@@ -1,116 +1,74 @@
 //import Link from "next/link";
 import { logout } from "./../../../store/auth/authActions";
 import { connect } from "react-redux";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
+import AddNewLevel from "./Modal/AddNewLevel";
 
 const postsList = [
     {
         id: 1,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem ipsum dolor sit',
         time: '7 days ago'
     },
     {
         id: 2,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem ipsum dolor sit',
         time: '7 days ago'
     },
     {
         id: 3,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem ipsum dolor sit',
         time: '7 days ago'
     },
     {
         id: 4,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem ipsum dolor sit',
         time: '7 days ago'
     },
     {
         id: 5,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem ipsum dolor sit',
         time: '7 days ago'
     },
     {
         id: 6,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem dolor sit amet',
         time: '7 days ago'
     },
     {
         id: 7,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        title: 'Lorem ipsum dolor sit',
         time: '7 days ago'
     },
 ]
 
-function index(props: any): ReactElement {
-
+function Badges(props: any): ReactElement {
+    const [isModalShowen, setIsModalShowen] = useState(false)
+    const setIsModalShowenHandle = () => {
+        setIsModalShowen(true);
+    }
+    const setIsModalHiddenHandle = () => {
+        setIsModalShowen(false);
+    }
     // Return statement.
     return (
         <>
+            {isModalShowen && <AddNewLevel setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
-                <div className="timlands-panel-header">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>Posts & Categories</h2>
+                <div className="timlands-panel-header d-flex align-items-center">
+                    <h2 className="title"><span className="material-icons material-icons-outlined">signal_cellular_alt</span>Levels</h2>
+                    <div className="header-butt">
+                        <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> Add New</button>
+                    </div>
                 </div>
                 <Alert type="warning">
-                    <p className="text"><span className="material-icons material-icons-outlined">report_problem</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, voluptas iure repellendus minima unde facere?</p>
+                    <p className="text"><span className="material-icons material-icons-outlined">report_problem</span> Lorem ipsum dolor sit amet adipisicing elit. Repellat, voluptas iure repellendus minima unde facere?</p>
                 </Alert>
                 <div className="timlands-table-filter">
                     <div className="row">
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterUser">
-                                    <option value="">Filter by Users</option>
-                                    <option value="">Abdelhamid</option>
-                                    <option value="">Tarek Aroui</option>
-                                    <option value="">Diaa Abdellah</option>
-                                    <option value="">Ehadi Abdellah</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
+                        <div className="col-sm-4 filter-form">
                             <div className="form-container">
                                 <select className="timlands-inputs" name="filterStatus">
                                     <option value="">Status</option>
@@ -148,9 +106,7 @@ function index(props: any): ReactElement {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Status</th>
-                                <th>Author</th>
+                                <th>Badge Name</th>
                                 <th>Created at</th>
                                 <th>Tools</th>
                             </tr>
@@ -159,8 +115,6 @@ function index(props: any): ReactElement {
                             {postsList.map(e => (
                                 <tr key={e.id}>
                                     <td>{e.title}</td>
-                                    <td>{e.status ? 'eee' : 'dd'}</td>
-                                    <td>{e.user.first_name + " " + e.user.lastname}</td>
                                     <td>{e.time}</td>
                                     <td className="tools-col">
                                         <button className="table-del warning">
@@ -186,7 +140,7 @@ function index(props: any): ReactElement {
         </>
     );
 }
-index.getLayout = function getLayout(page): ReactElement {
+Badges.getLayout = function getLayout(page): ReactElement {
     return (
         <DashboardLayout>
             {page}
@@ -198,4 +152,4 @@ const mapStateToProps = (state: any) => ({
     loading: state.auth.registerLoading,
 });
 
-export default connect(mapStateToProps, { logout })(index);
+export default connect(mapStateToProps, { logout })(Badges);

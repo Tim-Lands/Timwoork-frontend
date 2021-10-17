@@ -64,6 +64,24 @@ const sidebarLinks = [
     },
     {
         id: 7,
+        name: 'Badges & Levels',
+        icon: 'local_police',
+        href: '/dashboard/BadgesAndLevels/Badges',
+        hasSubMenu: [
+            {
+                id: 1,
+                name: 'Badges',
+                href: '/dashboard/BadgesAndLevels/Badges'
+            },
+            {
+                id: 2,
+                name: 'Levels',
+                href: '/dashboard/BadgesAndLevels/Levels'
+            },
+        ]
+    },
+    {
+        id: 8,
         name: 'Contact us',
         icon: 'email',
         href: '/dashboard/contacts'

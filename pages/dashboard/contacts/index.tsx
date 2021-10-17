@@ -8,79 +8,23 @@ import { Alert } from "@/components/Alert/Alert";
 const postsList = [
     {
         id: 1,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        fullName: 'Tarek Aroui',
+        email: 'tarekaroui@gmail.com',
+        title: 'Lorem ipsum dolor sit amet consectetur adipisicing',
         time: '7 days ago'
     },
     {
         id: 2,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        fullName: 'Tarek Aroui',
+        email: 'tarekaroui@gmail.com',
+        title: 'Lorem ipsum dolor sit amet consectetur adipisicing',
         time: '7 days ago'
     },
     {
         id: 3,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 4,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 5,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 6,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 7,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
+        fullName: 'Tarek Aroui',
+        email: 'tarekaroui@gmail.com',
+        title: 'Lorem ipsum dolor sit amet consectetur adipisicing',
         time: '7 days ago'
     },
 ]
@@ -92,7 +36,7 @@ function index(props: any): ReactElement {
         <>
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>Posts & Categories</h2>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">email</span>Contacts</h2>
                 </div>
                 <Alert type="warning">
                     <p className="text"><span className="material-icons material-icons-outlined">report_problem</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, voluptas iure repellendus minima unde facere?</p>
@@ -148,9 +92,9 @@ function index(props: any): ReactElement {
                     <table className="table">
                         <thead>
                             <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
                                 <th>Title</th>
-                                <th>Status</th>
-                                <th>Author</th>
                                 <th>Created at</th>
                                 <th>Tools</th>
                             </tr>
@@ -158,16 +102,11 @@ function index(props: any): ReactElement {
                         <tbody>
                             {postsList.map(e => (
                                 <tr key={e.id}>
+                                    <td>{e.fullName}</td>
+                                    <td>{e.email}</td>
                                     <td>{e.title}</td>
-                                    <td>{e.status ? 'eee' : 'dd'}</td>
-                                    <td>{e.user.first_name + " " + e.user.lastname}</td>
                                     <td>{e.time}</td>
                                     <td className="tools-col">
-                                        <button className="table-del warning">
-                                            <span className="material-icons material-icons-outlined">
-                                                cancel
-                                            </span>
-                                        </button>
                                         <button className="table-del error">
                                             <span className="material-icons material-icons-outlined">
                                                 delete
