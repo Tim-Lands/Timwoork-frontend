@@ -78,7 +78,7 @@ function Home() {
             <img src="/undraw_winter_designer_a2m7.svg" alt="" />
           </div>
           <div className="nanny-home-content">
-            <h2 className="title">Lorem ipsum dolor sit amet, consectetur</h2>
+            <h2 className="title"> HoHoHo Lorem ipsum dolor sit amet, consectetur</h2>
             <p className="text">Excepteur sint occaecat voluptate velit esse cillum dolore eu fugiat nulla cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
             <div className="py-3">
               <Link href="/">
