@@ -1,0 +1,19 @@
+.timlands-table {
+    margin: 9px;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
+    border: 1px solid #ddd;
+    .table {
+        tr {
+            td, th {
+                font-size: 13px;
+            }
+        }
+
+    }
+    .table>:not(:first-child) {
+        border-top: 2px solid #f1f1f1;
+    }
+}

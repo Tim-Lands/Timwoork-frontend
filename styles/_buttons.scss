@@ -1,0 +1,91 @@
+.btn {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 6px;
+    box-shadow: none;
+    font-weight: 800;
+    outline: none;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    &.butt-xs {
+        border-width: 1px;
+        font-size: 11px;
+        border-radius: 4px;
+        padding: 5px 11px;
+        .material-icons {
+            font-size: 16px;
+            margin-right: 4px;
+        }
+    }
+    &.butt-sm {
+        border-width: 2px;
+        font-size: 12px;
+        padding: 6px 13px;
+        border-radius: 5px;
+        .material-icons {
+            font-size: 17px;
+            margin-right: 5px;
+        }
+    }
+    &.butt-md {
+        border-width: 3px;
+        font-size: 13px;
+        padding: 8px 15px;
+        .material-icons {
+            font-size: 18px;
+            margin-right: 6px;
+        }
+    }
+    &.butt-lg {
+        border-width: 4px;
+        font-size: 14px;
+        padding: 9px 17px;
+        .material-icons {
+            font-size: 19px;
+            margin-right: 7px;
+        }
+    }
+    // Styles Colors
+
+    &.butt-primary {
+        background-color: $primary;
+        border-color: $primary;
+        color: #fff;
+        &:hover {
+            background-color: darken($primary, 5);
+            border-color: darken($primary, 5);
+        }
+        &:focus {
+            background-color: darken($primary, 13);
+            border-color: darken($primary, 13);
+        }
+    }
+    &.butt-primary2 {
+        background-color: $primary2;
+        border-color: $primary2;
+        color: #333;
+        &:hover {
+            background-color: darken($primary2, 5);
+            border-color: darken($primary2, 5);
+        }
+        &:focus {
+            background-color: darken($primary2, 13);
+            border-color: darken($primary2, 13);
+        }
+    }
+    &.butt-green {
+        background-color: #188539;
+        border-color: #188539;
+        color: #fff;
+        &:hover {
+            background-color: darken(#188539, 5);
+            border-color: darken(#188539, 5);
+        }
+        &:focus {
+            background-color: darken(#188539, 13);
+            border-color: darken(#188539, 13);
+        }
+    }
+}

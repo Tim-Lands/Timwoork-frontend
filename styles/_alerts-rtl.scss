@@ -1,0 +1,57 @@
+.timlands-alert {
+    padding: 15px 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    .text {
+        margin: 0;
+        font-size: 13px;
+    }
+    &.timlands-alert-error {
+        background-color: rgb(253, 243, 243);
+        border: 1px solid rgb(255, 236, 236);
+        .text {
+            color: rgb(160, 0, 0);
+        }
+    }
+    &.timlands-alert-warning {
+        background-color: rgb(253, 253, 243);
+        border: 1px solid rgb(255, 251, 236);
+        .text {
+            color: rgb(99, 84, 0);
+        }
+    }
+    &.timlands-alert-success {
+        background-color: rgb(243, 253, 244);
+        border: 1px solid rgb(236, 255, 241);
+        .text {
+            color: rgb(12, 122, 40);
+        }
+    }
+    &.timlands-alert-primary {
+        background-color: $primary;
+        border: 1px solid $primary;
+        .text {
+            color: #fff;
+        }
+    }
+    &.timlands-alert-primary2 {
+        background-color: $primary2;
+        border: 1px solid $primary2;
+        .text {
+            color: #222;
+        }
+    }
+    &.timlands-alert-fixed {
+        position: fixed;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.034);
+        &.alert-top {
+            top: 0;
+        }
+        &.alert-bottom {
+            top: 0;
+        }
+    }
+}

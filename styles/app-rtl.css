@@ -1,0 +1,1268 @@
+@import url("https://pro.fontawesome.com/releases/v5.10.0/css/all.css");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp");
+.timlands-alert {
+  padding: 15px 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.timlands-alert .text {
+  margin: 0;
+  font-size: 13px;
+}
+
+.timlands-alert.timlands-alert-error {
+  background-color: #fdf3f3;
+  border: 1px solid #ffecec;
+}
+
+.timlands-alert.timlands-alert-error .text {
+  color: #a00000;
+}
+
+.timlands-alert.timlands-alert-warning {
+  background-color: #fdfdf3;
+  border: 1px solid #fffbec;
+}
+
+.timlands-alert.timlands-alert-warning .text {
+  color: #635400;
+}
+
+.timlands-alert.timlands-alert-success {
+  background-color: #f3fdf4;
+  border: 1px solid #ecfff1;
+}
+
+.timlands-alert.timlands-alert-success .text {
+  color: #0c7a28;
+}
+
+.timlands-alert.timlands-alert-primary {
+  background-color: #475C80;
+  border: 1px solid #475C80;
+}
+
+.timlands-alert.timlands-alert-primary .text {
+  color: #fff;
+}
+
+.timlands-alert.timlands-alert-primary2 {
+  background-color: #dae90a;
+  border: 1px solid #dae90a;
+}
+
+.timlands-alert.timlands-alert-primary2 .text {
+  color: #222;
+}
+
+.timlands-alert.timlands-alert-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  -webkit-box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.034);
+          box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.034);
+}
+
+.timlands-alert.timlands-alert-fixed.alert-top {
+  top: 0;
+}
+
+.timlands-alert.timlands-alert-fixed.alert-bottom {
+  top: 0;
+}
+
+.timlands-inputs {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 10px 20px;
+  font-size: 13px;
+  display: block;
+  border-radius: 6px;
+  outline: none;
+}
+
+.timlands-inputs:hover {
+  border: 1px solid #ccc;
+}
+
+.timlands-inputs:focus {
+  border: 1px solid #475C80;
+}
+
+.timlands-form {
+  padding: 12px 0;
+}
+
+.timlands-form .label-block {
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.timlands-form .timlands-input {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 19px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-weight: 500;
+  outline: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-form .timlands-input::-webkit-input-placeholder {
+  color: #ddd;
+}
+
+.timlands-form .timlands-input:-ms-input-placeholder {
+  color: #ddd;
+}
+
+.timlands-form .timlands-input::-ms-input-placeholder {
+  color: #ddd;
+}
+
+.timlands-form .timlands-input::placeholder {
+  color: #ddd;
+}
+
+.timlands-form .timlands-input:hover {
+  border: 1px solid #ccc;
+}
+
+.timlands-form .timlands-input:focus {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  outline: none;
+  border: 1px solid #475C80;
+}
+
+.timlands-form .timlands-input:focus::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+.timlands-form .timlands-input:focus:-ms-input-placeholder {
+  color: #ccc;
+}
+
+.timlands-form .timlands-input:focus::-ms-input-placeholder {
+  color: #ccc;
+}
+
+.timlands-form .timlands-input:focus::placeholder {
+  color: #ccc;
+}
+
+.timlands-form .timlands-form-note {
+  margin-top: 7px;
+  padding: 8px 10px;
+  border-radius: 5px;
+}
+
+.timlands-form .timlands-form-note .text {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  font-weight: 700;
+}
+
+.timlands-form .timlands-form-note.form-note-error {
+  background-color: #fff6f6;
+  border: 1px solid #ffe5e5;
+}
+
+.timlands-form .timlands-form-note.form-note-error .text {
+  color: #c43d3d;
+}
+
+.btn {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 6px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  font-weight: 800;
+  outline: none;
+}
+
+.btn:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.btn.butt-xs {
+  border-width: 1px;
+  font-size: 11px;
+  border-radius: 4px;
+  padding: 5px 11px;
+}
+
+.btn.butt-xs .material-icons {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.btn.butt-sm {
+  border-width: 2px;
+  font-size: 12px;
+  padding: 6px 13px;
+  border-radius: 5px;
+}
+
+.btn.butt-sm .material-icons {
+  font-size: 17px;
+  margin-left: 5px;
+}
+
+.btn.butt-md {
+  border-width: 3px;
+  font-size: 13px;
+  padding: 8px 15px;
+}
+
+.btn.butt-md .material-icons {
+  font-size: 18px;
+  margin-left: 6px;
+}
+
+.btn.butt-lg {
+  border-width: 4px;
+  font-size: 14px;
+  padding: 9px 17px;
+}
+
+.btn.butt-lg .material-icons {
+  font-size: 19px;
+  margin-left: 7px;
+}
+
+.btn.butt-primary {
+  background-color: #475C80;
+  border-color: #475C80;
+  color: #fff;
+}
+
+.btn.butt-primary:hover {
+  background-color: #3e5070;
+  border-color: #3e5070;
+}
+
+.btn.butt-primary:focus {
+  background-color: #2f3d55;
+  border-color: #2f3d55;
+}
+
+.btn.butt-primary2 {
+  background-color: #dae90a;
+  border-color: #dae90a;
+  color: #333;
+}
+
+.btn.butt-primary2:hover {
+  background-color: #c3d109;
+  border-color: #c3d109;
+}
+
+.btn.butt-primary2:focus {
+  background-color: #9fa907;
+  border-color: #9fa907;
+}
+
+.btn.butt-green {
+  background-color: #188539;
+  border-color: #188539;
+  color: #fff;
+}
+
+.btn.butt-green:hover {
+  background-color: #146f30;
+  border-color: #146f30;
+}
+
+.btn.butt-green:focus {
+  background-color: #0e4d21;
+  border-color: #0e4d21;
+}
+
+.timlands-navbar-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-navbar-container.is-shown {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.timlands-navbar-container.is-hidden {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-transform: translateY(-100px);
+          transform: translateY(-100px);
+}
+
+.timlands-navbar {
+  background-color: #fff;
+  padding: 7px 19px;
+  position: relative;
+  z-index: 600;
+}
+
+.timlands-navbar .d-flex {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.timlands-navbar .logo-nav {
+  padding-left: 7px;
+}
+
+.timlands-navbar .nav-container .d-flex {
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.timlands-navbar .nav-container .app-navbar > li {
+  position: relative;
+}
+
+.timlands-navbar .nav-container .app-navbar > li > a {
+  font-weight: 600;
+  color: #666;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 17px;
+  font-size: 14px;
+  height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.timlands-navbar .nav-container .app-navbar > li > a .fa-angle-down {
+  margin-right: 6px;
+  margin-top: 2px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li > a .material-icons {
+  font-size: 19px;
+  margin-left: 6px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li > a:hover {
+  color: #000;
+}
+
+.timlands-navbar .nav-container .app-navbar > li.is-open > a {
+  color: #000;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores {
+  position: absolute;
+  width: 960px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 0 0 6px 6px;
+  top: 56px;
+  border: 1px solid #ddd;
+  border-top: 0;
+  overflow: hidden;
+  -webkit-box-shadow: 4px 7px 9px rgba(0, 0, 0, 0.068);
+          box-shadow: 4px 7px 9px rgba(0, 0, 0, 0.068);
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores {
+  background-color: #f4f4f4;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 13px 19px;
+  font-size: 14px;
+  font-weight: 700;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #333;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a .count {
+  margin: 0;
+  margin-right: auto;
+  font-size: 12px;
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a .material-icons {
+  margin-left: 5px;
+  font-size: 20px;
+  margin-top: -2px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a:hover {
+  background-color: #475C80;
+  color: #fff;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a:hover .material-icons {
+  color: #fff;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a:hover .count {
+  background-color: #fff;
+  color: #000;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container {
+  padding: 10px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-header {
+  padding: 15px;
+  border-bottom: 1px solid #f7f7f7;
+  margin-bottom: 7px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-header .title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  font-weight: 800;
+  font-size: 19px;
+  color: #444;
+  margin: 0;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-header .title .material-icons {
+  margin-left: 6px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-body .sub-cat-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 6px;
+  padding-right: 14px;
+  color: #222;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-body .sub-cat-link p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-body .sub-cat-link p.count {
+  margin-right: auto;
+  display: inline-block;
+  background-color: #f6f6f6;
+  color: #333;
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-body .sub-cat-link:hover {
+  color: #475C80;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-body .sub-cat-link:hover p.count {
+  background-color: #475C80;
+  color: #fff;
+}
+
+.timlands-navbar .nav-auth > li.login-nav-item > a {
+  display: block;
+  padding: 13px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 700;
+}
+
+.timlands-navbar .nav-auth > li.register-nav-item {
+  padding: 7px;
+}
+
+.timlands-navbar .circular-item {
+  padding-top: 4px;
+  position: relative;
+}
+
+.timlands-navbar .circular-item button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background-color: transparent;
+  color: #777;
+}
+
+.timlands-navbar .circular-item button:hover {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.timlands-navbar .circular-item button .material-icons {
+  font-size: 17px;
+}
+
+.timlands-navbar .circular-item .list-lang-items {
+  position: absolute;
+  background-color: #fff;
+  -webkit-box-shadow: 3px 2px 7px rgba(0, 0, 0, 0.055);
+          box-shadow: 3px 2px 7px rgba(0, 0, 0, 0.055);
+  border-radius: 5px;
+  width: 120px;
+  overflow: hidden;
+}
+
+.timlands-navbar .circular-item .list-lang-items .items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timlands-navbar .circular-item .list-lang-items .items-list .lang-item .lang-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  display: block;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+.timlands-navbar .circular-item .list-lang-items .items-list .lang-item .lang-link:hover {
+  color: #000;
+  background-color: #f2f2f2;
+}
+
+.timlands-sub-navbar {
+  background-color: #ddd;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #444;
+  padding: 8px 12px;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-item .category-link {
+  color: #444;
+  padding: 9px 12px;
+  display: block;
+  font-size: 13px;
+  position: relative;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-item .category-link::after {
+  content: "";
+  background-color: #475C80;
+  height: 3px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 100%;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-item .category-link:hover {
+  color: #000;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-item .category-link:hover::after {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  left: 0;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-item.active .category-link {
+  color: #000;
+  font-weight: 700;
+}
+
+.timlands-sub-navbar .sub-navbar-cats .category-item.active .category-link::after {
+  left: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-post-item {
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
+          box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
+  border-radius: 6px;
+  background-color: #fff;
+  position: relative;
+  margin: 5px 0;
+  margin-bottom: 12px;
+  overflow: hidden;
+  height: 400px;
+}
+
+.timlands-post-item .post-item-img {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  height: 190px;
+  background-position: center;
+  overflow: hidden;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-post-item .post-item-img::after {
+  content: '';
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  background-color: rgba(71, 92, 128, 0);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-post-item .post-item-img:hover::after {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: rgba(71, 92, 128, 0.4);
+}
+
+.timlands-post-item .post-item-content {
+  padding: 10px;
+}
+
+.timlands-post-item .post-item-content .post-meta li {
+  font-size: 11px;
+  padding: 3px 7px;
+  color: #777;
+  font-weight: 500;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.timlands-post-item .post-item-content .post-meta li .material-icons {
+  font-size: 17px;
+  margin-left: 3px;
+}
+
+.timlands-post-item .post-item-content .post-meta li:first-child {
+  padding-right: 0;
+  border-left: 1px solid #f3f3f3;
+}
+
+.timlands-post-item .post-item-content .post-meta li a {
+  color: #333;
+  font-weight: 700;
+}
+
+.timlands-post-item .post-item-content .post-meta li a:hover {
+  color: #475C80;
+}
+
+.timlands-post-item .post-item-content .post-meta li.post-meta-user a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.timlands-post-item .post-item-content .title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.timlands-post-item .post-item-content .title a {
+  color: #333;
+}
+
+.timlands-post-item .post-item-content .title a:hover {
+  color: #475C80;
+}
+
+.timlands-post-item .post-item-footer {
+  border-top: 1px solid #f1f1f1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  padding: 20px;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+}
+
+.timlands-post-item .post-item-footer .post-meta-price {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+
+.timlands-post-item .post-item-footer .post-meta-bayer {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+  margin-right: auto;
+}
+
+.timlands-post-item:hover {
+  border: 1px solid #475C80;
+  -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.089);
+          box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.089);
+}
+
+.timlands-post-item.post-item-search {
+  border: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  height: auto;
+}
+
+.timlands-post-item.post-item-search .d-flex {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.timlands-post-item.post-item-search .post-item-img {
+  width: 210px;
+  border-radius: 6px;
+  height: 140px;
+}
+
+.timlands-post-item.post-item-search .post-item-content {
+  width: calc(100% - 210px);
+}
+
+.timlands-table {
+  margin: 9px;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 7px;
+  -webkit-box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
+          box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
+  border: 1px solid #ddd;
+}
+
+.timlands-table .table tr td, .timlands-table .table tr th {
+  font-size: 13px;
+}
+
+.timlands-table .table > :not(:first-child) {
+  border-top: 2px solid #f1f1f1;
+}
+
+.app-footer {
+  background-color: #fff;
+  padding: 80px 0;
+}
+
+.app-footer .app-footer-aside .aside-header {
+  padding: 9px 0;
+  border-bottom: 1px solid #f5f5f5;
+  margin-bottom: 7px;
+}
+
+.app-footer .app-footer-aside .aside-header .title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #444;
+}
+
+.app-footer .app-footer-aside .aside-body .aside-list-items > li {
+  padding: 5px 0;
+}
+
+.app-footer .app-footer-aside .aside-body .aside-list-items > li > a {
+  color: #555;
+  font-size: 13px;
+}
+
+.app-footer .app-footer-aside .aside-body .aside-list-items > li > a:hover {
+  color: #b1bd08;
+}
+
+.app-footer .app-footer-aside .social-icons {
+  margin-top: 9px;
+  padding-top: 14px;
+  border-top: 1px solid #f5f5f5;
+}
+
+.app-footer .app-footer-aside .social-icons li {
+  padding-left: 7px;
+}
+
+.app-footer .app-footer-aside .social-icons li a {
+  width: 40px;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 50%;
+  background-color: #f3f3f3;
+  color: #777;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.app-footer .app-footer-aside .social-icons li a:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #000;
+  background-color: #ddd;
+}
+
+.bottom-footer .payments-logo img {
+  height: 15px;
+}
+
+.bottom-footer .center-nav-footer li {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bottom-footer .copy-text {
+  font-size: 13px;
+  margin: 0;
+  color: #333;
+}
+
+.bottom-footer .copy-text a {
+  color: #000;
+  font-weight: 700;
+}
+
+.bottom-footer .copy-text a:hover {
+  color: #475C80;
+}
+
+.circular-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+.material-icons {
+  line-height: 0;
+}
+
+body {
+  direction: rtl;
+  font-family: 'Montserrat';
+  background-color: #f5f5f5;
+}
+
+.is-home {
+  padding-top: 60px;
+}
+
+.row {
+  margin: 0;
+}
+
+.flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.me-auto {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+
+.nav {
+  padding-right: 0;
+}
+
+/*
+-------------------------------------------------------------------------------------------
+    Hero Header
+-------------------------------------------------------------------------------------------
+*/
+.timlands-hero {
+  background-image: url("5313770.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.timlands-hero .timlands-hero-inner {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-image {
+  padding: 7px 0;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-content .main-title {
+  font-weight: 800;
+  color: #333;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-content .sub-title {
+  font-size: 25px;
+  color: #444;
+  font-weight: 300;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search {
+  width: 600px;
+  position: relative;
+  margin-top: 7px;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search input {
+  width: 100%;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .search-btn {
+  background-color: transparent;
+  border: 0;
+  color: #ccc;
+  top: 14px;
+  left: 10px;
+  position: absolute;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .res-search-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.062);
+          box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.062);
+  border-radius: 0 0 6px 6px;
+  top: 40px;
+  text-align: right;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list {
+  padding: 7px 0;
+  margin-top: 8px;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-item a {
+  display: block;
+  font-size: 12px;
+  margin: 0 4px;
+  color: #333;
+  padding: 5px 9px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-item a:hover {
+  background-color: #ddd;
+  color: #000;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Home Nannies Section
+---------------------------------------------------------------------------------------------
+*/
+.timwoork-nanny-home {
+  background-color: #fff;
+  padding: 120px 30px;
+}
+
+.timwoork-nanny-home .d-flex {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.timwoork-nanny-home .nanny-home-image {
+  width: 40%;
+}
+
+.timwoork-nanny-home .nanny-home-image img {
+  width: 550px;
+  margin-right: -30px;
+}
+
+.timwoork-nanny-home .nanny-home-content {
+  padding-right: 15px;
+  width: 60%;
+}
+
+.timwoork-nanny-home .nanny-home-content .title {
+  font-size: 60px;
+}
+
+.timwoork-nanny-home .nanny-home-content .text {
+  font-size: 27px;
+  color: #444;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Account Page
+---------------------------------------------------------------------------------------------
+*/
+.timlands-accounts .timlands-accounts-container {
+  background-color: #fff;
+  height: 100vh;
+  padding: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.timlands-accounts .timlands-accounts-container .timlands-accounts-forms {
+  width: 100%;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    404 Page
+---------------------------------------------------------------------------------------------
+*/
+.timwoork-404-page {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.timwoork-404-page .not-found-image img {
+  width: 400px;
+}
+
+.timwoork-404-page .title {
+  margin: 25px 0;
+  color: #555;
+  font-weight: 400;
+}
+
+.timwoork-404-page .title .error-status {
+  font-weight: bold;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Posts Aside
+---------------------------------------------------------------------------------------------
+*/
+.posts-aside {
+  padding: 70px 50px;
+}
+
+.posts-aside .posts-aside-header {
+  padding: 20px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.posts-aside .posts-aside-header .title {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Dark Mode
+---------------------------------------------------------------------------------------------
+*/
+.is-dark .timlands-navbar {
+  background-color: #111;
+}
+
+.is-dark .timlands-navbar .nav-container .logo-nav svg stop {
+  fill: #fff;
+}
+
+.is-dark .timlands-navbar .nav-container .app-navbar > li > a {
+  color: #ccc;
+}
+
+.is-dark .timlands-navbar .nav-container .app-navbar > li > a:hover {
+  color: #fff;
+}
+
+.is-dark .timlands-navbar .nav-auth > li.login-nav-item > a {
+  color: #ccc;
+}
+
+.is-dark .timlands-navbar .circular-item button {
+  background-color: #151515;
+  color: #ddd;
+}
+
+.is-dark .timlands-navbar .circular-item button:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+.is-dark .timlands-navbar .circular-item .list-lang-items {
+  background-color: #111;
+  -webkit-box-shadow: 3px 2px 7px rgba(255, 255, 255, 0.055);
+          box-shadow: 3px 2px 7px rgba(255, 255, 255, 0.055);
+}
+
+.is-dark .timlands-navbar .circular-item .list-lang-items .items-list .lang-item .lang-link {
+  color: #f1f1f1;
+}
+
+.is-dark .timlands-sub-navbar {
+  background-color: #000;
+}
+
+.is-dark .timlands-sub-navbar .sub-navbar-cats .category-title {
+  color: #ddd;
+}
+
+.is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link {
+  color: #ccc;
+}
+
+.is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link::after {
+  background-color: #dae90a;
+}
+
+.is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link:hover {
+  color: #fff;
+}
+
+.is-dark .timlands-sub-navbar .sub-navbar-cats .category-item.active .category-link {
+  color: #fff;
+}
+/*# sourceMappingURL=app-rtl.css.map */

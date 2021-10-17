@@ -1,0 +1,130 @@
+.timlands-post-item {
+    border: 1px solid #ddd;
+    box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
+    border-radius: 6px;
+    background-color: #fff;
+    position: relative;
+    margin: 5px 0;
+    margin-bottom: 12px;
+    overflow: hidden;
+    height: 400px;
+    .post-item-img {
+        display: flex;
+        cursor: pointer;
+        height: 190px;
+        background-position: center;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s;
+        &::after {
+            content: '';
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            background-color: rgba($primary, 0);
+            transition: all 0.3s;
+        }
+        &:hover {
+            &::after {
+                transition: all 0.3s;
+                background-color: rgba($primary, 0.4);
+            }
+        }
+    }
+    .post-item-content {
+        padding: 10px;
+        .post-meta {
+            li {
+                font-size: 11px;
+                padding: 3px 7px;
+                color: #777;
+                font-weight: 500;
+                align-items: center;
+                display: flex;
+                align-content: center;
+                .material-icons {
+                    font-size: 17px;
+                    margin-left: 3px;
+                }
+                &:first-child {
+                    padding-right: 0;
+                    border-left: 1px solid #f3f3f3;
+                }
+                a {
+                    color: #333;
+                    font-weight: 700;
+                    &:hover {
+                        color: $primary;
+                    }
+                }
+                &.post-meta-user {
+                    a {
+                        display: flex;
+                        height: 100%;
+                        align-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+        .title {
+            font-weight: 700;
+            font-size: 18px;
+            a {
+                color: #333;
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+    }
+    .post-item-footer {
+        border-top: 1px solid #f1f1f1;
+        display: flex;
+        align-items: center;    
+        align-content: center;
+        padding: 20px;
+        width: 100%;
+        bottom: 0;
+        position: absolute;
+        .post-meta-price {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0;
+        }
+        .post-meta-bayer {
+            font-size: 13px;
+            color: #444;
+            margin: 0;
+            margin-right: auto;
+
+        }
+    }
+    &:hover {
+        border: 1px solid $primary;
+        box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.089);
+    }
+    &.post-item-search {
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        height: auto;
+        .d-flex {
+            align-items: center;
+            align-content: center;
+        }
+        .post-item-img {
+            width: 210px;
+            border-radius: 6px;
+            height: 140px;
+        }
+        .post-item-content {
+            width: calc(100% - 210px);
+        }
+    }
+}
