@@ -51,7 +51,7 @@ export class AuthGuard {
              * Fortunately, we can extract these cookies from the req object
              * and attach them to the api call.
              */
-            const user = await axios.get("/api/user", {
+            const user = await axios.get("/dashboard/user", {
                 headers: { Cookie: req.headers.cookie },
             });
 
@@ -113,7 +113,7 @@ export class AuthGuard {
              * Fortunately, we can extract these cookies from the req object
              * and attach them to the api call.
              */
-            const response = await axios.get("/api/user", {
+            const response = await axios.get("/dashboard/user", {
                 headers: { Cookie: req.headers.cookie },
             });
 

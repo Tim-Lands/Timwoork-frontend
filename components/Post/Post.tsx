@@ -7,7 +7,9 @@ function Post({ title, thumbnail, postUrl, author, userUrl, rate, buyers, price 
     return (
         <div className="timlands-post-item">
             <Link href={postUrl}>
-                <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
+                <a>
+                    <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
+                </a>
             </Link>
             <div className="post-item-content">
                 <h3 className="title">

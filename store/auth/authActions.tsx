@@ -24,7 +24,7 @@ export const loadUser = () => {
     return async (dispatch: CallableFunction) => {
         try {
             await axios.get("/sanctum/csrf-cookie");
-            const res = await axios.get("/api/user");
+            const res = await axios.get("/api/dashboard/user");
 
             // User was loaded successfully.
             if (res.status === 200) {
@@ -65,13 +65,14 @@ export const loadUser = () => {
  */
 export const login = (email: string, password: string): any => {
     return async (dispatch: CallableFunction) => {
+        
         try {
             // Start loading.
             dispatch({ type: types.START_LOGIN_LOADING });
 
             // Make api requests.
             await axios.get("/sanctum/csrf-cookie");
-            const res = await axios.post("/login", {
+            const res = await axios.post("/dashboard/login", {
                 email,
                 password,
             });

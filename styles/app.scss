@@ -522,8 +522,248 @@ body {
     Posts Aside
 ---------------------------------------------------------------------------------------------
 */
+.timwoork-single {
+    .timwoork-single-post {
+        padding: 20px;
+        .timwoork-single-header {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 9px;
+            padding: 20px 0;
+            .title {
+                font-size: 43px;
+                font-weight: bold;
+                color: #333;
+                margin: 0;
+            }
+            .single-header-meta {
+                padding: 0;
+                margin-top: 12px;
+                li {
+                    padding: 0 9px;
+                    border-right: 1px solid #ddd;
+                    display: flex;
+                    align-items: center;
+                    align-content: center;
+                    &:first-child {
+                        padding-left: 0;
+                    }
+                    &:last-child {
+                        border-right: 0;
+                    }
+                    &.rate-stars {
+                        .stars-icons {
+                            .material-icons-outlined {
+                                color: rgb(233, 98, 8);
+                                font-size: 23px;
+                                margin-top: 5px;
+                                &.outline-star {
+                                    color: #777;
+                                }
+                            }
+                        }
+                    }
+                    &.level-item {
+                        .text-level {
+                            font-weight: 700;
+                            color: #555;
+                            margin-right: 4px;
+                        }
+                        .value-level {
+                            font-weight: 300;
+                            color: #333;
+                        }
+                    }
+                }
+            }
+        }
+        .timwoork-single-content {
+            .timwoork-single-content-body {
+                background-color: #fff;
+                padding: 18px;
+                border-radius: 5px;
+                .each-slide {
+                    position: relative;
+                    overflow: hidden;
+                    border-radius: 6px;
+                    .images-slider {
+                        position: relative;
+                        background-size: cover;
+                        background-position: center;
+                        overflow: hidden;
+                        height: 450px;
+                        .caption-descriptions {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            padding: 22px;
+                            height: 120px;
+                            display: flex;
+                            align-items: center;
+                            align-content: center;
+                            background-image: linear-gradient(rgba(0, 0, 0, 0), #000);
+                            .text {
+                                margin: 0;
+                                font-size: 18px;
+                                color: #fff;
+                                text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+                .arrow-navigations {
+                    cursor: pointer;
+                    .material-icons-outlined {
+                        color: #fff;
+                        font-size: 73px;
+                        text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+                        margin-left: -22px;
+                    }
+                }
+            }
+        }
+    }
+}
+.single-sidebar {
+    position: sticky;
+    top: 90px;
+    padding: 20px 0;
+    .single-panel-aside {
+        background-color: #fff;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.062);
+        .panel-aside-header {
+            padding: 15px 22px;
+            border-bottom: 1px solid #f2f2f2;
+            margin-bottom: 5px;
+            .top-aside-nav {
+                li {
+                    padding: 0;
+                    font-size: 13px;
+                    align-items: center;
+                    align-content: center;
+                    display: flex;
+                    color: #555;
+                    padding: 2px 8px;
+                    border-right: 2px solid #f7f7f7;
+                    &:first-child {
+                        padding-left: 0;
+                    }
+                    &:last-child {
+                        border-right: 0;
+                    }
+                    .material-icons {
+                        font-size: 17px;
+                        margin-right: 5px;
+                    }
+                    a {
+                        color: #333;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                        align-content: center;
+
+                    }
+                }
+            }
+        }
+        .panel-aside-body {
+            padding: 14px;
+            .bayers-count {
+                padding: 7px 20px;
+                background-color: rgb(240, 240, 240);
+                display: inline-block;
+                border-radius: 4px;
+                .num {
+                    margin: 0;
+                    font-weight: 500;
+                    font-size: 13px;
+                    color: #444;
+                }
+            }
+            .add-devloppers-nav {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                .devloppers-item {
+                    font-weight: 500;
+                    color: #444;
+                    font-size: 13px;
+                    display: flex;
+                    align-content: center;
+                    align-items: center;
+                    border-bottom: 1px solid #f5f5f5;
+                    padding: 10px 0;
+                    &:last-child {
+                        border-bottom: 0;
+                    }
+                    .form-check {
+                        .form-check-label {
+                            margin-top: 2px;
+                        }
+                        .form-check-input {
+                            width: 1.14em;
+                            height: 1.14em;
+                            &:focus {
+                                border-color: lighten($primary, 8);
+                                outline: 0;
+                            }
+                            &:checked {
+                                background-color: $primary;
+                                border-color: $primary;
+                            }
+                        }
+                    }
+                    .devloppers-price {
+                        margin-left: auto;
+                        .price-number {
+                            font-weight: bold;
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+        .panel-aside-footer {
+            background-color: #f7f7f7;
+            border-top: 1px solid #f1f1f1;
+            padding: 13px;
+            text-align: center;
+            .aside-footer-total-price {
+                .price-total {
+                    margin: 0;
+                    font-weight: 300;
+                    color: #777;
+                }
+            }
+            .aside-footer-note {
+                margin: 8px 0;
+                .text {
+                    font-size: 13px;
+                    margin: 0;
+                    color: #555;
+                }
+            }
+            .aside-footer-addtocart {
+                .butt-primary {
+                    width: 100%;
+
+                }
+            }
+        }
+    }
+}
+/*
+---------------------------------------------------------------------------------------------
+    Posts Aside
+---------------------------------------------------------------------------------------------
+*/
 .posts-aside {
-    padding: 70px 50px;
+    padding: 40px 50px;
+
     .posts-aside-header {
         padding: 20px 0;
         margin-bottom: 8px;

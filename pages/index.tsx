@@ -88,13 +88,10 @@ function Home() {
           </div>
         </div>
       </div>
-      <PostsAside title="Lorem ipsum dolor sit amet" PostData={testServices} />
-      <PostsAside title="Lorem ipsum dolor sit amet" PostData={testServices} />
-      <PostsAside title="Lorem ipsum dolor sit amet" PostData={testServices} />
-      <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo amet a cupiditate quasi impedit corporis incidunt et vitae fugiat, repudiandae quos, in voluptate aliquam temporibus necessitatibus sit accusamus ad mollitia.</h1>
-      <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo amet a cupiditate quasi impedit corporis incidunt et vitae fugiat, repudiandae quos, in voluptate aliquam temporibus necessitatibus sit accusamus ad mollitia.</h1>
-      <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo amet a cupiditate quasi impedit corporis incidunt et vitae fugiat, repudiandae quos, in voluptate aliquam temporibus necessitatibus sit accusamus ad mollitia.</h1>
-      <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo amet a cupiditate quasi impedit corporis incidunt et vitae fugiat, repudiandae quos, in voluptate aliquam temporibus necessitatibus sit accusamus ad mollitia.</h1>
+      <PostsAside title="Video & Animations" PostData={testServices} />
+      <PostsAside title="Programming & Tech" PostData={testServices} />
+      <PostsAside title="Graphics & Designs" PostData={testServices} />
+
     </>
   );
 }
