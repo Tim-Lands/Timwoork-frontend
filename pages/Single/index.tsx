@@ -79,15 +79,15 @@ function Single() {
   const [checkedState, setCheckedState] = useState(
     new Array(toppings.length).fill(false)
   );
-  
+
   const [total, setTotal] = useState(0);
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
-  
+
     setCheckedState(updatedCheckedState);
-  
+
     const totalPrice = updatedCheckedState.reduce(
       (sum, currentState, index) => {
         if (currentState === true) {
@@ -97,7 +97,7 @@ function Single() {
       },
       0
     );
-  
+
     setTotal(totalPrice);
   };
   return (
@@ -154,20 +154,17 @@ function Single() {
               </div>
               <div className="timwoork-single-content">
                 <div className="timwoork-single-content-body">
-                  <br />
-                  <div>
-                    <Slide {...properties}>
-                      {slideImages.map((each, index) => (
-                        <div key={index} className="each-slide">
-                          <div className="images-slider" style={{ backgroundImage: `url(${each})` }}>
-                            <div className="caption-descriptions">
-                              <p className="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, reiciendis.</p>
-                            </div>
+                  <Slide {...properties}>
+                    {slideImages.map((each, index) => (
+                      <div key={index} className="each-slide">
+                        <div className="images-slider" style={{ backgroundImage: `url(${each})` }}>
+                          <div className="caption-descriptions">
+                            <p className="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, reiciendis.</p>
                           </div>
                         </div>
-                      ))}
-                    </Slide>
-                  </div>
+                      </div>
+                    ))}
+                  </Slide>
                   <div className="timwoork-single-product-detailts">
 
                     <h1>Lorem adipisicing elit. Deleniti</h1>
@@ -196,10 +193,40 @@ function Single() {
                     <h6>Lorem adipisicing elit. Deleniti</h6>
                   </div>
                   <div className="timwoork-single-seller-info">
+                    <div className="seller-info-header">
+                      <h2 className="title">About Seller</h2>
+                    </div>
                     <div className="seller-info-container">
                       <div className="d-flex">
                         <div className="seller-info-avatar">
-                          <img className="circular-img md-size" src="/avatar.png" alt="" />
+                          <img className="circular-img huge-size" src="/avatar.png" alt="" />
+                          <span className="is-online"></span>
+                        </div>
+                        <div className="seller-info-content">
+                          <h3 className="user-title">Abdelhamid Boumegouas</h3>
+                          <ul className="user-meta nav">
+                            <li>
+                              <span className="material-icons material-icons-outlined">badge</span> Promium Seller
+                            </li>
+                            <li>
+                              <span className="material-icons material-icons-outlined">place</span> <strong>Djelfa</strong>, Algeria
+                            </li>
+                            <li>
+                              <span className="material-icons material-icons-outlined">speed</span> 4 Hours
+                            </li>
+                          </ul>
+                          <div className="seller-info-butts d-flex">
+                            <Link href="">
+                              <a className="btn butt-primary butt-sm flex-center">
+                                <i className="material-icons material-icons-outlined">account_circle</i> View Profile
+                              </a>
+                            </Link>
+                            <Link href="">
+                              <a className="btn butt-green butt-sm flex-center">
+                                <i className="material-icons material-icons-outlined">email</i> Contact Seller
+                              </a>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -230,33 +257,34 @@ function Single() {
                     <h3 className="title">Available Developers</h3>
                   </div>
                   <ul className="add-devloppers-nav">
-                  {toppings.map(({ id, name, price }, index) => {
-                    return (
-                      <li key={id} className="devloppers-item">
-                        <div className="form-check">
-                          <input 
-                            className="form-check-input" 
-                            type="checkbox" 
-                            id={"flexCheckDefault-id" + id} 
-                            value={name}
-                            checked={checkedState[index]}
-                            onChange={() => handleOnChange(index)}
+                    {toppings.map(({ id, name, price }, index) => {
+                      return (
+                        <li key={id} className="devloppers-item">
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id={"flexCheckDefault-id" + id}
+                              value={name}
+                              checked={checkedState[index]}
+                              onChange={() => handleOnChange(index)}
                             />
-                          <label className="form-check-label" htmlFor={"flexCheckDefault-id" + id}>
-                            {name}
-                          </label>
-                        </div>
-                        <div className="devloppers-price">
-                          <p className="price-number">{price}$</p>
-                        </div>
-                      </li>
-                    )})}
+                            <label className="form-check-label" htmlFor={"flexCheckDefault-id" + id}>
+                              {name}
+                            </label>
+                          </div>
+                          <div className="devloppers-price">
+                            <p className="price-number">{price}$</p>
+                          </div>
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
                 <div className="panel-aside-footer">
                   <div className="aside-footer-total-price">
                     <h1 className="price-total me-auto">
-                      <strong>Total: </strong> {getFormattedPrice(total)}$
+                      <strong>Total: </strong> {getFormattedPrice(total)}
                     </h1>
                     <div className="bayers-count">
                       <p className="num">

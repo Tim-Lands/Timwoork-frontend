@@ -38,6 +38,18 @@
     align-content: center;
     justify-content: center;
     overflow: hidden;
+    &.huge-size {
+        width: 90px;
+        height: 90px;
+    }
+    &.xl-size {
+        width: 75px;
+        height: 75px;
+    }
+    &.lg-size {
+        width: 65px;
+        height: 65px;
+    }
     &.md-size {
         width: 50px;
         height: 50px;
@@ -707,6 +719,64 @@ body {
                                 > li {
                                     margin: 6px 0;
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+            .timwoork-single-seller-info {
+                .seller-info-header {
+                    padding: 9px 0;
+                    .title {
+                        font-weight: 700;
+                    }
+                }
+                .seller-info-container {
+                    padding: 14px 0;
+                    .seller-info-avatar {
+                        padding-right: 12px;
+                        position: relative;
+                        span.is-online {
+                            position: absolute;
+                            display: flex;
+                            height: 16px;
+                            width: 16px;
+                            top: 5px;
+                            left: 4px;
+                            background-color: rgb(64, 175, 97);
+                            border-radius: 50%;
+                        }
+                    }
+                    .seller-info-content {
+                        .user-title {
+                            font-size: 20px;
+                            font-weight: bold;
+                            margin: 0;
+                            color: #333;
+                        }
+                        .user-meta {
+                            padding: 0;
+                            margin-top: 8px;
+                            li {
+                                display: flex;
+                                align-content: center;
+                                align-items: center;
+                                font-size: 13px;
+                                padding: 1px 6px;
+                                &:first-child {
+                                    padding-left: 0;
+                                }
+                                color: #555;
+                                .material-icons {
+                                    font-size: 16px;
+                                    margin-right: 5px;
+                                }
+                            }
+                        }
+                        .seller-info-butts {
+                            padding: 10px 0;
+                            .btn {
+                                margin-right: 6px;
                             }
                         }
                     }
