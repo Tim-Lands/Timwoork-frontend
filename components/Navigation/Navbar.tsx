@@ -87,6 +87,9 @@ export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
                             </a>
                         </li>
                         <li className="register-nav-item">
+                            <Link href="">
+
+                            </Link>
                             <a href="" className="btn butt-sm butt-primary flex-center">
                                 <i className="material-icons material-icons-outlined">person_add_alt</i> Join us!
                             </a>
