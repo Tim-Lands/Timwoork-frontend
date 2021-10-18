@@ -88,11 +88,10 @@ export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
                         </li>
                         <li className="register-nav-item">
                             <Link href="">
-
+                                <a className="btn butt-sm butt-primary flex-center">
+                                    <i className="material-icons material-icons-outlined">person_add_alt</i> Join us!
+                                </a>
                             </Link>
-                            <a href="" className="btn butt-sm butt-primary flex-center">
-                                <i className="material-icons material-icons-outlined">person_add_alt</i> Join us!
-                            </a>
                         </li>
                         <li className="circular-item">
                             <motion.button whileTap={{ scale: 0.9 }} onClick={setIsDarkenHandle} className="language-nav-butt circular-center">
