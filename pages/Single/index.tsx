@@ -8,7 +8,7 @@
 */
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 //import { Alert } from "@/components/Alert/Alert";
 //import { Navbar } from "@/components/Navigation/Navbar";
 import PostsAside from "@/components/PostsAside";
@@ -43,7 +43,63 @@ const properties = {
   prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
+
+const toppings = [
+  {
+    id: 1,
+    name: "I will record an italian Capsicum",
+    price: 11.2
+  },
+  {
+    id: 2,
+    name: "I will record an italia nPaneer",
+    price: 22.0
+  },
+  {
+    id: 3,
+    name: "I will record an italia nRed Paprika",
+    price: 2.5
+  },
+  {
+    id: 4,
+    name: "I will record an italian Onions",
+    price: 33.0
+  },
+  {
+    id: 5,
+    name: "I will record an italian Extra Cheese",
+    price: 23.5
+  },
+]
+
+// 
+const getFormattedPrice = (price) => `$${price.toFixed(2)}`;
+
 function Single() {
+  const [checkedState, setCheckedState] = useState(
+    new Array(toppings.length).fill(false)
+  );
+  
+  const [total, setTotal] = useState(0);
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+  
+    setCheckedState(updatedCheckedState);
+  
+    const totalPrice = updatedCheckedState.reduce(
+      (sum, currentState, index) => {
+        if (currentState === true) {
+          return sum + toppings[index].price;
+        }
+        return sum;
+      },
+      0
+    );
+  
+    setTotal(totalPrice);
+  };
   return (
     <>
       <div className="timwoork-single">
@@ -139,6 +195,15 @@ function Single() {
                     <h5>Lorem adipisicing elit. Deleniti</h5>
                     <h6>Lorem adipisicing elit. Deleniti</h6>
                   </div>
+                  <div className="timwoork-single-seller-info">
+                    <div className="seller-info-container">
+                      <div className="d-flex">
+                        <div className="seller-info-avatar">
+                          <img src="/avatar.png" alt="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -165,56 +230,33 @@ function Single() {
                     <h3 className="title">Available Developers</h3>
                   </div>
                   <ul className="add-devloppers-nav">
-                    <li className="devloppers-item">
-                      <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
-                          Default checkbox
-                        </label>
-                      </div>
-                      <div className="devloppers-price">
-                        <p className="price-number">19.00$</p>
-                      </div>
-                    </li>
-                    <li className="devloppers-item">
-                      <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
-                          Default checkbox
-                        </label>
-                      </div>
-                      <div className="devloppers-price">
-                        <p className="price-number">19.00$</p>
-                      </div>
-                    </li>
-                    <li className="devloppers-item">
-                      <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
-                          Default checkbox
-                        </label>
-                      </div>
-                      <div className="devloppers-price">
-                        <p className="price-number">19.00$</p>
-                      </div>
-                    </li>
-                    <li className="devloppers-item">
-                      <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
-                          Default checkbox
-                        </label>
-                      </div>
-                      <div className="devloppers-price">
-                        <p className="price-number">19.00$</p>
-                      </div>
-                    </li>
+                  {toppings.map(({ id, name, price }, index) => {
+                    return (
+                      <li key={id} className="devloppers-item">
+                        <div className="form-check">
+                          <input 
+                            className="form-check-input" 
+                            type="checkbox" 
+                            id={"flexCheckDefault-id" + id} 
+                            value={name}
+                            checked={checkedState[index]}
+                            onChange={() => handleOnChange(index)}
+                            />
+                          <label className="form-check-label" htmlFor={"flexCheckDefault-id" + id}>
+                            {name}
+                          </label>
+                        </div>
+                        <div className="devloppers-price">
+                          <p className="price-number">{price}$</p>
+                        </div>
+                      </li>
+                    )})}
                   </ul>
                 </div>
                 <div className="panel-aside-footer">
                   <div className="aside-footer-total-price">
                     <h1 className="price-total me-auto">
-                      <strong>Total: </strong>  945.00$
+                      <strong>Total: </strong> {getFormattedPrice(total)}$
                     </h1>
                     <div className="bayers-count">
                       <p className="num">
