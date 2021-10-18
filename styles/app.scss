@@ -32,6 +32,29 @@
         height: 30px;
     }
 }
+.circular-img {
+    border-radius: 50%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: hidden;
+    &.md-size {
+        width: 50px;
+        height: 50px;
+    }
+    &.small-size {
+        width: 40px;
+        height: 40px;
+    }
+    &.semi-small-size {
+        width: 35px;
+        height: 35px;
+    }
+    &.tiny-size {
+        width: 30px;
+        height: 30px;
+    }
+}
 a {
     text-decoration: none;
 }

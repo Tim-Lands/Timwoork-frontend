@@ -199,7 +199,7 @@ function Single() {
                     <div className="seller-info-container">
                       <div className="d-flex">
                         <div className="seller-info-avatar">
-                          <img src="/avatar.png" alt="" />
+                          <img className="circular-img md-size" src="/avatar.png" alt="" />
                         </div>
                       </div>
                     </div>

@@ -15,7 +15,6 @@ import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import { connect } from "react-redux";
 import { logout } from "./../store/auth/authActions";
-import { Alert } from "@/components/Alert/Alert";
 
 const testServices = [
   {

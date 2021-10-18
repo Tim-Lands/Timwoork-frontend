@@ -1085,6 +1085,39 @@
   height: 30px;
 }
 
+.circular-img {
+  border-radius: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: hidden;
+}
+
+.circular-img.md-size {
+  width: 50px;
+  height: 50px;
+}
+
+.circular-img.small-size {
+  width: 40px;
+  height: 40px;
+}
+
+.circular-img.semi-small-size {
+  width: 35px;
+  height: 35px;
+}
+
+.circular-img.tiny-size {
+  width: 30px;
+  height: 30px;
+}
+
 a {
   text-decoration: none;
 }
