@@ -29,6 +29,18 @@ const testServices = [
         buyers: 9,
         userUrl: '/user'
     },
+    {
+        id: 32,
+        title: 'Voluptate aliquam temporibus necessitatibus sit accusamus',
+        author: 'Tarek Aroui',
+        rate: 5,
+        price: 36,
+        postUrl: '/Single',
+        thumbnail: '/photographer.jpg',
+        period: 5,
+        buyers: 9,
+        userUrl: '/user'
+    },
 ]
 
 function Hero() {

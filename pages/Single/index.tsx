@@ -52,28 +52,49 @@ function Single() {
             <div className="timwoork-single-post">
               <div className="timwoork-single-header">
                 <h1 className="title">I will record an italian professional voice over</h1>
-                <ul className="single-header-meta nav">
-                  <li className="rate-stars">
-                    <span className="stars-icons">
-                      <span className="material-icons-outlined">star</span>
-                      <span className="material-icons-outlined">star</span>
-                      <span className="material-icons-outlined">star</span>
-                      <span className="material-icons-outlined">star</span>
-                      <span className="material-icons-outlined outline-star">star_border</span>
-                    </span>
-                    <span className="stars-count">
-                      (90)
-                    </span>
-                  </li>
-                  <li className="level-item">
-                    <span className="text-level">
-                      Level
-                    </span>
-                    <span className="value-level">
-                      Level Name
-                    </span>
-                  </li>
-                </ul>
+                <div className="timwoork-single-header-meta d-flex">
+
+                  <ul className="single-header-meta nav me-auto">
+                    <li className="user-item">
+                      <Link href="/users/Single">
+                        <a className="user-link">
+                          <img src="/avatar.png" className="circular-center tiny-size" alt="" />
+                          Abdelhamid Boumegouass
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="category-item">
+                      <Link href="/users/Single">
+                        <a className="category-link">
+                          <span className="material-icons material-icons-outlined">label</span>
+                          Graphics & Designs
+                        </a>
+                      </Link>
+                    </li>
+                  </ul>
+                  <ul className="single-header-meta nav ml-auto">
+                    <li className="rate-stars">
+                      <span className="stars-icons">
+                        <span className="material-icons-outlined">star</span>
+                        <span className="material-icons-outlined">star</span>
+                        <span className="material-icons-outlined">star</span>
+                        <span className="material-icons-outlined">star</span>
+                        <span className="material-icons-outlined outline-star">star_border</span>
+                      </span>
+                      <span className="stars-count">
+                        (90)
+                      </span>
+                    </li>
+                    <li className="level-item">
+                      <span className="text-level">
+                        Level
+                      </span>
+                      <span className="value-level">
+                        Level Name
+                      </span>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div className="timwoork-single-content">
                 <div className="timwoork-single-content-body">
@@ -91,8 +112,33 @@ function Single() {
                       ))}
                     </Slide>
                   </div>
+                  <div className="timwoork-single-product-detailts">
 
-                  <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime quas, beatae doloremque tenetur repellat, eveniet aliquid repudiandae voluptates fugit odit et ullam corrupti eius! Veniam culpa aliquid illum deserunt ipsa.</h1>
+                    <h1>Lorem adipisicing elit. Deleniti</h1>
+                    <h2>Lorem adipisicing elit. Deleniti</h2>
+                    <ul className="single-list">
+                      <li>Lorem adipisicing elit. Deleniti</li>
+                      <li>Lorem adipisicing elit. Deleniti
+                        <ul>
+                          <li>Lorem adipisicing elit</li>
+                          <li>Lorem adipisicing elit</li>
+                          <li>Lorem adipisicing elit</li>
+                          <li>Lorem adipisicing elit</li>
+                          <li>Lorem adipisicing elit</li>
+                        </ul>
+                      </li>
+                      <li>Lorem adipisicing elit. Deleniti</li>
+                      <li>Lorem adipisicing elit. Deleniti</li>
+                      <li>Lorem adipisicing elit. Deleniti</li>
+                    </ul>
+                    <h3>Lorem adipisicing elit. Deleniti</h3>
+                    <p className="text">
+                      Lorem adipisicing elit. Deleniti nobis Tempora recusandae omnis  Lorem adipisicing elit. Deleniti nobis Tempora recusandae omnis Lorem adipisicing elit. Deleniti nobis Tempora recusandae omnis corrupti assumenda, laboriosam odio iusto veritatis illo consequatur molestiae quis molestias reiciendis.
+                    </p>
+                    <h4>Lorem adipisicing elit. Deleniti</h4>
+                    <h5>Lorem adipisicing elit. Deleniti</h5>
+                    <h6>Lorem adipisicing elit. Deleniti</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -115,11 +161,8 @@ function Single() {
                   </ul>
                 </div>
                 <div className="panel-aside-body">
-                  <div className="bayers-count">
-                    <p className="num">
-                      <span className="count">5 </span>
-                      <span className="text"> Bayers</span>
-                    </p>
+                  <div className="add-devloppers-header">
+                    <h3 className="title">Available Developers</h3>
                   </div>
                   <ul className="add-devloppers-nav">
                     <li className="devloppers-item">
@@ -170,9 +213,15 @@ function Single() {
                 </div>
                 <div className="panel-aside-footer">
                   <div className="aside-footer-total-price">
-                    <h1 className="price-total">
-                      945.00$
+                    <h1 className="price-total me-auto">
+                      <strong>Total: </strong>  945.00$
                     </h1>
+                    <div className="bayers-count">
+                      <p className="num">
+                        <span className="count">5 </span>
+                        <span className="text"> Bayers</span>
+                      </p>
+                    </div>
                   </div>
                   <div className="aside-footer-note">
                     <p className="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci, unde? Numquam, autem?</p>

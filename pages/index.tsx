@@ -15,6 +15,7 @@ import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import { connect } from "react-redux";
 import { logout } from "./../store/auth/authActions";
+import { Alert } from "@/components/Alert/Alert";
 
 const testServices = [
   {
@@ -72,13 +73,16 @@ function Home() {
     <>
       {/*<Alert type="primary">What do you want to do?</Alert>*/}
       <Hero />
+      
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
             <img src="/undraw_winter_designer_a2m7.svg" alt="" />
           </div>
           <div className="nanny-home-content">
-            <h2 className="title"> HoHoHo Lorem ipsum dolor sit amet</h2>
+            <h2 className="title">
+              <span className="material-icons material-icons-outlined">analytics</span>
+               HoHoHo Lorem ipsum dolor sit amet</h2>
             <p className="text">Excepteur sint occaecat voluptate velit esse cillum dolore eu fugiat nulla cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
             <div className="py-3">
               <Link href="/">

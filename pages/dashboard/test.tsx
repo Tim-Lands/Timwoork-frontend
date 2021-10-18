@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { logout } from "./../../store/auth/authActions";
-import { connect } from "react-redux";
 import { ReactElement } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
@@ -220,9 +218,4 @@ TestPage.getLayout = function getLayout(page): ReactElement {
       </DashboardLayout>
     )
 }
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.registerLoading,
-});
-
-export default connect(mapStateToProps, { logout })(TestPage);
+export default TestPage;
