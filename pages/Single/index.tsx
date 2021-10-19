@@ -8,6 +8,7 @@
 */
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
+import Comments from './Components/Comments'
 import { ReactElement, useState } from "react";
 //import { Alert } from "@/components/Alert/Alert";
 //import { Navbar } from "@/components/Navigation/Navbar";
@@ -228,6 +229,22 @@ function Single() {
                             </Link>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="timwoork-single-comments">
+                    <div className="timwoork-single-comments-inner">
+                      <div className="single-comments-header">
+                        <div className="flex-center">
+                          <h1 className="title">
+                            <span className="material-icons material-icons-outlined">question_answer</span>
+                            Top Comments
+                          </h1>
+                        </div>
+                      </div>
+                      <div className="single-comments-body">
+                        <Comments />
                       </div>
                     </div>
                   </div>

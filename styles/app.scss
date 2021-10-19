@@ -782,6 +782,86 @@ body {
                     }
                 }
             }
+            .timwoork-single-comments {
+                .timwoork-single-comments-inner {
+                    .single-comments-header {
+                        padding: 14px 0;
+                        border-bottom: 1px solid #f4f4f4;
+                        margin-bottom: 8px;
+                        .title {
+                            font-weight: bold;
+                            font-size: 22px;
+                            margin: 0;
+                            color: #444;
+                            display: flex;
+                            align-items: center;
+                            align-content: center;
+                            .material-icons {
+                                margin-right: 7px;
+                            }
+                        }
+                    }
+                    .single-comments-body {
+                        .comments-list-items {
+                            .list-items-ul {
+                                list-style: none;
+                                padding: 0;
+                                margin: 0;
+                                > .comment-item {
+                                    padding: 12px;
+                                    padding-left: 25px;
+                                    .comment-item-avatar {
+                                        padding-top: 8px;
+                                    }
+                                    .comment-item-content {
+                                        padding: 13px;
+                                        .meta-time, .user-ratting {
+                                            font-size: 12px;
+                                            color: #444;
+                                            margin: 0;
+                                            display: flex;
+                                            align-content: center;
+                                            align-items: center;
+                                            span {
+                                                font-size: 16px;
+                                            }
+                                        }
+                                        .meta-time {
+                                            .material-icons {
+                                                margin-right: 4px;
+                                                margin-top: -1px;
+                                            }
+                                        }
+                                        .user-title {
+                                            font-size: 17px;
+                                            font-weight: bold;
+                                            color: #444;
+                                            margin-top: 6px;
+                                        }
+                                        .item-text {
+                                            line-height: 28px;
+                                            color: #333;
+                                            margin: 0;
+                                            margin-top: 7px;
+                                        }
+                                    }
+                                    .list-items-replies {
+                                        list-style: none;
+                                        .reply-item {
+                                            margin: 5px 0;
+                                            background-color: #f7f7f7;
+                                            border-radius: 6px;
+                                            padding: 20px 13px;
+                                            padding-left: 40px;
+                                            border-left: 4px solid $primary;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
