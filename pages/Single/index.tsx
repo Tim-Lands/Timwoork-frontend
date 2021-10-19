@@ -30,6 +30,42 @@ const testServices = [
     buyers: 5,
     userUrl: '/user'
   },
+  {
+    id: 2,
+    title: 'Lorem ipsum dolor sit amet consectetur',
+    author: 'Abdelhamid Boumegouas',
+    rate: 4,
+    price: 40,
+    postUrl: '/Single',
+    thumbnail: '/homepage.jpg',
+    period: 9,
+    buyers: 5,
+    userUrl: '/user'
+  },
+  {
+    id: 3,
+    title: 'Lorem ipsum dolor sit amet consectetur',
+    author: 'Abdelhamid Boumegouas',
+    rate: 4,
+    price: 40,
+    postUrl: '/Single',
+    thumbnail: '/homepage.jpg',
+    period: 9,
+    buyers: 5,
+    userUrl: '/user'
+  },
+  {
+    id: 4,
+    title: 'Lorem ipsum dolor sit amet consectetur',
+    author: 'Abdelhamid Boumegouas',
+    rate: 4,
+    price: 40,
+    postUrl: '/Single',
+    thumbnail: '/homepage.jpg',
+    period: 9,
+    buyers: 5,
+    userUrl: '/user'
+  },
 ]
 const slideImages = [
   "/slide_2.png",
@@ -325,7 +361,7 @@ function Single() {
           </div>
         </div>
       </div>
-      <PostsAside title="Graphics & Designs" PostData={testServices} />
+      <PostsAside title="Related Services" PostData={testServices} />
     </>
   );
 }
