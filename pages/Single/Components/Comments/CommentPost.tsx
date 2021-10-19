@@ -32,7 +32,7 @@ function CommentPost(props: any): ReactElement {
             {props.replies &&
                 <ul className="list-items-replies">
                     {props.replies.map(e => (
-                        <li className="reply-item">
+                        <li key={e.id} className="reply-item">
                             <div className="d-flex">
                                 <div className="comment-item-avatar">
                                     <img src={e.avatar || "/avatar.png"} className="circular-img md-size" alt="" />
