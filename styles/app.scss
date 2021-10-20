@@ -536,6 +536,71 @@ body {
     404 Page
 ---------------------------------------------------------------------------------------------
 */
+.timlands-step {
+    background-color: #fff;
+    padding: 10px;
+    margin: 19px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    .timlands-step-nav {
+        position: relative;
+        .list-step {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            list-style: none;
+            position: relative;
+            align-content: center;
+            justify-content: space-around;
+            &::after {
+                content: "";
+                position: absolute;
+                height: 4px;
+                background-color: #f2f2f2;
+                left: 0;
+                right: 0;
+                z-index: 11;
+                transition: all 0.3s;
+            }
+            &::before {
+                content: "";
+                position: absolute;
+                height: 4px;
+                background-color: $primary2;
+                left: 0;
+                right: 83%;
+                z-index: 12;
+                transition: all 0.3s;
+            }
+            > .step-item {
+                position: relative;
+                z-index: 39;
+                .step-count {
+                    display: flex;
+                    width: 35px;
+                    height: 35px;
+                    background-color: #ddd;
+                    border-radius: 50%;
+                    align-content: center;
+                    align-items: center;
+                    justify-content: center;
+                }
+                &.active {
+                    .step-count {
+                        background-color: $primary;
+                        font-weight: bold;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+/*
+---------------------------------------------------------------------------------------------
+    404 Page
+---------------------------------------------------------------------------------------------
+*/
 .timwoork-404-page {
     height: 100vh;
     display: flex;

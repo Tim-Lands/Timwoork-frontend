@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
+import { useTranslation } from "react-i18next";
+
 const testServices = [
   {
     id: 1,
@@ -113,6 +115,9 @@ const toppings = [
 const getFormattedPrice = (price) => `$${price.toFixed(2)}`;
 
 function Single() {
+  // Use Traductions
+  const { t } = useTranslation();
+
   const [checkedState, setCheckedState] = useState(
     new Array(toppings.length).fill(false)
   );
@@ -146,7 +151,6 @@ function Single() {
               <div className="timwoork-single-header">
                 <h1 className="title">I will record an italian professional voice over</h1>
                 <div className="timwoork-single-header-meta d-flex">
-
                   <ul className="single-header-meta nav me-auto">
                     <li className="user-item">
                       <Link href="/users/Single">
@@ -160,7 +164,7 @@ function Single() {
                       <Link href="/users/Single">
                         <a className="category-link">
                           <span className="material-icons material-icons-outlined">label</span>
-                          Graphics & Designs
+                          {t('Graphics & Designs')}
                         </a>
                       </Link>
                     </li>
@@ -180,10 +184,10 @@ function Single() {
                     </li>
                     <li className="level-item">
                       <span className="text-level">
-                        Level
+                        {t('Level')}
                       </span>
                       <span className="value-level">
-                        Level Name
+                        {t('Level Name')}
                       </span>
                     </li>
                   </ul>
@@ -231,7 +235,7 @@ function Single() {
                   </div>
                   <div className="timwoork-single-seller-info">
                     <div className="seller-info-header">
-                      <h2 className="title">About Seller</h2>
+                      <h2 className="title">{t('About Seller')}</h2>
                     </div>
                     <div className="seller-info-container">
                       <div className="d-flex">
@@ -243,24 +247,24 @@ function Single() {
                           <h3 className="user-title">Abdelhamid Boumegouas</h3>
                           <ul className="user-meta nav">
                             <li>
-                              <span className="material-icons material-icons-outlined">badge</span> Promium Seller
+                              <span className="material-icons material-icons-outlined">badge</span> {t('Promium Seller')}
                             </li>
                             <li>
                               <span className="material-icons material-icons-outlined">place</span> <strong>Djelfa</strong>, Algeria
                             </li>
                             <li>
-                              <span className="material-icons material-icons-outlined">speed</span> 4 Hours
+                              <span className="material-icons material-icons-outlined">speed</span> 4 {t('Hours')}
                             </li>
                           </ul>
                           <div className="seller-info-butts d-flex">
                             <Link href="">
                               <a className="btn butt-primary butt-sm flex-center">
-                                <i className="material-icons material-icons-outlined">account_circle</i> View Profile
+                                <i className="material-icons material-icons-outlined">account_circle</i> {t('View Profile')}
                               </a>
                             </Link>
                             <Link href="">
                               <a className="btn butt-green butt-sm flex-center">
-                                <i className="material-icons material-icons-outlined">email</i> Contact Seller
+                                <i className="material-icons material-icons-outlined">email</i> {t('Contact Seller')}
                               </a>
                             </Link>
                           </div>
@@ -275,7 +279,7 @@ function Single() {
                         <div className="flex-center">
                           <h1 className="title">
                             <span className="material-icons material-icons-outlined">question_answer</span>
-                            Top Comments
+                            {t('Top Comments')}
                           </h1>
                         </div>
                       </div>
@@ -296,18 +300,18 @@ function Single() {
                     <li className="cat-post">
                       <Link href="">
                         <a>
-                          <span className="material-icons material-icons-outlined">label</span>Graphics & Designs
+                          <span className="material-icons material-icons-outlined">label</span>{t('Graphics & Designs')}
                         </a>
                       </Link>
                     </li>
                     <li className="delevr-time">
-                      <span className="material-icons material-icons-outlined">timer</span>2 Days Delivery
+                      <span className="material-icons material-icons-outlined">timer</span>2 {t('Days Delivery')}
                     </li>
                   </ul>
                 </div>
                 <div className="panel-aside-body">
                   <div className="add-devloppers-header">
-                    <h3 className="title">Available Developers</h3>
+                    <h3 className="title">{t('Available Developers')}</h3>
                   </div>
                   <ul className="add-devloppers-nav">
                     {toppings.map(({ id, name, price }, index) => {
@@ -337,22 +341,22 @@ function Single() {
                 <div className="panel-aside-footer">
                   <div className="aside-footer-total-price">
                     <h1 className="price-total me-auto">
-                      <strong>Total: </strong> {getFormattedPrice(total)}
+                      <strong>{t('Total')} </strong> {getFormattedPrice(total)}
                     </h1>
                     <div className="bayers-count">
                       <p className="num">
                         <span className="count">5 </span>
-                        <span className="text"> Bayers</span>
+                        <span className="text"> {t('Bayers')}</span>
                       </p>
                     </div>
                   </div>
                   <div className="aside-footer-note">
-                    <p className="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci, unde? Numquam, autem?</p>
+                    <p className="text">{t('Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci, unde? Numquam, autem?')}</p>
                   </div>
                   <div className="aside-footer-addtocart">
                     <button className="btn butt-primary butt-lg">
                       <span className="material-icons material-icons-outlined">add_shopping_cart</span>
-                      Add To Cart
+                      {t('Add To Cart')}
                     </button>
                   </div>
                 </div>

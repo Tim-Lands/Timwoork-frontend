@@ -49,8 +49,8 @@
 }
 
 .timlands-alert.timlands-alert-primary2 {
-  background-color: #dae90a;
-  border: 1px solid #dae90a;
+  background-color: #ffd000;
+  border: 1px solid #ffd000;
 }
 
 .timlands-alert.timlands-alert-primary2 .text {
@@ -262,19 +262,19 @@
 }
 
 .btn.butt-primary2 {
-  background-color: #dae90a;
-  border-color: #dae90a;
+  background-color: #ffd000;
+  border-color: #ffd000;
   color: #333;
 }
 
 .btn.butt-primary2:hover {
-  background-color: #c3d109;
-  border-color: #c3d109;
+  background-color: #e6bb00;
+  border-color: #e6bb00;
 }
 
 .btn.butt-primary2:focus {
-  background-color: #9fa907;
-  border-color: #9fa907;
+  background-color: #bd9a00;
+  border-color: #bd9a00;
 }
 
 .btn.butt-green {
@@ -848,7 +848,7 @@
 }
 
 .app-footer .app-footer-aside .aside-body .aside-list-items > li > a:hover {
-  color: #b1bd08;
+  color: #d1ab00;
 }
 
 .app-footer .app-footer-aside .social-icons {
@@ -1255,7 +1255,7 @@ body {
 }
 
 .is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link::after {
-  background-color: #dae90a;
+  background-color: #ffd000;
 }
 
 .is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link:hover {

@@ -62,8 +62,8 @@
 }
 
 .timlands-alert.timlands-alert-primary2 {
-  background-color: #dae90a;
-  border: 1px solid #dae90a;
+  background-color: #ffd000;
+  border: 1px solid #ffd000;
 }
 
 .timlands-alert.timlands-alert-primary2 .text {
@@ -310,19 +310,19 @@
 }
 
 .btn.butt-primary2 {
-  background-color: #dae90a;
-  border-color: #dae90a;
+  background-color: #ffd000;
+  border-color: #ffd000;
   color: #333;
 }
 
 .btn.butt-primary2:hover {
-  background-color: #c3d109;
-  border-color: #c3d109;
+  background-color: #e6bb00;
+  border-color: #e6bb00;
 }
 
 .btn.butt-primary2:focus {
-  background-color: #9fa907;
-  border-color: #9fa907;
+  background-color: #bd9a00;
+  border-color: #bd9a00;
 }
 
 .btn.butt-green {
@@ -991,7 +991,7 @@
 }
 
 .app-footer .app-footer-aside .aside-body .aside-list-items > li > a:hover {
-  color: #b1bd08;
+  color: #d1ab00;
 }
 
 .app-footer .app-footer-aside .social-icons {
@@ -1729,6 +1729,92 @@ body {
     404 Page
 ---------------------------------------------------------------------------------------------
 */
+.timlands-step {
+  background-color: #fff;
+  padding: 10px;
+  margin: 19px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.timlands-step .timlands-step-nav {
+  position: relative;
+}
+
+.timlands-step .timlands-step-nav .list-step {
+  height: 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  list-style: none;
+  position: relative;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.timlands-step .timlands-step-nav .list-step::after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  background-color: #f2f2f2;
+  left: 0;
+  right: 0;
+  z-index: 11;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-step .timlands-step-nav .list-step::before {
+  content: "";
+  position: absolute;
+  height: 4px;
+  background-color: #ffd000;
+  left: 0;
+  right: 83%;
+  z-index: 12;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.timlands-step .timlands-step-nav .list-step > .step-item {
+  position: relative;
+  z-index: 39;
+}
+
+.timlands-step .timlands-step-nav .list-step > .step-item .step-count {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 35px;
+  height: 35px;
+  background-color: #ddd;
+  border-radius: 50%;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.timlands-step .timlands-step-nav .list-step > .step-item.active .step-count {
+  background-color: #475C80;
+  font-weight: bold;
+  color: #fff;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    404 Page
+---------------------------------------------------------------------------------------------
+*/
 .timwoork-404-page {
   height: 100vh;
   display: -webkit-box;
@@ -2439,7 +2525,7 @@ body {
 }
 
 .is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link::after {
-  background-color: #dae90a;
+  background-color: #ffd000;
 }
 
 .is-dark .timlands-sub-navbar .sub-navbar-cats .category-item .category-link:hover {
