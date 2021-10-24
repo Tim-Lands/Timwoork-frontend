@@ -82,7 +82,7 @@ function Home() {
             <h2 className="title">
               <span className="material-icons material-icons-outlined">analytics</span>
                HoHoHo Lorem ipsum dolor sit amet</h2>
-            <p className="text">Excepteur sint occaecat voluptate velit esse cillum dolore eu fugiat nulla cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+            <p className="text">Do you need help from a skilled freelancer? </p>
             <div className="py-3">
               <Link href="/">
                 <a className="btn butt-primary butt-md">Create Account</a>
