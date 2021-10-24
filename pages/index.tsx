@@ -80,7 +80,6 @@ function Home() {
           </div>
           <div className="nanny-home-content">
             <h2 className="title">
-              <span className="material-icons material-icons-outlined">analytics</span>
                HoHoHo Lorem ipsum dolor sit amet</h2>
             <p className="text">Do you need help from a skilled freelancer? </p>
             <div className="py-3">
