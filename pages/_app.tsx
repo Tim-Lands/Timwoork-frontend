@@ -10,12 +10,12 @@ import TagManager from "react-gtm-module";
 //import { AdvancedFooter } from "@/components/Navigation/Footer";
 //import { useRouter } from "next/router";
 //import { protectedRoutes } from "./../config/config";
-require("./../config/config.tsx");
+//require("./../config/config.tsx");
 import type { ReactNode } from 'react'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 //import { useTranslation } from "react-i18next";
-require('../langs/config')
+//require('../langs/config')
 
 type NextPageWithLayout = NextPage & {
     getLayout?: () => ReactNode
