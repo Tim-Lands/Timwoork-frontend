@@ -17,7 +17,7 @@ function Levels(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('/dashboard/levels')
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/levels')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -50,7 +50,7 @@ function Levels(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`/dashboard/levels/${id}/delete`)
+                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/levels/${id}/delete`)
                         if(res) {
                             refreshData()
                         }

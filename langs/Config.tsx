@@ -5,7 +5,6 @@ import ar from './ar/ar.json'
 const locales = {
     en: {
         translation: en
-        
     },
     ar: {
         translation: ar

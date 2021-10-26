@@ -35,7 +35,7 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
                         try {
-                            const res = await axios.post("/dashboard/badges/store", values);
+                            const res = await axios.post("https://api.wazzfny.com/dashboard/badges/store", values);
                             // If Activate Network 
                             // Authentication was successful.
                             if (res.status == 201 || res.status == 200) {    

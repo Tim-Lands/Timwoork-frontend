@@ -18,7 +18,7 @@ function Categories(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('/dashboard/categories?page=1')
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/categories?page=1')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -52,7 +52,7 @@ function Categories(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`/dashboard/categories/${id}/delete`)
+                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/delete`)
                         //const json = res.data
                         if(res) {
                             refreshData()

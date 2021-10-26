@@ -17,7 +17,7 @@ function Badges(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('/dashboard/badges')
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/badges')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -50,7 +50,7 @@ function Badges(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`/dashboard/badges/${id}/delete`)
+                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/badges/${id}/delete`)
                         if(res) {
                             refreshData()
                         }

@@ -29,7 +29,7 @@ export default function EditCategory(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get(`/dashboard/categories/${id}`)
+            const res: any = await axios.get(`https://api.wazzfny.com/dashboard/categories/${id}`)
             if (res.data) {
                 setIsLoading(false)
                 console.log(res.data.data);
@@ -68,7 +68,7 @@ export default function EditCategory(): ReactElement {
                     onSubmit={async values => {
                         try {
 
-                            const res = await axios.post(`/dashboard/categories/${id}/update`, values);
+                            const res = await axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/update`, values);
                             // If Activate Network 
                             // Authentication was successful.
                             if (res.status == 201 || res.status == 200 || res.status == 202 || res.status == 203) {

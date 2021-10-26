@@ -45,7 +45,7 @@ export default function AddNewSubCategory({ setIsModalHiddenHandle, CatId }: any
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
                         try {
-                            const res = await axios.post("/dashboard/subcategories/store", values);
+                            const res = await axios.post("https://api.wazzfny.com/dashboard/subcategories/store", values);
                             // If Activate Network 
                             // Authentication was successful.
                             if (res.status == 201 || res.status == 200) {    
