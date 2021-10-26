@@ -15,6 +15,7 @@ import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import { connect } from "react-redux";
 import { logout } from "./../store/auth/authActions";
+import { useTranslation } from "react-i18next";
 
 const testServices = [
   {
@@ -68,6 +69,7 @@ const testServices = [
 ]
 
 function Home() {
+  const { t } = useTranslation();
   return (
     <>
       {/*<Alert type="primary">What do you want to do?</Alert>*/}
@@ -81,7 +83,7 @@ function Home() {
           <div className="nanny-home-content">
             <h2 className="title">
               <span className="material-icons material-icons-outlined">analytics</span>
-               HoHoHo Lorem ipsum dolor sit amet</h2>
+              {t("HoHoHo Lorem ipsum dolor sit amet")}</h2>
             <p className="text">Excepteur sint occaecat voluptate velit esse cillum dolore eu fugiat nulla cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
             <div className="py-3">
               <Link href="/">

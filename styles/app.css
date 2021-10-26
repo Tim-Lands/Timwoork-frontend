@@ -204,9 +204,8 @@
 }
 
 .timlands-form .timlands-form-note {
-  margin-top: 7px;
-  padding: 8px 10px;
-  border-radius: 5px;
+  margin-top: 5px;
+  padding: 6px 0;
 }
 
 .timlands-form .timlands-form-note .text {
@@ -214,11 +213,6 @@
   color: #666;
   margin: 0;
   font-weight: 700;
-}
-
-.timlands-form .timlands-form-note.form-note-error {
-  background-color: #fff6f6;
-  border: 1px solid #ffe5e5;
 }
 
 .timlands-form .timlands-form-note.form-note-error .text {
@@ -229,6 +223,24 @@
   .timlands-form {
     margin: 20px 0;
   }
+}
+
+.timlands-form.sm {
+  padding: 11px 0;
+}
+
+.timlands-form.sm .label-block {
+  font-size: 13px;
+}
+
+.timlands-form.sm .timlands-input {
+  padding: 8px 17px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+.timlands-form.sm .timlands-form-note .text {
+  font-size: 11px;
 }
 
 .btn {
@@ -1549,6 +1561,12 @@ body {
   color: #333;
 }
 
+.timlands-panel-item .panel-item-body .panel-image {
+  display: block;
+  margin: auto;
+  margin-bottom: 7px;
+}
+
 .timlands-panel-item .panel-item-body .count-num {
   font-size: 25px;
   font-weight: 300;
@@ -1592,6 +1610,10 @@ body {
 /*
     Modal
 */
+.center {
+  text-align: center;
+}
+
 .panel-modal {
   position: fixed;
   background-color: #fff;
@@ -1601,6 +1623,14 @@ body {
   width: 700px;
   z-index: 999;
   overflow: hidden;
+}
+
+.panel-modal.md {
+  width: 790px;
+}
+
+.panel-modal.lg {
+  width: 880px;
 }
 
 .panel-modal .panel-modal-header {
@@ -1735,6 +1765,7 @@ body {
   margin: 19px 0;
   border-radius: 5px;
   border: 1px solid #ddd;
+  position: relative;
 }
 
 .timlands-step .timlands-step-nav {
@@ -1757,6 +1788,24 @@ body {
       justify-content: space-around;
 }
 
+@-webkit-keyframes stepProgress {
+  0% {
+    right: 100%;
+  }
+  100% {
+    right: 83%;
+  }
+}
+
+@keyframes stepProgress {
+  0% {
+    right: 100%;
+  }
+  100% {
+    right: 83%;
+  }
+}
+
 .timlands-step .timlands-step-nav .list-step::after {
   content: "";
   position: absolute;
@@ -1769,20 +1818,7 @@ body {
   transition: all 0.3s;
 }
 
-.timlands-step .timlands-step-nav .list-step::before {
-  content: "";
-  position: absolute;
-  height: 4px;
-  background-color: #ffd000;
-  left: 0;
-  right: 83%;
-  z-index: 12;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
 .timlands-step .timlands-step-nav .list-step > .step-item {
-  position: relative;
   z-index: 39;
 }
 
@@ -1808,6 +1844,16 @@ body {
   background-color: #475C80;
   font-weight: bold;
   color: #fff;
+}
+
+.timlands-step .progress-bar {
+  position: absolute;
+  background-color: #475C80;
+  height: 4px;
+  left: 0;
+  right: 84%;
+  top: 49%;
+  z-index: 12;
 }
 
 /*

@@ -17,9 +17,9 @@ i18n.use(initReactI18next)
         // (tip move them in a JSON file and import them,    
         // or even better, manage them via)    
         resources: locales,
-        lng: "en",
+        lng: "ar",
         // if you're using a language detector, do not define the lng option    
-        fallbackLng: "en",
+        fallbackLng: "ar",
         interpolation: {
             escapeValue: false
             // react already safes from xss =>-function/interpolation#unescape    

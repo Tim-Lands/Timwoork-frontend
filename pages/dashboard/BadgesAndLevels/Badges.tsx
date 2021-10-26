@@ -1,56 +1,102 @@
 //import Link from "next/link";
-import { logout } from "./../../../store/auth/authActions";
+import { logout } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewBadge from "./Modal/AddNewBadge";
+import axios from "axios";
+import { motion } from "framer-motion";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-const postsList = [
-    {
-        id: 1,
-        title: 'Lorem ipsum dolor sit',
-        time: '7 days ago'
-    },
-    {
-        id: 2,
-        title: 'Lorem ipsum dolor sit',
-        time: '7 days ago'
-    },
-    {
-        id: 3,
-        title: 'Lorem ipsum dolor sit',
-        time: '7 days ago'
-    },
-    {
-        id: 4,
-        title: 'Lorem ipsum dolor sit',
-        time: '7 days ago'
-    },
-    {
-        id: 5,
-        title: 'Lorem ipsum dolor sit',
-        time: '7 days ago'
-    },
-    {
-        id: 6,
-        title: 'Lorem dolor sit amet',
-        time: '7 days ago'
-    },
-    {
-        id: 7,
-        title: 'Lorem ipsum dolor sit',
-        time: '7 days ago'
-    },
-]
+function Badges(): ReactElement {
+    const [GetData, setGetData] = useState([])
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const refreshData = async () => {
+        setIsLoading(true)
+        try {
+            const res: any = await axios.get('/dashboard/badges')
+            if (res) {
+                setIsLoading(false)
+                setGetData(res.data.data)
+                setIsError(false)
+            }
+        } catch (error) {
+            setIsError(true)
+            setIsLoading(false)
+        }
+    }
+    const deleteHandle = (id) => {
+            const MySwal = withReactContent(Swal)
 
-function Badges(props: any): ReactElement {
+            const swalWithBootstrapButtons = MySwal.mixin({
+                customClass: {
+                    confirmButton: 'btn butt-red butt-sm me-1',
+                    cancelButton: 'btn butt-green butt-sm'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'هل أنت متأكد؟',
+                text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم, أريد الحذف',
+                cancelButtonText: 'لا',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const res: any = axios.post(`/dashboard/badges/${id}/delete`)
+                        if(res) {
+                            refreshData()
+                        }
+                    } catch (error) {
+                        setIsError(true)
+                        setIsLoading(false)
+                    }
+                    swalWithBootstrapButtons.fire(
+                        'تم الحذف!',
+                        'لقد تم حذف هذا العنصر بنجاح',
+                        'success'
+                    )
+                    refreshData()
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'ملغى',
+                        'تم الإلغاء',
+                        'error'
+                    )
+                }
+            })
+
+    }
+    useEffect(() => {
+        refreshData()
+    }, [])
     const [isModalShowen, setIsModalShowen] = useState(false)
     const setIsModalShowenHandle = () => {
         setIsModalShowen(true);
     }
     const setIsModalHiddenHandle = () => {
         setIsModalShowen(false);
+        refreshData()
+    }
+    const catVariants = {
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: i * 0.072,
+            },
+        }),
+        hidden: { opacity: 0, y: 9 },
     }
     // Return statement.
     return (
@@ -58,46 +104,21 @@ function Badges(props: any): ReactElement {
             {isModalShowen && <AddNewBadge setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">badge</span>Badges</h2>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">badge</span>الشارات</h2>
                     <div className="header-butt">
-                        <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> Add New</button>
+                        <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> إضافة جديد</button>
                     </div>
                 </div>
-                <Alert type="warning">
-                    <p className="text"><span className="material-icons material-icons-outlined">report_problem</span> Lorem ipsum dolor sit amet adipisicing elit. Repellat, voluptas iure repellendus minima unde facere?</p>
-                </Alert>
                 <div className="timlands-table-filter">
                     <div className="row">
                         <div className="col-sm-4 filter-form">
                             <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Status</option>
-                                    <option value="">All</option>
-                                    <option value="">Active</option>
-                                    <option value="">Disactive</option>
-                                </select>
+                                <input className="timlands-inputs" placeholder="البحث في الجدول...." name="filterStatus" />
                             </div>
                         </div>
                         <div className="col-sm-2 filter-form">
                             <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Select Date</option>
-                                    <option value="">Today</option>
-                                    <option value="">Yesterday</option>
-                                    <option value="">This Week</option>
-                                    <option value="">This Mounth</option>
-                                    <option value="">This Year</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-4 filter-form">
-                            <div className="form-container">
-                                <input className="timlands-inputs" placeholder="Search in Table List...." name="filterStatus" />
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <button className="btn butt-md butt-filter butt-primary">Filter</button>
+                                <button className="btn butt-md butt-filter butt-primary">فلترة</button>
                             </div>
                         </div>
                     </div>
@@ -106,37 +127,41 @@ function Badges(props: any): ReactElement {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Badge Name</th>
-                                <th>Created at</th>
-                                <th>Tools</th>
+                                <th>اسم الشارة</th>
+                                <th>نسبة العمولة</th>
+                                <th>الأدوات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {postsList.map(e => (
-                                <tr key={e.id}>
-                                    <td>{e.title}</td>
-                                    <td>{e.time}</td>
+                            {GetData.map((e, i) => (
+                                <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
+                                    <td>{e.name_ar}</td>
+                                    <td>{e.precent_deducation}%</td>
                                     <td className="tools-col">
-                                        <button className="table-del warning">
-                                            <span className="material-icons material-icons-outlined">
-                                                cancel
-                                            </span>
+                                        <button className="table-del success">
+                                            <span className="material-icons material-icons-outlined">edit</span>
                                         </button>
-                                        <button className="table-del error">
-                                            <span className="material-icons material-icons-outlined">
-                                                delete
-                                            </span>
+                                        <button onClick={() => deleteHandle(e.id)} className="table-del error">
+                                            <span className="material-icons material-icons-outlined">delete</span>
                                         </button>
                                     </td>
-                                </tr>
+                                </motion.tr>
                             ))}
                         </tbody>
                     </table>
+                    {isError &&
+                        <Alert type="error">
+                            <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
+                        </Alert>}
+                    {isLoading &&
+                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 justify-content-center">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </motion.div>
+                    }
                 </div>
             </div>
-            <button onClick={() => { props.logout(); }}>
-                Logout
-            </button>
         </>
     );
 }

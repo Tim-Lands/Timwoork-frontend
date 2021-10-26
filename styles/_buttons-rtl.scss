@@ -76,16 +76,119 @@
         }
     }
     &.butt-green {
-        background-color: #188539;
-        border-color: #188539;
+        background-color: #43b465;
+        border-color: #43b465;
         color: #fff;
         &:hover {
-            background-color: darken(#188539, 5);
-            border-color: darken(#188539, 5);
+            background-color: darken(#43b465, 5);
+            border-color: darken(#43b465, 5);
         }
         &:focus {
-            background-color: darken(#188539, 13);
-            border-color: darken(#188539, 13);
+            background-color: darken(#43b465, 13);
+            border-color: darken(#43b465, 13);
+        }
+    }
+    &.butt-blue {
+        background-color: #439db4;
+        border-color: #439db4;
+        color: #fff;
+        &:hover {
+            background-color: darken(#439db4, 5);
+            border-color: darken(#439db4, 5);
+        }
+        &:focus {
+            background-color: darken(#439db4, 13);
+            border-color: darken(#439db4, 13);
+        }
+    }
+    &.butt-white {
+        background-color: #fff;
+        border-color: #fff;
+        color: #333;
+        &:hover {
+            background-color: darken(#fff, 5);
+            border-color: darken(#fff, 5);
+            color: #222;
+        }
+        &:focus {
+            background-color: darken(#fff, 13);
+            border-color: darken(#fff, 13);
+            color: #000;
+        }
+    }
+    &.butt-white {
+        background-color: #fff;
+        border-color: #fff;
+        color: #333;
+        &:hover {
+            background-color: darken(#fff, 5);
+            border-color: darken(#fff, 5);
+            color: #222;
+        }
+        &:focus {
+            background-color: darken(#fff, 13);
+            border-color: darken(#fff, 13);
+            color: #000;
+        }
+    }
+    &.butt-dark {
+        background-color: #333;
+        border-color: #333;
+        color: #fff;
+        &:hover {
+            background-color: darken(#333, 5);
+            border-color: darken(#333, 5);
+            color: #f2f2f2;
+        }
+        &:focus {
+            background-color: darken(#333, 13);
+            border-color: darken(#333, 13);
+            color: #fff;
+        }
+    }
+    &.butt-red {
+        background-color: #da1616;
+        border-color: #da1616;
+        color: #fff;
+        &:hover {
+            background-color: darken(#da1616, 5);
+            border-color: darken(#da1616, 5);
+            color: #f2f2f2;
+        }
+        &:focus {
+            background-color: darken(#da1616, 13);
+            border-color: darken(#da1616, 13);
+            color: #fff;
+        }
+    }
+    &.butt-dark-out {
+        background-color: transparent;
+        border-color: #333;
+        color: #333;
+        &:hover {
+            background-color: darken(#333, 5);
+            border-color: darken(#333, 5);
+            color: #f2f2f2;
+        }
+        &:focus {
+            background-color: darken(#333, 13);
+            border-color: darken(#333, 13);
+            color: #fff;
+        }
+    }
+    &.butt-light {
+        background-color: #f3f3f3;
+        border-color: #f3f3f3;
+        color: #333;
+        &:hover {
+            background-color: darken(#f3f3f3, 5);
+            border-color: darken(#f3f3f3, 5);
+            color: #222;
+        }
+        &:focus {
+            background-color: darken(#f3f3f3, 13);
+            border-color: darken(#f3f3f3, 13);
+            color: #000;
         }
     }
 }

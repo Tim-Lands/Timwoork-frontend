@@ -1,9 +1,6 @@
 //import Link from "next/link";
-import { logout } from "./../../../store/auth/authActions";
-import { connect } from "react-redux";
 import { ReactElement } from "react";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
-import { Alert } from "@/components/Alert/Alert";
+import DashboardLayout from "../../../components/Layout/DashboardLayout";
 
 const postsList = [
     {
@@ -94,9 +91,6 @@ function index(props: any): ReactElement {
                 <div className="timlands-panel-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>Posts & Categories</h2>
                 </div>
-                <Alert type="warning">
-                    <p className="text"><span className="material-icons material-icons-outlined">report_problem</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, voluptas iure repellendus minima unde facere?</p>
-                </Alert>
                 <div className="timlands-table-filter">
                     <div className="row">
                         <div className="col-sm-2 filter-form">
@@ -149,19 +143,19 @@ function index(props: any): ReactElement {
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Status</th>
+                                <th className="hidden-tem">Status</th>
                                 <th>Author</th>
-                                <th>Created at</th>
+                                <th className="hidden-tem">Created at</th>
                                 <th>Tools</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {postsList.map(e => (
-                                <tr key={e.id}>
+                            {postsList.map((e, i) => (
+                                <tr key={i}>
                                     <td>{e.title}</td>
-                                    <td>{e.status ? 'eee' : 'dd'}</td>
+                                    <td className="hidden-tem">{e.status ? 'eee' : 'dd'}</td>
                                     <td>{e.user.first_name + " " + e.user.lastname}</td>
-                                    <td>{e.time}</td>
+                                    <td className="hidden-tem">{e.time}</td>
                                     <td className="tools-col">
                                         <button className="table-del warning">
                                             <span className="material-icons material-icons-outlined">
@@ -186,16 +180,12 @@ function index(props: any): ReactElement {
         </>
     );
 }
-index.getLayout = function getLayout(page): ReactElement {
+index.getLayout = function getLayout(page: any): ReactElement {
     return (
         <DashboardLayout>
             {page}
         </DashboardLayout>
     )
 }
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.registerLoading,
-});
 
-export default connect(mapStateToProps, { logout })(index);
+export default index;

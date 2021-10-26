@@ -26,7 +26,7 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 |
 */
 export const protectedRoutes: string[] = [
-    process.env.NEXT_PUBLIC_USER_HOME_ROUTE, // -> from .env.local
+    //process.env.NEXT_PUBLIC_USER_HOME_ROUTE, // -> from .env.local
     // "/profile",
     // "/acount",
     // ...,

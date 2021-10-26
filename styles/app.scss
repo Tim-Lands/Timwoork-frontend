@@ -404,6 +404,11 @@ body {
         }
     }
     .panel-item-body {
+        .panel-image {
+            display: block;
+            margin: auto;
+            margin-bottom: 7px;
+        }
         .count-num {
             font-size: 25px;
             font-weight: 300;
@@ -441,6 +446,9 @@ body {
 /*
     Modal
 */
+.center {
+    text-align: center;
+}
 .panel-modal {
     position: fixed;
     background-color: #fff;
@@ -449,6 +457,12 @@ body {
     width: 700px;
     z-index: 999;
     overflow: hidden;
+    &.md {
+        width: 790px;
+    }
+    &.lg {
+        width: 880px;
+    }
     .panel-modal-header {
         padding: 17px 12px;
         border-bottom: 1px solid #f6f6f6;
@@ -542,6 +556,7 @@ body {
     margin: 19px 0;
     border-radius: 5px;
     border: 1px solid #ddd;
+    position: relative;
     .timlands-step-nav {
         position: relative;
         .list-step {
@@ -552,6 +567,14 @@ body {
             position: relative;
             align-content: center;
             justify-content: space-around;
+            @keyframes stepProgress {
+                0% {
+                    right: 100%;
+                }
+                100% {
+                    right: 83%;
+                }
+            }
             &::after {
                 content: "";
                 position: absolute;
@@ -562,18 +585,8 @@ body {
                 z-index: 11;
                 transition: all 0.3s;
             }
-            &::before {
-                content: "";
-                position: absolute;
-                height: 4px;
-                background-color: $primary2;
-                left: 0;
-                right: 83%;
-                z-index: 12;
-                transition: all 0.3s;
-            }
+
             > .step-item {
-                position: relative;
                 z-index: 39;
                 .step-count {
                     display: flex;
@@ -585,6 +598,7 @@ body {
                     align-items: center;
                     justify-content: center;
                 }
+
                 &.active {
                     .step-count {
                         background-color: $primary;
@@ -594,6 +608,15 @@ body {
                 }
             }
         }
+    }
+    .progress-bar {
+        position: absolute;
+        background-color: $primary;
+        height: 4px;
+        left: 0;
+        right: 84%;
+        top: 49%;
+        z-index: 12;
     }
 }
 /*

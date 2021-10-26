@@ -1,19 +1,121 @@
+.hidden-tem {
+    @media (max-width: 768px) {
+        display: none !important;
+    }
+}
 .timlands-table {
-    margin: 9px;
+    margin: 9px 0;
     overflow: hidden;
     background-color: #fff;
-    border-radius: 7px;
+    border-radius: 5px;
     box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
     border: 1px solid #ddd;
     .table {
         tr {
             td, th {
                 font-size: 13px;
+                padding: 10px 15px;
+                position: relative;
+                .material-icons {
+                    font-size: 17px;
+                    margin-left: 4px;
+                }
+            }
+            &:last-child {
+                border-bottom-width: 0;
+                td {
+                    border-bottom-width: 0;
+                }
+            }
+            > td {
+
+                &.tools-col {
+                    display: flex;
+                    padding-block: 4px;
+                    .table-del {
+                        display: flex;
+                        background-color: #fff;
+                        width: 30px;
+                        height: 30px;
+                        color: #555;
+                        border-radius: 50%;
+                        margin-left: 4px;
+                        align-items: center;
+                        align-content: center;
+                        border: 1px solid #f6f6f6;
+                        &:hover {
+                            background-color: #f6f6f6;
+                            color: #000;
+                            transition: all 0.3s;
+                        }
+                        .material-icons {
+                            font-size: 15px;
+                        }
+                        &.error {
+                            color: rgb(216, 44, 44);
+                            border: 1px solid #fdb1b1;
+                        }
+                        &.warning {
+                            color: rgb(189, 170, 0);
+                            border: 1px solid #fdfcb1;
+                        }
+                    }
+                }
+            }
+        }
+        thead {
+            tr {
+                background-color: #f4f4f4;
+            }
+        }
+        tbody {
+            tr {
+                &:hover {
+                    background-color: #f9f9f9;
+                }
             }
         }
 
     }
     .table>:not(:first-child) {
         border-top: 2px solid #f1f1f1;
+    }
+    
+}
+
+/*
+------------------------------------------------------------------------------------------------------
+    Filter content
+------------------------------------------------------------------------------------------------------
+*/
+.timlands-table-filter {
+    padding-top: 9px;
+    .filter-form {
+        padding: 0;
+        .form-container {
+            position: relative;
+            padding-left: 6px;
+            .butt-filter {
+                width: 100%;
+            }
+        }
+        &:last-of-type {
+            .form-container {
+                padding-left: 0;
+            }
+        }
+    }
+}
+
+.with-icon {
+    margin: 0;
+    a {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        color: #444;
+        &:hover {
+            color: $primary;
+        }
     }
 }

@@ -131,9 +131,6 @@ export class AuthGuard {
                 currentUser &&
                 (pathname === "/user/register" || pathname === "/user/login")
             ) {
-                res.writeHead(302, {
-                    Location: "/dashboard",
-                });
                 res.end();
             }
             // Redirect to login if user is not authenticated and tries to access protected route.

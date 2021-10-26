@@ -1,9 +1,9 @@
-import { logout } from "./../../../store/auth/authActions";
+import { logout } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
 import { ReactElement, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
-import AddNewCategory from "./Modals/AddNewCategory";
+import AddNewCategory from "./Modals/AddNewRole";
 
 const postsList = [
     {
@@ -15,7 +15,7 @@ const postsList = [
     },
 ]
 
-function Categories(props: any): ReactElement {
+function Categories(): ReactElement {
     const [isModalShowen, setIsModalShowen] = useState(false)
     const setIsModalShowenHandle = () => {
         setIsModalShowen(true);
@@ -29,7 +29,9 @@ function Categories(props: any): ReactElement {
             {isModalShowen && <AddNewCategory setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">bookmark_border</span>Categories</h2>
+                    <h2 className="title">
+                        <span className="material-icons material-icons-outlined">rule</span>Roles
+                    </h2>
                     <div className="header-butt">
                         <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> Add New</button>
                     </div>
@@ -39,7 +41,7 @@ function Categories(props: any): ReactElement {
                 </Alert>
                 <div className="timlands-table-filter">
                     <div className="row">
-                        <div className="col-sm-4 filter-form">
+                        <div className="col-sm-6 filter-form">
                             <div className="form-container">
                                 <input className="timlands-inputs" placeholder="Search in Table List...." name="filterStatus" />
                             </div>
@@ -51,18 +53,6 @@ function Categories(props: any): ReactElement {
                                     <option value="">All</option>
                                     <option value="">Active</option>
                                     <option value="">Disactive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Select Date</option>
-                                    <option value="">Today</option>
-                                    <option value="">Yesterday</option>
-                                    <option value="">This Week</option>
-                                    <option value="">This Mounth</option>
-                                    <option value="">This Year</option>
                                 </select>
                             </div>
                         </div>
@@ -83,8 +73,8 @@ function Categories(props: any): ReactElement {
                             </tr>
                         </thead>
                         <tbody>
-                            {postsList.map(e => (
-                                <tr key={e.id}>
+                            {postsList.map((e, i) => (
+                                <tr key={i}>
                                     <td>
                                         <div className="d-flex align-items-center">
                                             <span className="material-icons material-icons-outlined">{e.icon}</span>
@@ -110,9 +100,6 @@ function Categories(props: any): ReactElement {
                     </table>
                 </div>
             </div>
-            <button onClick={() => { props.logout(); }}>
-                Logout
-            </button>
         </>
     );
 }
