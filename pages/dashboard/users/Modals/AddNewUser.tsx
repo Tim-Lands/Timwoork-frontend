@@ -56,7 +56,7 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                             const res = await axios.post("https://flexyapp.herokuapp.com/api/v1/users", values);
                             // If Activate Network 
                             // Authentication was successful.
-                            if (res.status == 201 || res.status == 200) {    
+                            if (res.status == 201 || res.status == 200) {
                                 alert('تمت الإضافة بنجاح')
                                 setIsModalHiddenHandle()
                             } else {
@@ -64,14 +64,14 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                             }
                         } catch (error) {
                             alert('Error Network')
-        
+
                         }
                     }}
                 >
                     {({ errors, touched, isSubmitting }) => (
                         <Form>
-                            <div className={"panel-modal-body" + (isSubmitting ? ' is-loading' : '')}>
-                            {!isSubmitting ? '' :
+                            <div className={"panel-modal-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
+                                {!isSubmitting ? '' :
                                     <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                         <div className="spinner-border" role="status">
                                             <span className="visually-hidden">Loading...</span>

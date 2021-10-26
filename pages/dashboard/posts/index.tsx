@@ -91,7 +91,7 @@ function index(props: any): ReactElement {
                 <div className="timlands-panel-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>Posts & Categories</h2>
                 </div>
-                <div className="timlands-table-filter">
+                {/*<div className="timlands-table-filter">
                     <div className="row">
                         <div className="col-sm-2 filter-form">
                             <div className="form-container">
@@ -137,7 +137,7 @@ function index(props: any): ReactElement {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
                 <div className="timlands-table">
                     <table className="table">
                         <thead>

@@ -114,7 +114,7 @@ function Category(): ReactElement {
                         <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> إضافة جديد</button>
                     </div>
                 </div>
-                <div className="timlands-table-filter">
+                {/*<div className="timlands-table-filter">
                     <div className="row">
                         <div className="col-sm-4 filter-form">
                             <div className="form-container">
@@ -127,7 +127,7 @@ function Category(): ReactElement {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
                 <div className="timlands-table">
                     <table className="table">
                         <thead>

@@ -43,9 +43,6 @@ function index({ isDarken, setIsDarkenHandle, setIsSidebarShowenHandle }: any): 
                                 </motion.button>
                             </div>
                         </li>
-                        <li className="dash-nav-item me-1">
-                            <motion.img src="/avatar.png" whileTap={{ scale: 0.9 }} onClick={setIsDarkenHandle} className="language-nav-butt circular-center semi-small-size"/>
-                        </li>
                     </ul>
                 </div>
             </div>
