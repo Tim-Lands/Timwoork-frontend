@@ -1,7 +1,34 @@
 import Link from "next/link";
-import { ReactElement } from "react";
+import axios from 'axios';
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
+import { useRouter } from "next/router";
+export interface User {
+    id: number,
+    first_name: string,
+    last_name: string,
+    email: string,
+    avatar: string,
+}
 function TestPage(): ReactElement {
+    const router = useRouter()
+    useEffect(() => {
+        (
+            async () => {
+                try {
+                    const { data } = await axios.get('https://api.wazzfny.com/dashboard/me', { withCredentials: true });
+                    console.log(data)
+                } catch (e) {
+                    console.log(e)
+                }
+
+            }
+        )()
+    }, [])
+
+    const logout = async () => {
+        await axios.post('https://api.wazzfny.com/dashboard/logout', {}, { withCredentials: true })
+    }
     // Return statement.
     return (
         <>
@@ -18,7 +45,7 @@ function TestPage(): ReactElement {
                                 </div>
                                 <div className="panel-content">
                                     <h1 className="price-text">الرصيد الإجمالي</h1>
-                                    <h1 className="price-num"><span className="num-val">1,786$</span></h1>
+                                    <h1 className="price-num"><span className="num-val">0.00$</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +58,7 @@ function TestPage(): ReactElement {
                                 </div>
                                 <div className="panel-content">
                                     <h1 className="price-text">الفوائد</h1>
-                                    <h1 className="price-num"><span className="num-val">1,786$</span></h1>
+                                    <h1 className="price-num"><span className="num-val">0.00$</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +77,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المشرفين والمدراء</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">34</p>
+                                                <p className="text">1</p>
                                             </div>
                                         </div>
                                     </li>
@@ -60,7 +87,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المشترين</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">297</p>
+                                                <p className="text">0</p>
                                             </div>
                                         </div>
                                     </li>
@@ -70,7 +97,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">البائعين</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">98</p>
+                                                <p className="text">0</p>
                                             </div>
                                         </div>
                                     </li>
@@ -80,7 +107,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المجموع</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">34,238</p>
+                                                <p className="text">1</p>
                                             </div>
                                         </div>
                                     </li>
@@ -104,20 +131,40 @@ function TestPage(): ReactElement {
                                     <li>
                                         <div className="d-flex">
                                             <div className="det-prop">
-                                                <p className="text">الأكثر شراء</p>
+                                                <p className="text">المسودات</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">34</p>
+                                                <p className="text">0</p>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="d-flex">
                                             <div className="det-prop">
-                                                <p className="text">المضافة حديثا</p>
+                                                <p className="text">في انتظار التفعيل</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">227</p>
+                                                <p className="text">0</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="d-flex">
+                                            <div className="det-prop">
+                                                <p className="text">المرفوضة</p>
+                                            </div>
+                                            <div className="det-val">
+                                                <p className="text">0</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="d-flex">
+                                            <div className="det-prop">
+                                                <p className="text">النشطة</p>
+                                            </div>
+                                            <div className="det-val">
+                                                <p className="text">0</p>
                                             </div>
                                         </div>
                                     </li>
@@ -127,7 +174,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المعطلة</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">227</p>
+                                                <p className="text">0</p>
                                             </div>
                                         </div>
                                     </li>
@@ -137,7 +184,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المجموع</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">34,238</p>
+                                                <p className="text">0</p>
                                             </div>
                                         </div>
                                     </li>
@@ -150,94 +197,8 @@ function TestPage(): ReactElement {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-7">
-                        <div className="timlands-panel-header">
-                            <h2 className="title"><span className="material-icons material-icons-outlined">monetization_on</span>حركة الأموال</h2>
-                        </div>
-                        <div className="timlands-table">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>رصيد جديد</th>
-                                        <th>المبلغ</th>
-                                        <th>التاريخ</th>
-                                        <th>النوع</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
-                <div className="row mt-4">
-                    <div className="col-md-6">
-                        <div className="timlands-panel-header">
-                            <h2 className="title"><span className="material-icons material-icons-outlined">monetization_on</span>حركة الأموال</h2>
-                        </div>
-                        <div className="timlands-table">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>رصيد جديد</th>
-                                        <th>المبلغ</th>
-                                        <th>التاريخ</th>
-                                        <th>النوع</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1632</td>
-                                        <td>36.00</td>
-                                        <td>منذ دقيقتين</td>
-                                        <td>موبيليس</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+{ /*              <div className="row mt-4">
                     <div className="col-md-6">
                         <div className="timlands-panel-header">
                             <h2 className="title"><span className="material-icons material-icons-outlined">view_list</span>آخر النشاطات</h2>
@@ -276,7 +237,7 @@ function TestPage(): ReactElement {
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>*/}
             </div>
         </>
     );

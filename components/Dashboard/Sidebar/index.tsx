@@ -11,12 +11,6 @@ const sidebarLinks = [
         href: '/dashboard'
     },
     {
-        id: 2,
-        name: 'الأدوار والصلاحيات',
-        icon: 'rule',
-        href: '/dashboard/roles'
-    },
-    {
         id: 3,
         name: 'إدارة المستخدمين',
         icon: 'people',
@@ -24,27 +18,9 @@ const sidebarLinks = [
     },
     {
         id: 4,
-        name: 'الخدمات والمنتجات',
+        name: 'الخدمات',
         icon: 'collections_bookmark',
         href: '/dashboard/posts',
-        hasSubMenu: [
-            {
-                id: 1,
-                name: 'إدارة الخدمات',
-                href: '/dashboard/posts'
-            },
-            {
-                id: 2,
-                name: 'إدارة التصنيفات',
-                href: '/dashboard/posts/categories'
-            },
-        ]
-    },
-    {
-        id: 5,
-        name: 'إدارة طرق الدفع',
-        icon: 'credit_score',
-        href: '/dashboard/payments'
     },
     {
         id: 6,
@@ -54,39 +30,30 @@ const sidebarLinks = [
         hasSubMenu: [
             {
                 id: 1,
-                name: 'الصفحات',
-                href: '/dashboard/constants/pages'
-            },
-            {
-                id: 2,
-                name: 'العمولات',
-                href: '/dashboard/constants/tax'
-            },
-        ]
-    },
-    {
-        id: 7,
-        name: 'الشارات والمستويات',
-        icon: 'local_police',
-        href: '/dashboard/BadgesAndLevels/Badges',
-        hasSubMenu: [
-            {
-                id: 1,
                 name: 'الشارات',
-                href: '/dashboard/BadgesAndLevels/Badges'
+                href: '/dashboard/cms/Badges'
             },
             {
                 id: 2,
                 name: 'المستويات',
-                href: '/dashboard/BadgesAndLevels/Levels'
+                href: '/dashboard/cms/Levels'
+            },
+            {
+                id: 3,
+                name: 'إدارة التصنيفات',
+                href: '/dashboard/cms/categories'
+            },
+            {
+                id: 4,
+                name: 'الوسوم',
+                href: '/dashboard/cms/tags'
+            },
+            {
+                id: 5,
+                name: 'البلدان',
+                href: '/dashboard/cms/countries'
             },
         ]
-    },
-    {
-        id: 8,
-        name: 'الوسوم',
-        icon: 'tag',
-        href: '/dashboard/tags'
     },
     {
         id: 9,

@@ -1,29 +1,25 @@
 //import Link from "next/link";
-import { logout } from "../../../../store/auth/authActions";
+import { logout } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
-import AddNewSubCategory from "../Modal/AddNewSubCategory";
+import AddNewBadge from "./Modals/AddNewBadge";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useRouter } from "next/router";
 
-function Category(): ReactElement {
-    const router = useRouter()
-    const [GetData, setGetData]: any = useState({})
+function Badges(): ReactElement {
+    const [GetData, setGetData] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/categories/' + router.query.id)
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/badges')
             if (res) {
                 setIsLoading(false)
-                console.log(res.data.data)
-
                 setGetData(res.data.data)
                 setIsError(false)
             }
@@ -33,53 +29,52 @@ function Category(): ReactElement {
         }
     }
     const deleteHandle = (id) => {
-        const MySwal = withReactContent(Swal)
+            const MySwal = withReactContent(Swal)
 
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
+            const swalWithBootstrapButtons = MySwal.mixin({
+                customClass: {
+                    confirmButton: 'btn butt-red butt-sm me-1',
+                    cancelButton: 'btn butt-green butt-sm'
+                },
+                buttonsStyling: false
+            })
 
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الحذف',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res: any = axios.post(`https://api.wazzfny.com/dashboard/subcategories/${id}/delete`)
-                    //const json = res.data
-                    if (res) {
-                        refreshData()
+            swalWithBootstrapButtons.fire({
+                title: 'هل أنت متأكد؟',
+                text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم, أريد الحذف',
+                cancelButtonText: 'لا',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/badges/${id}/delete`)
+                        if(res) {
+                            refreshData()
+                        }
+                    } catch (error) {
+                        setIsError(true)
+                        setIsLoading(false)
                     }
-                } catch (error) {
-                    setIsError(true)
-                    setIsLoading(false)
+                    swalWithBootstrapButtons.fire(
+                        'تم الحذف!',
+                        'لقد تم حذف هذا العنصر بنجاح',
+                        'success'
+                    )
+                    refreshData()
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'ملغى',
+                        'تم الإلغاء',
+                        'error'
+                    )
                 }
-                swalWithBootstrapButtons.fire(
-                    'تم الحذف!',
-                    'لقد تم حذف هذا العنصر بنجاح',
-                    'success'
-                )
-                refreshData()
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
-            }
-        })
+            })
 
     }
     useEffect(() => {
@@ -106,10 +101,10 @@ function Category(): ReactElement {
     // Return statement.
     return (
         <>
-            {isModalShowen && <AddNewSubCategory CatId={router.query.id} setIsModalHiddenHandle={setIsModalHiddenHandle} />}
+            {isModalShowen && <AddNewBadge setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">{GetData.icon}</span>{GetData.name_ar}</h2>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">badge</span>الشارات</h2>
                     <div className="header-butt">
                         <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> إضافة جديد</button>
                     </div>
@@ -132,14 +127,16 @@ function Category(): ReactElement {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th> اسم الصنف</th>
+                                <th>اسم الشارة</th>
+                                <th>نسبة العمولة</th>
                                 <th>الأدوات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {GetData.subcategories ? (GetData.subcategories.map((e, i) => (
+                            {GetData.map((e, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
-                                    <td><p className="with-icon">{e.name_ar}</p></td>
+                                    <td>{e.name_ar}</td>
+                                    <td>{e.precent_deducation}%</td>
                                     <td className="tools-col">
                                         <button className="table-del success">
                                             <span className="material-icons material-icons-outlined">edit</span>
@@ -149,11 +146,7 @@ function Category(): ReactElement {
                                         </button>
                                     </td>
                                 </motion.tr>
-                            ))) :
-                                <Alert type="error">
-                                    <p className="text"><span className="material-icons">warning_amber</span> لاتوجد تصنيفات لعرضها</p>
-                                </Alert>
-                            }
+                            ))}
                         </tbody>
                     </table>
                     {isError &&
@@ -172,8 +165,7 @@ function Category(): ReactElement {
         </>
     );
 }
-
-Category.getLayout = function getLayout(page): ReactElement {
+Badges.getLayout = function getLayout(page): ReactElement {
     return (
         <DashboardLayout>
             {page}
@@ -184,4 +176,5 @@ const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
     loading: state.auth.registerLoading,
 });
-export default connect(mapStateToProps, { logout })(Category);
+
+export default connect(mapStateToProps, { logout })(Badges);

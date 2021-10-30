@@ -4,24 +4,26 @@ import { connect } from "react-redux";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
-import AddNewBadge from "./Modal/AddNewBadge";
+import AddNewCategory from "./Modals/AddNewCategory";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { Link } from "@material-ui/core";
 
-function Badges(): ReactElement {
+function Categories(): ReactElement {
     const [GetData, setGetData] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/badges')
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/categories?page=1')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
                 setIsError(false)
+                console.log(res.data.data);
             }
         } catch (error) {
             setIsError(true)
@@ -50,7 +52,8 @@ function Badges(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/badges/${id}/delete`)
+                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/delete`)
+                        //const json = res.data
                         if(res) {
                             refreshData()
                         }
@@ -101,10 +104,10 @@ function Badges(): ReactElement {
     // Return statement.
     return (
         <>
-            {isModalShowen && <AddNewBadge setIsModalHiddenHandle={setIsModalHiddenHandle} />}
+            {isModalShowen && <AddNewCategory setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">badge</span>الشارات</h2>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">chrome_reader_mode</span>التصنيفات</h2>
                     <div className="header-butt">
                         <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> إضافة جديد</button>
                     </div>
@@ -127,20 +130,27 @@ function Badges(): ReactElement {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>اسم الشارة</th>
-                                <th>نسبة العمولة</th>
+                                <th> اسم الصنف</th>
                                 <th>الأدوات</th>
                             </tr>
                         </thead>
                         <tbody>
                             {GetData.map((e, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
-                                    <td>{e.name_ar}</td>
-                                    <td>{e.precent_deducation}%</td>
+                                    <td>
+                                        <p className="with-icon">
+                                            <a href={"/dashboard/posts/category/" + e.id}>
+                                                <span className="material-icons material-icons-outlined">{e.icon}</span>
+                                                {e.name_ar}
+                                            </a>
+                                        </p>
+                                    </td>
                                     <td className="tools-col">
-                                        <button className="table-del success">
-                                            <span className="material-icons material-icons-outlined">edit</span>
-                                        </button>
+                                        <Link href={`/dashboard/cms/category/edit/${e.id}`}>
+                                            <button className="table-del success">
+                                                <span className="material-icons material-icons-outlined">edit</span>
+                                            </button>
+                                        </Link>
                                         <button onClick={() => deleteHandle(e.id)} className="table-del error">
                                             <span className="material-icons material-icons-outlined">delete</span>
                                         </button>
@@ -165,7 +175,7 @@ function Badges(): ReactElement {
         </>
     );
 }
-Badges.getLayout = function getLayout(page): ReactElement {
+Categories.getLayout = function getLayout(page): ReactElement {
     return (
         <DashboardLayout>
             {page}
@@ -177,4 +187,4 @@ const mapStateToProps = (state: any) => ({
     loading: state.auth.registerLoading,
 });
 
-export default connect(mapStateToProps, { logout })(Badges);
+export default connect(mapStateToProps, { logout })(Categories);

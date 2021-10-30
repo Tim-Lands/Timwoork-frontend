@@ -4,21 +4,21 @@ import { connect } from "react-redux";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
-import AddNewCategory from "./Modal/AddNewCategory";
+import AddNewTag from "./Modals/AddNewTag";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Link } from "@material-ui/core";
 
-function Categories(): ReactElement {
+function index(): ReactElement {
     const [GetData, setGetData] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/categories?page=1')
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/tags?page=1')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -52,7 +52,7 @@ function Categories(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/delete`)
+                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/tags/${id}/delete`)
                         //const json = res.data
                         if(res) {
                             refreshData()
@@ -104,10 +104,10 @@ function Categories(): ReactElement {
     // Return statement.
     return (
         <>
-            {isModalShowen && <AddNewCategory setIsModalHiddenHandle={setIsModalHiddenHandle} />}
+            {isModalShowen && <AddNewTag setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">chrome_reader_mode</span>التصنيفات</h2>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">tag</span>الوسم</h2>
                     <div className="header-butt">
                         <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> إضافة جديد</button>
                     </div>
@@ -130,21 +130,14 @@ function Categories(): ReactElement {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th> اسم الصنف</th>
+                                <th> اسم الوسم</th>
                                 <th>الأدوات</th>
                             </tr>
                         </thead>
                         <tbody>
                             {GetData.map((e, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
-                                    <td>
-                                        <p className="with-icon">
-                                            <a href={"/dashboard/posts/category/" + e.id}>
-                                                <span className="material-icons material-icons-outlined">{e.icon}</span>
-                                                {e.name_ar}
-                                            </a>
-                                        </p>
-                                    </td>
+                                    <td>{e.name_ar}</td>
                                     <td className="tools-col">
                                         <Link href={`/dashboard/posts/category/edit/${e.id}`}>
                                             <button className="table-del success">
@@ -175,7 +168,7 @@ function Categories(): ReactElement {
         </>
     );
 }
-Categories.getLayout = function getLayout(page): ReactElement {
+index.getLayout = function getLayout(page): ReactElement {
     return (
         <DashboardLayout>
             {page}
@@ -187,4 +180,4 @@ const mapStateToProps = (state: any) => ({
     loading: state.auth.registerLoading,
 });
 
-export default connect(mapStateToProps, { logout })(Categories);
+export default connect(mapStateToProps, { logout })(index);

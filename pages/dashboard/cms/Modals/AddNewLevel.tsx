@@ -1,47 +1,22 @@
 import axios from "axios"
 import { motion } from "framer-motion"
-import { ReactElement, useEffect, useState } from "react"
+import { ReactElement } from "react"
 import PropTypes from "prop-types";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
-
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { useRouter } from "next/router";
+
 
 const SignupSchema = Yup.object().shape({
     name_ar: Yup.string().required('هذا الحقل إجباري'),
     name_en: Yup.string().required('هذا الحقل إجباري'),
     name_fr: Yup.string().required('هذا الحقل إجباري'),
-    description_ar: Yup.string().min(8, 'يجب أن يكون عدد الحروف أكثر من 8').required('هذا الحقل إجباري'),
-    description_en: Yup.string().min(8, 'يجب أن يكون عدد الحروف أكثر من 8').required('هذا الحقل إجباري'),
-    description_fr: Yup.string().min(8, 'يجب أن يكون عدد الحروف أكثر من 8').required('هذا الحقل إجباري'),
-    icon: Yup.string().required('هذا الحقل إجباري'),
+    type: Yup.number().required('هذا الحقل إجباري'),
+    number_developments: Yup.number().lessThan(127, 'عدد التطويرات لا يتعدى 127').required('هذا الحقل إجباري'),
+    price_developments: Yup.number().required('هذا الحقل إجباري'),
+    number_sales: Yup.number().required('هذا الحقل إجباري'),
+    value_bayer: Yup.number().required('هذا الحقل إجباري'),
 });
-export default function EditCategory(): ReactElement {
-    //const [iconPrev, setIconPrev] = useState('')
-    //const iconPreviewHandle = (e) => {
-    //    setIconPrev(e.target.value)
-    //}
-    const router = useRouter()
-    const id = router.query.id
-
-    const [isLoading, setIsLoading] = useState(false)
-    const refreshData = async () => {
-        setIsLoading(true)
-        try {
-            const res: any = await axios.get(`https://api.wazzfny.com/dashboard/categories/${id}`)
-            if (res.data) {
-                setIsLoading(false)
-                console.log(res.data.data);
-
-            }
-        } catch (error) {
-            setIsLoading(false)
-        }
-    }
-    useEffect(() => {
-        refreshData()
-    }, [])
+export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElement {
     return (
         <>
             <div className="panel-modal-overlay"></div>
@@ -49,7 +24,7 @@ export default function EditCategory(): ReactElement {
                 <div className="panel-modal-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">add_box</span>إضافة جديد</h2>
                     <div className="panel-modal-left-tools">
-                        <button onClick={() => router.push('/dashboard/posts/categories')} className="close-modal">
+                        <button onClick={setIsModalHiddenHandle} className="close-modal">
                             <span className="material-icons material-icons-outlined">close</span>
                         </button>
                     </div>
@@ -59,42 +34,34 @@ export default function EditCategory(): ReactElement {
                         name_ar: '',
                         name_en: '',
                         name_fr: '',
-                        description_ar: '',
-                        description_en: '',
-                        description_fr: '',
-                        icon: '',
+                        type: 1,
+                        number_developments: '',
+                        price_developments: '',
+                        number_sales: '',
+                        value_bayer: ''
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
                         try {
-
-                            const res = await axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/update`, values);
+                            const res = await axios.post("https://api.wazzfny.com/dashboard/levels/store", values);
                             // If Activate Network 
                             // Authentication was successful.
-                            if (res.status == 201 || res.status == 200 || res.status == 202 || res.status == 203) {
+                            if (res.status == 201 || res.status == 200) {    
                                 //alert('تمت الإضافة بنجاح')
-                                router.push('/dashboard/posts/categories')
+                                setIsModalHiddenHandle()
                             } else {
                                 alert('Error')
                             }
                         } catch (error) {
                             alert('Error Network')
+        
                         }
                     }}
                 >
-                    {(formik) => {
-                        const {
-                            values,
-                            handleChange,
-                            errors,
-                            isSubmitting,
-                            touched,
-                            handleBlur,
-                        } = formik;
-                        return (<Form>
-                            {isLoading && 'يرجى الإنتظار...'}
+                    {({ errors, touched, isSubmitting }) => (
+                        <Form>
                             <div className={"panel-modal-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
-                                {!isSubmitting ? '' :
+                            {!isSubmitting ? '' :
                                     <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                         <div className="spinner-border" role="status">
                                             <span className="visually-hidden">Loading...</span>
@@ -104,16 +71,13 @@ export default function EditCategory(): ReactElement {
                                 <div className="row">
                                     <div className="col-sm-4">
                                         <div className="timlands-form">
-                                            <label className="label-block" htmlFor="name_ar">اسم الصنف بالعربي</label>
+                                            <label className="label-block" htmlFor="name_ar">اسم المستوى بالعربي</label>
                                             <Field
                                                 id="name_ar"
                                                 name="name_ar"
-                                                placeholder="اسم الصنف بالعربي..."
+                                                placeholder="اسم المستوى بالعربي..."
                                                 className="timlands-inputs"
                                                 autoComplete="off"
-                                                value={values.name_ar}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
                                             />
                                             {errors.name_ar && touched.name_ar ?
                                                 <div style={{ overflow: 'hidden' }}>
@@ -127,16 +91,13 @@ export default function EditCategory(): ReactElement {
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="timlands-form">
-                                            <label className="label-block" htmlFor="name_en">اسم الصنف بالانجليزي</label>
+                                            <label className="label-block" htmlFor="name_en">اسم المستوى بالانجليزي</label>
                                             <Field
                                                 id="name_en"
                                                 name="name_en"
-                                                placeholder="اسم الصنف بالانجليزي..."
+                                                placeholder="اسم المستوى بالانجليزي..."
                                                 className="timlands-inputs"
                                                 autoComplete="off"
-                                                value={values.name_en}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
                                             />
                                             {errors.name_en && touched.name_en ?
                                                 <div style={{ overflow: 'hidden' }}>
@@ -150,16 +111,13 @@ export default function EditCategory(): ReactElement {
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="timlands-form">
-                                            <label className="label-block" htmlFor="name_fr">اسم الصنف بالفرنسي</label>
+                                            <label className="label-block" htmlFor="name_fr">اسم المستوى بالفرنسي</label>
                                             <Field
                                                 id="name_fr"
                                                 name="name_fr"
-                                                placeholder="اسم الصنف بالفرنسي..."
+                                                placeholder="اسم المستوى بالفرنسي..."
                                                 className="timlands-inputs"
                                                 autoComplete="off"
-                                                value={values.name_fr}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
                                             />
                                             {errors.name_fr && touched.name_fr ?
                                                 <div style={{ overflow: 'hidden' }}>
@@ -173,99 +131,99 @@ export default function EditCategory(): ReactElement {
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="timlands-form">
-                                            <label className="label-block" htmlFor="description_ar">الوصف بالعربي</label>
-                                            <Field
-                                                as="textarea"
-                                                id="description_ar"
-                                                name="description_ar"
-                                                placeholder="الوصف بالعربي..."
-                                                className="timlands-inputs"
-                                                value={values.description_ar}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            ></Field>
-                                            {errors.description_ar && touched.description_ar ?
-                                                <div style={{ overflow: 'hidden' }}>
-                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.description_ar}</p>
-                                                    </motion.div>
-                                                </div>
-                                                :
-                                                null}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="description_en">الوصف بالإنجليزي</label>
-                                            <Field
-                                                as="textarea"
-                                                id="description_en"
-                                                name="description_en"
-                                                placeholder="الوصف بالإنجليزي..."
-                                                className="timlands-inputs"
-                                                value={values.description_en}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            ></Field>
-                                            {errors.description_en && touched.description_en ?
-                                                <div style={{ overflow: 'hidden' }}>
-                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.description_en}</p>
-                                                    </motion.div>
-                                                </div>
-                                                :
-                                                null}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="description_fr">الوصف بالفرنسي</label>
-                                            <Field
-                                                as="textarea"
-                                                id="description_fr"
-                                                name="description_fr"
-                                                placeholder="الوصف بالفرنسي..."
-                                                className="timlands-inputs"
-                                                value={values.description_fr}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            ></Field>
-                                            {errors.description_fr && touched.description_fr ?
-                                                <div style={{ overflow: 'hidden' }}>
-                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.description_fr}</p>
-                                                    </motion.div>
-                                                </div>
-                                                :
-                                                null}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-12">
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="icon">أيقونة الصنف</label>
+                                            <label className="label-block" htmlFor="input-state">اختر نوع المستوى</label>
                                             <Field
                                                 as="select"
-                                                id="icon"
-                                                name="icon"
-                                                className="timlands-inputs"
-                                                value={values.icon}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
+                                                id="input-state"
+                                                name="address.state"
+                                                className="timlands-inputs select"
                                             >
-                                                <option value="bookmark_border">bookmark_border</option>
-                                                <option value="description">description</option>
-                                                <option value="account_circle">account_circle</option>
-                                                <option value="favorite_border">favorite_border</option>
-                                                <option value="dashboard">dashboard</option>
-                                                <option value="fact_check">fact_check</option>
-                                                <option value="question_answer">question_answer</option>
-                                                <option value="verified_user">verified_user</option>
-                                                <option value="code">code</option>
+                                                <option value="">اختر نوع المستوى</option>
+                                                <option value={1}>بائع</option>
+                                                <option value={0}>مشتري</option>
                                             </Field>
-                                            {errors.icon && touched.icon ?
+                                            {errors.type && touched.type ?
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.icon}</p>
+                                                        <p className="text">{errors.type}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="value_bayer">القيمة الشرائية</label>
+                                            <Field
+                                                id="value_bayer"
+                                                name="value_bayer"
+                                                placeholder="القيمة الشرائية..."
+                                                className="timlands-inputs"
+                                                autoComplete="off"
+                                            />
+                                            {errors.value_bayer && touched.value_bayer ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.value_bayer}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="number_sales">عدد المبيعات </label>
+                                            <Field
+                                                id="number_sales"
+                                                name="number_sales"
+                                                placeholder="عدد المبيعات ..."
+                                                className="timlands-inputs"
+                                            />
+                                            {errors.number_sales && touched.number_sales ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.number_sales}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="number_developments">عدد التطويرات المسموح بها</label>
+                                            <Field
+                                                id="number_developments"
+                                                name="number_developments"
+                                                placeholder="عدد التطويرات المسموح بها..."
+                                                className="timlands-inputs"
+                                            />
+                                            {errors.number_developments && touched.number_developments ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.number_developments}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="price_developments">أعلى سعر للتطوير الواحد</label>
+                                            <Field
+                                                id="price_developments"
+                                                name="price_developments"
+                                                placeholder="أعلى سعر للتطوير الواحد..."
+                                                className="timlands-inputs"
+                                            />
+                                            {errors.price_developments && touched.price_developments ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.price_developments}</p>
                                                     </motion.div>
                                                 </div>
                                                 :
@@ -275,23 +233,16 @@ export default function EditCategory(): ReactElement {
                                 </div>
                             </div>
                             <div className="panel-modal-footer">
-                                <button onClick={() => router.push('/dashboard/posts/categories')} type="button" className="btn butt-red butt-sm">إغلاق</button>
+                                <button onClick={setIsModalHiddenHandle} type="button" className="btn butt-red butt-sm">إغلاق</button>
                                 <button type="submit" disabled={isSubmitting} className="btn butt-primary butt-sm">حفظ التغييرات</button>
                             </div>
-                        </Form>)
-                    }}
+                        </Form>
+                    )}
                 </Formik>
             </div>
         </>
     )
 }
-EditCategory.propTypes = {
+AddNewUser.propTypes = {
     setIsModalHiddenHandle: PropTypes.func,
 };
-EditCategory.getLayout = function getLayout(page): ReactElement {
-    return (
-        <DashboardLayout>
-            {page}
-        </DashboardLayout>
-    )
-}

@@ -1,161 +1,117 @@
 //import Link from "next/link";
-import { ReactElement } from "react";
+import { Alert } from "@/components/Alert/Alert";
+import axios from "axios";
+import { motion } from "framer-motion";
+import { ReactElement, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import DashboardLayout from "../../../components/Layout/DashboardLayout";
 
-const postsList = [
-    {
-        id: 1,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 2,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 3,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 4,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 5,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 6,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-    {
-        id: 7,
-        title: 'Lorem ipsum dolor sit amet consectetur, adipisicing',
-        status: true,
-        user: {
-            id: 5,
-            first_name: 'Abdelhamid',
-            lastname: 'Boumegouass'
-        },
-        time: '7 days ago'
-    },
-]
-
 function index(props: any): ReactElement {
+    const [postsList, setPostsList] = useState([])
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const refreshData = async () => {
+        setIsLoading(true)
+        try {
+            const res: any = await axios.get('https://api.wazzfny.com/dashboard/products')
+            if (res) {
+                setIsLoading(false)
+                setPostsList(res.data.data)
+                console.log(res.data);
+                
+                setIsError(false)
+            }
+        } catch (error) {
+            setIsError(true)
+            setIsLoading(false)
+        }
+    }
+    const deleteHandle = (id) => {
+        const MySwal = withReactContent(Swal)
 
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الحذف',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res: any = axios.post(`https://api.wazzfny.com/dashboard/badges/${id}/delete`)
+                    if (res) {
+                        refreshData()
+                    }
+                } catch (error) {
+                    setIsError(true)
+                    setIsLoading(false)
+                }
+                swalWithBootstrapButtons.fire(
+                    'تم الحذف!',
+                    'لقد تم حذف هذا العنصر بنجاح',
+                    'success'
+                )
+                refreshData()
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'ملغى',
+                    'تم الإلغاء',
+                    'error'
+                )
+            }
+        })
+
+    }
+    useEffect(() => {
+        refreshData()
+    }, [])
+    const catVariants = {
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: i * 0.072,
+            },
+        }),
+        hidden: { opacity: 0, y: 9 },
+    }
     // Return statement.
     return (
         <>
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>Posts & Categories</h2>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إدارة الخدمات</h2>
                 </div>
-                {/*<div className="timlands-table-filter">
-                    <div className="row">
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterUser">
-                                    <option value="">Filter by Users</option>
-                                    <option value="">Abdelhamid</option>
-                                    <option value="">Tarek Aroui</option>
-                                    <option value="">Diaa Abdellah</option>
-                                    <option value="">Ehadi Abdellah</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Status</option>
-                                    <option value="">All</option>
-                                    <option value="">Active</option>
-                                    <option value="">Disactive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Select Date</option>
-                                    <option value="">Today</option>
-                                    <option value="">Yesterday</option>
-                                    <option value="">This Week</option>
-                                    <option value="">This Mounth</option>
-                                    <option value="">This Year</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-4 filter-form">
-                            <div className="form-container">
-                                <input className="timlands-inputs" placeholder="Search in Table List...." name="filterStatus" />
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <button className="btn butt-md butt-filter butt-primary">Filter</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>*/}
                 <div className="timlands-table">
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th className="hidden-tem">Status</th>
-                                <th>Author</th>
-                                <th className="hidden-tem">Created at</th>
-                                <th>Tools</th>
+                                <th>العنوان</th>
+                                <th className="hidden-tem">الحالة</th>
+                                <th className="hidden-tem">التاريخ</th>
+                                <th>الأدوات</th>
                             </tr>
                         </thead>
                         <tbody>
                             {postsList.map((e, i) => (
-                                <tr key={i}>
+                                <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.title}</td>
-                                    <td className="hidden-tem">{e.status ? 'eee' : 'dd'}</td>
-                                    <td>{e.user.first_name + " " + e.user.lastname}</td>
-                                    <td className="hidden-tem">{e.time}</td>
+                                    <td className="hidden-tem">{e.status ? 'eee' : 'معطلة'}</td>
+                                    <td className="hidden-tem">{e.created_at}</td>
                                     <td className="tools-col">
                                         <button className="table-del warning">
                                             <span className="material-icons material-icons-outlined">
@@ -168,10 +124,21 @@ function index(props: any): ReactElement {
                                             </span>
                                         </button>
                                     </td>
-                                </tr>
+                                </motion.tr>
                             ))}
                         </tbody>
                     </table>
+                    {isError &&
+                        <Alert type="error">
+                            <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
+                        </Alert>}
+                    {isLoading &&
+                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 justify-content-center">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </motion.div>
+                    }
                 </div>
             </div>
             <button onClick={() => { props.logout(); }}>

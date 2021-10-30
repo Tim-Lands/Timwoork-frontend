@@ -7,174 +7,112 @@
 |
 */
 
-import React, { ReactElement, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { login } from "@/store/auth/authActions";
-import { UserValidator } from "@/services/UserValidator";
-import { TextInput } from "@/components/Form/FormElement";
-import { Alert } from "@/components/Alert/Alert";
+import React, { ReactElement, useEffect, useState, SyntheticEvent } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { SmallSpinner } from "@/components/Spinner/Spinner";
+import axios from "axios";
+import { Field, Form, Formik } from "formik";
+import { motion } from "framer-motion";
+import * as Yup from 'yup';
 
-const Login = (props: any): ReactElement => {
-    /**
-     * The state.
-     */
-    const [formData, setFormData] = useState<{
-        email: string;
-        password: string;
-        emailError: string;
-        passwordError: string;
-    }>({
-        email: "",
-        password: "",
-        emailError: "",
-        passwordError: "",
+const Login = (): ReactElement => {
+    const router = useRouter()
+    const SignupSchema = Yup.object().shape({
+        email: Yup.string().required('هذا الحقل إجباري'),
+        password: Yup.string().required('هذا الحقل إجباري'),
     });
-
-    // The router object used for redirecting after login.
-    const router = useRouter();
-
-    // Redirect to user home route if user is authenticated.
-    useEffect(() => {
-        if (props.isAuthenticated && !props.loading) {
-            router.push(process.env.NEXT_PUBLIC_USER_HOME_ROUTE);
-        }
-    }, [props.isAuthenticated, props.loading]);
-
-    /**
-     * Handle input change.
-     *
-     * @param {object} e
-     *   The event object.
-     */
-    const handleInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
-        setFormData({
-            ...formData,
-            [e.currentTarget.name]: e.currentTarget.value,
-            emailError: "",
-            passwordError: "",
-        });
-    };
-
-    /**
-     * Submit the form.
-     */
-    const submit = (): Promise<void> => {
-        const userValidator: UserValidator = new UserValidator();
-        const { email, password } = formData;
-
-        // Check for valid email address.
-        const isEmailValid: boolean = userValidator.validateEmail(email);
-        if (!isEmailValid) {
-            setFormData({
-                ...formData,
-                emailError: "Please provide a valid email address",
-            });
-            return;
-        }
-
-        // Check for valid password.
-        if (!password) {
-            setFormData({
-                ...formData,
-                passwordError: "Please provide a valid password",
-            });
-            return;
-        }
-
-        // Make API call if everything is fine.
-        props.login(email, password);
-    };
-
     // Return statement.
     return (
-        <div className="timlands-accounts">
-            <div className="row">
-                <div className="col-lg-6 p-0">
-                    <div className="timlands-accounts-container">
-                        <div className="timlands-accounts-forms">
-                            {props.loginError && (
-                                <Alert type="danger">{props.loginError}</Alert>
-                            )}
-                            {/* The main Header */}
-                            <div className="timlands-accounts-header">
-                                <h1 className="title">Login</h1>
-                            </div>
-
-                            {/* Email */}
-                            <TextInput
-                                type="text"
-                                value={formData.email}
-                                placeholder="Your email address..."
-                                title="Email address"
-                                onChange={(e) => {
-                                    handleInputChange(e);
-                                }}
-                                name="email"
-                                errorMsg={formData.emailError}
-                            />
-
-                            {/* Password */}
-                            <TextInput
-                                type="password"
-                                value={formData.password}
-                                title="Your password"
-                                placeholder="Your password..."
-                                onChange={(e) => {
-                                    handleInputChange(e);
-                                }}
-                                name="password"
-                                errorMsg={formData.passwordError}
-                            />
-
-                            {/* Submit Button */}
-                            <div className="account-butt">
-                                <button
-                                    onClick={() => {
-                                        submit();
-                                    }}
-                                    className="btn butt-primary butt-lg btn-block"
-                                >
-                                    <SmallSpinner show={props.loading} />
-                                    Login
-                                </button>
-                            </div>
-
-                            {/* Additional links. */}
-                            <div className="w-full flex justify-between mt-3 text-blue-500">
-                                <Link href="/user/register">
-                                    <a className="text-xs underline">
-                                        No Account yet?
-                                    </a>
-                                </Link>
-                                <Link href="/user/password/forgot">
-                                    <a className="text-xs underline">
-                                        Forgot password?
-                                    </a>
-                                </Link>
+        <div>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: '',
+                }}
+                validationSchema={SignupSchema}
+                onSubmit={async values => {
+                    try {
+                        const res = await axios.post("https://api.wazzfny.com/dashboard/login", values, { withCredentials: true });
+                        // If Activate Network 
+                        // Authentication was successful.
+                        if (res.status == 201 || res.status == 200) {
+                            alert('تمت الإضافة بنجاح')
+                            router.push('/dashboard')
+                        } else {
+                            alert('Error')
+                        }
+                    } catch (ex) {
+                        
+                        if (ex.response && ex.response.status === 422) {
+                            alert(ex.response.data.errors)
+                        }
+            
+                        if (ex.response && ex.response.status === 401) {
+                            alert(ex.response.data);
+                        }
+                    }
+                }}
+            >
+                {({ errors, touched, isSubmitting }) => (
+                    <Form>
+                        <div className={"panel-modal-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
+                            {!isSubmitting ? '' :
+                                <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </motion.div>
+                            }
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    <div className="timlands-form">
+                                        <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
+                                        <Field
+                                            id="email"
+                                            name="email"
+                                            placeholder="البريد الإلكتروني..."
+                                            className="timlands-inputs"
+                                            autoComplete="off"
+                                        />
+                                        {errors.email && touched.email ?
+                                            <div style={{ overflow: 'hidden' }}>
+                                                <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                    <p className="text">{errors.email}</p>
+                                                </motion.div>
+                                            </div>
+                                            :
+                                            null}
+                                    </div>
+                                </div>
+                                <div className="col-sm-6">
+                                    <div className="timlands-form">
+                                        <label className="label-block" htmlFor="password">كلمة المرور</label>
+                                        <Field
+                                            id="password"
+                                            name="password"
+                                            placeholder="كلمة المرور..."
+                                            className="timlands-inputs"
+                                            autoComplete="off"
+                                        />
+                                        {errors.password && touched.password ?
+                                            <div style={{ overflow: 'hidden' }}>
+                                                <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                    <p className="text">{errors.password}</p>
+                                                </motion.div>
+                                            </div>
+                                            :
+                                            null}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div className="panel-modal-footer">
+                            <button type="submit" disabled={isSubmitting} className="btn butt-primary butt-sm">حفظ التغييرات</button>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };
 
-// Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    loginError: state.auth.loginError,
-    loading: state.auth.loginLoading,
-});
-
-// Define PropTypes.
-Login.propTypes = {
-    props: PropTypes.object,
-    login: PropTypes.func,
-};
-
-export default connect(mapStateToProps, { login })(Login);
+export default Login;
