@@ -1,64 +1,12 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import DashboardLayout from "../../../components/Layout/DashboardLayout";
 import AddNewUser from "./Modals/AddNewUser";
-import axios from "axios";
-import { motion } from 'framer-motion'
 import { Alert } from "../../../components/Alert/Alert";
-import Link from 'next/link'
 function index(): ReactElement {
-    const catVariants = {
-        visible: (i: number) => ({
-            opacity: 1,
-            y: 0,
-            transition: {
-                delay: i * 0.072,
-            },
-        }),
-        hidden: { opacity: 0, y: 9 },
-    }
 
     const [isModalShowen, setIsModalShowen] = useState(false)
-    const [isError, setIsError] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [users, setUsers] = useState([])
-    const refreshData = async () => {
-        setIsLoading(true)
-
-        try {
-            const res: any = await axios.get('https://flexyapp.herokuapp.com/api/v1/users')
-            const json = res.data.content
-            if (json) {
-                setIsLoading(false)
-                setUsers(json)
-                setIsError(true)
-            }
-        } catch (error) {
-            setIsError(true)
-            setIsLoading(false)
-        }
-    }
-    useEffect(() => {
-        refreshData()
-    }, [])
-    const setIsModalShowenHandle = () => {
-        setIsModalShowen(true);
-    }
     const setIsModalHiddenHandle = () => {
         setIsModalShowen(false);
-        refreshData()
-    }
-    async function deleteHandle(id: any) {
-        try {
-            const res = await axios.delete("https://flexyapp.herokuapp.com/api/v1/users/" + id);
-            // If Activate Network 
-            // Authentication was successful.
-            if (res.status == 202 || res.status == 201 || res.status == 200) {
-                alert('تم الحذف بنجاح')
-                refreshData()
-            }
-        } catch (error) {
-            alert('حدث خطأ')
-        }
     }
     // Return statement.
     return (
@@ -81,8 +29,8 @@ function index(): ReactElement {
                             </tr>
                         </thead>
                     </table>
-                    <Alert type="error">
-                        <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
+                    <Alert type="warning">
+                        <p className="text"><span className="material-icons">warning_amber</span> لاتوجد أعضاء</p>
                     </Alert>
                 </div>
             </div>

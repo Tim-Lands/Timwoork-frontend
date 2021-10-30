@@ -3,8 +3,6 @@ import { Alert } from "@/components/Alert/Alert";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import DashboardLayout from "../../../components/Layout/DashboardLayout";
 
 function index(props: any): ReactElement {
@@ -27,7 +25,7 @@ function index(props: any): ReactElement {
             setIsLoading(false)
         }
     }
-    const deleteHandle = (id) => {
+    /*const deleteHandle = (id) => {
         const MySwal = withReactContent(Swal)
 
         const swalWithBootstrapButtons = MySwal.mixin({
@@ -64,7 +62,7 @@ function index(props: any): ReactElement {
                 )
                 refreshData()
             } else if (
-                /* Read more about handling dismissals below */
+                
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
@@ -75,7 +73,7 @@ function index(props: any): ReactElement {
             }
         })
 
-    }
+    }*/
     useEffect(() => {
         refreshData()
     }, [])

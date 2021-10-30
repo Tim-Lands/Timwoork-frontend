@@ -1,8 +1,7 @@
 import Link from "next/link";
 import axios from 'axios';
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
-import { useRouter } from "next/router";
 export interface User {
     id: number,
     first_name: string,
@@ -11,7 +10,6 @@ export interface User {
     avatar: string,
 }
 function TestPage(): ReactElement {
-    const router = useRouter()
     useEffect(() => {
         (
             async () => {
@@ -26,9 +24,6 @@ function TestPage(): ReactElement {
         )()
     }, [])
 
-    const logout = async () => {
-        await axios.post('https://api.wazzfny.com/dashboard/logout', {}, { withCredentials: true })
-    }
     // Return statement.
     return (
         <>
