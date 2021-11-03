@@ -1,4 +1,4 @@
-import axios from "axios"
+import API from '../../../../config';
 import { motion } from "framer-motion"
 import { ReactElement } from "react"
 import PropTypes from "prop-types";
@@ -35,7 +35,7 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
                         try {
-                            const res = await axios.post("https://api.wazzfny.com/dashboard/badges/store", values);
+                            const res = await API.post("dashboard/badges/store", values);
                             // If Activate Network 
                             // Authentication was successful.
                             if (res.status == 201 || res.status == 200) {    

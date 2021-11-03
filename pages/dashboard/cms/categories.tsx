@@ -5,7 +5,7 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewCategory from "./Modals/AddNewCategory";
-import axios from "axios";
+import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -18,7 +18,7 @@ function Categories(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/categories?page=1')
+            const res: any = await API.get('dashboard/categories?page=1')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -52,7 +52,7 @@ function Categories(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/delete`)
+                        const res: any = API.post(`dashboard/categories/${id}/delete`)
                         //const json = res.data
                         if(res) {
                             refreshData()

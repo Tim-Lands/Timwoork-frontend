@@ -53,6 +53,16 @@ const sidebarLinks = [
                 name: 'البلدان',
                 href: '/dashboard/cms/countries'
             },
+            {
+                id: 6,
+                name: 'المهارات',
+                href: '/dashboard/cms/skills'
+            },
+            {
+                id: 7,
+                name: 'اللغات',
+                href: '/dashboard/cms/languages'
+            },
         ]
     },
     {

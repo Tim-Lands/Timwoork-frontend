@@ -1,4 +1,4 @@
-import axios from "axios"
+import API from '../../../../../config';
 import { ReactElement, useEffect, useState } from "react"
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
@@ -12,7 +12,7 @@ export default function EditCategory(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get(`https://api.wazzfny.com/dashboard/categories/${id}`)
+            const res: any = await API.get(`dashboard/categories/${id}`)
             if (res.data) {
                 setIsLoading(false)
                 setPerson(res.data.data)
@@ -77,7 +77,7 @@ export default function EditCategory(): ReactElement {
         e.preventDefault();
         console.log(person);
         try {
-            const res = await axios.post(`https://api.wazzfny.com/dashboard/categories/${id}/update`, person);
+            const res = await API.post(`dashboard/categories/${id}/update`, person);
             // If Activate Network 
             // Authentication was successful.
             if (res.status == 201 || res.status == 200 || res.status == 202 || res.status == 203) {

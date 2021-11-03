@@ -5,7 +5,7 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewLevel from "./Modals/AddNewLevel";
-import axios from "axios";
+import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -17,7 +17,7 @@ function Levels(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/levels')
+            const res: any = await API.get('dashboard/levels')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -50,7 +50,7 @@ function Levels(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/levels/${id}/delete`)
+                        const res: any = API.post(`dashboard/levels/${id}/delete`)
                         if(res) {
                             refreshData()
                         }

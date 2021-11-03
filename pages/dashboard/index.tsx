@@ -1,6 +1,6 @@
 import Link from "next/link";
-import axios from 'axios';
-import { ReactElement, useEffect } from "react";
+import API from '../../config';
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 export interface User {
     id: number,
@@ -9,19 +9,38 @@ export interface User {
     email: string,
     avatar: string,
 }
-function TestPage(): ReactElement {
-    useEffect(() => {
-        (
-            async () => {
-                try {
-                    const { data } = await axios.get('https://api.wazzfny.com/dashboard/me', { withCredentials: true });
-                    console.log(data)
-                } catch (e) {
-                    console.log(e)
-                }
+function index(): ReactElement {
+    const [postsList, setPostsList] = useState({
+        admins: 1,
+        badges: 2,
+        categories: 9,
+        levels: 0,
+        products_actived: 0,
+        products_rejected: 0,
+        products_wainting_actived: 6,
+        subcategories: 27,
+        tags: 0,
+        users: 1,
+    })
+    //const [isError, setIsError] = useState(false)
+    //const [isLoading, setIsLoading] = useState(false)
+    const getData = async () => {
+        //setIsLoading(true)
+        try {
+            const res: any = await API.get('dashboard')
+            //setIsLoading(false)
+            setPostsList(res.data.data)
+            console.log(res.data.data);
 
-            }
-        )()
+            //setIsError(false)
+
+        } catch (error) {
+            //setIsError(true)
+            //setIsLoading(false)
+        }
+    }
+    useEffect(() => {
+        getData()
     }, [])
 
     // Return statement.
@@ -72,7 +91,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المشرفين والمدراء</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">1</p>
+                                                <p className="text">{postsList.admins}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -102,7 +121,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المجموع</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">1</p>
+                                                <p className="text">{postsList.users}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -126,20 +145,10 @@ function TestPage(): ReactElement {
                                     <li>
                                         <div className="d-flex">
                                             <div className="det-prop">
-                                                <p className="text">المسودات</p>
-                                            </div>
-                                            <div className="det-val">
-                                                <p className="text">0</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="d-flex">
-                                            <div className="det-prop">
                                                 <p className="text">في انتظار التفعيل</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">0</p>
+                                                <p className="text">{postsList.products_wainting_actived}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -149,7 +158,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">المرفوضة</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">0</p>
+                                                <p className="text">{postsList.products_rejected}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -159,7 +168,7 @@ function TestPage(): ReactElement {
                                                 <p className="text">النشطة</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">0</p>
+                                                <p className="text">{postsList.products_actived}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -179,7 +188,9 @@ function TestPage(): ReactElement {
                                                 <p className="text">المجموع</p>
                                             </div>
                                             <div className="det-val">
-                                                <p className="text">0</p>
+                                                <p className="text">
+                                                    {postsList.products_actived + postsList.products_rejected + postsList.products_wainting_actived}
+                                                </p>
                                             </div>
                                         </div>
                                     </li>
@@ -193,7 +204,7 @@ function TestPage(): ReactElement {
                         </div>
                     </div>
                 </div>
-{ /*              <div className="row mt-4">
+                { /*              <div className="row mt-4">
                     <div className="col-md-6">
                         <div className="timlands-panel-header">
                             <h2 className="title"><span className="material-icons material-icons-outlined">view_list</span>آخر النشاطات</h2>
@@ -237,11 +248,11 @@ function TestPage(): ReactElement {
         </>
     );
 }
-TestPage.getLayout = function getLayout(page: any): ReactElement {
+index.getLayout = function getLayout(page: any): ReactElement {
     return (
         <DashboardLayout>
             {page}
         </DashboardLayout>
     )
 }
-export default TestPage;
+export default index;

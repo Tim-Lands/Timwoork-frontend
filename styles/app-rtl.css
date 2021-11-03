@@ -1079,6 +1079,7 @@
   -webkit-box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
           box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
   border: 1px solid #ddd;
+  position: relative;
 }
 
 .timlands-table .table tr td, .timlands-table .table tr th {
@@ -1146,6 +1147,11 @@
   border: 1px solid #fdfcb1;
 }
 
+.timlands-table .table tr > td.tools-col .table-del.green {
+  color: #10992e;
+  border: 1px solid #b1fdca;
+}
+
 .timlands-table .table thead tr {
   background-color: #f4f4f4;
 }
@@ -1156,6 +1162,23 @@
 
 .timlands-table .table > :not(:first-child) {
   border-top: 2px solid #f1f1f1;
+}
+
+.timlands-table .spinner-loader {
+  background-color: rgba(255, 255, 255, 0.829);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
 }
 
 /*

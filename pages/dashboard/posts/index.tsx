@@ -1,23 +1,26 @@
 //import Link from "next/link";
 import { Alert } from "@/components/Alert/Alert";
-import axios from "axios";
+import API from '../../../config';
+
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "../../../components/Layout/DashboardLayout";
+import LastSeen from "@/components/LastSeen";
 
-function index(props: any): ReactElement {
+function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/products')
+            const res: any = await API.get('dashboard/products')
             if (res) {
                 setIsLoading(false)
                 setPostsList(res.data.data)
                 console.log(res.data);
-                
+
                 setIsError(false)
             }
         } catch (error) {
@@ -25,6 +28,18 @@ function index(props: any): ReactElement {
             setIsLoading(false)
         }
     }
+
+    const switchStatus = (status) => {
+        switch (status) {
+            case null:
+                return (<span className="badge bg-warning text-dark">قيد الإنتظار</span>)
+            case 0:
+                return (<span className="badge bg-danger text-light">مرفوضة</span>)
+            case 1:
+                return (<span className="badge bg-success text-light">نشطة</span>)
+        }
+    }
+
     /*const deleteHandle = (id) => {
         const MySwal = withReactContent(Swal)
 
@@ -87,6 +102,34 @@ function index(props: any): ReactElement {
         }),
         hidden: { opacity: 0, y: 9 },
     }
+    const activateProduct = async (id : any) => {
+        setIsLoading(true)
+        try {
+            const res: any = await API.post(`dashboard/products/${id}/activeProduct`)
+            if (res) {
+                setIsLoading(false)
+                setIsError(false)
+                refreshData()
+            }
+        } catch (error) {
+            setIsError(true)
+            setIsLoading(false)
+        }
+    }
+    const rejectProduct = async (id : any) => {
+        setIsLoading(true)
+        try {
+            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`)
+            if (res) {
+                setIsLoading(false)
+                setIsError(false)
+                refreshData()
+            }
+        } catch (error) {
+            setIsError(true)
+            setIsLoading(false)
+        }
+    }
     // Return statement.
     return (
         <>
@@ -108,15 +151,25 @@ function index(props: any): ReactElement {
                             {postsList.map((e, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.title}</td>
-                                    <td className="hidden-tem">{e.status ? 'eee' : 'معطلة'}</td>
-                                    <td className="hidden-tem">{e.created_at}</td>
+                                    <td className="hidden-tem">{switchStatus(e.status)}</td>
+                                    <td className="hidden-tem" title={e.created_at}><LastSeen date={e.created_at} /></td>
                                     <td className="tools-col">
-                                        <button className="table-del warning">
-                                            <span className="material-icons material-icons-outlined">
-                                                cancel
-                                            </span>
-                                        </button>
-                                        <button className="table-del error">
+                                        {(e.status == 0 || e.status == null) ?
+                                            <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(e.id)} className="table-del green">
+                                                <span className="material-icons material-icons-outlined">
+                                                    check
+                                                </span>
+                                            </button> : ''
+                                        }
+                                        {(e.status == 1) ?
+                                            <button title="تعطيل هذه الخدمة" onClick={() => rejectProduct(e.id)} className="table-del warning">
+                                                <span className="material-icons material-icons-outlined">
+                                                    cancel
+                                                </span>
+                                            </button> : ''
+                                        }
+
+                                        <button  title="حذف هذه الخدمة" className="table-del error">
                                             <span className="material-icons material-icons-outlined">
                                                 delete
                                             </span>
@@ -131,7 +184,7 @@ function index(props: any): ReactElement {
                             <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
                         </Alert>}
                     {isLoading &&
-                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 justify-content-center">
+                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">
                             <div className="spinner-border" role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>
@@ -139,9 +192,6 @@ function index(props: any): ReactElement {
                     }
                 </div>
             </div>
-            <button onClick={() => { props.logout(); }}>
-                Logout
-            </button>
         </>
     );
 }

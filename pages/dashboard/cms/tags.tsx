@@ -5,7 +5,7 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewTag from "./Modals/AddNewTag";
-import axios from "axios";
+import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -18,7 +18,7 @@ function index(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/tags?page=1')
+            const res: any = await API.get('dashboard/tags?page=1')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -52,7 +52,7 @@ function index(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/tags/${id}/delete`)
+                        const res: any = API.post(`dashboard/tags/${id}/delete`)
                         //const json = res.data
                         if(res) {
                             refreshData()
@@ -139,7 +139,7 @@ function index(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
                                     <td className="tools-col">
-                                        <Link href={`/dashboard/posts/category/edit/${e.id}`}>
+                                        <Link href={`/dashboard/cms/edit/tags/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>

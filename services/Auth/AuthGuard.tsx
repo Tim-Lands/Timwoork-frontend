@@ -8,7 +8,6 @@
 */
 import axios from "axios";
 import { IncomingMessage, ServerResponse } from "http";
-import { protectedRoutes } from "./../../config/config";
 
 export class AuthGuard {
     /**
@@ -19,9 +18,6 @@ export class AuthGuard {
     /**
      * The constructor function.
      */
-    constructor() {
-        this.protectedRoutes = protectedRoutes;
-    }
 
     /**
      * Get the current user from the database and redirect to dashboard if successful.

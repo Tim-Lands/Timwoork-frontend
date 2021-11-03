@@ -5,11 +5,11 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewBadge from "./Modals/AddNewBadge";
-import axios from "axios";
+import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-
+import Link from 'next/link'
 function Badges(): ReactElement {
     const [GetData, setGetData] = useState([])
     const [isError, setIsError] = useState(false)
@@ -17,7 +17,7 @@ function Badges(): ReactElement {
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await axios.get('https://api.wazzfny.com/dashboard/badges')
+            const res: any = await API.get('dashboard/badges')
             if (res) {
                 setIsLoading(false)
                 setGetData(res.data.data)
@@ -50,7 +50,7 @@ function Badges(): ReactElement {
             }).then((result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = axios.post(`https://api.wazzfny.com/dashboard/badges/${id}/delete`)
+                        const res: any = API.post(`dashboard/badges/${id}/delete`)
                         if(res) {
                             refreshData()
                         }
@@ -138,9 +138,12 @@ function Badges(): ReactElement {
                                     <td>{e.name_ar}</td>
                                     <td>{e.precent_deducation}%</td>
                                     <td className="tools-col">
-                                        <button className="table-del success">
-                                            <span className="material-icons material-icons-outlined">edit</span>
-                                        </button>
+                                        <Link href={"/dashboard/cms/edit/badges/" + e.id}>
+
+                                            <button className="table-del success">
+                                                <span className="material-icons material-icons-outlined">edit</span>
+                                            </button>
+                                        </Link>
                                         <button onClick={() => deleteHandle(e.id)} className="table-del error">
                                             <span className="material-icons material-icons-outlined">delete</span>
                                         </button>
