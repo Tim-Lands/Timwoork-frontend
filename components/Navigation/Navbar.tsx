@@ -83,13 +83,13 @@ export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
                         </li>
                         <li className="login-nav-item">
                             <a href="/user/login">
-                                Login
+                                تسجيل الدخول
                             </a>
                         </li>
                         <li className="register-nav-item">
                             <Link href="">
                                 <a className="btn butt-sm butt-primary flex-center">
-                                    <i className="material-icons material-icons-outlined">person_add_alt</i> Join us!
+                                    <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
                                 </a>
                             </Link>
                         </li>
@@ -107,35 +107,35 @@ export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
             </nav>
             <motion.nav transition={{ duration: 0.8 }} style={{ position: 'relative', zIndex: 500 }} initial={{ y: -90, opacity: 0 }} animate={(scroll ? { y: 0, opacity: 1 } : { y: -90, opacity: 0 })} className={'timlands-sub-navbar'}>
                 <ul className="nav sub-navbar-cats">
-                    <li className="category-title">Popular Categories</li>
+                    <li className="category-title">التصنيفات الشائعة</li>
                     <li className="category-item active">
                         <Link href="">
-                            <a className="category-link">Graphics & Design</a>
+                            <a className="category-link">التصميم الغرافيكي</a>
                         </Link>
                     </li>
                     <li className="category-item">
                         <Link href="">
-                            <a className="category-link">Digital Marketing</a>
+                            <a className="category-link">التسويق الرقمي</a>
                         </Link>
                     </li>
                     <li className="category-item">
                         <Link href="">
-                            <a className="category-link">Writing & Translation</a>
+                            <a className="category-link">الكتابة والترجمة</a>
                         </Link>
                     </li>
                     <li className="category-item">
                         <Link href="">
-                            <a className="category-link">Video & Animation</a>
+                            <a className="category-link">الفيديوهات والحركات</a>
                         </Link>
                     </li>
                     <li className="category-item">
                         <Link href="">
-                            <a className="category-link">Programming & Tech</a>
+                            <a className="category-link">برمجة وتقنيات</a>
                         </Link>
                     </li>
                     <li className="category-item">
                         <Link href="">
-                            <a className="category-link">Business</a>
+                            <a className="category-link">إدارة أعمال</a>
                         </Link>
                     </li>
                 </ul>

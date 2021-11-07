@@ -72,11 +72,12 @@
             font-size: 12px;
             color: #666;
             margin: 0;
-            font-weight: 700;
+            font-weight: 200;
         }
         &.form-note-error {
             .text {
                 color: rgb(196, 61, 61);
+                font-weight: 700;
             }
         }
     }

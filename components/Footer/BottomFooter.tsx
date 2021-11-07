@@ -9,15 +9,15 @@ function BottomFooter() {
                 </a>
 
                 <ul className="nav center-nav-footer col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" className="nav-link px-2 link-dark">Home</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">Features</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">Pricing</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">FAQs</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">About</a></li>
+                    <li><a href="#" className="nav-link px-2 link-dark">الرئيسية</a></li>
+                    <li><a href="#" className="nav-link px-2 link-dark">الميزات</a></li>
+                    <li><a href="#" className="nav-link px-2 link-dark">مخطط الاسعار</a></li>
+                    <li><a href="#" className="nav-link px-2 link-dark">الاسئلة الشائعة</a></li>
+                    <li><a href="#" className="nav-link px-2 link-dark">حول الموقع</a></li>
                 </ul>
 
                 <div className="col-md-3 text-end">
-                    <p className="copy-text">© 2005-2011 <a href="#">TimWoork</a> All Rights Reserved</p>
+                    <p className="copy-text">© 2005-2011 <a href="#">TimWoork</a> جميع الحقوق محفوظة </p>
                 </div>
             </header>
         </div>

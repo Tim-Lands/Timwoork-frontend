@@ -26,7 +26,7 @@ const sidebarLinks = [
         id: 6,
         name: 'إدارة المحتوى',
         icon: 'event_note',
-        href: '/dashboard/constants',
+        href: null,
         hasSubMenu: [
             {
                 id: 1,
@@ -104,11 +104,18 @@ function index(): ReactElement {
                     {sidebarLinks.map(e => (
                         <>
                             <li key={e.id} className={"dash-item" + (e.href == path.route ? ' active' : '')}>
-                                <Link href={e.href}>
+
+                                {(e.href == null) ?
                                     <a className="dash-link">
                                         <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
                                     </a>
-                                </Link>
+                                    :
+                                    <Link href={e.href}>
+                                        <a className="dash-link">
+                                            <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
+                                        </a>
+                                    </Link>
+                                }
                                 {
                                     (submenu && (e.hasSubMenu &&
                                         <motion.ul initial={{ opacity: 0, scaleY: 0 }} animate={{ opacity: 1, scaleY: 1 }} className="sub-dashnav-list">

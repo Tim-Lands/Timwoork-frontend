@@ -4,33 +4,33 @@ function BlogFooter() {
     return (
         <div className="app-footer-aside">
         <div className="aside-header">
-            <h4 className="title">Blog</h4>
+            <h4 className="title">المدونة</h4>
         </div>
         <div className="aside-body">
             <ul className="aside-list-items">
                 <li>
                     <Link href="">
-                        <a>Sed ut perspiciatis unde omnis iste natus error</a>
+                        <a>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Nemo enim ipsam voluptatem quia voluptas sit</a>
+                        <a>لقد تم توليد هذا النص من مولد النص العربى</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Ut enim ad minima veniam, quis nostrum exercitationem</a>
+                        <a>هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Quis autem vel eum iure qui in ea velit esse</a>
+                        <a>عدد الحروف التى يولدها التطبيق.إذا كنت تحتاج إلى عدد أكب</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>But I must explain to you how all this mistaken idea</a>
+                        <a>من الفقرات يتيح لك مولد النص العربى زيادة</a>
                     </Link>
                 </li>
             </ul>

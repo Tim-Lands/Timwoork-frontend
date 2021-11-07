@@ -84,7 +84,7 @@
         height: 30px;
     }
 }
-a {
+a, a:hover {
     text-decoration: none;
 }
 .material-icons {
@@ -93,7 +93,7 @@ a {
 body {
     direction: rtl;
     font-family: 'jf';
-    background-color: #fff;
+    background-color: #f7f7f7;
 }
 .is-home {
     padding-top: 60px;
@@ -112,6 +112,9 @@ body {
 }
 .nav {
     padding-right: 0;
+}
+h3 {
+    line-height: 25px;
 }
 /*
 ---------------------------------------------------------------------------------------------
@@ -987,12 +990,105 @@ body {
     background-color: #fff;
     padding: 20px;
     overflow: hidden;
+    .timlands-steps {
+        border-bottom: 1px solid lighten($primary, 54);
+        border-radius: 6px;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        margin: 12px 0;
+        .timlands-step-item {
+            padding: 10px 18px;
+            position: relative;
+            .title {
+                font-size: 14px;
+                font-weight: 300;
+                margin: 0;
+                opacity: 0.5;
+                color: #111;
+            }
+            .text {
+                font-size: 12px;
+                opacity: 0.5;
+                color: #222;
+                font-weight: 200;
+                margin: 0;
+            }
+            &::after {
+                content: '';
+                left: 0;
+                right: 100%;
+                bottom: 0;
+                height: 2px;
+                background-color: $primary;
+                position: absolute;
+            }
+            &.active {
+                .title, .text {
+                    opacity: 1;
+                    font-weight: bold;
+                }
+                &::after {
+                    left: 0;
+                    right: 0;
+                    background-color: $primary;
+                }
+            }
+        }
+    }
+    &.is-loader {
+        position: relative;
+        &::after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.712);
+        }
+    }
     .timlands-panel-header {
         padding: 7px 0;
         border-bottom: 1px solid #f4f4f4;
         margin-bottom: 17px;
         .header-butt {
+            display: flex;
             margin-right: auto;
+            .butt-sm {
+                .material-icons-outlined {
+                    font-size: 18px;
+                }
+                .spinner-border {
+                    display: none;
+                }
+            }
+            .butt-xs {
+                .material-icons-outlined {
+                    font-size: 16px;
+                }
+                .spinner-border {
+                    display: none;
+                }
+            }
+            &.is-loader {
+                .butt-sm {
+                    .text, .material-icons-outlined {
+                        display: none;
+                    }
+                    .spinner-border {
+                        display: inline-block;
+                    }
+                }
+                .butt-xs {
+                    .text, .material-icons-outlined {
+                        display: none;
+                    }
+                    .spinner-border {
+                        display: inline-block;
+                    }
+                }
+            }
         }
         .title {
             font-weight: bold;
@@ -1005,6 +1101,56 @@ body {
                 margin-left: 6px;
                 font-size: 21px;
             }
+        }
+    }
+}
+.product-devlopes-butt {
+    background-color: #f8f8f8;
+    border: 3px dotted #ccc;
+    box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.071);
+    text-align: center;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    .product-devlopes-text {
+        font-weight: 200;
+        color: #444;
+    }
+    .add-devs-btn {
+        text-align: center;
+        justify-content: center;
+        .material-icons-outlined {
+            font-size: 21px;
+            margin-top: -4px;
+            margin-left: 5px;
+        }
+    }
+}
+.add-product-advices {
+    position: sticky;
+    top: 70px;
+    padding-top: 23px;
+    .advice-img {
+        width: 150px;
+        display: block;
+        margin: auto;
+    }
+    .advice-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        padding: 26px 0;
+        margin-bottom: 26px;
+        border-bottom: 1px solid #ccc;
+    }
+    .advice-list {
+        li {
+            font-size: 14px;
+            color: #333;
+            font-weight: 200;
+            margin: 10px 0;
         }
     }
 }
@@ -1339,6 +1485,42 @@ body {
         }
     }
 }
+.develop-price {
+    border: 1px solid #f1f1f1;
+    background-color: #f8f8f8;
+    padding: 12px;
+    margin-bottom: 9px;
+    border-radius: 6px;
+    position: relative;
+    .buttons-tools {
+        position: absolute;
+        left: -5px;
+        top: -5px;
+        display: flex;
+        .formarray-butt {
+            background-color: #f7f7f7;
+            border: 0;
+            display: flex;
+            width: 25px;
+            height: 25px;
+            font-size: 19px;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #777;
+            &:hover {
+                color: #000;
+                background-color: #f2f2f2;
+            }
+            &.del {
+                background-color: rgb(255, 221, 221);
+                color: rgb(80, 8, 8);
+            }
+        }
+
+    }
+}
 /*
     Modal
 */
@@ -1474,6 +1656,55 @@ body {
         font-weight: 400;
         .error-status {
             font-weight: bold;
+        }
+    }
+}
+/*
+---------------------------------------------------------------------------------------------
+    Content Editor
+---------------------------------------------------------------------------------------------
+*/
+.content-editor {
+    border: 1px solid #f6f6f6;
+    border-radius: 6px;
+    overflow: hidden;
+    textarea {
+        min-height: 100px !important;
+    }
+    .content-menu-tools {
+        background-color: #f5f5f5;
+        display: flex;
+        button {
+            background-color: transparent;
+            color: #555;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            height: 46px;
+            width: 46px;
+            border: 0;
+            &:hover {
+                color: $primary;
+                background-color: lighten($primary, 44);
+            }
+            &.is-active {
+                color: #fff;
+                background-color: $primary;
+            }
+        }
+    }
+    .ProseMirror {
+        padding: 12px;
+        min-height: 200px;
+        outline: none;
+        &:focus {
+            outline: none;
+        }
+    }
+    .normal-editor {
+        textarea {
+            min-height: 200px;
         }
     }
 }
@@ -1872,6 +2103,30 @@ body {
         }
     }
 }
+.choose-images-file {
+    background-color: #f8f8f8;
+    border: 2px dotted #ccc;
+    padding: 17px;
+    border-radius: 6px;
+    margin-bottom: 13px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.041);
+    transition: all 0.3s;
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+    &:hover {
+        border-color: $primary;
+        transition: all 0.3s;
+        background-color: #fff;
+    }
+}
+.timlands-content-form-subtitle {
+    font-size: 17px !important;
+    font-weight: bold;
+    padding: 15px 0;
+    border-bottom: 1px solid #f4f4f4;
+    margin-bottom: 7px;
+}
 /*
 ---------------------------------------------------------------------------------------------
     Dark Mode
@@ -1897,6 +2152,7 @@ body {
         }
     }
 }
+
 /*
 ---------------------------------------------------------------------------------------------
     Dashboard Page
@@ -2060,6 +2316,7 @@ body {
 .panel-modal-overlay {
     background-color: rgba(255, 255, 255, 0.603);
 }
+
 /*
 ---------------------------------------------------------------------------------------------
     404 Page
@@ -2083,6 +2340,7 @@ body {
     Posts Aside
 ---------------------------------------------------------------------------------------------
 */
+
 .posts-aside {
     .posts-aside-header {
         border-bottom: 1px solid #f1f1f1;
@@ -2258,3 +2516,108 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     }
   }
 }
+
+
+
+
+.ReactTags :global {
+    /* Example Styles for React Tags*/
+    .app {
+      padding: 40px;
+      text-align: center;
+    }
+  
+    /* Example Styles for React Tags*/
+  
+    .container {
+      margin: auto;
+      width: 50%;
+    }
+    .ReactTags__tags {
+      position: relative;
+    }
+  
+    .ReactTags__clearAll {
+      cursor: pointer;
+      padding: 10px;
+      margin: 10px;
+      background: #f88d8d;
+      color: #fff;
+      border: none;
+    }
+  
+    /* Styles for the input */
+    .ReactTags__tagInput {
+      border-radius: 2px;
+      display: inline-block;
+    }
+    .ReactTags__tagInput input.ReactTags__tagInputField,
+    .ReactTags__tagInput input.ReactTags__tagInputField:focus {
+      height: 31px;
+      margin: 0;
+      font-size: 12px;
+      border: 1px solid #eee;
+      min-width: 150px;
+    }
+  
+    .ReactTags__editInput {
+      border-radius: 1px;
+    }
+  
+    .ReactTags__editTagInput {
+      display: inline-flex;
+    }
+  
+    /* Styles for selected tags */
+    .ReactTags__selected span.ReactTags__tag {
+      border: 1px solid #ddd;
+      background: #63bcfd;
+      color: white;
+      font-size: 12px;
+      display: inline-block;
+      padding: 5px;
+      margin: 0 5px;
+      border-radius: 2px;
+    }
+    .ReactTags__selected span.ReactTags__tag:first-child {
+      margin-left: 0px;
+    }
+    .ReactTags__selected a.ReactTags__remove {
+      color: #aaa;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  
+    /* Styles for suggestions */
+    .ReactTags__suggestions {
+      position: absolute;
+      top:60px;
+    }
+    .ReactTags__suggestions ul {
+      list-style-type: none;
+      box-shadow: 0.05em 0.01em 0.5em rgba(0, 0, 0, 0.2);
+      background: white;
+      width: 200px;
+    }
+    .ReactTags__suggestions li {
+      border-bottom: 1px solid #ddd;
+      padding: 5px 10px;
+      margin: 0;
+    }
+    .ReactTags__suggestions li mark {
+      text-decoration: underline;
+      background: none;
+      font-weight: 600;
+    }
+    .ReactTags__suggestions ul li.ReactTags__activeSuggestion {
+      background: #b7cfe0;
+      cursor: pointer;
+    }
+  
+    .ReactTags__remove {
+      border: none;
+      cursor: pointer;
+      background: none;
+      color: white;
+    }
+  }
