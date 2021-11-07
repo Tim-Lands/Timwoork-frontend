@@ -1,8 +1,6 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import API from '../../config';
 //import 'rsuite/dist/rsuite.min.css';
 import { motion } from 'framer-motion';
 import router from 'next/router';
@@ -10,31 +8,7 @@ import SidebarAdvices from './SidebarAdvices';
 //import { useEditor, EditorContent } from '@tiptap/react'
 //import StarterKit from '@tiptap/starter-kit'
 
-const SignupSchema = Yup.object().shape({
-    title: Yup.string().required('هذا الحقل إجباري'),
-    content: Yup.string().required('هذا الحقل إجباري'),
-    subcategories: Yup.string(),
-    tags: Yup.array(),
-});
-
 function Description() {
-    const [GetMainCategories, setMainCategories] = useState([])
-    const [isError, setIsError] = useState(false)
-    const getCategories = async () => {
-        try {
-            const res: any = await API.get('dashboard/categories')
-            if (res) {
-                setMainCategories(res.data.data)
-                setIsError(false)
-                console.log(res.data.data);
-            }
-        } catch (error) {
-            setIsError(true)
-        }
-    }
-    useEffect(() => {
-        getCategories()
-    }, [])
     return (
         <div className="container-fluid">
             <div className="row">
@@ -53,7 +27,7 @@ function Description() {
                         enableReinitialize={true}
 
                         //validationSchema={SignupSchema}
-                        onSubmit={async (values) => {
+                        onSubmit={async () => {
                             await new Promise((r) => setTimeout(r, 500));
                             router.push('/add-new/medias')
                             //alert(JSON.stringify(values, null, 2));

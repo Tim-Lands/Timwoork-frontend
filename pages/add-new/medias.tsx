@@ -1,6 +1,6 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
-import API from '../../config';
+import { ReactElement, useState } from "react";
+//import API from '../../config';
 import 'rsuite/dist/rsuite.min.css';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
@@ -50,23 +50,6 @@ function Medias() {
           console.log(info.fileList);
         },
       };
-    const [GetMainCategories, setMainCategories] = useState([])
-    const [isError, setIsError] = useState(false)
-    const getCategories = async () => {
-        try {
-            const res: any = await API.get('dashboard/categories')
-            if (res) {
-                setMainCategories(res.data.data)
-                setIsError(false)
-                console.log(res.data.data);
-            }
-        } catch (error) {
-            setIsError(true)
-        }
-    }
-    useEffect(() => {
-        getCategories()
-    }, [])
     return (
         <div className="container-fluid">
             <div className="row">

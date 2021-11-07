@@ -1,8 +1,6 @@
 //import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { Field, FieldArray, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import API from '../../config';
 //import 'rsuite/dist/rsuite.min.css';
 import { motion } from 'framer-motion';
 import Layout from "@/components/Layout/HomeLayout";
@@ -10,33 +8,7 @@ import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 //import { useEditor, EditorContent } from '@tiptap/react'
 //import StarterKit from '@tiptap/starter-kit'
-
-const SignupSchema = Yup.object().shape({
-    title: Yup.string().required('هذا الحقل إجباري'),
-    content: Yup.string().required('هذا الحقل إجباري'),
-    subcategories: Yup.string(),
-    tags: Yup.array(),
-});
-
 function Prices() {
-    const [GetMainCategories, setMainCategories] = useState([])
-    const [isError, setIsError] = useState(false)
-    const getCategories = async () => {
-        try {
-            const res: any = await API.get('dashboard/categories')
-            if (res) {
-                setMainCategories(res.data.data)
-                setIsError(false)
-                console.log(res.data.data);
-            }
-        } catch (error) {
-            setIsError(true)
-        }
-    }
-    useEffect(() => {
-        getCategories()
-    }, [])
-    const [rateCount, setRateCount] = useState(0)
     return (
         <div className="container-fluid">
             <div className="row">
@@ -55,13 +27,13 @@ function Prices() {
                             friends: []
                         }}
                         //validationSchema={SignupSchema}
-                        onSubmit={async (values) => {
+                        onSubmit={async (/*values*/) => {
                             await new Promise((r) => setTimeout(r, 500));
                             //alert(JSON.stringify(values, null, 2));
                             router.push('/add-new/description')
                         }}
                     >
-                        {({ errors, touched, isSubmitting, values, handleChange }) => (
+                        {({ errors, touched, isSubmitting, values }) => (
                             <Form>
                                 <div className={"timlands-panel " + (isSubmitting ? ' is-loader' : '')}>
 
