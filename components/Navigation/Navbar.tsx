@@ -60,7 +60,6 @@ export function Navbar(): ReactElement {
             transition: { duration: 0.41 },
         },
     }
-    const [showLang, setShowLang] = useState(false)
 
     const isLogged = useSelector((state: any) => state.isLogged)
     const isDarken = useSelector((state: any) => state.isDarken)
