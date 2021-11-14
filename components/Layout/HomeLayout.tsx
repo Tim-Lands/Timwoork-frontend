@@ -17,7 +17,7 @@ export default function Layout({ children }) {
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };
-    const handleComplete = (url: any) => setLoading(false);
+    const handleComplete = () => setLoading(false);
 
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);

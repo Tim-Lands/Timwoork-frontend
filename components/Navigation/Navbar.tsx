@@ -61,9 +61,7 @@ export function Navbar(): ReactElement {
         },
     }
     const [showLang, setShowLang] = useState(false)
-    const setShowLangHandle = () => {
-        setShowLang(!showLang)
-    }
+
     const isLogged = useSelector((state: any) => state.isLogged)
     const isDarken = useSelector((state: any) => state.isDarken)
     const dispatch = useDispatch()

@@ -60,8 +60,6 @@ function index() {
         totalUniqueItems,
         items,
         updateItemQuantity,
-        removeItem,
-        totalItems,
         cartTotal,
     } = useCart();
     function pricesTax() {

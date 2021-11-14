@@ -61,6 +61,7 @@ Post.propTypes = {
     period: PropTypes.number,
     buyers: PropTypes.number,
     price: PropTypes.number,
+    product: PropTypes.any
 };
 
 export default Post
