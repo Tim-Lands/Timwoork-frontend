@@ -14,9 +14,8 @@ import { ReactElement } from "react";
 //import { Navbar } from "@/components/Navigation/Navbar";
 import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
-import { connect } from "react-redux";
-import { logout } from "./../store/auth/authActions";
-import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from 'react-redux'
+import { increment } from '../actions'
 
 const testServices = [
   {
@@ -70,12 +69,14 @@ const testServices = [
 ]
 
 function Home() {
-  const { t } = useTranslation();
+  const counter = useSelector((state: any) => state.counter)
+  const dispatch = useDispatch()
   return (
     <>
-      {/*<Alert type="primary">What do you want to do?</Alert>*/}
       <Hero />
-      
+      <h1>{counter}</h1>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button>-</button>
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
@@ -84,7 +85,7 @@ function Home() {
           <div className="nanny-home-content">
             <h2 className="title">
               <span className="material-icons material-icons-outlined">analytics</span>
-              {t("HoHoHo Lorem ipsum dolor sit amet")}</h2>
+              HoHoHo Lorem ipsum dolor sit amet</h2>
             <p className="text">Excepteur sint occaecat voluptate velit esse cillum dolore eu fugiat nulla cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
             <div className="py-3">
               <Link href="/">
@@ -108,8 +109,4 @@ Home.getLayout = function getLayout(page): ReactElement {
     </Layout>
   )
 }
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.registerLoading,
-});
-export default connect(mapStateToProps, { logout })(Home);
+export default Home

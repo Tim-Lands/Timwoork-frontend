@@ -36,27 +36,47 @@ function Prices() {
                         {({ errors, touched, isSubmitting, values }) => (
                             <Form>
                                 <div className={"timlands-panel " + (isSubmitting ? ' is-loader' : '')}>
-
-                                    <div className="timlands-steps">
+                                <div className="timlands-steps">
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الأولى</h3>
-                                            <h3 className="text">معلومات عامة</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                                                </span>
+                                                معلومات عامة
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item active">
-                                            <h3 className="title">المرحلة الثانية</h3>
-                                            <h3 className="text">السعر والتطويرات</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">payments</span>
+                                                </span>
+                                                السعر والتطويرات
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الثالثة</h3>
-                                            <h3 className="text">الوصف وتعليمات المشتري</h3>
+                                            <h3 className="text">
+
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">description</span>
+                                                </span>
+                                                الوصف وتعليمات المشتري
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الرابعة</h3>
-                                            <h3 className="text">مكتبة الصور والملفات</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">mms</span>
+                                                </span>
+                                                مكتبة الصور والملفات
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الخامسة</h3>
-                                            <h3 className="text">نشر الخدمة</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">publish</span>
+                                                </span>
+                                                نشر الخدمة
+                                            </h3>
                                         </div>
                                     </div>
                                     <div className="timlands-panel-header mt-3">

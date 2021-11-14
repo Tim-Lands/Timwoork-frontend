@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
+import { useCart } from "react-use-cart";
 
-function Post({ title, thumbnail, postUrl, author, userUrl, rate, buyers, price }): ReactElement {
+function Post({ title, thumbnail, postUrl, author, userUrl, rate, buyers, price, product }): ReactElement {
     const thumbnailUrl = `url(${thumbnail})`;
+    const { addItem, inCart, removeItem } = useCart();
     return (
         <div className="timlands-post-item">
             <Link href={postUrl}>
@@ -34,12 +36,17 @@ function Post({ title, thumbnail, postUrl, author, userUrl, rate, buyers, price 
                 </ul>
             </div>
             <div className="post-item-footer">
-                    <p className="post-meta-price">
-                        Price at: {price}.00$
-                    </p>
-                    <p className="post-meta-bayer">
-                        {((buyers == 0) ? buyers : buyers + ' Bayers') || "Buy Now"}
-                    </p>
+                {inCart(product.id) ?
+                    <button onClick={() => removeItem(product.id)}>-</button> :
+                    <button onClick={() => addItem(product)}>+</button>
+                }
+
+                <p className="post-meta-price">
+                    السعر من: {price}.00$
+                </p>
+                <p className="post-meta-bayer">
+                    {((buyers == 0) ? buyers : buyers + ' اشتروا هذا') || "اشتري الآن"}
+                </p>
             </div>
         </div>
     )

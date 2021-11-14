@@ -1,7 +1,8 @@
 import i18n from "i18next";
 import "bootstrap/dist/css/bootstrap.min.css";
-import store from "@/store/store";
+//import store from "@/store/store";
 import { Provider } from "react-redux";
+import configureStore from "../config/configureStore";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 //import * as types from "@/store/actionTypes";
@@ -14,6 +15,7 @@ import type { AppProps } from 'next/app'
 //import { useTranslation } from "react-i18next";
 //require('../langs/config')
 import TimeAgo from 'javascript-time-ago'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import ar from 'javascript-time-ago/locale/ar.json'
 
@@ -27,6 +29,7 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
 }
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const { store, persistor } = configureStore()
     // Handle current user in redux.
     useEffect(() => {
         const tt: string = i18n.dir()
@@ -40,9 +43,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
         <Provider store={store}>
-            <div>
+            <PersistGate loading={null} persistor={persistor}>
                 {getLayout(<Component {...pageProps} />)}
-            </div>
+            </PersistGate>
         </Provider>
     );
 }

@@ -1,20 +1,8 @@
-/*
-|--------------------------------------------------------------------------
-| The home page.
-|--------------------------------------------------------------------------
-|
-| The home page of your application.
-|
-*/
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
 import Comments from './Components/Comments'
 import { ReactElement, useState } from "react";
-//import { Alert } from "@/components/Alert/Alert";
-//import { Navbar } from "@/components/Navigation/Navbar";
 import PostsAside from "@/components/PostsAside";
-import { connect } from "react-redux";
-import { logout } from "./../../store/auth/authActions";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import { useTranslation } from "react-i18next";
@@ -149,14 +137,14 @@ function Single() {
           <div className="col-lg-8">
             <div className="timwoork-single-post">
               <div className="timwoork-single-header">
-                <h1 className="title">I will record an italian professional voice over</h1>
+                <h1 className="title">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،</h1>
                 <div className="timwoork-single-header-meta d-flex">
                   <ul className="single-header-meta nav me-auto">
                     <li className="user-item">
                       <Link href="/users/Single">
                         <a className="user-link">
                           <img src="/avatar.png" className="circular-center tiny-size" alt="" />
-                          Abdelhamid Boumegouass
+                          عبد الحميد بومقواس
                         </a>
                       </Link>
                     </li>
@@ -164,7 +152,7 @@ function Single() {
                       <Link href="/users/Single">
                         <a className="category-link">
                           <span className="material-icons material-icons-outlined">label</span>
-                          {t('Graphics & Designs')}
+                          التصميم الغرافيكي
                         </a>
                       </Link>
                     </li>
@@ -184,10 +172,10 @@ function Single() {
                     </li>
                     <li className="level-item">
                       <span className="text-level">
-                        {t('Level')}
+                        المستوى
                       </span>
                       <span className="value-level">
-                        {t('Level Name')}
+                        بائع محترف
                       </span>
                     </li>
                   </ul>
@@ -200,7 +188,7 @@ function Single() {
                       <div key={index} className="each-slide">
                         <div className="images-slider" style={{ backgroundImage: `url(${each})` }}>
                           <div className="caption-descriptions">
-                            <p className="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, reiciendis.</p>
+                            <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد</p>
                           </div>
                         </div>
                       </div>
@@ -208,30 +196,29 @@ function Single() {
                   </Slide>
                   <div className="timwoork-single-product-detailts">
 
-                    <h1>Lorem adipisicing elit. Deleniti</h1>
-                    <h2>Lorem adipisicing elit. Deleniti</h2>
+                    <h1>هذا النص هو مثال لنص في نفس</h1>
+                    <h2>المساحة، لقد تم توليد هذا </h2>
                     <ul className="single-list">
-                      <li>Lorem adipisicing elit. Deleniti</li>
-                      <li>Lorem adipisicing elit. Deleniti
+                      <li>النص من مولد النص العربى، حيث</li>
+                      <li>نصوصا مؤقتة على التصميم ليظهر للعميل
                         <ul>
-                          <li>Lorem adipisicing elit</li>
-                          <li>Lorem adipisicing elit</li>
-                          <li>Lorem adipisicing elit</li>
-                          <li>Lorem adipisicing elit</li>
-                          <li>Lorem adipisicing elit</li>
+                          <li>النص من مولد النص العربى، حيث</li>
+                          <li>المواقع على وجه الخصوص، حيث</li>
+                          <li>العربى أن يوفر على المصمم عناء</li>
+                          <li>زيادة عدد الفقرات كما تريد، النص لن يبدو</li>
+                          <li>النص من مولد النص العربى، حيث</li>
                         </ul>
                       </li>
-                      <li>Lorem adipisicing elit. Deleniti</li>
-                      <li>Lorem adipisicing elit. Deleniti</li>
-                      <li>Lorem adipisicing elit. Deleniti</li>
+                      <li>مولد النص العربى مفيد لمصممي المواقع</li>
+                      <li>على وجه الخصوص، حيث يحتاج</li>
+                      <li>يطلع على صورة حقيقية لتصميم الموقع</li>
                     </ul>
-                    <h3>Lorem adipisicing elit. Deleniti</h3>
+                    <h3>العربى أن يوفر على المصمم عناء</h3>
                     <p className="text">
-                      Lorem adipisicing elit. Deleniti nobis Tempora recusandae omnis  Lorem adipisicing elit. Deleniti nobis Tempora recusandae omnis Lorem adipisicing elit. Deleniti nobis Tempora recusandae omnis corrupti assumenda, laboriosam odio iusto veritatis illo consequatur molestiae quis molestias reiciendis.
+                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
+إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.
                     </p>
-                    <h4>Lorem adipisicing elit. Deleniti</h4>
-                    <h5>Lorem adipisicing elit. Deleniti</h5>
-                    <h6>Lorem adipisicing elit. Deleniti</h6>
+                    <h4>مولد النص العربى مفيد لمصممي المواقع</h4>
                   </div>
                   <div className="timwoork-single-seller-info">
                     <div className="seller-info-header">
@@ -244,27 +231,27 @@ function Single() {
                           <span className="is-online"></span>
                         </div>
                         <div className="seller-info-content">
-                          <h3 className="user-title">Abdelhamid Boumegouas</h3>
+                          <h3 className="user-title">عبد الحميد بومقواس</h3>
                           <ul className="user-meta nav">
                             <li>
                               <span className="material-icons material-icons-outlined">badge</span> {t('Promium Seller')}
                             </li>
                             <li>
-                              <span className="material-icons material-icons-outlined">place</span> <strong>Djelfa</strong>, Algeria
+                              <span className="material-icons material-icons-outlined">place</span> <strong>الجلفة</strong>, الجزائر
                             </li>
                             <li>
-                              <span className="material-icons material-icons-outlined">speed</span> 4 {t('Hours')}
+                              <span className="material-icons material-icons-outlined">speed</span> 4 ساعات
                             </li>
                           </ul>
                           <div className="seller-info-butts d-flex">
                             <Link href="">
                               <a className="btn butt-primary butt-sm flex-center">
-                                <i className="material-icons material-icons-outlined">account_circle</i> {t('View Profile')}
+                                <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص 
                               </a>
                             </Link>
                             <Link href="">
                               <a className="btn butt-green butt-sm flex-center">
-                                <i className="material-icons material-icons-outlined">email</i> {t('Contact Seller')}
+                                <i className="material-icons material-icons-outlined">email</i> مراسلة البائع
                               </a>
                             </Link>
                           </div>
@@ -279,7 +266,7 @@ function Single() {
                         <div className="flex-center">
                           <h1 className="title">
                             <span className="material-icons material-icons-outlined">question_answer</span>
-                            {t('Top Comments')}
+                            التعليقات
                           </h1>
                         </div>
                       </div>
@@ -300,18 +287,18 @@ function Single() {
                     <li className="cat-post">
                       <Link href="">
                         <a>
-                          <span className="material-icons material-icons-outlined">label</span>{t('Graphics & Designs')}
+                          <span className="material-icons material-icons-outlined">label</span>التصميم الغرافيكي
                         </a>
                       </Link>
                     </li>
                     <li className="delevr-time">
-                      <span className="material-icons material-icons-outlined">timer</span>2 {t('Days Delivery')}
+                      <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: يومين
                     </li>
                   </ul>
                 </div>
                 <div className="panel-aside-body">
                   <div className="add-devloppers-header">
-                    <h3 className="title">{t('Available Developers')}</h3>
+                    <h3 className="title">التطويرات المتوفرة</h3>
                   </div>
                   <ul className="add-devloppers-nav">
                     {toppings.map(({ id, name, price }, index) => {
@@ -341,22 +328,22 @@ function Single() {
                 <div className="panel-aside-footer">
                   <div className="aside-footer-total-price">
                     <h1 className="price-total me-auto">
-                      <strong>{t('Total')} </strong> {getFormattedPrice(total)}
+                      <strong>المجموع </strong> {getFormattedPrice(total)}
                     </h1>
                     <div className="bayers-count">
                       <p className="num">
                         <span className="count">5 </span>
-                        <span className="text"> {t('Bayers')}</span>
+                        <span className="text"> اشتروا هذا</span>
                       </p>
                     </div>
                   </div>
                   <div className="aside-footer-note">
-                    <p className="text">{t('Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci, unde? Numquam, autem?')}</p>
+                    <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
                   </div>
                   <div className="aside-footer-addtocart">
                     <button className="btn butt-primary butt-lg">
                       <span className="material-icons material-icons-outlined">add_shopping_cart</span>
-                      {t('Add To Cart')}
+                      إضافة إلى السلة
                     </button>
                   </div>
                 </div>
@@ -376,8 +363,4 @@ Single.getLayout = function getLayout(page): ReactElement {
     </Layout>
   )
 }
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.registerLoading,
-});
-export default connect(mapStateToProps, { logout })(Single);
+export default Single;

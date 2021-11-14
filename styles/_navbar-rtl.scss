@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 999;
     transition: all 0.3s;
     &.is-shown {
         transition: all 0.3s;
@@ -12,6 +12,9 @@
         transition: all 0.3s;
         transform: translateY(-100px);
     }
+}
+.ant-dropdown-menu {
+    text-align: right;
 }
 .timlands-navbar {
     background-color: #fff;
@@ -181,6 +184,15 @@
                     font-weight: 700;
                 }
             }
+            &.login-user {
+                > a {
+                    display: block;
+                    padding: 9px 10px;
+                    font-size: 14px;
+                    color: #555;
+                    font-weight: 300;
+                }
+            }
             &.register-nav-item {
                 padding: 7px;
             }
@@ -232,8 +244,19 @@
         }
     }
 }
-
-
+.nav-auth {
+    .language-nav-butt  {
+        margin-top: 8px;
+        color: #777 !important;
+        &:hover {
+            background-color: #fff !important;
+            color: #000 !important;
+        }
+        .material-icons {
+            font-size: 21px !important;
+        }
+    }
+}
 .timlands-sub-navbar {
     background-color: #ddd;
     .sub-navbar-cats {

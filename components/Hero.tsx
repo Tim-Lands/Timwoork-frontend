@@ -96,15 +96,15 @@ function Hero() {
                 </motion.div>
                 <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
-                        Lorem ipsum dolor sit amet,
+                    هذا النص هو مثال لنص يمكن أن يستبدل
                     </motion.h1>
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
-                        consectetur adipiscing elit, sed do eiusmod tempor
+                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
                     </motion.h1>
                 </div>
                 <div className="timlands-hero-search">
                     <div className="rel-search">
-                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="Search in Wazzfny..." className="timlands-inputs" />
+                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيموورك..." className="timlands-inputs" />
                         <button className="search-btn">
                             <span className="material-icons material-icons-outlined">search</span>
                         </button>
@@ -130,25 +130,25 @@ function Hero() {
                         </motion.div>}
 
                         <ul className="popular-searchs-list nav">
-                            <li className="popular-title">Popular Search: </li>
+                            <li className="popular-title">الأكثر بحثا: </li>
                             <li className="popular-item">
                                 <Link href="dd">
-                                    <a className="popular-link">Web Design</a>
+                                    <a className="popular-link">تصميم المواقع</a>
                                 </Link>
                             </li>
                             <li className="popular-item">
                                 <Link href="dd">
-                                    <a className="popular-link">Write and Traduction</a>
+                                    <a className="popular-link">ترمجة المقالات</a>
                                 </Link>
                             </li>
                             <li className="popular-item">
                                 <Link href="dd">
-                                    <a className="popular-link">Photoshop</a>
+                                    <a className="popular-link">فوتوشوب</a>
                                 </Link>
                             </li>
                             <li className="popular-item">
                                 <Link href="dd">
-                                    <a className="popular-link">Graphic Design</a>
+                                    <a className="popular-link">غرافيك</a>
                                 </Link>
                             </li>
                         </ul>

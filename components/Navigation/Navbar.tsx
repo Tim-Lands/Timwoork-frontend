@@ -8,17 +8,18 @@
 |
 */
 import PropTypes from "prop-types";
-
-import {ReactElement, useEffect, useState} from "react";
+import { Menu, Dropdown, Avatar, Image, Badge } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.min.css';
+import { ReactElement, useEffect, useState } from "react";
 import Logo from "../Logo";
 import Menus from "./Menus";
 import Link from "next/link";
 import { motion } from 'framer-motion'
- /**
- * A Link that can be displayed in the menu.
- * @param {object} props
- */
-// The horizontal menu bar.
+import { useSelector, useDispatch } from 'react-redux'
+import { login, setDarken } from '../../actions'
+import router from "next/router";
+import { useCart } from "react-use-cart";
 
 export function LangList(): ReactElement {
 
@@ -39,13 +40,14 @@ export function LangList(): ReactElement {
         </motion.div>
     )
 }
-export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
+export function Navbar(): ReactElement {
     const [scroll, setScroll] = useState(false);
+    const { totalUniqueItems } = useCart();
     useEffect(() => {
-      window.addEventListener("scroll", () => {
-        setScroll(window.scrollY > 60);
-      });
-    }, []); 
+        window.addEventListener("scroll", () => {
+            setScroll(window.scrollY > 60);
+        });
+    }, []);
     const DarkIconvariants = {
         visible: {
             opacity: 1,
@@ -57,11 +59,34 @@ export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
             y: 80,
             transition: { duration: 0.41 },
         },
-      }
+    }
     const [showLang, setShowLang] = useState(false)
     const setShowLangHandle = () => {
         setShowLang(!showLang)
-    } 
+    }
+    const isLogged = useSelector((state: any) => state.isLogged)
+    const isDarken = useSelector((state: any) => state.isDarken)
+    const dispatch = useDispatch()
+    const AccountList = (
+        <Menu>
+            <Menu.Item key="0">
+                <Link href="/">
+                    <a>الصفحة الشخصية</a>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="1">
+                <Link href="/">
+                    <a>الإعدادات</a>
+                </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="3">
+                <a onClick={() => dispatch(login())}>
+                    تسجيل الخروج
+                </a>
+            </Menu.Item>
+        </Menu>
+    )
     return (
         <div className={"timlands-navbar-container" + (scroll ? ' is-shown' : '')}>
             <nav className="timlands-navbar">
@@ -76,30 +101,60 @@ export function Navbar({isDarken, setIsDarkenHandle}): ReactElement {
                     </div>
                     <ul className="nav nav-auth ml-auto">
                         <li className="circular-item language-nav-item">
-                            <motion.button whileTap={{ scale: 0.9 }} onClick={setShowLangHandle} className="language-nav-butt circular-center">
-                                <i className="material-icons">language</i>
+                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
+                                <Badge count={totalUniqueItems} size='small' offset={[2, -8]}>
+                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                </Badge>
                             </motion.button>
-                            {showLang && <LangList />}
                         </li>
-                        <li className="login-nav-item">
-                            <a href="/user/login">
-                                تسجيل الدخول
-                            </a>
-                        </li>
-                        <li className="register-nav-item">
-                            <Link href="">
-                                <a className="btn butt-sm butt-primary flex-center">
-                                    <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
-                                </a>
-                            </Link>
-                        </li>
+                        {isLogged ?
+                            <>
+                                <li className="circular-item language-nav-item">
+                                    <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
+                                        <Badge count={0} size='small' offset={[2, -8]}>
+                                            <i className="material-icons material-icons-outlined">email</i>
+                                        </Badge>
+                                    </motion.button>
+                                </li>
+                                <li className="circular-item language-nav-item">
+                                    <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
+                                        <Badge count={5} size='small' offset={[2, -8]}>
+                                            <i className="material-icons material-icons-outlined">notifications</i>
+                                        </Badge>
+                                    </motion.button>
+                                </li>
+                                <li className="login-user">
+                                    <Dropdown overlay={AccountList} trigger={['click']}>
+                                        <a>
+                                            <Avatar src={<Image src="/avatar2.jpg" style={{ width: 32 }} />} />
+                                            <span className="text"> عبد الحميد <DownOutlined /></span>
+                                        </a>
+                                    </Dropdown>
+                                </li>
+                            </>
+                            :
+                            <>
+                                <li className="login-nav-item">
+                                    <a onClick={() => dispatch(login())} className="btn butt-xs flex-center">
+                                        تسجيل الدخول
+                                    </a>
+                                </li>
+                                <li className="register-nav-item">
+                                    <Link href="">
+                                        <a className="btn butt-sm butt-primary flex-center">
+                                            <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
+                                        </a>
+                                    </Link>
+                                </li>
+                            </>
+                        }
                         <li className="circular-item">
-                            <motion.button whileTap={{ scale: 0.9 }} onClick={setIsDarkenHandle} className="language-nav-butt circular-center">
-                            {isDarken ? 
-                                <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i> 
-                                : 
-                                <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
-                            }
+                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => dispatch(setDarken())} className="language-nav-butt circular-center">
+                                {isDarken ?
+                                    <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
+                                    :
+                                    <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
+                                }
                             </motion.button>
                         </li>
                     </ul>

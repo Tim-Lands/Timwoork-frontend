@@ -1,13 +1,25 @@
 import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement } from "react";
 import { Field, Form, Formik } from 'formik';
-//import 'rsuite/dist/rsuite.min.css';
+import { Select } from 'antd';
+
+import "antd/dist/antd.css";
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 //import { useEditor, EditorContent } from '@tiptap/react'
 //import StarterKit from '@tiptap/starter-kit'
 function Overview() {
+    const { Option }: any = Select;
+
+    const children = [];
+    for (let i = 0; i < 1000; i++) {
+        children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+    }
+
+    function handleChange(value) {
+        console.log(`selected ${value}`);
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -37,29 +49,51 @@ function Overview() {
                                 <div className={"timlands-panel" + (isSubmitting ? ' is-loader' : '')}>
                                     <div className="timlands-steps">
                                         <div className="timlands-step-item active">
-                                            <h3 className="title">المرحلة الأولى</h3>
-                                            <h3 className="text">معلومات عامة</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                                                </span>
+                                                معلومات عامة
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الثانية</h3>
-                                            <h3 className="text">السعر والتطويرات</h3>
+                                            <h3 className="text">
+
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">payments</span>
+                                                </span>
+                                                السعر والتطويرات
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الثالثة</h3>
-                                            <h3 className="text">الوصف وتعليمات المشتري</h3>
+                                            <h3 className="text">
+
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">description</span>
+                                                </span>
+                                                الوصف وتعليمات المشتري
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الرابعة</h3>
-                                            <h3 className="text">مكتبة الصور والملفات</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">mms</span>
+                                                </span>
+                                                مكتبة الصور والملفات
+                                            </h3>
                                         </div>
                                         <div className="timlands-step-item">
-                                            <h3 className="title">المرحلة الخامسة</h3>
-                                            <h3 className="text">نشر الخدمة</h3>
+                                            <h3 className="text">
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">publish</span>
+                                                </span>
+                                                نشر الخدمة
+                                            </h3>
                                         </div>
                                     </div>
                                     <div className="timlands-panel-header mt-3">
                                         <div className="flex-center">
-                                            <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إضافة خدمة جديدة</h2>
+                                            <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>معلومات عامة</h2>
                                             <div className={"header-butt" + (isSubmitting ? ' is-loader' : '')}>
                                                 <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
                                                     <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
@@ -101,7 +135,7 @@ function Overview() {
                                                         className="timlands-inputs select"
                                                         autoComplete="off"
                                                     >
-                                                            <option>gfhgfhf</option>
+                                                        <option>gfhgfhf</option>
                                                     </Field>
                                                     {errors.subcategories && touched.subcategories ?
                                                         <div style={{ overflow: 'hidden' }}>
@@ -138,17 +172,21 @@ function Overview() {
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                    <div className="content-editor">
-                                                        <div className="normal-editor">
-                                                            <Field
-                                                                id="input-tags"
-                                                                name="tags"
-                                                                placeholder="الوسوم..."
-                                                                className="timlands-inputs"
-                                                                autoComplete="off"
-                                                            />
-                                                        </div>
-                                                    </div>
+                                                    <Select
+                                                        mode="multiple"
+                                                        notFoundContent="No people avaialable"
+                                                        style={{ width: "100%" }}
+                                                        className="timlands-inputs select"
+                                                        placeholder="اختر الوسوم"
+                                                        defaultValue={["a10", "c12"]}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="hghg">jgvjhgfh</option>
+                                                        <option value="hg66hg">jgvjh345gfh</option>
+                                                        <option value="hgh443g">jgvj3hg435fh</option>
+                                                        <option value="hgh568g">jgvjhgfh</option>
+                                                        <option value="hgh33g">jgvjhgfh</option>
+                                                    </Select>
                                                     {errors.content && touched.content ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">

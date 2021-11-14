@@ -22,6 +22,7 @@ function PostsAside({ PostData, title, colNumber }): ReactElement {
                                 period={e.period}
                                 buyers={e.buyers}
                                 userUrl={e.userUrl}
+                                product={e}
                             />
                         </div>
                     ))}
