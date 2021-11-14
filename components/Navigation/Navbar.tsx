@@ -149,7 +149,7 @@ export function Navbar(): ReactElement {
                             </>
                         }
                         <li className="circular-item">
-                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => dispatch(setDarken())} className="language-nav-butt circular-center">
+                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => dispatch(setDarken())} className="language-nav-butt circular-center pb-3">
                                 {isDarken ?
                                     <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
                                     :

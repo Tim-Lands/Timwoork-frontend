@@ -118,7 +118,7 @@ function index() {
                                                         </div>
                                                         <div className="cart-item-header me-auto">
                                                             <ul className="prices-list">
-                                                                <li><span>الكمية: </span>{item.quantity}</li>
+                                                                <li><span>عدد المرات: </span>{item.quantity}</li>
                                                                 <li><span>السعر: </span>{item.price}</li>
                                                                 <li><strong>الإجمالي: </strong>{item.itemTotal}</li>
                                                             </ul>
@@ -160,7 +160,7 @@ function index() {
                                                     </div>
                                                     <div className="cart-item-price ml-auto">
                                                         <h4 className="price-title-total">
-                                                            {pricesTax().toLocaleString()}$
+                                                            ${pricesTax().toLocaleString()}
                                                         </h4>
                                                     </div>
                                                 </div>
