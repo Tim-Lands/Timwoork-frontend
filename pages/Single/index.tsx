@@ -222,7 +222,7 @@ function Single() {
                   </div>
                   <div className="timwoork-single-seller-info">
                     <div className="seller-info-header">
-                      <h2 className="title">{t('About Seller')}</h2>
+                      <h2 className="title">حول البائع</h2>
                     </div>
                     <div className="seller-info-container">
                       <div className="d-flex">
