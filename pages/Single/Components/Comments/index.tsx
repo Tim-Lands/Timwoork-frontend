@@ -3,17 +3,17 @@ import CommentPost from './CommentPost'
 const replies = [
     {
         id: 1,
-        autor: 'Buyer ben Buyer',
-        time: '9 min ago',
-        content: 'consectetur adipisicing elit. Aut dolore veritatis dolor, voluptas, corporis, repudiandae dolores neque in reprehenderit delectus nihil quod dolorum qui architecto'
+        autor: 'المشتري فلان',
+        time: 'منذ 25 دقيقة',
+        content: 'هذا النص يمكن أن يتم تركيبه على أي تصميم دون مشكلة فلن يبدو وكأنه نص منسوخ، غير منظم، غير منسق، أو حتى غير مفهوم. لأنه'
     }
 ]
 function index() {
     return (
         <div className="comments-list-items">
             <ul className="list-items-ul">
-                <CommentPost time="4 min ago" author="Abdellah Elhadi" content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolore veritatis dolor, voluptas, corporis, repudiandae dolores neque in reprehenderit delectus nihil quod dolorum qui architecto a facilis laborum voluptate possimus?" />
-                <CommentPost replies={replies} time="8 days ago" author="Folan ben folan" content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut dolore veritatis dolor, voluptas, corporis, repudiandae dolores neque in reprehenderit delectus nihil quod dolorum qui architecto a facilis laborum voluptate possimus?" />
+                <CommentPost time="منذ 5 دقائق" author="عبدالله الهادي" content="هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل " />
+                <CommentPost replies={replies} time="منذ 9 ايام" author="فارس المتولي" content="ومن هنا وجب على المصمم أن يضع نصوصا مؤقتة على التصميم ليظهر للعميل الشكل كاملاً،دور مولد النص العربى" />
             </ul>
         </div>
     )

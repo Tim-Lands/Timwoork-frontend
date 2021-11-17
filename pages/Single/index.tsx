@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 const testServices = [
   {
     id: 1,
-    title: 'Lorem ipsum dolor sit amet consectetur',
-    author: 'Abdelhamid Boumegouas',
+    title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم دون مشكلة',
+    author: 'عبد الحميد بومقواس',
     rate: 4,
     price: 40,
     postUrl: '/Single',
@@ -22,8 +22,8 @@ const testServices = [
   },
   {
     id: 2,
-    title: 'Lorem ipsum dolor sit amet consectetur',
-    author: 'Abdelhamid Boumegouas',
+    title: 'هذا النص غير منظم، غير أو حتى غير مفهوم. لأنه',
+    author: 'طارق عروي',
     rate: 4,
     price: 40,
     postUrl: '/Single',
@@ -34,24 +34,24 @@ const testServices = [
   },
   {
     id: 3,
-    title: 'Lorem ipsum dolor sit amet consectetur',
-    author: 'Abdelhamid Boumegouas',
+    title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم دون',
+    author: 'ضياء الدين محمد',
     rate: 4,
     price: 40,
     postUrl: '/Single',
-    thumbnail: '/homepage.jpg',
+    thumbnail: '/slide_3.jpg',
     period: 9,
     buyers: 5,
     userUrl: '/user'
   },
   {
     id: 4,
-    title: 'Lorem ipsum dolor sit amet consectetur',
-    author: 'Abdelhamid Boumegouas',
+    title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم',
+    author: 'رقية الرفوع',
     rate: 4,
     price: 40,
     postUrl: '/Single',
-    thumbnail: '/homepage.jpg',
+    thumbnail: '/slide_2.jpg',
     period: 9,
     buyers: 5,
     userUrl: '/user'
@@ -74,27 +74,27 @@ const properties = {
 const toppings = [
   {
     id: 1,
-    name: "I will record an italian Capsicum",
+    name: "الحروف التى يولدها التطبيق",
     price: 11.2
   },
   {
     id: 2,
-    name: "I will record an italia nPaneer",
+    name: "الأخرى إضافة إلى زيادة عدد",
     price: 22.0
   },
   {
     id: 3,
-    name: "I will record an italia nRed Paprika",
+    name: " مولد النص العربى زيادة عدد الفقرات ",
     price: 2.5
   },
   {
     id: 4,
-    name: "I will record an italian Onions",
+    name: "يطلع على صورة حقيقية لتصميم الموقع",
     price: 33.0
   },
   {
     id: 5,
-    name: "I will record an italian Extra Cheese",
+    name: "مشكلة فلن يبدو وكأنه نص منسوخ",
     price: 23.5
   },
 ]
