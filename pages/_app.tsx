@@ -18,6 +18,7 @@ import TimeAgo from 'javascript-time-ago'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import ar from 'javascript-time-ago/locale/ar.json'
+import { ConfigProvider } from "antd";
 
 TimeAgo.addDefaultLocale(ar)
 
@@ -34,17 +35,19 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     useEffect(() => {
         const tt: string = i18n.dir()
         if (tt == "rtl") {
-            import ("../styles/app-rtl" + ".css");
+            import("../styles/app-rtl" + ".css");
 
-        }else {
-            import ("../styles/app" + ".css");
+        } else {
+            import("../styles/app" + ".css");
         }
     }, []);
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                {getLayout(<Component {...pageProps} />)}
+                <ConfigProvider direction="rtl">
+                    {getLayout(<Component {...pageProps} />)}
+                </ConfigProvider>
             </PersistGate>
         </Provider>
     );

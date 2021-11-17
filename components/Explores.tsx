@@ -5,7 +5,7 @@ const categories = [
     {
         id: 1,
         cateUrl: '/category/id',
-        name: 'Recording & Audio',
+        name: 'صوتيات',
         icon: 'headphones',
         iconIsOutlined: true,
         count: 34,
@@ -13,7 +13,7 @@ const categories = [
     {
         id: 2,
         cateUrl: '/category/id',
-        name: 'Programming & Tech',
+        name: 'برمجة وتطوير',
         icon: 'code',
         iconIsOutlined: true,
         count: 34,
@@ -21,7 +21,7 @@ const categories = [
     {
         id: 3,
         cateUrl: '/category/id',
-        name: 'Data',
+        name: 'علم البيانات',
         icon: 'account_tree',
         iconIsOutlined: true,
         count: 34,
@@ -29,7 +29,7 @@ const categories = [
     {
         id: 4,
         cateUrl: '/category/id',
-        name: 'Video & Animation',
+        name: 'الفيديوهات والحركات',
         icon: 'ondemand_video',
         iconIsOutlined: true,
         count: 34,
@@ -37,7 +37,7 @@ const categories = [
     {
         id: 5,
         cateUrl: '/category/id',
-        name: 'Writing & Translation',
+        name: 'الكتابة والترجمة',
         icon: 'rate_review',
         iconIsOutlined: true,
         count: 34,
@@ -45,7 +45,7 @@ const categories = [
     {
         id: 6,
         cateUrl: '/category/id',
-        name: 'Digital Marketing',
+        name: 'التسويق الرقمي',
         icon: 'connected_tv',
         iconIsOutlined: true,
         count: 34,
@@ -53,7 +53,7 @@ const categories = [
     {
         id: 7,
         cateUrl: '/category/id',
-        name: 'Graphics & Design',
+        name: 'التصميم الغرافيكي',
         icon: 'view_in_ar',
         iconIsOutlined: true,
         count: 34,
@@ -61,7 +61,7 @@ const categories = [
     {
         id: 8,
         cateUrl: '/category/id',
-        name: 'Business',
+        name: 'إدارة أعمال',
         icon: 'business',
         iconIsOutlined: true,
         count: 34,
@@ -69,7 +69,7 @@ const categories = [
     {
         id: 9,
         cateUrl: '/category/id',
-        name: 'Lifestyle',
+        name: 'نمط الحياة',
         icon: 'volunteer_activism',
         iconIsOutlined: true,
         count: 34,
@@ -110,14 +110,14 @@ function Explores() {
                     <div className="col-md-8 p-0">
                         <div className="main-explores-container">
                             <div className="main-item-category-header">
-                                <h2 className="title"><span className="material-icons material-icons-outlined">connected_tv</span>  Digital Marketing</h2>
+                                <h2 className="title"><span className="material-icons material-icons-outlined">connected_tv</span>  التسويق الرقمي</h2>
                             </div>
                             <div className="main-item-category-body">
                                 <div className="row">
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Social Media Advertising</p>
+                                                <p className="text">هذا النص هو مثال لنص</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -125,7 +125,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Search Engine Optimization (SEO)</p>
+                                                <p className="text">من النصوص الأخرى</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -133,7 +133,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Local SEO</p>
+                                                <p className="text">يستبدل في نفس</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -141,7 +141,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Marketing Strategy</p>
+                                                <p className="text">يبدو مقسما</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -149,7 +149,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Public Relations</p>
+                                                <p className="text">الفقرات كما تريد</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -157,7 +157,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Content Marketing</p>
+                                                <p className="text">من النصوص الأخرى</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -165,7 +165,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Video Marketing</p>
+                                                <p className="text">هذا النص هو مثال لنص</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -173,7 +173,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Web Analytics</p>
+                                                <p className="text">يستبدل في نفس</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -181,7 +181,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Text Message Marketing</p>
+                                                <p className="text">الفقرات كما تريد</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -189,7 +189,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Display Advertising</p>
+                                                <p className="text">يستبدل في نفس</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -197,7 +197,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Affiliate Marketing</p>
+                                                <p className="text">من النصوص الأخرى</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>
@@ -205,7 +205,7 @@ function Explores() {
                                     <div className="col-sm-6">
                                         <Link href="/">
                                             <a className="sub-cat-link">
-                                                <p className="text">Crowdfunding</p>
+                                                <p className="text">هذا النص هو مثال لنص</p>
                                                 <p className="count">19</p>
                                             </a>
                                         </Link>

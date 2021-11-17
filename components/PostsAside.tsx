@@ -15,7 +15,7 @@ function PostsAside({ PostData, title, colNumber }): ReactElement {
                             <Post
                                 title={e.title}
                                 author={e.author}
-                                rate={e.rate}
+                                //rate={e.rate}
                                 price={e.price}
                                 postUrl={e.postUrl}
                                 thumbnail={e.thumbnail}

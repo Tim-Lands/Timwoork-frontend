@@ -2,53 +2,82 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
+import { Badge } from 'antd';
 
-function Post({ title, thumbnail, postUrl, author, userUrl, rate, buyers, price, product }): ReactElement {
+function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, product }): ReactElement {
     const thumbnailUrl = `url(${thumbnail})`;
     const { addItem, inCart, removeItem } = useCart();
+    /*const showStars = () => {
+        const xAr: any = [
+            <span className="material-icons">grade</span>,
+            <span className="material-icons">grade</span>,
+            <span className="material-icons">grade</span>,
+            <span className="material-icons">grade</span>,
+            <span className="material-icons">grade</span>
+        ]
+        const yAr: any = [
+            <span className="material-icons material-icons-outlined">grade</span>,
+            <span className="material-icons material-icons-outlined">grade</span>,
+            <span className="material-icons material-icons-outlined">grade</span>,
+            <span className="material-icons material-icons-outlined">grade</span>,
+            <span className="material-icons material-icons-outlined">grade</span>,
+        ]
+
+        const x: number = 5
+        const y: number = x - rate
+        const yut: any = xAr.slice(y)
+        if (y == 0) {
+            return yut
+        } else {
+            const yut2: any = yAr.slice(-y, x)
+            return yut.concat(yut2)
+        }
+    }*/
     return (
-        <div className="timlands-post-item">
-            <Link href={postUrl}>
-                <a>
-                    <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
-                </a>
-            </Link>
-            <div className="post-item-content">
-                <h3 className="title">
-                    <Link href={postUrl}>
-                        <a>
-                            {title}
-                        </a>
-                    </Link>
-                </h3>
-                <ul className="nav post-meta">
-                    <li className="post-meta-user">
-                        <Link href={userUrl}>
+        <Badge.Ribbon text="Hippies" color="cyan">
+            <div className="timlands-post-item">
+                <Link href={postUrl}>
+                    <a>
+                        <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
+                    </a>
+                </Link>
+                <div className="post-item-content">
+                    <h3 className="title">
+                        <Link href={postUrl}>
                             <a>
-                                <span className="material-icons material-icons-outlined">person_outline</span> {author}
+                                {title}
                             </a>
                         </Link>
-                    </li>
-                    <li className="post-meta-rate">
-                        <span className="material-icons material-icons-outlined">grade</span> {rate}
-                    </li>
+                    </h3>
+                    <ul className="nav post-meta">
+                        <li className="post-meta-user">
+                            <Link href={userUrl}>
+                                <a>
+                                    <span className="material-icons material-icons-outlined">person_outline</span> {author}
+                                </a>
+                            </Link>
+                        </li>
+                        <li className="post-meta-rate">
+                            {/*showStars.map(e => e)*/}
+                        </li>
 
-                </ul>
-            </div>
-            <div className="post-item-footer">
-                {inCart(product.id) ?
-                    <button onClick={() => removeItem(product.id)}>-</button> :
-                    <button onClick={() => addItem(product)}>+</button>
-                }
+                    </ul>
+                </div>
+                <div className="post-item-footer">
+                    {inCart(product.id) ?
+                        <button onClick={() => removeItem(product.id)}>-</button> :
+                        <button onClick={() => addItem(product)}>+</button>
+                    }
 
-                <p className="post-meta-price">
-                    السعر من: {price}.00$
-                </p>
-                <p className="post-meta-bayer">
-                    {((buyers == 0) ? buyers : buyers + ' اشتروا هذا') || "اشتري الآن"}
-                </p>
+                    <p className="post-meta-price">
+                        السعر من: {price}.00$
+                    </p>
+                    <p className="post-meta-bayer">
+                        {((buyers == 0) ? buyers : buyers + ' اشتروا هذا') || "اشتري الآن"}
+                    </p>
+                </div>
             </div>
-        </div>
+        </Badge.Ribbon>
     )
 }
 Post.propTypes = {

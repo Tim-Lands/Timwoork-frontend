@@ -1,4 +1,3 @@
-//import Link from "next/link";
 import { Alert } from "@/components/Alert/Alert";
 import API from '../../../config';
 

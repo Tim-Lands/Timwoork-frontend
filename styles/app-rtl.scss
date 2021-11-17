@@ -263,6 +263,262 @@ h3 {
     border-top: 1px dashed #ddd;
     display: flex;
 }
+.timlands-profile-content {
+    .profile-content-body {
+        padding: 20px;
+        background-color: #fff;
+        .content-title {
+            padding: 15px 0;
+            border-bottom: 1px dashed #ddd;
+            margin-bottom: 9px;
+            .title {
+                font-size: 17px;
+                color: #444;
+                font-weight: bold;
+                margin: 0;
+                .material-icons {
+                    margin-left: 4px;
+                }
+            }
+        }
+        .content-text-item {
+            padding: 10px 0;
+            border: 1px dashed #ddd;
+            border-radius: 6px;
+            margin: 7px 0;
+            padding: 15px;  
+            &::after, &::before {
+                content: '';
+                display: block;
+                clear: both;
+            }
+            .text-label {
+                font-size: 14px;
+                font-weight: bold;
+                color: #222;
+                margin: 0;
+            }
+            .text-value {
+                font-size: 17px;
+                font-weight: 200;
+                color: #555;
+                margin: 0;
+            }
+            .text-skills {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                li {
+                    padding: 3px;
+                    float: right;
+                    a {
+                        display: flex;
+                        padding: 5px 7px;
+                        background-color: #f8f8f8;
+                        color: #444;
+                        font-size: 11px;
+                        font-weight: bold;
+                        border-radius: 5px;
+                        &:hover {
+                            background-color: $primary;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .profile-content-header {
+        border-bottom: 1px dashed #ddd;
+        margin-bottom: 8px;
+        padding: 20px;
+        text-align: center;
+        .profile-content-avatar {
+            width: 120px;
+            overflow: hidden;
+            border-radius: 50%;
+            img {
+                border-radius: 50%;
+            }
+        }
+        .profile-content-head {
+            .title {
+                font-size: 19px;
+                font-weight: bold;
+                margin: 4px 0;
+                color: #222;
+            }
+            .text {
+                font-size: 13px;
+                color: #333;
+                margin: 0;
+            }
+            .button-edit {
+                width: 220px;
+                margin: 7px auto;
+                .btn {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+.user-bro {
+    margin: 0;
+    font-size: 14px;
+    line-height: 27px;
+    color: #444;
+}
+.statistic-item {
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 10px;
+    padding: 15px 0;
+    &:last-of-type {
+        border-bottom: 0;
+        margin-bottom: 0;
+    }
+}
+/*
+-------------------------------------------------------------------------------------------
+    Login Panel
+-------------------------------------------------------------------------------------------
+*/
+.login-panel {
+    height: 100vh;
+    display: flex;
+    background-color: #fff;
+    align-items: center;
+    align-content: center;
+    .login-panel-body {
+        padding: 15px 35px;
+    }
+    @media (max-width: 720px) {
+        padding: 0 20px;
+        height: auto;
+        .login-panel-body {
+            padding: 15px 0;
+        }
+    }
+    .login-external-links {
+        margin-top: 25px;
+        li {
+            padding-left: 7px;
+            &:last-child {
+                padding-left: 0;
+            }
+            .ext-butt {
+                border: 1px solid #f1f1f1;
+                background-color: #f7f7f7;
+                display: flex;
+                border-radius: 6px;
+                padding: 10px 20px;
+                font-size: 13px;
+                align-content: center;
+                align-items: center;
+                font-weight: 200;
+                justify-content: center;
+                color: #999;
+                &:hover {
+                    color: #555;
+                    background-color: #f1f1f1;
+                }
+                .fab {
+                    margin-left: 4px;
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+    .panel-login-external {
+        padding: 20px 0;
+        .login-external-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            &::after, &::before {
+                content: '';
+                position: absolute;
+                height: 2px;
+                top: 50%;
+                background-color: #ddd;
+            }
+            &::before {
+                left: 0;
+                right: 68%;
+            }
+            &::after {
+                right: 0;
+                left: 68%;
+            }
+            .title {
+                font-size: 14px;
+                font-weight: bold;
+                color: #333;
+                margin: 0;
+            }
+        }
+    }
+    .remember-text {
+        font-size: 13px;
+        .text {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+    }
+    .login-panel-body {
+        width: 100%;
+    }
+    .panel-modal-footer {
+        padding-top: 20px;
+        margin-top: 9px;
+        border-top: 1px dashed #ddd;
+        .d-flex {
+            align-content: center;
+            align-items: center;
+        }
+        .footer-text {
+            .text {
+                font-size: 14px;
+                font-weight: 300;
+                color: #444;
+                a {
+                    color: #000;
+                    font-weight: bold;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+}
+.login-image {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background-image: url('../public/colorful-abstract-textured-background.jpg');
+    background-size: cover;
+    flex-direction: column;
+    text-align: center;
+    .timwoork-logo {
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.11);
+        margin-bottom: 8px;
+        padding-bottom: 15px;
+    }
+    @media (max-width: 720px) {
+        padding: 20px;
+    }
+    .login-title {
+        font-weight: bold;
+    }
+    .login-text {
+        font-size: 16px;
+        font-weight: 200;
+        color: #666;
+    }
+}
 /*
 -------------------------------------------------------------------------------------------
     Hero Header
@@ -274,6 +530,13 @@ h3 {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    @media (max-width: 580px) {
+        background-position: left;
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+    }
     .timlands-hero-inner {
         padding: 20px 0;
         text-align: center;
@@ -281,6 +544,9 @@ h3 {
             padding: 7px 0;
         }
         .timlands-hero-content {
+            @media (max-width: 580px) {
+                padding: 20px;
+            }
             .main-title {
                 font-weight: 800;
                 color: #333;
@@ -289,11 +555,19 @@ h3 {
                 font-size: 25px;
                 color: #444;
                 font-weight: 300;
+                @media (max-width: 580px) {
+                    font-weight: 200;
+                    font-size: 20px;
+                    line-height: 33px;
+                }
             }
         }
         .timlands-hero-search {
             display: flex;
             justify-content: center;
+            @media (max-width: 580px) {
+                padding: 0 20px;
+            }
             .rel-search {
                 width: 600px;
                 position: relative;

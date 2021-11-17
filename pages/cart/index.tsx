@@ -66,17 +66,25 @@ function index() {
         let tax = 0
         if (cartTotal <= 20) {
             tax = cartTotal + 1
-        } else {
+        } else if (cartTotal > 20 || cartTotal <= 200) {
             tax = (cartTotal * 0.05) + cartTotal
+        } else if (cartTotal > 200 || cartTotal <= 1000) {
+            tax = (cartTotal * 0.07) + cartTotal
+        } else if (cartTotal > 1000) {
+            tax = (cartTotal * 0.1) + cartTotal
         }
         return tax
     }
     function isTax() {
         let tax: any = 0
         if (cartTotal <= 20) {
-            tax = '1$'
-        } else {
-            tax = '5%'
+            tax = 1
+        } else if (cartTotal > 20 || cartTotal <= 200) {
+            tax = cartTotal * 0.05
+        } else if (cartTotal > 200 || cartTotal <= 1000) {
+            tax = cartTotal * 0.07
+        } else if (cartTotal > 1000) {
+            tax = cartTotal * 0.1
         }
         return tax
     }
@@ -108,7 +116,7 @@ function index() {
                                     <div className="cart-list">
                                         <ul className="cart-list-item">
                                             {items.map((item) => (
-                                                <li className="cart-item" key={item.id}>
+                                                <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item" key={item.id}>
                                                     <div className="d-flex">
                                                         <div className="cart-item-content me-auto">
                                                             <h2 className="title">{item.title}</h2>
@@ -117,8 +125,8 @@ function index() {
                                                         <div className="cart-item-header me-auto">
                                                             <ul className="prices-list">
                                                                 <li><span>عدد المرات: </span>{item.quantity}</li>
-                                                                <li><span>السعر: </span>{item.price}</li>
-                                                                <li><strong>الإجمالي: </strong>{item.itemTotal}</li>
+                                                                <li><span>السعر: </span>{item.price}$</li>
+                                                                <li><strong>الإجمالي: </strong>{item.itemTotal}$</li>
                                                             </ul>
                                                         </div>
                                                         <div className="cart-item-price ml-auto">
@@ -142,7 +150,7 @@ function index() {
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                </li>
+                                                </motion.li>
                                             ))}
                                             <li className="cart-item">
                                                 <div className="d-flex">
@@ -151,7 +159,7 @@ function index() {
                                                     </div>
                                                     <div className="cart-item-header me-auto">
                                                         <ul className="prices-list">
-                                                            <li><span>نسبة التحويل: </span>{isTax()}</li>
+                                                            <li><span>سعر التحويل: </span>{isTax().toPrecision(3)}$</li>
                                                             <li><span>اجمالي السعر: </span>{cartTotal}$</li>
                                                             <li><strong>المجموع: </strong>{pricesTax()}$</li>
                                                         </ul>

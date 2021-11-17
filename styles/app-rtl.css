@@ -600,6 +600,43 @@
 
 .timlands-navbar .logo-nav {
   padding-left: 7px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.timlands-navbar .toggle-nav {
+  display: none;
+}
+
+@media (max-width: 750px) {
+  .timlands-navbar .toggle-nav {
+    display: block;
+  }
+}
+
+.timlands-navbar .toggle-nav .toggle-nav-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  color: #999;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 0;
+}
+
+.timlands-navbar .toggle-nav .toggle-nav-btn:focus {
+  color: #000;
+  outline: none;
 }
 
 .timlands-navbar .nav-container .d-flex {
@@ -608,6 +645,12 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.timlands-navbar .nav-container .app-navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .timlands-navbar .nav-container .app-navbar > li {
@@ -720,6 +763,10 @@
 }
 
 .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container {
+  background-image: url("../public/cat-bg.png");
+  background-position: 0% 430%;
+  background-repeat: no-repeat;
+  height: 100%;
   padding: 10px;
 }
 
@@ -781,6 +828,32 @@
   color: #fff;
 }
 
+@media (max-width: 750px) {
+  .timlands-navbar .nav-container .app-navbar {
+    display: none;
+    position: absolute;
+    top: 60px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    -webkit-box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.041);
+            box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.041);
+  }
+}
+
+.timlands-navbar .nav-container .app-navbar.is-shown {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.timlands-navbar .nav-container .app-navbar.is-hidden {
+  display: none;
+}
+
 .timlands-navbar .nav-auth > li.login-nav-item > a {
   display: block;
   padding: 13px;
@@ -795,6 +868,15 @@
   font-size: 14px;
   color: #555;
   font-weight: 300;
+}
+
+@media (max-width: 580px) {
+  .timlands-navbar .nav-auth > li.login-user > a .text {
+    display: none;
+  }
+  .timlands-navbar .nav-auth > li.login-user > a img {
+    margin-left: 4px;
+  }
 }
 
 .timlands-navbar .nav-auth > li.register-nav-item {
@@ -1676,6 +1758,345 @@ h3 {
   display: flex;
 }
 
+.timlands-profile-content .profile-content-body {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.timlands-profile-content .profile-content-body .content-title {
+  padding: 15px 0;
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 9px;
+}
+
+.timlands-profile-content .profile-content-body .content-title .title {
+  font-size: 17px;
+  color: #444;
+  font-weight: bold;
+  margin: 0;
+}
+
+.timlands-profile-content .profile-content-body .content-title .title .material-icons {
+  margin-left: 4px;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item {
+  padding: 10px 0;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+  margin: 7px 0;
+  padding: 15px;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item::after, .timlands-profile-content .profile-content-body .content-text-item::before {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item .text-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+  margin: 0;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item .text-value {
+  font-size: 17px;
+  font-weight: 200;
+  color: #555;
+  margin: 0;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item .text-skills {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item .text-skills li {
+  padding: 3px;
+  float: right;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item .text-skills li a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px 7px;
+  background-color: #f8f8f8;
+  color: #444;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.timlands-profile-content .profile-content-body .content-text-item .text-skills li a:hover {
+  background-color: #475C80;
+  color: #fff;
+}
+
+.timlands-profile-content .profile-content-header {
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-avatar {
+  width: 120px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-avatar img {
+  border-radius: 50%;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-head .title {
+  font-size: 19px;
+  font-weight: bold;
+  margin: 4px 0;
+  color: #222;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-head .text {
+  font-size: 13px;
+  color: #333;
+  margin: 0;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-head .button-edit {
+  width: 220px;
+  margin: 7px auto;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-head .button-edit .btn {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.user-bro {
+  margin: 0;
+  font-size: 14px;
+  line-height: 27px;
+  color: #444;
+}
+
+.statistic-item {
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 10px;
+  padding: 15px 0;
+}
+
+.statistic-item:last-of-type {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+/*
+-------------------------------------------------------------------------------------------
+    Login Panel
+-------------------------------------------------------------------------------------------
+*/
+.login-panel {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #fff;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.login-panel .login-panel-body {
+  padding: 15px 35px;
+}
+
+@media (max-width: 720px) {
+  .login-panel {
+    padding: 0 20px;
+    height: auto;
+  }
+  .login-panel .login-panel-body {
+    padding: 15px 0;
+  }
+}
+
+.login-panel .login-external-links {
+  margin-top: 25px;
+}
+
+.login-panel .login-external-links li {
+  padding-left: 7px;
+}
+
+.login-panel .login-external-links li:last-child {
+  padding-left: 0;
+}
+
+.login-panel .login-external-links li .ext-butt {
+  border: 1px solid #f1f1f1;
+  background-color: #f7f7f7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 200;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #999;
+}
+
+.login-panel .login-external-links li .ext-butt:hover {
+  color: #555;
+  background-color: #f1f1f1;
+}
+
+.login-panel .login-external-links li .ext-butt .fab {
+  margin-left: 4px;
+  font-size: 17px;
+}
+
+.login-panel .panel-login-external {
+  padding: 20px 0;
+}
+
+.login-panel .panel-login-external .login-external-header {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.login-panel .panel-login-external .login-external-header::after, .login-panel .panel-login-external .login-external-header::before {
+  content: '';
+  position: absolute;
+  height: 2px;
+  top: 50%;
+  background-color: #ddd;
+}
+
+.login-panel .panel-login-external .login-external-header::before {
+  left: 0;
+  right: 68%;
+}
+
+.login-panel .panel-login-external .login-external-header::after {
+  right: 0;
+  left: 68%;
+}
+
+.login-panel .panel-login-external .login-external-header .title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.login-panel .remember-text {
+  font-size: 13px;
+}
+
+.login-panel .remember-text .text {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.login-panel .login-panel-body {
+  width: 100%;
+}
+
+.login-panel .panel-modal-footer {
+  padding-top: 20px;
+  margin-top: 9px;
+  border-top: 1px dashed #ddd;
+}
+
+.login-panel .panel-modal-footer .d-flex {
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.login-panel .panel-modal-footer .footer-text .text {
+  font-size: 14px;
+  font-weight: 300;
+  color: #444;
+}
+
+.login-panel .panel-modal-footer .footer-text .text a {
+  color: #000;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.login-image {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-image: url("../public/colorful-abstract-textured-background.jpg");
+  background-size: cover;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+.login-image .timwoork-logo {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.11);
+  margin-bottom: 8px;
+  padding-bottom: 15px;
+}
+
+@media (max-width: 720px) {
+  .login-image {
+    padding: 20px;
+  }
+}
+
+.login-image .login-title {
+  font-weight: bold;
+}
+
+.login-image .login-text {
+  font-size: 16px;
+  font-weight: 200;
+  color: #666;
+}
+
 /*
 -------------------------------------------------------------------------------------------
     Hero Header
@@ -1688,6 +2109,16 @@ h3 {
   background-position: center;
 }
 
+@media (max-width: 580px) {
+  .timlands-hero {
+    background-position: left;
+    overflow: hidden;
+  }
+  .timlands-hero img {
+    width: 100%;
+  }
+}
+
 .timlands-hero .timlands-hero-inner {
   padding: 20px 0;
   text-align: center;
@@ -1695,6 +2126,12 @@ h3 {
 
 .timlands-hero .timlands-hero-inner .timlands-hero-image {
   padding: 7px 0;
+}
+
+@media (max-width: 580px) {
+  .timlands-hero .timlands-hero-inner .timlands-hero-content {
+    padding: 20px;
+  }
 }
 
 .timlands-hero .timlands-hero-inner .timlands-hero-content .main-title {
@@ -1708,6 +2145,14 @@ h3 {
   font-weight: 300;
 }
 
+@media (max-width: 580px) {
+  .timlands-hero .timlands-hero-inner .timlands-hero-content .sub-title {
+    font-weight: 200;
+    font-size: 20px;
+    line-height: 33px;
+  }
+}
+
 .timlands-hero .timlands-hero-inner .timlands-hero-search {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1715,6 +2160,12 @@ h3 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+@media (max-width: 580px) {
+  .timlands-hero .timlands-hero-inner .timlands-hero-search {
+    padding: 0 20px;
+  }
 }
 
 .timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search {

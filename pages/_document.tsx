@@ -4,7 +4,10 @@ export default class CustomDocument extends Document {
     render() {
         return (
             <Html>
-                <Head></Head>
+                <Head>
+                    <title>تيموورك</title>
+                    <link rel="icon" href="/icon.png" />
+                </Head>
                 <body>
                     <Main />
                 </body>

@@ -12,7 +12,6 @@ import { Menu, Dropdown, Avatar, Image, Badge } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
 import { ReactElement, useEffect, useState } from "react";
-import Logo from "../Logo";
 import Menus from "./Menus";
 import Link from "next/link";
 import { motion } from 'framer-motion'
@@ -22,7 +21,6 @@ import router from "next/router";
 import { useCart } from "react-use-cart";
 
 export function LangList(): ReactElement {
-
     return (
         <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="list-lang-items">
             <ul className="items-list">
@@ -67,7 +65,7 @@ export function Navbar(): ReactElement {
     const AccountList = (
         <Menu>
             <Menu.Item key="0">
-                <Link href="/">
+                <Link href="/user/profile">
                     <a>الصفحة الشخصية</a>
                 </Link>
             </Menu.Item>
@@ -90,8 +88,17 @@ export function Navbar(): ReactElement {
                 <div className="d-flex">
                     <div className="nav-container me-auto">
                         <div className="d-flex">
+                            <div className="toggle-nav me-auto">
+                                <button className="toggle-nav-btn">
+                                    <span className="material-icons material-icons-outlined">menu</span>
+                                </button>
+                            </div>
                             <div className="logo-nav me-auto">
-                                <Logo />
+                                <Link href="/">
+                                    <a>
+                                        <img src="/logo2.png" alt="" />
+                                    </a>
+                                </Link>
                             </div>
                             <Menus />
                         </div>
@@ -99,7 +106,7 @@ export function Navbar(): ReactElement {
                     <ul className="nav nav-auth ml-auto">
                         <li className="circular-item language-nav-item">
                             <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
-                                <Badge count={totalUniqueItems} size='small' offset={[2, -8]}>
+                                <Badge count={totalUniqueItems} offset={[2, -8]}>
                                     <i className="material-icons material-icons-outlined">shopping_cart</i>
                                 </Badge>
                             </motion.button>
@@ -108,14 +115,14 @@ export function Navbar(): ReactElement {
                             <>
                                 <li className="circular-item language-nav-item">
                                     <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
-                                        <Badge count={0} size='small' offset={[2, -8]}>
+                                        <Badge count={0} offset={[2, -8]}>
                                             <i className="material-icons material-icons-outlined">email</i>
                                         </Badge>
                                     </motion.button>
                                 </li>
                                 <li className="circular-item language-nav-item">
                                     <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
-                                        <Badge count={5} size='small' offset={[2, -8]}>
+                                        <Badge count={5} offset={[2, -8]}>
                                             <i className="material-icons material-icons-outlined">notifications</i>
                                         </Badge>
                                     </motion.button>
@@ -124,7 +131,7 @@ export function Navbar(): ReactElement {
                                     <Dropdown overlay={AccountList} trigger={['click']}>
                                         <a>
                                             <Avatar src={<Image src="/avatar2.jpg" style={{ width: 32 }} />} />
-                                            <span className="text"> عبد الحميد <DownOutlined /></span>
+                                            <span className="text"> عبد الحميد </span><DownOutlined />
                                         </a>
                                     </Dropdown>
                                 </li>
