@@ -159,6 +159,7 @@ h3 {
     .d-flex {
         align-content: center;
         align-items: center;
+        
     }
     .cart-list-item {
         list-style: none;
@@ -178,7 +179,6 @@ h3 {
             }
             .cart-item-content {
                 padding: 15px;
-                width: 45%;
                 .title {
                     font-size: 16px;
                     font-weight: bold;
@@ -201,7 +201,6 @@ h3 {
             }
             .cart-item-header {
                 padding: 12px;
-                width: 20%;
                 .prices-list {
                     margin: 0;
                     padding: 0;
@@ -216,7 +215,6 @@ h3 {
                 }
             }
             .cart-item-price {
-                width: 35%;
                 .price-title-total {
                     font-weight: bold;
                     color: $primary;

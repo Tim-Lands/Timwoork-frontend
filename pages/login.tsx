@@ -9,20 +9,20 @@ import * as Yup from 'yup';
 const Login = (): ReactElement => {
     const router = useRouter()
     const SignupSchema = Yup.object().shape({
-        email: Yup.string().required('هذا الحقل إجباري'),
+        username: Yup.string().required('هذا الحقل إجباري'),
         password: Yup.string().required('هذا الحقل إجباري'),
     });
     // Return statement.
     return (
         <Formik
             initialValues={{
-                email: '',
+                username: '',
                 password: '',
             }}
             validationSchema={SignupSchema}
             onSubmit={async values => {
                 try {
-                    const res = await API.post("dashboard/login", values, { withCredentials: true });
+                    const res = await API.post("login", values, { withCredentials: true });
                     // If Activate Network 
                     // Authentication was successful.
                     if (res.status == 201 || res.status == 200) {
@@ -77,15 +77,15 @@ const Login = (): ReactElement => {
                                         <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
                                         <Field
                                             id="email"
-                                            name="email"
+                                            name="username"
                                             placeholder="البريد الإلكتروني..."
                                             className="timlands-inputs"
                                             autoComplete="off"
                                         />
-                                        {errors.email && touched.email ?
+                                        {errors.username && touched.username ?
                                             <div style={{ overflow: 'hidden' }}>
                                                 <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                    <p className="text">{errors.email}</p>
+                                                    <p className="text">{errors.username}</p>
                                                 </motion.div>
                                             </div>
                                             :

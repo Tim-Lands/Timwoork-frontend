@@ -1642,7 +1642,6 @@ h3 {
 
 .cart-list .cart-list-item .cart-item .cart-item-content {
   padding: 15px;
-  width: 45%;
 }
 
 .cart-list .cart-list-item .cart-item .cart-item-content .title {
@@ -1674,7 +1673,6 @@ h3 {
 
 .cart-list .cart-list-item .cart-item .cart-item-header {
   padding: 12px;
-  width: 20%;
 }
 
 .cart-list .cart-list-item .cart-item .cart-item-header .prices-list {
@@ -1690,10 +1688,6 @@ h3 {
 
 .cart-list .cart-list-item .cart-item .cart-item-header .prices-list li strong, .cart-list .cart-list-item .cart-item .cart-item-header .prices-list li span {
   color: #333;
-}
-
-.cart-list .cart-list-item .cart-item .cart-item-price {
-  width: 35%;
 }
 
 .cart-list .cart-list-item .cart-item .cart-item-price .price-title-total {

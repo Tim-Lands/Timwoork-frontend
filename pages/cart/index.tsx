@@ -117,37 +117,43 @@ function index() {
                                         <ul className="cart-list-item">
                                             {items.map((item) => (
                                                 <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item" key={item.id}>
-                                                    <div className="d-flex">
-                                                        <div className="cart-item-content me-auto">
-                                                            <h2 className="title">{item.title}</h2>
-                                                            <p className="meta-user"><span className="material-icons material-icons-outlined">person_outline</span> {item.author} | رقم الخدمة: <span className="product-code">214344</span></p>
+                                                    <div className="row">
+                                                        <div className="col-md-6">
+                                                            <div className="cart-item-content me-auto">
+                                                                <h2 className="title">{item.title}</h2>
+                                                                <p className="meta-user"><span className="material-icons material-icons-outlined">person_outline</span> {item.author} | رقم الخدمة: <span className="product-code">214344</span></p>
+                                                            </div>
                                                         </div>
-                                                        <div className="cart-item-header me-auto">
-                                                            <ul className="prices-list">
-                                                                <li><span>عدد المرات: </span>{item.quantity}</li>
-                                                                <li><span>السعر: </span>{item.price}$</li>
-                                                                <li><strong>الإجمالي: </strong>{item.itemTotal}$</li>
-                                                            </ul>
+                                                        <div className="col-6 col-md-3">
+                                                            <div className="cart-item-header me-auto">
+                                                                <ul className="prices-list">
+                                                                    <li><span>عدد المرات: </span>{item.quantity}</li>
+                                                                    <li><span>السعر: </span>{item.price}$</li>
+                                                                    <li><strong>الإجمالي: </strong>{item.itemTotal}$</li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                        <div className="cart-item-price ml-auto">
-                                                            <ul className="price-nav">
-                                                                <li>
-                                                                    <motion.button
-                                                                        whileTap={{ scale: 0.9 }}
-                                                                        className="addquantity"
-                                                                        onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>
-                                                                        <span className="material-icons material-icons-outlined">add</span>
-                                                                    </motion.button>
-                                                                </li>
-                                                                <li>
-                                                                    <motion.button
-                                                                        whileTap={{ scale: 0.9 }}
-                                                                        className="removequantity"
-                                                                        onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>
-                                                                        <span className="material-icons material-icons-outlined">remove</span>
-                                                                    </motion.button>
-                                                                </li>
-                                                            </ul>
+                                                        <div className="col-6 col-md-3">
+                                                            <div className="cart-item-price ml-auto">
+                                                                <ul className="price-nav">
+                                                                    <li>
+                                                                        <motion.button
+                                                                            whileTap={{ scale: 0.9 }}
+                                                                            className="addquantity"
+                                                                            onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>
+                                                                            <span className="material-icons material-icons-outlined">add</span>
+                                                                        </motion.button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <motion.button
+                                                                            whileTap={{ scale: 0.9 }}
+                                                                            className="removequantity"
+                                                                            onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>
+                                                                            <span className="material-icons material-icons-outlined">remove</span>
+                                                                        </motion.button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </motion.li>
