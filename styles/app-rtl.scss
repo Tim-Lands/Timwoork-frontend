@@ -694,6 +694,9 @@ h3 {
 .timwoork-single {
     .timwoork-single-post {
         padding: 20px;
+        @media (max-width: 580px) {
+            padding: 20px 0 !important;
+        }
         .timwoork-single-header {
             border-bottom: 1px solid #ddd;
             margin-bottom: 9px;
@@ -703,17 +706,24 @@ h3 {
                 font-weight: bold;
                 color: #333;
                 margin: 0;
+                @media (max-width: 580px) {
+                    font-size: 27px;
+                }
             }
             .single-header-meta {
                 padding: 0;
                 margin-top: 12px;
                 li {
                     padding: 0 9px;
-                    border-right: 1px solid #ddd;
+                    border-left: 1px solid #ddd;
                     display: flex;
                     font-size: 14px;
                     align-items: center;
                     align-content: center;
+                    @media (max-width: 580px) {
+                        font-size: 12px;
+                        padding: 0 7px;
+                    }
                     &:first-child {
                         padding-right: 0;
                     }
@@ -728,6 +738,9 @@ h3 {
                                 margin-top: 5px;
                                 &.outline-star {
                                     color: #777;
+                                }
+                                @media (max-width: 580px) {
+                                    font-size: 17px;
                                 }
                             }
                         }
@@ -826,6 +839,9 @@ h3 {
                 }
                 .timwoork-single-product-detailts {
                     padding: 20px 0;
+                    @media (max-width: 580px) {
+                        padding: 15px 0;
+                    }
                     .text {
                         font-size: 18px;
                         color: #333;
@@ -833,6 +849,11 @@ h3 {
                         text-align: justify;
                         font-weight: 400;
                         line-height: 29px;
+                        @media (max-width: 580px) {
+                            font-size: 16px;
+                            margin: 13px 0;
+                            line-height: 27px;
+                        }
                     }
                     h1, h2, h3 {
                         padding: 9px 0;
@@ -842,6 +863,10 @@ h3 {
                     .single-list {
                         line-height: 29px;
                         font-size: 19px;
+                        @media (max-width: 580px) {
+                            font-size: 17px;
+                            line-height: 27px;
+                        }
                         > li {
                             margin: 6px 0;
                             > ul {
@@ -880,6 +905,9 @@ h3 {
                     .seller-info-content {
                         .user-title {
                             font-size: 20px;
+                            @media (max-width: 580px) {
+                                font-size: 18px;
+                            }
                             font-weight: bold;
                             margin: 0;
                             color: #333;
@@ -892,6 +920,9 @@ h3 {
                                 align-content: center;
                                 align-items: center;
                                 font-size: 13px;
+                                @media (max-width: 580px) {
+                                    font-size: 12px;
+                                }
                                 padding: 1px 6px;
                                 &:first-child {
                                     padding-right: 0;
@@ -900,6 +931,9 @@ h3 {
                                 .material-icons {
                                     font-size: 16px;
                                     margin-left: 5px;
+                                    @media (max-width: 580px) {
+                                        font-size: 14px;
+                                    }
                                 }
                             }
                         }
@@ -940,11 +974,19 @@ h3 {
                                 > .comment-item {
                                     padding: 12px;
                                     padding-right: 25px;
+                                    @media (max-width: 580px) {
+                                        padding: 12px 0;
+                                        padding-right: 0;
+                                    }
                                     .comment-item-avatar {
                                         padding-top: 8px;
                                     }
                                     .comment-item-content {
                                         padding: 13px;
+                                        @media (max-width: 580px) {
+                                            padding: 12px 0;
+                                            padding-right: 9px;
+                                        }
                                         .meta-time, .user-ratting {
                                             font-size: 12px;
                                             color: #444;
@@ -984,6 +1026,13 @@ h3 {
                                             padding: 20px 13px;
                                             padding-right: 40px;
                                             border-right: 4px solid $primary;
+                                            @media (max-width: 580px) {
+                                                padding-right: 10px;
+                                            }
+                                        }
+                                        @media (max-width: 580px) {
+                                            padding: 0;
+                                            padding-right: 10px;
                                         }
                                     }
                                 }
@@ -2232,6 +2281,9 @@ h3 {
                     .single-list {
                         line-height: 29px;
                         font-size: 19px;
+                        @media (max-width: 580px) {
+                            font-size: 17px;
+                        }
                         > li {
                             margin: 6px 0;
                             > ul {
@@ -2253,9 +2305,21 @@ h3 {
                 }
                 .seller-info-container {
                     padding: 14px 0;
+                    .d-flex {
+                        @media (max-width: 580px) {
+                            flex-direction: column;
+                            justify-content: center;
+                            text-align: center;
+                        }
+                    }
                     .seller-info-avatar {
                         padding-left: 12px;
                         position: relative;
+                        @media (max-width: 580px) {
+                            width: 70px;
+                            margin: auto;
+                            margin-bottom: 7px;
+                        }
                         span.is-online {
                             position: absolute;
                             display: flex;
@@ -2297,6 +2361,14 @@ h3 {
                             padding: 10px 0;
                             .btn {
                                 margin-left: 6px;
+                            }
+                            @media (max-width: 580px) {
+                                .btn {
+                                    margin: 0;
+                                    margin-bottom: 7px;
+                                    text-align: center;
+                                    justify-content: center;
+                                }
                             }
                         }
                     }

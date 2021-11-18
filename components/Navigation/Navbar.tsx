@@ -105,22 +105,20 @@ export function Navbar(): ReactElement {
                                     </a>
                                 </Link>
                             </div>
-                            {!isMobile && 
-                                (isMenuShowen && <Menus />)
-                            }
-                            
+                            {isMenuShowen && <Menus />}
+
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">
-                        <li className="circular-item language-nav-item">
-                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
-                                <Badge count={totalUniqueItems} offset={[2, -8]}>
-                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                </Badge>
-                            </motion.button>
-                        </li>
                         {isLogged ?
                             <>
+                                <li className="circular-item language-nav-item">
+                                    <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
+                                        <Badge count={totalUniqueItems} offset={[2, -8]}>
+                                            <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                        </Badge>
+                                    </motion.button>
+                                </li>
                                 <li className="circular-item language-nav-item">
                                     <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
                                         <Badge count={0} offset={[2, -8]}>

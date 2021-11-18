@@ -221,6 +221,7 @@ function Single() {
                     <h4>مولد النص العربى مفيد لمصممي المواقع</h4>
                   </div>
                   <div className="timwoork-single-seller-info">
+                    
                     <div className="seller-info-header">
                       <h2 className="title">حول البائع</h2>
                     </div>
