@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import { Menu, Dropdown, Avatar, Image, Badge } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
-import { isMobile } from 'react-device-detect';
+//import { isMobile } from 'react-device-detect';
 import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
