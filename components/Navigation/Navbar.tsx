@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import { Menu, Dropdown, Avatar, Image, Badge } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
+import { isMobile } from 'react-device-detect';
 import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
@@ -40,6 +41,10 @@ export function LangList(): ReactElement {
 }
 export function Navbar(): ReactElement {
     const [scroll, setScroll] = useState(false);
+    const [isMenuShowen, setIsMenuShowen] = useState(true);
+    const setIsMenuShowenHandle = () => {
+        setIsMenuShowen(!isMenuShowen)
+    }
     const { totalUniqueItems } = useCart();
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -89,7 +94,7 @@ export function Navbar(): ReactElement {
                     <div className="nav-container me-auto">
                         <div className="d-flex">
                             <div className="toggle-nav me-auto">
-                                <button className="toggle-nav-btn">
+                                <button className="toggle-nav-btn" onClick={setIsMenuShowenHandle}>
                                     <span className="material-icons material-icons-outlined">menu</span>
                                 </button>
                             </div>
@@ -100,7 +105,10 @@ export function Navbar(): ReactElement {
                                     </a>
                                 </Link>
                             </div>
-                            <Menus />
+                            {!isMobile && 
+                                (isMenuShowen && <Menus />)
+                            }
+                            
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">

@@ -311,6 +311,9 @@
 }
 .timlands-sub-navbar {
     background-color: #ddd;
+    @media (max-width: 580px) {
+        display: none;
+    }
     .sub-navbar-cats {
         .category-title {
             font-weight: 700;

@@ -954,6 +954,12 @@
   background-color: #ddd;
 }
 
+@media (max-width: 580px) {
+  .timlands-sub-navbar {
+    display: none;
+  }
+}
+
 .timlands-sub-navbar .sub-navbar-cats .category-title {
   font-weight: 700;
   font-size: 14px;
