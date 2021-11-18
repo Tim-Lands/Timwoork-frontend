@@ -2136,6 +2136,34 @@ h3 {
     top: 0;
     background-color: rgba(0, 0, 0, 0.603);
 }
+.timlands-add-new {
+    border: 1px dashed #ddd;
+    border-radius: 7px;
+    margin: 20px 0;
+    padding: 30px 50px;
+    text-align: center;
+    .timlands-add-new-icon {
+        color: #ccc;
+        padding-top: 20px;
+        padding-bottom: 10px;
+        .material-icons {
+            font-size: 49px;
+        }
+    }
+    .timlands-add-new-body {
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+        .text {
+            font-size: 19px;
+            color: #666;
+            font-weight: 200;
+            line-height: 34px;
+        }
+    }
+}
 /*
 ---------------------------------------------------------------------------------------------
     404 Page
@@ -2868,16 +2896,6 @@ h3 {
     Panels Style
 ---------------------------------------------------------------------------------------------
 */
-.timlands-panel {
-    background-color: #222;
-    border: 1px solid #232323;
-    .timlands-panel-header {
-        border-bottom: 1px solid #232323;
-        .title {
-            color: #fff;
-        }
-    }
-}
 .timlands-panel-item {
     border: 1px solid #232323;
     background-color: #222;
