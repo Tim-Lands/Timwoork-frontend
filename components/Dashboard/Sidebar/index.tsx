@@ -77,45 +77,48 @@ const sidebarLinks = [
 function index(props: any): ReactElement {
     const submenu = true
     const path = useRouter()
-    if (props.userData) {
-        return (
-            <div className={"dashboard-sidebar"}>
+    const { userData } = props
+    return (
+        <div className={"dashboard-sidebar"}>
+            {userData &&
                 <div className="dashboard-sidebar-inner">
                     <Link href="/">
                         <a>الرئيسية</a>
                     </Link>
-                    <div className="dashbord-user-details">
-                        <div className="dashbord-user-avatar">
-                            {props.userData.profile.avatar == 'avatar.png' ? <img src="/avatar.png" alt="" /> : <img src={props.userData.profile.avatar} alt="" />}
-                            
-                        </div>
-                        <div className="dashbord-user-content">
-                            <h3 className="user-title">
-                                {props.userData.profile.first_name + ' ' + props.userData.profile.last_name}
-                            </h3>
-                            <ul className="meta">
-                                <li>
-                                    <a onClick={() => {
-                                        props.logout();
-                                    }}>
-                                        <span className="material-icons">logout</span> خروج
-                                    </a>
-                                </li>
-                                <li>
-                                    <Link href="/dashboard/settings">
-                                        <a>
-                                            <span className="material-icons">settings</span> الإعدادات
+                    {userData.profile && 
+                    
+                        <div className="dashbord-user-details">
+                            <div className="dashbord-user-avatar">
+                                {userData.profile.avatar == 'avatar.png' ? <img src="/avatar.png" alt="" /> : <img src={userData.profile.avatar} alt="" />}
+                            </div>
+                            <div className="dashbord-user-content">
+                                <h3 className="user-title">
+                                    {props.userData.profile.first_name + ' ' + props.userData.profile.last_name}
+                                </h3>
+                                <ul className="meta">
+                                    <li>
+                                        <a onClick={() => {
+                                            props.logout();
+                                        }}>
+                                            <span className="material-icons">logout</span> خروج
                                         </a>
-                                    </Link>
-                                </li>
-                            </ul>
+                                    </li>
+                                    <li>
+                                        <Link href="/dashboard/settings">
+                                            <a>
+                                                <span className="material-icons">settings</span> الإعدادات
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    }
                     <ul className="dashboard-sidebar-list">
                         {sidebarLinks.map(e => (
                             <>
                                 <li key={e.id} className={"dash-item" + (e.href == path.route ? ' active' : '')}>
-    
+
                                     {(e.href == null) ?
                                         <a className="dash-link">
                                             <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
@@ -147,9 +150,9 @@ function index(props: any): ReactElement {
                         ))}
                     </ul>
                 </div>
-            </div>
-        )
-    }
+            }
+        </div>
+    )
 }
 
 const mapStateToProps = (state: any) => ({

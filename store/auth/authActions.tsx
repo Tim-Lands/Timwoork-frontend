@@ -11,6 +11,7 @@
 
 import API from "../../config";
 import * as types from "../actionTypes";
+import Cookies from 'js-cookie'
 
 /**
  * Load currently logged in user from DB.
@@ -19,9 +20,10 @@ import * as types from "../actionTypes";
  * or after a page refresh when there is currently
  * an active user.
  */
-export const loadUser = (token: string) => {
+export const loadUser = () => {
     return async (dispatch: CallableFunction) => {
         try {
+            const token= Cookies.get('token')
             const res = await API.get("me", {
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,11 +77,12 @@ export const login = (username: string, password: string): any => {
             const res = await API.post("login", {
                 username,
                 password,
-            });
+            }, { withCredentials: true })
+            Cookies.set('token', res.data.data)
 
             // Authentication was successful.
             if (res.status === 200) {
-                dispatch(loadUser(res.data.data));
+                dispatch(loadUser());
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                 });

@@ -6,13 +6,6 @@ import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import {NextRouter, useRouter} from "next/router";
 
-export interface User {
-    id: number,
-    first_name: string,
-    last_name: string,
-    email: string,
-    avatar: string,
-}
 function index(props: any): ReactElement {
     const [postsList, setPostsList] = useState({
         admins: 1,
@@ -26,17 +19,11 @@ function index(props: any): ReactElement {
         tags: 0,
         users: 1,
     })
-    //const [isError, setIsError] = useState(false)
-    //const [isLoading, setIsLoading] = useState(false)
     const getData = async () => {
-        //setIsLoading(true)
         try {
             const res: any = await API.get('dashboard')
             //setIsLoading(false)
             setPostsList(res.data.data)
-            //console.log(res.data.data);
-
-            //setIsError(false)
 
         } catch (error) {
             //setIsError(true)
@@ -53,6 +40,7 @@ function index(props: any): ReactElement {
             router.push("/user/login");
         }
     }, [props.isAuthenticated]);
+
 
     // Return statement.
     return (

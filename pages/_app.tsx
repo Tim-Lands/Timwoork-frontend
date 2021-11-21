@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 //import configureStore from "../config/configureStore";
 import PropTypes from "prop-types";
 import { AuthGuard } from "../services/Auth/AuthGuard";
-
+//import { useRouter } from "next/router";
 import { useEffect } from "react";
 import * as types from "@/store/actionTypes";
 //import { protectedRoutes } from "./../config/config";
@@ -16,6 +16,7 @@ import type { AppProps } from 'next/app'
 //require('../langs/config')
 import TimeAgo from 'javascript-time-ago'
 //import { PersistGate } from 'redux-persist/integration/react'
+//import { protectedRoutes } from "./../config";
 
 import ar from 'javascript-time-ago/locale/ar.json'
 import { ConfigProvider } from "antd";
@@ -30,7 +31,13 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
 }
 function MyApp({ Component, pageProps }: AppPropsWithLayout, { user }: any) {
-    //const { store, persistor } = configureStore()
+
+    //const router = useRouter();
+    // Check if we're on a protected route.
+    /*const isNoProtectedRoute = protectedRoutes.every((route) => {
+        return !router.pathname.startsWith(route);
+    });*/
+
     // Handle current user in redux.
     useEffect(() => {
         const tt: string = i18n.dir()

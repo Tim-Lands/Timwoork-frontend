@@ -9,6 +9,7 @@
 import API from "../../config";
 import { IncomingMessage, ServerResponse } from "http";
 import { protectedRoutes } from "./../../config";
+import Cookies from 'js-cookie'
 
 export class AuthGuard {
     /**
@@ -48,8 +49,12 @@ export class AuthGuard {
              * Fortunately, we can extract these cookies from the req object
              * and attach them to the api call.
              */
+            const token= Cookies.get('token')
             const user = await API.get("me", {
-                headers: { Cookie: req.headers.cookie },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             // Redirect to dashboard if user is logged in.
@@ -108,9 +113,13 @@ export class AuthGuard {
              * Fortunately, we can extract these cookies from the req object
              * and attach them to the api call.
              */
-            const response = await API.get("me", {
-                headers: { Cookie: req.headers.cookie },
-            });
+             const token= Cookies.get('token')
+             const response = await API.get("me", {
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'Authorization': `Bearer ${token}`
+                 }
+             });
 
             // Abort if request was not successful.
             if (response.status !== 200) {

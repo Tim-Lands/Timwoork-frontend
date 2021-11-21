@@ -20,26 +20,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { login, setDarken } from '../../actions'
 import router from "next/router";
 import { useCart } from "react-use-cart";
+import { connect } from "react-redux";
+import { logout } from "./../../store/auth/authActions";
 
-export function LangList(): ReactElement {
-    return (
-        <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="list-lang-items">
-            <ul className="items-list">
-                <li className="lang-item">
-                    <a className="lang-link">
-                        English
-                    </a>
-                </li>
-                <li className="lang-item">
-                    <a className="lang-link">
-                        العربية
-                    </a>
-                </li>
-            </ul>
-        </motion.div>
-    )
-}
-export function Navbar(props: any): ReactElement {
+function Navbar(props: any): ReactElement {
     const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
@@ -47,6 +31,8 @@ export function Navbar(props: any): ReactElement {
     }
     const { totalUniqueItems } = useCart();
     useEffect(() => {
+        console.log(props);
+        
         window.addEventListener("scroll", () => {
             setScroll(window.scrollY > 60);
         });
@@ -121,7 +107,7 @@ export function Navbar(props: any): ReactElement {
                             </motion.button>
                         </li>
                         
-                        {!props.isAuthenticated ?
+                        {props.isAuthenticated ?
                             <>
                                 <li className="circular-item language-nav-item">
                                     <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
@@ -220,3 +206,10 @@ Navbar.propTypes = {
     setIsDarkenHandle: PropTypes.func,
     isDarken: PropTypes.bool,
 };
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.registerLoading,
+    userInfo: state.auth.user
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
