@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import { Menu, Dropdown, Avatar, Image, Badge } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
-//import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
@@ -39,7 +39,7 @@ export function LangList(): ReactElement {
         </motion.div>
     )
 }
-export function Navbar(): ReactElement {
+export function Navbar(props: any): ReactElement {
     const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
@@ -64,7 +64,6 @@ export function Navbar(): ReactElement {
         },
     }
 
-    const isLogged = useSelector((state: any) => state.isLogged)
     const isDarken = useSelector((state: any) => state.isDarken)
     const dispatch = useDispatch()
     const AccountList = (
@@ -78,6 +77,11 @@ export function Navbar(): ReactElement {
                 <Link href="/">
                     <a>الإعدادات</a>
                 </Link>
+            </Menu.Item>
+            <Menu.Item key="4">
+                <a onClick={() => router.push('/dashboard')}>
+                    الإدارة العامة
+                </a>
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="3">
@@ -106,19 +110,19 @@ export function Navbar(): ReactElement {
                                 </Link>
                             </div>
                             {isMenuShowen && <Menus />}
-
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">
-                        {isLogged ?
+                        <li className="circular-item language-nav-item">
+                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
+                                <Badge count={totalUniqueItems} offset={[2, -8]}>
+                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                </Badge>
+                            </motion.button>
+                        </li>
+                        
+                        {!props.isAuthenticated ?
                             <>
-                                <li className="circular-item language-nav-item">
-                                    <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
-                                        <Badge count={totalUniqueItems} offset={[2, -8]}>
-                                            <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                        </Badge>
-                                    </motion.button>
-                                </li>
                                 <li className="circular-item language-nav-item">
                                     <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
                                         <Badge count={0} offset={[2, -8]}>
@@ -145,17 +149,21 @@ export function Navbar(): ReactElement {
                             :
                             <>
                                 <li className="login-nav-item">
-                                    <a onClick={() => dispatch(login())} className="btn butt-xs flex-center">
-                                        تسجيل الدخول
-                                    </a>
-                                </li>
-                                <li className="register-nav-item">
-                                    <Link href="">
-                                        <a className="btn butt-sm butt-primary flex-center">
-                                            <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
+                                    <Link href="/login">
+                                        <a className="btn butt-xs flex-center">
+                                            تسجيل الدخول
                                         </a>
                                     </Link>
                                 </li>
+                                {!isMobile &&
+                                    <li className="register-nav-item">
+                                        <Link href="">
+                                            <a className="btn butt-sm butt-primary flex-center">
+                                                <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
+                                            </a>
+                                        </Link>
+                                    </li>
+                                }
                             </>
                         }
                         <li className="circular-item">

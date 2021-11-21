@@ -1,13 +1,25 @@
-import React, { ReactElement } from "react";
-import { useRouter } from "next/router";
-import API from '../config';
+import React, { ReactElement, useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Link from 'next/link'
+import { login } from "@/store/auth/authActions";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import * as Yup from 'yup';
+//import { message } from "antd";
+//import { useSelector } from 'react-redux'
+import { useRouter } from "next/router";
 
-const Login = (): ReactElement => {
-    const router = useRouter()
+const Login = (props: any): ReactElement => {
+    // The router object used for redirecting after login.
+    const router = useRouter();
+    // Redirect to user home route if user is authenticated.
+    useEffect(() => {
+        if (props.isAuthenticated && !props.loading) {
+            router.push('/dashboard');
+        }
+    }, [props.isAuthenticated, props.loading]);
+    // Yup Validations
     const SignupSchema = Yup.object().shape({
         username: Yup.string().required('هذا الحقل إجباري'),
         password: Yup.string().required('هذا الحقل إجباري'),
@@ -21,26 +33,7 @@ const Login = (): ReactElement => {
             }}
             validationSchema={SignupSchema}
             onSubmit={async values => {
-                try {
-                    const res = await API.post("login", values, { withCredentials: true });
-                    // If Activate Network 
-                    // Authentication was successful.
-                    if (res.status == 201 || res.status == 200) {
-                        alert('تمت الإضافة بنجاح')
-                        router.push('/dashboard')
-                    } else {
-                        alert('Error')
-                    }
-                } catch (ex) {
-
-                    if (ex.response && ex.response.status === 422) {
-                        alert(ex.response.data.errors)
-                    }
-
-                    if (ex.response && ex.response.status === 401) {
-                        alert(ex.response.data);
-                    }
-                }
+                props.login(values.username, values.password);
             }}
         >
             {({ errors, touched, isSubmitting }) => (
@@ -127,7 +120,7 @@ const Login = (): ReactElement => {
                                     </div>
                                     <div className="panel-modal-footer">
                                         <div className="d-flex">
-                                            <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تسجيل الدخول</button>
+                                            <button type="submit" disabled={props.loading} className="btn me-auto butt-primary butt-md">تسجيل الدخول</button>
                                             <div className="footer-text">
                                                 <p className="text">ليس لديك حساب؟
                                                     <Link href="/register">
@@ -171,4 +164,17 @@ const Login = (): ReactElement => {
     );
 };
 
-export default Login;
+// Map redux states to local component props.
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    loginError: state.auth.loginError,
+    loading: state.auth.loginLoading,
+});
+
+// Define PropTypes.
+Login.propTypes = {
+    props: PropTypes.object,
+    login: PropTypes.func,
+};
+
+export default connect(mapStateToProps, { login })(Login);

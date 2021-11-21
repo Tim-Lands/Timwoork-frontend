@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
+import { connect } from "react-redux";
+import { logout } from "../../../store/auth/authActions";
 
 const sidebarLinks = [
     {
@@ -72,72 +74,87 @@ const sidebarLinks = [
         href: '/dashboard/contacts'
     },
 ]
-function index(): ReactElement {
+function index(props: any): ReactElement {
     const submenu = true
     const path = useRouter()
-    return (
-        <div className={"dashboard-sidebar"}>
-            <div className="dashboard-sidebar-inner">
-                <div className="dashbord-user-details">
-                    <div className="dashbord-user-avatar">
-                        <img src="/avatar.png" alt="" />
-                    </div>
-                    <div className="dashbord-user-content">
-                        <h3 className="user-title">عبد الحميد بومقواس</h3>
-                        <ul className="meta">
-                            <li>
-                                <a >
-                                    <span className="material-icons">logout</span> خروج
-                                </a>
-                            </li>
-                            <li>
-                                <Link href="/dashboard/settings">
-                                    <a>
-                                        <span className="material-icons">settings</span> الإعدادات
+    if (props.userData) {
+        return (
+            <div className={"dashboard-sidebar"}>
+                <div className="dashboard-sidebar-inner">
+                    <Link href="/">
+                        <a>الرئيسية</a>
+                    </Link>
+                    <div className="dashbord-user-details">
+                        <div className="dashbord-user-avatar">
+                            {props.userData.profile.avatar == 'avatar.png' ? <img src="/avatar.png" alt="" /> : <img src={props.userData.profile.avatar} alt="" />}
+                            
+                        </div>
+                        <div className="dashbord-user-content">
+                            <h3 className="user-title">
+                                {props.userData.profile.first_name + ' ' + props.userData.profile.last_name}
+                            </h3>
+                            <ul className="meta">
+                                <li>
+                                    <a onClick={() => {
+                                        props.logout();
+                                    }}>
+                                        <span className="material-icons">logout</span> خروج
                                     </a>
-                                </Link>
-                            </li>
-                        </ul>
+                                </li>
+                                <li>
+                                    <Link href="/dashboard/settings">
+                                        <a>
+                                            <span className="material-icons">settings</span> الإعدادات
+                                        </a>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <ul className="dashboard-sidebar-list">
-                    {sidebarLinks.map(e => (
-                        <>
-                            <li key={e.id} className={"dash-item" + (e.href == path.route ? ' active' : '')}>
-
-                                {(e.href == null) ?
-                                    <a className="dash-link">
-                                        <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
-                                    </a>
-                                    :
-                                    <Link href={e.href}>
+                    <ul className="dashboard-sidebar-list">
+                        {sidebarLinks.map(e => (
+                            <>
+                                <li key={e.id} className={"dash-item" + (e.href == path.route ? ' active' : '')}>
+    
+                                    {(e.href == null) ?
                                         <a className="dash-link">
                                             <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
                                         </a>
-                                    </Link>
-                                }
-                                {
-                                    (submenu && (e.hasSubMenu &&
-                                        <motion.ul initial={{ opacity: 0, scaleY: 0 }} animate={{ opacity: 1, scaleY: 1 }} className="sub-dashnav-list">
-                                            {e.hasSubMenu.map(p => (
-                                                <li key={p.id} className={"subdash-item" + (p.href == path.route ? ' active' : '')}>
-                                                    <Link href={p.href}>
-                                                        <a className="subdash-link">
-                                                            {p.name}
-                                                        </a>
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </motion.ul>
-                                    ))
-                                }
-                            </li>
-                        </>
-                    ))}
-                </ul>
+                                        :
+                                        <Link href={e.href}>
+                                            <a className="dash-link">
+                                                <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
+                                            </a>
+                                        </Link>
+                                    }
+                                    {
+                                        (submenu && (e.hasSubMenu &&
+                                            <motion.ul initial={{ opacity: 0, scaleY: 0 }} animate={{ opacity: 1, scaleY: 1 }} className="sub-dashnav-list">
+                                                {e.hasSubMenu.map(p => (
+                                                    <li key={p.id} className={"subdash-item" + (p.href == path.route ? ' active' : '')}>
+                                                        <Link href={p.href}>
+                                                            <a className="subdash-link">
+                                                                {p.name}
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </motion.ul>
+                                        ))
+                                    }
+                                </li>
+                            </>
+                        ))}
+                    </ul>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default index
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.registerLoading,
+});
+
+export default connect(mapStateToProps, { logout })(index);

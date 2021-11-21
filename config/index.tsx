@@ -1,6 +1,13 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: 'https://flexyapp.herokuapp.com/api/v1/', // https://api.wazzfny.com/
+    baseURL: 'https://api.timwoork.com/api/', // https://api.wazzfny.com/
     withCredentials: true
 });
+
+export const protectedRoutes: string[] = [
+    '/dashboard', // -> from .env.local
+    // "/profile",
+    // "/acount",
+    // ...,
+];

@@ -13,3 +13,9 @@ export const setDarken = () => {
         type: 'DARKEN_MODE'
     }
 }
+export const getUser = async (token: any) => {
+    return {
+        type: 'GET_USER',
+        payload: token
+    }
+}

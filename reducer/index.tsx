@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+
 function CounterReducer(state = 0, action) {
     switch (action.type) {
         case 'INCREMENT':
@@ -26,10 +27,22 @@ function isDarken(state = false, action) {
             return state
     }
 }
+async function getUser(state = null, action) {
+    switch (action.type) {
+        case 'GET_USER':
+            return {
+                ...state,
+                userData: action.payload
+            }
+        default:
+            return state
+    }
+}
 const allReducer = combineReducers({
     counter: CounterReducer,
     isLogged: loggedReducer,
-    isDarken: isDarken
+    isDarken: isDarken,
+    getUser: getUser
 })
 
 export default allReducer

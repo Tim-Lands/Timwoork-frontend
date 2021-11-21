@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import { CartProvider } from "react-use-cart";
+import { connect } from "react-redux";
+import { logout } from "./../../store/auth/authActions";
 
-export default function Layout({ children }) {
+function Layout({ children }) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     /*if (isMobile) {
       setIsSidebarShowen(true)
-      
-
     }*/
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
@@ -39,3 +39,10 @@ Layout.propTypes = {
   children: PropTypes.func
 };
 
+const mapStateToProps = (state: any) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.registerLoading,
+  userInfo: state.auth.user
+});
+
+export default connect(mapStateToProps, { logout })(Layout);

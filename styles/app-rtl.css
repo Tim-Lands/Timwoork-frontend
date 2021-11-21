@@ -600,7 +600,7 @@
 }
 
 .timlands-navbar .logo-nav {
-  padding-left: 7px;
+  padding-left: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4201,10 +4201,10 @@ h3 {
 }
 
 .timlands-add-new .timlands-add-new-body .text {
-  font-size: 19px;
+  font-size: 14px;
   color: #666;
   font-weight: 200;
-  line-height: 34px;
+  line-height: 27px;
 }
 
 /*

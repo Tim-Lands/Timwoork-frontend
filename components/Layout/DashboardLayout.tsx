@@ -1,35 +1,44 @@
 import Navbar from "../Dashboard/Navbar";
 import Sidebar from "../Dashboard/Sidebar";
-import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { logout } from "./../../store/auth/authActions";
 
-export default function DashboardLayout({ children }: any) {
+function DashboardLayout(props: any) {
+  useEffect(() => {
+    console.log(props.userInfo);
+  }, []);
+
   const [isDarken, setIsDarken] = useState(false)
   const setIsDarkenHandle = () => {
-      setIsDarken(!isDarken)
-  } 
+    setIsDarken(!isDarken)
+  }
 
   const [isSidebarShowen, setIsSidebarShowen] = useState(false)
   const setIsSidebarShowenHandle = () => {
     setIsSidebarShowen(!isSidebarShowen)
-  } 
+  }
   return (
     <div className={'is-dashboard ' + (isDarken ? 'is-dark' : '')}>
       <div className="clearflex">
         <div className={"right-column" + (isSidebarShowen ? ' hidden' : '')}>
-          <Sidebar />
+          <Sidebar userData={props.userInfo} />
         </div>
         <div className={"left-column" + (isSidebarShowen ? ' full-width' : '')}>
           <Navbar setIsSidebarShowenHandle={setIsSidebarShowenHandle} isDarken={isDarken} setIsDarkenHandle={setIsDarkenHandle} />
           <div className="timlands-dashboard-content">
-            {children}
+            {props.children}
           </div>
         </div>
       </div>
     </div>
   )
 }
-DashboardLayout.propTypes = {
-    children: PropTypes.any
-};
 
+const mapStateToProps = (state: any) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.registerLoading,
+  userInfo: state.auth.user
+});
+
+export default connect(mapStateToProps, { logout })(DashboardLayout);

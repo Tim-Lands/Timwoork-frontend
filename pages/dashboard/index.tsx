@@ -2,6 +2,10 @@ import Link from "next/link";
 import API from '../../config';
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
+import { connect } from "react-redux";
+import { logout } from "./../../store/auth/authActions";
+import {NextRouter, useRouter} from "next/router";
+
 export interface User {
     id: number,
     first_name: string,
@@ -9,7 +13,7 @@ export interface User {
     email: string,
     avatar: string,
 }
-function index(): ReactElement {
+function index(props: any): ReactElement {
     const [postsList, setPostsList] = useState({
         admins: 1,
         badges: 2,
@@ -30,7 +34,7 @@ function index(): ReactElement {
             const res: any = await API.get('dashboard')
             //setIsLoading(false)
             setPostsList(res.data.data)
-            console.log(res.data.data);
+            //console.log(res.data.data);
 
             //setIsError(false)
 
@@ -39,9 +43,16 @@ function index(): ReactElement {
             //setIsLoading(false)
         }
     }
+    const router: NextRouter = useRouter();
+
     useEffect(() => {
         getData()
-    }, [])
+        console.log(props.userInfo);
+        
+        if (!props.isAuthenticated) {
+            router.push("/user/login");
+        }
+    }, [props.isAuthenticated]);
 
     // Return statement.
     return (
@@ -204,46 +215,6 @@ function index(): ReactElement {
                         </div>
                     </div>
                 </div>
-                { /*              <div className="row mt-4">
-                    <div className="col-md-6">
-                        <div className="timlands-panel-header">
-                            <h2 className="title"><span className="material-icons material-icons-outlined">view_list</span>آخر النشاطات</h2>
-                        </div>
-                        <div className="timlands-table">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>التاريخ</th>
-                                        <th>رقم الهاتف</th>
-                                        <th>المبلغ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>منذ 6 أيام</td>
-                                        <td>0558873988</td>
-                                        <td>100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>منذ 6 أيام</td>
-                                        <td>0558873988</td>
-                                        <td>100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>منذ 6 أيام</td>
-                                        <td>0558873988</td>
-                                        <td>100.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>منذ 6 أيام</td>
-                                        <td>0558873988</td>
-                                        <td>100.00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>*/}
             </div>
         </>
     );
@@ -255,4 +226,10 @@ index.getLayout = function getLayout(page: any): ReactElement {
         </DashboardLayout>
     )
 }
-export default index;
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.registerLoading,
+    userInfo: state.auth.user
+});
+
+export default connect(mapStateToProps, { logout })(index);
