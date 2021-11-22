@@ -49,11 +49,12 @@ export class AuthGuard {
              * Fortunately, we can extract these cookies from the req object
              * and attach them to the api call.
              */
-            const token= Cookies.get('token')
+            const tokenStorage = Cookies.get('token')
+            
             const user = await API.get("me", {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${tokenStorage}`,
                 }
             });
 
@@ -86,10 +87,10 @@ export class AuthGuard {
         pathname: string
     ) {
         const isNoProtectedRoute = this.isNoProtectedRoute(pathname);
+        const token = Cookies.get('token')
         try {
-
             // If there are no cookies and the route is protected, redirect to login.
-            if (!req.headers.cookie && !isNoProtectedRoute) {
+            if (!token && !isNoProtectedRoute) {
                 /**
                  * No further redirect if we're already on the login
                  * path, as we otherwisely would be caught in an
@@ -113,13 +114,13 @@ export class AuthGuard {
              * Fortunately, we can extract these cookies from the req object
              * and attach them to the api call.
              */
-             const token= Cookies.get('token')
-             const response = await API.get("me", {
-                 headers: {
-                     'Content-Type': 'application/json',
-                     'Authorization': `Bearer ${token}`
-                 }
-             });
+
+            const response = await API.get("me", {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
 
             // Abort if request was not successful.
             if (response.status !== 200) {

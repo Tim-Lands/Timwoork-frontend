@@ -33,11 +33,9 @@ function index(props: any): ReactElement {
     const router: NextRouter = useRouter();
 
     useEffect(() => {
-        getData()
-        console.log(props.userInfo);
-        
+        getData()        
         if (!props.isAuthenticated) {
-            router.push("/user/login");
+            router.push("/login");
         }
     }, [props.isAuthenticated]);
 

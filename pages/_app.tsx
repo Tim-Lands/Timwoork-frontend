@@ -5,10 +5,9 @@ import { Provider } from "react-redux";
 //import configureStore from "../config/configureStore";
 import PropTypes from "prop-types";
 import { AuthGuard } from "../services/Auth/AuthGuard";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import * as types from "@/store/actionTypes";
-//import { protectedRoutes } from "./../config/config";
 import type { ReactNode } from 'react'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
@@ -16,7 +15,7 @@ import type { AppProps } from 'next/app'
 //require('../langs/config')
 import TimeAgo from 'javascript-time-ago'
 //import { PersistGate } from 'redux-persist/integration/react'
-//import { protectedRoutes } from "./../config";
+import { protectedRoutes } from "./../config";
 
 import ar from 'javascript-time-ago/locale/ar.json'
 import { ConfigProvider } from "antd";
@@ -32,11 +31,11 @@ type AppPropsWithLayout = AppProps & {
 }
 function MyApp({ Component, pageProps }: AppPropsWithLayout, { user }: any) {
 
-    //const router = useRouter();
+    const router = useRouter();
     // Check if we're on a protected route.
-    /*const isNoProtectedRoute = protectedRoutes.every((route) => {
+    const isNoProtectedRoute = protectedRoutes.every((route) => {
         return !router.pathname.startsWith(route);
-    });*/
+    });
 
     // Handle current user in redux.
     useEffect(() => {
@@ -54,17 +53,20 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, { user }: any) {
                 payload: user,
             });
             return;
+        } else {
+
+            // Dispatch user loading error if no user is present.
+            store.dispatch({
+                type: types.USER_LOADED_ERROR,
+            });
         }
-        // Dispatch user loading error if no user is present.
-        store.dispatch({
-            type: types.USER_LOADED_ERROR,
-        });
     }, []);
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
         <Provider store={store}>
             <ConfigProvider direction="rtl">
                 {getLayout(<Component {...pageProps} />)}
+                {isNoProtectedRoute && ''}
             </ConfigProvider>
         </Provider>
     );

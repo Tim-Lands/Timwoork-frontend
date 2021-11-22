@@ -12,6 +12,7 @@
 import API from "../../config";
 import * as types from "../actionTypes";
 import Cookies from 'js-cookie'
+import router from "next/router";
 
 /**
  * Load currently logged in user from DB.
@@ -23,10 +24,10 @@ import Cookies from 'js-cookie'
 export const loadUser = () => {
     return async (dispatch: CallableFunction) => {
         try {
-            const token= Cookies.get('token')
+            const token = Cookies.get('token')
+            //const token = localStorage.getItem('token')
             const res = await API.get("me", {
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             });
@@ -63,8 +64,8 @@ export const loadUser = () => {
 /**
  * Login functionality.
  *
- * @param {string} email
- *   The email address of the user.
+ * @param {string} username
+ *   The username of the user.
  * @param {string} password
  *   The password of the user.
  */
@@ -77,32 +78,40 @@ export const login = (username: string, password: string): any => {
             const res = await API.post("login", {
                 username,
                 password,
-            }, { withCredentials: true })
-            Cookies.set('token', res.data.data)
-
+            })
+            // localStorage.setItem('token', res.data.data);
+            
             // Authentication was successful.
             if (res.status === 200) {
-                dispatch(loadUser());
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                 });
+                //router.push('/dashboard')
+                Cookies.set('token', res.data.data)
+                dispatch(loadUser());
             }
         } catch (error: any) {
             if (error.response && error.response.status === 422) {
                 return dispatch({
                     type: types.LOGIN_ERROR,
-                    payload: "Email or password are incorrect.",
+                    payload: "يرجى تعبئة البيانات",
                 });
             }
             if (error.response && error.response.status === 419) {
                 return dispatch({
                     type: types.LOGIN_ERROR,
-                    payload: "Application access denied.",
+                    payload: "العملية غير ناجحة",
+                });
+            } 
+            if (error.response && error.response.status === '401') {
+                return dispatch({
+                    type: types.LOGIN_ERROR,
+                    payload: "حدث خطأ.. يرجى التأكد من البيانات",
                 });
             } else {
                 return dispatch({
-                    type: types.AUTHENTICATION_ERROR,
-                    payload: "Sorry, somethig went wrong.",
+                    type: types.LOGIN_ERROR,
+                    payload: "حدث خطأ غير متوقع",
                 });
             }
         }
@@ -114,14 +123,20 @@ export const login = (username: string, password: string): any => {
 export const logout = () => {
     return async (dispatch: CallableFunction) => {
         try {
-            const res = await API.post("logout");
+            const token = Cookies.get('token')
+            const res = await API.post("logout", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             if (res.status === 200) {
                 dispatch({
                     type: types.LOGOUT,
                 });
+                Cookies.remove('token')
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     };
 };

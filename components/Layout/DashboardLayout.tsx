@@ -6,7 +6,7 @@ import { logout } from "./../../store/auth/authActions";
 
 function DashboardLayout(props: any) {
   useEffect(() => {
-    console.log(props.userInfo);
+    console.log(props);
   }, []);
 
   const [isDarken, setIsDarken] = useState(false)
@@ -37,7 +37,6 @@ function DashboardLayout(props: any) {
 
 const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.registerLoading,
   userInfo: state.auth.user
 });
 

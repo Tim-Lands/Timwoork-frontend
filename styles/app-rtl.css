@@ -1924,6 +1924,27 @@ h3 {
 
 .login-panel .login-panel-body {
   padding: 15px 35px;
+  position: relative;
+}
+
+.login-panel .login-panel-body .is-loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(255, 255, 255, 0.699);
+  z-index: 20;
 }
 
 @media (max-width: 720px) {

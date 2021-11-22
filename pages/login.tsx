@@ -9,13 +9,14 @@ import * as Yup from 'yup';
 //import { message } from "antd";
 //import { useSelector } from 'react-redux'
 import { useRouter } from "next/router";
+import { Alert } from "@/components/Alert/Alert";
 
 const Login = (props: any): ReactElement => {
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.
     useEffect(() => {
-        if (props.isAuthenticated && !props.loading) {
+        if (props.isAuthenticated && !props.loading ) {
             router.push('/dashboard');
         }
     }, [props.isAuthenticated, props.loading]);
@@ -36,7 +37,7 @@ const Login = (props: any): ReactElement => {
                 props.login(values.username, values.password);
             }}
         >
-            {({ errors, touched, isSubmitting }) => (
+            {({ errors, touched }) => (
                 <Form>
                     <div className="row">
                         <div className="col-lg-6 p-0">
@@ -57,9 +58,12 @@ const Login = (props: any): ReactElement => {
                             </div>
                         </div>
                         <div className="col-lg-6 p-0">
+                                {props.loginError && (
+                                    <Alert type="danger">{props.loginError}</Alert>
+                                )}
                             <div className="login-panel">
-                                <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
-                                    {!isSubmitting ? '' :
+                                <div className={"panel-modal-body login-panel-body auto-height" + (props.loading ? ' is-loading' : '')}>
+                                    {!props.loading ? '' :
                                         <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                             <div className="spinner-border" role="status">
                                                 <span className="visually-hidden">Loading...</span>
@@ -73,7 +77,6 @@ const Login = (props: any): ReactElement => {
                                             name="username"
                                             placeholder="البريد الإلكتروني..."
                                             className="timlands-inputs"
-                                            autoComplete="off"
                                         />
                                         {errors.username && touched.username ?
                                             <div style={{ overflow: 'hidden' }}>

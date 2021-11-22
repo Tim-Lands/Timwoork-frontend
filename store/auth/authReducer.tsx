@@ -39,6 +39,7 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 isAuthenticated: true,
                 loginError: "",
                 registerError: "",
+                user: action.payload,
             };
         case types.USER_LOADED:
             return {
@@ -55,6 +56,7 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 loading: false,
                 isAuthenticated: false,
                 userLoadedError: action.payload,
+                user: {},
             };
         case types.START_LOGIN_LOADING:
             return {
@@ -66,6 +68,7 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 ...state,
                 isAuthenticated: true,
                 loginLoading: false,
+                user: action.payload,
             };
         case types.LOGIN_ERROR:
             return {
@@ -106,7 +109,6 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 authError: "",
                 userLoadedError: "",
             };
-        case types.AUTH_GENERAL_ERROR:
         case types.RESET_PASSWORD_LINK_SENT:
             return {
                 ...state,
