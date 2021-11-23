@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
@@ -78,6 +78,9 @@ function index(props: any): ReactElement {
     const submenu = true
     const path = useRouter()
     const { userData } = props
+    useEffect(() => {
+        //console.log(userData);
+    }, [])
     return (
         <div className={"dashboard-sidebar"}>
             {userData &&
@@ -158,6 +161,7 @@ function index(props: any): ReactElement {
 const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
     loading: state.auth.registerLoading,
+    userInfo: state.auth.user
 });
 
 export default connect(mapStateToProps, { logout })(index);

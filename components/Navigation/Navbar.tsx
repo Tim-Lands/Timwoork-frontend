@@ -17,13 +17,15 @@ import Menus from "./Menus";
 import Link from "next/link";
 import { motion } from 'framer-motion'
 import { useSelector, useDispatch } from 'react-redux'
-import { login, setDarken } from '../../actions'
+import { login } from '../../actions'
 import router from "next/router";
 import { useCart } from "react-use-cart";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
+import Cookies from 'js-cookie'
 
-function Navbar(props: any): ReactElement {
+function Navbar({ userData }): ReactElement {
+    const token = Cookies.get('token')
     const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
@@ -31,8 +33,7 @@ function Navbar(props: any): ReactElement {
     }
     const { totalUniqueItems } = useCart();
     useEffect(() => {
-        console.log(props);
-        
+
         window.addEventListener("scroll", () => {
             setScroll(window.scrollY > 60);
         });
@@ -57,6 +58,11 @@ function Navbar(props: any): ReactElement {
             <Menu.Item key="0">
                 <Link href="/user/profile">
                     <a>الصفحة الشخصية</a>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="7">
+                <Link href="/add-new">
+                    <a>إضافة خدمة جديدة</a>
                 </Link>
             </Menu.Item>
             <Menu.Item key="1">
@@ -106,31 +112,40 @@ function Navbar(props: any): ReactElement {
                                 </Badge>
                             </motion.button>
                         </li>
-                        
-                        {props.isAuthenticated ?
+
+                        {token ?
                             <>
-                                <li className="circular-item language-nav-item">
-                                    <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
-                                        <Badge count={0} offset={[2, -8]}>
-                                            <i className="material-icons material-icons-outlined">email</i>
-                                        </Badge>
-                                    </motion.button>
-                                </li>
-                                <li className="circular-item language-nav-item">
-                                    <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
-                                        <Badge count={5} offset={[2, -8]}>
-                                            <i className="material-icons material-icons-outlined">notifications</i>
-                                        </Badge>
-                                    </motion.button>
-                                </li>
-                                <li className="login-user">
-                                    <Dropdown overlay={AccountList} trigger={['click']}>
-                                        <a>
-                                            <Avatar src={<Image src="/avatar2.jpg" style={{ width: 32 }} />} />
-                                            <span className="text"> عبد الحميد </span><DownOutlined />
-                                        </a>
-                                    </Dropdown>
-                                </li>
+                                {userData && userData.profile &&
+                                    (
+                                        <>
+                                            <li className="circular-item language-nav-item">
+                                                <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
+                                                    <Badge count={0} offset={[2, -8]}>
+                                                        <i className="material-icons material-icons-outlined">email</i>
+                                                    </Badge>
+                                                </motion.button>
+                                            </li>
+                                            <li className="circular-item language-nav-item">
+                                                <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
+                                                    <Badge count={5} offset={[2, -8]}>
+                                                        <i className="material-icons material-icons-outlined">notifications</i>
+                                                    </Badge>
+                                                </motion.button>
+                                            </li>
+                                            <li className="login-user">
+                                                <Dropdown overlay={AccountList} trigger={['click']}>
+                                                    <a>
+                                                        {userData.profile.avatar == 'avatar.png' ?
+                                                            <Avatar src={<Image src="/avatar2.jpg" style={{ width: 32 }} />} /> :
+                                                            <Avatar src={<Image src={userData.profile.avatar} style={{ width: 32 }} />} />
+                                                        }
+                                                        <span className="text"> {userData.profile.last_name} </span><DownOutlined />
+                                                    </a>
+                                                </Dropdown>
+                                            </li>
+                                        </>
+                                    )
+                                }
                             </>
                             :
                             <>
@@ -153,7 +168,7 @@ function Navbar(props: any): ReactElement {
                             </>
                         }
                         <li className="circular-item">
-                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => dispatch(setDarken())} className="language-nav-butt circular-center pb-3">
+                            <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center pb-3" style={{ backgroundColor: 'transparent', borderWidth: 0, height: 45 }}>
                                 {isDarken ?
                                     <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
                                     :
@@ -205,6 +220,7 @@ function Navbar(props: any): ReactElement {
 Navbar.propTypes = {
     setIsDarkenHandle: PropTypes.func,
     isDarken: PropTypes.bool,
+    userData: PropTypes.object
 };
 const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,

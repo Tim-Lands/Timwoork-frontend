@@ -17,7 +17,6 @@ const initState = {
     loginLoading: false,
     user: {},
     loginError: "",
-    registerError: "",
     authError: "",
     userLoadedError: "",
 };
@@ -38,7 +37,6 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 loading: false,
                 isAuthenticated: true,
                 loginError: "",
-                registerError: "",
                 user: action.payload,
             };
         case types.USER_LOADED:
@@ -47,7 +45,6 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 loading: false,
                 isAuthenticated: true,
                 loginError: "",
-                registerError: "",
                 user: action.payload,
             };
         case types.USER_LOADED_ERROR:
@@ -77,49 +74,6 @@ const auth = (state = initState, action: { type: string; payload: any }) => {
                 isAuthenticated: false,
                 user: {},
                 loginError: action.payload,
-            };
-        case types.START_REGISTER_LOADING:
-            return {
-                ...state,
-                registerLoading: true,
-            };
-        case types.REGISTER_SUCCESS:
-            return {
-                ...state,
-                isAuthenticated: true,
-                registerLoading: false,
-            };
-        case types.REGISTER_ERROR:
-            return {
-                ...state,
-                registerLoading: false,
-                isAuthenticated: false,
-                user: {},
-                registerError: action.payload,
-            };
-        case types.LOGOUT:
-            return {
-                ...state,
-                isAuthenticated: false,
-                loading: false,
-                loginLoading: false,
-                user: {},
-                loginError: "",
-                registerError: "",
-                authError: "",
-                userLoadedError: "",
-            };
-        case types.RESET_PASSWORD_LINK_SENT:
-            return {
-                ...state,
-                isAuthenticated: false,
-                loading: false,
-                loginLoading: false,
-                user: {},
-                loginError: "",
-                registerError: "",
-                authError: "",
-                userLoadedError: "",
             };
     }
     return state;

@@ -10,16 +10,19 @@ import * as Yup from 'yup';
 //import { useSelector } from 'react-redux'
 import { useRouter } from "next/router";
 import { Alert } from "@/components/Alert/Alert";
+import Cookies from 'js-cookie'
 
 const Login = (props: any): ReactElement => {
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.
+    const token = Cookies.get('token')
     useEffect(() => {
-        if (props.isAuthenticated && !props.loading ) {
+        
+        if (props.isAuthenticated && token) {
             router.push('/dashboard');
         }
-    }, [props.isAuthenticated, props.loading]);
+    }, []);
     // Yup Validations
     const SignupSchema = Yup.object().shape({
         username: Yup.string().required('هذا الحقل إجباري'),

@@ -2,12 +2,13 @@ import Navbar from "../Dashboard/Navbar";
 import Sidebar from "../Dashboard/Sidebar";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { logout } from "./../../store/auth/authActions";
+import { logout, loadUser } from "./../../store/auth/authActions";
 
 function DashboardLayout(props: any) {
+
   useEffect(() => {
-    console.log(props);
-  }, []);
+    props.loadUser()
+  }, [props.userInfo]);
 
   const [isDarken, setIsDarken] = useState(false)
   const setIsDarkenHandle = () => {
@@ -40,4 +41,4 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.auth.user
 });
 
-export default connect(mapStateToProps, { logout })(DashboardLayout);
+export default connect(mapStateToProps, { logout, loadUser })(DashboardLayout);

@@ -1,5 +1,3 @@
-import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement } from "react";
 import { Field, Form, Formik } from 'formik';
 import { Select } from 'antd';
 
@@ -7,8 +5,6 @@ import "antd/dist/antd.css";
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
-//import { useEditor, EditorContent } from '@tiptap/react'
-//import StarterKit from '@tiptap/starter-kit'
 function Overview() {
     const { Option }: any = Select;
 
@@ -217,13 +213,6 @@ function Overview() {
                 </div>
             </div>
         </div>
-    )
-}
-Overview.getLayout = function getLayout(page): ReactElement {
-    return (
-        <Layout>
-            {page}
-        </Layout>
     )
 }
 export default Overview

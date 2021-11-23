@@ -51,7 +51,7 @@ export class AuthGuard {
              */
             const tokenStorage = Cookies.get('token')
             
-            const user = await API.get("me", {
+            const user = await API.get("api/me", {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${tokenStorage}`,
@@ -115,7 +115,7 @@ export class AuthGuard {
              * and attach them to the api call.
              */
 
-            const response = await API.get("me", {
+            const response = await API.get("api/me", {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,

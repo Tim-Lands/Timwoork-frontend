@@ -1,12 +1,7 @@
-import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement } from "react";
 import { Field, Form, Formik } from 'formik';
-//import 'rsuite/dist/rsuite.min.css';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
-//import { useEditor, EditorContent } from '@tiptap/react'
-//import StarterKit from '@tiptap/starter-kit'
 
 function Description() {
     return (
@@ -30,7 +25,6 @@ function Description() {
                         onSubmit={async () => {
                             await new Promise((r) => setTimeout(r, 500));
                             router.push('/add-new/medias')
-                            //alert(JSON.stringify(values, null, 2));
                         }}
                     >
                         {({ errors, touched, isSubmitting }) => (
@@ -160,13 +154,6 @@ function Description() {
                 </div>
             </div>
         </div>
-    )
-}
-Description.getLayout = function getLayout(page): ReactElement {
-    return (
-        <Layout>
-            {page}
-        </Layout>
     )
 }
 export default Description

@@ -1,13 +1,7 @@
-//import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement } from "react";
 import { Field, FieldArray, Form, Formik } from 'formik';
-//import 'rsuite/dist/rsuite.min.css';
 import { motion } from 'framer-motion';
-import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
-//import { useEditor, EditorContent } from '@tiptap/react'
-//import StarterKit from '@tiptap/starter-kit'
 function Prices() {
     return (
         <div className="container-fluid">
@@ -267,10 +261,3 @@ function Prices() {
     )
 }
 export default Prices
-Prices.getLayout = function getLayout(page): ReactElement {
-    return (
-        <Layout>
-            {page}
-        </Layout>
-    )
-}

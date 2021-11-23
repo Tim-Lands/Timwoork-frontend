@@ -5,6 +5,9 @@ import DashboardLayout from "../../components/Layout/DashboardLayout";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import {NextRouter, useRouter} from "next/router";
+import Cookies from 'js-cookie'
+import store from "@/store/store";
+import * as types from "@/store/actionTypes";
 
 function index(props: any): ReactElement {
     const [postsList, setPostsList] = useState({
@@ -33,11 +36,19 @@ function index(props: any): ReactElement {
     const router: NextRouter = useRouter();
 
     useEffect(() => {
+        //console.log(props);
+        const token: string = Cookies.get('token')
         getData()        
-        if (!props.isAuthenticated) {
+        if (!token) {
             router.push("/login");
+        } else {
+            store.dispatch({
+                type: types.USER_LOADED,
+                payload: props.user,
+            });
+            return;
         }
-    }, [props.isAuthenticated]);
+    }, []);
 
 
     // Return statement.

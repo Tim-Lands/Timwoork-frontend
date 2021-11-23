@@ -1,19 +1,21 @@
 import Navbar from "@/components/Navigation/Navbar";
 import { Spin } from "antd";
 import router from "next/router";
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import { CartProvider } from "react-use-cart";
 import { connect } from "react-redux";
-import { logout } from "./../../store/auth/authActions";
+import { logout, loadUser } from "./../../store/auth/authActions";
 
-function Layout({ children }) {
+function Layout(props: any) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     /*if (isMobile) {
       setIsSidebarShowen(true)
     }*/
+    props.loadUser()
+    console.log(props.userInfo);
+
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };
@@ -26,23 +28,18 @@ function Layout({ children }) {
   return (
     <CartProvider>
       <div className={'is-home is-dark'}>
-        <Navbar />
+        <Navbar userData={props.userInfo} />
         <Spin tip="يرجى الإنتظار..." spinning={loading}>
-          {children}
+          {props.children}
         </Spin>
         <Footer />
       </div>
     </CartProvider>
   )
 }
-Layout.propTypes = {
-  children: PropTypes.func
-};
-
 const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.registerLoading,
   userInfo: state.auth.user
 });
 
-export default connect(mapStateToProps, { logout })(Layout);
+export default connect(mapStateToProps, { logout, loadUser })(Layout);
