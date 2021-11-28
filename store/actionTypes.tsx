@@ -2,7 +2,13 @@
 export const SET_ALERT = "SET_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 
-export const IS_TOKEN = "IS_TOKEN";
+export const START_VERIFY_LOADING = "START_VERIFY_LOADING";
+export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
+export const VERIFY_ERROR = "VERIFY_ERROR";
+
+export const ADD_NEW_PRODUCT_ERROR = "ADD_NEW_PRODUCT_ERROR";
+export const ADDED_PRODUCT = "ADDED_PRODUCT";
+export const ADD_PRODUCT_LOADING = "ADD_PRODUCT_LOADING";
 
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const USER_LOADED = "USER_LOADED";

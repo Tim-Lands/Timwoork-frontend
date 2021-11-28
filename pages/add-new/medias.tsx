@@ -1,4 +1,5 @@
-import { useState } from "react";
+import Layout from '../../components/Layout/HomeLayout'
+import { ReactElement, useState } from "react";
 //import API from '../../config';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
@@ -204,6 +205,13 @@ function Medias() {
                 </div>
             </div>
         </div>
+    )
+}
+Medias.getLayout = function getLayout(page): ReactElement {
+    return (
+        <Layout>
+            {page}
+        </Layout>
     )
 }
 export default Medias

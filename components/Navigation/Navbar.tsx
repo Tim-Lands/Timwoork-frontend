@@ -16,15 +16,14 @@ import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
 import { motion } from 'framer-motion'
-import { useSelector, useDispatch } from 'react-redux'
-import { login } from '../../actions'
+import { useSelector } from 'react-redux'
 import router from "next/router";
 import { useCart } from "react-use-cart";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import Cookies from 'js-cookie'
 
-function Navbar({ userData }): ReactElement {
+function Navbar({ userData }, props: any): ReactElement {
     const token = Cookies.get('token')
     const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);
@@ -52,7 +51,7 @@ function Navbar({ userData }): ReactElement {
     }
 
     const isDarken = useSelector((state: any) => state.isDarken)
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
     const AccountList = (
         <Menu>
             <Menu.Item key="0">
@@ -77,7 +76,7 @@ function Navbar({ userData }): ReactElement {
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="3">
-                <a onClick={() => dispatch(login())}>
+                <a onClick={props.logout}>
                     تسجيل الخروج
                 </a>
             </Menu.Item>
@@ -158,7 +157,7 @@ function Navbar({ userData }): ReactElement {
                                 </li>
                                 {!isMobile &&
                                     <li className="register-nav-item">
-                                        <Link href="">
+                                        <Link href="/register">
                                             <a className="btn butt-sm butt-primary flex-center">
                                                 <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
                                             </a>
@@ -219,6 +218,7 @@ function Navbar({ userData }): ReactElement {
 }
 Navbar.propTypes = {
     setIsDarkenHandle: PropTypes.func,
+    logout: PropTypes.func,
     isDarken: PropTypes.bool,
     userData: PropTypes.object
 };

@@ -4,12 +4,8 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
-import {NextRouter, useRouter} from "next/router";
-import Cookies from 'js-cookie'
-import store from "@/store/store";
-import * as types from "@/store/actionTypes";
 
-function index(props: any): ReactElement {
+function index(): ReactElement {
     const [postsList, setPostsList] = useState({
         admins: 1,
         badges: 2,
@@ -29,28 +25,12 @@ function index(props: any): ReactElement {
             setPostsList(res.data.data)
 
         } catch (error) {
-            //setIsError(true)
-            //setIsLoading(false)
+            console.log(error);
         }
     }
-    const router: NextRouter = useRouter();
-
     useEffect(() => {
-        //console.log(props);
-        const token: string = Cookies.get('token')
-        getData()        
-        if (!token) {
-            router.push("/login");
-        } else {
-            store.dispatch({
-                type: types.USER_LOADED,
-                payload: props.user,
-            });
-            return;
-        }
+        getData()
     }, []);
-
-
     // Return statement.
     return (
         <>
@@ -229,4 +209,4 @@ const mapStateToProps = (state: any) => ({
     userInfo: state.auth.user
 });
 
-export default connect(mapStateToProps, { logout })(index);
+export default connect(mapStateToProps, { logout })(index)

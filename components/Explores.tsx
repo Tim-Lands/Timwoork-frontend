@@ -79,14 +79,14 @@ const categories = [
 function Explores() {
     const catVariants = {
         visible: i => ({
-          opacity: 1,
-          y: 0,
-          transition: {
-            delay: i * 0.092,
-          },
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: i * 0.092,
+            },
         }),
         hidden: { opacity: 0, y: 9 },
-      }
+    }
     return (
         <AnimatePresence>
             <motion.div initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
@@ -102,7 +102,7 @@ function Explores() {
                                                 <p className="count">{e.count}</p>
                                             </a>
                                         </Link>
-                                    </motion.li>   
+                                    </motion.li>
                                 ))}
                             </ul>
                         </div>
@@ -115,100 +115,98 @@ function Explores() {
                             <div className="main-item-category-body">
                                 <div className="row">
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">هذا النص هو مثال لنص</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">هذا النص هو مثال لنص</p>
+                                            <p className="count">19</p>
+                                        </a>
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">من النصوص الأخرى</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">من النصوص الأخرى</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">يستبدل في نفس</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">يستبدل في نفس</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">يبدو مقسما</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">يبدو مقسما</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">الفقرات كما تريد</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">الفقرات كما تريد</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">من النصوص الأخرى</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">من النصوص الأخرى</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">هذا النص هو مثال لنص</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">هذا النص هو مثال لنص</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">يستبدل في نفس</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">يستبدل في نفس</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">الفقرات كما تريد</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">الفقرات كما تريد</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">يستبدل في نفس</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">يستبدل في نفس</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">من النصوص الأخرى</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">من النصوص الأخرى</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                     <div className="col-sm-6">
-                                        <Link href="/">
-                                            <a className="sub-cat-link">
-                                                <p className="text">هذا النص هو مثال لنص</p>
-                                                <p className="count">19</p>
-                                            </a>
-                                        </Link>
+
+                                        <a href="/category/category-slug" className="sub-cat-link">
+                                            <p className="text">هذا النص هو مثال لنص</p>
+                                            <p className="count">19</p>
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>

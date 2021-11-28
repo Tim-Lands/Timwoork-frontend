@@ -127,4 +127,52 @@
             width: calc(100% - 210px);
         }
     }
+    &.small {
+        border-radius: 5px;
+        margin: 4px 0;
+        margin-bottom: 10px;
+        height: 310px;
+        .post-item-img {
+            height: 140px;
+        }
+        .post-item-content {
+            padding: 8px;
+            .post-meta {
+                li {
+                    font-size: 10px;
+                    padding: 2px 6px;
+                    .material-icons {
+                        font-size: 15px;
+                        margin-left: 3px;
+                    }
+                }
+            }
+            .title {
+                font-size: 16px;
+            }
+        }
+        .post-item-footer {
+            padding: 15px;
+            .post-meta-price {
+                font-size: 12px;
+            }
+            .post-meta-bayer {
+                font-size: 11px;
+            }
+        }
+        &:hover {
+            box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.089);
+        }
+        &.post-item-search {
+            padding: 8px;
+            .post-item-img {
+                width: 190px;
+                border-radius: 5px;
+                height: 120px;
+            }
+            .post-item-content {
+                width: calc(100% - 190px);
+            }
+        }
+    }
 }

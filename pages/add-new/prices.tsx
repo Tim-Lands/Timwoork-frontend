@@ -1,5 +1,7 @@
+import { ReactElement } from "react";
 import { Field, FieldArray, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
+import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 function Prices() {
@@ -261,3 +263,10 @@ function Prices() {
     )
 }
 export default Prices
+Prices.getLayout = function getLayout(page): ReactElement {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
+}

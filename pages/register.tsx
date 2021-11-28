@@ -1,12 +1,23 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { useRouter } from "next/router";
-import API from '../config';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Link from 'next/link'
 import { Field, Form, Formik } from "formik";
-import { motion } from "framer-motion";
 import * as Yup from 'yup';
+import { motion } from "framer-motion";
+import { register } from "@/store/auth/authActions";
+import Cookies from 'js-cookie'
+import { Alert } from "@/components/Alert/Alert";
 
-const Register = (): ReactElement => {
+const Register = (props: any): ReactElement => {
+    // Redirect to user home route if user is authenticated.
+    const token = Cookies.get('token')
+    useEffect(() => {        
+        if (token) {
+            router.push('/');
+        }
+    }, []);
     const router = useRouter()
     const SignupSchema = Yup.object().shape({
         email: Yup.string().required('هذا الحقل إجباري'),
@@ -21,29 +32,10 @@ const Register = (): ReactElement => {
             }}
             validationSchema={SignupSchema}
             onSubmit={async values => {
-                try {
-                    const res = await API.post("dashboard/login", values, { withCredentials: true });
-                    // If Activate Network 
-                    // Authentication was successful.
-                    if (res.status == 201 || res.status == 200) {
-                        alert('تمت الإضافة بنجاح')
-                        router.push('/dashboard')
-                    } else {
-                        alert('Error')
-                    }
-                } catch (ex) {
-
-                    if (ex.response && ex.response.status === 422) {
-                        alert(ex.response.data.errors)
-                    }
-
-                    if (ex.response && ex.response.status === 401) {
-                        alert(ex.response.data);
-                    }
-                }
+                props.register(values.email, values.password);
             }}
         >
-            {({ errors, touched, isSubmitting }) => (
+            {({ errors, touched }) => (
                 <Form>
                     <div className="row">
                         <div className="col-lg-6 p-0">
@@ -64,9 +56,12 @@ const Register = (): ReactElement => {
                             </div>
                         </div>
                         <div className="col-lg-6 p-0">
+                            {props.registerError && (
+                                <Alert type="danger">{props.registerError}</Alert>
+                            )}
                             <div className="login-panel">
-                                <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
-                                    {!isSubmitting ? '' :
+                                <div className={"panel-modal-body login-panel-body auto-height" + (props.registerLoading ? ' is-loading' : '')}>
+                                    {!props.registerLoading ? '' :
                                         <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                             <div className="spinner-border" role="status">
                                                 <span className="visually-hidden">Loading...</span>
@@ -78,6 +73,7 @@ const Register = (): ReactElement => {
                                         <Field
                                             id="email"
                                             name="email"
+                                            dir="ltr"
                                             placeholder="البريد الإلكتروني..."
                                             className="timlands-inputs"
                                             autoComplete="off"
@@ -95,6 +91,7 @@ const Register = (): ReactElement => {
                                         <label className="label-block" htmlFor="password">كلمة المرور</label>
                                         <Field
                                             id="password"
+                                            dir="ltr"
                                             name="password"
                                             placeholder="كلمة المرور..."
                                             className="timlands-inputs"
@@ -118,7 +115,7 @@ const Register = (): ReactElement => {
                                     </div>
                                     <div className="panel-modal-footer">
                                         <div className="d-flex">
-                                            <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">إنشاء حساب</button>
+                                            <button type="submit" disabled={props.registerLoading} className="btn me-auto butt-primary butt-md">إنشاء حساب</button>
                                             <div className="footer-text">
                                                 <p className="text"> لديك حساب؟
                                                     <Link href="/login">
@@ -161,4 +158,17 @@ const Register = (): ReactElement => {
     );
 };
 
-export default Register;
+// Map redux states to local component props.
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    registerError: state.auth.registerError,
+    registerLoading: state.auth.registerLoading,
+});
+
+// Define PropTypes.
+Register.propTypes = {
+    props: PropTypes.object,
+    register: PropTypes.func,
+};
+
+export default connect(mapStateToProps, { register })(Register);

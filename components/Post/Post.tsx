@@ -4,9 +4,17 @@ import Link from "next/link";
 import { useCart } from "react-use-cart";
 import { Badge } from 'antd';
 
-function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, product }): ReactElement {
+function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, product, size }): ReactElement {
     const thumbnailUrl = `url(${thumbnail})`;
     const { addItem, inCart, removeItem } = useCart();
+    const sizeClass = () => {
+        switch (size) {
+            case 'small':
+                return ' small'
+            default:
+                return ''
+        }
+    }
     /*const showStars = () => {
         const xAr: any = [
             <span className="material-icons">grade</span>,
@@ -35,7 +43,7 @@ function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, produ
     }*/
     return (
         <Badge.Ribbon text="Hippies" color="cyan">
-            <div className="timlands-post-item">
+            <div className={"timlands-post-item" + sizeClass()}>
                 <Link href={postUrl}>
                     <a>
                         <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
@@ -86,6 +94,7 @@ Post.propTypes = {
     postUrl: PropTypes.string,
     author: PropTypes.string,
     userUrl: PropTypes.string,
+    size: PropTypes.string,
     rate: PropTypes.number,
     period: PropTypes.number,
     buyers: PropTypes.number,

@@ -5,22 +5,15 @@ import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
 import { logout, loadUser } from "./../../store/auth/authActions";
-import Cookies from 'js-cookie'
-import router from 'next/router';
+import withAuth from '../../services/withAuth'
 
 function Profile(props: any) {
-    const token = Cookies.get('token')
-
     useEffect(() => {
-        if (!token) {
-            router.push('/login')
-        }
         props.loadUser()
-        console.log(props.userInfo);
     }, [])
     return (
         <div className="py-3">
-            {token && props.userInfo && props.userInfo.profile &&
+            {props.userInfo && props.userInfo.profile &&
                 (<div className="container">
                     <div className="row">
                         <div className="col-lg-4">
@@ -74,7 +67,7 @@ function Profile(props: any) {
                                 <div className="profile-content-header">
                                     <Badge count="غير متصل" offset={[10, 10]} >
                                         <div className="profile-content-avatar">
-                                            <img src="/avatar2.jpg" width={120} />
+                                            <img src={'https://api.timwoork.com/avatars/' + props.userInfo.profile.avatar} width={120} />
                                         </div>
                                     </Badge>
                                     <div className="profile-content-head">
@@ -200,4 +193,4 @@ const mapStateToProps = (state: any) => ({
     userInfo: state.auth.user
 });
 
-export default connect(mapStateToProps, { logout, loadUser })(Profile);
+export default connect(mapStateToProps, { logout, loadUser })(withAuth(Profile));

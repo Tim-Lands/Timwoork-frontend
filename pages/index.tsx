@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Layout from '../components/Layout/HomeLayout'
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import Hero from "@/components/Hero";
+import API from 'config'
 import PostsAside from "@/components/PostsAside";
+import useSWR from 'swr'
 const testServices = [
   {
     id: 1,
@@ -55,6 +57,18 @@ const testServices = [
 ]
 
 function Home() {
+  const { data: products, error }: any = useSWR('dashboard/products', () =>
+    API
+      .get('dashboard/products')
+      .then(res => res.data)
+      .catch(error => {
+        if (error.response.status != 409) throw error
+      }),
+  )
+      useEffect(() => {
+        console.log(products);
+        
+      }, [])
   return (
     <>
       <Hero />
@@ -63,12 +77,13 @@ function Home() {
           <div className="nanny-home-image">
             <img src="/undraw_winter_designer_a2m7.svg" alt="" />
           </div>
+          
           <div className="nanny-home-content">
             <h2 className="title">
-            هذا النص هو مثال لنص يمكن أن يستبدل في نفس
+              هذا النص هو مثال لنص يمكن أن يستبدل في نفس
             </h2>
             <p className="text">
-            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
+              هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
             </p>
             <div className="py-3">
               <Link href="/">
@@ -78,9 +93,12 @@ function Home() {
           </div>
         </div>
       </div>
-      <PostsAside title="الفيدهات والحركات" PostData={testServices} />
-      <PostsAside title="برمجة وتطوير" PostData={testServices} />
-      <PostsAside title="التصميم الغرافيكي" PostData={testServices} />
+
+      <div className="container">
+        <PostsAside title="الفيدهات والحركات" PostData={testServices} isLoading={!products} isError={error}/>
+        <PostsAside title="برمجة وتطوير" PostData={testServices} isLoading={!products} isError={error} />
+        <PostsAside title="التصميم الغرافيكي" PostData={testServices} isLoading={!products} isError={error} />
+      </div>
 
     </>
   );

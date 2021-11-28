@@ -3,12 +3,13 @@ import Sidebar from "../Dashboard/Sidebar";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { logout, loadUser } from "./../../store/auth/authActions";
+import withAuth from '../../services/withAuth'
 
 function DashboardLayout(props: any) {
 
   useEffect(() => {
     props.loadUser()
-  }, [props.userInfo]);
+  }, []);
 
   const [isDarken, setIsDarken] = useState(false)
   const setIsDarkenHandle = () => {
@@ -41,4 +42,4 @@ const mapStateToProps = (state: any) => ({
   userInfo: state.auth.user
 });
 
-export default connect(mapStateToProps, { logout, loadUser })(DashboardLayout);
+export default connect(mapStateToProps, { logout, loadUser })(withAuth(DashboardLayout));

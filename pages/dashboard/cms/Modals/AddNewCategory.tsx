@@ -14,6 +14,7 @@ const SignupSchema = Yup.object().shape({
     description_fr: Yup.string().min(8, 'يجب أن يكون عدد الحروف أكثر من 8').required('هذا الحقل إجباري'),
     icon: Yup.string().required('هذا الحقل إجباري'),
 });
+
 export default function AddNewCategory({ setIsModalHiddenHandle }: any): ReactElement {
     return (
         <>
@@ -54,7 +55,7 @@ export default function AddNewCategory({ setIsModalHiddenHandle }: any): ReactEl
                         }
                     }}
                 >
-                    {({ errors, touched, isSubmitting }) => (
+                    {({ errors, touched, isSubmitting, handleChange, values }) => (
                         <Form>
                             <div className={"panel-modal-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
                             {!isSubmitting ? '' :
@@ -193,6 +194,7 @@ export default function AddNewCategory({ setIsModalHiddenHandle }: any): ReactEl
                                                 id="icon"
                                                 name="icon"
                                                 className="timlands-inputs"
+                                                onChange={handleChange}
                                             >
                                                 <option value="bookmark_border">bookmark_border</option>
                                                 <option value="description">description</option>
@@ -203,7 +205,20 @@ export default function AddNewCategory({ setIsModalHiddenHandle }: any): ReactEl
                                                 <option value="question_answer">question_answer</option>
                                                 <option value="verified_user">verified_user</option>
                                                 <option value="code">code</option>
+                                                <option value="settings">settings</option>
+                                                <option value="analytics">analytics</option>
+                                                <option value="account_tree">account_tree</option>
+                                                <option value="headphones">headphones</option>
+                                                <option value="ondemand_video">ondemand_video</option>
+                                                <option value="rate_review">rate_review</option>
+                                                <option value="connected_tv">connected_tv</option>
+                                                <option value="view_in_ar">view_in_ar</option>
+                                                <option value="business">business</option>
+                                                <option value="volunteer_activism">volunteer_activism</option>
                                             </Field>
+                                            <div className="icon-preview">
+                                                <span className="material-icons material-icons-outlined">{values.icon}</span>
+                                            </div>
                                             {errors.icon && touched.icon ?
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">

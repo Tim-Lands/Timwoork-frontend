@@ -16,9 +16,31 @@
     &.select {
         padding: 7px 20px;
     }
+    &.code {
+        padding: 17px 24px !important;
+        font-size: 27px !important;
+        text-align: center;
+        margin-top: 8px;
+        direction: ltr;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        &:hover {
+            border: 2px solid #ccc;
+        }
+        &:focus {
+            border: 2px solid $primary;
+        }
+    }
+    &.sm {
+        padding: 8px 15px !important;
+        font-size: 12px !important;
+        margin-top: 4px;
+        border-radius: 4px;
+    }
 }
 .timlands-form {
     padding: 12px 0;
+    position: relative;
     .label-block {
         font-size: 14px;
         color: #333;
@@ -27,7 +49,6 @@
         margin-bottom: 6px;
     }
     .timlands-input {
-
         display: block;
         width: 100%;
         background-color: #fff;
@@ -38,6 +59,7 @@
         font-weight: 500;
         outline: none;
         transition: all 0.3s;
+        
         &::placeholder {
             color: #ddd;
         }
@@ -52,6 +74,7 @@
                 color: #ccc;
             }
         }
+
         @keyframes formscale {
             0% {
                 transform: scale(1.08);
@@ -84,6 +107,16 @@
     @media (max-width: 500px) {
         margin: 20px 0;
     }
+    .icon-preview {
+        position: absolute;
+        left: 19px;
+        color: #999;
+        top: 60px;
+        .material-icons {
+            font-size: 32px;
+        }
+    }
+
 }
 
 .forms-methods {

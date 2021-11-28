@@ -6,8 +6,6 @@ import { login } from "@/store/auth/authActions";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import * as Yup from 'yup';
-//import { message } from "antd";
-//import { useSelector } from 'react-redux'
 import { useRouter } from "next/router";
 import { Alert } from "@/components/Alert/Alert";
 import Cookies from 'js-cookie'
@@ -18,11 +16,11 @@ const Login = (props: any): ReactElement => {
     // Redirect to user home route if user is authenticated.
     const token = Cookies.get('token')
     useEffect(() => {
-        
-        if (props.isAuthenticated && token) {
+        if (token) {
             router.push('/dashboard');
+            return;
         }
-    }, []);
+    }, [token]);
     // Yup Validations
     const SignupSchema = Yup.object().shape({
         username: Yup.string().required('هذا الحقل إجباري'),
@@ -61,9 +59,9 @@ const Login = (props: any): ReactElement => {
                             </div>
                         </div>
                         <div className="col-lg-6 p-0">
-                                {props.loginError && (
-                                    <Alert type="danger">{props.loginError}</Alert>
-                                )}
+                            {props.loginError && (
+                                <Alert type="danger">{props.loginError}</Alert>
+                            )}
                             <div className="login-panel">
                                 <div className={"panel-modal-body login-panel-body auto-height" + (props.loading ? ' is-loading' : '')}>
                                     {!props.loading ? '' :
@@ -77,6 +75,7 @@ const Login = (props: any): ReactElement => {
                                         <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
                                         <Field
                                             id="email"
+                                            dir="ltr"
                                             name="username"
                                             placeholder="البريد الإلكتروني..."
                                             className="timlands-inputs"
@@ -95,6 +94,7 @@ const Login = (props: any): ReactElement => {
                                         <Field
                                             id="password"
                                             name="password"
+                                            dir="ltr"
                                             placeholder="كلمة المرور..."
                                             className="timlands-inputs"
                                             autoComplete="off"
@@ -163,7 +163,6 @@ const Login = (props: any): ReactElement => {
                             </div>
                         </div>
                     </div>
-
                 </Form>
             )}
         </Formik>

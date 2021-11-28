@@ -1,3 +1,5 @@
+import Layout from '../../components/Layout/HomeLayout'
+import { ReactElement } from "react";
 import { Field, Form, Formik } from 'formik';
 import { Select } from 'antd';
 
@@ -213,6 +215,13 @@ function Overview() {
                 </div>
             </div>
         </div>
+    )
+}
+Overview.getLayout = function getLayout(page): ReactElement {
+    return (
+        <Layout>
+            {page}
+        </Layout>
     )
 }
 export default Overview

@@ -1,10 +1,3 @@
-//import configureStore from "../config/configureStore";
-//import { AuthGuard } from "../services/Auth/AuthGuard";
-//import { useRouter } from "next/router";
-//require('../langs/config')
-//import { useTranslation } from "react-i18next";
-//import { PersistGate } from 'redux-persist/integration/react'
-//import { protectedRoutes } from "./../config";
 import i18n from "i18next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import store from "@/store/store";
