@@ -4,6 +4,10 @@ import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { connect } from "react-redux";
 import { logout } from "../../../store/auth/authActions";
+import useSWR from 'swr'
+import API from '../../../config';
+import { message } from 'antd';
+import Cookies from 'js-cookie'
 
 const sidebarLinks = [
     {
@@ -75,28 +79,41 @@ const sidebarLinks = [
     },
 ]
 function index(props: any): ReactElement {
+    const token = Cookies.get('token')
+    const { data: userData, error }: any = useSWR('api/me', () =>
+        API
+            .get('api/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
+    useEffect(() => {
+        console.log(userData);
+
+    }, [])
     const submenu = true
     const path = useRouter()
-    const { userData } = props
-    useEffect(() => {
-        //console.log(userData);
-    }, [])
     return (
         <div className={"dashboard-sidebar"}>
+            {error && message.error('للأسف لم يتم جلب معلومات المستخدم')}
             {userData &&
                 <div className="dashboard-sidebar-inner">
                     <Link href="/">
                         <a>الرئيسية</a>
                     </Link>
-                    {userData.profile && 
-                    
+                    {userData.profile &&
                         <div className="dashbord-user-details">
                             <div className="dashbord-user-avatar">
                                 {userData.profile.avatar == 'avatar.png' ? <img src="/avatar.png" alt="" /> : <img src={userData.profile.avatar} alt="" />}
                             </div>
                             <div className="dashbord-user-content">
                                 <h3 className="user-title">
-                                    {props.userData.profile.first_name + ' ' + props.userData.profile.last_name}
+                                    {userData.profile.first_name + ' ' + userData.profile.last_name}
                                 </h3>
                                 <ul className="meta">
                                     <li>
@@ -117,6 +134,7 @@ function index(props: any): ReactElement {
                             </div>
                         </div>
                     }
+
                     <ul className="dashboard-sidebar-list">
                         {sidebarLinks.map(e => (
                             <>

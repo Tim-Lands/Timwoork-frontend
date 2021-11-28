@@ -1,20 +1,35 @@
 import React, { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loadUser } from "../../store/auth/authActions";
+//import { loadUser } from "../../store/auth/authActions";
 import Link from 'next/link'
-import Cookies from 'js-cookie'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
-import API from "../../config";
+import useSWR from 'swr'
+import API from '../../config';
 import { motion } from "framer-motion";
 import withAuth from '../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
+import Cookies from 'js-cookie'
 
 const personalInformations = (props: any): ReactElement => {
+    const token = Cookies.get('token')
+    const { data: userData, error }: any = useSWR('api/me', () =>
+        API
+            .get('api/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.data.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
     useEffect(() => {
-        props.loadUser()        
+        console.log(userData);
+        
     }, [])
 
     // Redirect to user home route if user is authenticated.
@@ -29,16 +44,19 @@ const personalInformations = (props: any): ReactElement => {
     // Return statement.
     return (
         <>
-            {props.userInfo && props.userInfo.profile && 
+            {(!userData) && 'يرجى الإنتظار...'}
+            {(!userData.profile) && 'يرجى الإنتظار...'}
+            {error && message.error('حدث خطأ أثناء جلب البيانات')}
+            {userData && userData.profile && 
                 <Formik
                     isInitialValid={true}
                     initialValues={{
-                        first_name: props.userInfo.profile.first_name || '',
-                        last_name: props.userInfo.profile.last_name || '',
-                        username: props.userInfo.username || '',
-                        date_of_birth: props.userInfo.profile.date_of_birth || '',
-                        gender: parseInt(props.userInfo.profile.gender) || 1,
-                        country_id: parseInt(props.userInfo.profile.country_id) || 1,
+                        first_name: userData.profile && userData.profile.first_name || '',
+                        last_name: userData.profile && userData.profile.last_name || '',
+                        username: userData.username || '',
+                        date_of_birth: userData.profile && userData.profile.date_of_birth || '',
+                        gender: parseInt(userData.profile && userData.profile.gender) || 1,
+                        country_id: parseInt(userData.profile && userData.profile.country_id) || 1,
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
@@ -46,7 +64,7 @@ const personalInformations = (props: any): ReactElement => {
                             const token = Cookies.get('token')
                             const res = await API.post("api/profiles/step_one", values, {
                                 headers: {
-                                    'Authorization': `Bearer ${token}` 
+                                    'Authorization': `Bearer ${token}`
                                 }
                             })
                             // Authentication was successful.
@@ -253,6 +271,7 @@ const personalInformations = (props: any): ReactElement => {
                     )}
                 </Formik>
             }
+            
         </>
     );
 };
@@ -268,4 +287,4 @@ personalInformations.propTypes = {
     props: PropTypes.object,
 };
 
-export default connect(mapStateToProps, { loadUser })(withAuth(personalInformations));
+export default connect(mapStateToProps, { })(withAuth(personalInformations));

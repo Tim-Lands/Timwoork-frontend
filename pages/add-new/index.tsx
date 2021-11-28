@@ -1,20 +1,13 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { connect } from "react-redux";
 import { logout, loadUser, addNewProduct } from "./../../store/auth/authActions";
-import Cookies from 'js-cookie'
-import router from 'next/router';
+//import withAuth from '../../services/withAuth'
 import { Spin } from "antd";
 import { Alert } from '@/components/Alert/Alert';
 
 function index(props: any) {
     //props.loadUser()
-    const token = Cookies.get('token')
-    useEffect(() => {
-        if (!token) {
-            router.push('/login')
-        }
-    }, [])
     return (
         <div className="container">
             <div className="row justify-content-center">

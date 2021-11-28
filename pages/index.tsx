@@ -65,10 +65,6 @@ function Home() {
         if (error.response.status != 409) throw error
       }),
   )
-      useEffect(() => {
-        console.log(products);
-        
-      }, [])
   return (
     <>
       <Hero />

@@ -10,6 +10,7 @@ import type { AppProps } from 'next/app'
 import TimeAgo from 'javascript-time-ago'
 import ar from 'javascript-time-ago/locale/ar.json'
 import { ConfigProvider } from "antd";
+import "antd/dist/antd.css";
 
 TimeAgo.addDefaultLocale(ar)
 

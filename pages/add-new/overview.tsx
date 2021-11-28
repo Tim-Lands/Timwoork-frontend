@@ -1,13 +1,48 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Field, Form, Formik } from 'formik';
-import { Select } from 'antd';
-
-import "antd/dist/antd.css";
+import { message, Select } from 'antd';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
-function Overview() {
+import Cookies from 'js-cookie'
+import API from "../../config";
+import useSWR from 'swr'
+
+function Overview({ query }) {
+
+    const [tagsState, setTagsState] = useState([])
+    const [categoryState, setCategoryState] = useState(1)
+
+    const { data: categories, categoriesError }: any = useSWR('dashboard/categories', () =>
+        API
+            .get('dashboard/categories')
+            .then(res => res.data.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
+    const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`, () =>
+        API
+            .get(`dashboard/categories/${categoryState}`)
+            .then(res => res.data.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
+    const { data: getProduct, getProductError }: any = useSWR(`dashboard/products/${query.id}`, () =>
+        API
+            .get(`dashboard/products/${query.id}`)
+            .then(res => res.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
+    useEffect(() => {
+        // The counter changed!
+        console.log(getProduct);
+    }, [])
+    //if (!router.query.id) {return};
     const { Option }: any = Select;
 
     const children = [];
@@ -15,9 +50,6 @@ function Overview() {
         children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
     }
 
-    function handleChange(value) {
-        console.log(`selected ${value}`);
-    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -26,20 +58,47 @@ function Overview() {
                 </div>
                 <div className="col-md-8 pt-3">
                     <Formik
+                        isInitialValid={true}
                         initialValues={{
-                            title: '',
-                            content: '',
-                            subcategories: '',
+                            title: !getProduct ? '' : getProduct.title,
+                            subcategory: !getProduct ? '' : getProduct.subcategory,
                             category: '',
-                            tags: [],
+                            tags: !getProduct ? tagsState : getProduct.tags,
                         }}
                         enableReinitialize={true}
 
                         //validationSchema={SignupSchema}
-                        onSubmit={async () => {
-                            await new Promise((r) => setTimeout(r, 500));
-                            router.push('/add-new/prices')
-                            //alert(JSON.stringify(values, null, 2));
+                        onSubmit={async values => {
+                            try {
+                                const id = router.query.id
+                                const token = Cookies.get('token')
+                                const res = await API.post(`api/product/${id}/product-step-one`, values, {
+                                    headers: {
+                                        'Authorization': `Bearer ${token}`
+                                    }
+                                })
+                                // Authentication was successful.
+                                if (res.status === 200) {
+                                    message.success('لقد تم التحديث بنجاح')
+                                    //router.push('/add-new/prices')
+                                }
+                            } catch (error: any) {
+                                if (error.response && error.response.status === 200) {
+                                    message.success('لقد تم التحديث بنجاح')
+                                }
+                                if (error.response && error.response.status === 422) {
+                                    message.error("يرجى تعبئة البيانات")
+                                }
+                                if (error.response && error.response.status === 419) {
+                                    message.error("العملية غير ناجحة")
+                                }
+                                if (error.response && error.response.status === 400) {
+                                    message.error("حدث خطأ.. يرجى التأكد من البيانات")
+                                } else {
+                                    message.error("حدث خطأ غير متوقع")
+                                }
+                            }
+
                         }}
                     >
                         {({ errors, touched, isSubmitting }) => (
@@ -125,38 +184,21 @@ function Overview() {
                                             </div>
                                             <div className="col-md-5">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-subcategories">اختر التصنيف الرئيسي</label>
-                                                    <Field
-                                                        as="select"
-                                                        id="input-subcategories"
-                                                        name="subcategories"
-                                                        className="timlands-inputs select"
-                                                        autoComplete="off"
-                                                    >
-                                                        <option>gfhgfhf</option>
-                                                    </Field>
-                                                    {errors.subcategories && touched.subcategories ?
-                                                        <div style={{ overflow: 'hidden' }}>
-                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.subcategories}</p>
-                                                            </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-7">
-                                                <div className="timlands-form">
                                                     <label className="label-block" htmlFor="input-category">اختر التصنيف الرئيسي</label>
-                                                    <Field
-                                                        as="select"
+                                                    {categoriesError && "حدث خطأ"}
+                                                    <select
                                                         id="input-category"
                                                         name="category"
                                                         className="timlands-inputs select"
                                                         autoComplete="off"
+                                                        value={categoryState}
+                                                        onChange={(e: any) => setCategoryState(e.target.value)}
                                                     >
-                                                        <option value="">dfsfsdf</option>
-                                                    </Field>
+                                                        {!categories ? <option value="">يرجى الانتظار...</option> : (
+                                                            categories.map((e: any) => (
+                                                                <option value={e.id} key={e.id}>{e.name_ar}</option>
+                                                            )))}
+                                                    </select>
                                                     {errors.category && touched.category ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
@@ -167,28 +209,56 @@ function Overview() {
                                                         null}
                                                 </div>
                                             </div>
+                                            <div className="col-md-7">
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="input-subcategory">اختر التصنيف الفرعي</label>
+                                                    <Field
+                                                        as="select"
+                                                        id="input-subcategory"
+                                                        name="subcategory"
+                                                        className="timlands-inputs select"
+                                                        autoComplete="off"
+                                                    >
+                                                        {subCategoriesError && <option value="">حدث خطأ</option>}
+                                                        {!subCategories ? <option value="">يرجى الانتظار...</option> :
+                                                            subCategories.subcategories && subCategories.subcategories.map((e: any) => (
+                                                                <option value={e.id} key={e.id}>{e.name_ar}</option>
+                                                            ))
+                                                        }
+                                                    </Field>
+                                                    {errors.subcategory && touched.subcategory ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.subcategory}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
+                                                </div>
+                                            </div>
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="input-tags">الوسوم</label>
+                                                    {tagsState}
                                                     <Select
                                                         mode="multiple"
                                                         notFoundContent="No people avaialable"
                                                         style={{ width: "100%" }}
                                                         className="timlands-inputs select"
                                                         placeholder="اختر الوسوم"
-                                                        defaultValue={["a10", "c12"]}
-                                                        onChange={handleChange}
+                                                        defaultValue={tagsState}
+                                                        onChange={(e) => setTagsState(e)}
                                                     >
-                                                        <option value="hghg">jgvjhgfh</option>
-                                                        <option value="hg66hg">jgvjh345gfh</option>
-                                                        <option value="hgh443g">jgvj3hg435fh</option>
-                                                        <option value="hgh568g">jgvjhgfh</option>
-                                                        <option value="hgh33g">jgvjhgfh</option>
+                                                        <option value={9}>jgvjhgfh</option>
+                                                        <option value={1}>jgvjh345gfh</option>
+                                                        <option value={3}>jgvj3hg435fh</option>
+                                                        <option value={5}>jgvjhgfh</option>
+                                                        <option value={7}>jgvjhgfh</option>
                                                     </Select>
-                                                    {errors.content && touched.content ?
+                                                    {errors.tags && touched.tags ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.content}</p>
+                                                                <p className="text">{errors.tags}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
@@ -225,3 +295,7 @@ Overview.getLayout = function getLayout(page): ReactElement {
     )
 }
 export default Overview
+
+Overview.getInitialProps = ({ query }) => {
+    return { query }
+}

@@ -32,6 +32,12 @@ export const addNewProduct = () => {
                 dispatch({
                     type: types.ADDED_PRODUCT,
                 });
+                router.push({
+                    pathname: `/add-new/overview`,
+                    query: {
+                        id: res.data.data.id, // pass the id 
+                    },
+                })
             } else {
                 return dispatch({
                     type: types.ADD_NEW_PRODUCT_ERROR,
@@ -97,7 +103,7 @@ export const loadUser = () => {
  * @param {string} password
  *   The password of the user.
  */
- export const login = (username: string, password: string): any => {
+export const login = (username: string, password: string): any => {
     return async (dispatch: CallableFunction) => {
         try {
             // Start loading.
