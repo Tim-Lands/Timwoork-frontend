@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Layout from '../components/Layout/HomeLayout'
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import Hero from "@/components/Hero";
 import API from 'config'
 import PostsAside from "@/components/PostsAside";

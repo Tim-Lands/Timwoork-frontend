@@ -21,7 +21,7 @@ export const addNewProduct = () => {
             dispatch({
                 type: types.ADD_PRODUCT_LOADING,
             });
-            const res = await API.get("api/product/create", {
+            const res = await API.post("api/product/create", {} , {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

@@ -4,7 +4,40 @@ import { motion } from 'framer-motion';
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
-function Prices() {
+import { message, Popconfirm } from "antd";
+import Cookies from 'js-cookie'
+import API from "../../config";
+import useSWR from 'swr'
+
+function Prices({ query }) {
+    const token = Cookies.get('token')
+    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`, () =>
+        API
+            .get(`api/product/${query.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.data.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
+    const deleteProduct = async () => {
+        try {
+            const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status == 200) {
+                message.success('لقد تم الحذف بنجاح')
+                router.push("/add-new")
+            }
+        } catch (error) {
+            message.error('للأسف لم يتم الحذف ')
+        }
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -14,25 +47,58 @@ function Prices() {
                 <div className="col-md-8 pt-3">
 
                     <Formik
+                        isInitialValid={true}
                         initialValues={{
-                            price: '',
-                            content: '',
-                            subcategories: '',
-                            category: '',
-                            tags: [],
-                            friends: []
+                            price: getProduct && getProduct.price,
+                            duration: getProduct && getProduct.duration,
+                            developments: [],
                         }}
                         //validationSchema={SignupSchema}
-                        onSubmit={async (/*values*/) => {
-                            await new Promise((r) => setTimeout(r, 500));
-                            //alert(JSON.stringify(values, null, 2));
-                            router.push('/add-new/description')
+                        onSubmit={async values => {
+                            try {
+                                const id = query.id
+                                const token = Cookies.get('token')
+                                const res = await API.post(`api/product/${id}/product-step-two`, values, {
+                                    headers: {
+                                        'Authorization': `Bearer ${token}`
+                                    }
+                                })
+                                // Authentication was successful.
+                                if (res.status === 200) {
+                                    message.success('لقد تم التحديث بنجاح')
+                                    router.push({
+                                        pathname: '/add-new/description',
+                                        query: {
+                                            id: id, // pass the id 
+                                        },
+                                    })
+                                }
+                            } catch (error: any) {
+                                if (error.response && error.response.status === 200) {
+                                    message.success('لقد تم التحديث بنجاح')
+                                }
+                                if (error.response && error.response.status === 422) {
+                                    message.error("يرجى تعبئة البيانات")
+                                }
+                                if (error.response && error.response.status === 403) {
+                                    message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك")
+                                }
+                                if (error.response && error.response.status === 419) {
+                                    message.error("العملية غير ناجحة")
+                                }
+                                if (error.response && error.response.status === 400) {
+                                    message.error("حدث خطأ.. يرجى التأكد من البيانات")
+                                } else {
+                                    message.error("حدث خطأ غير متوقع")
+                                }
+                            }
+                            //router.push('/add-new/description')
                         }}
                     >
-                        {({ errors, touched, isSubmitting, values }) => (
+                        {({ errors, touched, isSubmitting, values, handleChange }) => (
                             <Form>
                                 <div className={"timlands-panel " + (isSubmitting ? ' is-loader' : '')}>
-                                <div className="timlands-steps">
+                                    <div className="timlands-steps">
                                         <div className="timlands-step-item">
                                             <h3 className="text">
                                                 <span className="icon-circular">
@@ -94,21 +160,31 @@ function Prices() {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-category">سعر الخدمة</label>
+                                                    <label className="label-block" htmlFor="input-price">سعر الخدمة</label>
                                                     <Field
                                                         as="select"
-                                                        id="input-category"
-                                                        name="category"
+                                                        id="input-price"
+                                                        name="price"
                                                         className="timlands-inputs select"
                                                         autoComplete="off"
+                                                        onChange={handleChange}
+                                                        value={values.price}
                                                     >
                                                         <option value="">اختر السعر</option>
                                                         <option value="5">5$</option>
+                                                        <option value="10">10$</option>
+                                                        <option value="15">15$</option>
+                                                        <option value="20">20$</option>
+                                                        <option value="25">25$</option>
+                                                        <option value="30">30$</option>
+                                                        <option value="35">35$</option>
+                                                        <option value="40">40$</option>
+                                                        <option value="45">45$</option>
                                                     </Field>
-                                                    {errors.category && touched.category ?
+                                                    {errors.price && touched.price ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.category}</p>
+                                                                <p className="text">{errors.price}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
@@ -117,13 +193,15 @@ function Prices() {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-subcategories">مدة التسليم</label>
+                                                    <label className="label-block" htmlFor="input-duration">مدة التسليم</label>
                                                     <Field
                                                         as="select"
-                                                        id="input-subcategories"
-                                                        name="subcategories"
+                                                        id="input-duration"
+                                                        name="duration"
                                                         className="timlands-inputs select"
                                                         autoComplete="off"
+                                                        onChange={handleChange}
+                                                        value={values.duration}
                                                     >
                                                         <option>اختر مدة التسليم</option>
                                                         <option value="1">يوم واحد</option>
@@ -136,10 +214,10 @@ function Prices() {
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                         <p className="text">حدد مدة تسليم مناسبة لك. يستطيع المشتري إلغاء الخدمة مباشرة في حال التأخر بتسليم الخدمة في الموعد المحدد</p>
                                                     </motion.div>
-                                                    {errors.subcategories && touched.subcategories ?
+                                                    {errors.duration && touched.duration ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.subcategories}</p>
+                                                                <p className="text">{errors.duration}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
@@ -150,11 +228,11 @@ function Prices() {
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="input-tags">التطويرات</label>
                                                     <FieldArray
-                                                        name="friends"
+                                                        name="developments"
                                                         render={arrayHelpers => (
                                                             <div>
-                                                                {values.friends && values.friends.length > 0 ? (
-                                                                    values.friends.map((friend, index) => (
+                                                                {values.developments && values.developments.length > 0 ? (
+                                                                    values.developments.map((development, index) => (
                                                                         <motion.div initial={{ y: -7, opacity: 0 }} exit={{ y: -7, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="develop-price" key={index}>
                                                                             <div className="row">
                                                                                 <div className="col-sm-12">
@@ -164,7 +242,7 @@ function Prices() {
                                                                                             id={"input-name-" + index}
                                                                                             placeholder="عنوان التطوير..."
                                                                                             className="timlands-inputs"
-                                                                                            name={`friends[${index}].name`}
+                                                                                            name={`developments[${index}].title`}
                                                                                         />
                                                                                     </div>
                                                                                 </div>
@@ -175,18 +253,18 @@ function Prices() {
                                                                                             id={"input-price-" + index}
                                                                                             placeholder="سعر التطوير..."
                                                                                             className="timlands-inputs"
-                                                                                            name={`friends[${index}].price`}
+                                                                                            name={`developments[${index}].price`}
                                                                                         />
 
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className="col-sm-5">
                                                                                     <div className="timlands-form">
-                                                                                        <label className="label-block" htmlFor={"input-durations-" + index}>مدة التطوير</label>
+                                                                                        <label className="label-block" htmlFor={"input-duration-" + index}>مدة التطوير</label>
                                                                                         <Field
                                                                                             as="select"
-                                                                                            id="input-durations"
-                                                                                            name={`friends[${index}].durations`}
+                                                                                            id="input-duration"
+                                                                                            name={`developments[${index}].duration`}
                                                                                             className="timlands-inputs select"
                                                                                             autoComplete="off"
                                                                                         >
@@ -202,7 +280,6 @@ function Prices() {
                                                                                 </div>
                                                                             </div>
                                                                             <div className="buttons-tools">
-
                                                                                 <button
                                                                                     type="button"
                                                                                     className="formarray-butt del"
@@ -215,7 +292,7 @@ function Prices() {
                                                                     ))
 
                                                                 ) : ''}
-                                                                {values.friends.length < 5 ?
+                                                                {values.developments.length < 5 ?
                                                                     <div className="product-devlopes-butt">
                                                                         <p className="product-devlopes-text">
                                                                             تطويرات الخدمة المقدمة اختيارية فقط ولا يمكن أن تجبر المشتري على طلبها. اعرف طريقة استخدامها بشكل صحيح
@@ -229,10 +306,10 @@ function Prices() {
                                                             </div>
                                                         )}
                                                     />
-                                                    {errors.content && touched.content ?
+                                                    {errors.developments && touched.developments ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.content}</p>
+                                                                <p className="text">{errors.developments}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
@@ -241,9 +318,16 @@ function Prices() {
                                             </div>
                                             <div className="col-md-12">
                                                 <div className="py-4 d-flex">
-                                                    <button type="button" className="btn butt-red me-auto butt-sm">
-                                                        إلغاء الأمر
-                                                    </button>
+                                                    <Popconfirm
+                                                        title="هل تريد حقا إلغاء هذه الخدمة"
+                                                        onConfirm={deleteProduct}
+                                                        okText="نعم"
+                                                        cancelText="لا"
+                                                    >
+                                                        <button type="button" className="btn butt-red me-auto butt-sm">
+                                                            إلغاء الأمر
+                                                        </button>
+                                                    </Popconfirm>
 
                                                     <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-sm">
                                                         <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
@@ -269,4 +353,8 @@ Prices.getLayout = function getLayout(page): ReactElement {
             {page}
         </Layout>
     )
+}
+
+Prices.getInitialProps = ({ query }) => {
+    return { query }
 }

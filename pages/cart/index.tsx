@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout/HomeLayout'
 import PostsAside from '@/components/PostsAside';
+import router from 'next/router';
 import React, { ReactElement } from 'react'
 import { useCart } from "react-use-cart";
 import CartList from '../../components/Cart/CartList';
@@ -66,33 +67,30 @@ function index() {
             <div className="timwoork-single">
                 <div className="row justify-content-md-center">
                     <div className="col-lg-8">
-                        <div className="timwoork-single-post bg-white mt-4">
-                            <div className="timwoork-single-header">
-                                <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات ({totalUniqueItems})</h1>
+                        {isEmpty ?
+                            <div className="cart-nothing">
+                                <div className="cart-nothing-inner">
+                                    <div className="cart-nothing-img">
+                                        <img src="/carticon.png" alt="" />
+                                    </div>
+                                    <div className="cart-nothing-content">
+                                        <h1 className="title">السلة فارغة</h1>
+                                        <p className="text">لاتوجد خدمات في سلة المشتريات يمكنك الذهاب إلى تصفح الخدمات</p>
+                                    </div>
+                                </div>
+                            </div> :
+                            <div className="timwoork-single-post bg-white mt-4">
+                                <div className="timwoork-single-header">
+                                    <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات ({totalUniqueItems})</h1>
+                                </div>
+                                <CartList listItem={items} />
+                                <div className="cart-list-continue">
+                                    <button onClick={() => router.push('/cart/bill')} className="btn butt-primary butt-lg ml-0">
+                                        اشتري الآن
+                                    </button>
+                                </div>
                             </div>
-                            {isEmpty ?
-                                (<div className="cart-nothing">
-                                    <div className="cart-nothing-inner">
-                                        <div className="cart-nothing-img">
-                                            <img src="/carticon.png" alt="" />
-                                        </div>
-                                        <div className="cart-nothing-content">
-                                            <h1 className="title">السلة فارغة</h1>
-                                            <p className="text">لاتوجد خدمات في سلة المشتريات يمكنك الذهاب إلى تصفح الخدمات</p>
-                                        </div>
-                                    </div>
-                                </div>)
-                                :
-                                (<>
-                                    <CartList listItem={items}  />
-                                    <div className="cart-list-continue">
-                                        <button type="submit" className="btn butt-primary butt-lg ml-0">
-                                            اشتري الآن
-                                        </button>
-                                    </div>
-                                </>)
-                            }
-                        </div>
+                        }
                     </div>
                 </div>
             </div>

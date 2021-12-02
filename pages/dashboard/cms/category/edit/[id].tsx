@@ -32,6 +32,7 @@ export default function EditCategory(): ReactElement {
         description_ar: '',
         description_en: '',
         description_fr: '',
+        icon: '',
     });
 
     function handlename_arChange(e) {
@@ -71,6 +72,12 @@ export default function EditCategory(): ReactElement {
         setPerson({
             ...person,
             description_fr: e.target.value
+        });
+    }
+    function handleiconChange(e) {
+        setPerson({
+            ...person,
+            icon: e.target.value
         });
     }
     const saveData = async (e) => {
@@ -197,6 +204,8 @@ export default function EditCategory(): ReactElement {
                                         id="icon"
                                         name="icon"
                                         className="timlands-inputs"
+                                        value={person.icon}
+                                        onChange={handleiconChange}
                                     >
                                         <option value="bookmark_border">bookmark_border</option>
                                         <option value="description">description</option>
@@ -207,7 +216,20 @@ export default function EditCategory(): ReactElement {
                                         <option value="question_answer">question_answer</option>
                                         <option value="verified_user">verified_user</option>
                                         <option value="code">code</option>
+                                        <option value="settings">settings</option>
+                                        <option value="analytics">analytics</option>
+                                        <option value="account_tree">account_tree</option>
+                                        <option value="headphones">headphones</option>
+                                        <option value="ondemand_video">ondemand_video</option>
+                                        <option value="rate_review">rate_review</option>
+                                        <option value="connected_tv">connected_tv</option>
+                                        <option value="view_in_ar">view_in_ar</option>
+                                        <option value="business">business</option>
+                                        <option value="volunteer_activism">volunteer_activism</option>
                                     </select>
+                                    <div className="icon-preview">
+                                        <span className="material-icons material-icons-outlined">{person.icon}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

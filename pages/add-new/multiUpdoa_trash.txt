@@ -1,0 +1,78 @@
+
+import ImageUploading from "react-images-uploading";
+import { Alert } from '@/components/Alert/Alert';
+import { motion } from 'framer-motion';
+import { Formik } from 'formik';
+    // Image Upload
+
+    const [images, setImages]: any = useState([]);
+    const maxNumber = 69;
+    const onChangeL = (imageList, addUpdateIndex) => {
+        // data for submit
+        setImages(imageList);
+        const data = new FormData()
+
+        console.log(images.map(e => e.file));
+        data.append("image_data", images.map(e => e.data_url));
+        console.log(data);
+
+    };
+
+                        <ImageUploading
+                            multiple
+                            value={images}
+                            onChange={onChangeL}
+                            maxNumber={maxNumber}
+                            dataURLKey="data_url"
+                        >
+                            {({
+                                imageList,
+                                onImageUpload,
+                                onImageRemoveAll,
+                                onImageUpdate,
+                                onImageRemove,
+                                isDragging,
+                                dragProps
+                            }) => (
+                                // write your building UI
+                                <div className="choose-images-file">
+                                    <div className="choose-images-list d-flex">
+                                        {imageList.map((image, index) => (
+                                            <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="choose-images-item" key={index}>
+                                                <div className="image-item">
+                                                    <img src={image["data_url"]} alt="" width="100" />
+                                                    <div className="image-item__btn-wrapper">
+                                                        <button onClick={() => onImageUpdate(index)}>
+                                                            <span className="material-icons-outlined">edit</span>
+                                                        </button>
+                                                        <button onClick={() => onImageRemove(index)}>
+                                                            <span className="material-icons-outlined">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                        {(imageList.length && imageList.length >= 5) ? <Alert type="error"><p className="text">لايمكنك إضافة أكثر من 5 صور</p></Alert> :
+
+                                            <button
+                                                style={isDragging ? { color: "red" } : undefined}
+                                                className="uploader-btn"
+                                                onClick={onImageUpload}
+                                                {...dragProps}
+                                            >
+                                                <span className="material-icons-outlined">upload</span>
+                                            </button>
+                                        }
+                                        &nbsp;
+                                        <button className="uploader-btn clear" onClick={onImageRemoveAll}><span className="material-icons-outlined">clear</span></button>
+                                    </div>
+                                </div>
+                            )}
+                        </ImageUploading>
+                        <div className="images-btns-upload">
+                            <div className="inner-div">
+                                <p className="note-text">
+                                    يجب أن يكون حجم كل صورة أقل من <strong>1MB</strong>
+                                </p>
+                            </div>
+                        </div>

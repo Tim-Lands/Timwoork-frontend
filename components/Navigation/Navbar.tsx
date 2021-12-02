@@ -124,12 +124,14 @@ function Navbar({ userData }, props: any): ReactElement {
                                                     </Badge>
                                                 </motion.button>
                                             </li>
-                                            <li className="circular-item language-nav-item">
-                                                <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
-                                                    <Badge count={5} offset={[2, -8]}>
-                                                        <i className="material-icons material-icons-outlined">notifications</i>
-                                                    </Badge>
-                                                </motion.button>
+                                            <li className="circular-item language-nav-item pt-3">
+                                                <Link href="/notifications">
+                                                    <a className="language-nav-butt circular-center">
+                                                        <Badge count={5} offset={[2, -8]}>
+                                                            <i className="material-icons material-icons-outlined">notifications</i>
+                                                        </Badge>
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li className="login-user">
                                                 <Dropdown overlay={AccountList} trigger={['click']}>

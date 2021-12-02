@@ -1,7 +1,7 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { Field, Form, Formik } from 'formik';
-import { message, Select } from 'antd';
+import { message, Popconfirm, Select } from 'antd';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
@@ -10,9 +10,17 @@ import API from "../../config";
 import useSWR from 'swr'
 
 function Overview({ query }) {
-
+    const token = Cookies.get('token')
     const [tagsState, setTagsState] = useState([])
     const [categoryState, setCategoryState] = useState(1)
+    const { data: getTags, getTagsError }: any = useSWR('dashboard/tags', () =>
+        API
+            .get('dashboard/tags')
+            .then(res => res.data.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
 
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories', () =>
         API
@@ -30,19 +38,31 @@ function Overview({ query }) {
                 if (error.response.status != 409) throw error
             }),
     )
-    const { data: getProduct, getProductError }: any = useSWR(`dashboard/products/${query.id}`, () =>
+    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`, () =>
         API
-            .get(`dashboard/products/${query.id}`)
-            .then(res => res.data)
+            .get(`api/product/${query.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.data.data)
             .catch(error => {
                 if (error.response.status != 409) throw error
             }),
     )
-    useEffect(() => {
-        // The counter changed!
-        console.log(getProduct);
-    }, [])
-    //if (!router.query.id) {return};
+    if (!query) return message.error('حدث خطأ')
+    const deleteProduct = async () => {
+        try {
+            const res: any = API.post(`api/product/${query.id}/deleteProduct`)
+            //const json = res.data
+            if(res.status == 200) {
+                message.success('لقد تم الحذف بنجاح')
+                router.push("/add-new")
+            }
+        } catch (error) {
+            message.error('للأسف لم يتم الحذف ')
+        }
+    }
     const { Option }: any = Select;
 
     const children = [];
@@ -61,16 +81,16 @@ function Overview({ query }) {
                         isInitialValid={true}
                         initialValues={{
                             title: !getProduct ? '' : getProduct.title,
-                            subcategory: !getProduct ? '' : getProduct.subcategory,
-                            category: '',
-                            tags: !getProduct ? tagsState : getProduct.tags,
+                            subcategory: !getProduct ? '' : (getProduct.subcategory && getProduct.subcategory.id),
+                            category: !getProduct ? categoryState : getProduct.category_id,
+                            product_tag: !getProduct ? tagsState : getProduct.tags,
                         }}
                         enableReinitialize={true}
 
                         //validationSchema={SignupSchema}
                         onSubmit={async values => {
                             try {
-                                const id = router.query.id
+                                const id = query.id
                                 const token = Cookies.get('token')
                                 const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                     headers: {
@@ -80,7 +100,12 @@ function Overview({ query }) {
                                 // Authentication was successful.
                                 if (res.status === 200) {
                                     message.success('لقد تم التحديث بنجاح')
-                                    //router.push('/add-new/prices')
+                                    router.push({
+                                        pathname: '/add-new/prices', 
+                                        query: {
+                                            id: id, // pass the id 
+                                        },
+                                    })
                                 }
                             } catch (error: any) {
                                 if (error.response && error.response.status === 200) {
@@ -88,6 +113,9 @@ function Overview({ query }) {
                                 }
                                 if (error.response && error.response.status === 422) {
                                     message.error("يرجى تعبئة البيانات")
+                                }
+                                if (error.response && error.response.status === 403) {
+                                    message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك")
                                 }
                                 if (error.response && error.response.status === 419) {
                                     message.error("العملية غير ناجحة")
@@ -101,7 +129,7 @@ function Overview({ query }) {
 
                         }}
                     >
-                        {({ errors, touched, isSubmitting }) => (
+                        {({ errors, touched, isSubmitting, values }) => (
                             <Form>
                                 <div className={"timlands-panel" + (isSubmitting ? ' is-loader' : '')}>
                                     <div className="timlands-steps">
@@ -239,26 +267,25 @@ function Overview({ query }) {
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                    {tagsState}
+                                                    {getTagsError && "حدث خطأ"}
                                                     <Select
                                                         mode="multiple"
-                                                        notFoundContent="No people avaialable"
+                                                        notFoundContent="لاتوجد بيانات"
                                                         style={{ width: "100%" }}
                                                         className="timlands-inputs select"
                                                         placeholder="اختر الوسوم"
                                                         defaultValue={tagsState}
                                                         onChange={(e) => setTagsState(e)}
                                                     >
-                                                        <option value={9}>jgvjhgfh</option>
-                                                        <option value={1}>jgvjh345gfh</option>
-                                                        <option value={3}>jgvj3hg435fh</option>
-                                                        <option value={5}>jgvjhgfh</option>
-                                                        <option value={7}>jgvjhgfh</option>
+                                                        {!getTags ? <option value="">يرجى الانتظار...</option> : (
+                                                            getTags.map((e: any) => (
+                                                                <option value={e.id} key={e.id}>{e.name_ar}</option>
+                                                            )))}
                                                     </Select>
-                                                    {errors.tags && touched.tags ?
+                                                    {errors.product_tag && touched.product_tag ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.tags}</p>
+                                                                <p className="text">{errors.product_tag}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
@@ -267,9 +294,16 @@ function Overview({ query }) {
                                             </div>
                                             <div className="col-md-12">
                                                 <div className="py-4 d-flex">
-                                                    <button type="button" className="btn butt-red me-auto butt-sm">
-                                                        إلغاء الأمر
-                                                    </button>
+                                                    <Popconfirm
+                                                        title="هل تريد حقا إلغاء هذه الخدمة"
+                                                        onConfirm={deleteProduct}
+                                                        okText="نعم"
+                                                        cancelText="لا"
+                                                    >
+                                                        <button type="button" className="btn butt-red me-auto butt-sm">
+                                                            إلغاء الأمر
+                                                        </button>
+                                                    </Popconfirm>
                                                     <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-sm">
                                                         <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                                     </button>

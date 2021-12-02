@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
-import Comments from './Components/Comments'
-import { ReactElement, useState } from "react";
+import Comments from '../../components/Comments'
+import { ReactElement, useEffect, useState } from "react";
 import PostsAside from "@/components/PostsAside";
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import { useTranslation } from "react-i18next";
+import API from "../../config";
 
 const testServices = [
   {
@@ -102,7 +103,12 @@ const toppings = [
 // 
 const getFormattedPrice = (price) => `$${price.toFixed(2)}`;
 
-function Single() {
+function Single({ getProduct }: any) {
+  if (!getProduct) return <div>ejjedh</div>
+  useEffect(() => {
+    console.log(getProduct);
+
+  }, [])
   // Use Traductions
   const { t } = useTranslation();
 
@@ -215,13 +221,13 @@ function Single() {
                     </ul>
                     <h3>العربى أن يوفر على المصمم عناء</h3>
                     <p className="text">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.
+                      هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
+                      إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.
                     </p>
                     <h4>مولد النص العربى مفيد لمصممي المواقع</h4>
                   </div>
                   <div className="timwoork-single-seller-info">
-                    
+
                     <div className="seller-info-header">
                       <h2 className="title">حول البائع</h2>
                     </div>
@@ -247,7 +253,7 @@ function Single() {
                           <div className="seller-info-butts d-flex">
                             <Link href="">
                               <a className="btn butt-primary butt-sm flex-center">
-                                <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص 
+                                <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
                               </a>
                             </Link>
                             <Link href="">
@@ -365,3 +371,11 @@ Single.getLayout = function getLayout(page): ReactElement {
   )
 }
 export default Single;
+
+Single.getInitialProps = async ({ query }) => {
+
+  const res: any = await API.get(`api/product/${query.product}`)
+  return {
+    getProduct: res.data
+  }
+}

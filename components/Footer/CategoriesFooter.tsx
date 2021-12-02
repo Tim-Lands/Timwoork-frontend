@@ -5,33 +5,33 @@ function CategoriesFooter() {
     return (
         <div className="app-footer-aside">
         <div className="aside-header">
-            <h4 className="title">Categories</h4>
+            <h4 className="title">التصنيفات</h4>
         </div>
         <div className="aside-body">
             <ul className="aside-list-items">
                 <li>
                     <Link href="">
-                        <a>Graphics & Design</a>
+                        <a>التصميم الغرافيكي</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Video & Animation</a>
+                        <a>الحركات والفيديو</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Programming & Tech</a>
+                        <a>تقنيات وبرمجة</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Writing & Translation</a>
+                        <a>كتابة وترجمة</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="">
-                        <a>Writing & Translation</a>
+                        <a>نمط الحياة</a>
                     </Link>
                 </li>
             </ul>

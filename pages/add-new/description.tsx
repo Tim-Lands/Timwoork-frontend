@@ -2,8 +2,42 @@ import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
+import { message, Popconfirm } from "antd";
+import Layout from "@/components/Layout/HomeLayout";
+import Cookies from 'js-cookie'
+import API from "../../config";
+import useSWR from 'swr'
+import { ReactElement } from 'react';
 
-function Description() {
+function Description({ query }) {
+    const token = Cookies.get('token')
+    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`, () =>
+        API
+            .get(`api/product/${query.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.data.data)
+            .catch(error => {
+                if (error.response.status != 409) throw error
+            }),
+    )
+    const deleteProduct = async () => {
+        try {
+            const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status == 200) {
+                message.success('لقد تم الحذف بنجاح')
+                router.push("/add-new")
+            }
+        } catch (error) {
+            message.error('للأسف لم يتم الحذف ')
+        }
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -13,18 +47,50 @@ function Description() {
                 <div className="col-md-8 pt-3">
                     <Formik
                         initialValues={{
-                            title: '',
+                            buyer_instruct: '',
                             content: '',
-                            subcategories: '',
-                            category: '',
-                            tags: [],
                         }}
                         enableReinitialize={true}
 
                         //validationSchema={SignupSchema}
-                        onSubmit={async () => {
-                            await new Promise((r) => setTimeout(r, 500));
-                            router.push('/add-new/medias')
+                        onSubmit={async (values) => {
+                            try {
+                                const id = query.id
+                                const token = Cookies.get('token')
+                                const res = await API.post(`api/product/${id}/product-step-three`, values, {
+                                    headers: {
+                                        'Authorization': `Bearer ${token}`
+                                    }
+                                })
+                                // Authentication was successful.
+                                if (res.status === 200) {
+                                    message.success('لقد تم التحديث بنجاح')
+                                    router.push({
+                                        pathname: '/add-new/medias',
+                                        query: {
+                                            id: id, // pass the id 
+                                        },
+                                    })
+                                }
+                            } catch (error: any) {
+                                if (error.response && error.response.status === 200) {
+                                    message.success('لقد تم التحديث بنجاح')
+                                }
+                                if (error.response && error.response.status === 422) {
+                                    message.error("يرجى تعبئة البيانات")
+                                }
+                                if (error.response && error.response.status === 403) {
+                                    message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك")
+                                }
+                                if (error.response && error.response.status === 419) {
+                                    message.error("العملية غير ناجحة")
+                                }
+                                if (error.response && error.response.status === 400) {
+                                    message.error("حدث خطأ.. يرجى التأكد من البيانات")
+                                } else {
+                                    message.error("حدث خطأ غير متوقع")
+                                }
+                            }
                         }}
                     >
                         {({ errors, touched, isSubmitting }) => (
@@ -94,11 +160,11 @@ function Description() {
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-description">وصف الخدمة</label>
+                                                    <label className="label-block" htmlFor="input-content">وصف الخدمة</label>
                                                     <Field
                                                         as="textarea"
-                                                        id="input-description"
-                                                        name="description"
+                                                        id="input-content"
+                                                        name="content"
                                                         placeholder="وصف الخدمة..."
                                                         className="timlands-inputs"
                                                         autoComplete="off"
@@ -107,10 +173,10 @@ function Description() {
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                         <p className="text">أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط . يمنع وضع البريد الالكتروني، رقم الهاتف أو أي معلومات اتصال أخرى.</p>
                                                     </motion.div>
-                                                    {errors.title && touched.title ?
+                                                    {errors.content && touched.content ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.title}</p>
+                                                                <p className="text">{errors.content}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
@@ -119,11 +185,11 @@ function Description() {
                                             </div>
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-description">تعليمات المشتري</label>
+                                                    <label className="label-block" htmlFor="input-buyer_instruct">تعليمات المشتري</label>
                                                     <Field
                                                         as="textarea"
-                                                        id="input-description"
-                                                        name="description"
+                                                        id="input-buyer_instruct"
+                                                        name="buyer_instruct"
                                                         placeholder="تعليمات المشتري..."
                                                         className="timlands-inputs"
                                                         autoComplete="off"
@@ -132,13 +198,28 @@ function Description() {
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                         <p className="text">المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة. تظهر هذه المعلومات بعد شراء الخدمة فقط</p>
                                                     </motion.div>
+                                                    {errors.buyer_instruct && touched.buyer_instruct ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.buyer_instruct}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
                                                 </div>
                                             </div>
                                             <div className="col-md-12">
                                                 <div className="py-4 d-flex">
-                                                    <button type="button" className="btn butt-red me-auto butt-sm">
-                                                        إلغاء الأمر
-                                                    </button>
+                                                    <Popconfirm
+                                                        title="هل تريد حقا إلغاء هذه الخدمة"
+                                                        onConfirm={deleteProduct}
+                                                        okText="نعم"
+                                                        cancelText="لا"
+                                                    >
+                                                        <button type="button" className="btn butt-red me-auto butt-sm">
+                                                            إلغاء الأمر
+                                                        </button>
+                                                    </Popconfirm>
                                                     <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-sm">
                                                         <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                                     </button>
@@ -157,3 +238,13 @@ function Description() {
     )
 }
 export default Description
+Description.getLayout = function getLayout(page): ReactElement {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
+}
+Description.getInitialProps = ({ query }) => {
+    return { query }
+}

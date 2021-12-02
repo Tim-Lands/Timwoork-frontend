@@ -10,6 +10,7 @@ import type { AppProps } from 'next/app'
 import TimeAgo from 'javascript-time-ago'
 import ar from 'javascript-time-ago/locale/ar.json'
 import { ConfigProvider } from "antd";
+import Head from 'next/head'
 import "antd/dist/antd.css";
 
 TimeAgo.addDefaultLocale(ar)
@@ -36,15 +37,20 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }
         // Store current user if we have one.
         //console.log(props.user);
-        
+
     }, []);
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
-        <Provider store={store}>
-            <ConfigProvider direction="rtl">
-                {getLayout(<Component {...pageProps} />)}
-            </ConfigProvider>
-        </Provider>
+        <>
+            <Head>
+                <title>Timwoork</title>
+            </Head>
+            <Provider store={store}>
+                <ConfigProvider direction="rtl">
+                    {getLayout(<Component {...pageProps} />)}
+                </ConfigProvider>
+            </Provider>
+        </>
     );
 }
 

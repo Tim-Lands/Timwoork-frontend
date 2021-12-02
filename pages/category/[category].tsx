@@ -3,6 +3,9 @@ import Layout from '@/components/Layout/HomeLayout'
 import FilterContent from '../../components/filterLayout'
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
+import useSWR from 'swr'
+import API from '../../config';
+import { Empty, Spin } from 'antd';
 
 const products = [
   {
@@ -103,6 +106,16 @@ const products = [
   },
 ]
 function Category() {
+  const { data: getCategories, error }: any = useSWR('dashboard/categories', () =>
+    API
+      .get('dashboard/categories')
+      .then(res => res.data.data)
+      .catch(error => {
+        if (error.response.status != 409) throw error
+      }),
+  )
+  if (!getCategories) return <div className="py-5 my-3 d-flex justify-content-center"><Spin /></div>
+  if (error) return <div>Error</div>
   return (
     <div className="container py-5">
       <Formik
@@ -166,86 +179,33 @@ function Category() {
                     </div>
                   </div>
                   <div className="filter-sidebar-panel">
-                    <h3 className="title">السعر</h3>
+                    <h3 className="title">اختر المستخدم</h3>
                     <div className="filter-cheks">
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-                      
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className ="form-check-label" htmlFor="flexCheckDefault">
-                          التصميم الغرافيكي
-                        </label>
-                      </div>
-
+                        <div className="form-check py-1 pe-4">
+                          <input className="form-check-input" type="checkbox" value="" id={"getCategories-"} />
+                          <label className="form-check-label" htmlFor={"getCategories-"}>
+                            عبد الحميد بومقواس
+                          </label>
+                        </div>
+                        <div className="form-check py-1 pe-4">
+                          <input className="form-check-input" type="checkbox" value="" id={"getCategories-"} />
+                          <label className="form-check-label" htmlFor={"getCategories-"}>
+                            طارق عروي
+                          </label>
+                        </div>
+                    </div>
+                  </div>
+                  <div className="filter-sidebar-panel">
+                    <h3 className="title">التصنيف الرئيسي</h3>
+                    <div className="filter-cheks">
+                      {getCategories.map((e: any) => (
+                        <div className="form-check py-1 pe-4" key={e.id}>
+                          <input className="form-check-input" type="checkbox" value={e.id} id={"getCategories-" + e.id} />
+                          <label className="form-check-label" htmlFor={"getCategories-" + e.id}>
+                            {e.name_ar}
+                          </label>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

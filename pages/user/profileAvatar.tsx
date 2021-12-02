@@ -11,16 +11,10 @@ import { motion } from "framer-motion";
 import withAuth from '../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
-import useSWR from 'swr'
-
 const profileAvatar = (props: any): ReactElement => {
     useEffect(() => {
         props.loadUser()
-        
     }, [])
-    const { data, error } = useSWR('api/me', props.loadUser())
-    if (!data) return <div>loading...</div>
-    if (error) return <div>failed to load</div>
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
         avatar: Yup.mixed().required(),
@@ -38,6 +32,8 @@ const profileAvatar = (props: any): ReactElement => {
                         try {
                             const dataform = new FormData()
                             dataform.append('avatar', values.avatar)
+                            console.log(dataform);
+                            
                             const token = Cookies.get('token')
                             const res = await API.post("api/profiles/step_two", dataform, {
                                 headers: {

@@ -1,19 +1,19 @@
 import React, { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loadUser } from "../../store/auth/authActions";
+import { loadUser } from "@/store/auth/authActions";
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
-import API from "../../config";
+import API from "../../../config";
 import { motion } from "framer-motion";
-import withAuth from '../../services/withAuth'
+import withAuth from '../../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
 const personalInformations = (props: any): ReactElement => {
     useEffect(() => {
-        props.loadUser()        
+        props.loadUser()
     }, [])
 
     // Redirect to user home route if user is authenticated.
@@ -25,6 +25,9 @@ const personalInformations = (props: any): ReactElement => {
         username: Yup.string().required('هذا الحقل إجباري'),
         country_id: Yup.number().required('هذا الحقل إجباري'),
     });
+    useEffect(() => {
+        console.log(props.userInfo);
+    }, [])
     // Return statement.
     return (
         <>

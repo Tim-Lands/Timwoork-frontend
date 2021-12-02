@@ -211,52 +211,7 @@ h3 {
                 }
             }
         }
-        .content-text-item {
-            padding: 10px 0;
-            border: 1px dashed #ddd;
-            border-radius: 6px;
-            margin: 7px 0;
-            padding: 15px;  
-            &::after, &::before {
-                content: '';
-                display: block;
-                clear: both;
-            }
-            .text-label {
-                font-size: 14px;
-                font-weight: bold;
-                color: #222;
-                margin: 0;
-            }
-            .text-value {
-                font-size: 17px;
-                font-weight: 200;
-                color: #555;
-                margin: 0;
-            }
-            .text-skills {
-                padding: 0;
-                margin: 0;
-                list-style: none;
-                li {
-                    padding: 3px;
-                    float: right;
-                    a {
-                        display: flex;
-                        padding: 5px 7px;
-                        background-color: #f8f8f8;
-                        color: #444;
-                        font-size: 11px;
-                        font-weight: bold;
-                        border-radius: 5px;
-                        &:hover {
-                            background-color: $primary;
-                            color: #fff;
-                        }
-                    }
-                }
-            }
-        }
+
     }
     .profile-content-header {
         border-bottom: 1px dashed #ddd;
@@ -293,6 +248,53 @@ h3 {
         }
     }
 }
+.content-text-item {
+    padding: 10px 0;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    margin: 7px 0;
+    padding: 15px;  
+    &::after, &::before {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .text-label {
+        font-size: 14px;
+        font-weight: bold;
+        color: #222;
+        margin: 0;
+    }
+    .text-value {
+        font-size: 17px;
+        font-weight: 200;
+        color: #555;
+        margin: 0;
+    }
+    .text-skills {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        li {
+            padding: 3px;
+            float: right;
+            a {
+                display: flex;
+                padding: 5px 7px;
+                background-color: #f8f8f8;
+                color: #444;
+                font-size: 11px;
+                font-weight: bold;
+                border-radius: 5px;
+                &:hover {
+                    background-color: $primary;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+}
 .user-bro {
     margin: 0;
     font-size: 14px;
@@ -306,6 +308,38 @@ h3 {
     &:last-of-type {
         border-bottom: 0;
         margin-bottom: 0;
+    }
+}
+.app-bill {
+    background-color: #fff;
+    padding: 20px;
+    .app-bill-header {
+        border-bottom: 2px dashed #ddd;
+        padding: 14px 0;
+        margin-bottom: 10px;
+        .title {
+            font-size: 19px;
+            font-weight: bold;
+            color: #333;
+        }
+    }
+    .app-bill-footer {
+        border-top: 2px dashed #ddd;
+        padding: 14px 0;
+        margin-top: 10px;
+    }
+    .app-bill-content {
+        .list-group {
+            padding: 0;
+            font-size: 13px;
+            .list-group-item {
+                padding: 13px  17px;
+            }
+            .total {
+                font-size: 15px;
+                font-weight: bold;
+            }
+        }
     }
 }
 /*

@@ -117,7 +117,7 @@ const Login = (props: any): ReactElement => {
                                                 </label>
                                             </div>
                                             <p className="text">
-                                                <Link href="/">
+                                                <Link href="/user/forgetPass">
                                                     <a>نسيت كلمة المرور؟</a>
                                                 </Link>
                                             </p>

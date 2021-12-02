@@ -5,33 +5,33 @@ function CommunityFooter() {
     return (
         <div className="app-footer-aside">
             <div className="aside-header">
-                <h4 className="title">Community</h4>
+                <h4 className="title">مجتمع تيموورك</h4>
             </div>
             <div className="aside-body">
                 <ul className="aside-list-items">
                     <li>
                         <Link href="">
-                            <a>Lorem ipsum dolor sit amet, consectetur adipiscing</a>
+                            <a>هذا النص هو مثال لنص يمكن أن يستبدل</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="">
-                            <a>Excepteur sint occaecat cupidatat non proident, sunt</a>
+                            <a>في نفس المساحة، لقد تم توليد هذا النص من مولد النص</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="">
-                            <a>Duis aute irure dolor in reprehenderit in</a>
+                            <a>العديد من النصوص الأخرى إضافة إلى زيادة </a>
                         </Link>
                     </li>
                     <li>
                         <Link href="">
-                            <a>Cillum dolore eu fugiat nulla pariatur. Excepteur</a>
+                            <a>عدد الحروف التى يولدها التطبيق. عدد الحروف التى يولدها </a>
                         </Link>
                     </li>
                     <li>
                         <Link href="">
-                            <a>Nstrud exercitation ullamco laboris nisi ut aliquip ex</a>
+                            <a>ومن هنا وجب على المصمم أن يضع نصوصا</a>
                         </Link>
                     </li>
                 </ul>

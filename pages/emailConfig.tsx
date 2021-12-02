@@ -13,11 +13,12 @@ import { Alert } from '@/components/Alert/Alert';
 function EmailConfig(props: any) {
     useEffect(() => {
         props.loadUser()
-        if (props.userInfo) {
-            if (props.userInfo.email_verified_at) {
-                router.push('/dashboard')
-            }
+        if (props.userInfo.email_verified_at) {
+            router.push('/dashboard')
         }
+        console.log(props.userInfo.email_verified_at);
+        
+
     }, [props.userInfo.email_verified_at])
     const SignupSchema = Yup.object().shape({
         code: Yup.number().required('هذا الحقل إجباري'),
@@ -36,7 +37,7 @@ function EmailConfig(props: any) {
                 </div>
             </div>
             <div className="col-lg-6 p-0">
-                {props.userInfo && 
+                {props.userInfo &&
                     <Formik
                         isInitialValid={true}
                         initialValues={{
