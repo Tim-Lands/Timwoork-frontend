@@ -4,7 +4,7 @@ import { ReactElement } from "react"
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
+import useSWR, { mutate } from 'swr'
 
 const SignupSchema = Yup.object().shape({
     name_ar: Yup.string().required('هذا الحقل إجباري'),
@@ -13,6 +13,8 @@ const SignupSchema = Yup.object().shape({
     precent_deducation: Yup.number().lessThan(101, 'النسبة المئوية يجب أن تكون أقل من 100').required('هذا الحقل إجباري'),
 });
 export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElement {
+    const { data, error }: any = useSWR(`dashboard/badges`)
+
     return (
         <>
             <div className="panel-modal-overlay"></div>
@@ -34,26 +36,15 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
-                        try {
-                            const res = await API.post("dashboard/badges/store", values);
-                            // If Activate Network 
-                            // Authentication was successful.
-                            if (res.status == 201 || res.status == 200) {    
-                                //alert('تمت الإضافة بنجاح')
-                                setIsModalHiddenHandle()
-                            } else {
-                                alert('Error')
-                            }
-                        } catch (error) {
-                            alert('Error Network')
-        
-                        }
+                        mutate('dashboard/badges', [...data, values])
+                        await API.post("dashboard/badges/store", values);
+                        setIsModalHiddenHandle()
                     }}
                 >
                     {({ errors, touched, isSubmitting }) => (
                         <Form>
                             <div className={"panel-modal-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
-                            {!isSubmitting ? '' :
+                                {!isSubmitting ? '' :
                                     <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                         <div className="spinner-border" role="status">
                                             <span className="visually-hidden">Loading...</span>
