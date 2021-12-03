@@ -13,43 +13,11 @@ function Overview({ query }) {
     const token = Cookies.get('token')
     const [tagsState, setTagsState] = useState([])
     const [categoryState, setCategoryState] = useState(1)
-    const { data: getTags, getTagsError }: any = useSWR('dashboard/tags', () =>
-        API
-            .get('dashboard/tags')
-            .then(res => res.data.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
+    const { data: getTags, getTagsError }: any = useSWR('dashboard/tags')
 
-    const { data: categories, categoriesError }: any = useSWR('dashboard/categories', () =>
-        API
-            .get('dashboard/categories')
-            .then(res => res.data.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
-    const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`, () =>
-        API
-            .get(`dashboard/categories/${categoryState}`)
-            .then(res => res.data.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
-    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`, () =>
-        API
-            .get(`api/product/${query.id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            .then(res => res.data.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
+    const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
+    const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`)
+    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`)
     if (!query) return message.error('حدث خطأ')
     const deleteProduct = async () => {
         try {
@@ -80,10 +48,10 @@ function Overview({ query }) {
                     <Formik
                         isInitialValid={true}
                         initialValues={{
-                            title: !getProduct ? '' : getProduct.title,
-                            subcategory: !getProduct ? '' : (getProduct.subcategory && getProduct.subcategory.id),
-                            category: !getProduct ? categoryState : getProduct.category_id,
-                            product_tag: !getProduct ? tagsState : getProduct.tags,
+                            title: !getProduct.data ? '' : getProduct.data.title,
+                            subcategory: !getProduct.data ? '' : (getProduct.subcategory && getProduct.data.subcategory.id),
+                            category: !getProduct.data ? categoryState : getProduct.data.category_id,
+                            product_tag: !getProduct.data ? tagsState : getProduct.data.tags,
                         }}
                         enableReinitialize={true}
 

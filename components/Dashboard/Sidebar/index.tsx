@@ -1,13 +1,11 @@
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { connect } from "react-redux";
 import { logout } from "../../../store/auth/authActions";
 import useSWR from 'swr'
-import API from '../../../config';
 import { message } from 'antd';
-import Cookies from 'js-cookie'
 
 const sidebarLinks = [
     {
@@ -79,23 +77,7 @@ const sidebarLinks = [
     },
 ]
 function index(props: any): ReactElement {
-    const token = Cookies.get('token')
-    const { data: userData, error }: any = useSWR('api/me', () =>
-        API
-            .get('api/me', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            .then(res => res.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
-    useEffect(() => {
-        console.log(userData);
-
-    }, [])
+    const { data: userData, error }: any = useSWR(`api/me`)
     const submenu = true
     const path = useRouter()
     return (
@@ -178,8 +160,6 @@ function index(props: any): ReactElement {
 
 const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.registerLoading,
-    userInfo: state.auth.user
 });
 
 export default connect(mapStateToProps, { logout })(index);

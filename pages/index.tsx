@@ -2,7 +2,6 @@ import Link from "next/link";
 import Layout from '../components/Layout/HomeLayout'
 import { ReactElement } from "react";
 import Hero from "@/components/Hero";
-import API from 'config'
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
 const testServices = [
@@ -57,14 +56,7 @@ const testServices = [
 ]
 
 function Home() {
-  const { data: products, error }: any = useSWR('dashboard/products', () =>
-    API
-      .get('dashboard/products')
-      .then(res => res.data)
-      .catch(error => {
-        if (error.response.status != 409) throw error
-      }),
-  )
+  const { data: products, error }: any = useSWR('dashboard/products')
   return (
     <>
       <Hero />
@@ -73,7 +65,7 @@ function Home() {
           <div className="nanny-home-image">
             <img src="/undraw_winter_designer_a2m7.svg" alt="" />
           </div>
-          
+
           <div className="nanny-home-content">
             <h2 className="title">
               هذا النص هو مثال لنص يمكن أن يستبدل في نفس
@@ -91,7 +83,7 @@ function Home() {
       </div>
 
       <div className="container">
-        <PostsAside title="الفيدهات والحركات" PostData={testServices} isLoading={!products} isError={error}/>
+        <PostsAside title="الفيدهات والحركات" PostData={testServices} isLoading={!products} isError={error} />
         <PostsAside title="برمجة وتطوير" PostData={testServices} isLoading={!products} isError={error} />
         <PostsAside title="التصميم الغرافيكي" PostData={testServices} isLoading={!products} isError={error} />
       </div>

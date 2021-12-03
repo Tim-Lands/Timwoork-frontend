@@ -11,12 +11,10 @@ import { motion } from "framer-motion";
 import withAuth from '../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
+import useSWR from 'swr'
 
-const personalInformations = (props: any): ReactElement => {
-    useEffect(() => {
-        props.loadUser()
-    }, [])
-
+const personalInformations = (): ReactElement => {
+    const { data: userInfo, error }: any = useSWR('api/me')
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
         phone_number: Yup.number().required('هذا الحقل إجباري'),
@@ -24,11 +22,11 @@ const personalInformations = (props: any): ReactElement => {
     // Return statement.
     return (
         <>
-            {props.userInfo && props.userInfo.profile && 
+            {userInfo && userInfo.profile && 
                 <Formik
                     isInitialValid={true}
                     initialValues={{
-                        phone_number: props.userInfo.phone || '',
+                        phone_number: userInfo.phone || '',
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {

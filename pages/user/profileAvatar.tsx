@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loadUser } from "../../store/auth/authActions";
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { Formik } from "formik";
@@ -11,10 +10,11 @@ import { motion } from "framer-motion";
 import withAuth from '../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
-const profileAvatar = (props: any): ReactElement => {
-    useEffect(() => {
-        props.loadUser()
-    }, [])
+import useSWR from 'swr'
+
+const profileAvatar = (): ReactElement => {
+    const { data: userInfo, error }: any = useSWR('api/me')
+
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
         avatar: Yup.mixed().required(),
@@ -22,10 +22,10 @@ const profileAvatar = (props: any): ReactElement => {
     // Return statement.
     return (
         <>
-            {props.userInfo && props.userInfo.profile &&
+            {userInfo && userInfo.profile &&
                 <Formik
                     isInitialValid={true}
-                    initialValues={{ avatar: ('https://api.timwoork.com/avatars/' + props.userInfo.profile.avatar) || null }}
+                    initialValues={{ avatar: ('https://api.timwoork.com/avatars/' + userInfo.profile.avatar) || null }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
 
@@ -139,4 +139,4 @@ profileAvatar.propTypes = {
     props: PropTypes.object,
 };
 
-export default connect(mapStateToProps, { loadUser })(withAuth(profileAvatar));
+export default connect(mapStateToProps, {})(withAuth(profileAvatar));

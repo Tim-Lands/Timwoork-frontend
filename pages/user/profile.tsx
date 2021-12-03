@@ -1,27 +1,26 @@
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Statistic, Card } from 'antd'
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
-import { logout, loadUser } from "./../../store/auth/authActions";
+import { logout } from "./../../store/auth/authActions";
 import withAuth from '../../services/withAuth'
+import useSWR from 'swr'
 
-function Profile(props: any) {
-    useEffect(() => {
-        props.loadUser()
-    }, [])
+function Profile() {
+    const { data: userInfo, error }: any = useSWR('api/me')
     return (
         <div className="py-3">
-            {props.userInfo && props.userInfo.profile &&
+            {userInfo && userInfo.profile &&
                 (<div className="container">
                     <div className="row">
                         <div className="col-lg-4">
-                            {props.userInfo.profile.profile_seller &&
+                            {userInfo.profile.profile_seller &&
                                 <div className="py-1">
                                     <Card title="نبذة عني">
                                         <p className="user-bro">
-                                            {props.userInfo.profile.profile_seller.bio}
+                                            {userInfo.profile.profile_seller.bio}
                                         </p>
                                     </Card>
                                 </div>
@@ -49,7 +48,6 @@ function Profile(props: any) {
                                         />
                                     </div>
                                     <div className="statistic-item">
-
                                         <Statistic
                                             title="الرصيد الكلي"
                                             value={112893}
@@ -67,13 +65,13 @@ function Profile(props: any) {
                                 <div className="profile-content-header">
                                     <Badge count="غير متصل" offset={[10, 10]} >
                                         <div className="profile-content-avatar">
-                                            <img src={'https://api.timwoork.com/avatars/' + props.userInfo.profile.avatar} width={120} />
+                                            <img src={'https://api.timwoork.com/avatars/' + userInfo.profile.avatar} width={120} />
                                         </div>
                                     </Badge>
                                     <div className="profile-content-head">
-                                        <h4 className="title">{props.userInfo.profile.first_name + ' ' + props.userInfo.profile.last_name}</h4>
+                                        <h4 className="title">{userInfo.profile.first_name + ' ' + userInfo.profile.last_name}</h4>
                                         <p className="text">
-                                            @{props.userInfo.username} |
+                                            @{userInfo.username} |
                                             <span className="app-label"> المستوى الأول </span>
                                             <Badge
                                                 className="site-badge-count-109"
@@ -103,13 +101,13 @@ function Profile(props: any) {
                                         <div className="col-sm-4">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الاسم الأول</h3>
-                                                <p className="text-value">{props.userInfo.profile.first_name}</p>
+                                                <p className="text-value">{userInfo.profile.first_name}</p>
                                             </div>
                                         </div>
                                         <div className="col-sm-4">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الاسم الأخير</h3>
-                                                <p className="text-value">{props.userInfo.profile.last_name}</p>
+                                                <p className="text-value">{userInfo.profile.last_name}</p>
                                             </div>
                                         </div>
                                         <div className="col-sm-4">
@@ -123,20 +121,20 @@ function Profile(props: any) {
                                             <Badge.Ribbon text="مفعل" color="green">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">رقم الهاتف</h3>
-                                                    <p className="text-value">{props.userInfo.phone}</p>
+                                                    <p className="text-value">{userInfo.phone}</p>
                                                 </div>
                                             </Badge.Ribbon>
                                         </div>
                                         <div className="col-sm-4">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الجنس</h3>
-                                                <p className="text-value">{props.userInfo.profile.gender == null ? '' : props.userInfo.profile.gender}</p>
+                                                <p className="text-value">{userInfo.profile.gender == null ? '' : userInfo.profile.gender}</p>
                                             </div>
                                         </div>
                                         <div className="col-sm-4">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">تاريخ الميلاد</h3>
-                                                <p className="text-value">{props.userInfo.profile.date_of_birth == null ? '' : props.userInfo.profile.date_of_birth}</p>
+                                                <p className="text-value">{userInfo.profile.date_of_birth == null ? '' : userInfo.profile.date_of_birth}</p>
 
                                             </div>
                                         </div>
@@ -151,13 +149,13 @@ function Profile(props: any) {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        {props.userInfo.profile.profile_seller &&
+                                        {userInfo.profile.profile_seller &&
                                             <div className="col-sm-6">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">المهارات</h3>
-                                                    {props.userInfo.profile.profile_seller.skills &&
+                                                    {userInfo.profile.profile_seller.skills &&
                                                         <ul className="text-skills">
-                                                            {props.userInfo.profile.profile_seller.skills.map((e, i) => (
+                                                            {userInfo.profile.profile_seller.skills.map((e, i) => (
                                                                 <li key={i}>
                                                                     <Link href="">
                                                                         <a>{e.name_ar}</a>
@@ -170,7 +168,6 @@ function Profile(props: any) {
                                             </div>
                                         }
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -180,17 +177,16 @@ function Profile(props: any) {
         </div>
     )
 }
-Profile.getLayout = function getLayout(page): ReactElement {
+
+const mapStateToProps = (state: any) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { logout })(withAuth(Profile));
+Profile.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
             {page}
         </Layout>
     )
 }
-
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    userInfo: state.auth.user
-});
-
-export default connect(mapStateToProps, { logout, loadUser })(withAuth(Profile));

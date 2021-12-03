@@ -1,13 +1,15 @@
 
 import React, { ReactElement } from "react";
 import Link from 'next/link'
-import API from "../../config";
 import Layout from '@/components/Layout/HomeLayout'
-
-import { Badge, Card, message } from "antd";
+import { Badge, Card } from "antd";
 import "antd/dist/antd.min.css";
-const User = ({ userInfo }: any) => {
+import useSWR from 'swr'
+
+const User = ({ query }) => {
     // Return statement.
+    const { data: userInfo, error }: any = useSWR(`api/profiles/${query.user}`)
+    //const userInfo = userInf.data
     return (
         <div className="py-3">
             {userInfo && userInfo.profile &&
@@ -134,15 +136,5 @@ User.getLayout = function getLayout(page): ReactElement {
     )
 }
 User.getInitialProps = async ({ query }) => {
-    try {
-        const res: any = await API.get(`api/profiles/${query.user}`)
-        if (res) {
-            console.log(res.data.data[0]);
-            return {
-                userInfo: res.data.data[0]
-            }
-        }
-    } catch (error) {
-        message.error('حدث خطأ غير متوقع')
-    }
-}
+    return { query }
+  }

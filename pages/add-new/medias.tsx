@@ -29,24 +29,25 @@ function Medias({ query }) {
 
     const [thumbnail, setThumbnail]: any = useState(null);
     const setThumbnailHandle = (e: any) => {
-        setThumbnail(e.target.files[0]);
+        const datathumb = new FormData()
+        datathumb.append('thumbnail', e.target.files[0])
+
+        setThumbnail(datathumb);
     }
     const loadImagesHandle = async () => {
         try {
-            const datathumb = new FormData()
-            console.log(datathumb);
-            datathumb.append('image', thumbnail, thumbnail.name)
+          
             
             const res = await API.post(`api/product/${id}/product-step-four`,
                 {
                     images: null,
                     url_video: url_video,
                     file: null,
-                    thumbnail: datathumb,
+                    thumbnail
                 },
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
+                        'content-type': 'multipart/form-data',
                         'Authorization': `Bearer ${token}`,
                     }
                 })
@@ -153,7 +154,7 @@ function Medias({ query }) {
                                                     onChange={setThumbnailHandle}
                                                     type="file"
                                                     className="form-control"
-                                                    ref={(fileInput: any) => fileInput = fileInput}
+                                        
                                                 />
                                             </div>
                                         </div>

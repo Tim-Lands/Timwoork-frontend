@@ -11,18 +11,6 @@ import { ReactElement } from 'react';
 
 function Description({ query }) {
     const token = Cookies.get('token')
-    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`, () =>
-        API
-            .get(`api/product/${query.id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            .then(res => res.data.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {

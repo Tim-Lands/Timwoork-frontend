@@ -13,6 +13,7 @@ import API from "../../config";
 import * as types from "../actionTypes";
 import Cookies from 'js-cookie'
 import router from "next/router";
+import useSWR from 'swr'
 
 export const addNewProduct = () => {
     return async (dispatch: CallableFunction) => {
@@ -21,7 +22,7 @@ export const addNewProduct = () => {
             dispatch({
                 type: types.ADD_PRODUCT_LOADING,
             });
-            const res = await API.post("api/product/create", {} , {
+            const res = await API.post("api/product/store", {} , {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -79,15 +80,10 @@ export const addNewProduct = () => {
 export const loadUser = () => {
     return async (dispatch: CallableFunction) => {
         try {
-            const token = Cookies.get('token')
-            const res = await API.get("api/me", {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (res.status === 200) {
-                dispatch({ type: types.USER_LOADED, payload: res.data });
-                return res.data;
+            const { data: user, error }: any = useSWR('api/me')
+            if (user) {
+                dispatch({ type: types.USER_LOADED, payload: user });
+                return user;
             }
         } catch (error) {
 

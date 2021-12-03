@@ -11,10 +11,10 @@ import { motion } from "framer-motion";
 import withAuth from '../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
-const personalInformations = (props: any): ReactElement => {
-    useEffect(() => {
-        props.loadUser()        
-    }, [])
+import useSWR from 'swr'
+
+const personalInformations = (): ReactElement => {
+    const { data: userInfo, error }: any = useSWR('api/me')
 
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
@@ -28,16 +28,16 @@ const personalInformations = (props: any): ReactElement => {
     // Return statement.
     return (
         <>
-            {props.userInfo && props.userInfo.profile && 
+            {userInfo && userInfo.profile && 
                 <Formik
                     isInitialValid={true}
                     initialValues={{
-                        first_name: props.userInfo.profile.first_name || '',
-                        last_name: props.userInfo.profile.last_name || '',
-                        username: props.userInfo.username || '',
-                        date_of_birth: props.userInfo.profile.date_of_birth || '',
-                        gender: parseInt(props.userInfo.profile.gender) || 1,
-                        country_id: parseInt(props.userInfo.profile.country_id) || 1,
+                        first_name: userInfo.profile.first_name || '',
+                        last_name: userInfo.profile.last_name || '',
+                        username: userInfo.username || '',
+                        date_of_birth: userInfo.profile.date_of_birth || '',
+                        gender: parseInt(userInfo.profile.gender) || 1,
+                        country_id: parseInt(userInfo.profile.country_id) || 1,
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
