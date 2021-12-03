@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from 'next/link'
@@ -13,7 +13,7 @@ import "antd/dist/antd.min.css";
 import useSWR from 'swr'
 
 const profileAvatar = (): ReactElement => {
-    const { data: userInfo, error }: any = useSWR('api/me')
+    const { data: userInfo }: any = useSWR('api/me')
 
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({

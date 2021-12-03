@@ -2,11 +2,11 @@ import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
+import PropTypes from "prop-types";
 import { message, Popconfirm } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from 'js-cookie'
 import API from "../../config";
-import useSWR from 'swr'
 import { ReactElement } from 'react';
 
 function Description({ query }) {
@@ -236,3 +236,6 @@ Description.getLayout = function getLayout(page): ReactElement {
 Description.getInitialProps = ({ query }) => {
     return { query }
 }
+Description.propTypes = {
+    query: PropTypes.any,
+};

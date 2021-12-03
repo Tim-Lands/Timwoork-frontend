@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewTag from "./Modals/AddNewTag";
@@ -29,11 +29,11 @@ function index(): ReactElement {
             confirmButtonText: 'نعم, أريد الحذف',
             cancelButtonText: 'لا',
             reverseButtons: true
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 if (id) { 
                     mutate("dashboard/tags", [...GetData, { id: id }])
-                    API.post(`dashboard/tags/${id}/delete`)
+                    await API.post(`dashboard/tags/${id}/delete`)
                 }
                 swalWithBootstrapButtons.fire(
                     'تم الحذف!',

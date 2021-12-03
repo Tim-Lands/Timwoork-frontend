@@ -2,9 +2,6 @@ import React, { ReactElement } from 'react'
 import Layout from '@/components/Layout/HomeLayout'
 import { useCart } from "react-use-cart";
 import { Form, Formik } from 'formik';
-import Cookies from 'js-cookie'
-import API from "../../config";
-import { message } from 'antd';
 
 function Bill() {
     const {
@@ -83,36 +80,34 @@ function Bill() {
                         console.log(values);
                     }}
                 >
-                    {({ errors, touched, isSubmitting }) => (
-                        <Form>
-                            <div className="app-bill">
-                                <div className="app-bill-header">
-                                    <h3 className="title">اختيار طريقة الدفع</h3>
-                                </div>
-                                {!isEmpty &&
-                                    <>
-                                        <div className="app-bill-payment">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="radio" name="billPayment" id="billPayment-strap" />
-                                                <label className="form-check-label" htmlFor="billPayment-strap">
-                                                    الدفع عن طريق البطاقات البنكية
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="radio" name="billPayment" id="billPayment-paypal" checked />
-                                                <label className="form-check-label" htmlFor="billPayment-paypal">
-                                                    الدفع عن طريق البايبال Paypal
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="app-bill-footer">
-                                            <button type="submit" style={{ width: '50%' }} className="btn butt-primary butt-lg butt-sm">متابعة الشراء ({cartTotal}) </button>
-                                        </div>
-                                    </>
-                                }
+                    <Form>
+                        <div className="app-bill">
+                            <div className="app-bill-header">
+                                <h3 className="title">اختيار طريقة الدفع</h3>
                             </div>
-                        </Form>
-                    )}
+                            {!isEmpty &&
+                                <>
+                                    <div className="app-bill-payment">
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="radio" name="billPayment" id="billPayment-strap" />
+                                            <label className="form-check-label" htmlFor="billPayment-strap">
+                                                الدفع عن طريق البطاقات البنكية
+                                            </label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="radio" name="billPayment" id="billPayment-paypal" checked />
+                                            <label className="form-check-label" htmlFor="billPayment-paypal">
+                                                الدفع عن طريق البايبال Paypal
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="app-bill-footer">
+                                        <button type="submit" style={{ width: '50%' }} className="btn butt-primary butt-lg butt-sm">متابعة الشراء ({cartTotal}) </button>
+                                    </div>
+                                </>
+                            }
+                        </div>
+                    </Form>
                 </Formik>
             </div>
         </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import API from "../config";
 import useSWR from 'swr'
@@ -66,7 +65,7 @@ function Explores() {
                         </div>
                     </div>
                     <div className="col-md-8 p-0">
-                        {isError && 'حدث خطأ'}
+                        {isError && <div>حدث خطأ</div>}
                         <Spin spinning={isLoading}>
                             {postsList &&
                                 <div className="main-explores-container">

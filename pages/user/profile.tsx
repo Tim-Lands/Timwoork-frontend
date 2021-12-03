@@ -9,7 +9,7 @@ import withAuth from '../../services/withAuth'
 import useSWR from 'swr'
 
 function Profile() {
-    const { data: userInfo, error }: any = useSWR('api/me')
+    const { data: userInfo }: any = useSWR('api/me')
     return (
         <div className="py-3">
             {userInfo && userInfo.profile &&

@@ -8,10 +8,11 @@ import { message, Popconfirm } from "antd";
 import Cookies from 'js-cookie'
 import API from "../../config";
 import useSWR from 'swr'
+import PropTypes from "prop-types";
 
 function Prices({ query }) {
     const token = Cookies.get('token')
-    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`, () =>
+    const { data: getProduct }: any = useSWR(`api/product/${query.id}`, () =>
         API
             .get(`api/product/${query.id}`, {
                 headers: {
@@ -358,3 +359,6 @@ Prices.getLayout = function getLayout(page): ReactElement {
 Prices.getInitialProps = ({ query }) => {
     return { query }
 }
+Prices.propTypes = {
+    query: PropTypes.any,
+};

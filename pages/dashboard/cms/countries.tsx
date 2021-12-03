@@ -30,10 +30,10 @@ function Countries(): ReactElement {
             confirmButtonText: 'نعم, أريد الحذف',
             cancelButtonText: 'لا',
             reverseButtons: true
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res: any = API.post(`dashboard/countries/${id}/delete`)
+                    await API.post(`dashboard/countries/${id}/delete`)
                 } catch (error) {
                     console.log(error);
 

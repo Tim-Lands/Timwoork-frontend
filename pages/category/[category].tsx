@@ -5,7 +5,7 @@ import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import useSWR from 'swr'
 import API from '../../config';
-import { Empty, Spin } from 'antd';
+import { Spin } from 'antd';
 
 const products = [
   {

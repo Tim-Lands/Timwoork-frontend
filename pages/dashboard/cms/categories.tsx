@@ -31,10 +31,10 @@ function Categories(): ReactElement {
                 confirmButtonText: 'نعم, أريد الحذف',
                 cancelButtonText: 'لا',
                 reverseButtons: true
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = API.post(`dashboard/categories/${id}/delete`)
+                       await API.post(`dashboard/categories/${id}/delete`)
                         
                     } catch (error) {
                         console.log(error);

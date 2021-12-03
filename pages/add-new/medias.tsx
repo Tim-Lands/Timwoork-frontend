@@ -7,6 +7,7 @@ import SidebarAdvices from './SidebarAdvices';
 import { Upload, message } from 'antd';
 import ReactPlayer from "react-player"
 import 'antd/dist/antd.css';
+import PropTypes from "prop-types";
 
 function Medias({ query }) {
     const id = query.id
@@ -217,3 +218,6 @@ export default Medias
 Medias.getInitialProps = ({ query }) => {
     return { query }
 }
+Medias.propTypes = {
+    query: PropTypes.any,
+};

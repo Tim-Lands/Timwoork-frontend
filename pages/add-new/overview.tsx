@@ -8,16 +8,16 @@ import SidebarAdvices from './SidebarAdvices';
 import Cookies from 'js-cookie'
 import API from "../../config";
 import useSWR from 'swr'
+import PropTypes from "prop-types";
 
 function Overview({ query }) {
-    const token = Cookies.get('token')
     const [tagsState, setTagsState] = useState([])
     const [categoryState, setCategoryState] = useState(1)
     const { data: getTags, getTagsError }: any = useSWR('dashboard/tags')
 
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`)
-    const { data: getProduct, getProductError }: any = useSWR(`api/product/${query.id}`)
+    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
     if (!query) return message.error('حدث خطأ')
     const deleteProduct = async () => {
         try {
@@ -97,7 +97,7 @@ function Overview({ query }) {
 
                         }}
                     >
-                        {({ errors, touched, isSubmitting, values }) => (
+                        {({ errors, touched, isSubmitting }) => (
                             <Form>
                                 <div className={"timlands-panel" + (isSubmitting ? ' is-loader' : '')}>
                                     <div className="timlands-steps">
@@ -301,3 +301,6 @@ export default Overview
 Overview.getInitialProps = ({ query }) => {
     return { query }
 }
+Overview.propTypes = {
+    query: PropTypes.any,
+};

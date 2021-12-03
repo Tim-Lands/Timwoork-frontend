@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewLanguage from "./Modals/AddNewLanguage";
@@ -32,7 +32,7 @@ function Languages(): ReactElement {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res: any = await API.post(`dashboard/languages/${id}/delete`)
+                    await API.post(`dashboard/languages/${id}/delete`)
                 } catch (error) {
                     console.log(error);
                 }

@@ -30,10 +30,10 @@ function Skills(): ReactElement {
                 confirmButtonText: 'نعم, أريد الحذف',
                 cancelButtonText: 'لا',
                 reverseButtons: true
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        const res: any = API.post(`dashboard/skills/${id}/delete`)
+                        await API.post(`dashboard/skills/${id}/delete`)
                     } catch (error) {
                         console.log(error);
                     }

@@ -5,10 +5,11 @@ import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Card } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from 'swr'
+import PropTypes from "prop-types";
 
 const User = ({ query }) => {
     // Return statement.
-    const { data: userInfo, error }: any = useSWR(`api/profiles/${query.user}`)
+    const { data: userInfo }: any = useSWR(`api/profiles/${query.user}`)
     //const userInfo = userInf.data
     return (
         <div className="py-3">
@@ -137,4 +138,7 @@ User.getLayout = function getLayout(page): ReactElement {
 }
 User.getInitialProps = async ({ query }) => {
     return { query }
-  }
+}
+User.propTypes = {
+    query: PropTypes.any,
+};

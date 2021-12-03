@@ -16,7 +16,7 @@ import useSWR from 'swr'
 
 
 const personalInformations = (): ReactElement => {
-    const { data: userInfo, error }: any = useSWR('api/me')
+    const { data: userInfo }: any = useSWR('api/me')
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
         first_name: Yup.string().required('هذا الحقل إجباري'),
