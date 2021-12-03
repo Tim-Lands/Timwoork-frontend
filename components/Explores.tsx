@@ -45,7 +45,7 @@ function Explores() {
         hidden: { opacity: 0, y: 9 },
     }
     !categories && <div>يرجى الانتظار...</div>
-    categoriesError && <div>'حدث خطأ'</div>
+    categoriesError && <div>حدث خطأ</div>
     return (
         <AnimatePresence>
             <motion.div initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">

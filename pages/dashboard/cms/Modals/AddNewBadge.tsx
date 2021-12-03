@@ -13,7 +13,7 @@ const SignupSchema = Yup.object().shape({
     precent_deducation: Yup.number().lessThan(101, 'النسبة المئوية يجب أن تكون أقل من 100').required('هذا الحقل إجباري'),
 });
 export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElement {
-    const { data, error }: any = useSWR(`dashboard/badges`)
+    const { data }: any = useSWR(`dashboard/badges`)
 
     return (
         <>
