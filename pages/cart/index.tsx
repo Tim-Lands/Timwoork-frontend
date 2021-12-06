@@ -94,11 +94,13 @@ function index() {
                     </div>
                 </div>
             </div>
-            <PostsAside title="الخدمات الأكثر شيوعا" PostData={testServices} />
+            <div className="container">
+                <PostsAside title="الخدمات الأكثر شيوعا" PostData={testServices} />
+            </div>
         </>
     );
 }
-index.getLayout = function getLayout(page): ReactElement {
+index.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
             {page}

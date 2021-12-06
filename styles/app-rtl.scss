@@ -1099,6 +1099,7 @@ h3 {
             }
             .add-devloppers-header {
                 padding: 15px 0;
+                padding-top: 0;
                 border-bottom: 1px solid #f4f4f4;
                 .title {
                     margin: 0;
@@ -1229,7 +1230,7 @@ h3 {
     height: 18px;
     background-color: #ddd;
     width: 60%;
-    animation: animate_placeholder 0.7s;
+    animation: animate_placeholder 1s;
     animation-iteration-count: infinite;
 }
 .loading-container {
@@ -1237,21 +1238,19 @@ h3 {
         height: 310px;
         width: 100%;
         background-color: #fff;
-        border: 1px solid #ddd;
+        border: 1px solid #f3f3f3;
         border-radius: 5px;
         box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
-        animation: animate_placeholderdiv 0.7s;
-        animation-iteration-count: infinite;
         .container-item-img {
             height: 140px;
             background-color: #f2f2f2;
-            animation: animate_placeholder 0.7s;
+            animation: animate_placeholder 1s;
             animation-iteration-count: infinite;
         }
         .container-item-title {
             height: 17px;
             background-color: #f1f1f1;
-            animation: animate_placeholder 0.7s;
+            animation: animate_placeholder 1s;
             animation-iteration-count: infinite;
             width: 87%;
             margin: 6px 15px;
@@ -1260,7 +1259,7 @@ h3 {
         .container-item-title2 {
             height: 17px;
             background-color: #f1f1f1;
-            animation: animate_placeholder 0.7s;
+            animation: animate_placeholder 1s;
             animation-iteration-count: infinite;
             width: 70%;
             margin: 6px 15px;
@@ -1268,7 +1267,7 @@ h3 {
         .container-item-meta {
             height: 12px;
             background-color: #f1f1f1;
-            animation: animate_placeholder 0.7s;
+            animation: animate_placeholder 1s;
             animation-iteration-count: infinite;
             width: 50%;
             margin: 6px 15px;
@@ -1282,9 +1281,9 @@ h3 {
 ---------------------------------------------------------------------------------------------
 */
 .posts-aside {
-    padding: 40px 10px;
+    padding: 40px 0;
     @media (max-width: 580px) {
-        padding: 40px 10px;
+        padding: 40px 30px;
     }
     .posts-aside-header {
         padding: 20px 0;
@@ -2768,7 +2767,7 @@ h3 {
 }
 .single-sidebar {
     position: sticky;
-    top: 90px;
+    top: 95px;
     padding: 20px 0;
     .single-panel-aside {
         background-color: #fff;
@@ -2828,6 +2827,7 @@ h3 {
             }
             .add-devloppers-header {
                 padding: 15px 0;
+                padding-top: 0;
                 border-bottom: 1px solid #f4f4f4;
                 .title {
                     margin: 0;
@@ -2913,15 +2913,16 @@ h3 {
                 }
             }
             .aside-footer-note {
-                margin: 8px 0;
+                margin: 10px 0;
                 .text {
-                    font-size: 13px;
+                    font-size: 12px;
                     margin: 0;
+                    font-weight: 200;
                     color: #555;
                 }
             }
             .aside-footer-addtocart {
-                .butt-primary {
+                .btn {
                     justify-content: center;
                     width: 100%;
                     display: flex;
@@ -2930,6 +2931,18 @@ h3 {
                 }
             }
         }
+    }
+}
+.page-loading-spinner {
+    padding: 29px 0;
+    margin-top: 35px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    .spinner-border {
+        border: 0.25em solid $primary;
+        border-right-color: transparent;
     }
 }
 .images-btns-upload {

@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie'
 
-const withAuth = (WrappedComponent) => {
+const withAuth = (WrappedComponent: any) => {
     const token = Cookies.get('token')
-    return (props) => {
+    return (props: any) => {
         // checks whether we are on client / browser or server.
         if (typeof window !== "undefined") {
             const Router = useRouter();
-
             // If there is no access token we redirect to "/" page.
             if (!token) {
                 Router.replace("/login");

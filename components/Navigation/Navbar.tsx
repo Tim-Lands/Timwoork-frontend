@@ -8,22 +8,26 @@
 |
 */
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Avatar, Image, Badge } from 'antd';
+import { Menu, Dropdown, Badge, Tooltip } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
-import { isMobile } from 'react-device-detect';
+//import { isMobile } from 'react-device-detect';
 import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
+import ImageLogo from "next/image";
+import logoIMG from '../../public/logo2.png'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
 import router from "next/router";
 import { useCart } from "react-use-cart";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
+import useSWR from 'swr'
 import Cookies from 'js-cookie'
 
-function Navbar({ userData }, props: any): ReactElement {
+
+function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
     const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);
@@ -32,7 +36,6 @@ function Navbar({ userData }, props: any): ReactElement {
     }
     const { totalUniqueItems } = useCart();
     useEffect(() => {
-
         window.addEventListener("scroll", () => {
             setScroll(window.scrollY > 60);
         });
@@ -51,7 +54,8 @@ function Navbar({ userData }, props: any): ReactElement {
     }
 
     const isDarken = useSelector((state: any) => state.isDarken)
-    //const dispatch = useDispatch()
+
+    const { data: userData }: any = useSWR(`api/me`)
     const AccountList = (
         <Menu>
             <Menu.Item key="0">
@@ -82,6 +86,10 @@ function Navbar({ userData }, props: any): ReactElement {
             </Menu.Item>
         </Menu>
     )
+    const APIURL = 'https://www.api.timwoork.com/avatars/'
+    const myLoader = () => {
+        return `${APIURL}${userData.profile.avatar}`;
+    }
     return (
         <div className={"timlands-navbar-container" + (scroll ? ' is-shown' : '')}>
             <nav className="timlands-navbar">
@@ -96,7 +104,7 @@ function Navbar({ userData }, props: any): ReactElement {
                             <div className="logo-nav me-auto">
                                 <Link href="/">
                                     <a>
-                                        <img src="/logo2.png" alt="" />
+                                        <ImageLogo src={logoIMG} />
                                     </a>
                                 </Link>
                             </div>
@@ -104,48 +112,80 @@ function Navbar({ userData }, props: any): ReactElement {
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">
-                        <li className="circular-item language-nav-item">
-                            <motion.button whileTap={{ scale: 0.9 }} onClick={() => router.push('/cart')} className="language-nav-butt circular-center">
-                                <Badge count={totalUniqueItems} offset={[2, -8]}>
-                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                </Badge>
-                            </motion.button>
+                        <li className="right-butts-icon">
+                            <Tooltip placement="bottom" title='سلة المشتريات'>
+                                <Link href='/cart'>
+                                    <motion.a whileTap={{ scale: 0.9 }}>
+                                        <Badge count={totalUniqueItems} offset={[2, -1]}>
+                                            <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                        </Badge>
+                                    </motion.a>
+                                </Link>
+                            </Tooltip>
                         </li>
 
+                        <li className="right-butts-icon">
+                            <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
+                                <motion.a whileTap={{ scale: 0.9 }}>
+                                    <Badge count={0} offset={[2, -1]}>
+                                        {isDarken ?
+                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
+                                            :
+                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
+                                        }
+                                    </Badge>
+                                </motion.a>
+                            </Tooltip>
+                        </li>
                         {token ?
                             <>
-                                {userData && userData.profile &&
-                                    (
-                                        <>
-                                            <li className="circular-item language-nav-item">
-                                                <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center">
-                                                    <Badge count={0} offset={[2, -8]}>
+                                {!userData &&
+                                    <li className="nav-loading">
+                                        <p className="loading-text">يرجى الإنتظار...</p>
+                                    </li>
+                                }
+                                {userData &&
+                                    <>
+                                        <li className="right-butts-icon">
+                                            <Tooltip placement="bottom" title='صندوق الرسائل'>
+                                                <motion.a whileTap={{ scale: 0.9 }} className="">
+                                                    <Badge count={0} offset={[2, -1]}>
                                                         <i className="material-icons material-icons-outlined">email</i>
                                                     </Badge>
-                                                </motion.button>
-                                            </li>
-                                            <li className="circular-item language-nav-item pt-3">
+                                                </motion.a>
+                                            </Tooltip>
+                                        </li>
+                                        <li className="right-butts-icon">
+                                            <Tooltip placement="bottom" title='الإشعارات'>
                                                 <Link href="/notifications">
-                                                    <a className="language-nav-butt circular-center">
-                                                        <Badge count={5} offset={[2, -8]}>
+                                                    <a>
+                                                        <Badge count={5} offset={[2, -1]}>
                                                             <i className="material-icons material-icons-outlined">notifications</i>
                                                         </Badge>
                                                     </a>
                                                 </Link>
-                                            </li>
-                                            <li className="login-user">
-                                                <Dropdown overlay={AccountList} trigger={['click']}>
-                                                    <a>
-                                                        {userData.profile.avatar == 'avatar.png' ?
-                                                            <Avatar src={<Image src="/avatar2.jpg" style={{ width: 32 }} />} /> :
-                                                            <Avatar src={<Image src={userData.profile.avatar} style={{ width: 32 }} />} />
-                                                        }
-                                                        <span className="text"> {userData.profile.last_name} </span><DownOutlined />
-                                                    </a>
-                                                </Dropdown>
-                                            </li>
-                                        </>
-                                    )
+                                            </Tooltip>
+                                        </li>
+                                        <li className="login-user">
+                                            <Dropdown overlay={AccountList} trigger={['click']}>
+                                                <a>
+                                                    {userData.profile.avatar == 'avatar.png' ?
+                                                        <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
+                                                        <ImageLogo
+                                                            loader={myLoader}
+                                                            src={APIURL + userData.profile.avatar}
+                                                            quality={60}
+                                                            width={32}
+                                                            height={32}
+                                                            placeholder='blur'
+                                                            blurDataURL='/avatar2.jpg'
+                                                        />
+                                                    }
+                                                    <span className="text"> {userData.profile.last_name} </span><DownOutlined />
+                                                </a>
+                                            </Dropdown>
+                                        </li>
+                                    </>
                                 }
                             </>
                             :
@@ -157,26 +197,16 @@ function Navbar({ userData }, props: any): ReactElement {
                                         </a>
                                     </Link>
                                 </li>
-                                {!isMobile &&
-                                    <li className="register-nav-item">
-                                        <Link href="/register">
-                                            <a className="btn butt-sm butt-primary flex-center">
-                                                <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
-                                            </a>
-                                        </Link>
-                                    </li>
-                                }
+                                <li className="register-nav-item">
+                                    <Link href="/register">
+                                        <a className="btn butt-sm butt-primary flex-center">
+                                            <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
+                                        </a>
+                                    </Link>
+                                </li>
+
                             </>
                         }
-                        <li className="circular-item">
-                            <motion.button whileTap={{ scale: 0.9 }} className="language-nav-butt circular-center pb-3" style={{ backgroundColor: 'transparent', borderWidth: 0, height: 45 }}>
-                                {isDarken ?
-                                    <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
-                                    :
-                                    <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
-                                }
-                            </motion.button>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -226,8 +256,6 @@ Navbar.propTypes = {
 };
 const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.registerLoading,
-    userInfo: state.auth.user
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

@@ -113,7 +113,7 @@ function Bill() {
         </div>
     )
 }
-Bill.getLayout = function getLayout(page): ReactElement {
+Bill.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
             {page}

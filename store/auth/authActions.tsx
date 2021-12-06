@@ -114,7 +114,7 @@ export const login = (username: string, password: string): any => {
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                 });
-                router.push('/dashboard')
+                router.back()
                 Cookies.set('token', res.data.data)
                 dispatch(loadUser());
 

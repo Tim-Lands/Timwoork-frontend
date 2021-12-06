@@ -4,8 +4,7 @@ import FilterContent from '../../components/filterLayout'
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import useSWR from 'swr'
-import API from '../../config';
-import { Spin } from 'antd';
+import Loading from '@/components/Loading';
 
 const products = [
   {
@@ -106,15 +105,8 @@ const products = [
   },
 ]
 function Category() {
-  const { data: getCategories, error }: any = useSWR('dashboard/categories', () =>
-    API
-      .get('dashboard/categories')
-      .then(res => res.data.data)
-      .catch(error => {
-        if (error.response.status != 409) throw error
-      }),
-  )
-  if (!getCategories) return <div className="py-5 my-3 d-flex justify-content-center"><Spin /></div>
+  const { data: getCategories, error }: any = useSWR('dashboard/categories')
+  if (!getCategories) return <Loading />
   if (error) return <div>Error</div>
   return (
     <div className="container py-5">
@@ -198,7 +190,7 @@ function Category() {
                   <div className="filter-sidebar-panel">
                     <h3 className="title">التصنيف الرئيسي</h3>
                     <div className="filter-cheks">
-                      {getCategories.map((e: any) => (
+                      {getCategories.data.map((e: any) => (
                         <div className="form-check py-1 pe-4" key={e.id}>
                           <input className="form-check-input" type="checkbox" value={e.id} id={"getCategories-" + e.id} />
                           <label className="form-check-label" htmlFor={"getCategories-" + e.id}>

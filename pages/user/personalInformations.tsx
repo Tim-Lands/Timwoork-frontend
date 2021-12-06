@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { loadUser } from "../../store/auth/authActions";
 import Link from 'next/link'
 import Cookies from 'js-cookie'
+import Layout from '@/components/Layout/HomeLayout'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import API from "../../config";
@@ -12,10 +13,11 @@ import withAuth from '../../services/withAuth'
 import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from 'swr'
+import Loading from "@/components/Loading";
 
-const personalInformations = (): ReactElement => {
+const personalInformations = () => {
     const { data: userInfo }: any = useSWR('api/me')
-
+    const { data: Countries }: any = useSWR('dashboard/countries')
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
         first_name: Yup.string().required('هذا الحقل إجباري'),
@@ -28,7 +30,8 @@ const personalInformations = (): ReactElement => {
     // Return statement.
     return (
         <>
-            {userInfo && userInfo.profile && 
+            {!userInfo && <Loading />}
+            {userInfo && userInfo.profile &&
                 <Formik
                     isInitialValid={true}
                     initialValues={{
@@ -45,7 +48,7 @@ const personalInformations = (): ReactElement => {
                             const token = Cookies.get('token')
                             const res = await API.post("api/profiles/step_one", values, {
                                 headers: {
-                                    'Authorization': `Bearer ${token}` 
+                                    'Authorization': `Bearer ${token}`
                                 }
                             })
                             // Authentication was successful.
@@ -72,24 +75,7 @@ const personalInformations = (): ReactElement => {
                 >
                     {({ errors, touched, isSubmitting }) => (
                         <Form>
-                            <div className="row">
-                                <div className="col-lg-6 p-0">
-                                    <div className="login-image">
-                                        <div className="timwoork-logo">
-                                            <Link href="/">
-                                                <a>
-                                                    <img src="/logo4.png" alt="" />
-                                                </a>
-                                            </Link>
-                                        </div>
-                                        <h1 className="login-title">
-                                            تحديث المعلومات الشخصية
-                                        </h1>
-                                        <h3 className="login-text">
-                                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                                        </h3>
-                                    </div>
-                                </div>
+                            <div className="row justify-content-md-center">
                                 <div className="col-lg-6 p-0">
                                     <div className="login-panel">
                                         <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
@@ -213,11 +199,9 @@ const personalInformations = (): ReactElement => {
                                                             name="country_id"
                                                             className="timlands-inputs"
                                                         >
-                                                            <option value={1}>الجزائر</option>
-                                                            <option value={2}>فلسطين</option>
-                                                            <option value={3}>الكويت</option>
-                                                            <option value={4}>الأردن</option>
-                                                            <option value={5}>تركيا</option>
+                                                            {Countries && Countries.data.map((e: any) => (
+                                                                <option key={e.id} value={e.id}>{e.name_ar}</option>
+                                                            ))}
                                                         </Field>
                                                         {errors.country_id && touched.country_id ?
                                                             <div style={{ overflow: 'hidden' }}>
@@ -266,5 +250,11 @@ const mapStateToProps = (state: any) => ({
 personalInformations.propTypes = {
     props: PropTypes.object,
 };
-
 export default connect(mapStateToProps, { loadUser })(withAuth(personalInformations));
+personalInformations.getLayout = function getLayout(page: any): ReactElement {
+    return (
+        <Layout>
+            {page}
+        </Layout>
+    )
+}

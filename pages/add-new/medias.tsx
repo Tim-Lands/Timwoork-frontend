@@ -29,23 +29,24 @@ function Medias({ query }) {
     }
 
     const [thumbnail, setThumbnail]: any = useState(null);
+    const [thumbnail2, setThumbnail2]: any = useState(null);
+    const [thumbnail3, setThumbnail3]: any = useState(null);
     const setThumbnailHandle = (e: any) => {
-        const datathumb = new FormData()
-        datathumb.append('thumbnail', e.target.files[0])
-
-        setThumbnail(datathumb);
+        setThumbnail(e.target.files[0]);
+    }
+    const setThumbnailHandle2 = (e: any) => {
+        setThumbnail2(e.target.files[0]);
+    }
+    const setThumbnailHandle3 = (e: any) => {
+        setThumbnail3(e.target.files[0]);
     }
     const loadImagesHandle = async () => {
+        const datathumb = new FormData()
+        datathumb.append('images', thumbnail)
+        datathumb.append('images', thumbnail2)
+        datathumb.append('thumbnail', thumbnail3)
         try {
-          
-            
-            const res = await API.post(`api/product/${id}/product-step-four`,
-                {
-                    images: null,
-                    url_video: url_video,
-                    file: null,
-                    thumbnail
-                },
+            const res = await API.post(`api/product/${id}/product-step-four`, datathumb,
                 {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -131,7 +132,7 @@ function Medias({ query }) {
                             <div className="flex-center">
                                 <h2 className="title"><span className="material-icons material-icons-outlined">mms</span>مكتبة الصور والملفات</h2>
                                 <div className={"header-butt"}>
-                                    <button onClick={() => router.push('/add-new/description')} type="button" className="btn flex-center butt-green-out mr-auto butt-xs">
+                                    <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out mr-auto butt-xs">
                                         <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
                                         <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                     </button>
@@ -149,13 +150,20 @@ function Medias({ query }) {
                                         <div className="col-md-12 align-center">
                                             <img src='' className="circular-img huge2-size" alt="" />
                                             <div className="timlands-form">
-                                                <label className="label-block" htmlFor="thumbnail">اختر الصورة الشخصية</label>
                                                 <input
-                                                    id="thumbnail"
                                                     onChange={setThumbnailHandle}
                                                     type="file"
                                                     className="form-control"
-                                        
+                                                />
+                                                <input
+                                                    onChange={setThumbnailHandle2}
+                                                    type="file"
+                                                    className="form-control"
+                                                />
+                                                <input
+                                                    onChange={setThumbnailHandle3}
+                                                    type="file"
+                                                    className="form-control"
                                                 />
                                             </div>
                                         </div>
@@ -207,7 +215,7 @@ function Medias({ query }) {
         </div>
     )
 }
-Medias.getLayout = function getLayout(page): ReactElement {
+Medias.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
             {page}

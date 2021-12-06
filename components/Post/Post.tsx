@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
-import { Badge } from 'antd';
 
 function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, product, size }): ReactElement {
     const thumbnailUrl = `url(${thumbnail})`;
@@ -42,50 +41,48 @@ function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, produ
         }
     }*/
     return (
-        <Badge.Ribbon text="Hippies" color="cyan">
-            <div className={"timlands-post-item" + sizeClass()}>
-                <Link href={postUrl}>
-                    <a>
-                        <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
-                    </a>
-                </Link>
-                <div className="post-item-content">
-                    <h3 className="title">
-                        <Link href={postUrl}>
+        <div className={"timlands-post-item" + sizeClass()}>
+            <Link href={postUrl}>
+                <a>
+                    <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
+                </a>
+            </Link>
+            <div className="post-item-content">
+                <h3 className="title">
+                    <Link href={postUrl}>
+                        <a>
+                            {title}
+                        </a>
+                    </Link>
+                </h3>
+                <ul className="nav post-meta">
+                    <li className="post-meta-user">
+                        <Link href={userUrl}>
                             <a>
-                                {title}
+                                <span className="material-icons material-icons-outlined">person_outline</span> {author}
                             </a>
                         </Link>
-                    </h3>
-                    <ul className="nav post-meta">
-                        <li className="post-meta-user">
-                            <Link href={userUrl}>
-                                <a>
-                                    <span className="material-icons material-icons-outlined">person_outline</span> {author}
-                                </a>
-                            </Link>
-                        </li>
-                        <li className="post-meta-rate">
-                            {/*showStars.map(e => e)*/}
-                        </li>
+                    </li>
+                    <li className="post-meta-rate">
+                        {/*showStars.map(e => e)*/}
+                    </li>
 
-                    </ul>
-                </div>
-                <div className="post-item-footer">
-                    {inCart(product.id) ?
-                        <button onClick={() => removeItem(product.id)}>-</button> :
-                        <button onClick={() => addItem(product)}>+</button>
-                    }
-
-                    <p className="post-meta-price">
-                        السعر من: {price}.00$
-                    </p>
-                    <p className="post-meta-bayer">
-                        {((buyers == 0) ? buyers : buyers + ' اشتروا هذا') || "اشتري الآن"}
-                    </p>
-                </div>
+                </ul>
             </div>
-        </Badge.Ribbon>
+            <div className="post-item-footer">
+                {inCart(product.id) ?
+                    <button onClick={() => removeItem(product.id)}>-</button> :
+                    <button onClick={() => addItem(product)}>+</button>
+                }
+
+                <p className="post-meta-price">
+                    السعر من: {price}.00$
+                </p>
+                <p className="post-meta-bayer">
+                    {((buyers == 0) ? buyers : buyers + ' اشتروا هذا') || "اشتري الآن"}
+                </p>
+            </div>
+        </div>
     )
 }
 Post.propTypes = {

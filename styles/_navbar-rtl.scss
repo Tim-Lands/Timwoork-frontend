@@ -218,6 +218,8 @@
         }
     }
     .nav-auth {
+        align-items: center;
+        align-content: center;
         > li {
             &.login-nav-item {
                 > a {
@@ -230,11 +232,22 @@
             }
             &.login-user {
                 > a {
-                    display: block;
+                    display: flex;
                     padding: 9px 10px;
                     font-size: 14px;
                     color: #555;
                     font-weight: 300;
+                    align-items: center;
+                    align-content: center;
+                    img {
+                        border-radius: 50%;
+                        display: inline-block;
+                        margin: 1px 6px;
+                        margin-right: 10px;
+                    }
+                    .text {
+                        margin-inline: 6px
+                    }
                     @media (max-width: 580px) {
                         .text {
                             display: none;
@@ -245,28 +258,44 @@
                     }
                 }
             }
+            &.nav-error, &.nav-loading {
+                display: flex;
+                align-content: center;
+                align-items: center;
+                margin: 0;
+                .loading-text {
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: #666;
+                    margin: 0;
+                }
+            }
             &.register-nav-item {
                 padding: 7px;
+            }
+            &.right-butts-icon {
+                display: flex;
+                align-items: center;
+                align-content: center;
+                margin-top: 4px;
+                a {
+                    display: flex;
+                    align-content: center;
+                    align-items: center;
+                    justify-content: center;
+                    align-self: center;
+                    color: #777 !important;
+                    height: 40px;
+                    width: 40px;
+                    .material-icons {
+                        margin-top: 12px;
+                    }
+                }
             }
         }
     }
     .circular-item {
-        padding-top: 4px;
         position: relative;
-        button {
-            width: 40px;
-            height: 40px;
-            border: 0;
-            background-color: transparent;
-            color: #777;
-            &:hover {
-                background-color: #f1f1f1;
-                color: #333;
-            }
-            .material-icons {
-                font-size: 17px;
-            }
-        }
         .list-lang-items {
             position: absolute;
             background-color: #fff;
@@ -298,7 +327,8 @@
 }
 .nav-auth {
     .language-nav-butt  {
-        margin-top: 8px;
+        margin-top: 10px;
+        margin-left: 4px;
         color: #777 !important;
         &:hover {
             background-color: #fff !important;
@@ -308,6 +338,7 @@
             font-size: 21px !important;
         }
     }
+
 }
 .timlands-sub-navbar {
     background-color: #ddd;

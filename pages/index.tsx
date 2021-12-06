@@ -4,6 +4,10 @@ import { ReactElement } from "react";
 import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
+
+import nannyIMG from '../public/nanny.png'
+import Image from 'next/image'
 const testServices = [
   {
     id: 1,
@@ -59,11 +63,16 @@ function Home() {
   const { data: products, error }: any = useSWR('dashboard/products')
   return (
     <>
+      <MetaTags
+        title={"الصفحة الرئيسية"}
+        metaDescription={"الصفحة الرئيسية"}
+        ogDescription={"الصفحة الرئيسية"}
+      />
       <Hero />
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
-            <img src="/undraw_winter_designer_a2m7.svg" alt="" />
+            <Image src={nannyIMG} placeholder="blur" />
           </div>
 
           <div className="nanny-home-content">
@@ -83,7 +92,7 @@ function Home() {
       </div>
 
       <div className="container">
-        <PostsAside title="الفيدهات والحركات" PostData={testServices} isLoading={!products} isError={error} />
+        <PostsAside title="الفيدهات والحركات" PostData={testServices} isLoading={!products} isError={error}  />
         <PostsAside title="برمجة وتطوير" PostData={testServices} isLoading={!products} isError={error} />
         <PostsAside title="التصميم الغرافيكي" PostData={testServices} isLoading={!products} isError={error} />
       </div>
@@ -91,7 +100,7 @@ function Home() {
     </>
   );
 }
-Home.getLayout = function getLayout(page): ReactElement {
+Home.getLayout = function getLayout(page: any): ReactElement {
   return (
     <Layout>
       {page}

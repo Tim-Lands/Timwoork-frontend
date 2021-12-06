@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import Link from 'next/link'
 import PostSearch from './Post/PostSearch';
-
+import heroIMG from '../public/hero.png'
+import Image from 'next/image'
 const testServices = [
     {
         id: 1,
@@ -92,7 +93,9 @@ function Hero() {
         <div className="timlands-hero">
             <div className="timlands-hero-inner">
                 <motion.div animate={controlsParent} style={{ overflow: 'hidden' }} className="timlands-hero-image">
-                    <motion.img animate={controls} transition={{ duration: 0.53 }} src="/hero.png" alt="" />
+                    <motion.div animate={controls} transition={{ duration: 0.53 }}> 
+                        <Image src={heroIMG} placeholder="blur" />
+                    </motion.div>
                 </motion.div>
                 <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">

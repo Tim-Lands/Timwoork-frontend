@@ -11,6 +11,7 @@
 |
 */
 import Link from "next/link";
+import Head from "next/head";
 import { connect } from "react-redux";
 
 function FourOFour(props: any) {
@@ -26,14 +27,17 @@ function FourOFour(props: any) {
 
     return (
         <div className="timwoork-404-page">
+            <Head>
+                <title>الصفحة غير موجودة</title>
+            </Head>
             <div className="timwoork-404-page-inner">
                 <div className="not-found-image">
                     <img src="/undraw_Waiting__for_you_ldha.svg" alt="" />
                 </div>
-                <h1 className="title"><span className="error-status">404</span> | Nothing to see here!</h1>
+                <h1 className="title"><span className="error-status">404</span> | الصفحة غير موجودة</h1>
                 <h2 className="text-xl text-purple-500 text-center underline flex hover:text-purple-700 transition">
                     <Link href={linkLocation}>
-                        <a className="btn butt-primary butt-md">Go Home</a>
+                        <a className="btn butt-primary butt-md">الرجوع للرئيسية</a>
                     </Link>
                 </h2>
             </div>
