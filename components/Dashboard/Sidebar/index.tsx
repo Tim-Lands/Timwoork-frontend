@@ -84,16 +84,13 @@ function index(props: any): ReactElement {
     const path = useRouter()
     const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
-        return `${APIURL}${userData.profile.avatar}`;
+        return `${APIURL}${userData.user_details.profile.avatar}`;
     }
     return (
         <div className={"dashboard-sidebar"}>
             {error && message.error('للأسف لم يتم جلب معلومات المستخدم')}
             {userData &&
                 <div className="dashboard-sidebar-inner">
-                    <Link href="/">
-                        <a>الرئيسية</a>
-                    </Link>
                     {userData.user_details.profile &&
                         <div className="dashbord-user-details">
                             <Link href={`/u/${userData.user_details.username}`}>

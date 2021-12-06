@@ -195,11 +195,7 @@ function Single({ query }) {
                     <Slide {...properties}>
                       {slideImages.map((each, index) => (
                         <div key={index} className="each-slide">
-                          <div className="images-slider" style={{ backgroundImage: `url(${each})` }}>
-                            <div className="caption-descriptions">
-                              <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد</p>
-                            </div>
-                          </div>
+                          <div className="images-slider" style={{ backgroundImage: `url(${each})` }}></div>
                         </div>
                       ))}
                     </Slide>
@@ -229,46 +225,47 @@ function Single({ query }) {
                       </p>
                       <h4>مولد النص العربى مفيد لمصممي المواقع</h4>
                     </div>
-                    <div className="timwoork-single-seller-info">
-
-                      <div className="seller-info-header">
-                        <h2 className="title">حول البائع</h2>
-                      </div>
-                      <div className="seller-info-container">
-                        <div className="d-flex">
-                          <div className="seller-info-avatar">
-                            <img className="circular-img huge-size" src="/avatar.png" alt="" />
-                            <span className="is-online"></span>
-                          </div>
-                          <div className="seller-info-content">
-                            <h3 className="user-title">عبد الحميد بومقواس</h3>
-                            <ul className="user-meta nav">
-                              <li>
-                                <span className="material-icons material-icons-outlined">badge</span> الشارة الذهبية
-                              </li>
-                              <li>
-                                <span className="material-icons material-icons-outlined">place</span> <strong>الجلفة</strong>, الجزائر
-                              </li>
-                              <li>
-                                <span className="material-icons material-icons-outlined">speed</span> 4 ساعات
-                              </li>
-                            </ul>
-                            <div className="seller-info-butts d-flex">
-                              <Link href="">
-                                <a className="btn butt-primary butt-sm flex-center">
-                                  <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
-                                </a>
-                              </Link>
-                              <Link href="">
-                                <a className="btn butt-green butt-sm flex-center">
-                                  <i className="material-icons material-icons-outlined">email</i> مراسلة البائع
-                                </a>
-                              </Link>
+                    {ProductData.data.profile_seller &&
+                      <div className="timwoork-single-seller-info">
+                        <div className="seller-info-header">
+                          <h2 className="title">حول البائع</h2>
+                        </div>
+                        <div className="seller-info-container">
+                          <div className="d-flex">
+                            <div className="seller-info-avatar">
+                              <img className="circular-img huge-size" src="/avatar.png" alt="" />
+                              <span className="is-online"></span>
+                            </div>
+                            <div className="seller-info-content">
+                              <h3 className="user-title">عبد الحميد بومقواس</h3>
+                              <ul className="user-meta nav">
+                                <li>
+                                  <span className="material-icons material-icons-outlined">badge</span> الشارة الذهبية
+                                </li>
+                                <li>
+                                  <span className="material-icons material-icons-outlined">place</span> <strong>الجلفة</strong>, الجزائر
+                                </li>
+                                <li>
+                                  <span className="material-icons material-icons-outlined">speed</span> 4 ساعات
+                                </li>
+                              </ul>
+                              <div className="seller-info-butts d-flex">
+                                <Link href="">
+                                  <a className="btn butt-primary butt-sm flex-center">
+                                    <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
+                                  </a>
+                                </Link>
+                                <Link href="">
+                                  <a className="btn butt-green butt-sm flex-center">
+                                    <i className="material-icons material-icons-outlined">email</i> مراسلة البائع
+                                  </a>
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    }
 
                     <div className="timwoork-single-comments">
                       <div className="timwoork-single-comments-inner">

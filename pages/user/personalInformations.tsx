@@ -259,7 +259,6 @@ const personalInformations = () => {
                                 isInitialValid={true}
                                 initialValues={{ avatar: ('https://api.timwoork.com/avatars/' + userInfo.user_details.profile.avatar) || null }}
                                 onSubmit={async values => {
-
                                     try {
                                         const dataform = new FormData()
                                         dataform.append('avatar', values.avatar)

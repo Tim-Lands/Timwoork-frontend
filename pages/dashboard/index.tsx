@@ -8,14 +8,7 @@ import useSWR from 'swr'
 import { message } from "antd";
 
 function index(): ReactElement {
-    const { data: postsList, categoriesError }: any = useSWR('dashboard', () =>
-        API
-            .get('dashboard')
-            .then(res => res.data.data)
-            .catch(error => {
-                if (error.response.status != 409) throw error
-            }),
-    )
+    const { data: postsList, categoriesError }: any = useSWR('dashboard')
     // Return statement.
     return (
         <>
@@ -24,7 +17,7 @@ function index(): ReactElement {
                     <h2 className="title"><span className="material-icons material-icons-outlined">dashboard</span>الرئيسية</h2>
                 </div>
                 {categoriesError && message.error('حدث خطأ أثناء جلب البيانات')}
-                {!postsList ? message.loading('جاري جلب البيانات...', 2.5) : (
+                {!postsList ? '' : (
                     <div className="row">
                         <div className="col-md-6">
                             <div className="timlands-panel-item floated green">
@@ -66,7 +59,7 @@ function index(): ReactElement {
                                                     <p className="text">المشرفين والمدراء</p>
                                                 </div>
                                                 <div className="det-val">
-                                                    <p className="text">{postsList.admins}</p>
+                                                    <p className="text">{postsList.data.admins}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -96,7 +89,7 @@ function index(): ReactElement {
                                                     <p className="text">المجموع</p>
                                                 </div>
                                                 <div className="det-val">
-                                                    <p className="text">{postsList.users}</p>
+                                                    <p className="text">{postsList.data.users}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -123,7 +116,7 @@ function index(): ReactElement {
                                                     <p className="text">في انتظار التفعيل</p>
                                                 </div>
                                                 <div className="det-val">
-                                                    <p className="text">{postsList.products_wainting_actived}</p>
+                                                    <p className="text">{postsList.data.products_wainting_actived}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -133,7 +126,7 @@ function index(): ReactElement {
                                                     <p className="text">المرفوضة</p>
                                                 </div>
                                                 <div className="det-val">
-                                                    <p className="text">{postsList.products_rejected}</p>
+                                                    <p className="text">{postsList.data.products_rejected}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -143,7 +136,7 @@ function index(): ReactElement {
                                                     <p className="text">النشطة</p>
                                                 </div>
                                                 <div className="det-val">
-                                                    <p className="text">{postsList.products_actived}</p>
+                                                    <p className="text">{postsList.data.products_actived}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -164,7 +157,7 @@ function index(): ReactElement {
                                                 </div>
                                                 <div className="det-val">
                                                     <p className="text">
-                                                        {postsList.products_actived + postsList.products_rejected + postsList.products_wainting_actived}
+                                                        {postsList.data.products_actived + postsList.data.products_rejected + postsList.data.products_wainting_actived}
                                                     </p>
                                                 </div>
                                             </div>

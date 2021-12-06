@@ -75,7 +75,6 @@ const Login = (props: any): ReactElement => {
                                         <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
                                         <Field
                                             id="email"
-                                            dir="ltr"
                                             name="username"
                                             placeholder="البريد الإلكتروني..."
                                             className="timlands-inputs"
@@ -92,9 +91,9 @@ const Login = (props: any): ReactElement => {
                                     <div className="timlands-form">
                                         <label className="label-block" htmlFor="password">كلمة المرور</label>
                                         <Field
+                                            type="password"
                                             id="password"
                                             name="password"
-                                            dir="ltr"
                                             placeholder="كلمة المرور..."
                                             className="timlands-inputs"
                                             autoComplete="off"
