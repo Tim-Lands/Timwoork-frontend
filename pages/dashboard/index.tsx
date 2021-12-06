@@ -1,5 +1,4 @@
 import Link from "next/link";
-import API from '../../config';
 import { ReactElement } from "react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 import { connect } from "react-redux";
