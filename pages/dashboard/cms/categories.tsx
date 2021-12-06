@@ -10,7 +10,7 @@ import { Link } from "@material-ui/core";
 import useSWR from 'swr'
 
 function Categories(): ReactElement {
-    const { data: GetData, error }: any = useSWR(`dashboard/categories?page=1`)
+    const { data: GetData, error }: any = useSWR(`dashboard/categories`)
 
     const deleteHandle = (id: any) => {
             const MySwal = withReactContent(Swal)
@@ -94,7 +94,7 @@ function Categories(): ReactElement {
                             </tr>
                         </thead>
                         <tbody>
-                            {GetData && GetData.map((e: any, i) => (
+                            {GetData && GetData.data.map((e: any, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>
                                         <p className="with-icon">

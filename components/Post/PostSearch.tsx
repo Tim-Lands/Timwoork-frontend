@@ -13,10 +13,10 @@ function PostSearch({title, thumbnail, postUrl, author, userUrl, rate, period, b
                 <div className="post-item-content">
                     <ul className="nav post-meta">
                         <li className="post-meta-price">
-                            Price: {price}.00$
+                            السعر: {price}.00$
                         </li>
                         <li className="post-meta-bayer">
-                            {((buyers == 1) ? 'Bayer' : 'Bayers') && "Buy Now"}
+                            {((buyers == 1) ? 'مشتريين' : 'مشتري') && "اشتري الآن"}
                         </li>
                     </ul>
                     <h3 className="title">
@@ -39,7 +39,7 @@ function PostSearch({title, thumbnail, postUrl, author, userUrl, rate, period, b
                         </li>
                         
                         <li className="post-meta-delay">
-                            Delivery period: {period}
+                            مدة التسليم: {period}
                         </li>
                     </ul>
                 </div>

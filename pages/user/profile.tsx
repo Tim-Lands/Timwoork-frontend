@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Statistic, Card } from 'antd'
+import { Badge, Statistic, Card, Result } from 'antd'
 import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
@@ -11,24 +11,41 @@ import Loading from '@/components/Loading'
 
 function Profile() {
     const { data: userInfo }: any = useSWR('api/me')
-    {!userInfo && <Loading />}
+    { !userInfo && <Loading /> }
+    if (userInfo && userInfo.user_details.profile.steps <= 1)
+        return <div className="row justify-content-md-center">
+            <div className="col-md-5">
+                <Result
+                    status="warning"
+                    title="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
+                    subTitle="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
+                    extra={
+                        <Link href="/user/personalInformations">
+                            <a className="btn butt-primary butt-md">
+                                الذهاب إلى التعديل
+                            </a>
+                        </Link>
+                    }
+                />
+            </div>
+        </div>
     return (
         <div className="py-3">
-            {userInfo && userInfo.profile &&
+            {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
-                        title={userInfo.profile.first_name + " " + userInfo.profile.last_name}
+                        title={userInfo.user_details.profile.first_name + " " + userInfo.user_details.profile.last_name}
                         metaDescription={"الصفحة الرئيسية"}
                         ogDescription={"الصفحة الرئيسية"}
                     />
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-4">
-                                {userInfo.profile.profile_seller &&
+                                {userInfo.user_details.profile.profile_seller &&
                                     <div className="py-1">
                                         <Card title="نبذة عني">
                                             <p className="user-bro">
-                                                {userInfo.profile.profile_seller.bio}
+                                                {userInfo.user_details.profile.profile_seller.bio}
                                             </p>
                                         </Card>
                                     </div>
@@ -73,13 +90,13 @@ function Profile() {
                                     <div className="profile-content-header">
                                         <Badge count="غير متصل" offset={[10, 10]} >
                                             <div className="profile-content-avatar">
-                                                <img src={'https://api.timwoork.com/avatars/' + userInfo.profile.avatar} width={120} />
+                                                <img src={'https://api.timwoork.com/avatars/' + userInfo.user_details.profile.avatar} width={120} />
                                             </div>
                                         </Badge>
                                         <div className="profile-content-head">
-                                            <h4 className="title">{userInfo.profile.first_name + ' ' + userInfo.profile.last_name}</h4>
+                                            <h4 className="title">{userInfo.user_details.profile.first_name + ' ' + userInfo.user_details.profile.last_name}</h4>
                                             <p className="text">
-                                                @{userInfo.username} |
+                                                @{userInfo.user_details.username} |
                                                 <span className="app-label"> المستوى الأول </span>
                                                 <Badge
                                                     className="site-badge-count-109"
@@ -109,13 +126,13 @@ function Profile() {
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">الاسم الأول</h3>
-                                                    <p className="text-value">{userInfo.profile.first_name}</p>
+                                                    <p className="text-value">{userInfo.user_details.profile.first_name}</p>
                                                 </div>
                                             </div>
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">الاسم الأخير</h3>
-                                                    <p className="text-value">{userInfo.profile.last_name}</p>
+                                                    <p className="text-value">{userInfo.user_details.profile.last_name}</p>
                                                 </div>
                                             </div>
                                             <div className="col-sm-4">
@@ -129,20 +146,20 @@ function Profile() {
                                                 <Badge.Ribbon text="مفعل" color="green">
                                                     <div className="content-text-item">
                                                         <h3 className="text-label">رقم الهاتف</h3>
-                                                        <p className="text-value">{userInfo.phone}</p>
+                                                        <p className="text-value">{userInfo.user_details.phone}</p>
                                                     </div>
                                                 </Badge.Ribbon>
                                             </div>
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">الجنس</h3>
-                                                    <p className="text-value">{userInfo.profile.gender == null ? '' : userInfo.profile.gender}</p>
+                                                    <p className="text-value">{userInfo.user_details.profile.gender == null ? '' : userInfo.user_details.profile.gender}</p>
                                                 </div>
                                             </div>
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">تاريخ الميلاد</h3>
-                                                    <p className="text-value">{userInfo.profile.date_of_birth == null ? '' : userInfo.profile.date_of_birth}</p>
+                                                    <p className="text-value">{userInfo.user_details.profile.date_of_birth == null ? '' : userInfo.user_details.profile.date_of_birth}</p>
 
                                                 </div>
                                             </div>
@@ -157,13 +174,13 @@ function Profile() {
                                             </div>
                                         </div>
                                         <div className="row">
-                                            {userInfo.profile.profile_seller &&
+                                            {userInfo.user_details.profile.profile_seller &&
                                                 <div className="col-sm-6">
                                                     <div className="content-text-item">
                                                         <h3 className="text-label">المهارات</h3>
-                                                        {userInfo.profile.profile_seller.skills &&
+                                                        {userInfo.user_details.profile.profile_seller.skills &&
                                                             <ul className="text-skills">
-                                                                {userInfo.profile.profile_seller.skills.map((e, i) => (
+                                                                {userInfo.user_details.profile.profile_seller.skills.map((e: any, i) => (
                                                                     <li key={i}>
                                                                         <Link href="">
                                                                             <a>{e.name_ar}</a>
@@ -191,7 +208,6 @@ const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(withAuth(Profile));
 Profile.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
@@ -199,3 +215,5 @@ Profile.getLayout = function getLayout(page: any): ReactElement {
         </Layout>
     )
 }
+
+export default connect(mapStateToProps)(withAuth(Profile));

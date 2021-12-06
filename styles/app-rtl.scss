@@ -353,6 +353,22 @@ h3 {
     background-color: #fff;
     align-items: center;
     align-content: center;
+    &.update-form {
+        height: auto;
+        display: block; 
+        margin-top: 30px;
+        .update-form-header {
+            padding: 16px 0;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+            .title {
+                font-size: 19px;
+                font-weight: bold;
+                color: #555;
+                margin: 0;
+            }
+        }
+    }
     .login-panel-body {
         padding: 15px 35px;
         position: relative;
@@ -1341,6 +1357,7 @@ h3 {
             align-content: center;
             border-bottom: 2px solid #d9d9d9;
             .dashbord-user-avatar {
+                display: block;
                 img {
                     width: 60px;
                     height: 60px;
@@ -2943,6 +2960,62 @@ h3 {
     .spinner-border {
         border: 0.25em solid $primary;
         border-right-color: transparent;
+    }
+}
+.page-header {
+    padding: 18px 0;
+    border-bottom: 1px dashed #f1f1f1;
+    margin-bottom: 15px;
+    .title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+    }
+}
+.page-content {
+    padding: 12px 28px;
+    .sub-title {
+        font-size: 25px;
+        font-weight: bold;
+        margin: 20px 0;
+        margin-top: 0;
+    }
+    .text {
+        font-size: 20px;
+        font-weight: 200;
+        color: #444;
+        line-height: 39px;
+        margin: 0;
+    }
+    .list {
+        li {
+            font-size: 20px;
+            font-weight: 200;
+            color: #444;
+            line-height: 39px;
+            margin-right: 25px;
+            margin-bottom: 15px;
+        }
+    }
+}
+.about-hero {
+    padding: 70px 25px;
+    background-image: url('../public/5566879.jpg'); 
+    background-size: cover;
+    background-position: 20% 20%;
+    .title {
+        font-size: 50px;
+        font-weight: bold;
+        color: $primary;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    .text {
+        font-size: 25px;
+        color: rgba(0, 0, 0, 0.733);
+        margin: 0;
+        font-weight: 200;
     }
 }
 .images-btns-upload {

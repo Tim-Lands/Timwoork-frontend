@@ -802,9 +802,9 @@
 
 .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container {
   background-image: url("../public/cat-bg.png");
-  background-position: 0% 430%;
+  background-position: 0 300px;
   background-repeat: no-repeat;
-  height: 100%;
+  height: 407px;
   padding: 10px;
 }
 
@@ -2011,6 +2011,25 @@ h3 {
           align-items: center;
   -ms-flex-line-pack: center;
       align-content: center;
+}
+
+.login-panel.update-form {
+  height: auto;
+  display: block;
+  margin-top: 30px;
+}
+
+.login-panel.update-form .update-form-header {
+  padding: 16px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.login-panel.update-form .update-form-header .title {
+  font-size: 19px;
+  font-weight: bold;
+  color: #555;
+  margin: 0;
 }
 
 .login-panel .login-panel-body {
@@ -3343,6 +3362,10 @@ h3 {
   -ms-flex-line-pack: center;
       align-content: center;
   border-bottom: 2px solid #d9d9d9;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-avatar {
+  display: block;
 }
 
 .dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-avatar img {
@@ -5410,6 +5433,69 @@ h3 {
 .page-loading-spinner .spinner-border {
   border: 0.25em solid #475C80;
   border-right-color: transparent;
+}
+
+.page-header {
+  padding: 18px 0;
+  border-bottom: 1px dashed #f1f1f1;
+  margin-bottom: 15px;
+}
+
+.page-header .title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.page-content {
+  padding: 12px 28px;
+}
+
+.page-content .sub-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 20px 0;
+  margin-top: 0;
+}
+
+.page-content .text {
+  font-size: 20px;
+  font-weight: 200;
+  color: #444;
+  line-height: 39px;
+  margin: 0;
+}
+
+.page-content .list li {
+  font-size: 20px;
+  font-weight: 200;
+  color: #444;
+  line-height: 39px;
+  margin-right: 25px;
+  margin-bottom: 15px;
+}
+
+.about-hero {
+  padding: 70px 25px;
+  background-image: url("../public/5566879.jpg");
+  background-size: cover;
+  background-position: 20% 20%;
+}
+
+.about-hero .title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #475C80;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.about-hero .text {
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.733);
+  margin: 0;
+  font-weight: 200;
 }
 
 .images-btns-upload {

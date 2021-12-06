@@ -193,8 +193,6 @@ index.getLayout = function getLayout(page: any): ReactElement {
 }
 const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.registerLoading,
-    userInfo: state.auth.user
 });
 
 export default connect(mapStateToProps, { logout })(index)

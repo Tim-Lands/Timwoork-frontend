@@ -88,7 +88,7 @@ function Navbar(props: any): ReactElement {
     )
     const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
-        return `${APIURL}${userData.profile.avatar}`;
+        return `${APIURL}${userData.user_details.profile.avatar}`;
     }
     return (
         <div className={"timlands-navbar-container" + (scroll ? ' is-shown' : '')}>
@@ -141,7 +141,9 @@ function Navbar(props: any): ReactElement {
                             <>
                                 {!userData &&
                                     <li className="nav-loading">
-                                        <p className="loading-text">يرجى الإنتظار...</p>
+                                        <p className="loading-text">
+                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> يرجى الإنتظار...
+                                        </p>
                                     </li>
                                 }
                                 {userData &&
@@ -169,11 +171,11 @@ function Navbar(props: any): ReactElement {
                                         <li className="login-user">
                                             <Dropdown overlay={AccountList} trigger={['click']}>
                                                 <a>
-                                                    {userData.profile.avatar == 'avatar.png' ?
+                                                    {userData.user_details.profile.avatar == 'avatar.png' ?
                                                         <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
                                                         <ImageLogo
                                                             loader={myLoader}
-                                                            src={APIURL + userData.profile.avatar}
+                                                            src={APIURL + userData.user_details.profile.avatar}
                                                             quality={60}
                                                             width={32}
                                                             height={32}
@@ -181,7 +183,7 @@ function Navbar(props: any): ReactElement {
                                                             blurDataURL='/avatar2.jpg'
                                                         />
                                                     }
-                                                    <span className="text"> {userData.profile.last_name} </span><DownOutlined />
+                                                    <span className="text"> {userData.user_details.profile.last_name} </span><DownOutlined />
                                                 </a>
                                             </Dropdown>
                                         </li>

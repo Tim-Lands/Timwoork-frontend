@@ -12,6 +12,7 @@ function Explores() {
 
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
     const getSubcats = async (id: any) => {
+        setIsLoading(true)
         try {
             const res: any = await API.get(`dashboard/categories/${id}`)
             if (res) {
@@ -47,11 +48,11 @@ function Explores() {
                     <div className="col-md-4 p-0">
                         <div className="main-explores">
                             <ul className="main-explore-items">
-                                {categories && categories.data.map((e: any, i) => (
+                                {categories && categories.data.slice(0, 8).map((e: any, i) => (
                                     <motion.li initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id} className="main-item-category">
                                         <a onClick={() => getSubcats(e.id)}>
                                             <span className={"material-icons material-icons-outlined"}>{e.icon}</span>{e.name_ar}
-                                            {/*<p className="count">{e.count}</p>*/}
+                                            <p className="count">382</p>
                                         </a>
                                     </motion.li>
                                 ))}
@@ -68,7 +69,7 @@ function Explores() {
                                     </div>
                                     <div className="main-item-category-body">
                                         <div className="row">
-                                            {postsList.subcategories && postsList.subcategories.map((e: any) => (
+                                            {postsList.subcategories && postsList.subcategories.slice(0, 12).map((e: any) => (
                                                 <div className="col-sm-6" key={e.id}>
                                                     <a href={"/category/" + e.slug} className="sub-cat-link">
                                                         <p className="text">{e.name_ar}</p>

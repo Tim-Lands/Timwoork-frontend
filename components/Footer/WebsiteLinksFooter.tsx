@@ -5,33 +5,33 @@ function WebsiteLinksFooter() {
     return (
         <div className="app-footer-aside">
             <div className="aside-header">
-                <h4 className="title">Website</h4>
+                <h4 className="title">روابط الموقع</h4>
             </div>
             <div className="aside-body">
                 <ul className="aside-list-items">
                     <li>
-                        <Link href="">
-                            <a>Privacy & Terms</a>
+                        <Link href="/privacy">
+                            <a>سياسة الخصوصية</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="">
-                            <a>Help & Support</a>
+                        <Link href="/terms">
+                            <a>شروط الإستخدام</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="">
-                            <a>Trust & Safety</a>
+                        <Link href="/trust-company">
+                            <a>شركات وثقت بنا</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="">
-                            <a>Invite a Friend</a>
+                        <Link href="/inite">
+                            <a>دعوة الأصدقاء</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="">
-                            <a>Become a Seller</a>
+                        <Link href="/login">
+                            <a>كن بائع!</a>
                         </Link>
                     </li>
                 </ul>

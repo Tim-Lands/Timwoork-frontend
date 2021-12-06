@@ -9,7 +9,7 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
                 <h1 className="title">حدث خطأ</h1>
             </div>
             <div className="posts-aside-body">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis vel harum ab! Debitis officiis illum tenetur sed inventore!</p>
+                <p>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى</p>
             </div>
         </div>
     )

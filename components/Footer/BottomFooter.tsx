@@ -1,4 +1,4 @@
-import React from 'react'
+import Link from 'next/link'
 
 function BottomFooter() {
     return (
@@ -9,15 +9,13 @@ function BottomFooter() {
                 </a>
 
                 <ul className="nav center-nav-footer col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" className="nav-link px-2 link-dark">الرئيسية</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">الميزات</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">مخطط الاسعار</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">الاسئلة الشائعة</a></li>
-                    <li><a href="#" className="nav-link px-2 link-dark">حول الموقع</a></li>
+                    <li><Link href="/"><a className="nav-link px-2 link-dark">الرئيسية</a></Link></li>
+                    <li><Link href="/faq"><a className="nav-link px-2 link-dark">الاسئلة الشائعة</a></Link></li>
+                    <li><Link href="/about"><a className="nav-link px-2 link-dark">حول الموقع</a></Link></li>
                 </ul>
 
                 <div className="col-md-3 text-end">
-                    <p className="copy-text">© 2005-2011 <a href="#">TimWoork</a> جميع الحقوق محفوظة </p>
+                    <p className="copy-text">© 2005-2011 <a href="/">TimWoork</a> جميع الحقوق محفوظة </p>
                 </div>
             </header>
         </div>

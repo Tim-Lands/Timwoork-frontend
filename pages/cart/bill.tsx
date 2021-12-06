@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react'
 import Layout from '@/components/Layout/HomeLayout'
 import { useCart } from "react-use-cart";
 import { Form, Formik } from 'formik';
+import withAuth from '../../services/withAuth'
 
 function Bill() {
     const {
@@ -120,4 +121,4 @@ Bill.getLayout = function getLayout(page: any): ReactElement {
         </Layout>
     )
 }
-export default Bill
+export default withAuth(Bill)

@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { connect } from "react-redux";
 import { logout } from "../../../store/auth/authActions";
 import useSWR from 'swr'
+import ImageLogo from "next/image";
+
 import { message } from 'antd';
 
 const sidebarLinks = [
@@ -80,6 +82,10 @@ function index(props: any): ReactElement {
     const { data: userData, error }: any = useSWR(`api/me`)
     const submenu = true
     const path = useRouter()
+    const APIURL = 'https://www.api.timwoork.com/avatars/'
+    const myLoader = () => {
+        return `${APIURL}${userData.profile.avatar}`;
+    }
     return (
         <div className={"dashboard-sidebar"}>
             {error && message.error('للأسف لم يتم جلب معلومات المستخدم')}
@@ -88,14 +94,31 @@ function index(props: any): ReactElement {
                     <Link href="/">
                         <a>الرئيسية</a>
                     </Link>
-                    {userData.profile &&
+                    {userData.user_details.profile &&
                         <div className="dashbord-user-details">
-                            <div className="dashbord-user-avatar">
-                                {userData.profile.avatar == 'avatar.png' ? <img src="/avatar.png" alt="" /> : <img src={userData.profile.avatar} alt="" />}
-                            </div>
+                            <Link href={`/u/${userData.user_details.username}`}>
+                                <a className="dashbord-user-avatar">
+                                    {userData.user_details.profile.avatar == 'avatar.png' ?
+                                        <ImageLogo src="/avatar2.jpg" width={30} height={30} /> :
+                                        <ImageLogo
+                                            loader={myLoader}
+                                            src={APIURL + userData.user_details.profile.avatar}
+                                            quality={60}
+                                            width={30}
+                                            height={30}
+                                            placeholder='blur'
+                                            blurDataURL='/avatar2.jpg'
+                                        />
+                                    }
+                                </a>
+                            </Link>
                             <div className="dashbord-user-content">
                                 <h3 className="user-title">
-                                    {userData.profile.first_name + ' ' + userData.profile.last_name}
+                                    <Link href={`/u/${userData.user_details.username}`}>
+                                        <a className="dashbord-user-avatar">
+                                            {userData.user_details.profile.first_name + ' ' + userData.user_details.profile.last_name}
+                                        </a>
+                                    </Link>
                                 </h3>
                                 <ul className="meta">
                                     <li>
