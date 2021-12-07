@@ -19,7 +19,6 @@ function Explores() {
                 setIsLoading(false)
                 setPostsList(res.data.data)
                 setIsError(false)
-                console.log(res.data.data);
                 
             }
         } catch (error) {

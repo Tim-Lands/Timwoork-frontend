@@ -66,7 +66,7 @@ function index() {
         <>
             <div className="timwoork-single">
                 <div className="row justify-content-md-center">
-                    <div className="col-lg-8">
+                    <div className="col-lg-9">
                         {isEmpty ?
                             <div className="cart-nothing">
                                 <div className="cart-nothing-inner">

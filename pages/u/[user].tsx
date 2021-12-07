@@ -14,7 +14,7 @@ import NotFound from "@/components/NotFound";
 const User = ({ query }) => {
     // Return statement.
     const { data: userInfo, error }: any = useSWR(`api/profiles/${query.user}`)
-    const User = userInfo && userInfo.data[0]
+    const User = userInfo && userInfo.data
     const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
         return `${APIURL}${User.profile.avatar}`;

@@ -5057,7 +5057,10 @@ h3 {
 
 .cart-list .cart-list-item .cart-item .add-devloppers-nav {
   list-style: none;
-  padding-right: 30px;
+  padding-right: 20px;
+  margin-top: 6px;
+  border-top: 1px solid #f6f6f6;
+  padding-top: 12px;
 }
 
 .cart-list .cart-list-item .cart-item .add-devloppers-nav .devloppers-item {

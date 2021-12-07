@@ -63,11 +63,12 @@ function Navbar(props: any): ReactElement {
                     <a>الصفحة الشخصية</a>
                 </Link>
             </Menu.Item>
-            <Menu.Item key="7">
+            {(userData && userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
                 <Link href="/add-new">
                     <a>إضافة خدمة جديدة</a>
                 </Link>
-            </Menu.Item>
+            </Menu.Item>)}
+
             <Menu.Item key="1">
                 <Link href="/">
                     <a>الإعدادات</a>
@@ -79,6 +80,7 @@ function Navbar(props: any): ReactElement {
                 </a>
             </Menu.Item>
             <Menu.Divider />
+
             <Menu.Item key="3">
                 <a onClick={props.logout}>
                     تسجيل الخروج

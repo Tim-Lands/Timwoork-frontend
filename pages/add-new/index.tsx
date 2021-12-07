@@ -2,13 +2,20 @@ import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import { ReactElement } from "react";
 import { connect } from "react-redux";
-import { logout, loadUser, addNewProduct } from "./../../store/auth/authActions";
+import { logout, addNewProduct } from "./../../store/auth/authActions";
 //import withAuth from '../../services/withAuth'
 import { Spin } from "antd";
 import { Alert } from '@/components/Alert/Alert';
+import useSWR from 'swr'
+import NotSeller from '@/components/NotSeller';
+import Cookies from 'js-cookie'
+import Unauthorized from '@/components/Unauthorized';
 
 function index(props: any) {
-    //props.loadUser()
+    const token = Cookies.get('token')
+    if (!token) return <Unauthorized />
+    const { data: userData }: any = useSWR(`api/me`)
+    if (userData && userData.user_details.profile.is_seller == 0) return <NotSeller />
     return (
         <>
             <MetaTags
@@ -32,11 +39,13 @@ function index(props: any) {
                                     <p className="text">
                                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                                     </p>
-                                    <div className="add-butts">
-                                        <button type="button" className="btn butt-md butt-primary2" onClick={props.addNewProduct}>
-                                            إضافة خدمة
-                                        </button>
-                                    </div>
+                                    {userData && userData.user_details.profile.is_seller == 0 && 
+                                        <div className="add-butts">
+                                            <button type="button" className="btn butt-md butt-primary2" onClick={props.addNewProduct}>
+                                                إضافة خدمة
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </Spin>
@@ -46,7 +55,7 @@ function index(props: any) {
         </>
     )
 }
-index.getLayout = function getLayout(page): ReactElement {
+index.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
             {page}
@@ -58,7 +67,6 @@ const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
     addNewProductLoading: state.auth.addNewProductLoading,
     addNewProductError: state.auth.addNewProductError,
-    userInfo: state.auth.user
 });
 
-export default connect(mapStateToProps, { logout, loadUser, addNewProduct })(index);
+export default connect(mapStateToProps, { logout, addNewProduct })(index);

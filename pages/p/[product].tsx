@@ -109,7 +109,6 @@ const getFormattedPrice = (price: any) => `$${price.toFixed(2)}`;
 
 function Single({ query }) {
   const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
-
   const [checkedState, setCheckedState] = useState(
     new Array(toppings.length).fill(false)
   );

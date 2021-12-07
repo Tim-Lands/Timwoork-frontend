@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Layout from '../components/Layout/HomeLayout'
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
@@ -61,7 +61,11 @@ const testServices = [
 
 function Home() {
   const { data: products, error }: any = useSWR('dashboard/products')
-
+  const { data: userData }: any = useSWR(`api/filter?is_completed=12`)
+  useEffect(() => {
+    console.log(userData);
+    
+  }, [])
   return (
     <>
       <MetaTags

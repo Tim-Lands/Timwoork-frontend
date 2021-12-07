@@ -1,8 +1,31 @@
 import { motion } from 'framer-motion'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 
 function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, developments }): ReactElement {
+    const [checkedState, setCheckedState] = useState(
+        new Array(developments.length).fill(false)
+    );
+
+    const [total, setTotal] = useState(0);
+    const handleOnChange = (position) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+            index === position ? !item : item
+        );
+        setCheckedState(updatedCheckedState);
+
+        const totalPrice = updatedCheckedState.reduce(
+            (sum, currentState, index) => {
+                if (currentState === true) {
+                    return sum + developments[index].price;
+                }
+                return sum;
+            },
+            0
+        );
+
+        setTotal(totalPrice);
+    };
     return (
         <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item">
             <div className="row">
@@ -19,7 +42,7 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                             }}>{title}</h2>
                         <div className="panel-aside-body">
                             <ul className="add-devloppers-nav">
-                                {developments.map((e: any) => {
+                                {developments.map((e: any, index) => {
                                     return (
                                         <li key={e.id} className="devloppers-item">
                                             <div className="form-check me-auto">
@@ -28,8 +51,8 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                                                     type="checkbox"
                                                     id={"flexCheckDefault-id" + e.id}
                                                     value={e.price}
-                                                //checked={checkedState[index]}
-                                                //onChange={() => handleOnChange(index)}
+                                                    checked={checkedState[index]}
+                                                    onChange={() => handleOnChange(index)}
                                                 />
                                                 <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                                                     {e.title}
@@ -43,7 +66,6 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                                 })}
                             </ul>
                         </div>
-
                     </div>
                 </div>
                 <div className="col-6 col-md-2">
@@ -58,7 +80,7 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                         >
                             <li style={{ fontSize: 13, color: '#777', }}><span>عدد المرات: </span>{quantity}</li>
                             <li style={{ fontSize: 13, color: '#777', }}><span>السعر: </span>{price}$</li>
-                            <li style={{ fontSize: 13, color: '#777', }}><strong>الإجمالي: </strong>{itemTotal}$</li>
+                            <li style={{ fontSize: 13, color: '#777', }}><strong>الإجمالي: </strong>{itemTotal + total}$</li>
                         </ul>
                     </div>
                 </div>

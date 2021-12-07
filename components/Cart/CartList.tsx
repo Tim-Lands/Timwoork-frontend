@@ -51,18 +51,6 @@ function CartList({ listItem }): ReactElement {
                 ))}
                 <li className="cart-item">
                     <div className="d-flex">
-                        <div className="cart-item-content me-auto" style={{ padding: 15 }}>
-                            <h2
-                                className="title"
-                                style={{
-                                    fontSize: 16,
-                                    fontWeight: 'bold',
-                                    color: '#444',
-                                    margin: 0,
-                                    marginBottom: 8,
-                                }}
-                            >المجموع</h2>
-                        </div>
                         <div className="cart-item-header me-auto" style={{ padding: 12 }}>
                             <ul
                                 className="prices-list"
