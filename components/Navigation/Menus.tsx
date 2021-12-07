@@ -1,17 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Explores from '../Explores'
+import { motion } from 'framer-motion'
 
+function useOutsideAlerter(ref: any, setHideExploreHandle: any) {
+    useEffect(() => {
+        /**
+         * Alert if clicked on outside of element
+         */
+        function handleClickOutside(event: any) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setHideExploreHandle();
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+}
 function Menus() {
     const [showExplore, setShowExplore] = useState(false)
     const setShowExploreHandle = () => {
         setShowExplore(!showExplore)
     }
+    const setHideExploreHandle = () => {
+        setShowExplore(false)
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef, setHideExploreHandle);
     return (
         <ul className="nav app-navbar">
             <li>
                 <Link href="">
-                    <a> 
+                    <a>
                         <i className="material-icons material-icons-outlined">question_answer</i> المجتمع
                     </a>
                 </Link>
@@ -27,7 +52,11 @@ function Menus() {
                 <a className="explore-butt" onClick={setShowExploreHandle}>
                     <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنفات <i className="fa fa-angle-down"></i>
                 </a>
-                {showExplore && <Explores />}
+                {showExplore && (
+                    <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
+                        <Explores />
+                    </motion.div>
+                )}
             </li>
         </ul>
     )

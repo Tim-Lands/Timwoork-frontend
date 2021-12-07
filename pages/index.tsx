@@ -61,6 +61,7 @@ const testServices = [
 
 function Home() {
   const { data: products, error }: any = useSWR('dashboard/products')
+
   return (
     <>
       <MetaTags
@@ -84,7 +85,7 @@ function Home() {
             </p>
             <div className="py-3">
               <Link href="/">
-                <a className="btn butt-primary butt-md">إنشاء حساب</a>
+                <a className="btn butt-green butt-md">أنشئي خدمتك الآن</a>
               </Link>
             </div>
           </div>

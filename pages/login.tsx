@@ -17,7 +17,7 @@ const Login = (props: any): ReactElement => {
     const token = Cookies.get('token')
     useEffect(() => {
         if (token) {
-            router.push('/dashboard');
+            router.push('/');
             return;
         }
     }, [token]);

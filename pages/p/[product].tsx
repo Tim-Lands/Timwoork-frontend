@@ -303,35 +303,37 @@ function Single({ query }) {
                       </li>
                     </ul>
                   </div>
-                  <div className="panel-aside-body">
-                    <div className="add-devloppers-header">
-                      <h3 className="title">التطويرات المتوفرة</h3>
+                  {ProductData.data.developments &&
+                    <div className="panel-aside-body">
+                      <div className="add-devloppers-header">
+                        <h3 className="title">التطويرات المتوفرة</h3>
+                      </div>
+                      <ul className="add-devloppers-nav">
+                        {ProductData.data.developments.map((e: any, index) => {
+                          return (
+                            <li key={e.id} className="devloppers-item">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id={"flexCheckDefault-id" + e.id}
+                                  value={e.price}
+                                  checked={checkedState[index]}
+                                  onChange={() => handleOnChange(index)}
+                                />
+                                <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
+                                  {e.title}<strong>({e.duration})</strong>
+                                </label>
+                              </div>
+                              <div className="devloppers-price">
+                                <p className="price-number">{e.price}$</p>
+                              </div>
+                            </li>
+                          )
+                        })}
+                      </ul>
                     </div>
-                    <ul className="add-devloppers-nav">
-                      {toppings.map(({ id, name, price }, index) => {
-                        return (
-                          <li key={id} className="devloppers-item">
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id={"flexCheckDefault-id" + id}
-                                value={name}
-                                checked={checkedState[index]}
-                                onChange={() => handleOnChange(index)}
-                              />
-                              <label className="form-check-label" htmlFor={"flexCheckDefault-id" + id}>
-                                {name}
-                              </label>
-                            </div>
-                            <div className="devloppers-price">
-                              <p className="price-number">{price}$</p>
-                            </div>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </div>
+                  }
                   <div className="panel-aside-footer">
                     <div className="aside-footer-total-price">
                       <h1 className="price-total me-auto">
@@ -359,9 +361,10 @@ function Single({ query }) {
                           onClick={() => addItem({
                             id: ProductData.data.id,
                             title: ProductData.data.title,
-                            brand: "New Balance",
+                            checkedState: checkedState,
                             color: "Neon Emerald with Dark Neptune",
                             size: "US 9",
+                            developments: ProductData.data.developments,
                             width: "B - Standard",
                             sku: "W1080LN9",
                             price: total + ProductData.data.price,

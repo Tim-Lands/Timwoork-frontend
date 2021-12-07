@@ -4,14 +4,16 @@ import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
-import withAuth from '../../services/withAuth'
+//import withAuth from '../../services/withAuth'
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
+import Cookies from 'js-cookie'
+import Unauthorized from '@/components/Unauthorized';
 
 function Profile() {
+    const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
-    { !userInfo && <Loading /> }
     if (userInfo && userInfo.user_details.profile.steps <= 1)
         return <div className="row justify-content-md-center">
             <div className="col-md-5">
@@ -31,6 +33,8 @@ function Profile() {
         </div>
     return (
         <div className="py-3">
+            {!userInfo && <Loading />}
+            {!token && <Unauthorized />}
             {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
@@ -216,4 +220,4 @@ Profile.getLayout = function getLayout(page: any): ReactElement {
     )
 }
 
-export default connect(mapStateToProps)(withAuth(Profile));
+export default connect(mapStateToProps)(Profile);

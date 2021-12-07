@@ -3,7 +3,7 @@ import { useCart } from "react-use-cart";
 import CartPost from './CartPost';
 import PropTypes from "prop-types";
 
-function CartList({listItem}): ReactElement {
+function CartList({ listItem }): ReactElement {
     const {
         updateItemQuantity,
         cartTotal,
@@ -46,6 +46,7 @@ function CartList({listItem}): ReactElement {
                         author={item.author}
                         price={item.price}
                         itemTotal={item.itemTotal}
+                        developments={item.developments}
                         updateItemQuantity={updateItemQuantity} />
                 ))}
                 <li className="cart-item">

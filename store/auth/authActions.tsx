@@ -22,7 +22,7 @@ export const addNewProduct = () => {
             dispatch({
                 type: types.ADD_PRODUCT_LOADING,
             });
-            const res = await API.post("api/product/store", {} , {
+            const res = await API.post("api/product/store", {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -114,10 +114,28 @@ export const login = (username: string, password: string): any => {
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                 });
-                router.back()
                 Cookies.set('token', res.data.data)
-                dispatch(loadUser());
-
+                const { data: userInfo }: any = useSWR('api/me')
+                if (!userInfo) return console.log(userInfo)
+                const step = userInfo && userInfo.user_details.profile.steps
+                const email_verified = userInfo && userInfo.user_details.email_verified_at
+                if (email_verified) {
+                    switch (step) {
+                        case 0:
+                            router.push('/user/personalInformations')
+                            break;
+                        case 1:
+                            router.push('/user/profileAvatar')
+                            break;
+                        case 2:
+                            router.push('/user/numberPhone')
+                            break;
+                        default:
+                            router.back()
+                    }
+                }else {
+                    router.push('/emailConfig')
+                }
             }
         } catch (error: any) {
             if (error.response && error.response.status === 422) {
@@ -258,6 +276,7 @@ export const verifyCode = (email: string, code: string): any => {
 export const logout = () => {
     return async (dispatch: CallableFunction) => {
         Cookies.remove('token')
+        router.reload()
         try {
             const res = await API.post("api/logout");
             if (res.status === 200) {

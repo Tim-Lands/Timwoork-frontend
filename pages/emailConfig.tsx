@@ -2,24 +2,37 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loadUser, verifyCode } from "./../store/auth/authActions";
+import { verifyCode } from "./../store/auth/authActions";
 import router from 'next/router';
 import withAuth from './../services/withAuth'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import { motion } from "framer-motion";
 import { Alert } from '@/components/Alert/Alert';
+import useSWR from 'swr'
 
 function EmailConfig(props: any) {
+    const { data: userInfo }: any = useSWR('api/me')
+    if (!userInfo) return console.log(userInfo)
+    const step = userInfo && userInfo.user_details.profile.steps
+    const email_verified = userInfo && userInfo.user_details.email_verified_at
     useEffect(() => {
-        props.loadUser()
-        if (props.userInfo.email_verified_at) {
-            router.push('/dashboard')
+        if (email_verified) {
+            switch (step) {
+                case 0:
+                    router.push('/user/personalInformations')
+                    break;
+                case 1:
+                    router.push('/user/profileAvatar')
+                    break;
+                case 2:
+                    router.push('/user/numberPhone')
+                    break;
+                default:
+                    router.push('/')
+            }
         }
-        console.log(props.userInfo.email_verified_at);
-        
-
-    }, [props.userInfo.email_verified_at])
+    }, [email_verified, step])
     const SignupSchema = Yup.object().shape({
         code: Yup.number().required('هذا الحقل إجباري'),
     });
@@ -37,11 +50,11 @@ function EmailConfig(props: any) {
                 </div>
             </div>
             <div className="col-lg-6 p-0">
-                {props.userInfo &&
+                {userInfo &&
                     <Formik
                         isInitialValid={true}
                         initialValues={{
-                            email: props.userInfo.email,
+                            email: userInfo.user_details.email,
                             code: '',
                         }}
                         validationSchema={SignupSchema}
@@ -104,9 +117,6 @@ function EmailConfig(props: any) {
 // Map redux states to local component props.
 const mapStateToProps = (state: any) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    verifyError: state.auth.verifyError,
-    verifyLoading: state.auth.verifyLoading,
-    userInfo: state.auth.user
 });
 
 // Define PropTypes.
@@ -114,4 +124,4 @@ EmailConfig.propTypes = {
     verifyCode: PropTypes.func,
 };
 
-export default connect(mapStateToProps, { verifyCode, loadUser })(withAuth(EmailConfig));
+export default connect(mapStateToProps, { verifyCode })(withAuth(EmailConfig));

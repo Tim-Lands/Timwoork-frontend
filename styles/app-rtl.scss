@@ -2677,7 +2677,6 @@ h3 {
         align-content: center;
         align-items: center;
     }
-
     .row {
         align-content: center;
         align-items: center;
@@ -2697,6 +2696,14 @@ h3 {
                 border-radius: 0 0 6px 6px;
                 border-bottom: 1px solid #ddd;
                 background-color: #f9f9f9;
+            }
+            .add-devloppers-nav {
+                list-style: none;
+                padding-right: 30px;
+                .devloppers-item {
+                    display: flex;
+                    font-weight: 200;
+                }
             }
             .cart-item-content {
                 padding: 15px;

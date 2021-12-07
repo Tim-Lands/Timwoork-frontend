@@ -26,8 +26,8 @@ import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 
-
 function Navbar(props: any): ReactElement {
+
     const token = Cookies.get('token')
     const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);

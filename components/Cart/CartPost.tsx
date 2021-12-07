@@ -2,35 +2,51 @@ import { motion } from 'framer-motion'
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 
-function CartPost({ id, quantity, title, author, price, itemTotal, updateItemQuantity }): ReactElement {
+function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, developments }): ReactElement {
     return (
         <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item">
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-7">
                     <div className="cart-item-content me-auto" style={{ padding: 15 }}>
                         <h2
                             className="title"
                             style={{
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: 'bold',
                                 color: '#444',
                                 margin: 0,
-                                marginBottom: 8,
+                                marginBottom: 13,
                             }}>{title}</h2>
-                        <p className="meta-user" style={{
-                            fontWeight: 200,
-                            color: '#777',
-                            fontSize: 13,
-                            display: 'flex',
-                            alignItems: 'center',
-                            alignContent: 'center',
-                            margin: 0,
-                        }}>
-                            <span className="material-icons material-icons-outlined">person_outline</span> {author} | رقم الخدمة: <span className="product-code">214344</span>
-                        </p>
+                        <div className="panel-aside-body">
+                            <ul className="add-devloppers-nav">
+                                {developments.map((e: any) => {
+                                    return (
+                                        <li key={e.id} className="devloppers-item">
+                                            <div className="form-check me-auto">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={"flexCheckDefault-id" + e.id}
+                                                    value={e.price}
+                                                //checked={checkedState[index]}
+                                                //onChange={() => handleOnChange(index)}
+                                                />
+                                                <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
+                                                    {e.title}
+                                                </label>
+                                            </div>
+                                            <div className="devloppers-price ml-auto">
+                                                <p className="price-number">{e.price}$</p>
+                                            </div>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
-                <div className="col-6 col-md-3">
+                <div className="col-6 col-md-2">
                     <div className="cart-item-header me-auto" style={{ padding: 12 }}>
                         <ul
                             className="prices-list"
@@ -106,7 +122,8 @@ CartPost.propTypes = {
     author: PropTypes.string,
     itemTotal: PropTypes.number,
     price: PropTypes.number,
-    updateItemQuantity: PropTypes.func
+    updateItemQuantity: PropTypes.func,
+    developments: PropTypes.array,
 };
 
 export default CartPost

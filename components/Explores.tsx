@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import API from "../config";
 import useSWR from 'swr'
 import { Spin } from 'antd';
@@ -42,8 +42,6 @@ function Explores() {
     !postsList && <Loading />
     categoriesError && <div>حدث خطأ</div>
     return (
-        <AnimatePresence>
-            <motion.div initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
                 <div className="row">
                     <div className="col-md-4 p-0">
                         <div className="main-explores">
@@ -84,8 +82,6 @@ function Explores() {
                         </Spin>
                     </div>
                 </div>
-            </motion.div>
-        </AnimatePresence>
     )
 }
 
