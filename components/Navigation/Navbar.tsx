@@ -148,12 +148,12 @@ function Navbar(props: any): ReactElement {
                                         </p>
                                     </li>
                                 }
-                                {userData &&
+                                {userData && 
                                     <>
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='صندوق الرسائل'>
                                                 <motion.a whileTap={{ scale: 0.9 }} className="">
-                                                    <Badge count={0} offset={[2, -1]}>
+                                                    <Badge count={userData && userData.msg_unread_count} offset={[2, -1]}>
                                                         <i className="material-icons material-icons-outlined">email</i>
                                                     </Badge>
                                                 </motion.a>

@@ -12,6 +12,7 @@ function BottomFooter() {
                     <li><Link href="/"><a className="nav-link px-2 link-dark">الرئيسية</a></Link></li>
                     <li><Link href="/faq"><a className="nav-link px-2 link-dark">الاسئلة الشائعة</a></Link></li>
                     <li><Link href="/about"><a className="nav-link px-2 link-dark">حول الموقع</a></Link></li>
+                    <li><Link href="/contact"><a className="nav-link px-2 link-dark">اتصل بنا</a></Link></li>
                 </ul>
 
                 <div className="col-md-3 text-end">

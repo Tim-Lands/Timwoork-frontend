@@ -6,8 +6,9 @@ import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 function Languages(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/languages`)
@@ -74,6 +75,11 @@ function Languages(): ReactElement {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title={"اللغات - الإدارة العامة"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
             {isModalShowen && <AddNewLanguage setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
@@ -91,7 +97,7 @@ function Languages(): ReactElement {
                             </tr>
                         </thead>
                         <tbody>
-                            {GetData.map((e, i) => (
+                            {GetData && GetData.data.map((e: any, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
                                     <td className="tools-col">

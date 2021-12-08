@@ -6,7 +6,7 @@ import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import useSWR, { mutate } from 'swr'
 
 function index(): ReactElement {

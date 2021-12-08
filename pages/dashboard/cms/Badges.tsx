@@ -8,51 +8,52 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Link from 'next/link'
 import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 function Badges(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/badges`)
 
     const deleteHandle = (id: any) => {
-            const MySwal = withReactContent(Swal)
-            const swalWithBootstrapButtons = MySwal.mixin({
-                customClass: {
-                    confirmButton: 'btn butt-red butt-sm me-1',
-                    cancelButton: 'btn butt-green butt-sm'
-                },
-                buttonsStyling: false
-            })
-            swalWithBootstrapButtons.fire({
-                title: 'هل أنت متأكد؟',
-                text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'نعم, أريد الحذف',
-                cancelButtonText: 'لا',
-                reverseButtons: true
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    try {
-                        await API.post(`dashboard/badges/${id}/delete`)
-                    } catch (error) {
-                        console.log(error);
-                        
-                    }
-                    swalWithBootstrapButtons.fire(
-                        'تم الحذف!',
-                        'لقد تم حذف هذا العنصر بنجاح',
-                        'success'
-                    )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'ملغى',
-                        'تم الإلغاء',
-                        'error'
-                    )
+        const MySwal = withReactContent(Swal)
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الحذف',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await API.post(`dashboard/badges/${id}/delete`)
+                } catch (error) {
+                    console.log(error);
+
                 }
-            })
+                swalWithBootstrapButtons.fire(
+                    'تم الحذف!',
+                    'لقد تم حذف هذا العنصر بنجاح',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'ملغى',
+                    'تم الإلغاء',
+                    'error'
+                )
+            }
+        })
 
     }
     const [isModalShowen, setIsModalShowen] = useState(false)
@@ -75,6 +76,11 @@ function Badges(): ReactElement {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title={"الإدارة العامة - الشارات"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
             {isModalShowen && <AddNewBadge setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
@@ -99,7 +105,6 @@ function Badges(): ReactElement {
                                     <td>{e.precent_deducation}%</td>
                                     <td className="tools-col">
                                         <Link href={"/dashboard/cms/edit/badges/" + e.id}>
-
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>
@@ -128,7 +133,7 @@ function Badges(): ReactElement {
         </>
     );
 }
-Badges.getLayout = function getLayout(page:any): ReactElement {
+Badges.getLayout = function getLayout(page: any): ReactElement {
     return (
         <DashboardLayout>
             {page}

@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
-import { useCart } from "react-use-cart";
 
 const APIURL = 'https://api.timwoork.com/avatars/'
 function Post({
@@ -10,12 +9,10 @@ function Post({
     author,
     buyers,
     price,
-    product,
     size,
     slug,
 }): ReactElement {
     const thumbnailUrl = `url(${APIURL}${thumbnail})`;
-    const { addItem, inCart, removeItem } = useCart();
     const sizeClass = () => {
         switch (size) {
             case 'small':
@@ -80,11 +77,6 @@ function Post({
                 </ul>
             </div>
             <div className="post-item-footer">
-                {inCart(product.id) ?
-                    <button onClick={() => removeItem(product.id)}>-</button> :
-                    <button onClick={() => addItem(product)}>+</button>
-                }
-
                 <p className="post-meta-price">
                     السعر من: {price}.00$
                 </p>

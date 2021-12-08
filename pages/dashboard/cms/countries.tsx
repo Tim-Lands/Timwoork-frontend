@@ -6,13 +6,14 @@ import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 function Countries(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/countries?page=1`)
 
-    const deleteHandle = (id) => {
+    const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
             customClass: {
@@ -76,6 +77,11 @@ function Countries(): ReactElement {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title={" الإدارة العامة - البلدان"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
             {isModalShowen && <AddNewCountry setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">

@@ -6,55 +6,56 @@ import API from '../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 function Categories(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/categories`)
 
     const deleteHandle = (id: any) => {
-            const MySwal = withReactContent(Swal)
+        const MySwal = withReactContent(Swal)
 
-            const swalWithBootstrapButtons = MySwal.mixin({
-                customClass: {
-                    confirmButton: 'btn butt-red butt-sm me-1',
-                    cancelButton: 'btn butt-green butt-sm'
-                },
-                buttonsStyling: false
-            })
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
 
-            swalWithBootstrapButtons.fire({
-                title: 'هل أنت متأكد؟',
-                text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'نعم, أريد الحذف',
-                cancelButtonText: 'لا',
-                reverseButtons: true
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    try {
-                       await API.post(`dashboard/categories/${id}/delete`)
-                        
-                    } catch (error) {
-                        console.log(error);
-                    }
-                    swalWithBootstrapButtons.fire(
-                        'تم الحذف!',
-                        'لقد تم حذف هذا العنصر بنجاح',
-                        'success'
-                    )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'ملغى',
-                        'تم الإلغاء',
-                        'error'
-                    )
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الحذف',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await API.post(`dashboard/categories/${id}/delete`)
+
+                } catch (error) {
+                    console.log(error);
                 }
-            })
+                swalWithBootstrapButtons.fire(
+                    'تم الحذف!',
+                    'لقد تم حذف هذا العنصر بنجاح',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'ملغى',
+                    'تم الإلغاء',
+                    'error'
+                )
+            }
+        })
 
     }
     const [isModalShowen, setIsModalShowen] = useState(false)
@@ -77,6 +78,11 @@ function Categories(): ReactElement {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title={"الإدارة العامة - التصنيفات"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
             {isModalShowen && <AddNewCategory setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
@@ -98,10 +104,12 @@ function Categories(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>
                                         <p className="with-icon">
-                                            <a href={"/dashboard/posts/category/" + e.id}>
-                                                <span className="material-icons material-icons-outlined">{e.icon}</span>
-                                                {e.name_ar}
-                                            </a>
+                                            <Link href={"/dashboard/cms/category/" + e.id}>
+                                                <a>
+                                                    <span className="material-icons material-icons-outlined">{e.icon}</span>
+                                                    {e.name_ar}
+                                                </a>
+                                            </Link>
                                         </p>
                                     </td>
                                     <td className="tools-col">

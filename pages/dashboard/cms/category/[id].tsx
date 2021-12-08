@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewSubCategory from "../Modals/AddNewSubCategory";
@@ -6,30 +6,14 @@ import API from '../../../../config';
 import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useRouter } from "next/router";
+import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
+import PropTypes from "prop-types";
 
-function Category(): ReactElement {
-    const router = useRouter()
-    const [GetData, setGetData]: any = useState({})
-    const [isError, setIsError] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const refreshData = async () => {
-        setIsLoading(true)
-        try {
-            const res: any = await API.get('dashboard/categories/' + router.query.id)
-            if (res) {
-                setIsLoading(false)
-                console.log(res.data.data)
+function Category({ query }): ReactElement {
+    const { data: GetData, error }: any = useSWR(`dashboard/categories/${query.id}`)
 
-                setGetData(res.data.data)
-                setIsError(false)
-            }
-        } catch (error) {
-            setIsError(true)
-            setIsLoading(false)
-        }
-    }
-    const deleteHandle = (id) => {
+    const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
 
         const swalWithBootstrapButtons = MySwal.mixin({
@@ -50,22 +34,12 @@ function Category(): ReactElement {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                try {
-                    const res: any = API.post(`dashboard/subcategories/${id}/delete`)
-                    //const json = res.data
-                    if (res) {
-                        refreshData()
-                    }
-                } catch (error) {
-                    setIsError(true)
-                    setIsLoading(false)
-                }
+                API.post(`dashboard/subcategories/${id}/delete`)
                 swalWithBootstrapButtons.fire(
                     'تم الحذف!',
                     'لقد تم حذف هذا العنصر بنجاح',
                     'success'
                 )
-                refreshData()
             } else if (
                 /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel
@@ -79,16 +53,12 @@ function Category(): ReactElement {
         })
 
     }
-    useEffect(() => {
-        refreshData()
-    }, [])
     const [isModalShowen, setIsModalShowen] = useState(false)
     const setIsModalShowenHandle = () => {
         setIsModalShowen(true);
     }
     const setIsModalHiddenHandle = () => {
         setIsModalShowen(false);
-        refreshData()
     }
     const catVariants = {
         visible: (i: number) => ({
@@ -103,7 +73,12 @@ function Category(): ReactElement {
     // Return statement.
     return (
         <>
-            {isModalShowen && <AddNewSubCategory CatId={router.query.id} setIsModalHiddenHandle={setIsModalHiddenHandle} />}
+            <MetaTags
+                title={"الإدارة العامة - التصنيفات الفرعية"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
+            {isModalShowen && <AddNewSubCategory CatId={query.id} setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
                     <h2 className="title"><span className="material-icons material-icons-outlined">{GetData.icon}</span>{GetData.name_ar}</h2>
@@ -111,20 +86,6 @@ function Category(): ReactElement {
                         <button onClick={setIsModalShowenHandle} className="btn butt-sm butt-green d-flex align-items-center"><span className="material-icons material-icons-outlined">add_box</span> إضافة جديد</button>
                     </div>
                 </div>
-                {/*<div className="timlands-table-filter">
-                    <div className="row">
-                        <div className="col-sm-4 filter-form">
-                            <div className="form-container">
-                                <input className="timlands-inputs" placeholder="البحث في الجدول...." name="filterStatus" />
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <button className="btn butt-md butt-filter butt-primary">فلترة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>*/}
                 <div className="timlands-table">
                     <table className="table">
                         <thead>
@@ -134,7 +95,7 @@ function Category(): ReactElement {
                             </tr>
                         </thead>
                         <tbody>
-                            {GetData.subcategories ? (GetData.subcategories.map((e, i) => (
+                            {GetData && GetData.data.subcategories.map((e: any, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td><p className="with-icon">{e.name_ar}</p></td>
                                     <td className="tools-col">
@@ -146,18 +107,14 @@ function Category(): ReactElement {
                                         </button>
                                     </td>
                                 </motion.tr>
-                            ))) :
-                                <Alert type="error">
-                                    <p className="text"><span className="material-icons">warning_amber</span> لاتوجد تصنيفات لعرضها</p>
-                                </Alert>
-                            }
+                            ))}
                         </tbody>
                     </table>
-                    {isError &&
+                    {error &&
                         <Alert type="error">
                             <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
                         </Alert>}
-                    {isLoading &&
+                    {!GetData &&
                         <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 justify-content-center">
                             <div className="spinner-border" role="status">
                                 <span className="visually-hidden">Loading...</span>
@@ -178,3 +135,9 @@ Category.getLayout = function getLayout(page): ReactElement {
     )
 }
 export default Category;
+Category.getInitialProps = async ({ query }) => {
+    return { query }
+}
+Category.propTypes = {
+    query: PropTypes.any,
+};

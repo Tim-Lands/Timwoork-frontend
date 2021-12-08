@@ -5,12 +5,18 @@ import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
 import { message } from "antd";
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 function index(): ReactElement {
     const { data: postsList, categoriesError }: any = useSWR('dashboard')
     // Return statement.
     return (
         <>
+            <MetaTags
+                title={"الصفحة الرئيسية - الإدارة العامة"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">dashboard</span>الرئيسية</h2>

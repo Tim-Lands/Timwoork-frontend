@@ -4,7 +4,6 @@ import { ReactElement } from "react"
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import useSWR, { mutate } from 'swr'
 
 const SignupSchema = Yup.object().shape({
     name_ar: Yup.string().required('هذا الحقل إجباري'),
@@ -13,8 +12,6 @@ const SignupSchema = Yup.object().shape({
     precent_deducation: Yup.number().lessThan(101, 'النسبة المئوية يجب أن تكون أقل من 100').required('هذا الحقل إجباري'),
 });
 export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElement {
-    const { data }: any = useSWR(`dashboard/badges`)
-    
     return (
         <>
             <div className="panel-modal-overlay"></div>
@@ -36,7 +33,6 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
-                        mutate('dashboard/badges', [...data, values], false)
                         await API.post("dashboard/badges/store", values);
                         setIsModalHiddenHandle()
                     }}

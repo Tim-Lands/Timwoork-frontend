@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import useSWR from 'swr'
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 function Levels(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/levels`)
@@ -74,6 +75,11 @@ function Levels(): ReactElement {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title={" المستويات - الإدارة العامة"}
+                metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
+                ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+            />
             {isModalShowen && <AddNewLevel setIsModalHiddenHandle={setIsModalHiddenHandle} />}
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
