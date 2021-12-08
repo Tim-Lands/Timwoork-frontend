@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 //import HeroSearch from './HeroSearch'
 import { motion, useAnimation } from 'framer-motion'
 import Link from 'next/link'
 import PostSearch from './Post/PostSearch';
 import heroIMG from '../public/hero.png'
 import Image from 'next/image'
+import { useOutsideAlerter } from './useOutsideAlerter'
 const testServices = [
     {
         id: 1,
@@ -50,12 +51,18 @@ function Hero() {
 
     const [isSearch, setIsSearch] = useState(false)
 
-    const onKeyUpHandle = (event) => {
+    const setHideExploreHandle = () => {
+        setIsSearch(false)
+    }
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef, setHideExploreHandle);
+
+    const onKeyUpHandle = (event: any) => {
         const keyword = event.target.value;
         if (keyword == '') {
             hiddenOnBlurSearch();
             setIsSearch(false)
-        }else {
+        } else {
             animateOnSearch();
             setIsSearch(true)
         }
@@ -93,16 +100,16 @@ function Hero() {
         <div className="timlands-hero">
             <div className="timlands-hero-inner">
                 <motion.div animate={controlsParent} style={{ overflow: 'hidden' }} className="timlands-hero-image">
-                    <motion.div animate={controls} transition={{ duration: 0.53 }}> 
+                    <motion.div animate={controls} transition={{ duration: 0.53 }}>
                         <Image src={heroIMG} placeholder="blur" />
                     </motion.div>
                 </motion.div>
                 <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
-                    هذا النص هو مثال لنص يمكن أن يستبدل
+                        هذا النص هو مثال لنص يمكن أن يستبدل
                     </motion.h1>
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
+                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
                     </motion.h1>
                 </div>
                 <div className="timlands-hero-search">
@@ -111,14 +118,15 @@ function Hero() {
                         <button className="search-btn">
                             <span className="material-icons material-icons-outlined">search</span>
                         </button>
-                        {isSearch && <motion.div initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.57, delay: 0.74 }} className="res-search-container">
+
+                        {isSearch && <motion.div ref={wrapperRef} initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.57, delay: 0.74 }} className="res-search-container">
                             <div className="search-results-items">
-                                <div className="list-results-items">eded
-                                    {testServices.map(e => 
-                                        <PostSearch 
-                                            key={e.id} 
-                                            title={e.title} 
-                                            author={e.author} 
+                                <div className="list-results-items">
+                                    {testServices.map(e =>
+                                        <PostSearch
+                                            key={e.id}
+                                            title={e.title}
+                                            author={e.author}
                                             rate={e.rate}
                                             price={e.price}
                                             postUrl={e.postUrl}

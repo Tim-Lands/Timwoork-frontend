@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Post from './Post/Post';
+import { Alert } from './Alert/Alert';
 
 function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactElement {
     if (isError) return (
@@ -9,7 +10,9 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
                 <h1 className="title">حدث خطأ</h1>
             </div>
             <div className="posts-aside-body">
-                <p>هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى</p>
+                <Alert type="error">
+                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
+                </Alert>
             </div>
         </div>
     )
@@ -75,11 +78,8 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
                                 author={e.author}
                                 //rate={e.rate}
                                 price={e.price}
-                                postUrl={e.postUrl}
                                 thumbnail={e.thumbnail}
-                                period={e.period}
                                 buyers={e.buyers}
-                                userUrl={e.userUrl}
                                 product={e}
                             />
                         </div>

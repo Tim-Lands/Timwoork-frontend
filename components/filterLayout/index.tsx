@@ -13,11 +13,8 @@ function index({ products }): ReactElement {
                         author={e.author}
                         //rate={e.rate}
                         price={e.price}
-                        postUrl={e.postUrl}
                         thumbnail={e.thumbnail}
-                        period={e.period}
                         buyers={e.buyers}
-                        userUrl={e.userUrl}
                         product={e}
                     />
                 </div>

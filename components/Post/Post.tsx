@@ -3,8 +3,18 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
 
-function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, product, size }): ReactElement {
-    const thumbnailUrl = `url(${thumbnail})`;
+const APIURL = 'https://api.timwoork.com/avatars/'
+function Post({
+    title,
+    thumbnail,
+    author,
+    buyers,
+    price,
+    product,
+    size,
+    slug,
+}): ReactElement {
+    const thumbnailUrl = `url(${APIURL}${thumbnail})`;
     const { addItem, inCart, removeItem } = useCart();
     const sizeClass = () => {
         switch (size) {
@@ -42,14 +52,14 @@ function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, produ
     }*/
     return (
         <div className={"timlands-post-item" + sizeClass()}>
-            <Link href={postUrl}>
+            <Link href={'/p/' + slug}>
                 <a>
                     <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
                 </a>
             </Link>
             <div className="post-item-content">
                 <h3 className="title">
-                    <Link href={postUrl}>
+                    <Link href={'/p/' + slug}>
                         <a>
                             {title}
                         </a>
@@ -57,7 +67,7 @@ function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, produ
                 </h3>
                 <ul className="nav post-meta">
                     <li className="post-meta-user">
-                        <Link href={userUrl}>
+                        <Link href='/'>
                             <a>
                                 <span className="material-icons material-icons-outlined">person_outline</span> {author}
                             </a>
@@ -88,12 +98,10 @@ function Post({ title, thumbnail, postUrl, author, userUrl, buyers, price, produ
 Post.propTypes = {
     title: PropTypes.string.isRequired,
     thumbnail: PropTypes.string,
-    postUrl: PropTypes.string,
     author: PropTypes.string,
-    userUrl: PropTypes.string,
+    slug: PropTypes.string,
     size: PropTypes.string,
     rate: PropTypes.number,
-    period: PropTypes.number,
     buyers: PropTypes.number,
     price: PropTypes.number,
     product: PropTypes.any

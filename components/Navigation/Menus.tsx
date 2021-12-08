@@ -1,27 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import Explores from '../Explores'
 import { motion } from 'framer-motion'
+import { useOutsideAlerter } from '../useOutsideAlerter'
 
-function useOutsideAlerter(ref: any, setHideExploreHandle: any) {
-    useEffect(() => {
-        /**
-         * Alert if clicked on outside of element
-         */
-        function handleClickOutside(event: any) {
-            if (ref.current && !ref.current.contains(event.target)) {
-                setHideExploreHandle();
-            }
-        }
-
-        // Bind the event listener
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            // Unbind the event listener on clean up
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [ref]);
-}
 function Menus() {
     const [showExplore, setShowExplore] = useState(false)
     const setShowExploreHandle = () => {
