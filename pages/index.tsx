@@ -16,7 +16,7 @@ const testServices = [
     rate: 4,
     price: 40,
     postUrl: '/Single',
-    thumbnail: '/homepage.jpg',
+    thumbnail: '',
     period: 9,
     buyers: 5,
     userUrl: '/user'
@@ -28,7 +28,7 @@ const testServices = [
     rate: 0,
     price: 36,
     postUrl: '/Single',
-    thumbnail: '/photographer.jpg',
+    thumbnail: '',
     period: 5,
     buyers: 0,
     userUrl: '/user'
@@ -40,7 +40,7 @@ const testServices = [
     rate: 3,
     price: 40,
     postUrl: '/Single',
-    thumbnail: '/homepage.jpg',
+    thumbnail: '',
     period: 9,
     buyers: 5,
     userUrl: '/user'
@@ -52,7 +52,7 @@ const testServices = [
     rate: 1,
     price: 36,
     postUrl: '/Single',
-    thumbnail: '/photographer.jpg',
+    thumbnail: '',
     period: 5,
     buyers: 0,
     userUrl: '/user'
