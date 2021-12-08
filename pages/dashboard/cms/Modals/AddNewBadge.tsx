@@ -14,7 +14,7 @@ const SignupSchema = Yup.object().shape({
 });
 export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElement {
     const { data }: any = useSWR(`dashboard/badges`)
-
+    
     return (
         <>
             <div className="panel-modal-overlay"></div>
@@ -36,7 +36,7 @@ export default function AddNewUser({ setIsModalHiddenHandle }: any): ReactElemen
                     }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
-                        mutate('dashboard/badges', [...data, values])
+                        mutate('dashboard/badges', [...data, values], false)
                         await API.post("dashboard/badges/store", values);
                         setIsModalHiddenHandle()
                     }}

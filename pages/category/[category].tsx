@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import Layout from '@/components/Layout/HomeLayout'
-import FilterContent from '../../components/filterLayout'
+import FilterContent from '../../components/products'
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import useSWR from 'swr'

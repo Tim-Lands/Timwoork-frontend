@@ -6,7 +6,7 @@ import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 
-import nannyIMG from '../public/nanny.png'
+import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
 const testServices = [
   {
@@ -76,6 +76,7 @@ function Home() {
           </div>
 
           <div className="nanny-home-content">
+            <p className="new-label">هذا النص هو مثال لنص</p>
             <h2 className="title">
               هذا النص هو مثال لنص يمكن أن يستبدل في نفس
             </h2>

@@ -2366,6 +2366,7 @@ h3 {
 .timwoork-nanny-home {
   background-color: #fff;
   padding: 120px 30px;
+  overflow: hidden;
 }
 
 .timwoork-nanny-home .d-flex {
@@ -2390,8 +2391,8 @@ h3 {
 }
 
 .timwoork-nanny-home .nanny-home-image img {
-  width: 550px;
-  margin-right: -30px;
+  border-radius: 11px 0 0 11px;
+  margin-top: 8px;
 }
 
 @media (max-width: 580px) {
@@ -2405,20 +2406,32 @@ h3 {
 }
 
 .timwoork-nanny-home .nanny-home-content {
-  padding-right: 15px;
+  padding: 0 45px;
   width: 60%;
 }
 
+.timwoork-nanny-home .nanny-home-content .new-label {
+  display: inline-block;
+  background-color: #fa570b;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 18px;
+  margin-top: 10px;
+  padding: 7px 15px;
+  border-radius: 5px;
+}
+
 .timwoork-nanny-home .nanny-home-content .title {
-  font-size: 60px;
+  font-size: 52px;
   font-weight: bold;
 }
 
 .timwoork-nanny-home .nanny-home-content .text {
-  font-size: 27px;
+  font-size: 22px;
   color: #444;
   font-weight: 200;
-  line-height: 48px;
+  line-height: 40px;
 }
 
 @media (max-width: 580px) {
