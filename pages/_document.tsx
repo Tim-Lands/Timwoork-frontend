@@ -6,6 +6,8 @@ export default class CustomDocument extends Document {
             <Html>
                 <Head>
                     <title>تيموورك</title>
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" />
+                    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
                     <link rel="icon" href="/icon.png" />
                 </Head>
                 <body>

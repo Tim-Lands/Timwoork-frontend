@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import i18n from "i18next";
 import "antd/dist/antd.css";
+import "../styles/fonts.css";
 import store from "@/store/store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
@@ -16,7 +17,6 @@ import { SWRConfig } from 'swr'
 import API from '../config'
 import Cookies from 'js-cookie'
 import LoadingScreen from "../components/LoadingScreen";
-import "../styles/app-rtl.css"
 TimeAgo.addDefaultLocale(ar)
 
 type NextPageWithLayout = NextPage & {
