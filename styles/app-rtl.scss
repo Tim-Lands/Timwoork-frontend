@@ -521,6 +521,14 @@ h3 {
             .main-title {
                 font-weight: 800;
                 color: #333;
+                .styles_typicalWrapper__1_Uvh {
+                    color: #fff;
+                    background-color: $primary;
+                    padding: 6px 15px;
+                    display: inline-block;
+                    border-radius: 5px;
+                    margin-right: 7px;
+                }
             }
             .sub-title {
                 font-size: 25px;
@@ -1067,8 +1075,8 @@ h3 {
                     align-content: center;
                     display: flex;
                     color: #555;
-                    padding: 2px 8px;
-                    border-left: 2px solid #f7f7f7;
+                    //padding: 2px 8px;
+                    //border-left: 2px solid #f7f7f7;
                     &:first-child {
                         padding-right: 0;
                     }
@@ -1082,7 +1090,6 @@ h3 {
                     a {
                         color: #333;
                         font-weight: 600;
-
                         display: flex;
                         align-items: center;
                         align-content: center;
@@ -2807,8 +2814,8 @@ h3 {
                     align-content: center;
                     display: flex;
                     color: #555;
-                    padding: 2px 8px;
-                    border-left: 2px solid #f7f7f7;
+                    //padding: 2px 8px;
+                    //border-left: 2px solid #f7f7f7;
                     &:first-child {
                         padding-right: 0;
                     }
@@ -3240,7 +3247,36 @@ h3 {
 .panel-modal-overlay {
     background-color: rgba(255, 255, 255, 0.603);
 }
-
+.timwoork-single-tags {
+    margin: 15px 0;
+    .single-tags-list {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        li {
+            &.title {
+                padding: 6px 10px;
+                margin-left: 5px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #000;
+            }
+            a {
+                display: block;
+                padding: 6px 10px;
+                background-color: #f7f7f7;
+                font-size: 14px;
+                color: #333;
+                margin-left: 2px;
+                border-radius: 5px;
+                &:hover {
+                    background-color: #f1f1f1;
+                    color: #000;
+                }
+            }
+        }
+    }
+}
 /*
 ---------------------------------------------------------------------------------------------
     404 Page
@@ -3545,3 +3581,69 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
       color: white;
     }
   }
+
+.stars {
+    padding-top: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    .stars-text {
+        margin: 0;
+        font-weight: bold;
+        font-size: 19px;
+        color: #444;
+        margin-bottom: 19px;
+        margin-left: 15px;
+    }
+ }
+ .stars input[type=radio]:checked ~ label  {
+    color: rgb(255, 145, 0);
+    .material-icons {
+        font-size: 36px;
+    }
+ }
+ .stars input[type=radio] {
+    display: none;
+ }
+ .stars input[type=radio]:first-child + label {
+    padding-right: 0;
+    .material-icons {
+        font-size: 36px;
+    }
+ }
+ .stars:hover input[type=radio]:checked ~ label,
+ .stars label {
+    font-size: 24px;
+    color: rgb(255, 145, 0);
+ }
+ .stars label {
+    box-sizing: border-box;
+    float: right;
+    cursor: pointer;
+ }
+ .stars label {
+    display: block;
+    content: "";
+    float: right;
+    transition: all 0.25s;
+    color: rgb(182, 182, 182);
+    .material-icons {
+        font-size: 36px;
+    }
+ }
+ .stars label:hover,
+ .stars label:hover ~ label {
+    color: rgb(223, 131, 12) !important;
+ }
+
+ .post-item-content {
+    .post-meta-rate {
+        .material-icons {
+            color: rgb(236, 127, 2);
+        }
+        .material-icons-outlined {
+            color: rgb(172, 172, 172);
+        }
+    }
+}

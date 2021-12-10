@@ -1,7 +1,4 @@
 import React, { ReactElement } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { loadUser } from "../../store/auth/authActions";
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import Layout from '@/components/Layout/HomeLayout'
@@ -354,17 +351,7 @@ const personalInformations = () => {
         </>
     );
 }
-
-// Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-});
-
-// Define PropTypes.
-personalInformations.propTypes = {
-    props: PropTypes.object,
-};
-export default connect(mapStateToProps, { loadUser })(personalInformations);
+export default personalInformations
 personalInformations.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>

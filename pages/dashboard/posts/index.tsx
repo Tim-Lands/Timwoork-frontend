@@ -1,10 +1,8 @@
 import { Alert } from "@/components/Alert/Alert";
 import API from '../../../config';
-
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "../../../components/Layout/DashboardLayout";
-import LastSeen from "@/components/LastSeen";
 
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
@@ -147,11 +145,11 @@ function index(): ReactElement {
                             </tr>
                         </thead>
                         <tbody>
-                            {postsList.map((e, i) => (
+                            {postsList.map((e: any, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.title}</td>
                                     <td className="hidden-tem">{switchStatus(e.status)}</td>
-                                    <td className="hidden-tem" title={e.created_at}><LastSeen date={e.created_at} /></td>
+                                    <td className="hidden-tem" title={e.created_at}>.....</td>
                                     <td className="tools-col">
                                         {(e.status == 0 || e.status == null) ?
                                             <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(e.id)} className="table-del green">

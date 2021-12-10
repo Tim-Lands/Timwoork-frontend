@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
-//import withAuth from '../../services/withAuth'
+import Image from 'next/image'
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
@@ -15,7 +15,7 @@ function Profile() {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
     if (userInfo && userInfo.user_details.profile.steps <= 1)
-        return <div className="row justify-content-md-center">
+        return (<div className="row justify-content-md-center">
             <div className="col-md-5">
                 <Result
                     status="warning"
@@ -30,7 +30,11 @@ function Profile() {
                     }
                 />
             </div>
-        </div>
+        </div>)
+    const APIURL = 'https://www.api.timwoork.com/avatars/'
+    const myLoader = () => {
+        return `${APIURL}${userInfo.user_details.profile.avatar}`;
+    }
     return (
         <div className="py-3">
             {!userInfo && <Loading />}
@@ -94,7 +98,18 @@ function Profile() {
                                     <div className="profile-content-header">
                                         <Badge count="غير متصل" offset={[10, 10]} >
                                             <div className="profile-content-avatar">
-                                                <img src={'https://api.timwoork.com/avatars/' + userInfo.user_details.profile.avatar} width={120} />
+                                                {userInfo.user_details.profile.avatar == 'avatar.png' ?
+                                                    <Image src="/avatar2.jpg" width={120} height={120} /> :
+                                                    <Image
+                                                        loader={myLoader}
+                                                        src={APIURL + userInfo.user_details.profile.avatar}
+                                                        quality={1}
+                                                        width={120}
+                                                        height={120}
+                                                        placeholder='blur'
+                                                        blurDataURL='/avatar2.jpg'
+                                                    />
+                                                }
                                             </div>
                                         </Badge>
                                         <div className="profile-content-head">
@@ -109,7 +124,7 @@ function Profile() {
                                                 />
                                             </p>
                                             <div className="button-edit">
-                                                <Link href="">
+                                                <Link href="/user/personalInformations">
                                                     <a className="btn butt-primary flex-center butt-sm">
                                                         <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
                                                     </a>

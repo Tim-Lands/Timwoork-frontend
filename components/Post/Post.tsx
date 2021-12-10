@@ -11,6 +11,7 @@ function Post({
     price,
     size,
     slug,
+    rate = 2,
 }): ReactElement {
     const thumbnailUrl = `url(${APIURL}${thumbnail})`;
     const sizeClass = () => {
@@ -21,21 +22,51 @@ function Post({
                 return ''
         }
     }
-    /*const showStars = () => {
+    const showStars = () => {
         const xAr: any = [
-            <span className="material-icons">grade</span>,
-            <span className="material-icons">grade</span>,
-            <span className="material-icons">grade</span>,
-            <span className="material-icons">grade</span>,
-            <span className="material-icons">grade</span>
-        ]
-        const yAr: any = [
-            <span className="material-icons material-icons-outlined">grade</span>,
-            <span className="material-icons material-icons-outlined">grade</span>,
-            <span className="material-icons material-icons-outlined">grade</span>,
-            <span className="material-icons material-icons-outlined">grade</span>,
-            <span className="material-icons material-icons-outlined">grade</span>,
-        ]
+            {
+              id: 1,
+              name: <span className="material-icons-outlined">star</span>
+            },
+            {
+              id: 2,
+              name: <span className="material-icons-outlined">star</span>
+            },
+            {
+              id: 3,
+              name: <span className="material-icons-outlined">star</span>
+            },
+            {
+              id: 4,
+              name: <span className="material-icons-outlined">star</span>
+            },
+            {
+              id: 5,
+              name: <span className="material-icons-outlined">star</span>
+            },
+          ]
+          const yAr: any = [
+            {
+              id: 6,
+              name: <span className="material-icons-outlined outline-star">star_border</span>
+            },
+            {
+              id: 7,
+              name: <span className="material-icons-outlined outline-star">star_border</span>
+            },
+            {
+              id: 8,
+              name: <span className="material-icons-outlined outline-star">star_border</span>
+            },
+            {
+              id: 9,
+              name: <span className="material-icons-outlined outline-star">star_border</span>
+            },
+            {
+              id: 10,
+              name: <span className="material-icons-outlined outline-star">star_border</span>
+            },
+          ]
 
         const x: number = 5
         const y: number = x - rate
@@ -46,7 +77,7 @@ function Post({
             const yut2: any = yAr.slice(-y, x)
             return yut.concat(yut2)
         }
-    }*/
+    }
     return (
         <div className={"timlands-post-item" + sizeClass()}>
             <Link href={'/p/' + slug}>
@@ -71,7 +102,7 @@ function Post({
                         </Link>
                     </li>
                     <li className="post-meta-rate">
-                        {/*showStars.map(e => e)*/}
+                        {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
                     </li>
 
                 </ul>

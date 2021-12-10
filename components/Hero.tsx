@@ -6,6 +6,8 @@ import PostSearch from './Post/PostSearch';
 import heroIMG from '../public/hero.png'
 import Image from 'next/image'
 import { useOutsideAlerter } from './useOutsideAlerter'
+import Typical from 'react-typical';
+
 const testServices = [
     {
         id: 1,
@@ -106,7 +108,21 @@ function Hero() {
                 </motion.div>
                 <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
-                        هذا النص هو مثال لنص يمكن أن يستبدل
+                        هذا النص هو مثال لنص
+                        <Typical
+                            steps={[
+                                'تيموورك',
+                                5000,
+                                'تيملاندز',
+                                4000,
+                                'كورسات',
+                                5000,
+                                'وظفني',
+                                4000,
+                            ]}
+                            wrapper="p"
+                            loop={Infinity}
+                        />
                     </motion.h1>
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا

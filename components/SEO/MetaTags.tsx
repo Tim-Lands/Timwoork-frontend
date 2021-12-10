@@ -28,7 +28,7 @@ export function MetaTags({
 
                 {/* Description */}
                 <meta name="description" content={metaDescription} />
-
+                
                 {/* Canocical URL, if given. */}
                 {canonical && <meta name="canonical" content={canonical} />}
 

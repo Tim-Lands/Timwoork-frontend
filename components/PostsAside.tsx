@@ -70,17 +70,17 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
             </div>
             <div className="posts-aside-body">
                 <div className="row">
-                    {PostData.map((e: any) => (
+                    {PostData && PostData.map((e: any) => (
                         <div key={e.id} className={"col-md-" + (colNumber || 3)}>
                             <Post
                                 size="small"
                                 title={e.title}
-                                author={e.author}
-                                //rate={e.rate}
+                                author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                                rate={e.ratings_avg_rating}
                                 price={e.price}
-                                thumbnail={e.thumbnail}
-                                buyers={e.buyers}
-                                product={e}
+                                slug={e.slug}
+                                thumbnail={'https://api.timwoork.com/' + e.thumbnail}
+                                buyers={e.count_buying}
                             />
                         </div>
                     ))}

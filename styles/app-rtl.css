@@ -133,17 +133,17 @@
   border-radius: 4px;
 }
 
-.timlands-form {
-  padding: 12px 0;
-  position: relative;
-}
-
-.timlands-form .label-block {
+.label-block {
   font-size: 14px;
   color: #333;
   font-weight: 600;
   display: block;
   margin-bottom: 6px;
+}
+
+.timlands-form {
+  padding: 12px 0;
+  position: relative;
 }
 
 .timlands-form .timlands-input {
@@ -2236,6 +2236,15 @@ h3 {
   color: #333;
 }
 
+.timlands-hero .timlands-hero-inner .timlands-hero-content .main-title .styles_typicalWrapper__1_Uvh {
+  color: #fff;
+  background-color: #475C80;
+  padding: 6px 15px;
+  display: inline-block;
+  border-radius: 5px;
+  margin-right: 7px;
+}
+
 .timlands-hero .timlands-hero-inner .timlands-hero-content .sub-title {
   font-size: 25px;
   color: #444;
@@ -2945,8 +2954,6 @@ h3 {
   display: -ms-flexbox;
   display: flex;
   color: #555;
-  padding: 2px 8px;
-  border-left: 2px solid #f7f7f7;
 }
 
 .single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li:first-child {
@@ -5208,8 +5215,6 @@ h3 {
   display: -ms-flexbox;
   display: flex;
   color: #555;
-  padding: 2px 8px;
-  border-left: 2px solid #f7f7f7;
 }
 
 .single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li:first-child {
@@ -5742,6 +5747,41 @@ h3 {
   background-color: rgba(255, 255, 255, 0.603);
 }
 
+.is-dark .timwoork-single-tags {
+  margin: 15px 0;
+}
+
+.is-dark .timwoork-single-tags .single-tags-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.is-dark .timwoork-single-tags .single-tags-list li.title {
+  padding: 6px 10px;
+  margin-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+}
+
+.is-dark .timwoork-single-tags .single-tags-list li a {
+  display: block;
+  padding: 6px 10px;
+  background-color: #f7f7f7;
+  font-size: 14px;
+  color: #333;
+  margin-left: 2px;
+  border-radius: 5px;
+}
+
+.is-dark .timwoork-single-tags .single-tags-list li a:hover {
+  background-color: #f1f1f1;
+  color: #000;
+}
+
 .is-dark .timwoork-404-page .not-found-image img {
   width: 400px;
 }
@@ -6050,5 +6090,86 @@ h3 {
   cursor: pointer;
   background: none;
   color: white;
+}
+
+.stars {
+  padding-top: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.stars .stars-text {
+  margin: 0;
+  font-weight: bold;
+  font-size: 19px;
+  color: #444;
+  margin-bottom: 19px;
+  margin-left: 15px;
+}
+
+.stars input[type=radio]:checked ~ label {
+  color: #ff9100;
+}
+
+.stars input[type=radio]:checked ~ label .material-icons {
+  font-size: 36px;
+}
+
+.stars input[type=radio] {
+  display: none;
+}
+
+.stars input[type=radio]:first-child + label {
+  padding-right: 0;
+}
+
+.stars input[type=radio]:first-child + label .material-icons {
+  font-size: 36px;
+}
+
+.stars:hover input[type=radio]:checked ~ label,
+.stars label {
+  font-size: 24px;
+  color: #ff9100;
+}
+
+.stars label {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  float: right;
+  cursor: pointer;
+}
+
+.stars label {
+  display: block;
+  content: "";
+  float: right;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+  color: #b6b6b6;
+}
+
+.stars label .material-icons {
+  font-size: 36px;
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+  color: #df830c !important;
+}
+
+.post-item-content .post-meta-rate .material-icons {
+  color: #ec7f02;
+}
+
+.post-item-content .post-meta-rate .material-icons-outlined {
+  color: #acacac;
 }
 /*# sourceMappingURL=app-rtl.css.map */

@@ -5,62 +5,12 @@ import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
-
 import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
-const testServices = [
-  {
-    id: 1,
-    title: 'إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد',
-    author: 'رقية الرفوع',
-    rate: 4,
-    price: 40,
-    postUrl: '/Single',
-    thumbnail: '',
-    period: 9,
-    buyers: 5,
-    userUrl: '/user'
-  },
-  {
-    id: 2,
-    title: 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس',
-    author: 'حاتم المصري',
-    rate: 0,
-    price: 36,
-    postUrl: '/Single',
-    thumbnail: '',
-    period: 5,
-    buyers: 0,
-    userUrl: '/user'
-  },
-  {
-    id: 3,
-    title: 'لقد تم توليد هذا النص من مولد النص',
-    author: 'حسام السوري',
-    rate: 3,
-    price: 40,
-    postUrl: '/Single',
-    thumbnail: '',
-    period: 9,
-    buyers: 5,
-    userUrl: '/user'
-  },
-  {
-    id: 4,
-    title: 'ومن هنا وجب على المصمم أن يضع نصوصا مؤقتة',
-    author: 'طارق عروي',
-    rate: 1,
-    price: 36,
-    postUrl: '/Single',
-    thumbnail: '',
-    period: 5,
-    buyers: 0,
-    userUrl: '/user'
-  },
-]
 
 function Home() {
-  const { data: products, error }: any = useSWR('api/filter?duration=42')
+  const { data: products, error }: any = useSWR('api/filter?paginate=4')
+
   return (
     <>
       <MetaTags
@@ -92,11 +42,14 @@ function Home() {
         </div>
       </div>
 
-      <div className="container">
-        <PostsAside title="الفيدهات والحركات" PostData={testServices} isLoading={!products} isError={error}  />
-        <PostsAside title="برمجة وتطوير" PostData={testServices} isLoading={!products} isError={error} />
-        <PostsAside title="التصميم الغرافيكي" PostData={testServices} isLoading={!products} isError={error} />
-      </div>
+      {products &&
+        <div className="container">
+          <PostsAside title="الفيدهات والحركات" PostData={products.data.data} isLoading={!products} isError={error} />
+          <PostsAside title="برمجة وتطوير" PostData={products.data.data} isLoading={!products} isError={error} />
+          <PostsAside title="التصميم الغرافيكي" PostData={products.data.data} isLoading={!products} isError={error} />
+        </div>
+      }
+
 
     </>
   );

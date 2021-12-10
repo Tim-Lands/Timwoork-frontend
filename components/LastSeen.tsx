@@ -1,10 +1,9 @@
 import React from 'react'
-import ReactTimeAgo from 'react-time-ago'
-
-export default function LastSeen({ date }: any) {
+export default function LastSeen() {
   return (
     <span>
-      <ReactTimeAgo date={date} locale="ar-AR"/>
+      
+      ...
     </span>
   )
 }

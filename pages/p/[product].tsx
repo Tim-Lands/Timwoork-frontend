@@ -3,14 +3,20 @@ import Layout from '@/components/Layout/HomeLayout'
 import Comments from '../../components/Comments'
 import { ReactElement, useState } from "react";
 import PostsAside from "@/components/PostsAside";
+import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 //import { useTranslation } from "react-i18next";
+import Image from 'next/image'
 import { useCart } from "react-use-cart";
 import useSWR from "swr";
 import Loading from '@/components/Loading'
-
+import { Dropdown, message, Spin, Menu, notification } from 'antd'
+import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
+import { Field, Form, Formik } from "formik";
+import Cookies from 'js-cookie'
+import router from "next/router";
 
 const testServices = [
   {
@@ -29,7 +35,7 @@ const testServices = [
     id: 2,
     title: 'هذا النص غير منظم، غير أو حتى غير مفهوم. لأنه',
     author: 'طارق عروي',
-    rate: 4,
+    rate: 0,
     price: 40,
     postUrl: '/Single',
     thumbnail: '/homepage.jpg',
@@ -41,7 +47,7 @@ const testServices = [
     id: 3,
     title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم دون',
     author: 'ضياء الدين محمد',
-    rate: 4,
+    rate: 5,
     price: 40,
     postUrl: '/Single',
     thumbnail: '/slide_3.jpg',
@@ -53,7 +59,7 @@ const testServices = [
     id: 4,
     title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم',
     author: 'رقية الرفوع',
-    rate: 4,
+    rate: 2,
     price: 40,
     postUrl: '/Single',
     thumbnail: '/slide_2.jpg',
@@ -76,69 +82,153 @@ const properties = {
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
 
-const toppings = [
-  {
-    id: 1,
-    name: "الحروف التى يولدها التطبيق",
-    price: 11.2
-  },
-  {
-    id: 2,
-    name: "الأخرى إضافة إلى زيادة عدد",
-    price: 22.0
-  },
-  {
-    id: 3,
-    name: " مولد النص العربى زيادة عدد الفقرات ",
-    price: 2.5
-  },
-  {
-    id: 4,
-    name: "يطلع على صورة حقيقية لتصميم الموقع",
-    price: 33.0
-  },
-  {
-    id: 5,
-    name: "مشكلة فلن يبدو وكأنه نص منسوخ",
-    price: 23.5
-  },
-]
-
 // 
-const getFormattedPrice = (price: any) => `$${price.toFixed(2)}`;
+const getFormattedPrice = (price: number) => `$${price}`;
 
 function Single({ query }) {
+  const token = Cookies.get('token')
   const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
+  if (!ProductData) { message.loading('يرجى الإنتظار...') }
+  const APIURL = 'https://www.api.timwoork.com/avatars/'
+  const myLoader = () => {
+    return `${APIURL}${ProductData.data.profile_seller.profile.avatar}`;
+  }
+
   const [checkedState, setCheckedState] = useState(
-    new Array(toppings.length).fill(false)
+    new Array(ProductData && ProductData.data.developments.length).fill(false)
   );
 
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(ProductData && ProductData.data.price);
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
-
     setCheckedState(updatedCheckedState);
 
     const totalPrice = updatedCheckedState.reduce(
       (sum, currentState, index) => {
         if (currentState === true) {
-          return sum + toppings[index].price;
+          return sum + (ProductData && ProductData.data.developments[index].price);
         }
         return sum;
       },
       0
     );
 
-    setTotal(totalPrice);
+    setTotal(totalPrice + (ProductData && ProductData.data.price));
   };
-  const { addItem, inCart } = useCart();
+  const showStars = () => {
+    const rate = ProductData.data.ratings_avg_rating || 0
+    const xAr: any = [
+      {
+        id: 1,
+        name: <span className="material-icons-outlined">star</span>
+      },
+      {
+        id: 2,
+        name: <span className="material-icons-outlined">star</span>
+      },
+      {
+        id: 3,
+        name: <span className="material-icons-outlined">star</span>
+      },
+      {
+        id: 4,
+        name: <span className="material-icons-outlined">star</span>
+      },
+      {
+        id: 5,
+        name: <span className="material-icons-outlined">star</span>
+      },
+    ]
+    const yAr: any = [
+      {
+        id: 6,
+        name: <span className="material-icons-outlined outline-star">star_border</span>
+      },
+      {
+        id: 7,
+        name: <span className="material-icons-outlined outline-star">star_border</span>
+      },
+      {
+        id: 8,
+        name: <span className="material-icons-outlined outline-star">star_border</span>
+      },
+      {
+        id: 9,
+        name: <span className="material-icons-outlined outline-star">star_border</span>
+      },
+      {
+        id: 10,
+        name: <span className="material-icons-outlined outline-star">star_border</span>
+      },
+    ]
 
+    const x: number = 5
+    const y: number = x - rate
+    const yut: any = xAr.slice(y)
+    if (rate == null) {
+      return 0
+    }
+    if (y == 0) {
+      return yut
+    } else {
+      const yut2: any = yAr.slice(-y, x)
+      return yut.concat(yut2)
+    }
+  }
+  const menu = (
+    <Menu>
+      <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
+       المشاركة على الفيسبووك
+      </Menu.Item>
+      <Menu.Item key="2" icon={<i className="fa fa-twitter"></i>}>
+        المشاركة على التويتر
+      </Menu.Item>
+      <Menu.Item key="3" icon={<i className="fa fa-youtube"></i>}>
+        المشاركة على اليوتيوب
+      </Menu.Item>
+    </Menu>
+  );
+  const { addItem, inCart } = useCart();
+  
+  const addToCart = () => {
+    addItem({
+      id: ProductData.data.id,
+      title: ProductData.data.title,
+      checkedState: checkedState,
+      color: "Neon Emerald with Dark Neptune",
+      size: "US 9",
+      developments: ProductData.data.developments,
+      width: "B - Standard",
+      sku: "W1080LN9",
+      price: total + ProductData.data.price,
+    }, ProductData.data.id)
+
+    const key = `open${Date.now()}`;
+    const btn = (
+      <button onClick={() => router.push("/cart")} className="btn butt-sm butt-primary">
+        الذهاب إلى السلة
+      </button>
+    );
+    
+    notification.open({
+      message: 'رسالة توضيحية',
+      description:
+        'لقد تم إضافة هذه الخدمة إلى السلة',
+      btn,
+      key,
+      onClose: close,
+    });
+  }
   return (
     <>
       {!ProductData && <Loading />}
-
+      <MetaTags
+        title={ProductData && ProductData.data.title + ' - تيموورك'}
+        metaDescription={ProductData && ProductData.data.content}
+        ogDescription={ProductData && ProductData.data.content}
+      />
       {ProductData &&
         <div className="timwoork-single">
           <div className="row">
@@ -149,10 +239,24 @@ function Single({ query }) {
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
-                        <Link href="/users/Single">
+                        <Link href={"/u/"}>
                           <a className="user-link">
-                            <img src="/avatar.png" className="circular-center tiny-size" alt="" />
-                            عبد الحميد بومقواس
+                            {ProductData.data.profile_seller.profile.avatar == 'avatar.png' ?
+                              <Image className="circular-center tiny-size ml-3" src="/avatar2.jpg" width={32} height={32} /> :
+                              <Image
+                                className="circular-center tiny-size"
+                                loader={myLoader}
+                                src={APIURL + ProductData.data.profile_seller.profile.avatar}
+                                quality={1}
+                                width={32}
+                                height={32}
+                                placeholder='blur'
+                                blurDataURL='/avatar2.jpg'
+                              />
+                            }
+                            <span className="pe-2">
+                              {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
+                            </span>
                           </a>
                         </Link>
                       </li>
@@ -168,11 +272,7 @@ function Single({ query }) {
                     <ul className="single-header-meta nav ml-auto">
                       <li className="rate-stars">
                         <span className="stars-icons">
-                          <span className="material-icons-outlined">star</span>
-                          <span className="material-icons-outlined">star</span>
-                          <span className="material-icons-outlined">star</span>
-                          <span className="material-icons-outlined">star</span>
-                          <span className="material-icons-outlined outline-star">star_border</span>
+                          {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
                         </span>
                         <span className="stars-count">
                           (90)
@@ -224,6 +324,22 @@ function Single({ query }) {
                       </p>
                       <h4>مولد النص العربى مفيد لمصممي المواقع</h4>
                     </div>
+                    {ProductData.data.product_tag &&
+                      <div className="timwoork-single-tags">
+                        <ul className="single-tags-list">
+                          <li className="title">
+                            الوسوم:
+                          </li>
+                          {ProductData.data.product_tag.map((e: any) => (
+                            <li key={e.id}>
+                              <Link href={'/' + e.id}>
+                                <a>{e.name_ar}</a>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    }
                     {ProductData.data.profile_seller &&
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
@@ -232,24 +348,35 @@ function Single({ query }) {
                         <div className="seller-info-container">
                           <div className="d-flex">
                             <div className="seller-info-avatar">
-                              <img className="circular-img huge-size" src="/avatar.png" alt="" />
+                              {ProductData.data.profile_seller.profile.avatar == 'avatar.png' ?
+                                <Image className="circular-img huge-size" src="/avatar2.jpg" width={100} height={100} /> :
+                                <Image
+                                  className="circular-img huge-size"
+                                  loader={myLoader}
+                                  src={APIURL + ProductData.data.profile_seller.profile.avatar}
+                                  quality={1}
+                                  width={100}
+                                  height={100}
+                                  placeholder='blur'
+                                  blurDataURL='/avatar2.jpg'
+                                />
+                              }
                               <span className="is-online"></span>
                             </div>
                             <div className="seller-info-content">
-                              <h3 className="user-title">عبد الحميد بومقواس</h3>
+                              <h3 className="user-title">
+                                {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
+                              </h3>
                               <ul className="user-meta nav">
                                 <li>
                                   <span className="material-icons material-icons-outlined">badge</span> الشارة الذهبية
                                 </li>
                                 <li>
-                                  <span className="material-icons material-icons-outlined">place</span> <strong>الجلفة</strong>, الجزائر
-                                </li>
-                                <li>
-                                  <span className="material-icons material-icons-outlined">speed</span> 4 ساعات
+                                  <span className="material-icons material-icons-outlined">place</span> الجزائر
                                 </li>
                               </ul>
                               <div className="seller-info-butts d-flex">
-                                <Link href="">
+                                <Link href={"/u/" + ProductData.data.profile_seller_id}>
                                   <a className="btn butt-primary butt-sm flex-center">
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
                                   </a>
@@ -265,7 +392,6 @@ function Single({ query }) {
                         </div>
                       </div>
                     }
-
                     <div className="timwoork-single-comments">
                       <div className="timwoork-single-comments-inner">
                         <div className="single-comments-header">
@@ -279,6 +405,71 @@ function Single({ query }) {
                         <div className="single-comments-body">
                           <Comments />
                         </div>
+                        <div className="single-comments-header">
+                          <div className="flex-center">
+                            <h1 className="title">
+                              <span className="material-icons material-icons-outlined">rate_review</span>
+                              أضف تعليقا
+                            </h1>
+                          </div>
+                        </div>
+                        <div className="timwoork-single-comment-form">
+                          <Formik
+                            initialValues={{
+                              rating: 0,
+                              comment: ''
+                            }}
+                            onSubmit={async (values) => {
+                              try {
+                                const res = API.post(`api/product/${ProductData.data.id}/rating`, values, {
+                                  headers: {
+                                    'Authorization': `Bearer ${token}`
+                                  }
+                                });
+                                console.log(res);
+                              } catch (error) {
+                                message.error('حدث خطأ أثناء إضافة التعليق')
+                              }
+                            }}
+                          >
+                            {({ isSubmitting }) => (
+                              <Form>
+                                <Spin spinning={isSubmitting}>
+                                  <div className="stars">
+                                    <p className="stars-text">التقييم: </p>
+                                    <Field type="radio" id="rate-5" name="rating" value="5" />
+                                    <label htmlFor="rate-5">
+                                      <span className="material-icons">star</span>
+                                    </label>
+                                    <Field type="radio" id="rate-4" name="rating" value="4" />
+                                    <label htmlFor="rate-4">
+                                      <span className="material-icons">star</span>
+                                    </label>
+                                    <Field type="radio" id="rate-3" name="rating" value="3" />
+                                    <label htmlFor="rate-3">
+                                      <span className="material-icons">star</span>
+                                    </label>
+                                    <Field type="radio" id="rate-2" name="rating" value="2" />
+                                    <label htmlFor="rate-2">
+                                      <span className="material-icons">star</span>
+                                    </label>
+                                    <Field type="radio" id="rate-1" name="rating" value="1x " />
+                                    <label htmlFor="rate-1">
+                                      <span className="material-icons">star</span>
+                                    </label>
+                                  </div>
+                                  <div className="form-textarea">
+                                    <label htmlFor="comment-text" className="label-block">نص التعليق</label>
+                                    <Field as="textarea" name="comment" id="comment-text" style={{ height: 230 }} className="timlands-inputs" placeholder="أكتب نص التعليق هنا"></Field>
+                                  </div>
+                                  <div className="py-3">
+                                    <button disabled={isSubmitting} className="btn butt-primary butt-md" type="submit">إرسال التقييم</button>
+                                  </div>
+                                </Spin>
+                              </Form>
+                            )}
+                          </Formik>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -290,15 +481,15 @@ function Single({ query }) {
                 <div className="single-panel-aside">
                   <div className="panel-aside-header">
                     <ul className="nav top-aside-nav">
-                      <li className="cat-post">
-                        <Link href="">
-                          <a>
-                            <span className="material-icons material-icons-outlined">label</span>التصميم الغرافيكي
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="delevr-time">
+                      <li className="delevr-time me-auto">
                         <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: يومين
+                      </li>
+                      <li className="cat-post ml-auto">
+                        <Dropdown overlay={menu}>
+                          <a>
+                            <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
+                          </a>
+                        </Dropdown>
                       </li>
                     </ul>
                   </div>
@@ -350,24 +541,13 @@ function Single({ query }) {
                     </div>
                     <div className="aside-footer-addtocart">
                       {inCart(ProductData.data.id) ?
-
                         <button disabled={true} className="btn butt-white butt-lg">
                           <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
                           تمت الإضافة
                         </button>
                         :
                         <button
-                          onClick={() => addItem({
-                            id: ProductData.data.id,
-                            title: ProductData.data.title,
-                            checkedState: checkedState,
-                            color: "Neon Emerald with Dark Neptune",
-                            size: "US 9",
-                            developments: ProductData.data.developments,
-                            width: "B - Standard",
-                            sku: "W1080LN9",
-                            price: total + ProductData.data.price,
-                          }, ProductData.data.id)}
+                          onClick={addToCart}
                           className="btn butt-primary butt-lg">
                           <span className="material-icons material-icons-outlined">add_shopping_cart</span>
                           إضافة إلى السلة
@@ -387,7 +567,7 @@ function Single({ query }) {
     </>
   );
 }
-Single.getLayout = function getLayout(page): ReactElement {
+Single.getLayout = function getLayout(page: any): ReactElement {
   return (
     <Layout>
       {page}
