@@ -79,7 +79,7 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
                                 rate={e.ratings_avg_rating}
                                 price={e.price}
                                 slug={e.slug}
-                                thumbnail={'https://api.timwoork.com/' + e.thumbnail}
+                                thumbnail={e.thumbnail}
                                 buyers={e.count_buying}
                             />
                         </div>

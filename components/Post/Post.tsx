@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
 
-const APIURL = 'https://api.timwoork.com/avatars/'
+const APIURL = 'http://api.timwoork.com/products/thumbnails/'
 function Post({
     title,
     thumbnail,

@@ -22,7 +22,6 @@ function Overview({ query }) {
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
-        console.log(getProduct);
         if (getProduct) {
             if (getProduct.profile_seller_id !== getUser.id) {
                 router.push('/add-new')

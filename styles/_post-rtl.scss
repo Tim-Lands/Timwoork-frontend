@@ -48,6 +48,12 @@
                     font-size: 17px;
                     margin-left: 3px;
                 }
+                span {
+                    .material-icons {
+                        font-size: 17px;
+                        margin-left: 3px;
+                    }
+                }
                 &:first-child {
                     padding-right: 0;
                     border-left: 1px solid #f3f3f3;
@@ -144,6 +150,12 @@
                     .material-icons {
                         font-size: 15px;
                         margin-left: 3px;
+                    }
+                    span {
+                        .material-icons {
+                            font-size: 15px;
+                            margin-left: 3px;
+                        }
                     }
                 }
             }

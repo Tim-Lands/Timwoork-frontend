@@ -24,6 +24,13 @@ function Menus() {
                 </Link>
             </li>
             <li>
+                <Link href="/products">
+                    <a>
+                        <i className="material-icons material-icons-outlined">table_view</i> تصفح جميع الخدمات
+                    </a>
+                </Link>
+            </li>
+            <li>
                 <Link href="">
                     <a>
                         <i className="material-icons material-icons-outlined">article</i> المدونة

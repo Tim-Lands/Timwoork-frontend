@@ -7,8 +7,8 @@ import Loading from './Loading';
 
 function Explores() {
     const [isLoading, setIsLoading] = useState(false)
-    const [postsList, setPostsList]: any = useState([])
     const [isError, setIsError] = useState(false)
+    const [postsList, setPostsList]: any = useState([])
 
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
     const getSubcats = async (id: any) => {

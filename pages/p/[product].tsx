@@ -299,30 +299,7 @@ function Single({ query }) {
                       ))}
                     </Slide>
                     <div className="timwoork-single-product-detailts">
-
-                      <h1>هذا النص هو مثال لنص في نفس</h1>
-                      <h2>المساحة، لقد تم توليد هذا </h2>
-                      <ul className="single-list">
-                        <li>النص من مولد النص العربى، حيث</li>
-                        <li>نصوصا مؤقتة على التصميم ليظهر للعميل
-                          <ul>
-                            <li>النص من مولد النص العربى، حيث</li>
-                            <li>المواقع على وجه الخصوص، حيث</li>
-                            <li>العربى أن يوفر على المصمم عناء</li>
-                            <li>زيادة عدد الفقرات كما تريد، النص لن يبدو</li>
-                            <li>النص من مولد النص العربى، حيث</li>
-                          </ul>
-                        </li>
-                        <li>مولد النص العربى مفيد لمصممي المواقع</li>
-                        <li>على وجه الخصوص، حيث يحتاج</li>
-                        <li>يطلع على صورة حقيقية لتصميم الموقع</li>
-                      </ul>
-                      <h3>العربى أن يوفر على المصمم عناء</h3>
-                      <p className="text">
-                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-                        إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع.
-                      </p>
-                      <h4>مولد النص العربى مفيد لمصممي المواقع</h4>
+                      {ProductData.data.content}
                     </div>
                     {ProductData.data.product_tag &&
                       <div className="timwoork-single-tags">
@@ -330,6 +307,7 @@ function Single({ query }) {
                           <li className="title">
                             الوسوم:
                           </li>
+                          
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <Link href={'/' + e.id}>
@@ -402,9 +380,11 @@ function Single({ query }) {
                             </h1>
                           </div>
                         </div>
-                        <div className="single-comments-body">
-                          <Comments />
-                        </div>
+                        {ProductData.data.ratings && 
+                          <div className="single-comments-body">
+                            <Comments comments={ProductData.data.ratings} />
+                          </div>
+                        }
                         <div className="single-comments-header">
                           <div className="flex-center">
                             <h1 className="title">

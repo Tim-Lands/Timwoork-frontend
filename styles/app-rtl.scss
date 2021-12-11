@@ -521,12 +521,10 @@ h3 {
             .main-title {
                 font-weight: 800;
                 color: #333;
+                margin-bottom: -16px;
                 .styles_typicalWrapper__1_Uvh {
-                    color: #fff;
-                    background-color: $primary;
-                    padding: 6px 15px;
+                    color: rgb(37, 211, 89);
                     display: inline-block;
-                    border-radius: 5px;
                     margin-right: 7px;
                 }
             }
@@ -3639,11 +3637,12 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 
  .post-item-content {
     .post-meta-rate {
-        .material-icons {
-            color: rgb(236, 127, 2);
-        }
         .material-icons-outlined {
-            color: rgb(172, 172, 172);
+            color: rgb(236, 127, 2);
+            font-size: 15px;
+        }
+        .outline-star {
+            color: #acacac;
         }
     }
 }

@@ -1137,6 +1137,11 @@
   margin-left: 3px;
 }
 
+.timlands-post-item .post-item-content .post-meta li span .material-icons {
+  font-size: 17px;
+  margin-left: 3px;
+}
+
 .timlands-post-item .post-item-content .post-meta li:first-child {
   padding-right: 0;
   border-left: 1px solid #f3f3f3;
@@ -1261,6 +1266,11 @@
 }
 
 .timlands-post-item.small .post-item-content .post-meta li .material-icons {
+  font-size: 15px;
+  margin-left: 3px;
+}
+
+.timlands-post-item.small .post-item-content .post-meta li span .material-icons {
   font-size: 15px;
   margin-left: 3px;
 }
@@ -2234,14 +2244,12 @@ h3 {
 .timlands-hero .timlands-hero-inner .timlands-hero-content .main-title {
   font-weight: 800;
   color: #333;
+  margin-bottom: -16px;
 }
 
 .timlands-hero .timlands-hero-inner .timlands-hero-content .main-title .styles_typicalWrapper__1_Uvh {
-  color: #fff;
-  background-color: #475C80;
-  padding: 6px 15px;
+  color: #25d359;
   display: inline-block;
-  border-radius: 5px;
   margin-right: 7px;
 }
 
@@ -6165,11 +6173,12 @@ h3 {
   color: #df830c !important;
 }
 
-.post-item-content .post-meta-rate .material-icons {
+.post-item-content .post-meta-rate .material-icons-outlined {
   color: #ec7f02;
+  font-size: 15px;
 }
 
-.post-item-content .post-meta-rate .material-icons-outlined {
+.post-item-content .post-meta-rate .outline-star {
   color: #acacac;
 }
 /*# sourceMappingURL=app-rtl.css.map */
