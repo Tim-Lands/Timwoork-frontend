@@ -16,6 +16,7 @@ import PropTypes from "prop-types";
 import { Field, Form, Formik } from "formik";
 import Cookies from 'js-cookie'
 import router from "next/router";
+import NotFound from "@/components/NotFound";
 
 const slideImages = [
   "/slide_2.png",
@@ -35,12 +36,13 @@ const properties = {
 const getFormattedPrice = (price: number) => `$${price}`;
 
 function Single({ query }) {
+  if (!query) return <>Error</>
   const token = Cookies.get('token')
-  const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
+  const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   if (!ProductData) { message.loading('يرجى الإنتظار...') }
   const APIURL = 'https://www.api.timwoork.com/avatars/'
   const myLoader = () => {
-    return `${APIURL}${ProductData.data.profile_seller.profile.avatar}`;
+    return `${APIURL}${ProductData && ProductData.data.profile_seller.profile.avatar}`;
   }
 
   const [checkedState, setCheckedState] = useState(
@@ -201,6 +203,7 @@ function Single({ query }) {
   return (
     <>
       {!ProductData && <Loading />}
+      {errorLoad && <NotFound />}
       {ProductData &&
         <MetaTags
           title={ProductData.data.title + ' - تيموورك'}
