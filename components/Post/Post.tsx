@@ -80,14 +80,14 @@ function Post({
     }
     return (
         <div className={"timlands-post-item" + sizeClass()}>
-            <Link href={'/p/' + slug}>
+            <Link href={`/p/${slug}`}>
                 <a>
                     <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
                 </a>
             </Link>
             <div className="post-item-content">
                 <h3 className="title">
-                    <Link href={'/p/' + slug}>
+                    <Link href={`/p/${slug}`}>
                         <a>
                             {title}
                         </a>

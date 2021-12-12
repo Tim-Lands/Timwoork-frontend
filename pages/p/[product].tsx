@@ -252,11 +252,13 @@ function Single({ query }) {
   return (
     <>
       {!ProductData && <Loading />}
-      <MetaTags
-        title={ProductData && ProductData.data.title + ' - تيموورك'}
-        metaDescription={ProductData && ProductData.data.content}
-        ogDescription={ProductData && ProductData.data.content}
-      />
+      {ProductData &&
+        <MetaTags
+          title={ProductData.data.title + ' - تيموورك'}
+          metaDescription={ProductData.data.content}
+          ogDescription={ProductData.data.content}
+        />
+      }
       {ProductData &&
         <div className="timwoork-single">
           <div className="row">
@@ -267,7 +269,7 @@ function Single({ query }) {
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
-                        <Link href={"/u/"}>
+                        <Link href={`/u/`}>
                           <a className="user-link">
                             {ProductData.data.profile_seller.profile.avatar == 'avatar.png' ?
                               <Image className="circular-center tiny-size ml-3" src="/avatar2.jpg" width={32} height={32} /> :
@@ -585,10 +587,8 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Single;
 
-Single.getInitialProps = async (ctx, { query }) => {
-  if(ctx.req) {
+Single.getInitialProps = async ({ query }) => {
     return { query }
-  }
 }
 Single.propTypes = {
   query: PropTypes.any,
