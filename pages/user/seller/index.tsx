@@ -6,13 +6,14 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import API from "../../../config";
 import { motion } from "framer-motion";
-import withAuth from '../../../services/withAuth'
 import { message } from "antd";
-import "antd/dist/antd.min.css";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
+import Loading from "@/components/Loading";
+import Unauthorized from "@/components/Unauthorized";
 
 const sellerInformations = (): ReactElement => {
+    const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
@@ -26,6 +27,8 @@ const sellerInformations = (): ReactElement => {
     // Return statement.
     return (
         <>
+            {!userInfo && <Loading />}
+            {!token && <Unauthorized />}
             {userInfo && userInfo.profile &&
                 <>
                     <MetaTags
@@ -46,7 +49,6 @@ const sellerInformations = (): ReactElement => {
                         validationSchema={SignupSchema}
                         onSubmit={async values => {
                             try {
-                                const token = Cookies.get('token')
                                 const res = await API.post("api/profiles/step_one", values, {
                                     headers: {
                                         'Authorization': `Bearer ${token}`
@@ -261,7 +263,7 @@ const sellerInformations = (): ReactElement => {
     );
 };
 
-export default withAuth(sellerInformations);
+export default sellerInformations
 sellerInformations.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>

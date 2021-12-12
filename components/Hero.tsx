@@ -128,6 +128,7 @@ function Hero() {
                                 <div className="list-results-items">
                                     {getSearchs && getSearchs.map((e: any) =>
                                         <PostSearch
+                                            key={e.id}
                                             title={e.title}
                                             author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
                                             rate={e.ratings_avg_rating}
