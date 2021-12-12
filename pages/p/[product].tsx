@@ -32,7 +32,7 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Single;
 
-Single.getInitialProps = async ({ query }) => {
+Single.getInitialProps = ({ query }) => {
     return { query }
 }
 Single.propTypes = {
