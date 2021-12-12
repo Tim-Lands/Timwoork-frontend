@@ -9,11 +9,9 @@ import Image from 'next/image'
 import useSWR from "swr";
 import Loading from '@/components/Loading'
 import { message, Spin } from 'antd'
-import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
 import { Field, Form, Formik } from "formik";
 import Cookies from 'js-cookie'
-import NotFound from "@/components/NotFound";
 
 const slideImages = [
   "/slide_2.png",
@@ -33,83 +31,15 @@ const properties = {
 function Single({ query }) {
 
   const token = Cookies.get('token')
-  const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
+  const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
   if (!ProductData) { message.loading('يرجى الإنتظار...') }
   const APIURL = 'https://www.api.timwoork.com/avatars/'
   const myLoader = () => {
     return `${APIURL}${ProductData && ProductData.data.profile_seller.profile.avatar}`;
   }
-  const showStars = () => {
-    const rate = ProductData.data.ratings_avg_rating || 0
-    const xAr: any = [
-      {
-        id: 1,
-        name: <span className="material-icons-outlined">star</span>
-      },
-      {
-        id: 2,
-        name: <span className="material-icons-outlined">star</span>
-      },
-      {
-        id: 3,
-        name: <span className="material-icons-outlined">star</span>
-      },
-      {
-        id: 4,
-        name: <span className="material-icons-outlined">star</span>
-      },
-      {
-        id: 5,
-        name: <span className="material-icons-outlined">star</span>
-      },
-    ]
-    const yAr: any = [
-      {
-        id: 6,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
-      },
-      {
-        id: 7,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
-      },
-      {
-        id: 8,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
-      },
-      {
-        id: 9,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
-      },
-      {
-        id: 10,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
-      },
-    ]
-
-    const x: number = 5
-    const y: number = x - rate
-    const yut: any = xAr.slice(y)
-    if (rate == null) {
-      return 0
-    }
-    if (y == 0) {
-      return yut
-    } else {
-      const yut2: any = yAr.slice(-y, x)
-      return yut.concat(yut2)
-    }
-  }
   return (
     <>
       {!ProductData && <Loading />}
-      {errorLoad && <NotFound />}
-      {ProductData &&
-        <MetaTags
-          title={ProductData && ProductData.data.title + ' - تيموورك'}
-          metaDescription={ProductData && ProductData.data.content}
-          ogDescription={ProductData && ProductData.data.content}
-        />
-      }
       {ProductData &&
         <div className="timwoork-single">
           <div className="row">
@@ -151,10 +81,7 @@ function Single({ query }) {
                       </li>
                     </ul>
                     <ul className="single-header-meta nav ml-auto">
-                      <li className="rate-stars">
-                        <span className="stars-icons">
-                          {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
-                        </span>
+                      <li className="rate-stars">ن
                         <span className="stars-count">
                           (90)
                         </span>
