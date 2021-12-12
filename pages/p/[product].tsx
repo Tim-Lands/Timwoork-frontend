@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
 import Comments from '../../components/Comments'
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
@@ -36,7 +36,7 @@ const properties = {
 const getFormattedPrice = (price: number) => `$${price}`;
 
 function Single({ query }) {
-  if (!query) return <>Error</>
+
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   if (!ProductData) { message.loading('يرجى الإنتظار...') }
@@ -44,7 +44,10 @@ function Single({ query }) {
   const myLoader = () => {
     return `${APIURL}${ProductData && ProductData.data.profile_seller.profile.avatar}`;
   }
-
+  useEffect(() => {
+    console.log(query.product);
+    
+  }, [])
   const [checkedState, setCheckedState] = useState(
     new Array(ProductData && ProductData.data.developments.length).fill(false)
   );
