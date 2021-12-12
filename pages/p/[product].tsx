@@ -3,13 +3,12 @@ import { ReactElement } from "react";
 import 'react-slideshow-image/dist/styles.css'
 import PropTypes from "prop-types";
 import useSWR from "swr";
-import { message } from 'antd'
 // 
 function Single({ query }) {
   const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
   return (
     <>
-        {!ProductData && message.loading('يرجى الإنتظار...')}
+        {ProductData && <p>dhgd</p>}
         <div className="timwoork-single">
           kjhshskjd {query.product}
         </div>
