@@ -16,6 +16,16 @@ function Menus() {
     useOutsideAlerter(wrapperRef, setHideExploreHandle);
     return (
         <ul className="nav app-navbar">
+            <li className={showExplore && 'is-open'}>
+                <a className="explore-butt" onClick={setShowExploreHandle}>
+                    <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنفات <i className="fa fa-angle-down"></i>
+                </a>
+                {showExplore && (
+                    <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
+                        <Explores />
+                    </motion.div>
+                )}
+            </li>
             <li>
                 <Link href="">
                     <a>
@@ -36,16 +46,6 @@ function Menus() {
                         <i className="material-icons material-icons-outlined">article</i> المدونة
                     </a>
                 </Link>
-            </li>
-            <li className={showExplore && 'is-open'}>
-                <a className="explore-butt" onClick={setShowExploreHandle}>
-                    <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنفات <i className="fa fa-angle-down"></i>
-                </a>
-                {showExplore && (
-                    <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
-                        <Explores />
-                    </motion.div>
-                )}
             </li>
         </ul>
     )

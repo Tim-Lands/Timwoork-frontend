@@ -521,7 +521,6 @@ h3 {
             .main-title {
                 font-weight: 800;
                 color: #333;
-                margin-bottom: -16px;
                 .styles_typicalWrapper__1_Uvh {
                     color: rgb(37, 211, 89);
                     display: inline-block;
@@ -559,6 +558,12 @@ h3 {
                     top: 14px;
                     left: 10px;
                     position: absolute;
+                    .material-icons {
+                        font-size: 20px;
+                    }
+                    .spinner-border {
+                        margin-bottom: 5px;
+                    }
                 }
                 .res-search-container {
                     position: absolute;
@@ -606,7 +611,45 @@ h3 {
         }
     }
 }
-
+.search-loading {
+    padding: 25px;
+    height: 100px;
+}
+.list-results-items {
+    .post-item-img {
+        width: 130px !important;
+        height: 80px !important;
+        border-radius: 3px !important;
+    }
+    .post-item-content {
+        .title {
+            margin-bottom: 5px;
+        }
+        .post-meta-rate {
+            padding-top: 7px;
+            span {
+                margin-top: 3px;
+            }
+        }
+    }
+}
+.be-seller-aside {
+    border: 1px dashed #ddd;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 26px 15px;
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #777;
+    }
+    .text {
+        font-size: 13px;
+        color: #333;
+        margin: 12px 0;
+    }
+}
 /*
 ---------------------------------------------------------------------------------------------
     Home Nannies Section
@@ -1155,6 +1198,12 @@ h3 {
                                 border-color: $primary;
                             }
                         }
+                    }
+                    .price-duration {
+                        font-weight: 200;
+                        font-size: 12px;
+                        color: #555;
+                        margin: 0;
                     }
                     .devloppers-price {
                         margin-right: auto;
@@ -2098,6 +2147,7 @@ h3 {
     margin: 20px auto;
     z-index: 999;
     overflow: hidden;
+    right: 20%;
     &.md {
         width: 790px;
     }
@@ -2793,7 +2843,7 @@ h3 {
 }
 .single-sidebar {
     position: sticky;
-    top: 95px;
+    top: 65px;
     padding: 20px 0;
     .single-panel-aside {
         background-color: #fff;
@@ -3071,303 +3121,6 @@ h3 {
     Dark Mode
 ---------------------------------------------------------------------------------------------
 */
-.is-dark {
-/*
----------------------------------------------------------------------------------------------
-    Account Page
----------------------------------------------------------------------------------------------
-*/
-.timlands-accounts {
-    .timlands-accounts-container {
-        background-color: #222;
-        .timlands-accounts-forms {
-            width: 100%;
-        }
-    }
-    .timlands-accounts-header {
-        border-bottom: 1px solid #232323;
-        .title {
-            color: #fff;
-        }
-    }
-}
-
-/*
----------------------------------------------------------------------------------------------
-    Dashboard Page
----------------------------------------------------------------------------------------------
-*/
-.dashboard-sidebar {
-    background-color: #111;
-    .dashboard-sidebar-inner {
-        .dashboard-sidebar-list {
-            > .dash-item {
-                > .dash-link {
-                    color: #f1f1f1;
-                    &:hover {
-                        color: $primary2;
-                    }
-                }
-                .sub-dashnav-list {
-                    > .subdash-item {
-                        > .subdash-link {
-                            color: #ddd;
-                            &:hover {
-                                color: $primary2;
-                            }
-                        }
-                        &.active {
-                            > .subdash-link {
-                                font-weight: bold;
-                                color: $primary2;
-                            }
-                        }
-                    }
-                }
-                &.active {
-                    > .dash-link {
-                        color: $primary2;
-                        background-color: #131313;
-                    }
-                }
-            }
-        }
-    }
-}
-.timlands-dashboard-content {
-    @media (max-width: 500px) {
-        padding: 0;
-    }
-}
-.filter-form {
-    @media (max-width: 768px) {
-        margin: 12px 0;
-    }
-}
-/*
----------------------------------------------------------------------------------------------
-    Dashboard Navbar
----------------------------------------------------------------------------------------------
-*/
-.dashboard-navbar {
-    background-color: #222;
-    .circular-item {
-        button {
-            color: #f3f3f3;
-            &:hover {
-                background-color: rgb(61, 61, 61);
-                color: #fff;
-            }
-        }
-    }
-}
-/*
----------------------------------------------------------------------------------------------
-    Panels Style
----------------------------------------------------------------------------------------------
-*/
-.timlands-panel-item {
-    border: 1px solid #232323;
-    background-color: #222;
-    
-    &:hover {
-        border: 1px solid $primary2;
-        box-shadow: 3px 4px 9px rgba(255, 255, 255, 0.055);
-    }
-    .panel-item-header {
-        border-bottom: 1px solid #232323;
-        .title {
-            color: #f3f3f3;
-        }
-    }
-    .panel-item-body {
-        .count-num {
-            color: #fff;
-        }
-        .details-items {
-            > li {
-                border-bottom: 1px solid #232323;
-                &:last-child {
-                    border-bottom: 0;
-                }
-                p {
-                    color: #fff;
-                }
-                .det-val {
-                    color: #fff;
-                }
-            }
-        }
-    }
-    .panel-item-footer {
-        border-top: 1px solid #333;
-    }
-}
-/*
-    Modal
-*/
-.panel-modal {
-    background-color: #222;
-    box-shadow: 3px 3px 13px rgba(255, 255, 255, 0.11);
-    .panel-modal-header {
-        border-bottom: 1px solid #232323;
-        .title {
-            color: #222;
-        }
-        .panel-modal-left-tools {
-            .close-modal {
-                background-color: #222;
-                color: #ddd;
-                &:hover {
-                    color: #f3f3f3;
-                    background-color: #222;
-                }
-                &:focus {
-                    color: #fff;
-                    background-color: #232323;
-                }
-            }
-        }
-    }
-    .panel-modal-body {
-        .is-loading {
-                background-color: rgba(0, 0, 0, 0.699);
-        }
-    }
-    .panel-modal-footer {
-        border-top: 1px solid #232323;
-        background-color: #222;
-        .butt-primary {
-            margin-right: auto;
-        }
-    }
-}
-.panel-modal-overlay {
-    background-color: rgba(255, 255, 255, 0.603);
-}
-.timwoork-single-tags {
-    margin: 15px 0;
-    .single-tags-list {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        li {
-            &.title {
-                padding: 6px 10px;
-                margin-left: 5px;
-                font-size: 14px;
-                font-weight: bold;
-                color: #000;
-            }
-            a {
-                display: block;
-                padding: 6px 10px;
-                background-color: #f7f7f7;
-                font-size: 14px;
-                color: #333;
-                margin-left: 2px;
-                border-radius: 5px;
-                &:hover {
-                    background-color: #f1f1f1;
-                    color: #000;
-                }
-            }
-        }
-    }
-}
-/*
----------------------------------------------------------------------------------------------
-    404 Page
----------------------------------------------------------------------------------------------
-*/
-.timwoork-404-page {
-    .not-found-image {
-        img {
-            width: 400px;
-        }
-    }
-    .title {
-        color: #555;
-        .error-status {
-            font-weight: bold;
-        }
-    }
-}
-/*
----------------------------------------------------------------------------------------------
-    Posts Aside
----------------------------------------------------------------------------------------------
-*/
-
-.posts-aside {
-    .posts-aside-header {
-        border-bottom: 1px solid #f1f1f1;
-        .title {
-            color: #000;
-        }
-    }
-}
-
-
-// table
-
-.timlands-table {
-    background-color: #111;
-    box-shadow: 3px 3px 9px rgba(255, 255, 255, 0.055);
-    border: 1px solid #262626;
-    .table {
-        tr {
-            td, th {
-                color: #fff;
-            }
-            > td {
-
-                &.tools-col {
-                    .table-del {
-                        background-color: #222;
-                        color: #f6f6f6;
-                        border: 1px solid #232323;
-                        &:hover {
-                            background-color: #232323;
-                            color: #fff;
-                        }
-                        &.error {
-                            color: rgb(243, 114, 114);
-                            border: 1px solid #ffe0e0;
-                        }
-                        &.warning {
-                            color: rgb(255, 233, 34);
-                            border: 1px solid #fffedd;
-                        }
-                    }
-                }
-            }
-        }
-        thead {
-            tr {
-                background-color: #000;
-            }
-        }
-        tbody {
-            tr {
-                &:hover {
-                    background-color: #262626;
-                }
-            }
-        }
-
-    }
-    .table>:not(:first-child) {
-        border-top: 2px solid #232323;
-    }
-    
-}
-.timlands-dashboard-content {
-    background-color: #111;
-}
-}
-
-
 
 
 

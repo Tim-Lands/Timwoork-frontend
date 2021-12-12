@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-
 const SignupSchema = Yup.object().shape({
     name_ar: Yup.string().required('هذا الحقل إجباري'),
     name_en: Yup.string().required('هذا الحقل إجباري'),

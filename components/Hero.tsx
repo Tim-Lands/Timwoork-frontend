@@ -1,57 +1,56 @@
 import React, { useRef, useState } from 'react'
 //import HeroSearch from './HeroSearch'
+import API from '../config'
 import { motion, useAnimation } from 'framer-motion'
 import Link from 'next/link'
 import PostSearch from './Post/PostSearch';
 import heroIMG from '../public/hero.png'
 import Image from 'next/image'
 import { useOutsideAlerter } from './useOutsideAlerter'
-import Typical from 'react-typical';
+import { Result } from 'antd';
+//import Typical from 'react-typical';
 
-const testServices = [
-    {
-        id: 1,
-        title: 'Lorem ipsum dolor sit amet consectetur',
-        author: 'Abdelhamid Boumegouas',
-        rate: 4,
-        price: 40,
-        postUrl: '/Single',
-        thumbnail: '/homepage.jpg',
-        period: 9,
-        buyers: 5,
-        userUrl: '/user'
-    },
-    {
-        id: 2,
-        title: 'Voluptate aliquam temporibus necessitatibus sit accusamus',
-        author: 'Tarek Aroui',
-        rate: 5,
-        price: 36,
-        postUrl: '/Single',
-        thumbnail: '/photographer.jpg',
-        period: 5,
-        buyers: 9,
-        userUrl: '/user'
-    },
-    {
-        id: 32,
-        title: 'Voluptate aliquam temporibus necessitatibus sit accusamus',
-        author: 'Tarek Aroui',
-        rate: 5,
-        price: 36,
-        postUrl: '/Single',
-        thumbnail: '/photographer.jpg',
-        period: 5,
-        buyers: 9,
-        userUrl: '/user'
-    },
-]
+export function LoadingSearch() {
+    return (
+        <div className="d-flex justify-content-center search-loading">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    )
+}
+export function NotFountSearch() {
+    return (
+        <Result
+            status="warning"
+            title="لا توجد نتائج"
+            subTitle="لاتوجد نتائج لعرضها يرجى إعادة المحاولة"
+        />
+    )
+}
 
 function Hero() {
+
     const controlsParent = useAnimation();
     const controls = useAnimation();
 
     const [isSearch, setIsSearch] = useState(false)
+
+    const [getSearchs, setGetSearchs] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    async function getDataFilter(query: string) {
+        setIsLoading(true)
+        try {
+            const res: any = await API.get(`api/filter?paginate=4&like=title,${query}`)
+            if (res) {
+                setIsLoading(false)
+                setGetSearchs(res.data.data.data)
+            }
+        } catch (error) {
+            setIsLoading(false)
+        }
+    }
 
     const setHideExploreHandle = () => {
         setIsSearch(false)
@@ -67,6 +66,7 @@ function Hero() {
         } else {
             animateOnSearch();
             setIsSearch(true)
+            getDataFilter(keyword)
         }
     }
 
@@ -75,12 +75,12 @@ function Hero() {
         controlsParent.start({
             height: 0,
             opacity: 0,
-            transition: { duration: 0.57, delay: 0.7 },
+            transition: { duration: 0.57, delay: 0.1 },
         })
         controls.start({
             y: -270,
             opacity: 0,
-            transition: { duration: 0.61, delay: 0.6 },
+            transition: { duration: 0.61, delay: 0.1 },
         })
     }
 
@@ -89,40 +89,24 @@ function Hero() {
         controlsParent.start({
             height: 'auto',
             opacity: 1,
-            transition: { duration: 0.61, delay: 0.6 },
+            transition: { duration: 0.61, delay: 0.1 },
         })
         controls.start({
             y: 0,
             opacity: 1,
-            transition: { duration: 0.57, delay: 0.7 },
+            transition: { duration: 0.57, delay: 0.1 },
         })
     }
 
     return (
         <div className="timlands-hero">
             <div className="timlands-hero-inner">
-                <motion.div animate={controlsParent} style={{ overflow: 'hidden' }} className="timlands-hero-image">
-                    <motion.div animate={controls} transition={{ duration: 0.53 }}>
-                        <Image src={heroIMG} placeholder="blur" />
-                    </motion.div>
+                <motion.div style={{ overflow: 'hidden' }} className="timlands-hero-image">
+                    <Image src={heroIMG} placeholder="blur" />
                 </motion.div>
                 <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
                         هذا النص هو مثال لنص
-                        <Typical
-                            steps={[
-                                'تيموورك',
-                                5000,
-                                'تيملاندز',
-                                4000,
-                                'كورسات',
-                                5000,
-                                'وظفني',
-                                4000,
-                            ]}
-                            wrapper="p"
-                            loop={Infinity}
-                        />
                     </motion.h1>
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
@@ -131,25 +115,27 @@ function Hero() {
                 <div className="timlands-hero-search">
                     <div className="rel-search">
                         <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيموورك..." className="timlands-inputs" />
-                        <button className="search-btn">
+                        {!isLoading && <button className="search-btn">
                             <span className="material-icons material-icons-outlined">search</span>
-                        </button>
-
+                        </button>}
+                        {isLoading && <button className="search-btn">
+                            <span className="spinner-border text-secondary spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>}
                         {isSearch && <motion.div ref={wrapperRef} initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.57, delay: 0.74 }} className="res-search-container">
                             <div className="search-results-items">
+                                {getSearchs.length == 0 && <NotFountSearch />}
+                                {isLoading && <LoadingSearch />}
                                 <div className="list-results-items">
-                                    {testServices.map(e =>
+                                    {getSearchs && getSearchs.map((e: any) =>
                                         <PostSearch
-                                            key={e.id}
                                             title={e.title}
-                                            author={e.author}
-                                            rate={e.rate}
+                                            author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                                            rate={e.ratings_avg_rating}
                                             price={e.price}
-                                            postUrl={e.postUrl}
+                                            slug={e.slug}
                                             thumbnail={e.thumbnail}
-                                            period={e.period}
-                                            buyers={e.buyers}
-                                            userUrl={e.userUrl}
+                                            buyers={e.count_buying}
+                                            period={e.duration}
                                         />
                                     )}
                                 </div>

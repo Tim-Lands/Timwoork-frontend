@@ -9,8 +9,8 @@ import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
 
 function Home() {
+  const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at&sort[1]=id,desc')
   const { data: products, error }: any = useSWR('api/filter?paginate=4')
-
   return (
     <>
       <MetaTags
@@ -44,9 +44,9 @@ function Home() {
 
       {products &&
         <div className="container">
-          <PostsAside title="الفيدهات والحركات" PostData={products.data.data} isLoading={!products} isError={error} />
-          <PostsAside title="برمجة وتطوير" PostData={products.data.data} isLoading={!products} isError={error} />
-          <PostsAside title="التصميم الغرافيكي" PostData={products.data.data} isLoading={!products} isError={error} />
+          <PostsAside title="الفيدهات والحركات" PostData={products && products.data.data} isLoading={!products} isError={error} />
+          <PostsAside title="الخدمات التي أضيفت حديثا" PostData={latestProducts && latestProducts.data.data} isLoading={!latestProducts} isError={latestError} />
+          <PostsAside title="التصميم الغرافيكي" PostData={products && products.data.data} isLoading={!products} isError={error} />
         </div>
       }
 

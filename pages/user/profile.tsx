@@ -1,20 +1,261 @@
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Statistic, Card, Result } from 'antd'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
-import { connect } from "react-redux";
 import Image from 'next/image'
 import useSWR from 'swr'
+import PropTypes from "prop-types";
+import API from '../../config'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
+import { Field, Form, Formik } from 'formik';
+import { motion } from 'framer-motion';
+import * as Yup from 'yup';
 
+const SignupSchema = Yup.object().shape({
+    name_ar: Yup.string().required('هذا الحقل إجباري'),
+    name_en: Yup.string().required('هذا الحقل إجباري'),
+    name_fr: Yup.string().required('هذا الحقل إجباري'),
+    type: Yup.number().required('هذا الحقل إجباري'),
+    number_developments: Yup.number().lessThan(127, 'عدد التطويرات لا يتعدى 127').required('هذا الحقل إجباري'),
+    price_developments: Yup.number().required('هذا الحقل إجباري'),
+    number_sales: Yup.number().required('هذا الحقل إجباري'),
+    value_bayer: Yup.number().required('هذا الحقل إجباري'),
+});
+export function BeSeller({ setIsModalHiddenHandle }: any): ReactElement {
+    return (
+        <>
+            <div className="panel-modal-overlay"></div>
+            <div className="panel-modal lg modal-add-new">
+                <div className="panel-modal-header">
+                    <h2 className="title"><span className="material-icons material-icons-outlined">add_box</span>إضافة جديد</h2>
+                    <div className="panel-modal-left-tools">
+                        <button onClick={setIsModalHiddenHandle} className="close-modal">
+                            <span className="material-icons material-icons-outlined">close</span>
+                        </button>
+                    </div>
+                </div>
+                <Formik
+                    initialValues={{
+                        name_ar: '',
+                        name_en: '',
+                        name_fr: '',
+                        type: 1,
+                        number_developments: '',
+                        price_developments: '',
+                        number_sales: '',
+                        value_bayer: ''
+                    }}
+                    validationSchema={SignupSchema}
+                    onSubmit={async values => {
+                        try {
+                            const res = await API.post("dashboard/levels/store", values);
+                            // If Activate Network 
+                            // Authentication was successful.
+                            if (res.status == 201 || res.status == 200) {    
+                                //alert('تمت الإضافة بنجاح')
+                                setIsModalHiddenHandle()
+                            } else {
+                                alert('Error')
+                            }
+                        } catch (error) {
+                            alert('Error Network')
+        
+                        }
+                    }}
+                >
+                    {({ errors, touched, isSubmitting }) => (
+                        <Form>
+                            <div className={"panel-modal-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
+                            {!isSubmitting ? '' :
+                                    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
+                                        <div className="spinner-border" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    </motion.div>
+                                }
+                                <div className="row">
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="name_ar">اسم المستوى بالعربي</label>
+                                            <Field
+                                                id="name_ar"
+                                                name="name_ar"
+                                                placeholder="اسم المستوى بالعربي..."
+                                                className="timlands-inputs"
+                                                autoComplete="off"
+                                            />
+                                            {errors.name_ar && touched.name_ar ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.name_ar}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="name_en">اسم المستوى بالانجليزي</label>
+                                            <Field
+                                                id="name_en"
+                                                name="name_en"
+                                                placeholder="اسم المستوى بالانجليزي..."
+                                                className="timlands-inputs"
+                                                autoComplete="off"
+                                            />
+                                            {errors.name_en && touched.name_en ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.name_en}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="name_fr">اسم المستوى بالفرنسي</label>
+                                            <Field
+                                                id="name_fr"
+                                                name="name_fr"
+                                                placeholder="اسم المستوى بالفرنسي..."
+                                                className="timlands-inputs"
+                                                autoComplete="off"
+                                            />
+                                            {errors.name_fr && touched.name_fr ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.name_fr}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="input-state">اختر نوع المستوى</label>
+                                            <Field
+                                                as="select"
+                                                id="input-state"
+                                                name="address.state"
+                                                className="timlands-inputs select"
+                                            >
+                                                <option value="">اختر نوع المستوى</option>
+                                                <option value={1}>بائع</option>
+                                                <option value={0}>مشتري</option>
+                                            </Field>
+                                            {errors.type && touched.type ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.type}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="value_bayer">القيمة الشرائية</label>
+                                            <Field
+                                                id="value_bayer"
+                                                name="value_bayer"
+                                                placeholder="القيمة الشرائية..."
+                                                className="timlands-inputs"
+                                                autoComplete="off"
+                                            />
+                                            {errors.value_bayer && touched.value_bayer ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.value_bayer}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="col-sm-4">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="number_sales">عدد المبيعات </label>
+                                            <Field
+                                                id="number_sales"
+                                                name="number_sales"
+                                                placeholder="عدد المبيعات ..."
+                                                className="timlands-inputs"
+                                            />
+                                            {errors.number_sales && touched.number_sales ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.number_sales}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="number_developments">عدد التطويرات المسموح بها</label>
+                                            <Field
+                                                id="number_developments"
+                                                name="number_developments"
+                                                placeholder="عدد التطويرات المسموح بها..."
+                                                className="timlands-inputs"
+                                            />
+                                            {errors.number_developments && touched.number_developments ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.number_developments}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="price_developments">أعلى سعر للتطوير الواحد</label>
+                                            <Field
+                                                id="price_developments"
+                                                name="price_developments"
+                                                placeholder="أعلى سعر للتطوير الواحد..."
+                                                className="timlands-inputs"
+                                            />
+                                            {errors.price_developments && touched.price_developments ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.price_developments}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-modal-footer">
+                                <button onClick={setIsModalHiddenHandle} type="button" className="btn butt-red butt-sm">إغلاق</button>
+                                <button type="submit" disabled={isSubmitting} className="btn butt-primary butt-sm">حفظ التغييرات</button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+        </>
+    )
+}
 function Profile() {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
-    if (userInfo && userInfo.user_details.profile.steps <= 1)
+    if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
                 <Result
@@ -35,6 +276,13 @@ function Profile() {
     const myLoader = () => {
         return `${APIURL}${userInfo.user_details.profile.avatar}`;
     }
+    const [isModalShowen, setIsModalShowen] = useState(false)
+    const setIsModalShowenHandle = () => {
+        setIsModalShowen(true);
+    }
+    const setIsModalHiddenHandle = () => {
+        setIsModalShowen(false);
+    }
     return (
         <div className="py-3">
             {!userInfo && <Loading />}
@@ -46,9 +294,19 @@ function Profile() {
                         metaDescription={"الصفحة الرئيسية"}
                         ogDescription={"الصفحة الرئيسية"}
                     />
+                    {isModalShowen && <BeSeller setIsModalHiddenHandle={setIsModalHiddenHandle} />}
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-4">
+                                {!userInfo.user_details.profile.profile_seller &&
+                                    <div className="be-seller-aside">
+                                        <h3 className="title">كن بائعا</h3>
+                                        <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
+                                            <button onClick={setIsModalShowenHandle} className='btn butt-green butt-md' style={{ width: '100%' }}>
+                                                إنشاء بروفايل بائع
+                                            </button>
+                                    </div>
+                                }
                                 {userInfo.user_details.profile.profile_seller &&
                                     <div className="py-1">
                                         <Card title="نبذة عني">
@@ -223,10 +481,6 @@ function Profile() {
     )
 }
 
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-});
-
 Profile.getLayout = function getLayout(page: any): ReactElement {
     return (
         <Layout>
@@ -234,5 +488,7 @@ Profile.getLayout = function getLayout(page: any): ReactElement {
         </Layout>
     )
 }
-
-export default connect(mapStateToProps)(Profile);
+BeSeller.propTypes = {
+    setIsModalHiddenHandle: PropTypes.func,
+};
+export default Profile

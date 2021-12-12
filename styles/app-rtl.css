@@ -557,9 +557,11 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9999;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+  -webkit-box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.034);
+          box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.034);
 }
 
 .timlands-navbar-container.is-shown {
@@ -2244,7 +2246,6 @@ h3 {
 .timlands-hero .timlands-hero-inner .timlands-hero-content .main-title {
   font-weight: 800;
   color: #333;
-  margin-bottom: -16px;
 }
 
 .timlands-hero .timlands-hero-inner .timlands-hero-content .main-title .styles_typicalWrapper__1_Uvh {
@@ -2301,6 +2302,14 @@ h3 {
   position: absolute;
 }
 
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .search-btn .material-icons {
+  font-size: 20px;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .search-btn .spinner-border {
+  margin-bottom: 5px;
+}
+
 .timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .res-search-container {
   position: absolute;
   left: 0;
@@ -2350,6 +2359,49 @@ h3 {
 .timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-item a:hover {
   background-color: #ddd;
   color: #000;
+}
+
+.search-loading {
+  padding: 25px;
+  height: 100px;
+}
+
+.list-results-items .post-item-img {
+  width: 130px !important;
+  height: 80px !important;
+  border-radius: 3px !important;
+}
+
+.list-results-items .post-item-content .title {
+  margin-bottom: 5px;
+}
+
+.list-results-items .post-item-content .post-meta-rate {
+  padding-top: 7px;
+}
+
+.list-results-items .post-item-content .post-meta-rate span {
+  margin-top: 3px;
+}
+
+.be-seller-aside {
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 26px 15px;
+}
+
+.be-seller-aside .title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #777;
+}
+
+.be-seller-aside .text {
+  font-size: 13px;
+  color: #333;
+  margin: 12px 0;
 }
 
 /*
@@ -3068,6 +3120,13 @@ h3 {
 .single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:checked {
   background-color: #475C80;
   border-color: #475C80;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .price-duration {
+  font-weight: 200;
+  font-size: 12px;
+  color: #555;
+  margin: 0;
 }
 
 .single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .devloppers-price {
@@ -4265,6 +4324,7 @@ h3 {
   margin: 20px auto;
   z-index: 999;
   overflow: hidden;
+  right: 20%;
 }
 
 .panel-modal.md {
@@ -5193,7 +5253,7 @@ h3 {
 .single-sidebar {
   position: -webkit-sticky;
   position: sticky;
-  top: 95px;
+  top: 65px;
   padding: 20px 0;
 }
 
@@ -5559,305 +5619,6 @@ h3 {
     Dark Mode
 ---------------------------------------------------------------------------------------------
 */
-.is-dark {
-  /*
----------------------------------------------------------------------------------------------
-    Account Page
----------------------------------------------------------------------------------------------
-*/
-  /*
----------------------------------------------------------------------------------------------
-    Dashboard Page
----------------------------------------------------------------------------------------------
-*/
-  /*
----------------------------------------------------------------------------------------------
-    Dashboard Navbar
----------------------------------------------------------------------------------------------
-*/
-  /*
----------------------------------------------------------------------------------------------
-    Panels Style
----------------------------------------------------------------------------------------------
-*/
-  /*
-    Modal
-*/
-  /*
----------------------------------------------------------------------------------------------
-    404 Page
----------------------------------------------------------------------------------------------
-*/
-  /*
----------------------------------------------------------------------------------------------
-    Posts Aside
----------------------------------------------------------------------------------------------
-*/
-}
-
-.is-dark .timlands-accounts .timlands-accounts-container {
-  background-color: #222;
-}
-
-.is-dark .timlands-accounts .timlands-accounts-container .timlands-accounts-forms {
-  width: 100%;
-}
-
-.is-dark .timlands-accounts .timlands-accounts-header {
-  border-bottom: 1px solid #232323;
-}
-
-.is-dark .timlands-accounts .timlands-accounts-header .title {
-  color: #fff;
-}
-
-.is-dark .dashboard-sidebar {
-  background-color: #111;
-}
-
-.is-dark .dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item > .dash-link {
-  color: #f1f1f1;
-}
-
-.is-dark .dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item > .dash-link:hover {
-  color: #ffd000;
-}
-
-.is-dark .dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item .sub-dashnav-list > .subdash-item > .subdash-link {
-  color: #ddd;
-}
-
-.is-dark .dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item .sub-dashnav-list > .subdash-item > .subdash-link:hover {
-  color: #ffd000;
-}
-
-.is-dark .dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item .sub-dashnav-list > .subdash-item.active > .subdash-link {
-  font-weight: bold;
-  color: #ffd000;
-}
-
-.is-dark .dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item.active > .dash-link {
-  color: #ffd000;
-  background-color: #131313;
-}
-
-@media (max-width: 500px) {
-  .is-dark .timlands-dashboard-content {
-    padding: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .is-dark .filter-form {
-    margin: 12px 0;
-  }
-}
-
-.is-dark .dashboard-navbar {
-  background-color: #222;
-}
-
-.is-dark .dashboard-navbar .circular-item button {
-  color: #f3f3f3;
-}
-
-.is-dark .dashboard-navbar .circular-item button:hover {
-  background-color: #3d3d3d;
-  color: #fff;
-}
-
-.is-dark .timlands-panel-item {
-  border: 1px solid #232323;
-  background-color: #222;
-}
-
-.is-dark .timlands-panel-item:hover {
-  border: 1px solid #ffd000;
-  -webkit-box-shadow: 3px 4px 9px rgba(255, 255, 255, 0.055);
-          box-shadow: 3px 4px 9px rgba(255, 255, 255, 0.055);
-}
-
-.is-dark .timlands-panel-item .panel-item-header {
-  border-bottom: 1px solid #232323;
-}
-
-.is-dark .timlands-panel-item .panel-item-header .title {
-  color: #f3f3f3;
-}
-
-.is-dark .timlands-panel-item .panel-item-body .count-num {
-  color: #fff;
-}
-
-.is-dark .timlands-panel-item .panel-item-body .details-items > li {
-  border-bottom: 1px solid #232323;
-}
-
-.is-dark .timlands-panel-item .panel-item-body .details-items > li:last-child {
-  border-bottom: 0;
-}
-
-.is-dark .timlands-panel-item .panel-item-body .details-items > li p {
-  color: #fff;
-}
-
-.is-dark .timlands-panel-item .panel-item-body .details-items > li .det-val {
-  color: #fff;
-}
-
-.is-dark .timlands-panel-item .panel-item-footer {
-  border-top: 1px solid #333;
-}
-
-.is-dark .panel-modal {
-  background-color: #222;
-  -webkit-box-shadow: 3px 3px 13px rgba(255, 255, 255, 0.11);
-          box-shadow: 3px 3px 13px rgba(255, 255, 255, 0.11);
-}
-
-.is-dark .panel-modal .panel-modal-header {
-  border-bottom: 1px solid #232323;
-}
-
-.is-dark .panel-modal .panel-modal-header .title {
-  color: #222;
-}
-
-.is-dark .panel-modal .panel-modal-header .panel-modal-left-tools .close-modal {
-  background-color: #222;
-  color: #ddd;
-}
-
-.is-dark .panel-modal .panel-modal-header .panel-modal-left-tools .close-modal:hover {
-  color: #f3f3f3;
-  background-color: #222;
-}
-
-.is-dark .panel-modal .panel-modal-header .panel-modal-left-tools .close-modal:focus {
-  color: #fff;
-  background-color: #232323;
-}
-
-.is-dark .panel-modal .panel-modal-body .is-loading {
-  background-color: rgba(0, 0, 0, 0.699);
-}
-
-.is-dark .panel-modal .panel-modal-footer {
-  border-top: 1px solid #232323;
-  background-color: #222;
-}
-
-.is-dark .panel-modal .panel-modal-footer .butt-primary {
-  margin-right: auto;
-}
-
-.is-dark .panel-modal-overlay {
-  background-color: rgba(255, 255, 255, 0.603);
-}
-
-.is-dark .timwoork-single-tags {
-  margin: 15px 0;
-}
-
-.is-dark .timwoork-single-tags .single-tags-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  list-style: none;
-  padding: 0;
-}
-
-.is-dark .timwoork-single-tags .single-tags-list li.title {
-  padding: 6px 10px;
-  margin-left: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #000;
-}
-
-.is-dark .timwoork-single-tags .single-tags-list li a {
-  display: block;
-  padding: 6px 10px;
-  background-color: #f7f7f7;
-  font-size: 14px;
-  color: #333;
-  margin-left: 2px;
-  border-radius: 5px;
-}
-
-.is-dark .timwoork-single-tags .single-tags-list li a:hover {
-  background-color: #f1f1f1;
-  color: #000;
-}
-
-.is-dark .timwoork-404-page .not-found-image img {
-  width: 400px;
-}
-
-.is-dark .timwoork-404-page .title {
-  color: #555;
-}
-
-.is-dark .timwoork-404-page .title .error-status {
-  font-weight: bold;
-}
-
-.is-dark .posts-aside .posts-aside-header {
-  border-bottom: 1px solid #f1f1f1;
-}
-
-.is-dark .posts-aside .posts-aside-header .title {
-  color: #000;
-}
-
-.is-dark .timlands-table {
-  background-color: #111;
-  -webkit-box-shadow: 3px 3px 9px rgba(255, 255, 255, 0.055);
-          box-shadow: 3px 3px 9px rgba(255, 255, 255, 0.055);
-  border: 1px solid #262626;
-}
-
-.is-dark .timlands-table .table tr td, .is-dark .timlands-table .table tr th {
-  color: #fff;
-}
-
-.is-dark .timlands-table .table tr > td.tools-col .table-del {
-  background-color: #222;
-  color: #f6f6f6;
-  border: 1px solid #232323;
-}
-
-.is-dark .timlands-table .table tr > td.tools-col .table-del:hover {
-  background-color: #232323;
-  color: #fff;
-}
-
-.is-dark .timlands-table .table tr > td.tools-col .table-del.error {
-  color: #f37272;
-  border: 1px solid #ffe0e0;
-}
-
-.is-dark .timlands-table .table tr > td.tools-col .table-del.warning {
-  color: #ffe922;
-  border: 1px solid #fffedd;
-}
-
-.is-dark .timlands-table .table thead tr {
-  background-color: #000;
-}
-
-.is-dark .timlands-table .table tbody tr:hover {
-  background-color: #262626;
-}
-
-.is-dark .timlands-table .table > :not(:first-child) {
-  border-top: 2px solid #232323;
-}
-
-.is-dark .timlands-dashboard-content {
-  background-color: #111;
-}
-
 /* VARS */
 /* MIXINS */
 /* TOGGLE STYLING */

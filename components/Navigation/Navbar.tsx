@@ -214,7 +214,7 @@ function Navbar(props: any): ReactElement {
                     </ul>
                 </div>
             </nav>
-            <motion.nav transition={{ duration: 0.8 }} style={{ position: 'relative', zIndex: 500 }} initial={{ y: -90, opacity: 0 }} animate={(scroll ? { y: 0, opacity: 1 } : { y: -90, opacity: 0 })} className={'timlands-sub-navbar'}>
+            {/*<motion.nav transition={{ duration: 0.8 }} style={{ position: 'relative', zIndex: 500 }} initial={{ y: -90, opacity: 0 }} animate={(scroll ? { y: 0, opacity: 1 } : { y: -90, opacity: 0 })} className={'timlands-sub-navbar'}>
                 <ul className="nav sub-navbar-cats">
                     <li className="category-title">التصنيفات الشائعة</li>
                     <li className="category-item active">
@@ -248,7 +248,7 @@ function Navbar(props: any): ReactElement {
                         </Link>
                     </li>
                 </ul>
-            </motion.nav>
+            </motion.nav>*/}
         </div>
     );
 }

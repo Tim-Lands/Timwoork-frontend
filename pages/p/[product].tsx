@@ -180,7 +180,7 @@ function Single({ query }) {
   const menu = (
     <Menu>
       <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
-       المشاركة على الفيسبووك
+        المشاركة على الفيسبووك
       </Menu.Item>
       <Menu.Item key="2" icon={<i className="fa fa-twitter"></i>}>
         المشاركة على التويتر
@@ -191,7 +191,7 @@ function Single({ query }) {
     </Menu>
   );
   const { addItem, inCart } = useCart();
-  
+
   const addToCart = () => {
     addItem({
       id: ProductData.data.id,
@@ -211,7 +211,7 @@ function Single({ query }) {
         الذهاب إلى السلة
       </button>
     );
-    
+
     notification.open({
       message: 'رسالة توضيحية',
       description:
@@ -220,6 +220,34 @@ function Single({ query }) {
       key,
       onClose: close,
     });
+  }
+  function durationFunc() {
+    if (ProductData.data.duration == 1) {
+      return 'يوم واحد'
+    }
+    if (ProductData.data.duration == 2) {
+      return 'يومين'
+    }
+    if (ProductData.data.duration > 2 && ProductData.data.duration < 11) {
+      return ProductData.data.duration + ' أيام '
+    }
+    if (ProductData.data.duration >= 11) {
+      return ProductData.data.duration + ' يوم '
+    }
+  }
+  function DevdurationFunc(duration) {
+    if (duration == 1) {
+      return 'يوم واحد'
+    }
+    if (duration == 2) {
+      return 'يومين'
+    }
+    if (duration > 2 && duration < 11) {
+      return duration + ' أيام '
+    }
+    if (duration >= 11) {
+      return duration + ' يوم '
+    }
   }
   return (
     <>
@@ -307,7 +335,7 @@ function Single({ query }) {
                           <li className="title">
                             الوسوم:
                           </li>
-                          
+
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <Link href={'/' + e.id}>
@@ -372,84 +400,87 @@ function Single({ query }) {
                     }
                     <div className="timwoork-single-comments">
                       <div className="timwoork-single-comments-inner">
-                        <div className="single-comments-header">
-                          <div className="flex-center">
-                            <h1 className="title">
-                              <span className="material-icons material-icons-outlined">question_answer</span>
-                              التعليقات
-                            </h1>
+                        {ProductData.data.ratings && <>
+                          <div className="single-comments-header">
+                            <div className="flex-center">
+                              <h1 className="title">
+                                <span className="material-icons material-icons-outlined">question_answer</span>
+                                التعليقات
+                              </h1>
+                            </div>
                           </div>
-                        </div>
-                        {ProductData.data.ratings && 
                           <div className="single-comments-body">
                             <Comments comments={ProductData.data.ratings} />
                           </div>
+                        </>
                         }
-                        <div className="single-comments-header">
-                          <div className="flex-center">
-                            <h1 className="title">
-                              <span className="material-icons material-icons-outlined">rate_review</span>
-                              أضف تعليقا
-                            </h1>
+                        {token && <>
+                          <div className="single-comments-header">
+                            <div className="flex-center">
+                              <h1 className="title">
+                                <span className="material-icons material-icons-outlined">rate_review</span>
+                                أضف تعليقا
+                              </h1>
+                            </div>
                           </div>
-                        </div>
-                        <div className="timwoork-single-comment-form">
-                          <Formik
-                            initialValues={{
-                              rating: 0,
-                              comment: ''
-                            }}
-                            onSubmit={async (values) => {
-                              try {
-                                const res = API.post(`api/product/${ProductData.data.id}/rating`, values, {
-                                  headers: {
-                                    'Authorization': `Bearer ${token}`
-                                  }
-                                });
-                                console.log(res);
-                              } catch (error) {
-                                message.error('حدث خطأ أثناء إضافة التعليق')
-                              }
-                            }}
-                          >
-                            {({ isSubmitting }) => (
-                              <Form>
-                                <Spin spinning={isSubmitting}>
-                                  <div className="stars">
-                                    <p className="stars-text">التقييم: </p>
-                                    <Field type="radio" id="rate-5" name="rating" value="5" />
-                                    <label htmlFor="rate-5">
-                                      <span className="material-icons">star</span>
-                                    </label>
-                                    <Field type="radio" id="rate-4" name="rating" value="4" />
-                                    <label htmlFor="rate-4">
-                                      <span className="material-icons">star</span>
-                                    </label>
-                                    <Field type="radio" id="rate-3" name="rating" value="3" />
-                                    <label htmlFor="rate-3">
-                                      <span className="material-icons">star</span>
-                                    </label>
-                                    <Field type="radio" id="rate-2" name="rating" value="2" />
-                                    <label htmlFor="rate-2">
-                                      <span className="material-icons">star</span>
-                                    </label>
-                                    <Field type="radio" id="rate-1" name="rating" value="1x " />
-                                    <label htmlFor="rate-1">
-                                      <span className="material-icons">star</span>
-                                    </label>
-                                  </div>
-                                  <div className="form-textarea">
-                                    <label htmlFor="comment-text" className="label-block">نص التعليق</label>
-                                    <Field as="textarea" name="comment" id="comment-text" style={{ height: 230 }} className="timlands-inputs" placeholder="أكتب نص التعليق هنا"></Field>
-                                  </div>
-                                  <div className="py-3">
-                                    <button disabled={isSubmitting} className="btn butt-primary butt-md" type="submit">إرسال التقييم</button>
-                                  </div>
-                                </Spin>
-                              </Form>
-                            )}
-                          </Formik>
-                        </div>
+                          <div className="timwoork-single-comment-form">
+                            <Formik
+                              initialValues={{
+                                rating: 0,
+                                comment: ''
+                              }}
+                              onSubmit={async (values) => {
+                                try {
+                                  const res = API.post(`api/product/${ProductData.data.id}/rating`, values, {
+                                    headers: {
+                                      'Authorization': `Bearer ${token}`
+                                    }
+                                  });
+                                  console.log(res);
+                                } catch (error) {
+                                  message.error('حدث خطأ أثناء إضافة التعليق')
+                                }
+                              }}
+                            >
+                              {({ isSubmitting }) => (
+                                <Form>
+                                  <Spin spinning={isSubmitting}>
+                                    <div className="stars">
+                                      <p className="stars-text">التقييم: </p>
+                                      <Field type="radio" id="rate-5" name="rating" value="5" />
+                                      <label htmlFor="rate-5">
+                                        <span className="material-icons">star</span>
+                                      </label>
+                                      <Field type="radio" id="rate-4" name="rating" value="4" />
+                                      <label htmlFor="rate-4">
+                                        <span className="material-icons">star</span>
+                                      </label>
+                                      <Field type="radio" id="rate-3" name="rating" value="3" />
+                                      <label htmlFor="rate-3">
+                                        <span className="material-icons">star</span>
+                                      </label>
+                                      <Field type="radio" id="rate-2" name="rating" value="2" />
+                                      <label htmlFor="rate-2">
+                                        <span className="material-icons">star</span>
+                                      </label>
+                                      <Field type="radio" id="rate-1" name="rating" value="1x " />
+                                      <label htmlFor="rate-1">
+                                        <span className="material-icons">star</span>
+                                      </label>
+                                    </div>
+                                    <div className="form-textarea">
+                                      <label htmlFor="comment-text" className="label-block">نص التعليق</label>
+                                      <Field as="textarea" name="comment" id="comment-text" style={{ height: 230 }} className="timlands-inputs" placeholder="أكتب نص التعليق هنا"></Field>
+                                    </div>
+                                    <div className="py-3">
+                                      <button disabled={isSubmitting} className="btn butt-primary butt-md" type="submit">إرسال التقييم</button>
+                                    </div>
+                                  </Spin>
+                                </Form>
+                              )}
+                            </Formik>
+                          </div>
+                        </>}
                       </div>
                     </div>
                   </div>
@@ -462,7 +493,7 @@ function Single({ query }) {
                   <div className="panel-aside-header">
                     <ul className="nav top-aside-nav">
                       <li className="delevr-time me-auto">
-                        <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: يومين
+                        <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
                       </li>
                       <li className="cat-post ml-auto">
                         <Dropdown overlay={menu}>
@@ -492,11 +523,9 @@ function Single({ query }) {
                                   onChange={() => handleOnChange(index)}
                                 />
                                 <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
-                                  {e.title}<strong>({e.duration})</strong>
+                                  {e.title}
+                                  <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}</p>
                                 </label>
-                              </div>
-                              <div className="devloppers-price">
-                                <p className="price-number">{e.price}$</p>
                               </div>
                             </li>
                           )
