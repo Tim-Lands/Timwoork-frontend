@@ -18,56 +18,6 @@ import { Field, Form, Formik } from "formik";
 import Cookies from 'js-cookie'
 import router from "next/router";
 
-const testServices = [
-  {
-    id: 1,
-    title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم دون مشكلة',
-    author: 'عبد الحميد بومقواس',
-    rate: 4,
-    price: 40,
-    postUrl: '/Single',
-    thumbnail: '/homepage.jpg',
-    period: 9,
-    buyers: 5,
-    userUrl: '/user'
-  },
-  {
-    id: 2,
-    title: 'هذا النص غير منظم، غير أو حتى غير مفهوم. لأنه',
-    author: 'طارق عروي',
-    rate: 0,
-    price: 40,
-    postUrl: '/Single',
-    thumbnail: '/homepage.jpg',
-    period: 9,
-    buyers: 5,
-    userUrl: '/user'
-  },
-  {
-    id: 3,
-    title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم دون',
-    author: 'ضياء الدين محمد',
-    rate: 5,
-    price: 40,
-    postUrl: '/Single',
-    thumbnail: '/slide_3.jpg',
-    period: 9,
-    buyers: 5,
-    userUrl: '/user'
-  },
-  {
-    id: 4,
-    title: 'هذا النص يمكن أن يتم تركيبه على أي تصميم',
-    author: 'رقية الرفوع',
-    rate: 2,
-    price: 40,
-    postUrl: '/Single',
-    thumbnail: '/slide_2.jpg',
-    period: 9,
-    buyers: 5,
-    userUrl: '/user'
-  },
-]
 const slideImages = [
   "/slide_2.png",
   "/slide_3.jpg",
@@ -572,9 +522,9 @@ function Single({ query }) {
           </div>
         </div>
       }
-      <div className="container">
+      {/*<div className="container">
         <PostsAside title="خدمات ذات صلة" PostData={testServices} />
-      </div>
+    </div>*/}
     </>
   );
 }
