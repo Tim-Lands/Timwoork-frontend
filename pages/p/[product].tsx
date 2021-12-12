@@ -7,9 +7,9 @@ import { message } from 'antd'
 // 
 function Single({ query }) {
   const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
-  if (!ProductData) { message.loading('يرجى الإنتظار...') }
   return (
     <>
+        {!ProductData && message.loading('يرجى الإنتظار...')}
         <div className="timwoork-single">
           kjhshskjd {query.product}
         </div>
