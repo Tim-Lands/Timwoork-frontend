@@ -38,7 +38,7 @@ const getFormattedPrice = (price: number) => `$${price}`;
 function Single({ query }) {
 
   const token = Cookies.get('token')
-  const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
+  const { data: ProductData, errorLoad }: any = useSWR(`api/product/${router.query.product}`)
   if (!ProductData) { message.loading('يرجى الإنتظار...') }
   const APIURL = 'https://www.api.timwoork.com/avatars/'
   const myLoader = () => {
