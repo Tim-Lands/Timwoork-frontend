@@ -585,8 +585,10 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Single;
 
-Single.getInitialProps = async ({ query }) => {
-  return { query }
+Single.getInitialProps = async (ctx, { query }) => {
+  if(ctx.req) {
+    return { query }
+  }
 }
 Single.propTypes = {
   query: PropTypes.any,
