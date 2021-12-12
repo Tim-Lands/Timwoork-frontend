@@ -2,9 +2,12 @@ import Layout from '@/components/Layout/HomeLayout'
 import { ReactElement } from "react";
 import 'react-slideshow-image/dist/styles.css'
 import PropTypes from "prop-types";
-
+import useSWR from "swr";
+import { message } from 'antd'
 // 
 function Single({ query }) {
+  const { data: ProductData }: any = useSWR(`api/product/${query.product}`)
+  if (!ProductData) { message.loading('يرجى الإنتظار...') }
   return (
     <>
         <div className="timwoork-single">
