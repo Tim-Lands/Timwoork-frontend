@@ -2,7 +2,6 @@ import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
 import Comments from '../../components/Comments'
 import { ReactElement, useState } from "react";
-import PostsAside from "@/components/PostsAside";
 import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
