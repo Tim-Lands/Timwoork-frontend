@@ -26,44 +26,42 @@ const User = ({ query }) => {
             {userInfo && User.profile && <>
                 <MetaTags
                     title={User.profile && User.profile.first_name + ' ' + User.profile && User.profile.last_name}
-                    metaDescription={User.profile.profile_seller.bio}
-                    ogDescription={User.profile.profile_seller.bio}
+                    metaDescription={User.profile.profile_seller && User.profile.profile_seller.bio}
+                    ogDescription={User.profile.profile_seller && User.profile.profile_seller.bio}
                 />
                 <div className="container">
-                    <div className="row">
-                        <div className="col-lg-4">
-                            {User.profile.profile_seller &&
-                                <>
-                                    <div className="py-1">
-                                        <Card title="نبذة عني">
-                                            <p className="user-bro">
-                                                {User.profile.profile_seller.bio}
-                                            </p>
-                                        </Card>
-                                    </div>
-                                    <div className="py-1">
-                                        <Card title="المهارات">
-                                            {User.profile.profile_seller &&
-                                                <div className="content-text-item">
-                                                    <h3 className="text-label">المهارات</h3>
-                                                    {User.profile.profile_seller.skills &&
-                                                        <ul className="text-skills">
-                                                            {User.profile.profile_seller.skills.map((e: any, i) => (
-                                                                <li key={i}>
-                                                                    <Link href="">
-                                                                        <a>{e.name_ar}</a>
-                                                                    </Link>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    }
-                                                </div>
-                                            }
-                                        </Card>
-                                    </div>
-                                </>
-                            }
-                        </div>
+                    <div className={"row" + (!User.profile.profile_seller && ' justify-content-md-center')}>
+                        {User.profile.profile_seller &&
+                            <div className="col-lg-4">
+                                <div className="py-1">
+                                    <Card title="نبذة عني">
+                                        <p className="user-bro">
+                                            {User.profile.profile_seller.bio}
+                                        </p>
+                                    </Card>
+                                </div>
+                                <div className="py-1">
+                                    <Card title="المهارات">
+                                        {User.profile.profile_seller &&
+                                            <div className="content-text-item">
+                                                <h3 className="text-label">المهارات</h3>
+                                                {User.profile.profile_seller.skills &&
+                                                    <ul className="text-skills">
+                                                        {User.profile.profile_seller.skills.map((e: any, i) => (
+                                                            <li key={i}>
+                                                                <Link href="">
+                                                                    <a>{e.name_ar}</a>
+                                                                </Link>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                }
+                                            </div>
+                                        }
+                                    </Card>
+                                </div>
+                            </div>
+                        }
                         <div className="col-lg-8">
                             <div className="timlands-profile-content">
                                 <div className="profile-content-header">
