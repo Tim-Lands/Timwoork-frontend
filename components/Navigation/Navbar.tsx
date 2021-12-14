@@ -130,17 +130,7 @@ function Navbar(props: any): ReactElement {
                         </li>
                         {token ?
                             <>
-                                <li className="right-butts-icon">
-                                    <Tooltip placement="bottom" title='سلة المشتريات'>
-                                        <Link href='/cart'>
-                                            <motion.a whileTap={{ scale: 0.9 }}>
-                                                <Badge count={totalUniqueItems} offset={[2, -1]}>
-                                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                                </Badge>
-                                            </motion.a>
-                                        </Link>
-                                    </Tooltip>
-                                </li>
+
                                 {!userData &&
                                     <li className="nav-loading">
                                         <p className="loading-text">
@@ -150,6 +140,17 @@ function Navbar(props: any): ReactElement {
                                 }
                                 {userData &&
                                     <>
+                                        <li className="right-butts-icon">
+                                            <Tooltip placement="bottom" title='سلة المشتريات'>
+                                                <Link href='/cart'>
+                                                    <motion.a whileTap={{ scale: 0.9 }}>
+                                                        <Badge count={totalUniqueItems} offset={[2, -1]}>
+                                                            <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                                        </Badge>
+                                                    </motion.a>
+                                                </Link>
+                                            </Tooltip>
+                                        </li>
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='صندوق الرسائل'>
                                                 <motion.a whileTap={{ scale: 0.9 }} className="">
