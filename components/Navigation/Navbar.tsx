@@ -68,19 +68,18 @@ function Navbar(props: any): ReactElement {
                     <a>إضافة خدمة جديدة</a>
                 </Link>
             </Menu.Item>)}
-
+            
             <Menu.Item key="1">
-                <Link href="/">
+                <Link href="/Orders">
+                    <a>الطلبات</a>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="1">
+                <Link href="/user/personalInformations">
                     <a>الإعدادات</a>
                 </Link>
             </Menu.Item>
-            <Menu.Item key="4">
-                <a onClick={() => router.push('/dashboard')}>
-                    الإدارة العامة
-                </a>
-            </Menu.Item>
             <Menu.Divider />
-
             <Menu.Item key="3">
                 <a onClick={props.logout}>
                     تسجيل الخروج
