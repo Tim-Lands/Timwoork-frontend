@@ -11,8 +11,6 @@ import Cookies from 'js-cookie'
 import { Alert } from "@/components/Alert/Alert";
 import { MetaTags } from '@/components/SEO/MetaTags'
 
-const thumbnailUrl = `url(/colorful-abstract-textured-background.jpg)`
-
 const Register = (props: any): ReactElement => {
     // Redirect to user home route if user is authenticated.
     const token = Cookies.get('token')
@@ -25,6 +23,8 @@ const Register = (props: any): ReactElement => {
     const SignupSchema = Yup.object().shape({
         email: Yup.string().required('هذا الحقل إجباري'),
         password: Yup.string().required('هذا الحقل إجباري'),
+        repassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'كلمتا المرور غير متطابقتين')
     });
     // Return statement.
     return (
@@ -38,6 +38,7 @@ const Register = (props: any): ReactElement => {
                 initialValues={{
                     email: '',
                     password: '',
+                    repassword: '',
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={async values => {
@@ -46,24 +47,7 @@ const Register = (props: any): ReactElement => {
             >
                 {({ errors, touched }) => (
                     <Form>
-                        <div className="row">
-                            <div className="col-lg-6 p-0">
-                                <div className="login-image" style={{ backgroundImage: thumbnailUrl }}>
-                                    <div className="timwoork-logo">
-                                        <Link href="/">
-                                            <a>
-                                                <img src="/logo4.png" alt="" />
-                                            </a>
-                                        </Link>
-                                    </div>
-                                    <h1 className="login-title">
-                                        التسجيل
-                                    </h1>
-                                    <h3 className="login-text">
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                                    </h3>
-                                </div>
-                            </div>
+                        <div className="row justify-content-md-center">
                             <div className="col-lg-6 p-0">
                                 {props.registerError && (
                                     <Alert type="danger">{props.registerError}</Alert>
@@ -77,6 +61,18 @@ const Register = (props: any): ReactElement => {
                                                 </div>
                                             </motion.div>
                                         }
+                                        <div className="timwoork-logo">
+                                            <Link href="/">
+                                                <a>
+                                                    <img src="/logo6.png" alt="" />
+                                                </a>
+                                            </Link>
+                                        </div>
+                                        <div className="page-header">
+                                            <h1 className="title">
+                                                التسجيل
+                                            </h1>
+                                        </div>
                                         <div className="timlands-form">
                                             <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
                                             <Field
@@ -109,6 +105,25 @@ const Register = (props: any): ReactElement => {
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                         <p className="text">{errors.password}</p>
+                                                    </motion.div>
+                                                </div>
+                                                :
+                                                null}
+                                        </div>
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="password">إعادة كلمة المرور</label>
+                                            <Field
+                                                type="password"
+                                                id="password"
+                                                name="repassword"
+                                                placeholder="إعادة كلمة المرور..."
+                                                className="timlands-inputs"
+                                                autoComplete="off"
+                                            />
+                                            {errors.repassword && touched.repassword ?
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{errors.repassword}</p>
                                                     </motion.div>
                                                 </div>
                                                 :

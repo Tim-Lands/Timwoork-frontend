@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import API from "../config";
 import useSWR from 'swr'
@@ -25,8 +25,24 @@ function Explores() {
             setIsError(true)
             setIsLoading(false)
         }
+    }    
+    const getSubcatsInitial = async () => {
+        setIsLoading(true)
+        try {
+            const res: any = await API.get(`api/get_categories/1`)
+            if (res) {
+                setIsLoading(false)
+                setPostsList(res.data.data)
+                setIsError(false)
+            }
+        } catch (error) {
+            setIsError(true)
+            setIsLoading(false)
+        }
     }
-
+    useEffect(() => {
+        getSubcatsInitial()
+    }, [])
     const catVariants = {
         visible: i => ({
             opacity: 1,
@@ -62,12 +78,11 @@ function Explores() {
                     {postsList &&
                         <div className="main-explores-container">
                             <div className="main-item-category-header">
-                                <h2 className="title"><span className="material-icons material-icons-outlined">{postsList.icon}</span>  {postsList.name_ar}</h2>
+                                <h2 className="title"><span className="material-icons material-icons-outlined">{postsList.icon}</span>  التصنيفات الفرعية</h2>
                             </div>
                             <div className="main-item-category-body">
                                 <div className="row">
                                     {postsList && postsList.slice(0, 12).map((e: any) => (
-                                        (e.products_count !== 0) &&
                                         <div className="col-sm-6" key={e.id}>
                                             <a href={"/category/" + e.slug} className="sub-cat-link">
                                                 <p className="text">{e.name_ar}</p>

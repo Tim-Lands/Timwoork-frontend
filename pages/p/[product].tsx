@@ -67,7 +67,7 @@ function Single({ query }) {
     setTotal(totalPrice + (ProductData && ProductData.data.price));
   };
   const showStars = () => {
-    const rate = ProductData.data.ratings_avg_rating || 0
+    const rate = ProductData.data.ratings_avg || 0
     const xAr: any = [
       {
         id: 1,

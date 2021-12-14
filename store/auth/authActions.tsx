@@ -114,26 +114,22 @@ export const login = (username: string, password: string): any => {
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                 });
-                Cookies.set('token', res.data.data)
-                const { data: userInfo }: any = useSWR('api/me')
-                if (!userInfo) return console.log(userInfo)
-                const step = userInfo && userInfo.user_details.profile.steps
-                const email_verified = userInfo && userInfo.user_details.email_verified_at
-                if (email_verified) {
-                    switch (step) {
+                Cookies.set('token', res.data.data.token)
+                if (res.data.data.is_verified) {
+                    switch (res.data.data.step) {
                         case 0:
                             router.push('/user/personalInformations')
                             break;
                         case 1:
-                            router.push('/user/profileAvatar')
+                            router.push('/user/personalInformations')
                             break;
                         case 2:
                             router.push('/user/numberPhone')
                             break;
                         default:
-                            router.back()
+                            router.push('/')
                     }
-                }else {
+                } else {
                     router.push('/emailConfig')
                 }
             }
@@ -187,9 +183,24 @@ export const register = (email: string, password: string): any => {
                 dispatch({
                     type: types.REGISTER_SUCCESS,
                 });
-                router.push({
-                    pathname: '/emailConfig',
-                })
+                Cookies.set('token', res.data.data.token)
+                if (res.data.data.is_verified) {
+                    switch (res.data.data.step) {
+                        case 0:
+                            router.push('/user/personalInformations')
+                            break;
+                        case 1:
+                            router.push('/user/personalInformations')
+                            break;
+                        case 2:
+                            router.push('/user/numberPhone')
+                            break;
+                        default:
+                            router.push('/')
+                    }
+                } else {
+                    router.push('/emailConfig')
+                }
             }
         } catch (error: any) {
             if (error.response && error.response.status === 422) {
@@ -217,59 +228,7 @@ export const register = (email: string, password: string): any => {
             }
         }
     };
-};
-/**
- * Verify Code Activation functionality.
- *
- * @param {string} email
- *   The username of the user.
- * @param {string} code
- *   The code of the user.
- */
-export const verifyCode = (email: string, code: string): any => {
-    return async (dispatch: CallableFunction) => {
-        try {
-            // Start loading.
-            dispatch({ type: types.START_VERIFY_LOADING });
-
-            const res = await API.post("api/email/verify", {
-                email,
-                code,
-            })
-            // Authentication was successful.
-            if (res.status === 200) {
-                dispatch({
-                    type: types.VERIFY_SUCCESS,
-                });
-                router.push('/user/personalInformations')
-            }
-        } catch (error: any) {
-            if (error.response && error.response.status === 422) {
-                return dispatch({
-                    type: types.VERIFY_ERROR,
-                    payload: "يرجى تعبئة البيانات",
-                });
-            }
-            if (error.response && error.response.status === 419) {
-                return dispatch({
-                    type: types.VERIFY_ERROR,
-                    payload: "العملية غير ناجحة",
-                });
-            }
-            if (error.response && error.response.status === 400) {
-                return dispatch({
-                    type: types.VERIFY_ERROR,
-                    payload: "حدث خطأ.. يرجى التأكد من البيانات",
-                });
-            } else {
-                return dispatch({
-                    type: types.VERIFY_ERROR,
-                    payload: "حدث خطأ غير متوقع",
-                });
-            }
-        }
-    };
-};
+}
 /**
  * Log current user out.
  */

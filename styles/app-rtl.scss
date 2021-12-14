@@ -327,15 +327,18 @@ h3 {
 -------------------------------------------------------------------------------------------
 */
 .login-panel {
-    height: 100vh;
-    display: flex;
     background-color: #fff;
-    align-items: center;
-    align-content: center;
+    &.email-config {
+        margin-top: 40px;
+    }
+    &.number-phone {
+        margin: 0 !important;
+    }
     &.update-form {
         height: auto;
         display: block; 
-        margin-top: 30px;
+        margin: 0;
+        margin-bottom: 5px;
         .update-form-header {
             padding: 16px 0;
             margin-bottom: 15px;
@@ -464,6 +467,13 @@ h3 {
         }
     }
 }
+.timwoork-logo {
+    margin: 8px 0;
+    padding: 5px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
 .login-image {
     height: 100%;
     display: flex;
@@ -474,11 +484,6 @@ h3 {
     background-size: cover;
     flex-direction: column;
     text-align: center;
-    .timwoork-logo {
-        border-bottom: 1px dashed rgba(0, 0, 0, 0.11);
-        margin-bottom: 8px;
-        padding-bottom: 15px;
-    }
     @media (max-width: 720px) {
         padding: 20px;
     }

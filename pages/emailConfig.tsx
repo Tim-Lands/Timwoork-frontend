@@ -2,53 +2,31 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { verifyCode } from "./../store/auth/authActions";
 import router from 'next/router';
+import API from '../config'
 import withAuth from './../services/withAuth'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import { motion } from "framer-motion";
 import { Alert } from '@/components/Alert/Alert';
 import useSWR from 'swr'
+import { message } from 'antd';
 
 function EmailConfig(props: any) {
     const { data: userInfo }: any = useSWR('api/me')
-    if (!userInfo) return console.log(userInfo)
-    const step = userInfo && userInfo.user_details.profile.steps
+    //if (!userInfo) return console.log(userInfo)
     const email_verified = userInfo && userInfo.user_details.email_verified_at
+    
     useEffect(() => {
         if (email_verified) {
-            switch (step) {
-                case 0:
-                    router.push('/user/personalInformations')
-                    break;
-                case 1:
-                    router.push('/user/profileAvatar')
-                    break;
-                case 2:
-                    router.push('/user/numberPhone')
-                    break;
-                default:
-                    router.push('/')
-            }
+            router.push('/')
         }
-    }, [email_verified, step])
+    }, [email_verified])
     const SignupSchema = Yup.object().shape({
         code: Yup.number().required('هذا الحقل إجباري'),
     });
     return (
-        <div className="row">
-            <div className="col-lg-6 p-0">
-                <div className="login-image">
-                    <div className="timwoork-logo">
-                        <Link href="/">
-                            <a>
-                                <img src="/logo4.png" alt="" />
-                            </a>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+        <div className="row justify-content-md-center">
             <div className="col-lg-6 p-0">
                 {userInfo &&
                     <Formik
@@ -59,16 +37,35 @@ function EmailConfig(props: any) {
                         }}
                         validationSchema={SignupSchema}
                         onSubmit={async values => {
-                            props.verifyCode(values.email, values.code);
+                            try {
+                                const res = await API.post("api/email/verify", values)
+                                // Authentication was successful.
+                                if (res.status === 200) {
+                                    message.success("تم التحقق بنجاح");
+                                    router.push('/user/personalInformations')
+                                }
+                            } catch (error: any) {
+                                if (error.response && error.response.status === 422) {
+                                    message.error("يرجى تعبئة البيانات");
+                                }
+                                if (error.response && error.response.status === 419) {
+                                    message.error("العملية غير ناجحة");
+                                }
+                                if (error.response && error.response.status === 400) {
+                                    message.error("حدث خطأ.. يرجى التأكد من البيانات");
+                                } else {
+                                    message.error("حدث خطأ غير متوقع")
+                                }
+                            }
                         }}
                     >
-                        {({ errors, touched }) => (
+                        {({ errors, touched, isSubmitting }) => (
                             <Form>
                                 {props.verifyError && (
                                     <Alert type="danger">{props.verifyError}</Alert>
                                 )}
-                                <div className="login-panel align-center">
-                                    <div className={"panel-modal-body login-panel-body auto-height" + (props.verifyLoading ? ' is-loading' : '')}>
+                                <div className="login-panel email-config">
+                                    <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
                                         {!props.verifyLoading ? '' :
                                             <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                                 <div className="spinner-border" role="status">
@@ -76,11 +73,18 @@ function EmailConfig(props: any) {
                                                 </div>
                                             </motion.div>
                                         }
+                                        <div className="timwoork-logo mb-4">
+                                            <Link href="/">
+                                                <a>
+                                                    <img src="/logo6.png" alt="" />
+                                                </a>
+                                            </Link>
+                                        </div>
                                         <h1 className="login-title-form">
                                             التأكد من البريد الإلكتروني
                                         </h1>
                                         <p className="login-text-form">
-                                            هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
+                                            تحقق من بريدك الإلكتروني انها وصلك كود تفعيل يتكون من 6 أرقام
                                         </p>
                                         <div className="timlands-form">
                                             <label className="label-block" htmlFor="code">كود التفعيل</label>
@@ -90,6 +94,7 @@ function EmailConfig(props: any) {
                                                 placeholder="######"
                                                 className="timlands-inputs code"
                                                 autoComplete="off"
+                                                disabled={isSubmitting}
                                             />
                                             {errors.code && touched.code ?
                                                 <div style={{ overflow: 'hidden' }}>
@@ -102,7 +107,7 @@ function EmailConfig(props: any) {
                                         </div>
                                         <div className="timlands-form">
                                             <button type="button" className="btn butt-md butt-black">إعادة إرسال كود التفعيل</button>
-                                            <button type="submit" className="btn butt-md butt-primary">إكمال عملية التسجيل</button>
+                                            <button type="submit" disabled={isSubmitting} className="btn butt-md butt-primary">إكمال عملية التسجيل</button>
                                         </div>
                                     </div>
                                 </div>
@@ -120,8 +125,8 @@ const mapStateToProps = (state: any) => ({
 });
 
 // Define PropTypes.
-EmailConfig.propTypes = {
+EmailConfig.propTypes = {   
     verifyCode: PropTypes.func,
 };
 
-export default connect(mapStateToProps, { verifyCode })(withAuth(EmailConfig));
+export default connect(mapStateToProps)(withAuth(EmailConfig));

@@ -63,7 +63,7 @@ function Navbar(props: any): ReactElement {
                     <a>الصفحة الشخصية</a>
                 </Link>
             </Menu.Item>
-            {(userData && userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
+            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
                 <Link href="/add-new">
                     <a>إضافة خدمة جديدة</a>
                 </Link>
@@ -114,17 +114,6 @@ function Navbar(props: any): ReactElement {
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">
-                        <li className="right-butts-icon">
-                            <Tooltip placement="bottom" title='سلة المشتريات'>
-                                <Link href='/cart'>
-                                    <motion.a whileTap={{ scale: 0.9 }}>
-                                        <Badge count={totalUniqueItems} offset={[2, -1]}>
-                                            <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                        </Badge>
-                                    </motion.a>
-                                </Link>
-                            </Tooltip>
-                        </li>
 
                         <li className="right-butts-icon">
                             <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
@@ -141,6 +130,17 @@ function Navbar(props: any): ReactElement {
                         </li>
                         {token ?
                             <>
+                                <li className="right-butts-icon">
+                                    <Tooltip placement="bottom" title='سلة المشتريات'>
+                                        <Link href='/cart'>
+                                            <motion.a whileTap={{ scale: 0.9 }}>
+                                                <Badge count={totalUniqueItems} offset={[2, -1]}>
+                                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                                </Badge>
+                                            </motion.a>
+                                        </Link>
+                                    </Tooltip>
+                                </li>
                                 {!userData &&
                                     <li className="nav-loading">
                                         <p className="loading-text">
@@ -148,7 +148,7 @@ function Navbar(props: any): ReactElement {
                                         </p>
                                     </li>
                                 }
-                                {userData && 
+                                {userData &&
                                     <>
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='صندوق الرسائل'>

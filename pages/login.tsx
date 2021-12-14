@@ -11,7 +11,6 @@ import { Alert } from "@/components/Alert/Alert";
 import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
 
-const thumbnailUrl = `url(/5566879.jpg)`
 const Login = (props: any): ReactElement => {
     // The router object used for redirecting after login.
     const router = useRouter();
@@ -49,24 +48,7 @@ const Login = (props: any): ReactElement => {
             >
                 {({ errors, touched }) => (
                     <Form>
-                        <div className="row">
-                            <div className="col-lg-6 p-0">
-                                <div className="login-image" style={{ backgroundImage: thumbnailUrl }}>
-                                    <div className="timwoork-logo">
-                                        <Link href="/">
-                                            <a>
-                                                <img src="/logo4.png" alt="" />
-                                            </a>
-                                        </Link>
-                                    </div>
-                                    <h1 className="login-title">
-                                        تسجيل الدخول
-                                    </h1>
-                                    <h3 className="login-text">
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                                    </h3>
-                                </div>
-                            </div>
+                        <div className="row justify-content-md-center">
                             <div className="col-lg-6 p-0">
                                 {props.loginError && (
                                     <Alert type="danger">{props.loginError}</Alert>
@@ -80,6 +62,18 @@ const Login = (props: any): ReactElement => {
                                                 </div>
                                             </motion.div>
                                         }
+                                        <div className="timwoork-logo">
+                                            <Link href="/">
+                                                <a>
+                                                    <img src="/logo6.png" alt="" />
+                                                </a>
+                                            </Link>
+                                        </div>
+                                        <div className="page-header">
+                                            <h1 className="title">
+                                            تسجيل الدخول
+                                            </h1>
+                                        </div>
                                         <div className="timlands-form">
                                             <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
                                             <Field

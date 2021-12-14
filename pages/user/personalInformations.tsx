@@ -1,43 +1,29 @@
-import React, { ReactElement } from "react";
-import Link from 'next/link'
+import React, { ReactElement, useEffect, useState } from "react";
 import Cookies from 'js-cookie'
 import Layout from '@/components/Layout/HomeLayout'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import API from "../../config";
 import { motion } from "framer-motion";
-import { message, Result } from "antd";
+import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from 'swr'
 import Loading from "@/components/Loading";
 import ImageLogo from "next/image";
+import router from "next/router";
+import NumberPhone from "./numberPhone";
 
 const personalInformations = () => {
     const token = Cookies.get('token')
-    if (!token)
-        return <div className="row justify-content-md-center">
-            <div className="col-md-5">
-                <Result
-                    status="warning"
-                    title="ليس لديك الصلاحية"
-                    subTitle="ليس لديك الصلاحية لدخول هذه الصفحة"
-                    extra={
-                        <Link href="/login">
-                            <a className="btn butt-primary butt-md">
-                                تسجيل الدخول
-                            </a>
-                        </Link>
-                    }
-                />
-            </div>
-        </div>
+
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Countries }: any = useSWR('dashboard/countries')
-    { !userInfo && <Loading /> }
+
     const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
         return `${APIURL}${userInfo.user_details.profile.avatar}`;
     }
+    const [avatarState, setavatarState] = useState(null)
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({
         first_name: Yup.string().required('هذا الحقل إجباري'),
@@ -47,10 +33,16 @@ const personalInformations = () => {
         username: Yup.string().required('هذا الحقل إجباري'),
         country_id: Yup.number().required('هذا الحقل إجباري'),
     });
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+        }
+    }, [token])
     // Return statement.
     return (
         <>
-            <div className="container">
+            {!userInfo && <Loading />}
+            <div className="container py-4">
                 {userInfo && userInfo.user_details.profile && <>
                     <div className="row">
                         <div className="col-lg-7">
@@ -152,7 +144,7 @@ const personalInformations = () => {
                                                                 null}
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="username">اسم المستخدم</label>
                                                             <Field
@@ -172,7 +164,7 @@ const personalInformations = () => {
                                                                 null}
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="date_of_birth">تاريخ الميلاد</label>
                                                             <Field
@@ -193,7 +185,7 @@ const personalInformations = () => {
                                                                 null}
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-5">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="gender">اختر الجنس</label>
                                                             <Field
@@ -215,7 +207,7 @@ const personalInformations = () => {
                                                                 null}
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-7">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="country_id">اختر البلد</label>
                                                             <Field
@@ -267,6 +259,7 @@ const personalInformations = () => {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
+                                            router.reload()
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.status === 200) {
@@ -305,7 +298,7 @@ const personalInformations = () => {
                                                 <div className="row">
                                                     <div className="col-md-12 align-center">
                                                         {userInfo.user_details.profile.avatar == 'avatar.png' ?
-                                                            <ImageLogo src="/avatar2.jpg" width={100} height={100} /> :
+                                                            <img src={avatarState} width={100} height={100} /> :
                                                             <ImageLogo
                                                                 loader={myLoader}
                                                                 src={APIURL + userInfo.user_details.profile.avatar}
@@ -320,6 +313,7 @@ const personalInformations = () => {
                                                             <label className="label-block" htmlFor="avatar">اختر الصورة الشخصية</label>
                                                             <input id="avatar" name="avatar" type="file" onChange={(event) => {
                                                                 setFieldValue("avatar", event.currentTarget.files[0]);
+                                                                setavatarState(URL.createObjectURL(event.target.files[0]))
                                                             }} className="form-control" />
                                                             {errors.avatar && touched.avatar ?
                                                                 <div style={{ overflow: 'hidden' }}>
@@ -342,6 +336,7 @@ const personalInformations = () => {
                                     </form>
                                 )}
                             </Formik>
+                            <NumberPhone />
                         </div>
                     </div>
                 </>

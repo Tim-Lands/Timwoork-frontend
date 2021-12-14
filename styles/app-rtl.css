@@ -557,7 +557,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 999;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   -webkit-box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.034);
@@ -1972,22 +1972,22 @@ h3 {
 -------------------------------------------------------------------------------------------
 */
 .login-panel {
-  height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   background-color: #fff;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
+}
+
+.login-panel.email-config {
+  margin-top: 40px;
+}
+
+.login-panel.number-phone {
+  margin: 0 !important;
 }
 
 .login-panel.update-form {
   height: auto;
   display: block;
-  margin-top: 30px;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 .login-panel.update-form .update-form-header {
@@ -2164,6 +2164,18 @@ h3 {
   margin-right: 8px;
 }
 
+.timwoork-logo {
+  margin: 8px 0;
+  padding: 5px 0;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .login-image {
   height: 100%;
   display: -webkit-box;
@@ -2183,12 +2195,6 @@ h3 {
       -ms-flex-direction: column;
           flex-direction: column;
   text-align: center;
-}
-
-.login-image .timwoork-logo {
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.11);
-  margin-bottom: 8px;
-  padding-bottom: 15px;
 }
 
 @media (max-width: 720px) {

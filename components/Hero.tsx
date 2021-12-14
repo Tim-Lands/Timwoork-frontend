@@ -123,7 +123,7 @@ function Hero() {
                         </button>}
                         {isSearch && <motion.div ref={wrapperRef} initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.57, delay: 0.74 }} className="res-search-container">
                             <div className="search-results-items">
-                                {getSearchs.length == 0 && <NotFountSearch />}
+                                {!getSearchs && <NotFountSearch />}
                                 {isLoading && <LoadingSearch />}
                                 <div className="list-results-items">
                                     {getSearchs && getSearchs.map((e: any) =>
