@@ -59,6 +59,11 @@ function Navbar(props: any): ReactElement {
     const AccountList = (
         <Menu>
             <Menu.Item key="0">
+                <Link href="/myproducts">
+                    <a>خدماتي</a>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="0">
                 <Link href="/user/profile">
                     <a>الصفحة الشخصية</a>
                 </Link>
@@ -68,7 +73,7 @@ function Navbar(props: any): ReactElement {
                     <a>إضافة خدمة جديدة</a>
                 </Link>
             </Menu.Item>)}
-            
+
             <Menu.Item key="1">
                 <Link href="/Orders">
                     <a>الطلبات</a>

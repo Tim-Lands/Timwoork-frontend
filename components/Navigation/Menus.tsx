@@ -18,20 +18,13 @@ function Menus() {
         <ul className="nav app-navbar">
             <li className={showExplore && 'is-open'}>
                 <a className="explore-butt" onClick={setShowExploreHandle}>
-                    <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنفات <i className="fa fa-angle-down"></i>
+                    <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنيفات <i className="fa fa-angle-down"></i>
                 </a>
                 {showExplore && (
                     <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
                         <Explores />
                     </motion.div>
                 )}
-            </li>
-            <li>
-                <Link href="">
-                    <a>
-                        <i className="material-icons material-icons-outlined">question_answer</i> المجتمع
-                    </a>
-                </Link>
             </li>
             <li>
                 <Link href="/products">

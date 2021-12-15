@@ -11,7 +11,7 @@ import Image from 'next/image'
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at&sort[1]=id,desc')
-  const { data: products, error }: any = useSWR('api/filter?paginate=4')
+  const { data: products, error }: any = useSWR('api/filter?paginate=4&sort=count_buying')
   return (
     <>
       <MetaTags

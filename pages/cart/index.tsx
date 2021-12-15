@@ -4,6 +4,7 @@ import router from 'next/router';
 import React, { ReactElement } from 'react'
 import { useCart } from "react-use-cart";
 import CartList from '../../components/Cart/CartList';
+import useSWR from 'swr'
 
 const testServices = [
     {
@@ -62,6 +63,7 @@ function index() {
         items,
     } = useCart();
 
+    const { data: cartList }: any = useSWR('api/cart')
     return (
         <>
             <div className="timwoork-single">

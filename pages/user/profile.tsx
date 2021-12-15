@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
 import Image from 'next/image'
+import router from 'next/router'
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
@@ -52,7 +53,7 @@ function Profile() {
                                     <div className="be-seller-aside">
                                         <h3 className="title">كن بائعا</h3>
                                         <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
-                                            <button className='btn butt-green butt-md' style={{ width: '100%' }}>
+                                            <button onClick={() => router.push('/user/editSeller')} className='btn butt-green butt-md' style={{ width: '100%' }}>
                                                 إنشاء بروفايل بائع
                                             </button>
                                     </div>
@@ -104,7 +105,7 @@ function Profile() {
                             <div className="col-lg-8">
                                 <div className="timlands-profile-content">
                                     <div className="profile-content-header">
-                                        <Badge count="غير متصل" offset={[10, 10]} >
+                                        <Badge color={'green'} count="متصل" offset={[10, 10]} >
                                             <div className="profile-content-avatar">
                                                 {userInfo.user_details.profile.avatar == 'avatar.png' ?
                                                     <Image src="/avatar2.jpg" width={120} height={120} /> :

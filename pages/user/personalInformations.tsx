@@ -63,6 +63,7 @@ const personalInformations = () => {
                                             headers: {
                                                 'Authorization': `Bearer ${token}`
                                             }
+                                        
                                         })
                                         // Authentication was successful.
                                         if (res.status === 200) {

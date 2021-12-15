@@ -47,7 +47,7 @@ function Single({ query }) {
     new Array(ProductData && ProductData.data.developments.length).fill(false)
   );
 
-  const [total, setTotal] = useState(ProductData && ProductData.data.price);
+  const [total, setTotal] = useState(0);
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
@@ -128,47 +128,71 @@ function Single({ query }) {
   }
   const menu = (
     <Menu>
-      <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
-        المشاركة على الفيسبووك
-      </Menu.Item>
-      <Menu.Item key="2" icon={<i className="fa fa-twitter"></i>}>
-        المشاركة على التويتر
-      </Menu.Item>
-      <Menu.Item key="3" icon={<i className="fa fa-youtube"></i>}>
-        المشاركة على اليوتيوب
-      </Menu.Item>
+      {ProductData &&
+        <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
+          <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fforum-wazzfny.com%2Fp%2F${ProductData.data.developments}`}>
+            المشاركة على الفيسبووك
+          </a>
+        </Menu.Item>
+      }
+      {ProductData &&
+        <Menu.Item key="2" icon={<i className="fa fa-facebook"></i>}>
+          <a target="_blank" href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Fforum-wazzfny.com%2Fp%2F${ProductData.data.developments}&text=`}>
+            المشاركة على التويتر
+          </a>
+        </Menu.Item>
+      }
     </Menu>
   );
   const { addItem, inCart } = useCart();
+  const addToCart = async () => {
+    console.log(checkedState);
+    
+    try {
+      const res = await API.post("api/profiles/step_one", {
+        quantity: 1,
+        product_id: ProductData.data.id,
+        developments: ProductData.data.developments,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      // Authentication was successful.
+      if (res.status === 200) {
+        message.success('لقد تم التحديث بنجاح')
+        const key = `open${Date.now()}`;
+        const btn = (
+          <button onClick={() => router.push("/cart")} className="btn butt-sm butt-primary">
+            الذهاب إلى السلة
+          </button>
+        );
 
-  const addToCart = () => {
-    addItem({
-      id: ProductData.data.id,
-      title: ProductData.data.title,
-      checkedState: checkedState,
-      color: "Neon Emerald with Dark Neptune",
-      size: "US 9",
-      developments: ProductData.data.developments,
-      width: "B - Standard",
-      sku: "W1080LN9",
-      price: total + ProductData.data.price,
-    }, ProductData.data.id)
+        notification.open({
+          message: 'رسالة توضيحية',
+          description:
+            'لقد تم إضافة هذه الخدمة إلى السلة',
+          btn,
+          key,
+          onClose: close,
+        });
+        addItem({
+          id: ProductData.data.id,
+          title: ProductData.data.title,
+          checkedState: checkedState,
+          color: "Neon Emerald with Dark Neptune",
+          size: "US 9",
+          developments: ProductData.data.developments,
+          width: "B - Standard",
+          sku: "W1080LN9",
+          price: total + ProductData.data.price,
+        }, ProductData.data.id)
+      }
+    } catch (error: any) {
+      console.log('error');
 
-    const key = `open${Date.now()}`;
-    const btn = (
-      <button onClick={() => router.push("/cart")} className="btn butt-sm butt-primary">
-        الذهاب إلى السلة
-      </button>
-    );
+    }
 
-    notification.open({
-      message: 'رسالة توضيحية',
-      description:
-        'لقد تم إضافة هذه الخدمة إلى السلة',
-      btn,
-      key,
-      onClose: close,
-    });
   }
   function durationFunc() {
     if (ProductData.data.duration == 1) {
@@ -538,7 +562,7 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 export default Single;
 
 Single.getInitialProps = async ({ query }) => {
-    return { query }
+  return { query }
 }
 Single.propTypes = {
   query: PropTypes.any,
