@@ -133,6 +133,13 @@
   border-radius: 4px;
 }
 
+.timlands-inputs.xs {
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+  margin-top: 1px;
+  border-radius: 4px;
+}
+
 .label-block {
   font-size: 14px;
   color: #333;
@@ -3022,6 +3029,22 @@ h3 {
 .cart-nothing .cart-nothing-inner .text {
   font-size: 13px;
   color: #999;
+  margin: 0;
+}
+
+.text-quatity {
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
   margin: 0;
 }
 

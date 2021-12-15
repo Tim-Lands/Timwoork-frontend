@@ -37,29 +37,32 @@ function Single({ query }) {
   const myLoader = () => {
     return `${APIURL}${ProductData && ProductData.data.profile_seller.profile.avatar}`;
   }
- /* const [checkedState, setCheckedState] = useState(
-    new Array(ProductData && ProductData.data.developments.length).fill(false)
-  );
+  const [quantutyCount, setQuantutyCount] = useState(1)
+  const [isLoadingCart, setIsLoadingCart] = useState(false)
 
-  const [total, setTotal] = useState(0);
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-
-    const totalPrice = updatedCheckedState.reduce(
-      (sum, currentState, index) => {
-        if (currentState === true) {
-          return sum + (ProductData && ProductData.data.developments[index].price);
-        }
-        return sum;
-      },
-      0
-    );
-
-    setTotal(totalPrice + (ProductData && ProductData.data.price));
-  };*/
+  /* const [checkedState, setCheckedState] = useState(
+     new Array(ProductData && ProductData.data.developments.length).fill(false)
+   );
+ 
+   const [total, setTotal] = useState(0);
+   const handleOnChange = (position) => {
+     const updatedCheckedState = checkedState.map((item, index) =>
+       index === position ? !item : item
+     );
+     setCheckedState(updatedCheckedState);
+ 
+     const totalPrice = updatedCheckedState.reduce(
+       (sum, currentState, index) => {
+         if (currentState === true) {
+           return sum + (ProductData && ProductData.data.developments[index].price);
+         }
+         return sum;
+       },
+       0
+     );
+ 
+     setTotal(totalPrice + (ProductData && ProductData.data.price));
+   };*/
   const showStars = () => {
     const rate = ProductData.data.ratings_avg || 0
     const xAr: any = [
@@ -140,9 +143,10 @@ function Single({ query }) {
   );
   const { addItem, inCart } = useCart();
   const addToCart = async () => {
+    setIsLoadingCart(true)
     try {
       const res = await API.post("api/cart/store", {
-        quantity: 1,
+        quantity: Number(quantutyCount),
         product_id: ProductData.data.id,
         developments: theIDs,
       }, {
@@ -178,10 +182,11 @@ function Single({ query }) {
           sku: "W1080LN9",
           price: ProductData.data.price,
         }, ProductData.data.id)
+        setIsLoadingCart(false)
       }
     } catch (error: any) {
-      console.log('error');
-
+      message.error('حدث خطأ غير متوقع')
+      setIsLoadingCart(false)
     }
 
   }
@@ -465,82 +470,91 @@ function Single({ query }) {
             </div>
             <div className="col-lg-4">
               <div className="single-sidebar">
-                <div className="single-panel-aside">
-                  <div className="panel-aside-header">
-                    <ul className="nav top-aside-nav">
-                      <li className="delevr-time me-auto">
-                        <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
-                      </li>
-                      <li className="cat-post ml-auto">
-                        <Dropdown overlay={menu}>
-                          <a>
-                            <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
-                          </a>
-                        </Dropdown>
-                      </li>
-                    </ul>
-                  </div>
-                  {ProductData.data.developments &&
-                    <div className="panel-aside-body">
-                      <div className="add-devloppers-header">
-                        <h3 className="title">التطويرات المتوفرة</h3>
-                      </div>
-                      <ul className="add-devloppers-nav">
-                        {ProductData.data.developments.map((e: any) => {
-                          return (
-                            <li key={e.id} className="devloppers-item">
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id={"flexCheckDefault-id" + e.id}
-                                  value={e.id}
-                                  onChange={handleOnChangeAddID}
-                                />
-                                <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
-                                  {e.title}
-                                  <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
-                                </label>
-                              </div>
-                            </li>
-                          )
-                        })}
+                <Spin spinning={isLoadingCart}>
+                  <div className="single-panel-aside">
+                    <div className="panel-aside-header">
+                      <ul className="nav top-aside-nav">
+                        <li className="delevr-time me-auto">
+                          <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
+                        </li>
+                        <li className="cat-post ml-auto">
+                          <Dropdown overlay={menu}>
+                            <a>
+                              <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
+                            </a>
+                          </Dropdown>
+                        </li>
                       </ul>
-                      {theIDs}
                     </div>
-                  }
-                  <div className="panel-aside-footer">
-                    <div className="aside-footer-total-price">
-                      <h1 className="price-total me-auto">
-                        <strong>المجموع </strong> 00
-                      </h1>
-                      <div className="bayers-count">
-                        <p className="num">
-                          <span className="count">{ProductData && ProductData.data.count_buying} </span>
-                          <span className="text"> اشتروا هذا</span>
-                        </p>
+                    <div className="row mx-auto py-2">
+                      <div className="col-7">
+                        <p className="text-quatity">عدد مرات الشراء: </p>
+                      </div>
+                      <div className="col-5">
+                        <input type="number" value={quantutyCount} name="quantity_count" className="timlands-inputs sm" onChange={(e: any) => setQuantutyCount(e.target.value)} />
                       </div>
                     </div>
-                    <div className="aside-footer-note">
-                      <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
-                    </div>
-                    <div className="aside-footer-addtocart">
-                      {inCart(ProductData.data.id) ?
-                        <button disabled={true} className="btn butt-white butt-lg">
-                          <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
-                          تمت الإضافة
-                        </button>
-                        :
-                        <button
-                          onClick={addToCart}
-                          className="btn butt-primary butt-lg">
-                          <span className="material-icons material-icons-outlined">add_shopping_cart</span>
-                          إضافة إلى السلة
-                        </button>
-                      }
+                    {ProductData.data.developments &&
+                      <div className="panel-aside-body">
+                        <div className="add-devloppers-header">
+                          <h3 className="title">التطويرات المتوفرة</h3>
+                        </div>
+                        <ul className="add-devloppers-nav">
+                          {ProductData.data.developments.map((e: any) => {
+                            return (
+                              <li key={e.id} className="devloppers-item">
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id={"flexCheckDefault-id" + e.id}
+                                    value={e.id}
+                                    onChange={handleOnChangeAddID}
+                                  />
+                                  <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
+                                    {e.title}
+                                    <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
+                                  </label>
+                                </div>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </div>
+                    }
+                    <div className="panel-aside-footer">
+                      <div className="aside-footer-total-price">
+                        <h1 className="price-total me-auto">
+                          <strong>المجموع </strong> 00
+                        </h1>
+                        <div className="bayers-count">
+                          <p className="num">
+                            <span className="count">{ProductData && ProductData.data.count_buying} </span>
+                            <span className="text"> اشتروا هذا</span>
+                          </p>
+                        </div>
+                      </div>
+                      <div className="aside-footer-note">
+                        <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
+                      </div>
+                      <div className="aside-footer-addtocart">
+                        {inCart(ProductData.data.id) ?
+                          <button disabled={true} className="btn butt-white butt-lg">
+                            <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
+                            تمت الإضافة
+                          </button>
+                          :
+                          <button
+                            onClick={addToCart}
+                            className="btn butt-primary butt-lg">
+                            <span className="material-icons material-icons-outlined">add_shopping_cart</span>
+                            إضافة إلى السلة
+                          </button>
+                        }
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Spin>
               </div>
             </div>
           </div>
