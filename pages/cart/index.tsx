@@ -5,6 +5,7 @@ import React, { ReactElement } from 'react'
 import { useCart } from "react-use-cart";
 import CartList from '../../components/Cart/CartList';
 import useSWR from 'swr'
+import Loading from '@/components/Loading';
 
 const testServices = [
     {
@@ -69,6 +70,7 @@ function index() {
             <div className="timwoork-single">
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
+                        {!cartList && <Loading />}
                         {isEmpty ?
                             <div className="cart-nothing">
                                 <div className="cart-nothing-inner">

@@ -19,7 +19,6 @@ import ImageLogo from "next/image";
 import logoIMG from '../../public/logo2.png'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import router from "next/router";
 import { useCart } from "react-use-cart";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";

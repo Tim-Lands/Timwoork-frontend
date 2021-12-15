@@ -154,7 +154,7 @@ const EditSeller = () => {
                                                                                             <option>اختر مستوى المهارة</option>
                                                                                             {!Skills && <option>يرجى الانتظار...</option>}
                                                                                             {Skills && Skills.data.map((e: any) => (
-                                                                                               <option value={e.id}>{e.name_ar}</option>
+                                                                                               <option key={e.id} value={e.id}>{e.name_ar}</option>
                                                                                             ))}
                                                                                         </Field>
                                                                                     </div>

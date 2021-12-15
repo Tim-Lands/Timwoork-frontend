@@ -8,7 +8,6 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
-import Post from '@/components/Post/Post'
 
 function index() {
     const token = Cookies.get('token')
