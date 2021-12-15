@@ -1966,6 +1966,36 @@ h3 {
   font-weight: bold;
 }
 
+.timwoork-single-tags .single-tags-list {
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.timwoork-single-tags .single-tags-list li.title {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.timwoork-single-tags .single-tags-list li a {
+  display: block;
+  padding: 6px 13px;
+  color: #444;
+  font-size: 13px;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  margin-left: 3px;
+}
+
+.timwoork-single-tags .single-tags-list li a:hover {
+  background-color: #f1f1f1;
+  color: #000;
+}
+
 /*
 -------------------------------------------------------------------------------------------
     Login Panel
@@ -2648,6 +2678,13 @@ h3 {
   border-radius: 5px;
 }
 
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .react-slideshow-container {
+  margin-right: -80px;
+  width: 100%;
+  position: relative;
+  right: -79px;
+}
+
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide {
   position: relative;
   overflow: hidden;
@@ -2690,6 +2727,7 @@ h3 {
 }
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .arrow-navigations {
+  margin-left: -78px !important;
   cursor: pointer;
 }
 
@@ -5141,6 +5179,16 @@ h3 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font-weight: 200;
+}
+
+.cart-list .cart-list-item .cart-item .add-devloppers-nav .devloppers-item .form-check-label {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.cart-list .cart-list-item .cart-item .add-devloppers-nav .devloppers-item .form-check-label .price-duration {
+  font-size: 13px;
   font-weight: 200;
 }
 

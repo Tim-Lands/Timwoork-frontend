@@ -321,6 +321,34 @@ h3 {
         }
     }
 }
+.timwoork-single-tags {
+    .single-tags-list {
+        list-style: none;
+        display: flex;
+        margin: 0;  
+        padding: 0;
+        margin-bottom: 20px;
+        li {
+            &.title {
+                font-weight: bold;
+                padding: 5px;
+            }
+            a {
+                display: block;
+                padding: 6px 13px;
+                color: #444;
+                font-size: 13px;
+                background-color: #f7f7f7;
+                border-radius: 4px;
+                margin-left: 3px;
+                &:hover {
+                    background-color: #f1f1f1;
+                    color: #000;
+                }
+            }
+        }
+    }
+}
 /*
 -------------------------------------------------------------------------------------------
     Login Panel
@@ -836,6 +864,12 @@ h3 {
                 background-color: #fff;
                 padding: 18px;
                 border-radius: 5px;
+                .react-slideshow-container {
+                    margin-right: -80px;
+                    width: 100%;
+                    position: relative;
+                    right: -79px;
+                }
                 .each-slide {
                     position: relative;
                     overflow: hidden;
@@ -868,6 +902,7 @@ h3 {
                     }
                 }
                 .arrow-navigations {
+                    margin-left: -78px !important;
                     cursor: pointer;
                     .material-icons-outlined {
                         color: #fff;
@@ -2760,6 +2795,14 @@ h3 {
                 .devloppers-item {
                     display: flex;
                     font-weight: 200;
+                    .form-check-label {
+                        font-weight: bold;
+                        font-size: 15px;
+                        .price-duration {
+                            font-size: 13px;
+                            font-weight: 200;
+                        }
+                    }
                 }
             }
             .cart-item-content {

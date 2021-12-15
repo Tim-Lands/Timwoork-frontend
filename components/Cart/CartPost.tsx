@@ -6,7 +6,20 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
     const [checkedState, setCheckedState] = useState(
         new Array(developments.length).fill(false)
     );
-
+    function DevdurationFunc(duration) {
+        if (duration == 1) {
+          return 'يوم واحد'
+        }
+        if (duration == 2) {
+          return 'يومين'
+        }
+        if (duration > 2 && duration < 11) {
+          return duration + ' أيام '
+        }
+        if (duration >= 11) {
+          return duration + ' يوم '
+        }
+      }
     const [total, setTotal] = useState(0);
     const handleOnChange = (position) => {
         const updatedCheckedState = checkedState.map((item, index) =>
@@ -56,6 +69,7 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                                                 />
                                                 <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                                                     {e.title}
+                                                    <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
                                                 </label>
                                             </div>
                                             <div className="devloppers-price ml-auto">

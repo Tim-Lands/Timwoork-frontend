@@ -45,7 +45,7 @@ function CartList({ listItem }): ReactElement {
                         title={item.title}
                         author={item.author}
                         price={item.price}
-                        itemTotal={item.itemTotal}
+                        itemTotal={item.total_price}
                         developments={item.developments}
                         updateItemQuantity={updateItemQuantity} />
                 ))}

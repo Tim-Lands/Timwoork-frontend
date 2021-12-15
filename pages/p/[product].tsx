@@ -18,12 +18,6 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 import NotFound from "@/components/NotFound";
 
-const slideImages = [
-  "/slide_2.png",
-  "/slide_3.jpg",
-  "/homepage.jpg"
-];
-
 const properties = {
   duration: 5000,
   transitionDuration: 500,
@@ -33,7 +27,7 @@ const properties = {
 }
 
 // 
-const getFormattedPrice = (price: number) => `$${price}`;
+//const getFormattedPrice = (price: number) => `$${price}`;
 
 function Single({ query }) {
 
@@ -43,7 +37,7 @@ function Single({ query }) {
   const myLoader = () => {
     return `${APIURL}${ProductData && ProductData.data.profile_seller.profile.avatar}`;
   }
-  const [checkedState, setCheckedState] = useState(
+ /* const [checkedState, setCheckedState] = useState(
     new Array(ProductData && ProductData.data.developments.length).fill(false)
   );
 
@@ -65,7 +59,7 @@ function Single({ query }) {
     );
 
     setTotal(totalPrice + (ProductData && ProductData.data.price));
-  };
+  };*/
   const showStars = () => {
     const rate = ProductData.data.ratings_avg || 0
     const xAr: any = [
@@ -146,13 +140,11 @@ function Single({ query }) {
   );
   const { addItem, inCart } = useCart();
   const addToCart = async () => {
-    console.log(checkedState);
-    
     try {
-      const res = await API.post("api/profiles/step_one", {
+      const res = await API.post("api/cart/store", {
         quantity: 1,
         product_id: ProductData.data.id,
-        developments: ProductData.data.developments,
+        developments: theIDs,
       }, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -179,13 +171,12 @@ function Single({ query }) {
         addItem({
           id: ProductData.data.id,
           title: ProductData.data.title,
-          checkedState: checkedState,
           color: "Neon Emerald with Dark Neptune",
           size: "US 9",
           developments: ProductData.data.developments,
           width: "B - Standard",
           sku: "W1080LN9",
-          price: total + ProductData.data.price,
+          price: ProductData.data.price,
         }, ProductData.data.id)
       }
     } catch (error: any) {
@@ -222,6 +213,15 @@ function Single({ query }) {
       return duration + ' يوم '
     }
   }
+  const APIURL2 = 'https://api.timwoork.com/products/galaries-images/'
+  const [theIDs, settheIDs] = useState([])
+  const handleOnChangeAddID = event => {
+    let newArray = [...theIDs, event.target.value];
+    if (theIDs.includes(event.target.value)) {
+      newArray = newArray.filter(day => day !== event.target.value);
+    }
+    settheIDs(newArray);
+  };
   return (
     <>
       {!ProductData && <Loading />}
@@ -296,9 +296,9 @@ function Single({ query }) {
                 <div className="timwoork-single-content">
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
-                      {slideImages.map((each, index) => (
+                      {ProductData && ProductData.data.galaries.map((each: any, index) => (
                         <div key={index} className="each-slide">
-                          <div className="images-slider" style={{ backgroundImage: `url(${each})` }}></div>
+                          <div className="images-slider" style={{ backgroundImage: `url(${APIURL2}${each.path})` }}></div>
                         </div>
                       ))}
                     </Slide>
@@ -486,7 +486,7 @@ function Single({ query }) {
                         <h3 className="title">التطويرات المتوفرة</h3>
                       </div>
                       <ul className="add-devloppers-nav">
-                        {ProductData.data.developments.map((e: any, index) => {
+                        {ProductData.data.developments.map((e: any) => {
                           return (
                             <li key={e.id} className="devloppers-item">
                               <div className="form-check">
@@ -494,29 +494,29 @@ function Single({ query }) {
                                   className="form-check-input"
                                   type="checkbox"
                                   id={"flexCheckDefault-id" + e.id}
-                                  value={e.price}
-                                  checked={checkedState[index]}
-                                  onChange={() => handleOnChange(index)}
+                                  value={e.id}
+                                  onChange={handleOnChangeAddID}
                                 />
                                 <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                                   {e.title}
-                                  <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}</p>
+                                  <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
                                 </label>
                               </div>
                             </li>
                           )
                         })}
                       </ul>
+                      {theIDs}
                     </div>
                   }
                   <div className="panel-aside-footer">
                     <div className="aside-footer-total-price">
                       <h1 className="price-total me-auto">
-                        <strong>المجموع </strong> {getFormattedPrice(total)}
+                        <strong>المجموع </strong> 00
                       </h1>
                       <div className="bayers-count">
                         <p className="num">
-                          <span className="count">5 </span>
+                          <span className="count">{ProductData && ProductData.data.count_buying} </span>
                           <span className="text"> اشتروا هذا</span>
                         </p>
                       </div>
