@@ -289,10 +289,10 @@ function Single({ query }) {
                       </li>
                       <li className="level-item">
                         <span className="text-level">
-                          المستوى
+                          المستوى:
                         </span>
                         <span className="value-level">
-                          بائع محترف
+                          {ProductData && ProductData.data.profile_seller.level.name_ar}
                         </span>
                       </li>
                     </ul>
@@ -356,7 +356,7 @@ function Single({ query }) {
                               </h3>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> الشارة الذهبية
+                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.badge.name_ar}
                                 </li>
                                 <li>
                                   <span className="material-icons material-icons-outlined">place</span> الجزائر
