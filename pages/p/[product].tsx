@@ -284,7 +284,7 @@ function Single({ query }) {
                           {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
                         </span>
                         <span className="stars-count">
-                          (90)
+                          ({ProductData.data.ratings_avg})
                         </span>
                       </li>
                       <li className="level-item">

@@ -142,8 +142,8 @@ const EditSeller = () => {
                                                             <>
                                                                 <div className="row">
                                                                     {values.skills.map((development, index) => (
-                                                                        <div className="col-sm-6 p-0">
-                                                                            <motion.div initial={{ y: -7, opacity: 0 }} exit={{ y: -7, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="develop-price mx-1" key={index}>
+                                                                        <div className="col-sm-6 p-0" key={index}>
+                                                                            <motion.div initial={{ y: -7, opacity: 0 }} exit={{ y: -7, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="develop-price mx-1">
                                                                                 <div className="row">
                                                                                     <div className="col-sm-6">
                                                                                         <div className="timlands-form">
