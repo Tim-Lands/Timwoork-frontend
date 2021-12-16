@@ -51,6 +51,9 @@
     font-weight: 600;
     display: block;
     margin-bottom: 6px;
+    &.sm {
+        font-size: 12px !important;
+    }
 }
 .timlands-form {
     padding: 12px 0;

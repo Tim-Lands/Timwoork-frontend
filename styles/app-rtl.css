@@ -148,6 +148,10 @@
   margin-bottom: 6px;
 }
 
+.label-block.sm {
+  font-size: 12px !important;
+}
+
 .timlands-form {
   padding: 12px 0;
   position: relative;
