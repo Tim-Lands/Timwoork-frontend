@@ -91,8 +91,6 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                                     onChange={(e: any) => setQuan(e.target.value)}
                                 />
                             </li>
-                            git config --global user.email "you@example.com"
-                            git config --global user.name "Your Name"
                             <li>
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
