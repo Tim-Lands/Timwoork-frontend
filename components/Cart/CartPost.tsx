@@ -2,10 +2,8 @@ import { motion } from 'framer-motion'
 import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 
-function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, developments }): ReactElement {
-    const [checkedState, setCheckedState] = useState(
-        new Array(developments.length).fill(false)
-    );
+function CartPost({ id, quantity, product_id, title, price, itemTotal, developments, deleteItem, updateItem }): ReactElement {
+    const [quan, setQuan] = useState(1)
     function DevdurationFunc(duration) {
         if (duration == 1) {
           return 'يوم واحد'
@@ -20,25 +18,6 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
           return duration + ' يوم '
         }
       }
-    const [total, setTotal] = useState(0);
-    const handleOnChange = (position) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-            index === position ? !item : item
-        );
-        setCheckedState(updatedCheckedState);
-
-        const totalPrice = updatedCheckedState.reduce(
-            (sum, currentState, index) => {
-                if (currentState === true) {
-                    return sum + developments[index].price;
-                }
-                return sum;
-            },
-            0
-        );
-
-        setTotal(totalPrice);
-    };
     return (
         <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item">
             <div className="row">
@@ -55,25 +34,20 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                             }}>{title}</h2>
                         <div className="panel-aside-body">
                             <ul className="add-devloppers-nav">
-                                {developments.map((e: any, index) => {
+                                {developments.map((e: any) => {
                                     return (
-                                        <li key={e.id} className="devloppers-item">
+                                        <li key={e.development_id} className="devloppers-item">
                                             <div className="form-check me-auto">
                                                 <input
                                                     className="form-check-input"
                                                     type="checkbox"
-                                                    id={"flexCheckDefault-id" + e.id}
+                                                    id={"flexCheckDefault-id" + e.development_id}
                                                     value={e.price}
-                                                    checked={checkedState[index]}
-                                                    onChange={() => handleOnChange(index)}
                                                 />
-                                                <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
+                                                <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.development_id}>
                                                     {e.title}
                                                     <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
                                                 </label>
-                                            </div>
-                                            <div className="devloppers-price ml-auto">
-                                                <p className="price-number">{e.price}$</p>
                                             </div>
                                         </li>
                                     )
@@ -94,7 +68,7 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                         >
                             <li style={{ fontSize: 13, color: '#777', }}><span>عدد المرات: </span>{quantity}</li>
                             <li style={{ fontSize: 13, color: '#777', }}><span>السعر: </span>{price}$</li>
-                            <li style={{ fontSize: 13, color: '#777', }}><strong>الإجمالي: </strong>{itemTotal + total}$</li>
+                            <li style={{ fontSize: 13, color: '#777', }}><strong>الإجمالي: </strong>{itemTotal}$</li>
                         </ul>
                     </div>
                 </div>
@@ -109,23 +83,16 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                             }}
                         >
                             <li>
-                                <motion.button
-                                    whileTap={{ scale: 0.9 }}
-                                    className="addquantity"
-                                    style={{
-                                        display: 'flex',
-                                        width: 35,
-                                        height: 35,
-                                        borderRadius: '50%',
-                                        alignItems: 'center',
-                                        alignContent: 'center',
-                                        justifyContent: 'center',
-                                        color: '#fff',
-                                    }}
-                                    onClick={() => updateItemQuantity(id, quantity + 1)}>
-                                    <span className="material-icons material-icons-outlined">add</span>
-                                </motion.button>
+                                <input 
+                                    type="number"
+                                    value={quan}
+                                    onKeyUp={() => updateItem(id, {product_id, quantity: Number(quan)})} 
+                                    className="timlands-inputs sm" 
+                                    onChange={(e: any) => setQuan(e.target.value)}
+                                />
                             </li>
+                            git config --global user.email "you@example.com"
+                            git config --global user.name "Your Name"
                             <li>
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
@@ -140,7 +107,7 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
                                         justifyContent: 'center',
                                         color: '#fff',
                                     }}
-                                    onClick={() => updateItemQuantity(id, quantity - 1)}>
+                                    onClick={() => deleteItem(id)}>
                                     <span className="material-icons material-icons-outlined">remove</span>
                                 </motion.button>
                             </li>
@@ -154,11 +121,13 @@ function CartPost({ id, quantity, title, price, itemTotal, updateItemQuantity, d
 CartPost.propTypes = {
     title: PropTypes.string,
     id: PropTypes.any,
+    product_id: PropTypes.any,
     quantity: PropTypes.number,
     author: PropTypes.string,
     itemTotal: PropTypes.number,
     price: PropTypes.number,
-    updateItemQuantity: PropTypes.func,
+    deleteItem: PropTypes.func,
+    updateItem: PropTypes.func,
     developments: PropTypes.array,
 };
 

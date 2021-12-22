@@ -292,7 +292,7 @@ function Single({ query }) {
                           المستوى:
                         </span>
                         <span className="value-level">
-                          {ProductData && ProductData.data.profile_seller.level.name_ar}
+                          {ProductData.data.profile_seller.level == null ? 'مستخدم جديد' : ProductData.data.profile_seller.level.name_ar}
                         </span>
                       </li>
                     </ul>
@@ -356,7 +356,7 @@ function Single({ query }) {
                               </h3>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.badge.name_ar}
+                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge == null ? 'مستخدم جديد' : ProductData.data.profile_seller.badge.name_ar }
                                 </li>
                                 <li>
                                   <span className="material-icons material-icons-outlined">place</span> الجزائر
@@ -525,7 +525,7 @@ function Single({ query }) {
                     <div className="panel-aside-footer">
                       <div className="aside-footer-total-price">
                         <h1 className="price-total me-auto">
-                          <strong>المجموع </strong> 00
+                          <strong>المجموع </strong> {ProductData && ProductData.data.price}$
                         </h1>
                         <div className="bayers-count">
                           <p className="num">

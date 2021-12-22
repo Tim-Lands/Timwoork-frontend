@@ -1,28 +1,66 @@
 import Layout from '@/components/Layout/HomeLayout'
 import PostsAside from '@/components/PostsAside';
 import router from 'next/router';
-import React, { ReactElement } from 'react'
-import { useCart } from "react-use-cart";
-import CartList from '../../components/Cart/CartList';
-import useSWR from 'swr'
+import API from '../../config'
+import React, { ReactElement, useState } from 'react'
+//import CartList from '../../components/Cart/CartList';
+import useSWR, { mutate } from 'swr'
+import Cookies from 'js-cookie'
 import Loading from '@/components/Loading';
+import CartPost from '@/components/Cart/CartPost';
+import { message, Spin } from 'antd';
 
 function index() {
-    const {
-        isEmpty,
-        totalUniqueItems,
-        items,
-    } = useCart();
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
-
+    const [isLoading, setIsLoading] = useState(false)
     const { data: cartList }: any = useSWR('api/cart')
+    const deleteItem = async (id: any) => {
+        const token = Cookies.get('token')
+        setIsLoading(true)
+        try {
+            const res = await API.post(`api/cart/cartitem/delete/${id}`, null, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                setIsLoading(false)
+              message.success('لقد تم التحديث بنجاح')
+              mutate('api/cart')
+            }
+          } catch (error: any) {
+            setIsLoading(false)
+            message.error('حدث خطأ غير متوقع')
+          }
+    }
+    const updateItem = async (id: any, values: any) => {
+        const token = Cookies.get('token')
+        setIsLoading(true)
+        try {
+            const res = await API.post(`api/cart/cartitem/update/${id}`, values, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                setIsLoading(false)
+              message.success('لقد تم التحديث بنجاح')
+              mutate('api/cart')
+            }
+          } catch (error: any) {
+            setIsLoading(false)
+            message.error('حدث خطأ غير متوقع')
+          }
+    }
     return (
         <>
             <div className="timwoork-single">
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
-                        {isEmpty ?
+                        {cartList && cartList.data == null ?
                             <div className="cart-nothing">
                                 <div className="cart-nothing-inner">
                                     <div className="cart-nothing-img">
@@ -34,17 +72,59 @@ function index() {
                                     </div>
                                 </div>
                             </div> :
-                            <div className="timwoork-single-post bg-white mt-4">
-                                <div className="timwoork-single-header">
-                                    <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات ({totalUniqueItems})</h1>
+                            <Spin spinning={isLoading}>
+                                <div className="timwoork-single-post bg-white mt-4">
+                                    <div className="timwoork-single-header">
+                                        <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات </h1>
+                                    </div>
+                                    {/*<CartList listItem={cartList && cartList.data.cart_items} />*/}
+                                    <div className="cart-list">
+                                        <ul className="cart-list-item" style={{ listStyle: 'none', margin: 0, padding: 0, }}>
+                                            {cartList && cartList.data.cart_items.map((e: any) => (
+                                                <CartPost
+                                                key={e.id}
+                                                id={e.id}
+                                                quantity={e.quantity}
+                                                title={e.title_product}
+                                                product_id={e.product_id}
+                                                price={e.price_product_spicify}
+                                                itemTotal={e.price_product}
+                                                deleteItem={deleteItem}
+                                                updateItem={updateItem}
+                                                developments={e.cart_item_developments} />
+                                            ))}
+                                            <li className="cart-item">
+                                                <div className="d-flex">
+                                                    <div className="cart-item-header me-auto" style={{ padding: 12 }}>
+                                                        <ul
+                                                            className="prices-list"
+                                                            style={{
+                                                                margin: 0,
+                                                                padding: 0,
+                                                                listStyle: 'none',
+                                                            }}
+                                                        >
+                                                            <li style={{ fontSize: 13, color: '#777', }}><span>سعر التحويل: </span>{cartList && cartList.data.tax}$</li>
+                                                            <li style={{ fontSize: 13, color: '#777', }}><span>اجمالي السعر: </span>{cartList && cartList.data.total_price}$</li>
+                                                            <li style={{ fontSize: 13, color: '#777', }}><strong>المجموع: </strong>{cartList && cartList.data.price_with_tax}$</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div className="cart-item-price ml-auto">
+                                                        <h4 className="price-title-total">
+                                                            ${cartList && cartList.data.price_with_tax}
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="cart-list-continue">
+                                        <button onClick={() => router.push('/cart/bill')} className="btn butt-primary butt-lg ml-0">
+                                            اشتري الآن
+                                        </button>
+                                    </div>
                                 </div>
-                                <CartList listItem={items} />
-                                <div className="cart-list-continue">
-                                    <button onClick={() => router.push('/cart/bill')} className="btn butt-primary butt-lg ml-0">
-                                        اشتري الآن
-                                    </button>
-                                </div>
-                            </div>
+                            </Spin>
                         }
                     </div>
                 </div>
