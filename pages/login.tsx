@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from 'next/link'
@@ -10,8 +10,36 @@ import { useRouter } from "next/router";
 import { Alert } from "@/components/Alert/Alert";
 import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
+import { GoogleLogin } from 'react-google-login';
+
+const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 const Login = (props: any): ReactElement => {
+
+    // Login with Google
+
+    const [showloginButton, setShowloginButton] = useState(true);
+    const onLoginSuccess = (res) => {
+
+        //اذهب للصفحة الرئيسية وقم بتسجيل الدخول
+        console.log('Login Success:', res.profileObj);
+        //أرسل هذا الريسبونس الى الباكند
+
+        console.log("userId: " + res.profileObj.googleId);
+        console.log("fullName: " + res.profileObj.name);
+        console.log("firstName: " + res.profileObj.givenName);
+        console.log("lastName: " + res.profileObj.familyName);
+        console.log("userEmail: " + res.profileObj.email);
+        console.log("imageUrl: " + res.profileObj.imageUrl);
+
+        setShowloginButton(false);
+    };
+
+    const onLoginFailure = (res) => {
+        console.log('Login Failed:', res);
+    };
+
+
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.
@@ -71,7 +99,7 @@ const Login = (props: any): ReactElement => {
                                         </div>
                                         <div className="page-header">
                                             <h1 className="title">
-                                            تسجيل الدخول
+                                                تسجيل الدخول
                                             </h1>
                                         </div>
                                         <div className="timlands-form">
@@ -160,6 +188,16 @@ const Login = (props: any): ReactElement => {
                                                     </button>
                                                 </li>
                                             </ul>
+                                            {showloginButton ?
+                                                <GoogleLogin
+                                                    clientId={clientId}
+                                                    buttonText="Sign In"
+                                                    onSuccess={onLoginSuccess}
+                                                    onFailure={onLoginFailure}
+                                                    cookiePolicy={'single_host_origin'}
+                                                    isSignedIn={true}
+                                                    className="btnGoogle" // التصميم يكون بناءا على هذه الكلاس
+                                                /> : null}
                                         </div>
                                     </div>
                                 </div>
