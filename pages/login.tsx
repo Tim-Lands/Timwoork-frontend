@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from 'next/link'
+import API from '../config'
 import { login } from "@/store/auth/authActions";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
@@ -10,36 +11,57 @@ import { useRouter } from "next/router";
 import { Alert } from "@/components/Alert/Alert";
 import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { message } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 const Login = (props: any): ReactElement => {
 
     // Login with Google
+    const [loginLoader, setLoginLoader] = useState(false);
 
-    const [showloginButton, setShowloginButton] = useState(true);
-    const onLoginSuccess = (res) => {
-
-        //اذهب للصفحة الرئيسية وقم بتسجيل الدخول
-        console.log('Login Success:', res.profileObj);
+    const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
 
-        console.log("userId: " + res.profileObj.googleId);
-        console.log("fullName: " + res.profileObj.name);
-        console.log("firstName: " + res.profileObj.givenName);
-        console.log("lastName: " + res.profileObj.familyName);
-        console.log("userEmail: " + res.profileObj.email);
-        console.log("imageUrl: " + res.profileObj.imageUrl);
-
-        setShowloginButton(false);
+        setLoginLoader(true)
+        try {
+            const response = await API.post("api/login/google", {
+                email: res.profileObj.email,
+                first_name: res.profileObj.givenName,
+                last_name: res.profileObj.familyName,
+                full_name: res.profileObj.name,
+                avatar: res.profileObj.imageUrl,
+                provider_id: res.profileObj.googleId
+            })
+            // Authentication was successful.
+            if (response.status === 200) {
+                console.log(response);
+                Cookies.set('token', response.data.data.token)
+                message.success('تم تسجيل الدخول بنجاح')
+                switch (response.data.data.step) {
+                    case 0:
+                        router.push('/user/personalInformations')
+                        break;
+                    case 1:
+                        router.push('/user/personalInformations')
+                        break;
+                    case 2:
+                        router.push('/')
+                        break;
+                    default:
+                        router.push('/')
+                }
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع')
+            setLoginLoader(false)
+        }
     };
 
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };
-
-
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.
@@ -178,9 +200,15 @@ const Login = (props: any): ReactElement => {
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button className="ext-butt">
-                                                        <i className="fab fa-google"></i> | غوغل
-                                                    </button>
+                                                    <GoogleLogin
+                                                        clientId={clientId}
+                                                        buttonText="غوغل"
+                                                        onSuccess={onLoginSuccess}
+                                                        onFailure={onLoginFailure}
+                                                        cookiePolicy={'single_host_origin'}
+                                                        //isSignedIn={true}
+                                                        className="ext-butt"
+                                                    />
                                                 </li>
                                                 <li>
                                                     <button className="ext-butt">
@@ -188,16 +216,8 @@ const Login = (props: any): ReactElement => {
                                                     </button>
                                                 </li>
                                             </ul>
-                                            {showloginButton ?
-                                                <GoogleLogin
-                                                    clientId={clientId}
-                                                    buttonText="Sign In"
-                                                    onSuccess={onLoginSuccess}
-                                                    onFailure={onLoginFailure}
-                                                    cookiePolicy={'single_host_origin'}
-                                                    isSignedIn={true}
-                                                    className="btnGoogle" // التصميم يكون بناءا على هذه الكلاس
-                                                /> : null}
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 
 function CartPost({ id, quantity, product_id, title, price, itemTotal, developments, deleteItem, updateItem }): ReactElement {
-    const [quan, setQuan] = useState(1)
+    const [quan, setQuan] = useState(quantity)
     function DevdurationFunc(duration) {
         if (duration == 1) {
           return 'يوم واحد'
@@ -38,12 +38,6 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                                     return (
                                         <li key={e.development_id} className="devloppers-item">
                                             <div className="form-check me-auto">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id={"flexCheckDefault-id" + e.development_id}
-                                                    value={e.price}
-                                                />
                                                 <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.development_id}>
                                                     {e.title}
                                                     <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
@@ -86,7 +80,7 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                                 <input 
                                     type="number"
                                     value={quan}
-                                    onKeyUp={() => updateItem(id, {product_id, quantity: Number(quan)})} 
+                                    onKeyUp={() => updateItem(id, {product_id, quantity: Number(Math.abs(quan))})} 
                                     className="timlands-inputs sm" 
                                     onChange={(e: any) => setQuan(e.target.value)}
                                 />
@@ -94,11 +88,13 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                             <li>
                                 <motion.button
                                     whileTap={{ scale: 0.9 }}
+                                    transition={{ duration: 0.2 }}
                                     className="removequantity"
+                                    title='إزالة من السلة'
                                     style={{
                                         display: 'flex',
-                                        width: 35,
-                                        height: 35,
+                                        width: 30,
+                                        height: 30,
                                         borderRadius: '50%',
                                         alignItems: 'center',
                                         alignContent: 'center',

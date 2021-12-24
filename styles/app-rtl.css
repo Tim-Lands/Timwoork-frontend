@@ -2092,24 +2092,40 @@ h3 {
 }
 
 .login-panel .login-external-links li .ext-butt {
-  border: 1px solid #f1f1f1;
-  background-color: #f7f7f7;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  border-radius: 6px;
-  padding: 10px 20px;
-  font-size: 13px;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-weight: 200;
+  border: 1px solid #f1f1f1 !important;
+  background-color: #f7f7f7 !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  border-radius: 6px !important;
+  padding: 10px 20px !important;
+  font-size: 13px !important;
+  -ms-flex-line-pack: center !important;
+      align-content: center !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+  font-weight: 200 !important;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  color: #999;
+  color: #999 !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  font-family: 'jf' !important;
+  opacity: 1 !important;
+}
+
+.login-panel .login-external-links li .ext-butt div {
+  margin-right: 0  !important;
+  background: white !important;
+  padding: 0 !important;
+  border-radius: 6px;
+}
+
+.login-panel .login-external-links li .ext-butt span {
+  padding: 0 !important;
+  margin-right: 7px;
 }
 
 .login-panel .login-external-links li .ext-butt:hover {
@@ -5290,16 +5306,24 @@ h3 {
 
 .cart-list .cart-list-item .cart-item .cart-item-price .price-nav li {
   padding: 0 2px;
-}
-
-.cart-list .cart-list-item .cart-item .cart-item-price .price-nav li button {
-  background-color: #57719e;
-  border: 1px solid #57719e;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 35px;
-  height: 35px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-price .price-nav li button {
+  background-color: #ee6363;
+  border: 1px solid #e35454;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -5317,9 +5341,22 @@ h3 {
 }
 
 .cart-list .cart-list-item .cart-item .cart-item-price .price-nav li button:hover {
-  background-color: #5e79a6;
-  border: 1px solid #758cb3;
+  background-color: #ef7171;
+  border: 1px solid #f39191;
   color: #fff;
+}
+
+.edit-button {
+  color: #777;
+  padding: 4px;
+}
+
+.edit-button:hover {
+  color: #475C80;
+}
+
+.edit-button .material-icons {
+  font-size: 17px;
 }
 
 .cart-list-continue {

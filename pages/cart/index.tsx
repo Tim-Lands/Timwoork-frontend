@@ -2,13 +2,14 @@ import Layout from '@/components/Layout/HomeLayout'
 import PostsAside from '@/components/PostsAside';
 import router from 'next/router';
 import API from '../../config'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 //import CartList from '../../components/Cart/CartList';
 import useSWR, { mutate } from 'swr'
 import Cookies from 'js-cookie'
 import Loading from '@/components/Loading';
 import CartPost from '@/components/Cart/CartPost';
 import { message, Spin } from 'antd';
+import { MetaTags } from '@/components/SEO/MetaTags';
 
 function index() {
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
@@ -19,43 +20,63 @@ function index() {
         setIsLoading(true)
         try {
             const res = await API.post(`api/cart/cartitem/delete/${id}`, null, {
-              headers: {
-                'Authorization': `Bearer ${token}`
-              }
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoading(false)
-              message.success('لقد تم التحديث بنجاح')
-              mutate('api/cart')
+                message.success('لقد تم التحديث بنجاح')
+                mutate('api/cart')
             }
-          } catch (error: any) {
+        } catch (error: any) {
             setIsLoading(false)
             message.error('حدث خطأ غير متوقع')
-          }
+        }
     }
     const updateItem = async (id: any, values: any) => {
         const token = Cookies.get('token')
         setIsLoading(true)
         try {
             const res = await API.post(`api/cart/cartitem/update/${id}`, values, {
-              headers: {
-                'Authorization': `Bearer ${token}`
-              }
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoading(false)
-              message.success('لقد تم التحديث بنجاح')
-              mutate('api/cart')
+                message.success('لقد تم التحديث بنجاح')
+                mutate('api/cart')
             }
-          } catch (error: any) {
+        } catch (error: any) {
             setIsLoading(false)
             message.error('حدث خطأ غير متوقع')
-          }
+        }
     }
+    const [isDisable, setIsDisabled] = useState(true)
+    const buyNowBtn = async () => {
+        if (cartList && cartList.data.cart_items_count == 0) {
+            message.error('لا يمكنك الشراء الآن لأن السلة فارغة')
+        } else {
+            message.success('يمكنك الشراء الآن')
+        }
+    }
+    useEffect(() => {
+        if (cartList && cartList.data.cart_items_count == 0) {
+            setIsDisabled(true)
+        } else {
+            setIsDisabled(false)
+        }
+    }, [isDisable])
     return (
         <>
+            <MetaTags
+                title={'سلة المشتريات - تيموورك'}
+                metaDescription={'سلة المشتريات - تيموورك'}
+                ogDescription={'سلة المشتريات - تيموورك'}
+            />
             <div className="timwoork-single">
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
@@ -82,16 +103,16 @@ function index() {
                                         <ul className="cart-list-item" style={{ listStyle: 'none', margin: 0, padding: 0, }}>
                                             {cartList && cartList.data.cart_items.map((e: any) => (
                                                 <CartPost
-                                                key={e.id}
-                                                id={e.id}
-                                                quantity={e.quantity}
-                                                title={e.title_product}
-                                                product_id={e.product_id}
-                                                price={e.price_product_spicify}
-                                                itemTotal={e.price_product}
-                                                deleteItem={deleteItem}
-                                                updateItem={updateItem}
-                                                developments={e.cart_item_developments} />
+                                                    key={e.id}
+                                                    id={e.id}
+                                                    quantity={e.quantity}
+                                                    title={e.title_product}
+                                                    product_id={e.product_id}
+                                                    price={e.price_product_spicify}
+                                                    itemTotal={e.price_product}
+                                                    deleteItem={deleteItem}
+                                                    updateItem={updateItem}
+                                                    developments={e.cart_item_developments} />
                                             ))}
                                             <li className="cart-item">
                                                 <div className="d-flex">
@@ -119,7 +140,7 @@ function index() {
                                         </ul>
                                     </div>
                                     <div className="cart-list-continue">
-                                        <button onClick={() => router.push('/cart/bill')} className="btn butt-primary butt-lg ml-0">
+                                        <button onClick={buyNowBtn} disabled={isDisable} className="btn butt-primary butt-lg ml-0">
                                             اشتري الآن
                                         </button>
                                     </div>

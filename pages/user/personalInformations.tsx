@@ -19,9 +19,8 @@ const personalInformations = () => {
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Countries }: any = useSWR('dashboard/countries')
 
-    const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
-        return `${APIURL}${userInfo.user_details.profile.avatar}`;
+        return `${userInfo.user_details.profile.avatar}`;
     }
     const [avatarState, setavatarState] = useState(null)
     // Redirect to user home route if user is authenticated.
@@ -33,7 +32,7 @@ const personalInformations = () => {
         username: Yup.string().required('هذا الحقل إجباري'),
         country_id: Yup.number().required('هذا الحقل إجباري'),
     });
-    useEffect(() => {
+    useEffect(() => {        
         if (!token) {
             router.push('/login')
         }
@@ -302,7 +301,7 @@ const personalInformations = () => {
                                                             <img src={avatarState} width={100} height={100} /> :
                                                             <ImageLogo
                                                                 loader={myLoader}
-                                                                src={APIURL + userInfo.user_details.profile.avatar}
+                                                                src={userInfo.user_details.profile.avatar}
                                                                 quality={60}
                                                                 width={100}
                                                                 height={100}

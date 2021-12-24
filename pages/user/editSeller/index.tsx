@@ -38,9 +38,9 @@ const EditSeller = () => {
                         <Formik
                             isInitialValid={true}
                             initialValues={{
-                                bio: '',
-                                portfolio: '',
-                                skills: [],
+                                bio: (userInfo && userInfo.user_details.profile.profile_seller.bio) || '',
+                                portfolio: (userInfo && userInfo.user_details.profile.profile_seller.portfolio) || '',
+                                skills: (userInfo && userInfo.user_details.profile.profile_seller.skills) || [],
                             }}
                             validationSchema={SignupSchema}
                             onSubmit={async values => {
@@ -55,6 +55,7 @@ const EditSeller = () => {
                                     // Authentication was successful.
                                     if (res.status === 200) {
                                         message.success('لقد تم التحديث بنجاح')
+                                        router.push('/user/profile')
                                     }
                                 } catch (error: any) {
                                     if (error.response && error.response.status === 200) {

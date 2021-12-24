@@ -91,9 +91,8 @@ function Navbar(props: any): ReactElement {
             </Menu.Item>
         </Menu>
     )
-    const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
-        return `${APIURL}${userData.user_details.profile.avatar}`;
+        return `${userData.user_details.profile.avatar}`;
     }
     return (
         <div className={"timlands-navbar-container" + (scroll ? ' is-shown' : '')}>
@@ -181,7 +180,7 @@ function Navbar(props: any): ReactElement {
                                                         <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
                                                         <ImageLogo
                                                             loader={myLoader}
-                                                            src={APIURL + userData.user_details.profile.avatar}
+                                                            src={userData.user_details.profile.avatar}
                                                             quality={60}
                                                             width={32}
                                                             height={32}

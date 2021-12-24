@@ -1,10 +1,11 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Statistic, Card, Result } from 'antd'
-import React, { ReactElement } from 'react'
+import { Badge, Statistic, Card, Result, message } from 'antd'
+import React, { ReactElement, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
 import Image from 'next/image'
 import router from 'next/router'
+import API from '../../config'
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
@@ -31,9 +32,27 @@ function Profile() {
                 />
             </div>
         </div>)
-    const APIURL = 'https://www.api.timwoork.com/avatars/'
     const myLoader = () => {
-        return `${APIURL}${userInfo.user_details.profile.avatar}`;
+        return `${userInfo.user_details.profile.avatar}`;
+    }
+    const [isLoadingSeler, setIsLoadingSeler] = useState(false)
+    const beseller = async () => {
+        setIsLoadingSeler(true)
+        try {
+            const res = await API.post("api/sellers/store", null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                setIsLoadingSeler(false)
+                router.push('/user/editSeller')
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع')
+            setIsLoadingSeler(false)
+        }
     }
     return (
         <div className="py-3">
@@ -53,14 +72,14 @@ function Profile() {
                                     <div className="be-seller-aside">
                                         <h3 className="title">كن بائعا</h3>
                                         <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
-                                            <button onClick={() => router.push('/user/editSeller')} className='btn butt-green butt-md' style={{ width: '100%' }}>
-                                                إنشاء بروفايل بائع
-                                            </button>
+                                        <button onClick={beseller} disabled={isLoadingSeler} className='btn butt-green butt-md' style={{ width: '100%' }}>
+                                            إنشاء بروفايل بائع
+                                        </button>
                                     </div>
                                 }
                                 {userInfo.user_details.profile.profile_seller &&
                                     <div className="py-1">
-                                        <Card title="نبذة عني">
+                                        <Card title="نبذة عني" extra={<Link href="/user/editSeller"><a className='edit-button flex-center'><span className="material-icons material-icons-outlined">edit</span></a></Link>}>
                                             <p className="user-bro">
                                                 {userInfo.user_details.profile.profile_seller.bio}
                                             </p>
@@ -111,7 +130,7 @@ function Profile() {
                                                     <Image src="/avatar2.jpg" width={120} height={120} /> :
                                                     <Image
                                                         loader={myLoader}
-                                                        src={APIURL + userInfo.user_details.profile.avatar}
+                                                        src={userInfo.user_details.profile.avatar}
                                                         quality={1}
                                                         width={120}
                                                         height={120}
@@ -122,7 +141,9 @@ function Profile() {
                                             </div>
                                         </Badge>
                                         <div className="profile-content-head">
-                                            <h4 className="title">{userInfo.user_details.profile.first_name + ' ' + userInfo.user_details.profile.last_name}</h4>
+                                            <h4 className="title">
+                                                {userInfo.user_details.profile.first_name + ' ' + userInfo.user_details.profile.last_name}
+                                            </h4>
                                             <p className="text">
                                                 @{userInfo.user_details.username} |
                                                 <span className="app-label"> المستوى الأول </span>
@@ -181,7 +202,12 @@ function Profile() {
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">الجنس</h3>
-                                                    <p className="text-value">{userInfo.user_details.profile.gender == null ? '' : userInfo.user_details.profile.gender}</p>
+                                                    <p className="text-value">
+                                                        {
+                                                            userInfo.user_details.profile && userInfo.user_details.profile.gender == null ? '' :
+                                                                userInfo.user_details.profile && (userInfo.user_details.profile.gender == 0 ? 'أنثى' : 'ذكر')
+                                                        }
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div className="col-sm-4">
@@ -192,15 +218,21 @@ function Profile() {
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div className="content-title">
-                                            <div className="d-flex">
-                                                <h3 className="title flex-center">
-                                                    <span className="material-icons material-icons-outlined">account_circle</span>
-                                                    المعلومات التقنية
-                                                </h3>
+                                        {userInfo.user_details.profile.profile_seller &&
+                                            <div className="content-title">
+                                                <div className="d-flex">
+                                                    <h3 className="title flex-center me-auto">
+                                                        <span className="material-icons material-icons-outlined">account_circle</span>
+                                                        المعلومات التقنية
+                                                    </h3>
+                                                    <Link href="/user/editSeller">
+                                                        <a className='edit-button flex-center ml-auto'>
+                                                            <span className="material-icons material-icons-outlined">edit</span>
+                                                        </a>
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
                                         <div className="row">
                                             {userInfo.user_details.profile.profile_seller &&
                                                 <div className="col-sm-6">

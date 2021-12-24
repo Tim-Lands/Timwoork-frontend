@@ -15,7 +15,7 @@ const User = ({ query }) => {
     // Return statement.
     const { data: userInfo, error }: any = useSWR(`api/profiles/${query.user}`)
     const User = userInfo && userInfo.data
-    const APIURL = 'https://www.api.timwoork.com/avatars/'
+    const APIURL = ''
     const myLoader = () => {
         return `${APIURL}${User.profile.avatar}`;
     }
@@ -128,7 +128,12 @@ const User = ({ query }) => {
                                         <div className="col-sm-4">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الجنس</h3>
-                                                <p className="text-value">{User.profile && User.profile.gender == null ? '' : userInfo.data.profile && userInfo.data.profile.gender}</p>
+                                                <p className="text-value">
+                                                    {
+                                                    User.profile && User.profile.gender == null ? '' : 
+                                                    User.profile && (User.profile.gender == 0 ? 'أنثى' : 'ذكر')
+                                                    }
+                                                </p>
                                             </div>
                                         </div>
                                         <div className="col-sm-4">
