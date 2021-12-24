@@ -25,51 +25,51 @@ function Post({
     const showStars = () => {
         const xAr: any = [
             {
-              id: 1,
-              name: <span className="material-icons-outlined">star</span>
+                id: 1,
+                name: <span className="material-icons-outlined">star</span>
             },
             {
-              id: 2,
-              name: <span className="material-icons-outlined">star</span>
+                id: 2,
+                name: <span className="material-icons-outlined">star</span>
             },
             {
-              id: 3,
-              name: <span className="material-icons-outlined">star</span>
+                id: 3,
+                name: <span className="material-icons-outlined">star</span>
             },
             {
-              id: 4,
-              name: <span className="material-icons-outlined">star</span>
+                id: 4,
+                name: <span className="material-icons-outlined">star</span>
             },
             {
-              id: 5,
-              name: <span className="material-icons-outlined">star</span>
+                id: 5,
+                name: <span className="material-icons-outlined">star</span>
             },
-          ]
-          const yAr: any = [
+        ]
+        const yAr: any = [
             {
-              id: 6,
-              name: <span className="material-icons-outlined outline-star">star_border</span>
-            },
-            {
-              id: 7,
-              name: <span className="material-icons-outlined outline-star">star_border</span>
+                id: 6,
+                name: <span className="material-icons-outlined outline-star">star_border</span>
             },
             {
-              id: 8,
-              name: <span className="material-icons-outlined outline-star">star_border</span>
+                id: 7,
+                name: <span className="material-icons-outlined outline-star">star_border</span>
             },
             {
-              id: 9,
-              name: <span className="material-icons-outlined outline-star">star_border</span>
+                id: 8,
+                name: <span className="material-icons-outlined outline-star">star_border</span>
             },
             {
-              id: 10,
-              name: <span className="material-icons-outlined outline-star">star_border</span>
+                id: 9,
+                name: <span className="material-icons-outlined outline-star">star_border</span>
             },
-          ]
+            {
+                id: 10,
+                name: <span className="material-icons-outlined outline-star">star_border</span>
+            },
+        ]
 
         const x: number = 5
-        const y: number = x - rate
+        const y: number = x - Number(rate)
         const yut: any = xAr.slice(y)
         if (y == 0) {
             return yut
@@ -80,18 +80,14 @@ function Post({
     }
     return (
         <div className={"timlands-post-item" + sizeClass()}>
-            <Link href={`/p/${slug}`}>
-                <a>
-                    <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
-                </a>
-            </Link>
+            <a href={`/p/${slug}`}>
+                <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
+            </a>
             <div className="post-item-content">
                 <h3 className="title">
-                    <Link href={`/p/${slug}`}>
-                        <a>
-                            {title}
-                        </a>
-                    </Link>
+                    <a href={`/p/${slug}`}>
+                        {title}
+                    </a>
                 </h3>
                 <ul className="nav post-meta">
                     <li className="post-meta-user">
