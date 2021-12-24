@@ -3,15 +3,58 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from 'next/link'
+import API from '../config'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import { motion } from "framer-motion";
 import { register } from "@/store/auth/authActions";
+import { GoogleLogin } from 'react-google-login';
 import Cookies from 'js-cookie'
 import { Alert } from "@/components/Alert/Alert";
 import { MetaTags } from '@/components/SEO/MetaTags'
+import { message } from "antd";
 
+const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (props: any): ReactElement => {
+    const onLoginSuccess = async (res) => {
+        //أرسل هذا الريسبونس الى الباكند
+
+        try {
+            const response = await API.post("api/login/google", {
+                email: res.profileObj.email,
+                first_name: res.profileObj.givenName,
+                last_name: res.profileObj.familyName,
+                full_name: res.profileObj.name,
+                avatar: res.profileObj.imageUrl,
+                provider_id: res.profileObj.googleId
+            })
+            // Authentication was successful.
+            if (response.status === 200) {
+                console.log(response);
+                Cookies.set('token', response.data.data.token)
+                message.success('تم تسجيل الدخول بنجاح')
+                switch (response.data.data.step) {
+                    case 0:
+                        router.push('/user/personalInformations')
+                        break;
+                    case 1:
+                        router.push('/user/personalInformations')
+                        break;
+                    case 2:
+                        router.push('/')
+                        break;
+                    default:
+                        router.push('/')
+                }
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع')
+        }
+    };
+
+    const onLoginFailure = (res) => {
+        console.log('Login Failed:', res);
+    };
     // Redirect to user home route if user is authenticated.
     const token = Cookies.get('token')
     useEffect(() => {
@@ -159,9 +202,15 @@ const Register = (props: any): ReactElement => {
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button className="ext-butt">
-                                                        <i className="fab fa-google"></i> | غوغل
-                                                    </button>
+                                                <GoogleLogin
+                                                        clientId={clientId}
+                                                        buttonText="غوغل"
+                                                        onSuccess={onLoginSuccess}
+                                                        onFailure={onLoginFailure}
+                                                        cookiePolicy={'single_host_origin'}
+                                                        //isSignedIn={true}
+                                                        className="ext-butt"
+                                                    />
                                                 </li>
                                                 <li>
                                                     <button className="ext-butt">

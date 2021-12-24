@@ -1,6 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
 import PostsAside from '@/components/PostsAside';
-import router from 'next/router';
 import API from '../../config'
 import React, { ReactElement, useEffect, useState } from 'react'
 //import CartList from '../../components/Cart/CartList';

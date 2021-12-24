@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from 'next/link'
@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { Alert } from "@/components/Alert/Alert";
 import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import { message } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
@@ -19,12 +19,9 @@ const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleuser
 const Login = (props: any): ReactElement => {
 
     // Login with Google
-    const [loginLoader, setLoginLoader] = useState(false);
-
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
 
-        setLoginLoader(true)
         try {
             const response = await API.post("api/login/google", {
                 email: res.profileObj.email,
@@ -55,7 +52,6 @@ const Login = (props: any): ReactElement => {
             }
         } catch (error: any) {
             message.error('حدث خطأ غير متوقع')
-            setLoginLoader(false)
         }
     };
 
