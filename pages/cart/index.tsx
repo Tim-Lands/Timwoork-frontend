@@ -48,6 +48,7 @@ function index() {
                 setIsLoading(false)
                 message.success('لقد تم التحديث بنجاح')
                 mutate('api/cart')
+                mutate('api/me')
             }
         } catch (error: any) {
             setIsLoading(false)
@@ -56,7 +57,7 @@ function index() {
     }
     const [isDisable, setIsDisabled] = useState(true)
     const buyNowBtn = async () => {
-        if (cartList && cartList.data.cart_items_count == 0) {
+        if ((cartList && cartList.data.cart_items_count == 0) || (cartList && cartList.data.price_with_tax == 0)) {
             message.error('لا يمكنك الشراء الآن لأن السلة فارغة')
         } else {
             message.success('يمكنك الشراء الآن')

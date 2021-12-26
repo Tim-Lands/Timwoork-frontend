@@ -7,8 +7,7 @@ import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 //import { useTranslation } from "react-i18next";
 import Image from 'next/image'
-import { useCart } from "react-use-cart";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
 import { Dropdown, message, Spin, Menu, notification } from 'antd'
 import { MetaTags } from '@/components/SEO/MetaTags'
@@ -64,7 +63,7 @@ function Single({ query }) {
      setTotal(totalPrice + (ProductData && ProductData.data.price));
    };*/
   const showStars = () => {
-    const rate = ProductData.data.ratings_avg || 0
+    const rate = Number(ProductData.data.ratings_avg) || 0
     const xAr: any = [
       {
         id: 1,
@@ -111,7 +110,7 @@ function Single({ query }) {
     ]
 
     const x: number = 5
-    const y: number = x - rate
+    const y: number = x - Number(rate)
     const yut: any = xAr.slice(y)
     if (rate == null) {
       return 0
@@ -141,7 +140,6 @@ function Single({ query }) {
       }
     </Menu>
   );
-  const { addItem, inCart } = useCart();
   const addToCart = async () => {
     setIsLoadingCart(true)
     try {
@@ -156,6 +154,8 @@ function Single({ query }) {
       })
       // Authentication was successful.
       if (res.status === 200) {
+        mutate('api/me')
+
         message.success('لقد تم التحديث بنجاح')
         const key = `open${Date.now()}`;
         const btn = (
@@ -172,16 +172,6 @@ function Single({ query }) {
           key,
           onClose: close,
         });
-        addItem({
-          id: ProductData.data.id,
-          title: ProductData.data.title,
-          color: "Neon Emerald with Dark Neptune",
-          size: "US 9",
-          developments: ProductData.data.developments,
-          width: "B - Standard",
-          sku: "W1080LN9",
-          price: ProductData.data.price,
-        }, ProductData.data.id)
         setIsLoadingCart(false)
       }
     } catch (error: any) {
@@ -538,19 +528,19 @@ function Single({ query }) {
                         <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
                       </div>
                       <div className="aside-footer-addtocart">
-                        {inCart(ProductData.data.id) ?
-                          <button disabled={true} className="btn butt-white butt-lg">
+                        
+                          {/*<button disabled={true} className="btn butt-white butt-lg">
                             <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
                             تمت الإضافة
-                          </button>
-                          :
+                          </button>*/}
+                          
                           <button
                             onClick={addToCart}
                             className="btn butt-primary butt-lg">
                             <span className="material-icons material-icons-outlined">add_shopping_cart</span>
                             إضافة إلى السلة
                           </button>
-                        }
+                        
                       </div>
                     </div>
                   </div>

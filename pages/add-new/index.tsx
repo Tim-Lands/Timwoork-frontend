@@ -39,7 +39,14 @@ function index(props: any) {
                                     <p className="text">
                                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                                     </p>
-                                    {userData && userData.user_details.profile.is_seller == 0 && 
+                                    {!userData && 
+                                        <div className="add-butts">
+                                            <button type="button" disabled={true} className="btn butt-md butt-white" onClick={props.addNewProduct}>
+                                                يرجى الإنتظار...
+                                            </button>
+                                        </div>
+                                    }
+                                    {userData && userData.user_details.profile.is_seller == 1 && 
                                         <div className="add-butts">
                                             <button type="button" className="btn butt-md butt-primary2" onClick={props.addNewProduct}>
                                                 إضافة خدمة

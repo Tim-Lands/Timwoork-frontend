@@ -19,7 +19,6 @@ import ImageLogo from "next/image";
 import logoIMG from '../../public/logo2.png'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import { useCart } from "react-use-cart";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
@@ -33,7 +32,6 @@ function Navbar(props: any): ReactElement {
     const setIsMenuShowenHandle = () => {
         setIsMenuShowen(!isMenuShowen)
     }
-    const { totalUniqueItems } = useCart();
     useEffect(() => {
         window.addEventListener("scroll", () => {
             setScroll(window.scrollY > 60);
@@ -116,7 +114,6 @@ function Navbar(props: any): ReactElement {
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">
-
                         <li className="right-butts-icon">
                             <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
                                 <motion.a whileTap={{ scale: 0.9 }}>
@@ -132,7 +129,6 @@ function Navbar(props: any): ReactElement {
                         </li>
                         {token ?
                             <>
-
                                 {!userData &&
                                     <li className="nav-loading">
                                         <p className="loading-text">
@@ -146,7 +142,7 @@ function Navbar(props: any): ReactElement {
                                             <Tooltip placement="bottom" title='سلة المشتريات'>
                                                 <Link href='/cart'>
                                                     <motion.a whileTap={{ scale: 0.9 }}>
-                                                        <Badge count={totalUniqueItems} offset={[2, -1]}>
+                                                        <Badge count={userData && userData.cart_items_count} offset={[2, -1]}>
                                                             <i className="material-icons material-icons-outlined">shopping_cart</i>
                                                         </Badge>
                                                     </motion.a>
@@ -217,41 +213,6 @@ function Navbar(props: any): ReactElement {
                     </ul>
                 </div>
             </nav>
-            {/*<motion.nav transition={{ duration: 0.8 }} style={{ position: 'relative', zIndex: 500 }} initial={{ y: -90, opacity: 0 }} animate={(scroll ? { y: 0, opacity: 1 } : { y: -90, opacity: 0 })} className={'timlands-sub-navbar'}>
-                <ul className="nav sub-navbar-cats">
-                    <li className="category-title">التصنيفات الشائعة</li>
-                    <li className="category-item active">
-                        <Link href="">
-                            <a className="category-link">التصميم الغرافيكي</a>
-                        </Link>
-                    </li>
-                    <li className="category-item">
-                        <Link href="">
-                            <a className="category-link">التسويق الرقمي</a>
-                        </Link>
-                    </li>
-                    <li className="category-item">
-                        <Link href="">
-                            <a className="category-link">الكتابة والترجمة</a>
-                        </Link>
-                    </li>
-                    <li className="category-item">
-                        <Link href="">
-                            <a className="category-link">الفيديوهات والحركات</a>
-                        </Link>
-                    </li>
-                    <li className="category-item">
-                        <Link href="">
-                            <a className="category-link">برمجة وتقنيات</a>
-                        </Link>
-                    </li>
-                    <li className="category-item">
-                        <Link href="">
-                            <a className="category-link">إدارة أعمال</a>
-                        </Link>
-                    </li>
-                </ul>
-            </motion.nav>*/}
         </div>
     );
 }
