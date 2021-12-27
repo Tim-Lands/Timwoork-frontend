@@ -292,9 +292,12 @@ function Single({ query }) {
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
                       {ProductData && ProductData.data.galaries.map((each: any, index) => (
-                        <div key={index} className="each-slide">
-                          <div className="images-slider" style={{ backgroundImage: `url(${APIURL2}${each.path})` }}></div>
-                        </div>
+                        <>
+                          {each.url_video == null ? <div key={index} className="each-slide">
+                            <div className="images-slider" style={{ backgroundImage: `url(${APIURL2}${each.path})` }}></div>
+                          </div> : ''}
+
+                        </>
                       ))}
                     </Slide>
                     <div className="timwoork-single-product-detailts">
@@ -346,7 +349,7 @@ function Single({ query }) {
                               </h3>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge == null ? 'مستخدم جديد' : ProductData.data.profile_seller.badge.name_ar }
+                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge == null ? 'مستخدم جديد' : ProductData.data.profile_seller.badge.name_ar}
                                 </li>
                                 <li>
                                   <span className="material-icons material-icons-outlined">place</span> الجزائر
@@ -528,19 +531,19 @@ function Single({ query }) {
                         <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
                       </div>
                       <div className="aside-footer-addtocart">
-                        
-                          {/*<button disabled={true} className="btn butt-white butt-lg">
+
+                        {/*<button disabled={true} className="btn butt-white butt-lg">
                             <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
                             تمت الإضافة
                           </button>*/}
-                          
-                          <button
-                            onClick={addToCart}
-                            className="btn butt-primary butt-lg">
-                            <span className="material-icons material-icons-outlined">add_shopping_cart</span>
-                            إضافة إلى السلة
-                          </button>
-                        
+
+                        <button
+                          onClick={addToCart}
+                          className="btn butt-primary butt-lg">
+                          <span className="material-icons material-icons-outlined">add_shopping_cart</span>
+                          إضافة إلى السلة
+                        </button>
+
                       </div>
                     </div>
                   </div>

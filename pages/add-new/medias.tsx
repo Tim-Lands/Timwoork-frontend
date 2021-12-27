@@ -3,13 +3,17 @@ import { ReactElement, useState } from "react";
 import Cookies from 'js-cookie'
 import ImageLogo from "next/image";
 import API from "../../config";
+import ImageUploading from "react-images-uploading";
+import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import { Upload, message } from 'antd';
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
 import 'antd/dist/antd.css';
 import PropTypes from "prop-types";
+import { Alert } from '@/components/Alert/Alert';
+import Unauthorized from '@/components/Unauthorized';
 
 function Medias({ query }) {
     const id = query.id
@@ -35,26 +39,25 @@ function Medias({ query }) {
     const handleSetVideourl = (e: any) => {
         setVideourl(e.target.value)
     }
-
-    const [thumbnail, setThumbnail]: any = useState(null);
-    const [thumbnail2, setThumbnail2]: any = useState(null);
+    const [images, setImages]: any = useState([]);
+    const maxNumber = 69;
+    const onChangeL = (imageList) => {
+        // data for submit
+        setImages(imageList);
+    };
     const [thumbnail3, setThumbnail3]: any = useState(null);
-    
-    const setThumbnailHandle = (e: any) => {
-        setThumbnail(e.target.files[0]);
-    }
-    const setThumbnailHandle2 = (e: any) => {
-        setThumbnail2(e.target.files[0]);
-    }
+    const [loading, setLoading] = useState(false);
+
     const setThumbnailHandle3 = (e: any) => {
-        setThumbnail3(e.target.files[0]);
+        setThumbnail3(e.target.files[0]);        
     }
     const loadImagesHandle = async () => {
+        setLoading(true)
         try {
             const datathumb = new FormData()
-            datathumb.append('url_video', url_video)
-            datathumb.append('images[]', thumbnail2)
-            datathumb.append('images[]', thumbnail)
+            images.map(e => (
+                datathumb.append('images[]', e.file)
+            ))
             datathumb.append('thumbnail', thumbnail3)
             const res = await API.post(`api/product/${id}/product-step-four`, datathumb,
                 {
@@ -65,9 +68,18 @@ function Medias({ query }) {
                 })
             // Authentication was successful.
             if (res.status === 200) {
+                setLoading(false)
                 message.success('لقد تم التحديث بنجاح')
+                mutate(`api/product/${query.id}`)
+                router.push({
+                    pathname: '/add-new/complete',
+                    query: {
+                        id: id, // pass the id 
+                    },
+                })
             }
         } catch (error: any) {
+            setLoading(false)
             if (error.response && error.response.status === 200) {
                 message.success('لقد تم التحديث بنجاح')
             }
@@ -87,6 +99,7 @@ function Medias({ query }) {
             }
         }
     }
+    if (token == '') return <Unauthorized />
     return (
         <div className="container-fluid">
             <div className="row">
@@ -94,7 +107,7 @@ function Medias({ query }) {
                     <SidebarAdvices />
                 </div>
                 <div className="col-md-8 pt-3">
-                    <div className={"timlands-panel"}>
+                    <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
                         <div className="timlands-steps">
                             <div className="timlands-step-item">
                                 <h3 className="text">
@@ -146,7 +159,7 @@ function Medias({ query }) {
                                         <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
                                         <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                     </button>
-                                    <button type="submit" onClick={loadImagesHandle} className="btn flex-center butt-green mr-auto butt-xs">
+                                    <button type="submit" disabled={loading} onClick={loadImagesHandle} className="btn flex-center butt-green mr-auto butt-xs">
                                         <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                         <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                     </button>
@@ -159,49 +172,83 @@ function Medias({ query }) {
                                     <div className="row">
                                         <div className="col-md-12 align-center">
                                             <div className="featured-image">
-                                                {getProduct && getProduct.data.thumbnail == null ?
-                                                    <ImageLogo src={thumbnail3} width={400} height={250} /> :
-                                                    <ImageLogo
-                                                        loader={myLoader}
-                                                        src={APIURL1 + (getProduct && getProduct.data.thumbnail)}
-                                                        quality={60}
-                                                        width={400}
-                                                        height={250}
-                                                        placeholder='blur'
-                                                        blurDataURL={APIURL1 + (getProduct && getProduct.data.thumbnail)}
-                                                    />
-                                                }
+                                                <ImageLogo
+                                                    loader={myLoader}
+                                                    src={APIURL1 + (getProduct && getProduct.data.thumbnail)}
+                                                    quality={60}
+                                                    width={400}
+                                                    height={250}
+                                                    placeholder='blur'
+                                                    blurDataURL={'/avatar2.png'}
+                                                />
                                                 <h3 className="texth">
-                                                    <span className="material-icons-outlined">cloud_upload</span>
-                                                   <span className='txt'> رفع الصورة البارزة</span>
-                                                </h3>
+                                                    رفع الصورة البارزة</h3>
                                                 <div className="overlay-upload">
                                                     <span className='upload-butt'>
-                                                        
+
                                                     </span>
                                                 </div>
                                                 <input
-                                                    onChange={
-                                                        (e: any) => {
-                                                            setThumbnailHandle3
-                                                            setThumbnail3(URL.createObjectURL(e.target.files[0]))
-                                                        }
-                                                    }
+                                                    onChange={setThumbnailHandle3}
                                                     type="file"
                                                     className="form-control"
                                                 />
                                             </div>
                                             <div className="timlands-form">
-                                                <input
-                                                    onChange={setThumbnailHandle}
-                                                    type="file"
-                                                    className="form-control"
-                                                />
-                                                <input
-                                                    onChange={setThumbnailHandle2}
-                                                    type="file"
-                                                    className="form-control"
-                                                />
+                                                <div className="page-header">
+                                                    <h3 className="title">معرض الصور</h3>
+                                                </div>
+                                                <ImageUploading
+                                                    multiple
+                                                    value={images}
+                                                    onChange={onChangeL}
+                                                    maxNumber={maxNumber}
+                                                    dataURLKey="data_url"
+                                                >
+                                                    {({
+                                                        imageList,
+                                                        onImageUpload,
+                                                        onImageRemoveAll,
+                                                        onImageUpdate,
+                                                        onImageRemove,
+                                                        isDragging,
+                                                        dragProps
+                                                    }) => (
+                                                        // write your building UI
+                                                        <div className="choose-images-file">
+                                                            <div className="choose-images-list d-flex">
+                                                                {imageList.map((image, index) => (
+                                                                    <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="choose-images-item" key={index}>
+                                                                        <div className="image-item">
+                                                                            <img src={image["data_url"]} alt="" width="100" />
+                                                                            <div className="image-item__btn-wrapper">
+                                                                                <button onClick={() => onImageUpdate(index)}>
+                                                                                    <span className="material-icons-outlined">edit</span>
+                                                                                </button>
+                                                                                <button onClick={() => onImageRemove(index)}>
+                                                                                    <span className="material-icons-outlined">delete</span>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </motion.div>
+                                                                ))}
+                                                                {(imageList.length && imageList.length >= 5) ? <Alert type="error"><p className="text">لايمكنك إضافة أكثر من 5 صور</p></Alert> :
+
+                                                                    <button
+                                                                        style={isDragging ? { color: "red" } : undefined}
+                                                                        className="uploader-btn"
+                                                                        onClick={onImageUpload}
+                                                                        {...dragProps}
+                                                                    >
+                                                                        <span className="material-icons-outlined">upload</span>
+                                                                    </button>
+                                                                }
+                                                                &nbsp;
+                                                                <button className="uploader-btn clear" onClick={onImageRemoveAll}><span className="material-icons-outlined">clear</span></button>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </ImageUploading>
                                             </div>
                                         </div>
                                     </div>
