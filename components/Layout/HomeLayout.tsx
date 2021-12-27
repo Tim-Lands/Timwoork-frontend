@@ -8,6 +8,7 @@ import { logout } from "./../../store/auth/authActions";
 
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);

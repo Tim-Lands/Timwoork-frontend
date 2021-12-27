@@ -1,6 +1,4 @@
 import React, { ReactElement } from "react";
-import Link from 'next/link'
-import Cookies from 'js-cookie'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import API from "../../config";
@@ -22,15 +20,12 @@ const ForgetPass = (): ReactElement => {
                 validationSchema={SignupSchema}
                 onSubmit={async values => {
                     try {
-                        const token = Cookies.get('token')
-                        const res = await API.post("api/profiles/step_three", values, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`
-                            }
-                        })
+                        const res = await API.post("api/password/forget/sendResetLink", values)
                         // Authentication was successful.
                         if (res.status === 200) {
                             message.success('لقد تم التحديث بنجاح')
+                            console.log(res);
+                            
                         }
                     } catch (error: any) {
                         if (error.response && error.response.status === 200) {
@@ -53,23 +48,6 @@ const ForgetPass = (): ReactElement => {
                 {({ errors, touched, isSubmitting }) => (
                     <Form>
                         <div className="row">
-                            <div className="col-lg-6 p-0">
-                                <div className="login-image">
-                                    <div className="timwoork-logo">
-                                        <Link href="/">
-                                            <a>
-                                                <img src="/logo4.png" alt="" />
-                                            </a>
-                                        </Link>
-                                    </div>
-                                    <h1 className="login-title">
-                                        تحديث المعلومات الشخصية
-                                    </h1>
-                                    <h3 className="login-text">
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                                    </h3>
-                                </div>
-                            </div>
                             <div className="col-lg-6 p-0">
                                 <div className="login-panel">
                                     <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>

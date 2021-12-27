@@ -6,11 +6,15 @@ import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import Cookies from 'js-cookie'
+import * as Yup from 'yup';
 import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
-
+const SignupSchema = Yup.object().shape({
+    title: Yup.string().required('هذا الحقل إجباري').nullable(),
+    product_tag: Yup.array().required('هذا الحقل إجباري'),
+});
 function Overview({ query }) {
     const [tagsState, setTagsState] = useState([])
     const [categoryState, setCategoryState] = useState(1)
@@ -40,11 +44,6 @@ function Overview({ query }) {
             message.error('للأسف لم يتم الحذف ')
         }
     }
-    const { Option }: any = Select;
-    const children = [];
-    for (let i = 0; i < 1000; i++) {
-        children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-    }
     return (
         <>
             <MetaTags
@@ -60,16 +59,16 @@ function Overview({ query }) {
                     </div>
                     <div className="col-md-8 pt-3">
                         <Formik
-                            isInitialValid={true}
+                            //isInitialValid={true}
                             initialValues={{
-                                title: !getProduct ? '' : getProduct.data.title,
-                                subcategory: !getProduct ? 0 : getProduct.data.category_id,
-                                category: !getProduct ? categoryState : getProduct.data.category_id,
+                                title: (getProduct && getProduct.data.title) || '',
+                                subcategory: (getProduct && getProduct.data.category_id) || 1,
+                                category: (getProduct && getProduct.data.category_id) || 0,
                                 product_tag: tagsState,
                             }}
                             enableReinitialize={true}
 
-                            //validationSchema={SignupSchema}
+                            validationSchema={SignupSchema}
                             onSubmit={async values => {
                                 try {
                                     const id = query.id
@@ -204,10 +203,10 @@ function Overview({ query }) {
                                                             value={categoryState}
                                                             onChange={(e: any) => setCategoryState(e.target.value)}
                                                         >
-                                                            {!categories ? <option value="">يرجى الانتظار...</option> : (
-                                                                categories.data.map((e: any) => (
-                                                                    <option value={e.id} key={e.id}>{e.name_ar}</option>
-                                                                )))}
+                                                            {!categories && <option value="">يرجى الانتظار...</option>}
+                                                            {categories && categories.data.map((e: any) => (
+                                                                <option value={e.id} key={e.id}>{e.name_ar}</option>
+                                                            ))}
                                                         </select>
                                                         {errors.category && touched.category ?
                                                             <div style={{ overflow: 'hidden' }}>
@@ -230,10 +229,10 @@ function Overview({ query }) {
                                                             autoComplete="off"
                                                         >
                                                             {subCategoriesError && <option value="">حدث خطأ</option>}
-                                                            {!subCategories ? <option value="">يرجى الانتظار...</option> :
-                                                                subCategories.data.subcategories.map((e: any) => (
-                                                                    <option value={e.id} key={e.id}>{e.name_ar}</option>
-                                                                ))
+                                                            {!subCategories && <option value="">يرجى الانتظار...</option>}
+                                                            {subCategories && subCategories.data.subcategories.map((e: any) => (
+                                                                <option value={e.id} key={e.id}>{e.name_ar}</option>
+                                                            ))
                                                             }
                                                         </Field>
                                                         {errors.subcategory && touched.subcategory ?
@@ -256,7 +255,7 @@ function Overview({ query }) {
                                                             style={{ width: "100%" }}
                                                             className="timlands-inputs select"
                                                             placeholder="اختر الوسوم"
-                                                            defaultValue={getProduct && getProduct.data.product_tag}
+                                                            defaultValue={tagsState}
                                                             value={tagsState}
                                                             onChange={(e) => setTagsState(e)}
                                                         >

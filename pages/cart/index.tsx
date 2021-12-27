@@ -34,11 +34,15 @@ function index() {
             message.error('حدث خطأ غير متوقع')
         }
     }
-    const updateItem = async (id: any, values: any) => {
+    const updateItem = async (e: any, values: any) => {
+        e.preventDefault()
+        console.log(e);
+        
+        return
         const token = Cookies.get('token')
         setIsLoading(true)
         try {
-            const res = await API.post(`api/cart/cartitem/update/${id}`, values, {
+            const res = await API.post(`api/cart/cartitem/update/${values.id}`, values, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

@@ -62,7 +62,6 @@ const personalInformations = () => {
                                             headers: {
                                                 'Authorization': `Bearer ${token}`
                                             }
-                                        
                                         })
                                         // Authentication was successful.
                                         if (res.status === 200) {
@@ -259,7 +258,6 @@ const personalInformations = () => {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
-                                            router.reload()
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.status === 200) {

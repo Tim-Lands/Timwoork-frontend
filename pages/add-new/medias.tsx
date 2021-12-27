@@ -1,10 +1,12 @@
 import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useState } from "react";
 import Cookies from 'js-cookie'
+import ImageLogo from "next/image";
 import API from "../../config";
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import { Upload, message } from 'antd';
+import useSWR from 'swr'
 import ReactPlayer from "react-player"
 import 'antd/dist/antd.css';
 import PropTypes from "prop-types";
@@ -12,6 +14,12 @@ import PropTypes from "prop-types";
 function Medias({ query }) {
     const id = query.id
     const token = Cookies.get('token')
+    const APIURL1 = 'http://api.timwoork.com/products/thumbnails/'
+    //const APIURL2 = 'https://api.timwoork.com/products/galaries-images/'
+    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+    const myLoader = () => {
+        return `${APIURL1}${getProduct && getProduct.data.thumbnail}`;
+    }
     const props = {
         beforeUpload: file => {
             if (file.type !== 'application/pdf') {
@@ -31,6 +39,7 @@ function Medias({ query }) {
     const [thumbnail, setThumbnail]: any = useState(null);
     const [thumbnail2, setThumbnail2]: any = useState(null);
     const [thumbnail3, setThumbnail3]: any = useState(null);
+    
     const setThumbnailHandle = (e: any) => {
         setThumbnail(e.target.files[0]);
     }
@@ -41,11 +50,12 @@ function Medias({ query }) {
         setThumbnail3(e.target.files[0]);
     }
     const loadImagesHandle = async () => {
-        const datathumb = new FormData()
-        datathumb.append('images', thumbnail)
-        datathumb.append('images', thumbnail2)
-        datathumb.append('thumbnail', thumbnail3)
         try {
+            const datathumb = new FormData()
+            datathumb.append('url_video', url_video)
+            datathumb.append('images[]', thumbnail2)
+            datathumb.append('images[]', thumbnail)
+            datathumb.append('thumbnail', thumbnail3)
             const res = await API.post(`api/product/${id}/product-step-four`, datathumb,
                 {
                     headers: {
@@ -148,7 +158,39 @@ function Medias({ query }) {
                                 <div className={"panel-modal-body login-panel-body auto-height"}>
                                     <div className="row">
                                         <div className="col-md-12 align-center">
-                                            <img src='' className="circular-img huge2-size" alt="" />
+                                            <div className="featured-image">
+                                                {getProduct && getProduct.data.thumbnail == null ?
+                                                    <ImageLogo src={thumbnail3} width={400} height={250} /> :
+                                                    <ImageLogo
+                                                        loader={myLoader}
+                                                        src={APIURL1 + (getProduct && getProduct.data.thumbnail)}
+                                                        quality={60}
+                                                        width={400}
+                                                        height={250}
+                                                        placeholder='blur'
+                                                        blurDataURL={APIURL1 + (getProduct && getProduct.data.thumbnail)}
+                                                    />
+                                                }
+                                                <h3 className="texth">
+                                                    <span className="material-icons-outlined">cloud_upload</span>
+                                                   <span className='txt'> رفع الصورة البارزة</span>
+                                                </h3>
+                                                <div className="overlay-upload">
+                                                    <span className='upload-butt'>
+                                                        
+                                                    </span>
+                                                </div>
+                                                <input
+                                                    onChange={
+                                                        (e: any) => {
+                                                            setThumbnailHandle3
+                                                            setThumbnail3(URL.createObjectURL(e.target.files[0]))
+                                                        }
+                                                    }
+                                                    type="file"
+                                                    className="form-control"
+                                                />
+                                            </div>
                                             <div className="timlands-form">
                                                 <input
                                                     onChange={setThumbnailHandle}
@@ -157,11 +199,6 @@ function Medias({ query }) {
                                                 />
                                                 <input
                                                     onChange={setThumbnailHandle2}
-                                                    type="file"
-                                                    className="form-control"
-                                                />
-                                                <input
-                                                    onChange={setThumbnailHandle3}
                                                     type="file"
                                                     className="form-control"
                                                 />
@@ -200,7 +237,7 @@ function Medias({ query }) {
                                     />
                                     {url_video &&
                                         <ReactPlayer
-                                            style={{ borderRadius: 6 }}
+                                            style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
                                             width="100%"
                                             url={url_video}
                                         />

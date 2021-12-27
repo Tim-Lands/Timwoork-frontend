@@ -6,18 +6,18 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
     const [quan, setQuan] = useState(quantity)
     function DevdurationFunc(duration) {
         if (duration == 1) {
-          return 'يوم واحد'
+            return 'يوم واحد'
         }
         if (duration == 2) {
-          return 'يومين'
+            return 'يومين'
         }
         if (duration > 2 && duration < 11) {
-          return duration + ' أيام '
+            return duration + ' أيام '
         }
         if (duration >= 11) {
-          return duration + ' يوم '
+            return duration + ' يوم '
         }
-      }
+    }
     return (
         <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item">
             <div className="row">
@@ -77,13 +77,16 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                             }}
                         >
                             <li>
-                                <input 
-                                    type="number"
-                                    value={quan}
-                                    onKeyUp={() => updateItem(id, {product_id, quantity: Number(Math.abs(quan))})} 
-                                    className="timlands-inputs sm" 
-                                    onChange={(e: any) => setQuan(e.target.value)}
-                                />
+                                <form
+                                    onSubmit={() => updateItem(id, { id, product_id, quantity: Number(Math.abs(quan)) })}
+                                >
+                                    <input
+                                        type="number"
+                                        value={quan}
+                                        className="timlands-inputs sm"
+                                        onChange={(e: any) => setQuan(e.target.value)}
+                                    />
+                                </form>
                             </li>
                             <li>
                                 <motion.button
