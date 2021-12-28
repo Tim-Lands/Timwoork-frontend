@@ -193,7 +193,7 @@ export const register = (email: string, password: string): any => {
                             router.push('/user/personalInformations')
                             break;
                         case 2:
-                            router.push('/user/numberPhone')
+                            router.push('/user/personalInformations')
                             break;
                         default:
                             router.push('/')

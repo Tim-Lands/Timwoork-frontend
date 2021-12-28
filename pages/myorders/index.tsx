@@ -2,38 +2,17 @@ import Layout from '@/components/Layout/HomeLayout'
 import PostsAside from '@/components/PostsAside';
 import API from '../../config'
 import React, { ReactElement, useEffect, useState } from 'react'
-//import CartList from '../../components/Cart/CartList';
 import useSWR, { mutate } from 'swr'
 import Cookies from 'js-cookie'
 import Loading from '@/components/Loading';
 import CartPost from '@/components/Cart/CartPost';
-import { message, Spin } from 'antd';
+import { message, Result, Spin } from 'antd';
 import { MetaTags } from '@/components/SEO/MetaTags';
 
 function index() {
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading] = useState(false)
     const { data: cartList }: any = useSWR('api/cart')
-    const deleteItem = async (id: any) => {
-        const token = Cookies.get('token')
-        setIsLoading(true)
-        try {
-            const res = await API.post(`api/cart/cartitem/delete/${id}`, null, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            // Authentication was successful.
-            if (res.status === 200) {
-                setIsLoading(false)
-                message.success('لقد تم التحديث بنجاح')
-                mutate('api/cart')
-            }
-        } catch (error: any) {
-            setIsLoading(false)
-            message.error('حدث خطأ غير متوقع')
-        }
-    }
     const updateItem = async (e: any, values: any) => {
         e.preventDefault()
         const token = Cookies.get('token')
@@ -74,7 +53,7 @@ function index() {
     return (
         <>
             <MetaTags
-                title={'سلة المشتريات - تيموورك'}
+                title={'طلباتي - تيموورك'}
                 metaDescription={'سلة المشتريات - تيموورك'}
                 ogDescription={'سلة المشتريات - تيموورك'}
             />
@@ -83,23 +62,17 @@ function index() {
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
                         {cartList && cartList.data == null ?
-                            <div className="cart-nothing">
-                                <div className="cart-nothing-inner">
-                                    <div className="cart-nothing-img">
-                                        <img src="/carticon.png" alt="" />
-                                    </div>
-                                    <div className="cart-nothing-content">
-                                        <h1 className="title">السلة فارغة</h1>
-                                        <p className="text">لاتوجد خدمات في سلة المشتريات يمكنك الذهاب إلى تصفح الخدمات</p>
-                                    </div>
-                                </div>
-                            </div> :
+                            <Result
+                                status="404"
+                                title="لا يوجد لديك طلبات"
+                                subTitle="يمكنك تصفح الخدمات في أي وقت وشراء الخدمات بسعر معقول "
+                                extra={<button className="btn butt-sm butt-primary">الذهاب إلى الخدمات</button>}
+                            /> :
                             <Spin spinning={isLoading}>
                                 <div className="timwoork-single-post bg-white mt-4">
                                     <div className="timwoork-single-header">
-                                        <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات </h1>
+                                        <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> طلباتي </h1>
                                     </div>
-                                    {/*<CartList listItem={cartList && cartList.data.cart_items} />*/}
                                     <div className="cart-list">
                                         <ul className="cart-list-item" style={{ listStyle: 'none', margin: 0, padding: 0, }}>
                                             {cartList && cartList.data.cart_items.map((e: any) => (
@@ -111,7 +84,6 @@ function index() {
                                                     product_id={e.product_id}
                                                     price={e.price_product_spicify}
                                                     itemTotal={e.price_product}
-                                                    deleteItem={deleteItem}
                                                     updateItem={updateItem}
                                                     developments={e.cart_item_developments} />
                                             ))}

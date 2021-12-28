@@ -5168,6 +5168,35 @@ h3 {
   transition: all 0.3s;
 }
 
+.choose-images-file.featured-image .choose-images-list {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.choose-images-file.featured-image .choose-images-list .image-item {
+  width: 430px;
+  height: 250px;
+  margin-left: 0;
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+}
+
+.choose-images-file.featured-image .choose-images-list .image-item .image-item__btn-wrapper button {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+}
+
+.choose-images-file.featured-image .choose-images-list .image-item .image-item__btn-wrapper button .material-icons-outlined {
+  font-size: 20px;
+}
+
+.choose-images-file.featured-image .choose-images-list .image-item img {
+  height: 100%;
+  width: 100%;
+}
+
 /*
 -------------------------------------------------------------------------------------------
     Cart List Item
@@ -5345,98 +5374,6 @@ h3 {
   background-color: #ef7171;
   border: 1px solid #f39191;
   color: #fff;
-}
-
-.featured-image {
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-}
-
-.featured-image img {
-  z-index: 8;
-  width: 100% !important;
-  -webkit-transition: all 0.4s;
-  transition: all 0.4s;
-}
-
-.featured-image input[type="file"] {
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  bottom: 0;
-  opacity: 0;
-  top: 0;
-  right: 0;
-}
-
-.featured-image .texth {
-  position: absolute;
-  color: #fff;
-  text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.568);
-  text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  top: 0;
-  bottom: 0;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  z-index: 9;
-  -webkit-transition: all 0.4s;
-  transition: all 0.4s;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  justify-items: center;
-  justify-self: center;
-  right: 0;
-  left: 0;
-}
-
-.featured-image .texth .material-icons-outlined {
-  font-size: 99px;
-  opacity: 0.3;
-}
-
-.featured-image .texth .txt {
-  display: block;
-}
-
-.featured-image .overlay-upload {
-  z-index: 9;
-  left: 0;
-  bottom: 0;
-  opacity: 0;
-  top: 0;
-  right: 0;
-}
-
-.featured-image .overlay-upload .upload-butt {
-  color: #fff;
-  text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.568);
-}
-
-.featured-image:hover img {
-  -webkit-transition: all 0.4s;
-  transition: all 0.4s;
-  opacity: 0.7;
-}
-
-.featured-image:hover .texth {
-  -webkit-transition: all 0.4s;
-  transition: all 0.4s;
-  top: -20px;
-  opacity: 0.8;
 }
 
 .edit-button {

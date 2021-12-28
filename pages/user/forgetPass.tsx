@@ -5,6 +5,7 @@ import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
+import router from "next/router";
 
 const ForgetPass = (): ReactElement => {
     const SignupSchema = Yup.object().shape({
@@ -24,8 +25,7 @@ const ForgetPass = (): ReactElement => {
                         // Authentication was successful.
                         if (res.status === 200) {
                             message.success('لقد تم التحديث بنجاح')
-                            console.log(res);
-                            
+                            router.push('/user/sentToken')
                         }
                     } catch (error: any) {
                         if (error.response && error.response.status === 200) {
@@ -47,7 +47,7 @@ const ForgetPass = (): ReactElement => {
             >
                 {({ errors, touched, isSubmitting }) => (
                     <Form>
-                        <div className="row">
+                        <div className="row justify-content-md-center pt-5">
                             <div className="col-lg-6 p-0">
                                 <div className="login-panel">
                                     <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>

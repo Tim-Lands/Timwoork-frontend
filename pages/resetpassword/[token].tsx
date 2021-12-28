@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Result, message } from 'antd'
+import { message } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
-import Link from 'next/link'
 import Cookies from 'js-cookie'
 import PropTypes from "prop-types";
 import API from '../../config'
@@ -38,18 +37,7 @@ function ResetPassword({ query }) {
     if (!query.token || !isToken || token)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
-                <Result
-                    status="warning"
-                    title="حدث خطأ"
-                    subTitle="الصفحة غير موجودة يرجى التأكد من الرابط"
-                    extra={
-                        <Link href="/">
-                            <a className="btn butt-primary butt-md">
-                                الذهاب إلى الرئيسية
-                            </a>
-                        </Link>
-                    }
-                />
+                <Loading />
             </div>
         </div>)
     const SignupSchema = Yup.object().shape({

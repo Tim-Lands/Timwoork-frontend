@@ -24,6 +24,7 @@ function index(props: any) {
                 ogDescription="إضافة خدمة جديدة"
             />
             <div className="container">
+            {token &&
                 <div className="row justify-content-center">
                     <div className="col-md-8">
                         <Spin spinning={props.addNewProductLoading}>
@@ -58,6 +59,7 @@ function index(props: any) {
                         </Spin>
                     </div>
                 </div>
+            }
             </div>
         </>
     )

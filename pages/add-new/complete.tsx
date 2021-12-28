@@ -91,7 +91,7 @@ function Complete({ query }) {
                                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                                     </p>
                                     <div className="add-butts">
-                                        <Link href="">
+                                        <Link href="/myproducts">
                                             <a className="btn butt-md butt-primary2">
                                               الانتقال إلى خدماتي
                                             </a>
