@@ -17,7 +17,7 @@ const withAuth = (WrappedComponent: any) => {
         }
         // If we are on server, return null
         return null;
-    };
+    }; 
 };
 
 export default withAuth;

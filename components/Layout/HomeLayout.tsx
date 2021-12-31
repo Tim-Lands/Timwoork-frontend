@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
+import SupportEngine from '../SupportChat/SupportEngine';
+import SupportAdmin from '../SupportChat/SupportAdmin';
 
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { 
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };
@@ -25,6 +27,8 @@ function Layout(props: any) {
       <Spin tip="يرجى الإنتظار..." spinning={loading}>
         {props.children}
       </Spin>
+      <SupportEngine />
+
       <Footer />
     </div>
   )
