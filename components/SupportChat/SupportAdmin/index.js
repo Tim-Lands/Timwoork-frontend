@@ -10,7 +10,7 @@ const SupportAdmin = () => {
       userSecret='support@timlands.com'
      // height='calc(100vh - 12px)'
     />
-  );
+  );  
 }
 
 export default SupportAdmin;
