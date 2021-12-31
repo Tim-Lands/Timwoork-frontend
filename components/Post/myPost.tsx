@@ -8,6 +8,7 @@ function Post({
     buyers,
     price,
     size,
+    
     slug,
     rate = 2,
 }): ReactElement {

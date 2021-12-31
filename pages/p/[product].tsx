@@ -210,13 +210,43 @@ function Single({ query }) {
   }
   const APIURL2 = 'https://api.timwoork.com/products/galaries-images/'
   const [theIDs, settheIDs] = useState([])
+  const [checkedDevelopments, setcheckedDevelopments] = useState([]);
+
   const handleOnChangeAddID = event => {
     let newArray = [...theIDs, event.target.value];
     if (theIDs.includes(event.target.value)) {
       newArray = newArray.filter(day => day !== event.target.value);
     }
     settheIDs(newArray);
+    setcheckedDevelopments(newArray);
+
   };
+
+  /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
+  function _totalPrice() {
+
+    var __checkedDevelopments_sum = 0;
+    var b = [],
+      c = checkedDevelopments,
+      a = ProductData && ProductData.data.developments.map(e => e.id);
+
+    for (var i = 0; i < a.length; i++) {
+
+      for (var j = 0; j < c.length; j++) {
+        if (a[i] == c[j]) {
+          b.push(i);
+        }
+      }
+    }
+    console.log(b)
+    for (var i = 0; i < b.length; i++) { __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price); }
+
+    var total_price = (ProductData.data.price + __checkedDevelopments_sum) * quantutyCount;
+    console.log("ProductData && ProductData.data.developments " + ProductData && ProductData.data.developments)
+
+    return Math.abs(total_price);
+  };
+
   return (
     <>
       {!ProductData && <Loading />}
@@ -502,7 +532,7 @@ function Single({ query }) {
                                     type="checkbox"
                                     id={"flexCheckDefault-id" + e.id}
                                     value={e.id}
-                                    onChange={handleOnChangeAddID}
+                                    onChange={handleOnChangeAddID} {..._totalPrice()}
                                   />
                                   <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                                     {e.title}
@@ -518,7 +548,7 @@ function Single({ query }) {
                     <div className="panel-aside-footer">
                       <div className="aside-footer-total-price">
                         <h1 className="price-total me-auto">
-                          <strong>المجموع </strong> {ProductData && ProductData.data.price}$
+                          <strong>المجموع </strong> {_totalPrice()}$
                         </h1>
                         <div className="bayers-count">
                           <p className="num">

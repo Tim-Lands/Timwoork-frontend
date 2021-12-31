@@ -21,17 +21,17 @@ function WebsiteLinksFooter() {
                     </li>
                     <li>
                         <Link href="/trust-company">
-                            <a>شركات وثقت بنا</a>
+                            <a>حول الموقع</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/inite">
-                            <a>دعوة الأصدقاء</a>
+                        <Link href="/trust-company">
+                            <a>شروط الاستخدام</a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/login">
-                            <a>كن بائع!</a>
+                        <Link href="/trust-company">
+                            <a>سياسة الخصوصية</a>
                         </Link>
                     </li>
                 </ul>

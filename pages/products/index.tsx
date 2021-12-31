@@ -14,7 +14,7 @@ function Category() {
 
   //const { data: products, errorP }: any = useSWR(`api/filter?paginate=12&between=price,100,24`)
   const { data: getCategories, error }: any = useSWR('dashboard/categories')
-  async function getDataFilter(price_min, price_max , categoryID) {
+  async function getDataFilter(price_min, price_max, categoryID) {
     setIsLoading(true)
     setIsError(false)
     try {
@@ -62,8 +62,8 @@ function Category() {
         onSubmit={async values => {
           //setFilterVals(`between=price,${values.price_min},${values.price_max}`)
           getDataFilter(
-            values.emptyPrice == '1' ? '' : values.price_min, 
-            values.emptyPrice == '1' ? '' : values.price_max, 
+            values.emptyPrice == '1' ? '' : values.price_min,
+            values.emptyPrice == '1' ? '' : values.price_max,
             values.categoryID
           )
         }}
@@ -84,7 +84,6 @@ function Category() {
                       <Field type="range" name="price_max" className="form-range" min={5} max={500} step="5" />
 
                       <div className="form-check py-1 pe-2">
-                        {values.emptyPrice}
                         <Field
                           className="form-check-input"
                           type="checkbox"
@@ -100,19 +99,14 @@ function Category() {
                   </div>
                   <div className="filter-sidebar-panel">
                     <h3 className="title">اختر المستخدم</h3>
-                    <div className="filter-cheks">
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id={"getCategories-"} />
-                        <label className="form-check-label" htmlFor={"getCategories-"}>
-                          عبد الحميد بومقواس
-                        </label>
-                      </div>
-                      <div className="form-check py-1 pe-4">
-                        <input className="form-check-input" type="checkbox" value="" id={"getCategories-"} />
-                        <label className="form-check-label" htmlFor={"getCategories-"}>
-                          طارق عروي
-                        </label>
-                      </div>
+                    <div className="timlands-form">
+                      <Field
+                        id="username"
+                        name="username"
+                        placeholder="اسم المستخدم..."
+                        className="timlands-inputs"
+                        autoComplete="off"
+                      />
                     </div>
                   </div>
                   <div className="filter-sidebar-panel">

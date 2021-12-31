@@ -1,22 +1,35 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Result } from 'antd'
+import { Badge, Button, Result, Tooltip } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
 import API from '../../config'
 import Link from 'next/link'
 import Image from 'next/image'
 import useSWR from 'swr'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
+import { DeleteOutlined } from '@ant-design/icons';
 import Unauthorized from '@/components/Unauthorized';
-import MyPost from '@/components/Post/myPost'
 
 function index() {
     const token = Cookies.get('token')
     //const [isLoading, setIsLoading] = useState(false)
     //const [isError, setIsError] = useState(false)
     const [postsList, setPostsList]: any = useState([])
-
+    function statusProduct(status: any) {
+        switch (status) {
+            case null:
+                return <span className="badge bg-info">في الإنتظار...</span>
+            case 0:
+                return <span className="badge bg-danger">مرفوظة</span>
+            case 1:
+                return <span className="badge bg-success">مقبولة</span>
+            default:
+                return <span className="badge bg-info">في الإنتظار...</span>
+        }
+    }
     const getProducts = async () => {
         //setIsLoading(true)
         try {
@@ -40,7 +53,57 @@ function index() {
     useEffect(() => {
         getProducts()
     }, [])
+
     const { data: userInfo }: any = useSWR('api/me')
+
+    const deleteHandle = (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الحذف',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await API.post(`api/product/${id}/deleteProduct`, null, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+                swalWithBootstrapButtons.fire(
+                    'تم الحذف!',
+                    'لقد تم حذف هذا العنصر بنجاح',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'ملغى',
+                    'تم الإلغاء',
+                    'error'
+                )
+            }
+        })
+
+    }
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
@@ -130,20 +193,43 @@ function index() {
                                         extra={<Link href='/add-new'><a className="btn butt-sm butt-primary">إضافة خدمة جديدة</a></Link>}
                                     />
                                 }
-                                <div className="row">
-                                    {postsList && postsList.map((e: any) => (
-                                        <div className="col-lg-4 col-sm-6" key={e.id}>
-                                            <MyPost
-                                                size="small"
-                                                title={e.title}
-                                                rate={e.ratings_avg}
-                                                price={e.price}
-                                                slug={e.slug}
-                                                thumbnail={e.thumbnail}
-                                                buyers={e.count_buying}
-                                            />
-                                        </div>
-                                    ))}
+                                <div className="timlands-table">
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>العنوان</th>
+                                                <th>مكتملة</th>
+                                                <th>عدد المشتريين</th>
+                                                <th>حالة التفعيل</th>
+                                                <th>الحالة</th>
+                                                <th>الأدوات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {postsList && postsList.map((e: any) => (
+                                                <tr key={e.id}>
+                                                    <td>{e.title}</td>
+                                                    <td>{e.is_completed == 0 ?
+                                                        <span className="badge bg-danger">لا</span> :
+                                                        <span className="badge bg-success">نعم</span>}</td>
+                                                    <td>{e.count_buying}</td>
+                                                    <td>{e.is_active == 0 ?
+                                                        <span className="badge bg-danger">معطلة</span> :
+                                                        <span className="badge bg-success">مفعلة</span>}
+                                                    </td>
+                                                    <td>{statusProduct(e.status)}</td>
+                                                    <td>
+                                                        <Tooltip title="حذف هذه الخدمة">
+                                                            <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                        </Tooltip>
+                                                        <Tooltip title="تعطيل هذه الخدمة">
+                                                            <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                        </Tooltip>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

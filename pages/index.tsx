@@ -10,7 +10,7 @@ import Image from 'next/image'
 
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
-  const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at&sort[1]=id,desc')
+  const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at&sort[1]=id,asc')
   const { data: products, error }: any = useSWR('api/filter?paginate=4&sort=count_buying')
   return (
     <>
@@ -35,7 +35,7 @@ function Home() {
               هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
             </p>
             <div className="py-3">
-              <Link href="/">
+              <Link href="/add-new">
                 <a className="btn butt-green butt-md">أنشئي خدمتك الآن</a>
               </Link>
             </div>
@@ -43,11 +43,26 @@ function Home() {
         </div>
       </div>
 
-      {products &&
+      {products && popularProducts && latestProducts &&
         <div className="container">
-          <PostsAside title="الأكثر شعبية" PostData={popularProducts && popularProducts.data.data} isLoading={!popularProducts} isError={popularError} />
-          <PostsAside title="الخدمات التي أضيفت حديثا" PostData={latestProducts && latestProducts.data.data} isLoading={!latestProducts} isError={latestError} />
-          <PostsAside title="الأكثر مبيعا" PostData={products && products.data.data} isLoading={!products} isError={error} />
+          <PostsAside
+            title="الأكثر شعبية"
+            PostData={popularProducts && popularProducts.data.data}
+            isLoading={!popularProducts}
+            isError={popularError}
+          />
+          <PostsAside
+            title="الخدمات التي أضيفت حديثا"
+            PostData={latestProducts && latestProducts.data.data}
+            isLoading={!latestProducts}
+            isError={latestError}
+          />
+          <PostsAside
+            title="الأكثر مبيعا"
+            PostData={products && products.data.data}
+            isLoading={!products}
+            isError={error}
+          />
         </div>
       }
 
