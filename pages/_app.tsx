@@ -1,7 +1,9 @@
+import "../styles/chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import i18n from "i18next";
 import "antd/dist/antd.css";
 import "../styles/fonts.css";
+
 import store from "@/store/store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";

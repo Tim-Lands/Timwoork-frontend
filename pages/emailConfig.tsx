@@ -19,6 +19,7 @@ function EmailConfig(props: any) {
     
     useEffect(() => {
         if (email_verified) {
+            
             router.push('/')
         }
     }, [email_verified])

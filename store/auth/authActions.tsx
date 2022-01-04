@@ -14,6 +14,7 @@ import * as types from "../actionTypes";
 import Cookies from 'js-cookie'
 import router from "next/router";
 import useSWR from 'swr'
+import { userInfo } from "os";
 
 export const addNewProduct = () => {
     return async (dispatch: CallableFunction) => {
@@ -114,7 +115,9 @@ export const login = (username: string, password: string): any => {
                 dispatch({
                     type: types.LOGIN_SUCCESS,
                 });
-                Cookies.set('token', res.data.data.token)
+                Cookies.set('token', res.data.data.token);
+                Cookies.set('username',username);
+
                 if (res.data.data.is_verified) {
                     switch (res.data.data.step) {
                         case 0:

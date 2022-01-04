@@ -137,7 +137,7 @@ function Category() {
                 <div className="page-header">
                   <h5 className="title">جميع الخدمات</h5>
                 </div>
-                <FilterContent products={products && products} isLoading={isLoading} isError={isError} />
+                <FilterContent products={ products} isLoading={isLoading} isError={isError} />
               </div>
             </div>
           </Form>

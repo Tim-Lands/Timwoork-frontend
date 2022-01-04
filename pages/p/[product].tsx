@@ -16,6 +16,9 @@ import { Field, Form, Formik } from "formik";
 import Cookies from 'js-cookie'
 import router from "next/router";
 import NotFound from "@/components/NotFound";
+import axios from 'axios';
+
+const REACT_APP_CHAT_ENGINE_ID="ac320c2f-2637-48b3-879a-3fb1da5dbe03";
 
 const properties = {
   duration: 5000,
@@ -39,29 +42,6 @@ function Single({ query }) {
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
 
-  /* const [checkedState, setCheckedState] = useState(
-     new Array(ProductData && ProductData.data.developments.length).fill(false)
-   );
- 
-   const [total, setTotal] = useState(0);
-   const handleOnChange = (position) => {
-     const updatedCheckedState = checkedState.map((item, index) =>
-       index === position ? !item : item
-     );
-     setCheckedState(updatedCheckedState);
- 
-     const totalPrice = updatedCheckedState.reduce(
-       (sum, currentState, index) => {
-         if (currentState === true) {
-           return sum + (ProductData && ProductData.data.developments[index].price);
-         }
-         return sum;
-       },
-       0
-     );
- 
-     setTotal(totalPrice + (ProductData && ProductData.data.price));
-   };*/
   const showStars = () => {
     const rate = Number(ProductData.data.ratings_avg) || 0
     const xAr: any = [
@@ -220,8 +200,34 @@ function Single({ query }) {
     settheIDs(newArray);
     setcheckedDevelopments(newArray);
 
-  };
+  };  
+     // ^--------------------*-------- Create New Chat----------*-------------------------------
+     
 
+   /* 3- Create new chat
+   ~ Chat title: product title 
+   */
+ const getOrCreateChat= (seller_Email:string)=>{
+  
+  axios.put('https://api.chatengine.io/chats/',
+  {usernames: [seller_Email, Cookies.get('username')], 'title':ProductData && ProductData.data.title, is_direct_chat: true},
+  
+  {
+      headers: {
+      'Project-ID': REACT_APP_CHAT_ENGINE_ID, 
+      'User-Name': seller_Email, 
+      'User-Secret':seller_Email 
+      }
+  }
+  )        
+   .catch((error) => console.log(error))
+   console.log("seeler email: "+ seller_Email); 
+   console.log("ProductData && ProductData.data.title: "+ ProductData && ProductData.data.title)  
+
+   router.push('/chat');// Go to chat page
+
+
+  }
   /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
   function _totalPrice() {
 
@@ -391,11 +397,9 @@ function Single({ query }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
                                   </a>
                                 </Link>
-                                <Link href="">
-                                  <a className="btn butt-green butt-sm flex-center">
-                                    <i className="material-icons material-icons-outlined">email</i> مراسلة البائع
+                                  <a className="btn butt-green butt-sm flex-center" onClick={()=> getOrCreateChat(ProductData.data.profile_seller.profile.user.email)}>
+                                    <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
                                   </a>
-                                </Link>
                               </div>
                             </div>
                           </div>

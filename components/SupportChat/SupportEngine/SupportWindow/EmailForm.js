@@ -19,10 +19,7 @@ const [loading, setLoading] = useState(false)
 
     function getOrCreateUser(callback) {
 
-        if (token ){
-            //loggedin
-            setEmail(userInfo && userInfo.user_details.email);
-        }
+       
         axios.put(
             'https://api.chatengine.io/users/',
             {username: email, email: email, secret: email},
@@ -44,6 +41,7 @@ const [loading, setLoading] = useState(false)
         )
         .then(r => callback(r.data))
         .catch(e => console.log('Get or create chat error', e))
+       
     }
 
     function handleSubmit(event) {

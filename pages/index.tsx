@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
+import SupportEngine from '@/components/SupportChat/SupportEngine';
 
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
@@ -65,7 +66,7 @@ function Home() {
           />
         </div>
       }
-
+      <SupportEngine />
 
     </>
   );

@@ -35,6 +35,9 @@ const Login = (props: any): ReactElement => {
             if (response.status === 200) {
                 console.log(response);
                 Cookies.set('token', response.data.data.token)
+                Cookies.set('username', res.profileObj.email);
+                console.log("response"+res.profileObj.email);
+
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {
                     case 0:
@@ -58,6 +61,7 @@ const Login = (props: any): ReactElement => {
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };
+     
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.

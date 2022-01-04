@@ -1,0 +1,93 @@
+/* Chats Page */
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+/*خيار اضافة مستخدمين للشات*/
+.ce-section-title-container.ce-person-title-container {
+  display: none;
+}
+/*خيار حذف الشات*/
+#ce-options-drop-down {
+  display: none;
+}
+/*خيار اضافة شات جديدة*/
+.ce-primary-button {
+  visibility: hidden;
+}
+/*نص اكتابة الرسالة*/
+
+/* اسم الشات*/
+.ce-input.ce-text-input {
+  pointer-events: none; /*مهمه هذه الخاصيه لمنع المستخدم من تغيير اسم الشات*/
+}
+/*خلفية الشات*/
+.ce-chat-feed-container {
+  background-image: url("https://circlecolor.vercel.app/images/wallpaper+whatsapp+iphone+white-1.jpg");
+}
+/*خلفية الجهة اليسرى من الشات*/
+.ce-chats-container {
+  background-image: url("https://www.colorhexa.com/252424.png");
+}
+
+.nav-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #252424;
+}
+.ce-chat-form-container {
+  background-image: url("https://www.colorhexa.com/252424.png");
+}
+.ce-chat-list {
+  background-image: url("https://www.colorhexa.com/252424.png");
+}
+
+.ce-chat-title-text {
+  color: #ffc700;
+  text-shadow: 0 0 2px rgb(0, 0, 0); /* Firefox 3.5+, Opera 9+, Safari 1+, Chrome, IE10 */
+  filter: progid:DXImageTransform.Microsoft.Glow(Color=#000000,Strength=1); /* IE<10 */
+}
+
+/*تعديل نص الكتابة للرساله*/
+
+.ql-editor.ql-blank:after {
+  content: "write a message...";
+  color: #858484;
+  position: absolute;
+  top: 30%;
+}
+
+/*send button*/
+.ce-send-button-container {
+  height: 34px;
+  width: 35px;
+  top: 5%;
+  cursor: pointer;
+  background-image: url("https://www.resizepixel.com/Image/b933697c7e/Preview/sendlogo.png?v=0b7f3aa0-ae60-40cb-ba9e-9dd1be95443c");
+}
+#ce-send-message-button {
+  vertical-align: -20px;
+  background-image: url("https://i.pinimg.com/736x/d4/c6/41/d4c64139ef87f94cb55b08e12cf551b2.jpg");
+}
+.anticon.anticon-arrow-up {
+  display: none;
+}
+
+.ce-chat-title {
+  height: 55px;
+}
+.ce-chat-list-mobile-option {
+  height: 20px;
+}
+
+.ce-chat-title-container {
+  top: -33%;
+}
+
+.ce-chat-settings-mobile-option {
+  height: 20px;
+}
