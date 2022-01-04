@@ -18,7 +18,7 @@ import router from "next/router";
 import NotFound from "@/components/NotFound";
 import axios from 'axios';
 
-const REACT_APP_CHAT_ENGINE_ID="ac320c2f-2637-48b3-879a-3fb1da5dbe03";
+const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
 
 const properties = {
   duration: 5000,
@@ -35,15 +35,14 @@ function Single({ query }) {
 
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
-  const APIURL = 'https://www.api.timwoork.com/avatars/'
   const myLoader = () => {
-    return `${APIURL}${ProductData && ProductData.data.profile_seller.profile.avatar}`;
+    return `${ProductData && ProductData.data.profile_seller.profile.avatar}`;
   }
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
 
   const showStars = () => {
-    const rate = Number(ProductData.data.ratings_avg) || 0
+    const rate = Number(ProductData.data.ratings_avg_rating) || 0
     const xAr: any = [
       {
         id: 1,
@@ -200,58 +199,47 @@ function Single({ query }) {
     settheIDs(newArray);
     setcheckedDevelopments(newArray);
 
-  };  
-     // ^--------------------*-------- Create New Chat----------*-------------------------------
-     
+  };
+  // ^--------------------*-------- Create New Chat----------*-------------------------------
+  const getOrCreateChat = (seller_Email: string) => {
 
-   /* 3- Create new chat
-   ~ Chat title: product title 
-   */
- const getOrCreateChat= (seller_Email:string)=>{
-  
-  axios.put('https://api.chatengine.io/chats/',
-  {usernames: [seller_Email, Cookies.get('username')], 'title':ProductData && ProductData.data.title, is_direct_chat: true},
-  
-  {
-      headers: {
-      'Project-ID': REACT_APP_CHAT_ENGINE_ID, 
-      'User-Name': seller_Email, 
-      'User-Secret':seller_Email 
+    axios.put('https://api.chatengine.io/chats/',
+      { usernames: [seller_Email, Cookies.get('username')], 'title': ProductData && ProductData.data.title, is_direct_chat: true },
+
+      {
+        headers: {
+          'Project-ID': REACT_APP_CHAT_ENGINE_ID,
+          'User-Name': seller_Email,
+          'User-Secret': seller_Email
+        }
       }
-  }
-  )        
-   .catch((error) => console.log(error))
-   console.log("seeler email: "+ seller_Email); 
-   console.log("ProductData && ProductData.data.title: "+ ProductData && ProductData.data.title)  
-
-   router.push('/chat');// Go to chat page
-
-
+    )
+      .catch((error) => console.log(error))
+    router.push('/chat');// Go to chat page
   }
   /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
   function _totalPrice() {
 
-    var __checkedDevelopments_sum = 0;
-    var b = [],
+    const [__checkedDevelopments_sum, setCheckedDevelopments_sum] = useState(0);
+    const b = [],
       c = checkedDevelopments,
       a = ProductData && ProductData.data.developments.map(e => e.id);
 
-    for (var i = 0; i < a.length; i++) {
+    for (let i = 0; i < a.length; i++) {
 
-      for (var j = 0; j < c.length; j++) {
+      for (let j = 0; j < c.length; j++) {
         if (a[i] == c[j]) {
           b.push(i);
         }
       }
     }
-    console.log(b)
-    for (var i = 0; i < b.length; i++) { __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price); }
+    for (let i = 0; i < b.length; i++) {
+      setCheckedDevelopments_sum(__checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price));
+    }
 
-    var total_price = (ProductData.data.price + __checkedDevelopments_sum) * quantutyCount;
-    console.log("ProductData && ProductData.data.developments " + ProductData && ProductData.data.developments)
-
+    const total_price = (ProductData.data.price + __checkedDevelopments_sum) * quantutyCount;
     return Math.abs(total_price);
-  };
+  }
 
   return (
     <>
@@ -281,7 +269,7 @@ function Single({ query }) {
                               <Image
                                 className="circular-center tiny-size"
                                 loader={myLoader}
-                                src={APIURL + ProductData.data.profile_seller.profile.avatar}
+                                src={ProductData && ProductData.data.profile_seller.profile.avatar}
                                 quality={1}
                                 width={32}
                                 height={32}
@@ -310,7 +298,7 @@ function Single({ query }) {
                           {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
                         </span>
                         <span className="stars-count">
-                          ({ProductData.data.ratings_avg})
+                          ({ProductData.data.ratings_avg_rating})
                         </span>
                       </li>
                       <li className="level-item">
@@ -369,7 +357,7 @@ function Single({ query }) {
                                 <Image
                                   className="circular-img huge-size"
                                   loader={myLoader}
-                                  src={APIURL + ProductData.data.profile_seller.profile.avatar}
+                                  src={ProductData && ProductData.data.profile_seller.profile.avatar}
                                   quality={1}
                                   width={100}
                                   height={100}
@@ -397,9 +385,9 @@ function Single({ query }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
                                   </a>
                                 </Link>
-                                  <a className="btn butt-green butt-sm flex-center" onClick={()=> getOrCreateChat(ProductData.data.profile_seller.profile.user.email)}>
-                                    <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
-                                  </a>
+                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email)}>
+                                  <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
+                                </a>
                               </div>
                             </div>
                           </div>

@@ -1,35 +1,36 @@
 import React, { useState } from "react"
-
 import { styles } from "../styles";
-
 import EmailForm from "./EmailForm";
 import ChatEngine from "./ChatEngine";
+import PropTypes from "prop-types";
 
-const SupportWindow = props => {
+const SupportWindow = ({ visible }) => {
     const [user, setUser] = useState(null)
     const [chat, setChat] = useState(null)
 
     return (
-        <div 
+        <div
             className='transition-5'
             style={{
                 ...styles.supportWindow,
-                ...{ opacity: props.visible ? '1' : '0' }
+                ...{ opacity: visible ? '1' : '0' }
             }}
         >
-            <EmailForm 
+            <EmailForm
                 visible={user === null || chat === null}
-                setUser={user => setUser(user)} 
-                setChat={chat => setChat(chat)} 
+                setUser={user => setUser(user)}
+                setChat={chat => setChat(chat)}
             />
 
-            <ChatEngine 
+            <ChatEngine
                 visible={user !== null && chat !== null}
-                user={user} 
-                chat={chat} 
+                user={user}
+                chat={chat}
             />
         </div>
     )
 }
-
+SupportWindow.propTypes = {
+    visible: PropTypes.any,
+  };
 export default SupportWindow;

@@ -72,8 +72,8 @@ function Navbar(props: any): ReactElement {
             </Menu.Item>)}
 
             <Menu.Item key="1">
-                <Link href="/Orders">
-                    <a>الطلبات</a>
+                <Link href="/myorders">
+                    <a>طلباتي</a>
                 </Link>
             </Menu.Item>
             <Menu.Item key="1">

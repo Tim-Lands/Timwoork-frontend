@@ -8,7 +8,6 @@ import useSWR from 'swr'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
 import { DeleteOutlined } from '@ant-design/icons';
 import Unauthorized from '@/components/Unauthorized';
@@ -126,7 +125,6 @@ function index() {
     }
     return (
         <div className="py-3">
-            {!postsList && <Loading />}
             {!token && <Unauthorized />}
             {userInfo && userInfo.user_details.profile &&
                 <>
@@ -185,13 +183,13 @@ function index() {
                                 <div className="page-header">
                                     <h3 className="title">خدماتي</h3>
                                 </div>
-                                {postsList.length == 0 &&
+                                {postsList && postsList.length == 0 ?
                                     <Result
                                         status="404"
                                         title="لا يوجد لديك خدمات"
                                         subTitle="يمكنك إضافة خدمة في أي وقت "
                                         extra={<Link href='/add-new'><a className="btn butt-sm butt-primary">إضافة خدمة جديدة</a></Link>}
-                                    />
+                                    /> : ''
                                 }
                                 <div className="timlands-table">
                                     <table className="table">
