@@ -15,7 +15,7 @@ function Paypal({ query }) {
     async function getBill() {
         setIsLoading(true)
         try {
-            const res: any = await API.post(`api/purchase/paypal/charge`, {token: query.token}, {
+            const res: any = await API.post(`api/purchase/paypal/charge`, { token: query.token }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -29,7 +29,7 @@ function Paypal({ query }) {
         }
     }
     useEffect(() => {
-        if(query.return == 1) {
+        if (query.return == 1) {
             getBill()
         }
         if (!token) {
@@ -49,7 +49,26 @@ function Paypal({ query }) {
                         <Alert type='success'>لقد تمت عملية الشراء بجاح</Alert> :
                         <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
                     }
-
+                    <div className="app-bill-content">
+                        <ul className="list-group">
+                            <li className="list-group-item d-flex justify-content-between align-items-center">
+                                عدد الخدمات
+                                <span className="">{445}</span>
+                            </li>
+                            <li className="list-group-item d-flex justify-content-between align-items-center">
+                                السعر الكلي
+                                <span className="">{45554}$</span>
+                            </li>
+                            <li className="list-group-item d-flex justify-content-between align-items-center">
+                                سعر التحويل
+                                <span className="">{4545}$</span>
+                            </li>
+                            <li className="list-group-item total d-flex justify-content-between align-items-center">
+                                المجموع الكلي
+                                <span className="">{4545}$</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

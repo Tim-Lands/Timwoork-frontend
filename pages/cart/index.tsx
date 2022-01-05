@@ -61,7 +61,7 @@ function index() {
         if ((cartList && cartList.data.cart_items_count == 0) || (cartList && cartList.data.price_with_tax == 0)) {
             message.error('لا يمكنك الشراء الآن لأن السلة فارغة')
         } else {
-            message.success('يمكنك الشراء الآن')
+            router.push('/cart/bill')
         }
     }
     useEffect(() => {

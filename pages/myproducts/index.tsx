@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Button, Result, Tooltip } from 'antd'
+import { Badge, Button, message, Result, Tooltip } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
 import API from '../../config'
 import Link from 'next/link'
@@ -9,13 +9,14 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Cookies from 'js-cookie'
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PauseCircleOutlined, EditOutlined } from '@ant-design/icons';
 import Unauthorized from '@/components/Unauthorized';
 import router from 'next/router'
+import Loading from '@/components/Loading'
 
 function index() {
     const token = Cookies.get('token')
-    //const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     //const [isError, setIsError] = useState(false)
     const [postsList, setPostsList]: any = useState([])
     function statusProduct(status: any) {
@@ -31,23 +32,19 @@ function index() {
         }
     }
     const getProducts = async () => {
-        //setIsLoading(true)
+        setIsLoading(true)
         try {
             const res: any = await API.get(`api/my_products`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res) {
-                //setIsLoading(false)
+            if (res.status === 200) {
+                setIsLoading(false)
                 setPostsList(res.data.data)
-                console.log(postsList);
-
-                //setIsError(false)
             }
         } catch (error) {
-            //setIsError(true)
-            //setIsLoading(false)
+            setIsLoading(false)
         }
     }
     useEffect(() => {
@@ -81,11 +78,14 @@ function index() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await API.post(`api/product/${id}/deleteProduct`, null, {
+                    const res = await API.post(`api/product/${id}/deleteProduct`, null, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     })
+                    if (res.status === 200) {
+                        message.success('تم حذف هذه الخدمة')
+                    }
                 } catch (error) {
                     console.log(error);
                 }
@@ -105,7 +105,6 @@ function index() {
                 )
             }
         })
-
     }
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
@@ -130,7 +129,8 @@ function index() {
     return (
         <div className="py-3">
             {!token && <Unauthorized />}
-            {userInfo && userInfo.user_details.profile &&
+            {isLoading && <Loading />}
+            {!isLoading && userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
                         title={'خدماتي'}
@@ -225,7 +225,10 @@ function index() {
                                                             <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
                                                         </Tooltip>
                                                         <Tooltip title="تعطيل هذه الخدمة">
-                                                            <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                            <Button type="primary" color='orange' size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                        </Tooltip>
+                                                        <Tooltip title="تعديل الخدمة">
+                                                            <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => deleteHandle(e.id)} />
                                                         </Tooltip>
                                                     </td>
                                                 </tr>
