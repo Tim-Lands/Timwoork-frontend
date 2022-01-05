@@ -34,7 +34,6 @@
   margin-inline-start: auto;
 }
 .ce-chat-title-text::before {
-  content: "\e853";
   position: absolute;
   top: -10px;
   right: 0;
