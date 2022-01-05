@@ -201,6 +201,11 @@ function Single({ query }) {
 
   };
   // ^--------------------*-------- Create New Chat----------*-------------------------------
+
+
+  /* 3- Create new chat
+  ~ Chat title: product title 
+  */
   const getOrCreateChat = (seller_Email: string) => {
 
     axios.put('https://api.chatengine.io/chats/',
@@ -215,12 +220,17 @@ function Single({ query }) {
       }
     )
       .catch((error) => console.log(error))
+    console.log("seeler email: " + seller_Email);
+    console.log("ProductData && ProductData.data.title: " + ProductData && ProductData.data.title)
+
     router.push('/chat');// Go to chat page
+
+
   }
   /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
   function _totalPrice() {
 
-    const [__checkedDevelopments_sum, setCheckedDevelopments_sum] = useState(0);
+    let __checkedDevelopments_sum = 0;
     const b = [],
       c = checkedDevelopments,
       a = ProductData && ProductData.data.developments.map(e => e.id);
@@ -234,12 +244,12 @@ function Single({ query }) {
       }
     }
     for (let i = 0; i < b.length; i++) {
-      setCheckedDevelopments_sum(__checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price));
+      __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price);
     }
 
     const total_price = (ProductData.data.price + __checkedDevelopments_sum) * quantutyCount;
     return Math.abs(total_price);
-  }
+  };
 
   return (
     <>

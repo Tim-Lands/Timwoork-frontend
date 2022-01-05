@@ -28,12 +28,17 @@ function Overview({ query }) {
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
+        if (!token) {
+            router.push('/login')
+            return
+        }
         if (getProduct) {
             if (getProduct.profile_seller_id !== getUser.id) {
                 router.push('/add-new')
             }
         }
     }, [])
+
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`)

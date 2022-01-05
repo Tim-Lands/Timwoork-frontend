@@ -17,13 +17,16 @@ function Complete({ query }) {
     if (!query) return message.error('حدث خطأ')
     if (!token) return <Unauthorized />
     useEffect(() => {
+        if (!token) {
+            router.push('/login')
+            return
+        }
         if (getProduct && getUser) {
             if (getProduct.profile_seller_id !== getUser.id) {
                 router.push('/add-new')
             }
         }
     }, [])
-    
     return (
         <>
             <MetaTags

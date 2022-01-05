@@ -11,6 +11,7 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import Cookies from 'js-cookie'
 import { DeleteOutlined } from '@ant-design/icons';
 import Unauthorized from '@/components/Unauthorized';
+import router from 'next/router'
 
 function index() {
     const token = Cookies.get('token')
@@ -50,6 +51,9 @@ function index() {
         }
     }
     useEffect(() => {
+        if (!token) {
+            router.push('/login')
+        }
         getProducts()
     }, [])
 

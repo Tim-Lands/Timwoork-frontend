@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import { logout, addNewProduct } from "./../../store/auth/authActions";
 //import withAuth from '../../services/withAuth'
@@ -10,9 +10,16 @@ import useSWR from 'swr'
 import NotSeller from '@/components/NotSeller';
 import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
+import router from 'next/router';
 
 function index(props: any) {
     const token = Cookies.get('token')
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+            return
+        }
+    }, [])
     if (!token) return <Unauthorized />
     const { data: userData }: any = useSWR(`api/me`)
     if (userData && userData.user_details.profile.is_seller == 0) return <NotSeller />

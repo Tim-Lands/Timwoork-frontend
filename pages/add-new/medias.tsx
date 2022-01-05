@@ -1,5 +1,5 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Cookies from 'js-cookie'
 import API from "../../config";
 import ImageUploading from "react-images-uploading";
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import { Upload, message } from 'antd';
-import { mutate } from 'swr'
+import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
 import 'antd/dist/antd.css';
 import PropTypes from "prop-types";
@@ -16,6 +16,19 @@ import { Alert } from '@/components/Alert/Alert';
 function Medias({ query }) {
     const id = query.id
     const token = Cookies.get('token')
+    const { data: getUser }: any = useSWR('api/me')
+    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+            return
+        }
+        if (getProduct && getUser) {
+            if (getProduct.profile_seller_id !== getUser.id) {
+                router.push('/add-new')
+            }
+        }
+    }, [])
     const props = {
         beforeUpload: file => {
             if (file.type !== 'application/pdf') {
@@ -40,6 +53,7 @@ function Medias({ query }) {
     const maxNumber = 69;
     const onChangeL = (imageList) => {
         // data for submit
+        console.log(images.map(e => (e.file)))
         setImages(imageList);
     };
     const [loading, setLoading] = useState(false);
@@ -166,7 +180,6 @@ function Medias({ query }) {
                                     <div className={"panel-modal-body login-panel-body auto-height"}>
                                         <div className="row">
                                             <div className="col-md-12 align-center">
-
                                                 <div className="timlands-form">
                                                     <div className="page-header">
                                                         <h3 className="title">اختر الصورة البارزة</h3>

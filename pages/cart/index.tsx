@@ -2,20 +2,21 @@ import Layout from '@/components/Layout/HomeLayout'
 import PostsAside from '@/components/PostsAside';
 import API from '../../config'
 import React, { ReactElement, useEffect, useState } from 'react'
-//import CartList from '../../components/Cart/CartList';
 import useSWR, { mutate } from 'swr'
 import Cookies from 'js-cookie'
 import Loading from '@/components/Loading';
 import CartPost from '@/components/Cart/CartPost';
 import { message, Spin } from 'antd';
 import { MetaTags } from '@/components/SEO/MetaTags';
+import router from 'next/router';
 
 function index() {
+    const token = Cookies.get('token')
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading] = useState(false)
     const { data: cartList }: any = useSWR('api/cart')
+
     const deleteItem = async (id: any) => {
-        const token = Cookies.get('token')
         setIsLoading(true)
         try {
             const res = await API.post(`api/cart/cartitem/delete/${id}`, null, {
@@ -36,7 +37,6 @@ function index() {
     }
     const updateItem = async (e: any, values: any) => {
         e.preventDefault()
-        const token = Cookies.get('token')
         setIsLoading(true)
         try {
             const res = await API.post(`api/cart/cartitem/update/${values.id}`, values, {
@@ -65,6 +65,9 @@ function index() {
         }
     }
     useEffect(() => {
+        if(!token) {
+            router.push('/login')
+        }
         if (cartList && cartList.data.cart_items_count == 0) {
             setIsDisabled(true)
         } else {

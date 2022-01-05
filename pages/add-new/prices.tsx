@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { Field, FieldArray, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import Layout from "@/components/Layout/HomeLayout";
@@ -15,6 +15,8 @@ import PropTypes from "prop-types";
 function Prices({ query }) {
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+    const { data: getUser }: any = useSWR('api/me')
+
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
@@ -35,6 +37,17 @@ function Prices({ query }) {
         price: number
         duration: number
     }
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+            return
+        }
+        if (getProduct) {
+            if (getProduct.profile_seller_id !== getUser.id) {
+                router.push('/add-new')
+            }
+        }
+    }, [])
     return (
         <>
             <MetaTags
