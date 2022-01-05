@@ -1,68 +1,142 @@
-
-/*خيار اضافة مستخدمين للشات*/
-.ce-section-title-container.ce-person-title-container {
-  display: none;
+.ce-chat-form-container,
+.ql-snow .ql-toolbar button,
+.ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar:after,
+.ql-snow.ql-toolbar:after {
+  display: none !important;
 }
-/*خيار حذف الشات*/
-#ce-options-drop-down {
-  display: none;
+.ce-chat-list {
+  overflow: hidden auto !important;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
-/*خيار اضافة شات جديدة*/
-.ce-primary-button {
-  visibility: hidden;
+.ce-chat-card {
+  border-radius: 0 !important;
+  text-align: start;
+  padding: 0.5rem !important;
 }
-/*نص اكتابة الرسالة*/
-
-/* اسم الشات*/
-.ce-input.ce-text-input {
-  pointer-events: none; /*مهمه هذه الخاصيه لمنع المستخدم من تغيير اسم الشات*/
+.ce-active-chat-card {
+  background-color: #f5f5f5 !important;
 }
-
-.nav-bar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+.ce-chats-container > div:not(:first-of-type) {
+  border-bottom: 1px solid #ccc;
 }
 .ce-chat-title-text {
-  color: #ffc700;
-  text-shadow: 0 0 2px rgb(0, 0, 0); /* Firefox 3.5+, Opera 9+, Safari 1+, Chrome, IE10 */
-  filter: progid:DXImageTransform.Microsoft.Glow(Color=#000000,Strength=1); /* IE<10 */
+  position: relative;
+  overflow: visible !important;
+  color: #475c80;
+  font-weight: bold !important;
+  padding-bottom: 0 !important;
 }
-
-/*تعديل نص الكتابة للرساله*/
-
-.ql-editor.ql-blank:after {
-  content: "write a message...";
-  color: #858484;
+.ce-chat-title-text div {
+  display: block !important;
+  width: 265px;
+  margin-inline-start: auto;
+}
+.ce-chat-title-text::before {
+  content: "\e853";
   position: absolute;
-  top: 30%;
+  top: -10px;
+  right: 0;
+  font-family: "Material Icons Outlined";
+  font-size: 40px;
+  font-weight: normal;
+}
+.ce-chat-subtitle {
+  display: flex;
+  flex-flow: column;
+  align-items: start;
+  width: 265px !important;
+  margin-inline-start: auto;
+}
+.ce-chat-subtitle-message {
+  width: auto !important;
 }
 
-/*send button*/
+.ce-chat-feed-container {
+  background-image: url("https://i.pinimg.com/236x/c9/1f/cd/c91fcd147661c60204bd6b8ae9c0a8fd.jpg");
+}
+.ce-chat-feed-column {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+.ce-chat-feed .ce-chat-title {
+  background-color: rgba(207, 225, 209, 0.6) !important;
+}
+.ce-chat-title-container {
+  overflow: hidden !important;
+  padding: 0.5rem !important;
+  text-align: start !important;
+}
+.ce-feed-container-top {
+  height: 70px !important;
+}
+.ce-chat-title-container .ce-chat-title-text,
+.ce-chat-title-container .ce-chat-subtitle-text {
+  font-size: 14px !important;
+  width: calc(100% - 50px);
+  margin-inline-start: auto;
+}
+.ce-chat-title-container .ce-chat-subtitle-text {
+  font-size: 10px !important;
+  color: #999;
+}
+.ce-chat-title-container .ce-chat-title-text::before {
+  right: -50px;
+}
+
 .ce-send-button-container {
-  height: 34px;
-  width: 35px;
-  top: 5%;
+  left: 15px;
+  top: 5px;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+.ql-container.ql-snow,
+.ql-toolbar.ql-snow {
+  border: 0 !important;
+  padding: 0 !important;
+}
+.ql-editor {
+  text-align: start !important;
+  background-color: #e7e7e7;
+  border-radius: 5rem;
+  padding: 0.5rem 1rem !important;
+  margin: 0.4rem 3rem 0.4rem 3.5rem;
+}
+.anticon-arrow-up {
+  position: relative;
+}
+.anticon-arrow-up::after {
+  content: "\e163";
+  position: absolute;
+  top: 1px;
+  left: 6px;
+  font-family: "Material Icons Outlined";
+  font-size: 20px;
+  transform: rotateY(180deg);
+}
+.anticon-arrow-up svg {
+  display: none !important;
 }
 #ce-send-message-button {
-  vertical-align: -20px;
+  width: 35px;
+  height: 35px;
+  padding: 0 !important;
+  border-radius: 50% !important;
 }
-.anticon.anticon-arrow-up {
-  display: none;
+#upload-document-button {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background-color: #e7e7e7;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
 }
-
-.ce-chat-title {
-  height: 55px;
-}
-.ce-chat-list-mobile-option {
-  height: 20px;
-}
-
-.ce-chat-title-container {
-  top: -33%;
-}
-
-.ce-chat-settings-mobile-option {
-  height: 20px;
+.ce-attachment-icon {
+  vertical-align: baseline !important;
+  float: none !important;
 }
