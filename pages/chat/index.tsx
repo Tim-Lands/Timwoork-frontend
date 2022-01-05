@@ -38,11 +38,6 @@ const Chats = () => {
     //chat component
     return (
         <div className="chats-page">
-            {(!token) && <p> error...</p>}
-            <div className="nav-bar">
-                <div className="logo-tab">
-                </div>
-            </div>
             <NoSsr>
                 <ChatEngine
                     height="calc(100vh - 66px)"

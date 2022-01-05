@@ -32,12 +32,10 @@ function Bill() {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.statusCode === 200) {
+            if (res.status === 200) {
                 setIsBuyer(true)
                 setIsLoading(false)
                 setGetLink(res.data)
-            } else {
-                setIsBuyer(false)
             }
         } catch (error) {
             setIsBuyer(false)
