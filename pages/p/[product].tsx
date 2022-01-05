@@ -249,8 +249,7 @@ function Single({ query }) {
 
     const total_price = (ProductData.data.price + __checkedDevelopments_sum) * quantutyCount;
     return Math.abs(total_price);
-  };
-
+  }
   return (
     <>
       {!ProductData && <Loading />}

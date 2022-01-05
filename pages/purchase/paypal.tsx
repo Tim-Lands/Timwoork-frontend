@@ -10,7 +10,7 @@ import Loading from '@/components/Loading';
 function Paypal({ query }) {
     const token = Cookies.get('token')
     const [isLoading, setIsLoading] = useState(false)
-    const [getBills, setGetBills] = useState([])
+    //const [getBills, setGetBills] = useState([])
 
     async function getBill() {
         setIsLoading(true)
@@ -49,7 +49,7 @@ function Paypal({ query }) {
                         <Alert type='success'>لقد تمت عملية الشراء بجاح</Alert> :
                         <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
                     }
-                    
+
                 </div>
             </div>
         </div>

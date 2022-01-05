@@ -11,21 +11,25 @@ import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
+
 const SignupSchema = Yup.object().shape({
-    title: Yup.string().required('هذا الحقل إجباري').nullable(),
-    product_tag: Yup.array().required('هذا الحقل إجباري'),
+    title: Yup.string().required('هذا الحقل إجباري'),
+    //product_tag: Yup.array().required('هذا الحقل إجباري'),
 });
 function Overview({ query }) {
+    const { Option } = Select;
+
     const [tagsState, setTagsState] = useState([])
     const [categoryState, setCategoryState] = useState(1)
     const id = query.id
     const token = Cookies.get('token')
-    
+
     const { data: getUser }: any = useSWR('api/me')
-    const { data: getTags, getTagsError }: any = useSWR('dashboard/tags')
+    const { data: getTags }: any = useSWR('dashboard/tags')
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`)
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
         if (!token) {
@@ -38,11 +42,12 @@ function Overview({ query }) {
             }
         }
     }, [])
-
+    const setTagsStateHandle = (e) => {
+        setTagsState(e)
+    }
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`)
-            //const json = res.data
             if (res.status == 200) {
                 message.success('لقد تم الحذف بنجاح')
                 router.push("/add-new")
@@ -78,6 +83,9 @@ function Overview({ query }) {
 
                                 validationSchema={SignupSchema}
                                 onSubmit={async values => {
+                                    console.log(values);
+                                    return
+
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {
@@ -256,23 +264,20 @@ function Overview({ query }) {
                                                     <div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                            {getTagsError && "حدث خطأ"}
                                                             <Select
-                                                                mode="multiple"
+                                                                mode="tags"
                                                                 notFoundContent="لاتوجد بيانات"
                                                                 style={{ width: "100%" }}
-                                                                className="timlands-inputs select"
+                                                                //className="timlands-inputs select"
                                                                 placeholder="اختر الوسوم"
-                                                                defaultValue={tagsState}
-                                                                value={tagsState}
-                                                                onChange={(e) => setTagsState(e)}
+                                                                //value={tagsState}
+                                                                onChange={setTagsStateHandle}
                                                             >
-                                                                {!getTags ? <option value="">يرجى الانتظار...</option> : (
-                                                                    getTags.data.map((e: any) => (
-                                                                        <option value={e.id} key={e.id}>
-                                                                            {e.name_ar}
-                                                                        </option>
-                                                                    )))}
+                                                                {getTags && getTags.data.map((e: any) => (
+                                                                    <Option value={e.id} key={e.id}>
+                                                                        {e.name_ar}
+                                                                    </Option>
+                                                                ))}
                                                             </Select>
                                                             {errors.product_tag && touched.product_tag ?
                                                                 <div style={{ overflow: 'hidden' }}>
