@@ -2,6 +2,8 @@
 .ql-snow .ql-toolbar button,
 .ql-snow.ql-toolbar button,
 .ql-snow .ql-toolbar:after,
+.ce-delete-chat-button,
+#ce-options-drop-down,
 .ql-snow.ql-toolbar:after {
   display: none !important;
 }
