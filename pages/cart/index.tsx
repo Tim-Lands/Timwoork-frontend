@@ -15,6 +15,7 @@ function index() {
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading] = useState(false)
     const { data: cartList }: any = useSWR('api/cart')
+    const { data: userInfo }: any = useSWR('api/me')
 
     const deleteItem = async (id: any) => {
         setIsLoading(true)
@@ -85,7 +86,7 @@ function index() {
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
-                        {cartList && cartList.data == null ?
+                        {cartList && cartList.data == null && userInfo && userInfo.cart_items_count == 0  ?
                             <div className="cart-nothing">
                                 <div className="cart-nothing-inner">
                                     <div className="cart-nothing-img">

@@ -6087,4 +6087,12 @@ h3 {
 .post-item-content .post-meta-rate .outline-star {
   color: #acacac;
 }
+
+.StripeElement {
+  margin: 9px 0;
+  font-size: 14px;
+  border: 1px solid #f3f3f3;
+  border-radius: 6px;
+  padding: 13px 20px;
+}
 /*# sourceMappingURL=app-rtl.css.map */

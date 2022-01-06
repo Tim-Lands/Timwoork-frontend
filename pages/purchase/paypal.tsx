@@ -10,7 +10,8 @@ import Loading from '@/components/Loading';
 function Paypal({ query }) {
     const token = Cookies.get('token')
     const [isLoading, setIsLoading] = useState(false)
-    //const [getBills, setGetBills] = useState([])
+    const [isError, setIsError] = useState(false)
+    const [getBills, setGetBills]: any = useState({})
 
     async function getBill() {
         setIsLoading(true)
@@ -22,10 +23,12 @@ function Paypal({ query }) {
             })
             if (res.status === 200) {
                 setIsLoading(false)
-                console.log(res.data)
+                setIsError(false)
+                setGetBills(res.data.data)
             }
         } catch (error) {
             setIsLoading(false)
+            setIsError(true)
         }
     }
     useEffect(() => {
@@ -45,29 +48,27 @@ function Paypal({ query }) {
                         <h3 className="title">نتيجة عملية الشراء</h3>
                     </div>
                     {isLoading && <Loading />}
-                    {query.return == 1 ?
+                    {query.return == 1 && !isError ?
                         <Alert type='success'>لقد تمت عملية الشراء بجاح</Alert> :
                         <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
                     }
                     <div className="app-bill-content">
-                        <ul className="list-group">
-                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                                عدد الخدمات
-                                <span className="">{445}</span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                                السعر الكلي
-                                <span className="">{45554}$</span>
-                            </li>
-                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                                سعر التحويل
-                                <span className="">{4545}$</span>
-                            </li>
-                            <li className="list-group-item total d-flex justify-content-between align-items-center">
-                                المجموع الكلي
-                                <span className="">{4545}$</span>
-                            </li>
-                        </ul>
+                        {!isError && getBills && 
+                            <ul className="list-group">
+                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                    السعر الكلي
+                                    <span className="">{getBills.total_price}$</span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                    سعر التحويل
+                                    <span className="">{getBills.tax}$</span>
+                                </li>
+                                <li className="list-group-item total d-flex justify-content-between align-items-center">
+                                    المجموع الكلي
+                                    <span className="">{getBills.price_with_tax}$</span>
+                                </li>
+                            </ul>
+                        }
                     </div>
                 </div>
             </div>

@@ -19,7 +19,7 @@ function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
-        setIsMenuShowen(!isMenuShowen)
+        setIsMenuShowen(!isMenuShowen)        
     }
     const DarkIconvariants = {
         visible: {

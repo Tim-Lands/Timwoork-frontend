@@ -1,31 +1,80 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import Layout from '@/components/Layout/HomeLayout'
-import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion'
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from 'next/router';
 import API from '../../config'
-import { Elements, CardElement } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import Loading from '@/components/Loading';
 import { Result } from 'antd';
+import {
+    CardElement,
+    Elements,
+    useStripe,
+    useElements,
+} from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+//const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
 
-function Bill() {
-    const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
-    const options = {
-        // passing the client secret obtained from the server
-        clientSecret: 'sk_test_51H7n51E0GSoKvEJxUV6zbHn0MDJA5O2gwx8ZnGHfPZuGG24jgZjrVMsKsBfJ6weBtiVKGdTzmlQkWvhY4HAIREIa00c1skasM4',
-    };
+const CheckoutForm = () => {
+    const stripe = useStripe();
+    const elements = useElements();
     const token = Cookies.get('token')
     const [isLoading, setIsLoading] = useState(false)
+    const [getBill, setGetBill] = useState({})
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (elements == null) {
+            return;
+        }
+        const { paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: elements.getElement(CardElement),
+        });
+        setIsLoading(true)
+        try {
+            const res: any = await API.post(`api/purchase/stripe/charge`, { payment_method_id: paymentMethod.id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                setIsLoading(false)
+                setGetBill(res.data)
+            }
+        } catch (error) {
+            setIsLoading(false)
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <CardElement />
+            <button type="submit" className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
+                {isLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                {!isLoading && <span>شراء الآن</span>}
+            </button>
+        </form>
+    );
+};
+const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
+function Bill() {
+    const token = Cookies.get('token')
+    const [billPayment, setBillPayment] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
     const [isBuyer, setIsBuyer] = useState(false)
+
     const [getLink, setGetLink] = useState('')
 
     const { data: cartList }: any = useSWR('api/cart')
+    const { data: userInfo }: any = useSWR('api/me')
     async function getPaypal() {
         setIsLoading(true)
         setIsBuyer(false)
+        setIsError(false)
         try {
             const res: any = await API.post(`api/purchase/paypal/approve`, {}, {
                 headers: {
@@ -35,9 +84,11 @@ function Bill() {
             if (res.status === 200) {
                 setIsBuyer(true)
                 setIsLoading(false)
+                setIsError(false)
                 setGetLink(res.data)
             }
         } catch (error) {
+            setIsError(true)
             setIsBuyer(false)
             setIsLoading(false)
         }
@@ -52,12 +103,12 @@ function Bill() {
     return (
         <>
             {!cartList && <Loading />}
-            {!isBuyer && <div className="row py-4 justify-content-center">
+            {isError && userInfo && userInfo.cart_items_count == 0 && <div className="row py-4 justify-content-center">
                 <div className="col-md-5">
                     <Result
                         status="warning"
                         title="حدث خطأ "
-                        subTitle="حدث خطأ أثناء جلب رابط البايبال"
+                        subTitle="حدث خطأ أثناء التحضير لعملية الشراء  "
                     />
                 </div>
             </div>}
@@ -91,79 +142,59 @@ function Bill() {
                         </div>
                     </div>
                     <div className="col-md-5">
-                        <Formik
-                            isInitialValid={true}
-                            initialValues={{
-                                productCount: 758,
-                                priceTotal: 23,
-                                billPayment: 0,
-                                tax: 45,
-                                products: 2,
-                            }}
-                            enableReinitialize={true}
-                            //validationSchema={SignupSchema}
-                            onSubmit={async (values) => {
-                                console.log(values);
-                            }}
-                        >
-                            {({ values }) => (
-                                <Form>
-                                    <div className="app-bill">
-                                        <div className="app-bill-header">
-                                            <h3 className="title">اختيار طريقة الدفع</h3>
-                                        </div>
-                                        <div className="app-bill-payment">
-                                            <div className="form-check">
-                                                <Field className="form-check-input" type="radio" value='0' name="billPayment" id="billPayment-strap" />
-                                                <label className="form-check-label" htmlFor="billPayment-strap">
-                                                    الدفع عن طريق البطاقات البنكية
-                                                </label>
-                                            </div>
-                                            <div style={{ overflow: 'hidden' }}>
-                                                {values.billPayment == 0 ?
-                                                    <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                                        <Elements stripe={stripePromise} options={options}>
-                                                            <CardElement />
-                                                        </Elements>
-                                                    </motion.div>
-                                                    : null}
-                                            </div>
-                                            <div className="form-check">
-                                                <Field className="form-check-input" type="radio" value='1' name="billPayment" id="billPayment-paypal" />
-                                                <label className="form-check-label" htmlFor="billPayment-paypal">
-                                                    الدفع عن طريق البايبال Paypal
-                                                </label>
-                                            </div>
-                                            {isLoading && <span className="spinner-border spinner-border-sm" role="status"></span>}
-                                            <div style={{ overflow: 'hidden' }}>
-                                                {values.billPayment == 1 ?
-                                                    <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                                        <a href={getLink} className='btn butt-primary2 butt-md'>
-                                                            {isLoading && <span className="spinner-border spinner-border-sm" role="status"></span>}
-                                                            {!isLoading && <> <i className='fab fa-paypal'></i> | عن طريق Paypal</>}
-                                                        </a>
-                                                    </motion.div>
-                                                    : null}
-                                            </div>
-                                        </div>
-                                        <div style={{ overflow: 'hidden' }}>
-                                            {values.billPayment == 0 ?
-                                                <div className="app-bill-footer">
-                                                    <motion.button
-                                                        initial={{ x: -49, opacity: 0 }}
-                                                        animate={{ x: 0, opacity: 1 }}
-                                                        type="submit"
-                                                        style={{ width: '50%' }}
-                                                        className="btn butt-primary butt-lg butt-sm">
-                                                        متابعة الشراء ({cartList.data.price_with_tax}$)
-                                                    </motion.button>
-                                                </div>
-                                                : null}
-                                        </div>
-                                    </div>
-                                </Form>
-                            )}
-                        </Formik>
+                        <div className="app-bill">
+                            <div className="app-bill-header">
+                                <h3 className="title">اختيار طريقة الدفع</h3>
+                            </div>
+                            <div className="app-bill-payment">
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        value='0'
+                                        name="billPayment"
+                                        id="billPayment-strap"
+                                        onChange={(e: any) => setBillPayment(e.target.value)}
+                                    />
+                                    <label className="form-check-label" htmlFor="billPayment-strap">
+                                        الدفع عن طريق البطاقات البنكية
+                                    </label>
+                                </div>
+                                <div style={{ overflow: 'hidden' }}>
+                                    {billPayment == 0 ?
+                                        <motion.div dir='ltr' initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                            <Elements stripe={stripePromise}>
+                                                <CheckoutForm />
+                                            </Elements>
+                                        </motion.div>
+                                        : null}
+                                </div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        value='1'
+                                        name="billPayment"
+                                        id="billPayment-paypal"
+                                        onChange={(e: any) => setBillPayment(e.target.value)}
+                                    />
+                                    <label className="form-check-label" htmlFor="billPayment-paypal">
+                                        الدفع عن طريق البايبال Paypal
+                                    </label>
+                                </div>
+                                {isLoading && <span className="spinner-border spinner-border-sm" role="status"></span>}
+                                <div style={{ overflow: 'hidden' }}>
+                                    {billPayment == 1 ?
+                                        <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                            <a href={getLink} className='btn butt-primary2 butt-md'>
+                                                {isLoading && <span className="spinner-border spinner-border-sm" role="status"></span>}
+                                                {!isLoading && <> <i className='fab fa-paypal'></i> | عن طريق Paypal</>}
+                                            </a>
+                                        </motion.div>
+                                        : null}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }

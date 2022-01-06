@@ -14,12 +14,12 @@ import PropTypes from "prop-types";
 
 function Prices({ query }) {
     const token = Cookies.get('token')
-    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
     const { data: getUser }: any = useSWR('api/me')
-
+    const { id } = query
+    const { data: getProduct }: any = useSWR(`api/product/${id}`)
     const deleteProduct = async () => {
         try {
-            const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
+            const res: any = API.post(`api/product/${id}/deleteProduct`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -65,15 +65,14 @@ function Prices({ query }) {
                             <Formik<FormValues>
                                 isInitialValid={true}
                                 initialValues={{
-                                    price: !getProduct ? 0 : getProduct.data.price,
-                                    duration: !getProduct ? 1 : getProduct.data.duration,
-                                    developments: [],
+                                    price: (getProduct && getProduct.data.price),
+                                    duration: (getProduct && getProduct.data.duration),
+                                    developments: (getProduct && getProduct.data.developments) || [],
                                 }}
                                 //validationSchema={SignupSchema}
                                 onSubmit={async values => {
+
                                     try {
-                                        const id = query.id
-                                        const token = Cookies.get('token')
                                         const res = await API.post(`api/product/${id}/product-step-two`, values, {
                                             headers: {
                                                 'Authorization': `Bearer ${token}`
@@ -173,6 +172,7 @@ function Prices({ query }) {
                                                 </div>
                                             </div>
                                             <div className="timlands-content-form ">
+                                                {getProduct && getProduct.data.developments.map(e => e.price)}
                                                 <div className="row">
                                                     <div className="col-md-6">
                                                         <div className="timlands-form">
