@@ -252,7 +252,6 @@ function Single({ query }) {
     
     return Math.abs(total_price);
   }
-
   return (
     <>
       {!ProductData && <Loading />}
@@ -262,6 +261,8 @@ function Single({ query }) {
           title={ProductData.data.title + ' - تيموورك'}
           metaDescription={ProductData.data.content}
           ogDescription={ProductData.data.content}
+          ogImage={'http://api.timwoork.com/products/thumbnails/' + ProductData.data.thumbnail}
+          ogUrl={'http://api.timwoork.com/products/thumbnails/' + ProductData.data.thumbnail}
         />
       }
       {ProductData &&
@@ -274,7 +275,7 @@ function Single({ query }) {
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
-                        <Link href={`/u/`}>
+                        <Link href={`/u/${ProductData.data.profile_seller.profile.user.username}`}>
                           <a className="user-link">
                             {ProductData.data.profile_seller.profile.avatar == 'avatar.png' ?
                               <Image className="circular-center tiny-size ml-3" src="/avatar2.jpg" width={32} height={32} /> :
@@ -299,7 +300,7 @@ function Single({ query }) {
                         <Link href="/users/Single">
                           <a className="category-link">
                             <span className="material-icons material-icons-outlined">label</span>
-                            التصميم الغرافيكي
+                            {ProductData.data.subcategory.category.name_ar}
                           </a>
                         </Link>
                       </li>

@@ -3,11 +3,17 @@ import Link from 'next/link'
 import Explores from '../Explores'
 import { motion } from 'framer-motion'
 import { useOutsideAlerter } from '../useOutsideAlerter'
+import { isMobile } from 'react-device-detect';
+import router from 'next/router'
 
 function Menus() {
     const [showExplore, setShowExplore] = useState(false)
     const setShowExploreHandle = () => {
-        setShowExplore(!showExplore)
+        if (isMobile) {
+            router.push('/category')
+        }else {
+            setShowExplore(!showExplore)
+        }
     }
     const setHideExploreHandle = () => {
         setShowExplore(false)

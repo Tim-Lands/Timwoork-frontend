@@ -2251,6 +2251,12 @@ h3 {
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
+  font-size: 18px;
+  color: #333;
+  margin: 14px 0;
+  text-align: justify;
+  font-weight: 400;
+  line-height: 31px;
 }
 
 @media (max-width: 580px) {
@@ -2259,17 +2265,8 @@ h3 {
   }
 }
 
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .text {
-  font-size: 18px;
-  color: #333;
-  margin: 14px 0;
-  text-align: justify;
-  font-weight: 400;
-  line-height: 29px;
-}
-
 @media (max-width: 580px) {
-  .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .text {
+  .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
     font-size: 16px;
     margin: 13px 0;
     line-height: 27px;

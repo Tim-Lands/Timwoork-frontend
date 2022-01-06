@@ -1,18 +1,9 @@
-/*
-|--------------------------------------------------------------------------
-| A collection of navbar components.
-|--------------------------------------------------------------------------
-|
-| Use any one you like. Once you decided for one, you might want to consider
-| deleting the others to keep you javascript bundle size as small as possible.
-|
-*/
 import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
 //import { isMobile } from 'react-device-detect';
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
 import ImageLogo from "next/image";
@@ -25,18 +16,11 @@ import useSWR from 'swr'
 import Cookies from 'js-cookie'
 
 function Navbar(props: any): ReactElement {
-
     const token = Cookies.get('token')
-    const [scroll, setScroll] = useState(false);
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
         setIsMenuShowen(!isMenuShowen)
     }
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            setScroll(window.scrollY > 60);
-        });
-    }, []);
     const DarkIconvariants = {
         visible: {
             opacity: 1,
@@ -55,11 +39,11 @@ function Navbar(props: any): ReactElement {
     const { data: userData }: any = useSWR(`api/me`)
     const AccountList = (
         <Menu>
-            <Menu.Item key="0">
+            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
                 <Link href="/myproducts">
                     <a>خدماتي</a>
                 </Link>
-            </Menu.Item>
+            </Menu.Item>)}
             <Menu.Item key="0">
                 <Link href="/user/profile">
                     <a>الصفحة الشخصية</a>
@@ -93,7 +77,7 @@ function Navbar(props: any): ReactElement {
         return `${userData.user_details.profile.avatar}`;
     }
     return (
-        <div className={"timlands-navbar-container" + (scroll ? ' is-shown' : '')}>
+        <div className={"timlands-navbar-container"}>
             <nav className="timlands-navbar">
                 <div className="d-flex">
                     <div className="nav-container me-auto">
@@ -151,11 +135,13 @@ function Navbar(props: any): ReactElement {
                                         </li>
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='صندوق الرسائل'>
-                                                <motion.a whileTap={{ scale: 0.9 }} className="">
-                                                    <Badge count={userData && userData.msg_unread_count} offset={[2, -1]}>
-                                                        <i className="material-icons material-icons-outlined">email</i>
-                                                    </Badge>
-                                                </motion.a>
+                                                <Link href="/chat">
+                                                    <motion.a whileTap={{ scale: 0.9 }}>
+                                                        <Badge count={userData && userData.msg_unread_count} offset={[2, -1]}>
+                                                            <i className="material-icons material-icons-outlined">email</i>
+                                                        </Badge>
+                                                    </motion.a>
+                                                </Link>
                                             </Tooltip>
                                         </li>
                                         <li className="right-butts-icon">

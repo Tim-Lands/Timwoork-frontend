@@ -9,6 +9,7 @@ import API from '../../config'
 import { Elements, CardElement } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Loading from '@/components/Loading';
+import { Result } from 'antd';
 
 function Bill() {
     const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
@@ -18,11 +19,13 @@ function Bill() {
     };
     const token = Cookies.get('token')
     const [isLoading, setIsLoading] = useState(false)
+    const [isBuyer, setIsBuyer] = useState(false)
     const [getLink, setGetLink] = useState('')
 
     const { data: cartList }: any = useSWR('api/cart')
     async function getPaypal() {
         setIsLoading(true)
+        setIsBuyer(false)
         try {
             const res: any = await API.post(`api/purchase/paypal/approve`, {}, {
                 headers: {
@@ -30,10 +33,12 @@ function Bill() {
                 }
             })
             if (res.status === 200) {
+                setIsBuyer(true)
                 setIsLoading(false)
                 setGetLink(res.data)
             }
         } catch (error) {
+            setIsBuyer(false)
             setIsLoading(false)
         }
     }
@@ -47,7 +52,16 @@ function Bill() {
     return (
         <>
             {!cartList && <Loading />}
-            {cartList &&
+            {!isBuyer && <div className="row py-4 justify-content-center">
+                <div className="col-md-5">
+                    <Result
+                        status="warning"
+                        title="حدث خطأ "
+                        subTitle="حدث خطأ أثناء جلب رابط البايبال"
+                    />
+                </div>
+            </div>}
+            {cartList && isBuyer &&
                 <div className="row py-4 justify-content-center">
                     <div className="col-md-3">
                         <div className="app-bill">

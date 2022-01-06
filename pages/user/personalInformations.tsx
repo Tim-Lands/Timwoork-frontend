@@ -7,7 +7,7 @@ import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import Loading from "@/components/Loading";
 import ImageLogo from "next/image";
 import router from "next/router";
@@ -36,7 +36,7 @@ const personalInformations = () => {
         username: Yup.string().required('هذا الحقل إجباري'),
         country_id: Yup.number().required('هذا الحقل إجباري'),
     });
-    useEffect(() => {        
+    useEffect(() => {     
         if (!token) {
             router.push('/login')
         }
@@ -56,7 +56,7 @@ const personalInformations = () => {
                                     last_name: userInfo.user_details.profile.last_name || '',
                                     username: userInfo.user_details.username || '',
                                     date_of_birth: userInfo.user_details.profile.date_of_birth || '',
-                                    gender: parseInt(userInfo.user_details.profile.gender) || 1,
+                                    gender: parseInt(userInfo.user_details.profile.gender),
                                     country_id: parseInt(userInfo.user_details.profile.country_id) || 1,
                                 }}
                                 validationSchema={SignupSchema}
@@ -70,6 +70,7 @@ const personalInformations = () => {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
+                                            mutate('api/me')
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.status === 200) {
@@ -197,8 +198,8 @@ const personalInformations = () => {
                                                                 name="gender"
                                                                 className="timlands-inputs"
                                                             >
-                                                                <option value={1}>ذكر</option>
-                                                                <option value={0}>أنثى</option>
+                                                                <option value="1">ذكر</option>
+                                                                <option value="0">أنثى</option>
                                                             </Field>
                                                             {errors.gender && touched.gender ?
                                                                 <div style={{ overflow: 'hidden' }}>

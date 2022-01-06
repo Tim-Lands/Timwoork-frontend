@@ -9,17 +9,15 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import Loading from '@/components/Loading'
-import NotFound from "@/components/NotFound";
 
 const User = ({ query }) => {
     // Return statement.
-    const { data: userInfo, error }: any = useSWR(`api/profiles/${query.user}`)
+    const { data: userInfo }: any = useSWR(`api/profiles/${query.user}`)
     const User = userInfo && userInfo.data
     const APIURL = ''
     const myLoader = () => {
         return `${APIURL}${User.profile.avatar}`;
     }
-    if (error) return <NotFound />
     return (
         <div className="py-3">
             {!userInfo && <Loading />}
@@ -30,7 +28,7 @@ const User = ({ query }) => {
                     ogDescription={User.profile.profile_seller && User.profile.profile_seller.bio}
                 />
                 <div className="container">
-                    <div className={"row" + (!User.profile.profile_seller && ' justify-content-md-center')}>
+                    <div className={'row justify-content-md-center'}>
                         {User.profile.profile_seller &&
                             <div className="col-lg-4">
                                 <div className="py-1">
