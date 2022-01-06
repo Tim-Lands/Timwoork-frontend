@@ -203,7 +203,7 @@ function Single({ query }) {
   // ^--------------------*-------- Create New Chat----------*-------------------------------
 
 
-  /* 3- Create new chat
+  /* Create or get new chat between seller nand buyer
   ~ Chat title: product title 
   */
   const getOrCreateChat = (seller_Email: string) => {
@@ -217,7 +217,7 @@ function Single({ query }) {
           'User-Name': seller_Email,
           'User-Secret': seller_Email
         }
-      }
+      } 
     )
       .catch((error) => console.log(error))
     console.log("seeler email: " + seller_Email);
@@ -245,9 +245,11 @@ function Single({ query }) {
     }
     for (let i = 0; i < b.length; i++) {
       __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price);
-    }
+      }
 
-    const total_price = (ProductData.data.price + __checkedDevelopments_sum) * quantutyCount;
+    const total_price = (parseInt(ProductData.data.price) + __checkedDevelopments_sum) * quantutyCount;
+
+    
     return Math.abs(total_price);
   }
   return (

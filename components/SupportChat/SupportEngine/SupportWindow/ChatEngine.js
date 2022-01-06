@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { ChatEngineWrapper, Socket, ChatFeed } from 'react-chat-engine'
 const REACT_APP_CE_PROJECT_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
-//const REACT_APP_CE_PRIVATE_KEY ="2805db84-87b8-4fef-bb94-7e3c5fd22b37";
 
 const ChatEngine = ({ visible, user, chat }) => {
     const [showChat, setShowChat] = useState(false)

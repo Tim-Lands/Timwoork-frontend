@@ -178,7 +178,7 @@ function Overview({ query }) {
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
 
                                             <div className="timlands-content-form">
                                                 <div className="row">

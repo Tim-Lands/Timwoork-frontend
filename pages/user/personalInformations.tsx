@@ -14,6 +14,10 @@ import router from "next/router";
 import NumberPhone from "./numberPhone";
 
 const personalInformations = () => {
+    // Update personal information at chat database
+    // const updateChatData = (first_name,last_name,username,avator) => {}
+    
+
     const token = Cookies.get('token')
 
     const { data: userInfo }: any = useSWR('api/me')
