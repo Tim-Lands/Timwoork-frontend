@@ -1,5 +1,4 @@
-//import './style.css';
-import Layout from '@/components/Layout/HomeLayout'
+ import Layout from '@/components/Layout/HomeLayout'
 import React, { useEffect } from 'react';
 import { ChatEngine } from 'react-chat-engine';
 //import './index.css';
@@ -31,7 +30,7 @@ const Chats = () => {
         }
     }
     useEffect(() => {
-        // اعد المستخدم لصفحة التسجيل اذا لم يكن مسجل
+
         getChat();
     })
 
