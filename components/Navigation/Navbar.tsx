@@ -135,7 +135,7 @@ function Navbar(props: any): ReactElement {
                                         </li>
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='صندوق الرسائل'>
-                                                <Link href="/chat">
+                                                <Link href='/chat'>
                                                     <motion.a whileTap={{ scale: 0.9 }}>
                                                         <Badge count={userData && userData.msg_unread_count} offset={[2, -1]}>
                                                             <i className="material-icons material-icons-outlined">email</i>
