@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 import router from 'next/router';
 import API from '../../config'
 import Loading from '@/components/Loading';
-import { Result } from 'antd';
+import { Result, Modal } from 'antd';
 import {
     CardElement,
     Elements,
@@ -14,15 +14,38 @@ import {
     useElements,
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-//const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
 
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const token = Cookies.get('token')
     const [isLoading, setIsLoading] = useState(false)
-    const [getBill, setGetBill] = useState({})
+    const [getBill, setGetBill]: any = useState(
+        {
+            cart: {
+                total_price: '0',
+                tax: '0',
+                price_with_tax: '0',
+            },
+            order: {
+                created_at: 'لايوجد'
+            }
+        }
+    )
+    const [visible, setVisible] = useState(false);
+    const [confirmLoading, setConfirmLoading] = useState(false);
 
+    const showModal = () => {
+        setVisible(true);
+    };
+
+    const handleOk = () => {
+        setConfirmLoading(true);
+        setTimeout(() => {
+            setVisible(false);
+            setConfirmLoading(false);
+        }, 2000);
+    };
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -42,7 +65,8 @@ const CheckoutForm = () => {
             })
             if (res.status === 200) {
                 setIsLoading(false)
-                setGetBill(res.data)
+                setGetBill(res.data.data)
+                showModal()
             }
         } catch (error) {
             setIsLoading(false)
@@ -50,13 +74,52 @@ const CheckoutForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CardElement />
-            <button type="submit" className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
-                {isLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
-                {!isLoading && <span>شراء الآن</span>}
-            </button>
-        </form>
+        <>
+            <Modal
+                title="الفاتورة النهائية"
+                visible={visible}
+                onOk={handleOk}
+                okText="موافق"
+                confirmLoading={confirmLoading}
+                cancelText={false}
+            >
+                {!getBill && isLoading && <Loading />}
+                {!isLoading &&
+                    <div className="app-bill">
+                        <div className="app-bill-header">
+                            <h3 className="title">الفاتورة النهائية</h3>
+                        </div>
+                        <div className="app-bill-content">
+                            <ul className="list-group">
+                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                    تاريخ العملية
+                                    <span className="">{getBill && getBill.order.created_at}</span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                    السعر الكلي
+                                    <span className="">{getBill && getBill.cart && getBill.cart.total_price}$</span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                    سعر التحويل
+                                    <span className="">{getBill && getBill.cart && getBill.cart.tax}$</span>
+                                </li>
+                                <li className="list-group-item total d-flex justify-content-between align-items-center">
+                                    المجموع الكلي
+                                    <span className="">{getBill && getBill.cart && getBill.cart.price_with_tax}$</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </Modal>
+            <form onSubmit={handleSubmit}>
+                <CardElement />
+                <button type="submit" className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
+                    {isLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                    {!isLoading && <span>شراء الآن</span>}
+                </button>
+            </form>
+        </>
     );
 };
 const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
@@ -66,11 +129,11 @@ function Bill() {
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isBuyer, setIsBuyer] = useState(false)
-
     const [getLink, setGetLink] = useState('')
 
-    const { data: cartList }: any = useSWR('api/cart')
+    const { data: cartList, error }: any = useSWR('api/cart')
     const { data: userInfo }: any = useSWR('api/me')
+
     async function getPaypal() {
         setIsLoading(true)
         setIsBuyer(false)
@@ -98,12 +161,16 @@ function Bill() {
             router.push('/login')
             return
         }
+        if (cartList && cartList.data == null) {
+            router.push('/myorders')
+            return
+        }
         getPaypal()
     }, [])
     return (
         <>
-            {!cartList && <Loading />}
-            {isError && userInfo && userInfo.cart_items_count == 0 && <div className="row py-4 justify-content-center">
+
+            {cartList && cartList.data == null && isError && error && <div className="row py-4 justify-content-center">
                 <div className="col-md-5">
                     <Result
                         status="warning"
@@ -112,13 +179,14 @@ function Bill() {
                     />
                 </div>
             </div>}
-            {cartList && isBuyer &&
-                <div className="row py-4 justify-content-center">
-                    <div className="col-md-3">
-                        <div className="app-bill">
-                            <div className="app-bill-header">
-                                <h3 className="title">الفاتورة النهائية</h3>
-                            </div>
+            <div className="row py-4 justify-content-center">
+                <div className="col-md-3">
+                    <div className="app-bill">
+                        <div className="app-bill-header">
+                            <h3 className="title">الفاتورة النهائية</h3>
+                        </div>
+                        {!cartList && !userInfo && <Loading />}
+                        {cartList && cartList.data !== null && isBuyer &&
                             <div className="app-bill-content">
                                 <ul className="list-group">
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -139,13 +207,15 @@ function Bill() {
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        }
                     </div>
-                    <div className="col-md-5">
-                        <div className="app-bill">
-                            <div className="app-bill-header">
-                                <h3 className="title">اختيار طريقة الدفع</h3>
-                            </div>
+                </div>
+                <div className="col-md-5">
+                    <div className="app-bill">
+                        <div className="app-bill-header">
+                            <h3 className="title">اختيار طريقة الدفع</h3>
+                        </div>
+                        {cartList && cartList.data !== null &&
                             <div className="app-bill-payment">
                                 <div className="form-check">
                                     <input
@@ -194,10 +264,10 @@ function Bill() {
                                         : null}
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
-            }
+            </div>
         </>
     )
 }

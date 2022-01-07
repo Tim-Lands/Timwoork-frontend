@@ -2,9 +2,31 @@ import Layout from '@/components/Layout/HomeLayout'
 import React, { ReactElement } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
 import { Button, Tooltip } from 'antd';
-import Image from 'next/image'
 import Link from 'next/link'
+import useSWR from 'swr'
+import Loading from '@/components/Loading';
+import { Alert } from '@/components/Alert/Alert';
+
 function index() {
+    const { data: buysList, BuysError }: any = useSWR('api/my_purchases')
+    const statusLabel = (status: any) => {
+        switch (status) {
+            case 0:
+                return <span className='badge bg-secondary'>قيد الانتظار...</span>
+
+            case 1:
+                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
+
+            case 2:
+                return <span className='badge bg-danger'>مرفوضة</span>
+
+            case 3:
+                return <span className='badge bg-success'>مكتملة</span>
+
+            default:
+                return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
+        }
+    }
     return (
         <>
             <MetaTags
@@ -20,6 +42,7 @@ function index() {
                                 <h3 className="title">طلباتي</h3>
                             </div>
                             <div className="timlands-table">
+
                                 <table className="table">
                                     <thead>
                                         <tr>
@@ -27,45 +50,40 @@ function index() {
                                             <th>السعر الكلي</th>
                                             <th>المشتري</th>
                                             <th>التاريخ</th>
-                                            <th>الحالة</th>
                                             <th>الأدوات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><span className='badge bg-info text-dark'>قيد الانتظار...</span> هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،</td>
-                                            <td>5,754$</td>
-                                            <td>
-                                                <p className="m-0">
-                                                    <Link href={"/"}>
-                                                        <a className='flex-center' style={{ color: "gray" }}>
-                                                            <Image
-                                                                src={'/avatar2.jpg'}
-                                                                quality={60}
-                                                                width={24}
-                                                                height={24}
-                                                                placeholder='blur'
-                                                                blurDataURL='/avatar2.jpg'
-                                                            /><span className='mx-1'> عبد الله الهادي</span>
-                                                        </a>
-                                                    </Link>
-                                                </p>
-                                            </td>
-                                            <td>
-                                                منذ 4 دقائق
-                                            </td>
-                                            <td><span className='badge bg-info text-dark'>قيد الانتظار...</span></td>
-                                            <td>
-                                                <Tooltip title="حذف هذه الخدمة">
-                                                    <Button danger type="primary" color='red' size="small" >رفض</Button>
-                                                </Tooltip>
-                                                <Tooltip title="تعديل الخدمة">
-                                                    <Button type="default" color='orange' size="small">قبول</Button>
-                                                </Tooltip>
-                                            </td>
-                                        </tr>
+                                        {buysList && buysList.data.data.map((e: any) => (
+                                            <tr>
+                                                <td>{statusLabel(e.status)} {e.title}</td>
+                                                <td>{e.price_product}$</td>
+                                                <td>
+                                                    <p className="m-0">
+                                                        <Link href={"/"}>
+                                                            <a className='flex-center' style={{ color: "gray" }}>
+                                                                <span className='mx-1'>{e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}</span>
+                                                            </a>
+                                                        </Link>
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    {e.created_at}
+                                                </td>
+                                                <td>
+                                                    <Tooltip title="حذف هذه الخدمة">
+                                                        <Button danger type="primary" color='red' size="small" >رفض</Button>
+                                                    </Tooltip>
+                                                    <Tooltip title="تعديل الخدمة">
+                                                        <Button type="default" color='orange' size="small">قبول</Button>
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
+                                {!buysList && <Loading />}
+                                {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
                             </div>
                         </div>
                     </div>

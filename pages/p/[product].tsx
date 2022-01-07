@@ -217,7 +217,7 @@ function Single({ query }) {
           'User-Name': seller_Email,
           'User-Secret': seller_Email
         }
-      } 
+      }
     )
       .catch((error) => console.log(error))
     console.log("seeler email: " + seller_Email);
@@ -245,11 +245,11 @@ function Single({ query }) {
     }
     for (let i = 0; i < b.length; i++) {
       __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price);
-      }
+    }
 
     const total_price = (parseInt(ProductData.data.price) + __checkedDevelopments_sum) * quantutyCount;
 
-    
+
     return Math.abs(total_price);
   }
   return (
@@ -393,7 +393,7 @@ function Single({ query }) {
                                 </li>
                               </ul>
                               <div className="seller-info-butts d-flex">
-                                <Link href={"/u/" + ProductData.data.profile_seller_id}>
+                                <Link href={"/u/" + ProductData.data.profile_seller.profile.user.username}>
                                   <a className="btn butt-primary butt-sm flex-center">
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخص
                                   </a>
@@ -565,21 +565,21 @@ function Single({ query }) {
                       <div className="aside-footer-note">
                         <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
                       </div>
-                      <div className="aside-footer-addtocart">
-
-                        {/*<button disabled={true} className="btn butt-white butt-lg">
+                      {token &&
+                        <div className="aside-footer-addtocart">
+                          {/*<button disabled={true} className="btn butt-white butt-lg">
                             <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
                             تمت الإضافة
                           </button>*/}
 
-                        <button
-                          onClick={addToCart}
-                          className="btn butt-primary butt-lg">
-                          <span className="material-icons material-icons-outlined">add_shopping_cart</span>
-                          إضافة إلى السلة
-                        </button>
-
-                      </div>
+                          <button
+                            onClick={addToCart}
+                            className="btn butt-primary butt-lg">
+                            <span className="material-icons material-icons-outlined">add_shopping_cart</span>
+                            إضافة إلى السلة
+                          </button>
+                        </div>
+                      }
                     </div>
                   </div>
                 </Spin>

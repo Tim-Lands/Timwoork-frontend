@@ -14,7 +14,7 @@ function index() {
     const token = Cookies.get('token')
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading] = useState(false)
-    const { data: cartList }: any = useSWR('api/cart')
+    const { data: cartList, error }: any = useSWR('api/cart')
     const { data: userInfo }: any = useSWR('api/me')
 
     const deleteItem = async (id: any) => {
@@ -57,24 +57,18 @@ function index() {
             message.error('حدث خطأ غير متوقع')
         }
     }
-    const [isDisable, setIsDisabled] = useState(true)
-    const buyNowBtn = async () => {
+    const buyNowBtn = () => {
         if ((cartList && cartList.data.cart_items_count == 0) || (cartList && cartList.data.price_with_tax == 0)) {
             message.error('لا يمكنك الشراء الآن لأن السلة فارغة')
         } else {
-            router.push('/cart/bill')
+            router.push('/purchase')
         }
     }
     useEffect(() => {
-        if(!token) {
+        if (!token) {
             router.push('/login')
         }
-        if (cartList && cartList.data.cart_items_count == 0) {
-            setIsDisabled(true)
-        } else {
-            setIsDisabled(false)
-        }
-    }, [isDisable])
+    }, [])
     return (
         <>
             <MetaTags
@@ -86,7 +80,7 @@ function index() {
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
-                        {cartList && cartList.data == null && userInfo && userInfo.cart_items_count == 0  ?
+                        {error && cartList && cartList.data == null ?
                             <div className="cart-nothing">
                                 <div className="cart-nothing-inner">
                                     <div className="cart-nothing-img">
@@ -101,12 +95,13 @@ function index() {
                             <Spin spinning={isLoading}>
                                 <div className="timwoork-single-post bg-white mt-4">
                                     <div className="timwoork-single-header">
-                                        <h1 className="title md"><span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات </h1>
+                                        <h1 className="title md">
+                                            <span className="material-icons material-icons-outlined">shopping_cart</span> سلة المشتريات
+                                        </h1>
                                     </div>
-                                    {/*<CartList listItem={cartList && cartList.data.cart_items} />*/}
                                     <div className="cart-list">
                                         <ul className="cart-list-item" style={{ listStyle: 'none', margin: 0, padding: 0, }}>
-                                            {cartList && cartList.data.cart_items.map((e: any) => (
+                                            {cartList && cartList.data !== null && cartList.data.cart_items.map((e: any) => (
                                                 <CartPost
                                                     key={e.id}
                                                     id={e.id}
@@ -130,25 +125,27 @@ function index() {
                                                                 listStyle: 'none',
                                                             }}
                                                         >
-                                                            <li style={{ fontSize: 13, color: '#777', }}><span>سعر التحويل: </span>{cartList && cartList.data.tax}$</li>
-                                                            <li style={{ fontSize: 13, color: '#777', }}><span>اجمالي السعر: </span>{cartList && cartList.data.total_price}$</li>
-                                                            <li style={{ fontSize: 13, color: '#777', }}><strong>المجموع: </strong>{cartList && cartList.data.price_with_tax}$</li>
+                                                            <li style={{ fontSize: 13, color: '#777', }}><span>سعر التحويل: </span>{cartList && cartList.data !== null && cartList.data.tax}$</li>
+                                                            <li style={{ fontSize: 13, color: '#777', }}><span>اجمالي السعر: </span>{cartList && cartList.data !== null && cartList.data.total_price}$</li>
+                                                            <li style={{ fontSize: 13, color: '#777', }}><strong>المجموع: </strong>{cartList && cartList.data !== null && cartList.data.price_with_tax}$</li>
                                                         </ul>
                                                     </div>
                                                     <div className="cart-item-price ml-auto">
                                                         <h4 className="price-title-total">
-                                                            ${cartList && cartList.data.price_with_tax}
+                                                            ${cartList && cartList.data !== null && cartList.data.price_with_tax}
                                                         </h4>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div className="cart-list-continue">
-                                        <button onClick={buyNowBtn} disabled={isDisable} className="btn butt-primary butt-lg ml-0">
-                                            اشتري الآن
-                                        </button>
-                                    </div>
+                                    {cartList && cartList.data !== null &&
+                                        <div className="cart-list-continue">
+                                            <button onClick={buyNowBtn} className="btn butt-primary butt-lg ml-0">
+                                                اشتري الآن
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
                             </Spin>
                         }
