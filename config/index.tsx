@@ -7,6 +7,6 @@ export const protectedRoutes: string[] = [
     // ...,
 ];
 export default axios.create({
-    baseURL: 'https://api.timwoork.com/', 
+    baseURL: 'https://api.icoursat.com/', 
     withCredentials: true
 });

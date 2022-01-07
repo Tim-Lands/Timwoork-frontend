@@ -146,10 +146,10 @@ function Profile() {
                                             </h4>
                                             <p className="text">
                                                 @{userInfo.user_details.username} |
-                                                <span className="app-label"> المستوى الأول </span>
+                                                <span className="app-label"> {userInfo.user_details.profile.level.name_ar} </span>
                                                 <Badge
                                                     className="site-badge-count-109"
-                                                    count="بائع محترف"
+                                                    count={userInfo.user_details.profile.badge.name_ar}
                                                     style={{ backgroundColor: '#52c41a' }}
                                                 />
                                             </p>

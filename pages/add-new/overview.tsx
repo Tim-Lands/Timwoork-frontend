@@ -1,5 +1,5 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import { Field, Form, Formik } from 'formik';
 import { message, Popconfirm } from 'antd';
 import { motion } from 'framer-motion';
@@ -20,15 +20,15 @@ const SignupSchema = Yup.object().shape({
 });
 function Overview({ query }) {
     
-    const [tagsState, setTagsState] = useState([])
-    const [categoryState, setCategoryState] = useState(1)
+    //const [productTags, setProductTags] = useState([])
+    //const [categoryState, setCategoryState] = useState(1)
     const id = query.id
     const token = Cookies.get('token')
 
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
-    const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`)
-    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+    const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/1`)
+    const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
 
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
@@ -76,8 +76,8 @@ function Overview({ query }) {
                                 initialValues={{
                                     title: (getProduct && getProduct.data.title) || '',
                                     subcategory: (getProduct && getProduct.data.category_id) || 0,
-                                    category: (getProduct && getProduct.data.category_id) || 0,
-                                    product_tag: tagsState,
+                                    category: (getProduct && getProduct.data.subcategory_id) || 0,
+                                    product_tag: [],
                                 }}
                                 enableReinitialize={true}
 
@@ -206,20 +206,19 @@ function Overview({ query }) {
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="input-category">اختر التصنيف الرئيسي</label>
                                                             {categoriesError && "حدث خطأ"}
-                                                            <select
+                                                            <Field
+                                                                as="select"
                                                                 id="input-category"
                                                                 name="category"
                                                                 className="timlands-inputs select"
                                                                 autoComplete="off"
-                                                                value={categoryState}
-                                                                onChange={(e: any) => setCategoryState(e.target.value)}
                                                             >
                                                                 <option value={0}>اختر التصنيف الرئيسي</option>
                                                                 {!categories && <option value="">يرجى الانتظار...</option>}
                                                                 {categories && categories.data.map((e: any) => (
                                                                     <option value={e.id} key={e.id}>{e.name_ar}</option>
                                                                 ))}
-                                                            </select>
+                                                            </Field>
                                                             {errors.category && touched.category ?
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">

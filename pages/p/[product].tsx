@@ -319,7 +319,7 @@ function Single({ query }) {
                           المستوى:
                         </span>
                         <span className="value-level">
-                          {ProductData.data.profile_seller.level == null ? 'مستخدم جديد' : ProductData.data.profile_seller.level.name_ar}
+                          {ProductData.data.profile_seller.level.name_ar }
                         </span>
                       </li>
                     </ul>
@@ -333,7 +333,6 @@ function Single({ query }) {
                           {each.url_video == null ? <div key={index} className="each-slide">
                             <div className="images-slider" style={{ backgroundImage: `url(${APIURL2}${each.path})` }}></div>
                           </div> : ''}
-
                         </>
                       ))}
                     </Slide>
@@ -386,7 +385,7 @@ function Single({ query }) {
                               </h3>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge == null ? 'مستخدم جديد' : ProductData.data.profile_seller.badge.name_ar}
+                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge.name_ar}
                                 </li>
                                 <li>
                                   <span className="material-icons material-icons-outlined">place</span> الجزائر

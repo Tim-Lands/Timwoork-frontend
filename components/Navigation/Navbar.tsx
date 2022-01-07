@@ -19,7 +19,7 @@ function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
-        setIsMenuShowen(!isMenuShowen)        
+        setIsMenuShowen(!isMenuShowen)
     }
     const DarkIconvariants = {
         visible: {
@@ -56,11 +56,17 @@ function Navbar(props: any): ReactElement {
             </Menu.Item>)}
 
             <Menu.Item key="1">
-                <Link href="/myorders">
-                    <a>طلباتي</a>
+                <Link href="/mypurchases">
+                    <a>مشترياتي</a>
                 </Link>
             </Menu.Item>
-            <Menu.Item key="1">
+            {userData && (userData.user_details.profile.is_seller == 1) && (
+                <Menu.Item key="43">
+                    <Link href="/mysales">
+                        <a>مبيعاتي</a>
+                    </Link>
+                </Menu.Item>)}
+            <Menu.Item key="14">
                 <Link href="/user/personalInformations">
                     <a>الإعدادات</a>
                 </Link>

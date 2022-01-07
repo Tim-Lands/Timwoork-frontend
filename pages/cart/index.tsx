@@ -15,7 +15,7 @@ function index() {
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading] = useState(false)
     const { data: cartList, error }: any = useSWR('api/cart')
-    const { data: userInfo }: any = useSWR('api/me')
+    //const { data: userInfo }: any = useSWR('api/me')
 
     const deleteItem = async (id: any) => {
         setIsLoading(true)
