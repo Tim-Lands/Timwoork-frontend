@@ -1,13 +1,15 @@
 import Layout from '@/components/Layout/HomeLayout'
 import { ReactElement } from "react";
 import  SupportAdmin from '@/components/SupportChat/SupportAdmin'
+import NoSsr from '@material-ui/core/NoSsr/NoSsr';
 
 
 function Admin() {
     return (
         <>
-        <SupportAdmin />
-        
+        <NoSsr>
+             <SupportAdmin />
+        </NoSsr>
         </>
     )
 }

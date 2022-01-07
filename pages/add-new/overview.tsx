@@ -1,7 +1,7 @@
 import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useEffect, useState } from "react";
 import { Field, Form, Formik } from 'formik';
-import { message, Popconfirm, Select } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
@@ -11,21 +11,21 @@ import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
+import Tags from '../../components/Tags'
+
 
 const SignupSchema = Yup.object().shape({
     title: Yup.string().required('هذا الحقل إجباري'),
     //product_tag: Yup.array().required('هذا الحقل إجباري'),
 });
 function Overview({ query }) {
-    const { Option } = Select;
-
+    
     const [tagsState, setTagsState] = useState([])
     const [categoryState, setCategoryState] = useState(1)
     const id = query.id
     const token = Cookies.get('token')
 
     const { data: getUser }: any = useSWR('api/me')
-    const { data: getTags }: any = useSWR('dashboard/tags')
     const { data: categories, categoriesError }: any = useSWR('dashboard/categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${categoryState}`)
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
@@ -42,9 +42,9 @@ function Overview({ query }) {
             }
         }
     }, [])
-    const setTagsStateHandle = (e) => {
+   /* const setTagsStateHandle = (e) => {
         setTagsState(e)
-    }
+    }*/
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`)
@@ -261,21 +261,7 @@ function Overview({ query }) {
                                                     <div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                            <Select
-                                                                mode="tags"
-                                                                notFoundContent="لاتوجد بيانات"
-                                                                style={{ width: "100%" }}
-                                                                //className="timlands-inputs select"
-                                                                placeholder="اختر الوسوم"
-                                                                //value={tagsState}
-                                                                onChange={setTagsStateHandle}
-                                                            >
-                                                                {getTags && getTags.data.map((e: any) => (
-                                                                    <Option value={e.id} key={e.id}>
-                                                                        {e.name_ar}
-                                                                    </Option>
-                                                                ))}
-                                                            </Select>
+                                                           <Tags/>
                                                             {errors.product_tag && touched.product_tag ?
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
