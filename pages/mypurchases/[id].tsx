@@ -11,10 +11,11 @@ import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import LastSeen from "@/components/LastSeen";
+import { Result } from "antd";
 const User = ({ query }) => {
     const token = Cookies.get('token')
 
-    const { data: ShowItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
+    const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
     const [rejectLoading, setrejectLoading] = useState(false)
     const rejectHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
@@ -48,7 +49,6 @@ const User = ({ query }) => {
                         setrejectLoading(false)
                     }
                 } catch (error) {
-                    console.log(error);
                     setrejectLoading(false)
                 }
                 swalWithBootstrapButtons.fire(
@@ -111,6 +111,10 @@ const User = ({ query }) => {
                 ogDescription={"عرض الطلبية"}
             />
             {!ShowItem && <Loading />}
+            {errorItem && <Result
+                status="warning"
+                title="There are some problems with your operation."
+            />}
             <div className="row py-4 justify-content-center">
                 <div className="col-md-10">
                     <div className="app-bill">

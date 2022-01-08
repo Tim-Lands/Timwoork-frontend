@@ -81,9 +81,15 @@ function index() {
                 return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية</span>
+                return <span className='badge bg-danger'>ملغية من طرف البائع</span>
 
             case 3:
+                return <span className='badge bg-warning'>ملغية من طرفك</span>
+
+            case 4:
+                return <span className='badge bg-warning'>ملغية من طرفكما</span>
+
+            case 5:
                 return <span className='badge bg-success'>مكتملة</span>
 
             default:
