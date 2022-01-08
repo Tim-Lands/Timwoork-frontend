@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout/HomeLayout'
 import React, { ReactElement, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Button, Tooltip } from 'antd';
+import { Button, message, Modal, Tooltip } from 'antd';
 import Link from 'next/link'
 import useSWR, { mutate } from 'swr'
 import Loading from '@/components/Loading';
@@ -15,7 +15,7 @@ import Cookies from 'js-cookie'
 function index() {
     const token = Cookies.get('token')
     const [pageIndex, setPageIndex] = useState(0);
-    const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
+    const { data: buysList, BuysError }: any = useSWR(`api/my_sales?page=${pageIndex}`)
 
     const [rejectLoading, setrejectLoading] = useState(false)
     const rejectHandle = (id: any) => {
@@ -46,11 +46,10 @@ function index() {
                         }
                     })
                     if (res.status === 200) {
-                        mutate('api/my_purchases')
+                        mutate('api/my_sales')
                         setrejectLoading(false)
                     }
                 } catch (error) {
-                    console.log(error);
                     setrejectLoading(false)
                 }
                 swalWithBootstrapButtons.fire(
@@ -72,6 +71,25 @@ function index() {
         })
 
     }
+
+    const acceptHandle = async (id: any) => {
+        setrejectLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/accept_item_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                message.success('تم قبول هذه الطلبية بنجاح')
+                mutate('api/my_sales')
+                setrejectLoading(false)
+
+            }
+        } catch (error) {
+            setrejectLoading(false)
+        }
+    }
     const statusLabel = (status: any) => {
         switch (status) {
             case 0:
@@ -81,13 +99,47 @@ function index() {
                 return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية</span>
+                return <span className='badge bg-danger'>مرفوضة</span>
 
             case 3:
+                return <span className='badge bg-danger'>ملغية</span>
+
+            case 4:
                 return <span className='badge bg-success'>مكتملة</span>
 
             default:
                 return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
+        }
+    }
+    async function cancelRequest(id: any) {
+        setrejectLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/request_cancel_item_by_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                Modal.info({
+                    title: 'تم بنجاح',
+                    content: (
+                        <p>لقد تم طلب الإلغاء . سيتم ارسال اشعار في حالة قبول الطلب</p>
+                    ),
+                    onOk() { },
+                });
+                mutate('api/my_sales')
+                setrejectLoading(false)
+
+            }
+        } catch (error) {
+            setrejectLoading(false)
+            Modal.info({
+                title: 'حدث خطأ',
+                content: (
+                    <p>تعذر طلب الإلغاء يرجى المحاولة مرة أخرى</p>
+                ),
+                onOk() { },
+            });
         }
     }
     return (
@@ -130,9 +182,7 @@ function index() {
                                                     <p className="m-0">
                                                         <Link href={`/u/${e.profile_seller.profile.user.username}`}>
                                                             <a className='flex-center' style={{ color: "gray" }}>
-                                                                <span className='mx-1'>
-                                                                    {e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}
-                                                                </span>
+                                                                <span className='mx-1'>{e.order.cart.user.profile.full_name}</span>
                                                             </a>
                                                         </Link>
                                                     </p>
@@ -142,16 +192,42 @@ function index() {
                                                 </td>
                                                 <td>
                                                     {e.status == 0 &&
-                                                        <Tooltip title="رفض الطلبية">
-                                                            <Button
-                                                                disabled={rejectLoading}
-                                                                onClick={() => rejectHandle(e.id)}
-                                                                danger
-                                                                type="primary"
-                                                                color='red'
-                                                                size="small"
-                                                            >رفض الطلبية</Button>
-                                                        </Tooltip>
+                                                        <>
+                                                            <Tooltip title="رفض الطلبية">
+                                                                <Button
+                                                                    disabled={rejectLoading}
+                                                                    onClick={() => rejectHandle(e.id)}
+                                                                    danger
+                                                                    type="primary"
+                                                                    color='red'
+                                                                    size="small"
+                                                                >رفض</Button>
+                                                            </Tooltip>
+
+                                                            <Tooltip title="قبول الطلبية">
+                                                                <Button
+                                                                    disabled={rejectLoading}
+                                                                    onClick={() => acceptHandle(e.id)}
+                                                                    type="primary"
+                                                                    color='green'
+                                                                    size="small"
+                                                                >قبول</Button>
+                                                            </Tooltip>
+                                                        </>
+                                                    }
+                                                    {e.status == 1 &&
+                                                        <>
+                                                            <Tooltip title="طلب إلغاء هذه الطلبية">
+                                                                <Button
+                                                                    disabled={rejectLoading}
+                                                                    onClick={() => cancelRequest(e.id)}
+                                                                    danger
+                                                                    type="primary"
+                                                                    color='red'
+                                                                    size="small"
+                                                                >طلب إلغاء</Button>
+                                                            </Tooltip>
+                                                        </>
                                                     }
                                                 </td>
                                             </tr>

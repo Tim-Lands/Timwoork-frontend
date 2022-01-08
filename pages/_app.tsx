@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import i18n from "i18next";
 import "antd/dist/antd.css";
 import "../styles/fonts.css";
-
 import store from "@/store/store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
@@ -15,6 +14,7 @@ import { ConfigProvider } from "antd";
 import { SWRConfig } from 'swr'
 import API from '../config'
 import Cookies from 'js-cookie'
+//import Echo from 'laravel-echo';
 
 type NextPageWithLayout = NextPage & {
     getLayout?: () => ReactNode
@@ -23,8 +23,28 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
 }
-
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const token = Cookies.get('token')
+    /*const options = {
+        broadcaster: 'pusher',
+        key: '510f53f8ccb3058a96fc',
+        cluster: 'eu',
+        //forceTLS: config.pusher.tls,
+        //authEndpoint is your apiUrl + /broadcasting/auth
+        authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
+        // As I'm using JWT tokens, I need to manually set up the headers.
+        auth: {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+            },
+        },
+    };
+    const echo = new Echo(options);
+    echo.private('conversations.1')
+        .listen('message.sent', (e) => {
+            console.log(e)
+        });*/
     // Check if we're on a protected route.
 
     // Handle current user in redux.
@@ -37,7 +57,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }
     }, []);
     const getLayout = Component.getLayout ?? ((page: any) => page)
-    const token = Cookies.get('token')
     return (
         <>
             <SWRConfig value={{

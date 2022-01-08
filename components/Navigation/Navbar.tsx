@@ -154,7 +154,7 @@ function Navbar(props: any): ReactElement {
                                             <Tooltip placement="bottom" title='الإشعارات'>
                                                 <Link href="/notifications">
                                                     <a>
-                                                        <Badge count={5} offset={[2, -1]}>
+                                                        <Badge count={userData && userData.unread_notifications_count} offset={[2, -1]}>
                                                             <i className="material-icons material-icons-outlined">notifications</i>
                                                         </Badge>
                                                     </a>
