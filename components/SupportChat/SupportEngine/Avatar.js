@@ -14,7 +14,7 @@ const Avatar = ({ style, onClick }) => {
                     ...{ opacity: hovered ? '1' : '0' }
                 }}
             >
-                Hey it&apos;s Roqaia 🤙
+               🤙 ?Need help  
             </div>
 
             <div 
