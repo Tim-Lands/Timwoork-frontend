@@ -26,6 +26,7 @@ const SupportEngine = () => {
     return (
         <div ref={wrapperRef}>
             <SupportWindow visible={visible} />
+            {console.log("visible"+visible)}
 
             <Avatar 
                 onClick={() => setVisible(true)}

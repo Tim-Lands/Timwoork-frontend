@@ -114,10 +114,6 @@ const EmailForm = ({ setUser, setChat, visible }) => {
                         style={styles.emailInput}
                     />
                 </form>
-
-                <div style={styles.bottomText}>
-                    Enter your email <br /> to get started.
-                </div>
             </div>
         </div>
     )

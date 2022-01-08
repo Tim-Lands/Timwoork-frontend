@@ -27,6 +27,7 @@ const ChatEngine = ({ visible, user, chat }) => {
                 ...{
                     height: visible ? '100%' : '0px',
                     zIndex: visible ? '100' : '0',
+                    display:  visible ? 'block' :'none'
                 }
             }}
         >
