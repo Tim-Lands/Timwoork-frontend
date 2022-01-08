@@ -11,7 +11,7 @@ const Avatar = ({ style, onClick }) => {
                 className='transition-3'
                 style={{
                     ...styles.avatarHello,
-                    ...{ opacity: hovered ? '1' : '0' }
+                    ...{ display: hovered ? 'block' :'none'}
                 }}
             >
                🤙 ?Need help  
