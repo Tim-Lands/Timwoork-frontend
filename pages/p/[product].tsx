@@ -330,6 +330,7 @@ function Single({ query }) {
                     </ul>
                   </div>
                 </div>
+                
                 <div className="timwoork-single-content">
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
