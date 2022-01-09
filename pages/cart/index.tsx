@@ -107,13 +107,11 @@ function index() {
                                                     id={e.id}
                                                     quantity={e.quantity}
                                                     title={e.title_product}
-                                                    product_id={e.product_id}
                                                     price={e.price_product_spicify}
                                                     itemTotal={e.price_product}
                                                     deleteItem={deleteItem}
                                                     updateItem={updateItem}
                                                     developments={e.cart_item_developments}
-                                                    isLoading={isLoading}
                                                     />
                                             ))}
                                             <li className="cart-item">
