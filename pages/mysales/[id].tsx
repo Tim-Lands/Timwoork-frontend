@@ -116,7 +116,7 @@ const User = ({ query }) => {
                 metaDescription={"عرض الطلبية"}
                 ogDescription={"عرض الطلبية"}
             />
-            {errorItem && !ShowItem.data && <Result
+            {errorItem && <Result
                 status="warning"
                 title="حدث خطأ غير متوقع"
             />}

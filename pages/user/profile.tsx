@@ -189,12 +189,14 @@ function Profile() {
                                                     <p className="text-value">{userInfo.user_details.profile.last_name}</p>
                                                 </div>
                                             </div>
-                                            <div className="col-sm-4">
-                                                <div className="content-text-item">
-                                                    <h3 className="text-label">البلد</h3>
-                                                    <p className="text-value">الجزائر</p>
+                                            {userInfo.user_details.profile.country !== null &&
+                                                <div className="col-sm-4">
+                                                    <div className="content-text-item">
+                                                        <h3 className="text-label">البلد</h3>
+                                                        <p className="text-value">{userInfo.user_details.profile.country.name_ar}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
 
                                             <div className="col-sm-4">
                                                 <Badge.Ribbon text="مفعل" color="green">

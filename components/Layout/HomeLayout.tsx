@@ -21,14 +21,14 @@ function Layout(props: any) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
   return (
-    <div className={'is-home is-dark'}>
+    <>
       <Navbar />
       <Spin tip="يرجى الإنتظار..." spinning={loading}>
         {props.children}
       </Spin>
 
       <Footer />
-    </div>
+    </>
   )
 }
 const mapStateToProps = (state: any) => ({

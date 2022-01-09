@@ -16,7 +16,7 @@ function Prices({ query }) {
     const token = Cookies.get('token')
     const { data: getUser }: any = useSWR('api/me')
     const { id } = query
-    const { data: getProduct }: any = useSWR(`api/product/${id}`)
+    const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${id}/deleteProduct`, {}, {
@@ -31,11 +31,6 @@ function Prices({ query }) {
         } catch (error) {
             message.error('للأسف لم يتم الحذف ')
         }
-    }
-    interface FormValues {
-        developments: object[]
-        price: number
-        duration: number
     }
     useEffect(() => {
         if (!token) {
@@ -57,18 +52,20 @@ function Prices({ query }) {
             />
             {token &&
                 <div className="container-fluid">
+                    <h1>{getProduct && getProduct.data.price}</h1>
                     <div className="row">
                         <div className="col-md-4">
                             <SidebarAdvices />
                         </div>
                         <div className="col-md-8 pt-3">
-                            <Formik<FormValues>
+                            <Formik
                                 isInitialValid={true}
                                 initialValues={{
                                     price: (getProduct && getProduct.data.price),
                                     duration: (getProduct && getProduct.data.duration),
                                     developments: (getProduct && getProduct.data.developments) || [],
                                 }}
+                                enableReinitialize={true}
                                 //validationSchema={SignupSchema}
                                 onSubmit={async values => {
 
@@ -89,22 +86,16 @@ function Prices({ query }) {
                                             })
                                         }
                                     } catch (error: any) {
-                                        if (error.response && error.response.status === 200) {
-                                            message.success('لقد تم التحديث بنجاح')
+                                        if (error.response && error.response.data && error.response.data.errors.price) {
+                                            message.error(error.response.data.errors.price[0]);
                                         }
-                                        if (error.response && error.response.status === 422) {
-                                            message.error("يرجى تعبئة البيانات")
+                                        if (error.response && error.response.data && error.response.data.errors.duration) {
+                                            message.error(error.response.data.errors.duration[0]);
                                         }
-                                        if (error.response && error.response.status === 403) {
-                                            message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك")
-                                        }
-                                        if (error.response && error.response.status === 419) {
-                                            message.error("العملية غير ناجحة")
-                                        }
-                                        if (error.response && error.response.status === 400) {
-                                            message.error("حدث خطأ.. يرجى التأكد من البيانات")
-                                        } else {
-                                            message.error("حدث خطأ غير متوقع")
+                                        if (error.response && error.response.data && error.response.data.errors.developments) {
+                                            message.error(error.response.data.errors.developments[0]);
+                                        } else if (error.response) {
+                                            message.error(error.response);
                                         }
                                     }
                                     //router.push('/add-new/description')

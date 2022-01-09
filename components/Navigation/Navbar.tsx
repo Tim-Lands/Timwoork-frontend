@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Badge, Tooltip } from 'antd';
+import { Menu, Dropdown, Badge, Tooltip, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
 //import { isMobile } from 'react-device-detect';
@@ -9,10 +9,10 @@ import Link from "next/link";
 import ImageLogo from "next/image";
 import logoIMG from '../../public/logo2.png'
 import { motion } from 'framer-motion'
-import { useSelector } from 'react-redux'
+import API from '../../config'
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import Cookies from 'js-cookie'
 
 function Navbar(props: any): ReactElement {
@@ -33,9 +33,25 @@ function Navbar(props: any): ReactElement {
             transition: { duration: 0.41 },
         },
     }
-
-    const isDarken = useSelector((state: any) => state.isDarken)
-
+    const [darkLoading, setSarkLoading] = useState(false)
+    async function darkModeToggle() {
+        setSarkLoading(true)
+        try {
+            const res = await API.post("api/mode", null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                mutate('api/me')
+                setSarkLoading(false)
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع')
+            setSarkLoading(false)
+        }
+    }
     const { data: userData }: any = useSWR(`api/me`)
     const AccountList = (
         <Menu>
@@ -104,19 +120,6 @@ function Navbar(props: any): ReactElement {
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto">
-                        <li className="right-butts-icon">
-                            <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
-                                <motion.a whileTap={{ scale: 0.9 }}>
-                                    <Badge count={0} offset={[2, -1]}>
-                                        {isDarken ?
-                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
-                                            :
-                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
-                                        }
-                                    </Badge>
-                                </motion.a>
-                            </Tooltip>
-                        </li>
                         {token ?
                             <>
                                 {!userData &&
@@ -128,6 +131,24 @@ function Navbar(props: any): ReactElement {
                                 }
                                 {userData &&
                                     <>
+                                        <li 
+                                            className="right-butts-icon"
+                                            style={{
+                                                opacity: (darkLoading ? 0.5 : 1)
+                                            }}
+                                        >
+                                            <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
+                                                <motion.a onClick={darkModeToggle} whileTap={{ scale: 0.9 }}>
+                                                    <Badge count={0} offset={[2, -1]}>
+                                                        {userData.user_details.profile.dark_mode == 1 ?
+                                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
+                                                            :
+                                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
+                                                        }
+                                                    </Badge>
+                                                </motion.a>
+                                            </Tooltip>
+                                        </li>
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='سلة المشتريات'>
                                                 <Link href='/cart'>

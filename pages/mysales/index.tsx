@@ -11,10 +11,11 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import API from '../../config'
 import Cookies from 'js-cookie'
+import router from 'next/router';
 
 function index() {
     const token = Cookies.get('token')
-    const [pageIndex, setPageIndex] = useState(0);
+    const [pageIndex, setPageIndex] = useState(1);
     const { data: buysList, BuysError }: any = useSWR(`api/my_sales?page=${pageIndex}`)
 
     const [rejectLoading, setrejectLoading] = useState(false)
@@ -40,7 +41,7 @@ function index() {
             if (result.isConfirmed) {
                 setrejectLoading(true)
                 try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_anyone`, {}, {
+                    const res = await API.post(`api/order/items/${id}/reject_item_seller`, {}, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -48,6 +49,7 @@ function index() {
                     if (res.status === 200) {
                         mutate('api/my_sales')
                         setrejectLoading(false)
+                        router.reload()
                     }
                 } catch (error) {
                     setrejectLoading(false)
@@ -84,6 +86,7 @@ function index() {
                 message.success('تم قبول هذه الطلبية بنجاح')
                 mutate('api/my_sales')
                 setrejectLoading(false)
+                router.reload()
 
             }
         } catch (error) {
@@ -99,10 +102,10 @@ function index() {
                 return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية من طرف البائع</span>
+                return <span className='badge bg-danger'>ملغية من مطرفك</span>
 
             case 3:
-                return <span className='badge bg-warning'>ملغية من طرفك</span>
+                return <span className='badge bg-warning'>ملغية من المشتري</span>
 
             case 4:
                 return <span className='badge bg-warning'>ملغية من طرفكما</span>
@@ -131,11 +134,12 @@ function index() {
                 });
                 mutate('api/my_sales')
                 setrejectLoading(false)
+                router.reload()
 
             }
         } catch (error) {
             setrejectLoading(false)
-            Modal.info({
+            Modal.error({
                 title: 'حدث خطأ',
                 content: (
                     <p>تعذر طلب الإلغاء يرجى المحاولة مرة أخرى</p>

@@ -6,10 +6,9 @@ import ImageUploading from "react-images-uploading";
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
-import { Upload, message } from 'antd';
+import { message } from 'antd';
 import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
-import 'antd/dist/antd.css';
 import PropTypes from "prop-types";
 import { Alert } from '@/components/Alert/Alert';
 
@@ -29,7 +28,7 @@ function Medias({ query }) {
             }
         }
     }, [])
-    const props = {
+    /*const props = {
         beforeUpload: file => {
             if (file.type !== 'application/pdf') {
                 message.error(`${file.name} is not a png file`);
@@ -39,7 +38,7 @@ function Medias({ query }) {
         onChange: info => {
             console.log(info.fileList);
         },
-    };
+    };*/
     const [url_video, setVideourl] = useState('')
     const handleSetVideourl = (e: any) => {
         setVideourl(e.target.value)
@@ -216,7 +215,7 @@ function Medias({ query }) {
                                                                             </div>
                                                                         </motion.div>
                                                                     ))}
-                                                                    {(imageList.length && imageList.length >= 1) ? message.info('يمكنك فقط إضافة صورة واحدة بارزة') :
+                                                                    {(imageList.length && imageList.length >= 1) ? <Alert type='error'>يمكنك فقط إضافة صورة واحدة بارزة</Alert> :
 
                                                                         <button
                                                                             style={isDragging ? { color: "red" } : undefined}
@@ -294,14 +293,14 @@ function Medias({ query }) {
                             </div>
 
                             <div className="timlands-content-form">
-                                <div className="choose-images-file">
+                                {/*<div className="choose-images-file">
                                     <h4 className="timlands-content-form-subtitle">
                                         اختيار ملف PDF
                                     </h4>
                                     <Upload {...props} multiple={false}>
                                         <button className="btn butt-md butt-primary2">تحميل ملف PDF من جهازك</button>
                                     </Upload>
-                                </div>
+                                </div>*/}
                                 <div className="choose-images-file">
                                     <h4 className="timlands-content-form-subtitle">
                                         فيديو تعريفي للخدمة

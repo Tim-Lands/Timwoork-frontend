@@ -6,6 +6,7 @@ import "../styles/fonts.css";
 import store from "@/store/store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
+import useSWR from "swr";
 import { useEffect } from "react";
 import type { ReactNode } from 'react'
 import type { NextPage } from 'next'
@@ -24,6 +25,8 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
 }
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const { data: userData }: any = useSWR(`api/me`)
+    const dataDark = userData && userData.user_details.profile.dark_mode
     const token = Cookies.get('token')
     /*const options = {
         broadcaster: 'pusher',
@@ -58,7 +61,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     }, []);
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
-        <>
+        <div className={'pt-5' + (dataDark == 1 && ' is-dark')}>
             <SWRConfig value={{
                 fetcher: async (url: string) => await API.get(url, {
                     headers: { Authorization: `Bearer ${token}` }
@@ -70,7 +73,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     </ConfigProvider>
                 </Provider>
             </SWRConfig>
-        </>
+        </div>
     );
 }
 
