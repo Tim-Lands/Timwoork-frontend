@@ -28,16 +28,16 @@ function index() {
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoading(false)
-                message.success('لقد تم التحديث بنجاح')
+              //  message.success('لقد تم التحديث بنجاح')
                 mutate('api/cart')
             }
         } catch (error: any) {
             setIsLoading(false)
-            message.error('حدث خطأ غير متوقع')
+            //message.error('حدث خطأ غير متوقع')
         }
     }
     const updateItem = async (e: any, values: any) => {
-        e.preventDefault()
+       // e.preventDefault()
         setIsLoading(true)
         try {
             const res = await API.post(`api/cart/cartitem/update/${values.id}`, values, {
@@ -48,13 +48,13 @@ function index() {
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoading(false)
-                message.success('لقد تم التحديث بنجاح')
+              //  message.success('لقد تم التحديث بنجاح')
                 mutate('api/cart')
                 mutate('api/me')
             }
         } catch (error: any) {
             setIsLoading(false)
-            message.error('حدث خطأ غير متوقع')
+        //    message.error('حدث خطأ غير متوقع')
         }
     }
     const buyNowBtn = () => {
@@ -112,7 +112,9 @@ function index() {
                                                     itemTotal={e.price_product}
                                                     deleteItem={deleteItem}
                                                     updateItem={updateItem}
-                                                    developments={e.cart_item_developments} />
+                                                    developments={e.cart_item_developments}
+                                                    isLoading={isLoading}
+                                                    />
                                             ))}
                                             <li className="cart-item">
                                                 <div className="d-flex">

@@ -81,10 +81,20 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                                     onSubmit={() => updateItem(id, { id, product_id, quantity: Number(Math.abs(quan)) })}
                                 >
                                     <input
-                                        type="number"
+                                        //type="number"
                                         value={quan}
                                         className="timlands-inputs sm"
                                         onChange={(e: any) => setQuan(e.target.value)}
+                                        onKeyPress={(event) => {
+                                            if (!/[0-9]/.test(event.key)) {
+                                              event.preventDefault();
+                                            } 
+                                            else { 
+                                                setTimeout(() => {
+                                                    updateItem(id, { id, product_id, quantity: Number(Math.abs(quan)) })
+                                                }, 900);
+                                                }                                                
+                                          }}
                                     />
                                 </form>
                             </li>
