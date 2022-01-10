@@ -14,7 +14,7 @@ import Cookies from 'js-cookie'
 
 function index() {
     const token = Cookies.get('token')
-    const [pageIndex, setPageIndex] = useState(0);
+    const [pageIndex, setPageIndex] = useState(1);
     const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
 
     const [rejectLoading, setrejectLoading] = useState(false)
@@ -70,7 +70,6 @@ function index() {
                 )
             }
         })
-
     }
     const statusLabel = (status: any) => {
         switch (status) {

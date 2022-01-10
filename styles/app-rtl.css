@@ -6099,4 +6099,39 @@ h3 {
 .ant-tooltip-inner {
   font-size: 13px;
 }
+
+.aside-header {
+  border-bottom: 2px dashed #f2f2f2;
+  margin-bottom: 15px;
+  padding: 11px 0;
+}
+
+.aside-header .title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  margin: 0;
+}
+
+.order-user-info .order-user-avatar img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-left: 6px;
+}
+
+.order-user-info .order-user-content .user-title {
+  font-size: 17px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.order-user-info .order-user-content .meta {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  margin-top: 6px;
+  font-weight: 200;
+}
 /*# sourceMappingURL=app-rtl.css.map */

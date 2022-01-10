@@ -42,7 +42,7 @@ function Single({ query }) {
   const [isLoadingCart, setIsLoadingCart] = useState(false)
 
   const showStars = () => {
-    const rate = Number(ProductData.data.ratings_avg_rating) || 0
+    const rate = Number(ProductData.data.ratings_count) || 0
     const xAr: any = [
       {
         id: 1,
@@ -154,8 +154,13 @@ function Single({ query }) {
         setIsLoadingCart(false)
       }
     } catch (error: any) {
-      message.error('حدث خطأ غير متوقع')
       setIsLoadingCart(false)
+      if (error.response && error.response.status === 400) {
+        message.error('لا يمكنك شراء هذه الخدمة, لأن هذه خدمتك')
+      } else {
+
+        message.error('حدث خطأ غير متوقع')
+      }
     }
 
   }
@@ -187,7 +192,7 @@ function Single({ query }) {
       return duration + ' يوم '
     }
   }
-  const APIURL2 = 'https://api.timwoork.com/products/galaries-images/'
+  const APIURL2 = 'https://api.icoursat.com/products/galaries-images/'
   const [theIDs, settheIDs] = useState([])
   const [checkedDevelopments, setcheckedDevelopments] = useState([]);
 
@@ -261,8 +266,8 @@ function Single({ query }) {
           title={ProductData.data.title + ' - تيموورك'}
           metaDescription={ProductData.data.content}
           ogDescription={ProductData.data.content}
-          ogImage={'http://api.timwoork.com/products/thumbnails/' + ProductData.data.thumbnail}
-          ogUrl={'http://api.timwoork.com/products/thumbnails/' + ProductData.data.thumbnail}
+          ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData.data.thumbnail}
+          ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData.data.thumbnail}
         />
       }
       {ProductData &&
@@ -311,7 +316,7 @@ function Single({ query }) {
                           {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
                         </span>
                         <span className="stars-count">
-                          ({ProductData.data.ratings_avg_rating})
+                          ({ProductData.data.ratings_count})
                         </span>
                       </li>
                       <li className="level-item">
@@ -319,7 +324,7 @@ function Single({ query }) {
                           المستوى:
                         </span>
                         <span className="value-level">
-                          {ProductData.data.profile_seller.level.name_ar }
+                          {ProductData.data.profile_seller.level.name_ar}
                         </span>
                       </li>
                     </ul>
@@ -387,9 +392,11 @@ function Single({ query }) {
                                 <li>
                                   <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge.name_ar}
                                 </li>
-                                <li>
-                                  <span className="material-icons material-icons-outlined">place</span> الجزائر
-                                </li>
+                                {ProductData.data.profile_seller.profile.country !== null &&
+                                  <li>
+                                    <span className="material-icons material-icons-outlined">place</span> الجزائر
+                                  </li>
+                                }
                               </ul>
                               <div className="seller-info-butts d-flex">
                                 <Link href={"/u/" + ProductData.data.profile_seller.profile.user.username}>

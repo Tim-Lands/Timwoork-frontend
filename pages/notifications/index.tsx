@@ -1,12 +1,30 @@
 import Layout from '@/components/Layout/HomeLayout'
 import Loading from '@/components/Loading';
 import Notification from '@/components/Notification'
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import useSWR from 'swr';
+import Cookies from 'js-cookie'
 
+import API from '../../config'
 function index() {
+    const token = Cookies.get('token')
+
     const { data: userInfo }: any = useSWR(`api/me`)
     const notifications = userInfo && userInfo.user_details.unread_notifications
+    async function markAllRead() {
+        try {
+            await API.post(`api/notifications/markAllAsRead`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        } catch (error) {
+            console.log('error');
+        }
+    }
+    useEffect(() => {
+        markAllRead()
+    }, [])
     return (
         <div className="my-2 py-4">
             <div className="row justify-content-center">

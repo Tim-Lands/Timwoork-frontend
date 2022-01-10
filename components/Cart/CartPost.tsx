@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
-
-function CartPost({ id, quantity, product_id, title, price, itemTotal, developments, deleteItem, updateItem }): ReactElement {
-    const [quan, setQuan] = useState(quantity)
+ 
+function CartPost({ id, quantity, title, price, itemTotal, developments, deleteItem }): ReactElement {
     function DevdurationFunc(duration) {
         if (duration == 1) {
             return 'يوم واحد'
@@ -76,27 +75,8 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                                 justifyContent: 'flex-end',
                             }}
                         >
-                            <li>  
-                                <form
-                                    onSubmit={() => updateItem(id, { id, product_id, quantity: Number(Math.abs(quan)) })}
-                                >
-                                    <input
-                                        //type="number"
-                                        value={quan}
-                                        className="timlands-inputs sm"
-                                        onChange={(e: any) => setQuan(e.target.value)}
-                                        onKeyPress={(event) => {
-                                            if (!/[0-9]/.test(event.key)) {
-                                              event.preventDefault();
-                                            } 
-                                            else { 
-                                                setTimeout(() => {
-                                                    updateItem(id, { id, product_id, quantity: Number(Math.abs(quan)) })
-                                                }, 900);
-                                                }                                                
-                                          }}
-                                    />
-                                </form>
+                            <li>
+                                
                             </li>
                             <li>
                                 <motion.button
@@ -128,7 +108,6 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
 CartPost.propTypes = {
     title: PropTypes.string,
     id: PropTypes.any,
-    product_id: PropTypes.any,
     quantity: PropTypes.number,
     author: PropTypes.string,
     itemTotal: PropTypes.number,
