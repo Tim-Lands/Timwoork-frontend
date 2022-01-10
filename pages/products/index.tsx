@@ -8,17 +8,18 @@ import Loading from '@/components/Loading';
 import PropTypes from "prop-types";
 import Slider from '@mui/material/Slider';
 import { setTimeout } from 'timers';
-import Select from 'react-select';
+import Tags from '@/components/Tags'
 
 function Category() {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [products, setProducts]: any = useState([])
   const { data: getCategories, error }: any = useSWR('api/get_categories')
-  const [checkedcategory, setCheckedcategory]: any = useState(''); 
+  let setValue,setLabel = [] 
+   setValue = getCategories && getCategories.data.map((e) => (e.id));
+   setLabel = getCategories && getCategories.data.map((e) => (e.name_ar));
+  const [selectedTags, setSelectedTags]: any = useState(['']); 
 
-
- 
   /********************** price Slider **********************/
 function valuetext(value: number) {
   return `${value}$`;
@@ -52,7 +53,7 @@ function valuetext(value: number) {
       setTimeout(() => { 
         setIsLoading(false);
       },1500)  
-        const res: any = await API.get(`api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}`)//&category=${categoryID}
+        const res: any = await API.get(`api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}&category=${selectedTags}`)
         if (res.status === 200) {
           setIsLoading(false)
           setProducts(res.data.data.data)
@@ -62,7 +63,6 @@ function valuetext(value: number) {
         setIsLoading(false)
         setIsError(true)
       }   
-      ////if (!products) return <p>لا يوجد نتائج </p>
    }
 
   async function getData() {
@@ -93,6 +93,7 @@ function valuetext(value: number) {
           categoryID: []
         }}
         onSubmit={async values => {
+         
         }}
       >
         {({ values }) => (
@@ -133,9 +134,7 @@ function valuetext(value: number) {
                   </div>
                   <div className="filter-sidebar-panel">
                     <h3 className="title">التصنيف الرئيسي</h3>
-                    <div className="filter-cheks">
-                        {/*  */}
-                    </div>
+                       <Tags values={setValue} labels={setLabel} placeholder="أدخل التصنيفات..." selected={selectedTags =>setSelectedTags(selectedTags)}/>
                   </div>
                   <div className="py-3">
                     <button type="submit" className='btn butt-primary butt-sm' onClick={filterData}>فلترة النتائج</button>

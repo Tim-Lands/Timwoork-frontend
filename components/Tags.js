@@ -18,8 +18,9 @@ const Tags = (props) => {
     }
     const setTagsStateHandle = (e) => {
        checked= Array.isArray(e)?e.map(x=>x.value):[]; //selected array of value
-        console.log(checked)
-       
+        console.log(values)
+        console.log("newArrayofObjects")
+        props.selected(checked) 
     }
     return (
         <div>
@@ -30,7 +31,7 @@ const Tags = (props) => {
                     style={{ width: "100%" }}
                     //className="timlands-inputs select"
                     placeholder={placeholder}
-                    onChange={setTagsStateHandle}
+                    onChange={setTagsStateHandle}  
                     options={newArrayofObjects}
                 //components={makeAnimated()}
                 >
