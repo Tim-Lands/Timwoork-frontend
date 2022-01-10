@@ -28,6 +28,9 @@ function Overview({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
+    const { data: getTags } = useSWR('dashboard/tags');
+    const values = getTags && getTags.data.map((e) => (e.id));
+    const labels = getTags && getTags.data.map((e) => (e.name_ar));
 
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
@@ -245,12 +248,12 @@ function Overview({ query }) {
                                                                 </div>
                                                                 :
                                                                 null}
-                                                        </div>
+                                                        </div> 
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                           <Tags />
+                                                           <Tags values={values} labels={labels} placeholder="أدخل الوسوم"/>
                                                             {errors.product_tag && touched.product_tag ?
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
