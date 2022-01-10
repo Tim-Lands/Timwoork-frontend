@@ -6,19 +6,82 @@ import useSWR from 'swr'
 import API from '../../config'
 import Loading from '@/components/Loading';
 import PropTypes from "prop-types";
-
+import Slider from '@mui/material/Slider';
 function Category() {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [products, setProducts]: any = useState([])
 
+  const [category, setCategory]: String = useState(''); 
+
+
+  /********************** Slider **********************/
+function valuetext(value: number) {
+  return `${value}$`;
+} 
+// Pricing range from 0 to 5000
+  const [priceRange, setpriceRange] = React.useState<number[]>([5, 5000]);
+  const minDistance = 50; // minimum distance between any two values of price
+  const handleChangeSlider = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number,
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (activeThumb === 0) {
+      setpriceRange([Math.min(newValue[0], priceRange[1] - minDistance), priceRange[1]]);
+    } else {
+      setpriceRange([priceRange[0], Math.max(newValue[1], priceRange[0] + minDistance)]);
+    }
+    filterPrice(priceRange);
+    
+  };     
+
+   //filter price 
+   async function filterPrice (priceRange){
+
+    setTimeout(() => {
+      setIsLoading(false)
+      console.log(" not waiting")
+    }, 3000);
+
+    console.log("  waiting")
+    setIsLoading(true)
+
+    if( isError || isLoading ){
+       try {
+        const res: any = await API.get(`api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}`) 
+        if (res.status === 200) {
+          setIsLoading(false)
+          setProducts(res.data.data.data)
+          setIsError(false)
+          console.log(products.length)
+          console.log(priceRange + "price range") // هذه مصفوفه تحتوي السعر الاقر والسعر الاعلى 
+        }
+      } catch (error) { 
+        setIsLoading(false)
+        setIsError(true)
+        console.log(priceRange + "price range") // هذه مصفوفه تحتوي السعر الاقر والسعر الاعلى 
+
+      }
+    }
+   }
+
+  /**-------------------------------------**/
+
+  //filter by  Category
+
   //const { data: products, errorP }: any = useSWR(`api/filter?paginate=12&between=price,100,24`)
-  const { data: getCategories, error }: any = useSWR('dashboard/categories')
-  async function getDataFilter(price_min, price_max, categoryID) {
+  const { data: getCategories, error }: any = useSWR('api/get_categories')
+
+  async function handleChangeCategory( categoryID) {
     setIsLoading(true)
     setIsError(false)
     try {
-      const res: any = await API.get(`api/filter?paginate=12&between=price,${price_min},${price_max}&category=${categoryID}`)
+      const res: any = await API.get(`api/filter?paginate=12&category=${categoryID}`)
       if (res) {
         setIsLoading(false)
         setProducts(res.data.data.data)
@@ -61,11 +124,11 @@ function Category() {
         }}
         onSubmit={async values => {
           //setFilterVals(`between=price,${values.price_min},${values.price_max}`)
-          getDataFilter(
+         /* getDataFilter(
             values.emptyPrice == '1' ? '' : values.price_min,
             values.emptyPrice == '1' ? '' : values.price_max,
             values.categoryID
-          )
+          )*/
         }}
       >
         {({ values }) => (
@@ -79,22 +142,17 @@ function Category() {
                   <div className="filter-sidebar-panel">
                     <h3 className="title">السعر</h3>
                     <div className="timlands-form">
-                      <p className='text' style={{ marginBottom: 0 }}>{values.price_min}--{values.price_max}</p>
-                      <Field type="range" name="price_min" className="form-range" min={5} max={500} step="5" />
-                      <Field type="range" name="price_max" className="form-range" min={5} max={500} step="5" />
-
-                      <div className="form-check py-1 pe-2">
-                        <Field
-                          className="form-check-input"
-                          type="checkbox"
-                          name='emptyPrice'
-                          value='1'
-                          id={"emptyPrice"}
-                        />
-                        <label className="form-check-label" htmlFor={"emptyPrice"}>
-                          تصفية بدون سعر
-                        </label>
-                      </div>
+                      <Slider
+                        getAriaLabel={() => 'Minimum distance shift'}
+                        value={priceRange}
+                        valueLabelDisplay="auto"  
+                        onChange={handleChangeSlider}
+                         getAriaValueText={valuetext}  
+                         max={5000}
+                         min = {0}
+                         step={50}
+                        disableSwap
+                      />
                     </div>
                   </div>
                   <div className="filter-sidebar-panel">
@@ -120,6 +178,7 @@ function Category() {
                             name='categoryID'
                             value={`${e.id}`}
                             id={"getCategories-" + e.id}
+                            onChange={() =>handleChangeCategory(e.id)}
                           />
                           <label className="form-check-label" htmlFor={"getCategories-" + e.id}>
                             {e.name_ar}

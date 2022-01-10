@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
-
+ 
 function CartPost({ id, quantity, title, price, itemTotal, developments, deleteItem }): ReactElement {
     function DevdurationFunc(duration) {
         if (duration == 1) {
