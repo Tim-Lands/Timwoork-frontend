@@ -8,17 +8,21 @@ import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import API from '../../config'
 import Cookies from 'js-cookie'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import LastSeen from "@/components/LastSeen";
 import { Result } from "antd";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const User = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
     const { data: userInfo }: any = useSWR(`api/me`)
     const profily = userInfo && userInfo.user_details.profile
+    const [acceptLoading, setacceptLoading] = useState(false)
+    const [resourcesLoading, setresourcesLoading] = useState(false)
     const [rejectLoading, setrejectLoading] = useState(false)
-    const rejectHandle = (id: any) => {
+
+    const requestRejectHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
             customClass: {
@@ -40,7 +44,7 @@ const User = ({ query }) => {
             if (result.isConfirmed) {
                 setrejectLoading(true)
                 try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_anyone`, {}, {
+                    const res = await API.post(`api/order/items/${id}/accept_cancel_request_by_seller`, {}, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -70,7 +74,38 @@ const User = ({ query }) => {
             }
         })
     }
-
+    const acceptHandle = async (id: any) => {
+        setacceptLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/accept_item_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                setacceptLoading(false)
+            }
+        } catch (error) {
+            setacceptLoading(false)
+        }
+    }
+    const resourcesHandle = async (id: any) => {
+        setresourcesLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/dilevery_resources`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                setresourcesLoading(false)
+            }
+        } catch (error) {
+            setresourcesLoading(false)
+        }
+    }
     const statusLabel = (status: any) => {
         switch (status) {
             case 0:
@@ -116,7 +151,7 @@ const User = ({ query }) => {
                 metaDescription={"عرض الطلبية"}
                 ogDescription={"عرض الطلبية"}
             />
-            {errorItem && <Result
+            {errorItem && !ShowItem.data && <Result
                 status="warning"
                 title="حدث خطأ غير متوقع"
             />}
@@ -127,12 +162,26 @@ const User = ({ query }) => {
                         <div className="app-bill">
                             <div className="app-bill-header d-flex">
                                 <h3 className="title me-auto">تفاصيل الطلبية</h3>
-                                {ShowItem && ShowItem.data.status !== 0 &&
+                                {ShowItem && ShowItem.data.status !== 0 && <>
+                                    <button
+                                        disabled={acceptLoading}
+                                        onClick={() => acceptHandle(ShowItem.data.id)}
+                                        className="btn butt-sm butt-green"
+                                    >قبول الطلب</button>
+                                </>
+                                }
+                                {ShowItem && ShowItem.data.status == 1 && <>
+                                    <button
+                                        disabled={resourcesLoading}
+                                        onClick={() => resourcesHandle(ShowItem.data.id)}
+                                        className="btn butt-sm butt-primary"
+                                    >تسليم المشروع</button>
                                     <button
                                         disabled={rejectLoading}
-                                        onClick={() => rejectHandle(ShowItem.data.id)}
-                                        className="btn butt-sm butt-red"
-                                    >إلغاء الشراء</button>
+                                        onClick={() => requestRejectHandle(ShowItem.data.id)}
+                                        className="btn butt-sm butt-primary2"
+                                    >طلب الإلغاء</button>
+                                </>
                                 }
                             </div>
                             <div className="row">
@@ -146,7 +195,7 @@ const User = ({ query }) => {
                                                 src={ShowItem && ShowItem.data.profile_seller.profile.avatar}
                                                 width={100}
                                                 height={100}
-                                            />  
+                                            />
                                         </div>
                                         <div className="order-user-content">
                                             <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
@@ -162,13 +211,13 @@ const User = ({ query }) => {
                                                 src={profily && profily.avatar}
                                                 width={100}
                                                 height={100}
-                                            />  
+                                            />
                                         </div>
                                         <div className="order-user-content">
                                             <h2 className="user-title">{profily && profily.full_name}</h2>
                                             <p className="meta">
-                                                الشارة: {profily && profily.badge.name_ar} | 
-                                                المستوى: {profily && profily.level.name_ar} 
+                                                الشارة: {profily && profily.badge.name_ar} |
+                                                المستوى: {profily && profily.level.name_ar}
                                             </p>
                                         </div>
                                     </div>

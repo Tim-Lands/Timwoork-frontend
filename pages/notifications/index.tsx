@@ -4,13 +4,14 @@ import Notification from '@/components/Notification'
 import { ReactElement, useEffect } from "react";
 import useSWR from 'swr';
 import Cookies from 'js-cookie'
+import router from 'next/router';
 
 import API from '../../config'
 function index() {
     const token = Cookies.get('token')
 
-    const { data: userInfo }: any = useSWR(`api/me`)
-    const notifications = userInfo && userInfo.user_details.unread_notifications
+    const { data: userInfo }: any = useSWR(`api/notifications`)
+    //const notifications = userInfo && userInfo.user_details.unread_notifications
     async function markAllRead() {
         try {
             await API.post(`api/notifications/markAllAsRead`, {}, {
@@ -23,8 +24,15 @@ function index() {
         }
     }
     useEffect(() => {
+        if (!token) {
+            router.push('/login')
+            return
+        }
         markAllRead()
     }, [])
+    return (
+        <div>ekhfgekfhegkhf</div>
+    )
     return (
         <div className="my-2 py-4">
             <div className="row justify-content-center">

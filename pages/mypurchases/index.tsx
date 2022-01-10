@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout/HomeLayout'
 import React, { ReactElement, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Button, Tooltip } from 'antd';
+import { Button, Result, Tooltip } from 'antd';
 import Link from 'next/link'
 import useSWR, { mutate } from 'swr'
 import Loading from '@/components/Loading';
@@ -40,7 +40,7 @@ function index() {
             if (result.isConfirmed) {
                 setrejectLoading(true)
                 try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_anyone`, {}, {
+                    const res = await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`, {}, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -155,6 +155,11 @@ function index() {
                                         ))}
                                     </tbody>
                                 </table>
+                                {buysList && buysList.data.data.length == 0 && <Result
+                                    status="404"
+                                    title="لا يوجد لديك مشتريات"
+                                    subTitle="ليس لديك مشريات لعرضها"
+                                />}
                                 {!buysList && <Loading />}
                                 {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
                                 <div className="p-2 d-flex">

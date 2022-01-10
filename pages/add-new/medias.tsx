@@ -215,7 +215,7 @@ function Medias({ query }) {
                                                                             </div>
                                                                         </motion.div>
                                                                     ))}
-                                                                    {(imageList.length && imageList.length >= 1) ? <Alert type='error'>يمكنك فقط إضافة صورة واحدة بارزة</Alert> :
+                                                                    {(imageList.length && imageList.length >= 1) ? <Alert type='info'>يمكنك فقط إضافة صورة واحدة بارزة</Alert> :
 
                                                                         <button
                                                                             style={isDragging ? { color: "red" } : undefined}
@@ -268,7 +268,7 @@ function Medias({ query }) {
                                                                             </div>
                                                                         </motion.div>
                                                                     ))}
-                                                                    {(imageList.length && imageList.length >= 5) ? <Alert type="error"><p className="text">لايمكنك إضافة أكثر من 5 صور</p></Alert> :
+                                                                    {(imageList.length && imageList.length >= 5) ? <Alert type="info"><p className="text">لايمكنك إضافة أكثر من 5 صور</p></Alert> :
 
                                                                         <button
                                                                             style={isDragging ? { color: "red" } : undefined}

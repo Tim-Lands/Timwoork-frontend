@@ -40,7 +40,7 @@ const User = ({ query }) => {
             if (result.isConfirmed) {
                 setrejectLoading(true)
                 try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_anyone`, {}, {
+                    const res = await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`, {}, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }

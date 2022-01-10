@@ -1,0 +1,1525 @@
+body {
+  background-color: #222;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Filter Search
+---------------------------------------------------------------------------------------------
+*/
+.filter-search-sidebar .filter-sidebar-title {
+  border-bottom: 1px dashed #ddd;
+}
+
+.filter-search-sidebar .filter-sidebar-title .title {
+  color: #333;
+}
+
+.filter-search-sidebar .filter-sidebar-panel {
+  background-color: #fff;
+}
+
+.filter-search-sidebar .filter-sidebar-panel .title {
+  color: #555;
+  border-bottom: 1px dashed #ddd;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Grid
+---------------------------------------------------------------------------------------------
+*/
+.timlands-profile-content .profile-content-body {
+  background-color: #fff;
+}
+
+.timlands-profile-content .profile-content-body .content-title {
+  border-bottom: 1px dashed #ddd;
+}
+
+.timlands-profile-content .profile-content-body .content-title .title {
+  color: #444;
+}
+
+.timlands-profile-content .profile-content-header {
+  border-bottom: 1px dashed #ddd;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-head .title {
+  color: #222;
+}
+
+.timlands-profile-content .profile-content-header .profile-content-head .text {
+  color: #333;
+}
+
+.content-text-item {
+  border: 1px dashed #ddd;
+}
+
+.content-text-item .text-label {
+  color: #222;
+}
+
+.content-text-item .text-value {
+  color: #555;
+}
+
+.content-text-item .text-skills li a {
+  background-color: #f8f8f8;
+  color: #444;
+}
+
+.content-text-item .text-skills li a:hover {
+  background-color: #475C80;
+  color: #fff;
+}
+
+.user-bro {
+  color: #444;
+}
+
+.statistic-item {
+  border-bottom: 1px dashed #ddd;
+}
+
+.app-bill {
+  background-color: #fff;
+}
+
+.app-bill .app-bill-header {
+  border-bottom: 2px dashed #ddd;
+}
+
+.app-bill .app-bill-header .title {
+  color: #333;
+}
+
+.app-bill .app-bill-footer {
+  border-top: 2px dashed #ddd;
+}
+
+.app-bill .app-bill-content .list-group .list-group-item {
+  padding: 13px  17px;
+}
+
+.app-bill .app-bill-content .list-group .total {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.timwoork-single-tags .single-tags-list li.title {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.timwoork-single-tags .single-tags-list li a {
+  color: #444;
+  background-color: #f7f7f7;
+}
+
+.timwoork-single-tags .single-tags-list li a:hover {
+  background-color: #f1f1f1;
+  color: #000;
+}
+
+/*
+-------------------------------------------------------------------------------------------
+    Login Panel
+-------------------------------------------------------------------------------------------
+*/
+.login-panel {
+  background-color: #fff;
+}
+
+.login-panel.update-form .update-form-header {
+  border-bottom: 1px dashed #ddd;
+}
+
+.login-panel.update-form .update-form-header .title {
+  color: #555;
+}
+
+.login-panel .login-panel-body .is-loading {
+  background-color: rgba(255, 255, 255, 0.699);
+}
+
+.login-panel .login-external-links li:last-child {
+  padding-left: 0;
+}
+
+.login-panel .login-external-links li .ext-butt {
+  border: 1px solid #f1f1f1 !important;
+  background-color: #f7f7f7 !important;
+  color: #999 !important;
+}
+
+.login-panel .login-external-links li .ext-butt div {
+  background: white !important;
+}
+
+.login-panel .login-external-links li .ext-butt:hover {
+  color: #555;
+  background-color: #f1f1f1;
+}
+
+.login-panel .panel-login-external .login-external-header::after, .login-panel .panel-login-external .login-external-header::before {
+  background-color: #ddd;
+}
+
+.login-panel .panel-login-external .login-external-header .title {
+  color: #333;
+}
+
+.login-panel .remember-text .text {
+  margin-bottom: 5px;
+}
+
+.login-panel .login-panel-body {
+  width: 100%;
+}
+
+.login-panel .panel-modal-footer {
+  border-top: 1px dashed #ddd;
+}
+
+.login-panel .panel-modal-footer .footer-text .text {
+  color: #444;
+}
+
+.login-panel .panel-modal-footer .footer-text .text a {
+  color: #000;
+}
+
+.login-image .login-title {
+  font-weight: bold;
+}
+
+.login-image .login-text {
+  color: #666;
+}
+
+/*
+-------------------------------------------------------------------------------------------
+    Hero Header
+-------------------------------------------------------------------------------------------
+*/
+.timlands-hero {
+  background-image: url("5313770.jpg");
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-image {
+  padding: 7px 0;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-content .main-title {
+  color: #333;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-content .main-title .styles_typicalWrapper__1_Uvh {
+  color: #25d359;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-content .sub-title {
+  color: #444;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search input {
+  width: 100%;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .search-btn {
+  background-color: transparent;
+  color: #ccc;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .search-btn .spinner-border {
+  margin-bottom: 5px;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .rel-search .res-search-container {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.062);
+          box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.062);
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-title {
+  color: #444;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-item a {
+  color: #333;
+  background-color: #f1f1f1;
+}
+
+.timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-item a:hover {
+  background-color: #ddd;
+  color: #000;
+}
+
+.search-loading {
+  padding: 25px;
+}
+
+.list-results-items .post-item-content .title {
+  margin-bottom: 5px;
+}
+
+.list-results-items .post-item-content .post-meta-rate {
+  padding-top: 7px;
+}
+
+.list-results-items .post-item-content .post-meta-rate span {
+  margin-top: 3px;
+}
+
+.be-seller-aside {
+  border: 1px dashed #ddd;
+}
+
+.be-seller-aside .title {
+  color: #777;
+}
+
+.be-seller-aside .text {
+  color: #333;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Home Nannies Section
+---------------------------------------------------------------------------------------------
+*/
+.timwoork-nanny-home {
+  background-color: #fff;
+}
+
+.timwoork-nanny-home .nanny-home-content .new-label {
+  background-color: #fa570b;
+  color: #fff;
+}
+
+.timwoork-nanny-home .nanny-home-content .title {
+  font-size: 52px;
+}
+
+.timwoork-nanny-home .nanny-home-content .text {
+  color: #444;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Posts Aside
+---------------------------------------------------------------------------------------------
+*/
+.timwoork-single .timwoork-single-post .timwoork-single-header {
+  border-bottom: 1px solid #ddd;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .title {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li {
+  border-left: 1px solid #ddd;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li:first-child {
+  padding-right: 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li:last-child {
+  border-left: 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.rate-stars .stars-icons .material-icons-outlined {
+  color: #e96208;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.rate-stars .stars-icons .material-icons-outlined.outline-star {
+  color: #777;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.level-item .text-level {
+  color: #555;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.level-item .value-level {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.user-item a {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.user-item a:hover {
+  color: #475C80;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.category-item a {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.category-item a:hover {
+  color: #475C80;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body {
+  background-color: #fff;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .react-slideshow-container {
+  margin-right: -80px;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider .caption-descriptions {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(#000));
+  background-image: linear-gradient(rgba(0, 0, 0, 0), #000);
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider .caption-descriptions .text {
+  color: #fff;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .arrow-navigations .material-icons-outlined {
+  color: #fff;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .text {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h1, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h2, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h3 {
+  color: #222;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .single-list > li > ul > li {
+  margin: 6px 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-header .title {
+  font-weight: 700;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-avatar span.is-online {
+  background-color: #40af61;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-title {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-meta {
+  padding: 0;
+  margin-top: 8px;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-meta li {
+  color: #555;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-meta li:first-child {
+  padding-right: 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .seller-info-butts .btn {
+  margin-left: 6px;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-header {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-header .title {
+  color: #444;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .comment-item-avatar {
+  padding-top: 8px;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .comment-item-content .meta-time, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .comment-item-content .user-ratting {
+  color: #444;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .comment-item-content .meta-time .material-icons {
+  margin-left: 4px;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .comment-item-content .user-title {
+  color: #444;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .comment-item-content .item-text {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-comments .timwoork-single-comments-inner .single-comments-body .comments-list-items .list-items-ul > .comment-item .list-items-replies .reply-item {
+  background-color: #f7f7f7;
+  border-right: 4px solid #475C80;
+}
+
+.cart-nothing .cart-nothing-inner .title {
+  color: #777;
+}
+
+.cart-nothing .cart-nothing-inner .text {
+  color: #999;
+}
+
+.text-quatity {
+  color: #222;
+}
+
+.single-sidebar .single-panel-aside {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.062);
+          box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.062);
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li {
+  color: #555;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li:first-child {
+  padding-right: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li:last-child {
+  border-left: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li a {
+  color: #333;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li a:hover {
+  color: #475C80;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .bayers-count {
+  background-color: #f0f0f0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .bayers-count .num {
+  color: #444;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-header {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-header .title {
+  color: #333;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item {
+  color: #444;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item:last-child {
+  border-bottom: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-label {
+  margin-top: 2px;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:focus {
+  border-color: #566f9a;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:checked {
+  background-color: #475C80;
+  border-color: #475C80;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .price-duration {
+  color: #555;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .devloppers-price .price-number {
+  font-weight: bold;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer {
+  background-color: #f7f7f7;
+  border-top: 1px solid #f1f1f1;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-total-price .price-total {
+  color: #666;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-total-price .bayers-count {
+  background-color: #f0f0f0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-total-price .bayers-count .num {
+  color: #777;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-note .text {
+  color: #555;
+}
+
+@-webkit-keyframes animate_placeholder {
+  0% {
+    background-color: #f4f4f4;
+  }
+  50% {
+    background-color: #ddd;
+  }
+  100% {
+    background-color: #f1f1f1;
+  }
+}
+
+@keyframes animate_placeholder {
+  0% {
+    background-color: #f4f4f4;
+  }
+  50% {
+    background-color: #ddd;
+  }
+  100% {
+    background-color: #f1f1f1;
+  }
+}
+
+@-webkit-keyframes animate_placeholderdiv {
+  0% {
+    background-color: #f8f8f8;
+  }
+  50% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: #f2f2f2;
+  }
+}
+
+@keyframes animate_placeholderdiv {
+  0% {
+    background-color: #f8f8f8;
+  }
+  50% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: #f2f2f2;
+  }
+}
+
+.loading-title {
+  background-color: #ddd;
+}
+
+.loading-container .loading-container-item {
+  background-color: #fff;
+  border: 1px solid #f3f3f3;
+  -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
+          box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
+}
+
+.loading-container .loading-container-item .container-item-title {
+  background-color: #f1f1f1;
+}
+
+.loading-container .loading-container-item .container-item-title2 {
+  background-color: #f1f1f1;
+}
+
+.loading-container .loading-container-item .container-item-meta {
+  background-color: #f1f1f1;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Posts Aside
+---------------------------------------------------------------------------------------------
+*/
+.posts-aside .posts-aside-header {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.posts-aside .posts-aside-header .title {
+  font-size: 19px;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Account Page
+---------------------------------------------------------------------------------------------
+*/
+.timlands-accounts .timlands-accounts-container {
+  background-color: #fff;
+}
+
+.timlands-accounts .timlands-accounts-header {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.timlands-accounts .timlands-accounts-header .title {
+  color: #333;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Dashboard Page
+---------------------------------------------------------------------------------------------
+*/
+.dashboard-sidebar {
+  background-color: #f4f4f4;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details {
+  background-color: #f9f9f9;
+  border-bottom: 2px solid #d9d9d9;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-content .user-title {
+  color: #444;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-content .user-title a {
+  color: #333;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-content .user-title a:hover {
+  color: #475C80;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-content .meta li:first-child {
+  padding-right: 0;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-content .meta li a {
+  color: #777;
+  cursor: pointer;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashbord-user-details .dashbord-user-content .meta li a:hover {
+  color: #475C80;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item > .dash-link {
+  border-right-color: transparent;
+  color: #222;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item > .dash-link:hover {
+  color: #475C80;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item .sub-dashnav-list > .subdash-item > .subdash-link {
+  color: #333;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item .sub-dashnav-list > .subdash-item > .subdash-link:hover {
+  color: #475C80;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item .sub-dashnav-list > .subdash-item.active > .subdash-link {
+  color: #475C80;
+}
+
+.dashboard-sidebar .dashboard-sidebar-inner .dashboard-sidebar-list > .dash-item.active > .dash-link {
+  color: #475C80;
+  background-color: #f2f2f2;
+  border-right-color: #475C80;
+}
+
+@media (max-width: 500px) {
+  .timlands-dashboard-content {
+    padding: 0;
+  }
+}
+
+.form-check .form-check-input {
+  margin-right: -1.5em;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Dashboard Navbar
+---------------------------------------------------------------------------------------------
+*/
+.dashboard-navbar {
+  background-color: #f2f2f2;
+}
+
+.dashboard-navbar .auth-dashboard.left-dash-nav {
+  margin-right: auto;
+}
+
+.dashboard-navbar .auth-dashboard.right-dash-nav {
+  margin-left: auto;
+}
+
+.dashboard-navbar .circular-item button {
+  background-color: transparent;
+  color: #333;
+}
+
+.dashboard-navbar .circular-item button:hover {
+  background-color: #e7e7e7;
+  color: #000;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Panels Style
+---------------------------------------------------------------------------------------------
+*/
+.timlands-panel {
+  background-color: #fff;
+}
+
+.timlands-panel .timlands-steps {
+  border-bottom: 1px solid #e8ecf2;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item .title {
+  color: #111;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item .text {
+  color: #222;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item .text .icon-circular {
+  background-color: #f2f2f2;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item::after {
+  background-color: #475C80;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item.active .title .icon-circular, .timlands-panel .timlands-steps .timlands-step-item.active .text .icon-circular {
+  background-color: #ffd000;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item.active::after {
+  background-color: #475C80;
+}
+
+.timlands-panel.is-loader::after {
+  background-color: rgba(255, 255, 255, 0.712);
+}
+
+.timlands-panel .timlands-panel-header {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.timlands-panel .timlands-panel-header .title {
+  color: #444;
+}
+
+.product-devlopes-butt {
+  background-color: #f8f8f8;
+  border: 3px dotted #ccc;
+  -webkit-box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.071);
+          box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.071);
+}
+
+.product-devlopes-butt .product-devlopes-text {
+  color: #444;
+}
+
+.product-devlopes-butt .add-devs-btn .material-icons-outlined {
+  font-size: 21px;
+}
+
+.add-product-advices .advice-title {
+  color: #333;
+  border-bottom: 1px solid #ccc;
+}
+
+.add-product-advices .advice-list li {
+  color: #333;
+}
+
+.timlands-panel-item {
+  border: 1px solid #f1f1f1;
+  background-color: #fff;
+}
+
+.timlands-panel-item:hover {
+  border: 1px solid #475C80;
+  -webkit-box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.055);
+          box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.055);
+}
+
+.timlands-panel-item .panel-item-header, .timlands-panel-item .panel-item-body, .timlands-panel-item .panel-item-footer {
+  padding: 15px;
+}
+
+.timlands-panel-item .panel-item-header {
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.timlands-panel-item .panel-item-header .title {
+  color: #333;
+}
+
+.timlands-panel-item .panel-item-body .count-num {
+  color: #333;
+}
+
+.timlands-panel-item .panel-item-body .details-items > li {
+  border-bottom: 1px solid #f6f6f6;
+}
+
+.timlands-panel-item .panel-item-body .details-items > li:last-child {
+  border-bottom: 0;
+}
+
+.timlands-panel-item .panel-item-body .details-items > li p {
+  margin: 0;
+}
+
+.timlands-panel-item .panel-item-body .details-items > li .det-val {
+  margin-right: auto;
+}
+
+.timlands-panel-item .panel-item-body .details-items > li .det-val .text {
+  font-weight: 600;
+}
+
+.timlands-panel-item .panel-item-footer {
+  border-top: 1px solid #f3f3f3;
+}
+
+.timlands-panel-item.floated .panel-item-body .panel-content .price-text {
+  font-size: 16px;
+}
+
+.timlands-panel-item.floated .panel-item-body .panel-content .price-num {
+  font-size: 42px;
+}
+
+.develop-price {
+  border: 1px solid #f1f1f1;
+  background-color: #f8f8f8;
+}
+
+.develop-price .buttons-tools .formarray-butt {
+  background-color: #f7f7f7;
+  color: #777;
+}
+
+.develop-price .buttons-tools .formarray-butt:hover {
+  color: #000;
+  background-color: #f2f2f2;
+}
+
+.develop-price .buttons-tools .formarray-butt.del {
+  background-color: #ffdddd;
+  color: #500808;
+}
+
+/*
+    Modal
+*/
+.panel-modal {
+  background-color: #fff;
+  -webkit-box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.11);
+          box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.11);
+}
+
+.panel-modal .panel-modal-header {
+  border-bottom: 1px solid #f6f6f6;
+}
+
+.panel-modal .panel-modal-header .title {
+  color: #444;
+}
+
+.panel-modal .panel-modal-header .panel-modal-left-tools .close-modal {
+  background-color: #fff;
+  color: #777;
+}
+
+.panel-modal .panel-modal-header .panel-modal-left-tools .close-modal:hover {
+  color: #333;
+  background-color: #f8f8f8;
+}
+
+.panel-modal .panel-modal-header .panel-modal-left-tools .close-modal:focus {
+  color: #000;
+  background-color: #f1f1f1;
+}
+
+.panel-modal .panel-modal-body .is-loading {
+  background-color: rgba(255, 255, 255, 0.699);
+}
+
+.panel-modal .panel-modal-footer {
+  border-top: 1px solid #ddd;
+  background-color: #f7f7f7;
+}
+
+.login-title-form {
+  color: #333;
+}
+
+.login-text-form {
+  color: #777;
+}
+
+.panel-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.603);
+}
+
+.timlands-add-new {
+  border: 1px dashed #ddd;
+}
+
+.timlands-add-new .timlands-add-new-icon {
+  color: #ccc;
+}
+
+.timlands-add-new .timlands-add-new-body .title {
+  color: #333;
+}
+
+.timlands-add-new .timlands-add-new-body .text {
+  color: #666;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    404 Page
+---------------------------------------------------------------------------------------------
+*/
+.timwoork-404-page .title {
+  color: #555;
+}
+
+.timwoork-404-page .title .error-status {
+  font-weight: bold;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Content Editor
+---------------------------------------------------------------------------------------------
+*/
+.content-editor {
+  border: 1px solid #f6f6f6;
+}
+
+.content-editor textarea {
+  min-height: 100px !important;
+}
+
+.content-editor .content-menu-tools {
+  background-color: #f5f5f5;
+}
+
+.content-editor .content-menu-tools button {
+  background-color: transparent;
+  color: #555;
+}
+
+.content-editor .content-menu-tools button:hover {
+  color: #475C80;
+  background-color: #c7d0e0;
+}
+
+.content-editor .content-menu-tools button.is-active {
+  color: #fff;
+  background-color: #475C80;
+}
+
+.content-editor .ProseMirror {
+  padding: 12px;
+  min-height: 200px;
+  outline: none;
+}
+
+.content-editor .ProseMirror:focus {
+  outline: none;
+}
+
+.content-editor .normal-editor textarea {
+  min-height: 200px;
+}
+
+/*
+---------------------------------------------------------------------------------------------
+    Posts Aside
+---------------------------------------------------------------------------------------------
+*/
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body {
+  background-color: #fff;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider .caption-descriptions {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(#000));
+  background-image: linear-gradient(rgba(0, 0, 0, 0), #000);
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider .caption-descriptions .text {
+  color: #fff;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .arrow-navigations {
+  cursor: pointer;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .arrow-navigations .material-icons-outlined {
+  color: #fff;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h1, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h2, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h3 {
+  color: #222;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .single-list > li {
+  margin: 6px 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .single-list > li > ul {
+  margin: 15px 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .single-list > li > ul > li {
+  margin: 6px 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-header {
+  padding: 9px 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-header .title {
+  font-weight: 700;
+}
+
+@media (max-width: 580px) {
+  .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .d-flex {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-avatar span.is-online {
+  background-color: #40af61;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-title {
+  color: #333;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-meta li {
+  color: #555;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-seller-info .seller-info-container .seller-info-content .user-meta li:first-child {
+  padding-right: 0;
+}
+
+.timwoork-single-header {
+  border-bottom: 1px dashed #ddd;
+}
+
+.timwoork-single-header .title {
+  color: #333;
+}
+
+.timwoork-single-header .title.md {
+  color: #444;
+}
+
+.timwoork-single-header .single-header-meta li {
+  border-left: 1px solid #ddd;
+}
+
+.timwoork-single-header .single-header-meta li:first-child {
+  padding-right: 0;
+}
+
+.timwoork-single-header .single-header-meta li:last-child {
+  border-left: 0;
+}
+
+.timwoork-single-header .single-header-meta li.rate-stars .stars-icons .material-icons-outlined {
+  color: #e96208;
+}
+
+.timwoork-single-header .single-header-meta li.rate-stars .stars-icons .material-icons-outlined.outline-star {
+  color: #777;
+}
+
+.timwoork-single-header .single-header-meta li.level-item .text-level {
+  color: #555;
+}
+
+.timwoork-single-header .single-header-meta li.level-item .value-level {
+  color: #333;
+}
+
+.timwoork-single-header .single-header-meta li.user-item a {
+  color: #333;
+}
+
+.timwoork-single-header .single-header-meta li.user-item a:hover {
+  color: #475C80;
+}
+
+.timwoork-single-header .single-header-meta li.category-item a {
+  color: #333;
+}
+
+.timwoork-single-header .single-header-meta li.category-item a:hover {
+  color: #475C80;
+}
+
+.choose-images-file .uploader-btn {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.choose-images-file .uploader-btn:focus {
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.choose-images-file .uploader-btn.clear {
+  background-color: #ffcccc;
+  color: #b80a0a;
+}
+
+.choose-images-file .choose-images-list .image-item {
+  border: 1px dashed #ddd;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper {
+  background-color: rgba(0, 0, 0, 0.671);
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button {
+  background-color: #fff;
+  color: #555;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button:hover {
+  color: #000;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button:focus {
+  color: #000;
+  background-color: #f7f7f7;
+}
+
+.choose-images-file .choose-images-list .image-item:hover .image-item__btn-wrapper {
+  opacity: 1;
+}
+
+.choose-images-file.featured-image .choose-images-list .image-item {
+  border: 1px dashed #ddd;
+}
+
+.choose-images-file.featured-image .choose-images-list .image-item .image-item__btn-wrapper button .material-icons-outlined {
+  font-size: 20px;
+}
+
+/*
+-------------------------------------------------------------------------------------------
+    Cart List Item
+-------------------------------------------------------------------------------------------
+*/
+.cart-list .cart-list-item .cart-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.cart-list .cart-list-item .cart-item:last-child {
+  border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.cart-list .cart-list-item .cart-item .add-devloppers-nav {
+  border-top: 1px solid #f6f6f6;
+}
+
+.cart-list .cart-list-item .cart-item .add-devloppers-nav .devloppers-item .form-check-label .price-duration {
+  font-weight: 200;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-content .title {
+  color: #444;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-content .meta-user {
+  color: #777;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-header .prices-list li {
+  color: #777;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-header .prices-list li strong, .cart-list .cart-list-item .cart-item .cart-item-header .prices-list li span {
+  color: #333;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-price .price-title-total {
+  color: #475C80;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-price .price-nav li button {
+  background-color: #ee6363;
+  border: 1px solid #e35454;
+  color: #fff;
+}
+
+.cart-list .cart-list-item .cart-item .cart-item-price .price-nav li button:hover {
+  background-color: #ef7171;
+  border: 1px solid #f39191;
+  color: #fff;
+}
+
+.edit-button {
+  color: #777;
+}
+
+.edit-button:hover {
+  color: #475C80;
+}
+
+.cart-list-continue {
+  border-top: 1px dashed #ddd;
+}
+
+.single-sidebar .single-panel-aside {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.062);
+          box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.062);
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li {
+  color: #555;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li:first-child {
+  padding-right: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li:last-child {
+  border-left: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li a {
+  color: #333;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-header .top-aside-nav li a:hover {
+  color: #475C80;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .bayers-count {
+  background-color: #f0f0f0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .bayers-count .num {
+  color: #444;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-header {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-header .title {
+  color: #333;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item {
+  color: #444;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item:last-child {
+  border-bottom: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:focus {
+  border-color: #566f9a;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:checked {
+  background-color: #475C80;
+  border-color: #475C80;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .devloppers-price .price-number {
+  margin: 0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer {
+  background-color: #f7f7f7;
+  border-top: 1px solid #f1f1f1;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-total-price .price-total {
+  color: #666;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-total-price .bayers-count {
+  background-color: #f0f0f0;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-total-price .bayers-count .num {
+  color: #777;
+}
+
+.single-sidebar .single-panel-aside .panel-aside-footer .aside-footer-note .text {
+  color: #555;
+}
+
+.page-loading-spinner .spinner-border {
+  border: 0.25em solid #475C80;
+  border-right-color: transparent;
+}
+
+.page-header {
+  border-bottom: 1px dashed #f1f1f1;
+}
+
+.page-header .title {
+  color: #333;
+}
+
+.page-content .sub-title {
+  font-size: 25px;
+}
+
+.page-content .text {
+  color: #444;
+}
+
+.page-content .list li {
+  color: #444;
+}
+
+.about-hero {
+  background-image: url("../public/5566879.jpg");
+}
+
+.about-hero .title {
+  color: #475C80;
+}
+
+.about-hero .text {
+  color: rgba(0, 0, 0, 0.733);
+}
+
+.images-btns-upload .note-text {
+  color: #777;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: 0;
+}
+
+.choose-images-file {
+  background-color: #f8f8f8;
+  border: 2px dotted #ccc;
+  -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.041);
+          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.041);
+}
+
+.choose-images-file:hover {
+  border-color: #475C80;
+  background-color: #fff;
+}
+
+.timlands-content-form-subtitle {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.stars .stars-text {
+  color: #444;
+}
+
+.stars input[type=radio]:checked ~ label {
+  color: #ff9100;
+}
+
+.stars input[type=radio]:first-child + label .material-icons {
+  font-size: 36px;
+}
+
+.stars:hover input[type=radio]:checked ~ label,
+.stars label {
+  color: #ff9100;
+}
+
+.stars label {
+  cursor: pointer;
+}
+
+.stars label {
+  color: #b6b6b6;
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+  color: #df830c !important;
+}
+
+.post-item-content .post-meta-rate .material-icons-outlined {
+  color: #ec7f02;
+}
+
+.post-item-content .post-meta-rate .outline-star {
+  color: #acacac;
+}
+
+.StripeElement {
+  border: 1px solid #f3f3f3;
+}
+
+.ant-tooltip-inner {
+  font-size: 13px;
+}
+
+.aside-header {
+  border-bottom: 2px dashed #f2f2f2;
+}
+
+.aside-header .title {
+  color: #444;
+}
+
+.order-user-info .order-user-content .user-title {
+  color: #333;
+}
+
+.order-user-info .order-user-content .meta {
+  color: #666;
+}
+/*# sourceMappingURL=is-dark.css.map */

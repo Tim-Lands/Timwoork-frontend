@@ -63,7 +63,7 @@ function Prices({ query }) {
                                 initialValues={{
                                     price: (getProduct && getProduct.data.price),
                                     duration: (getProduct && getProduct.data.duration),
-                                    developments: (getProduct && getProduct.data.developments) || [],
+                                    developments: [],
                                 }}
                                 enableReinitialize={true}
                                 //validationSchema={SignupSchema}
@@ -163,7 +163,6 @@ function Prices({ query }) {
                                                 </div>
                                             </div>
                                             <div className="timlands-content-form ">
-                                                {getProduct && getProduct.data.developments.map(e => e.price)}
                                                 <div className="row">
                                                     <div className="col-md-6">
                                                         <div className="timlands-form">
@@ -224,7 +223,7 @@ function Prices({ query }) {
                                                                 render={arrayHelpers => (
                                                                     <div>
                                                                         {values.developments && values.developments.length > 0 ? (
-                                                                            values.developments.map((development, index) => (
+                                                                            values.developments && values.developments.map((development, index) => (
                                                                                 <motion.div initial={{ y: -7, opacity: 0 }} exit={{ y: -7, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="develop-price" key={index}>
                                                                                     <div className="row">
                                                                                         <div className="col-sm-12">

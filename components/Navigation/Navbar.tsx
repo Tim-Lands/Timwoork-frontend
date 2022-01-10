@@ -12,8 +12,9 @@ import { motion } from 'framer-motion'
 import API from '../../config'
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import Cookies from 'js-cookie'
+import router from "next/router";
 
 function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
@@ -44,7 +45,7 @@ function Navbar(props: any): ReactElement {
             })
             // Authentication was successful.
             if (res.status === 200) {
-                mutate('api/me')
+                router.reload()
                 setSarkLoading(false)
             }
         } catch (error: any) {

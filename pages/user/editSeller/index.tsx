@@ -32,20 +32,18 @@ const EditSeller = () => {
     return (
         <>
             {!userInfo && <Loading />}
-            {userInfo && userInfo.user_details.profile && <>
+            {userInfo && userInfo.user_details.profile && userInfo.user_details.profile.profile_seller !== null && <>
                 <div className="row justify-content-md-center">
                     <div className="col-lg-7">
                         <Formik
                             isInitialValid={true}
                             initialValues={{
-                                bio: (userInfo && userInfo.user_details.profile.profile_seller.bio) || '',
-                                portfolio: (userInfo && userInfo.user_details.profile.profile_seller.portfolio) || '',
+                                bio: userInfo && userInfo.user_details.profile.profile_seller.bio,
+                                portfolio: userInfo && userInfo.user_details.profile.profile_seller.portfolio,
                                 skills: (userInfo && userInfo.user_details.profile.profile_seller.skills) || [],
                             }}
                             validationSchema={SignupSchema}
-                            onSubmit={async values => {
-                                console.log(values);
-                                
+                            onSubmit={async values => {                                
                                 try {
                                     const res = await API.post("api/sellers/detailsStore", values, {
                                         headers: {

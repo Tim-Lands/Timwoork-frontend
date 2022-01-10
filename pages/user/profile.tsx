@@ -2,7 +2,7 @@ import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Statistic, Card, Result, message } from 'antd'
 import React, { ReactElement, useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpOutlined, ArrowDownOutlined, ShrinkOutlined } from '@ant-design/icons';
+import { FallOutlined, RiseOutlined, ShrinkOutlined } from '@ant-design/icons';
 import Image from 'next/image'
 import router from 'next/router'
 import API from '../../config'
@@ -91,27 +91,27 @@ function Profile() {
                                         <div className="statistic-item">
                                             <Statistic
                                                 title="الرصيد المعلق"
-                                                value={112893}
+                                                value={userInfo && userInfo.user_details.profile.pending_amount}
                                                 precision={2}
                                                 valueStyle={{ color: '#cf1322' }}
-                                                prefix={<ArrowDownOutlined />}
+                                                prefix={<FallOutlined />}
                                                 suffix="$"
                                             />
                                         </div>
                                         <div className="statistic-item">
                                             <Statistic
                                                 title="الرصيد القابل للسحب"
-                                                value={112893}
+                                                value={userInfo && userInfo.user_details.profile.withdrawable_amount}
                                                 precision={2}
                                                 valueStyle={{ color: '#3f8600' }}
-                                                prefix={<ArrowUpOutlined />}
+                                                prefix={<RiseOutlined />}
                                                 suffix="$"
                                             />
                                         </div>
                                         <div className="statistic-item">
                                             <Statistic
                                                 title="الرصيد الكلي"
-                                                value={112893}
+                                                value={userInfo && (Number(userInfo.user_details.profile.withdrawable_amount) + Number(userInfo.user_details.profile.pending_amount))}
                                                 precision={2}
                                                 valueStyle={{ color: '#222' }}
                                                 prefix={<ShrinkOutlined />}
