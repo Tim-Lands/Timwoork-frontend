@@ -76,7 +76,7 @@ function CartPost({ id, quantity, product_id, title, price, itemTotal, developme
                                 justifyContent: 'flex-end',
                             }}
                         >
-                            <li>
+                            <li>  
                                 <form
                                     onSubmit={() => updateItem(id, { id, product_id, quantity: Number(Math.abs(quan)) })}
                                 >

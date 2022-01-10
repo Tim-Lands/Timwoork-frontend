@@ -33,10 +33,8 @@ const Login = (props: any): ReactElement => {
             })
             // Authentication was successful.
             if (response.status === 200) {
-                console.log(response);
                 Cookies.set('token', response.data.data.token)
                 Cookies.set('username', res.profileObj.email);
-                console.log("response"+res.profileObj.email);
 
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {

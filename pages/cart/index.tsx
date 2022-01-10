@@ -13,7 +13,7 @@ import router from 'next/router';
 function index() {
     const token = Cookies.get('token')
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading]:any = useState(false)
     const { data: cartList, error }: any = useSWR('api/cart')
     //const { data: userInfo }: any = useSWR('api/me')
 

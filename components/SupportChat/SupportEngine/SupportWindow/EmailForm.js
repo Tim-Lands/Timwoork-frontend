@@ -25,7 +25,7 @@ const EmailForm = ({ setUser, setChat, visible }) => {
     function getOrCreateChat(callback) {
         axios.put(
             'https://api.chatengine.io/chats/',
-            { usernames: [email, 'Timwoork Support'], is_direct_chat: true },
+            { usernames: ['Timwoork Support',email], is_direct_chat: true },
             {
                 headers: {
                     "Project-ID": REACT_APP_CE_PROJECT_ID,

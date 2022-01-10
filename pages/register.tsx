@@ -30,8 +30,9 @@ const Register = (props: any): ReactElement => {
             })
             // Authentication was successful.
             if (response.status === 200) {
-                console.log(response);
+                Cookies.set('username', res.profileObj.email);
                 Cookies.set('token', response.data.data.token)
+                
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {
                     case 0:
