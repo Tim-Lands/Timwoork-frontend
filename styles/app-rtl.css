@@ -6134,4 +6134,11 @@ h3 {
   margin-top: 6px;
   font-weight: 200;
 }
+
+.load-more-div {
+  border-top: 2px dashed #ddd;
+  padding-top: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
 /*# sourceMappingURL=app-rtl.css.map */

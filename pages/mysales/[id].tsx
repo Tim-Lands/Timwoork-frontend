@@ -21,6 +21,7 @@ const User = ({ query }) => {
     const [acceptLoading, setacceptLoading] = useState(false)
     const [resourcesLoading, setresourcesLoading] = useState(false)
     const [rejectLoading, setrejectLoading] = useState(false)
+    const [rejectOrderLoading, setrejectOrderLoading] = useState(false)
 
     const requestRejectHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
@@ -74,6 +75,59 @@ const User = ({ query }) => {
             }
         })
     }
+    const rejectHandle = (id: any) => {
+        const MySwal = withReactContent(Swal)
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد إلغاء هذه الطلبية",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الإلغاء',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                setrejectOrderLoading(true)
+                try {
+                    const res = await API.post(`api/order/items/${id}/reject_item_seller`, {}, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    if (res.status === 200) {
+                        mutate('api/my_sales')
+                        setrejectOrderLoading(false)
+                    }
+                } catch (error) {
+                    setrejectOrderLoading(false)
+                }
+                swalWithBootstrapButtons.fire(
+                    'تم الإلغاء!',
+                    'لقد تم إلغاء هذه الطلبية بنجاح',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                setrejectLoading(false)
+                swalWithBootstrapButtons.fire(
+                    'ملغى',
+                    'تم الإلغاء',
+                    'error'
+                )
+            }
+        })
+    }
+
     const acceptHandle = async (id: any) => {
         setacceptLoading(true)
         try {
@@ -162,25 +216,28 @@ const User = ({ query }) => {
                         <div className="app-bill">
                             <div className="app-bill-header d-flex">
                                 <h3 className="title me-auto">تفاصيل الطلبية</h3>
-                                {ShowItem && ShowItem.data.status !== 0 && <>
+                                {ShowItem && ShowItem.data.status == 0 ? <>
                                     <button
                                         disabled={acceptLoading}
                                         onClick={() => acceptHandle(ShowItem.data.id)}
-                                        className="btn butt-sm butt-green"
-                                    >قبول الطلب</button>
-                                </>
-                                }
-                                {ShowItem && ShowItem.data.status == 1 && <>
+                                        className="btn butt-xs butt-green mx-1 flex-center"
+                                    ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
+                                    <button
+                                        disabled={rejectOrderLoading}
+                                        onClick={() => rejectHandle(ShowItem.data.id)}
+                                        className="btn butt-xs butt-red mx-1 flex-center"
+                                    ><span className="material-icons material-icons-outlined">done_all</span> رفض الطلب</button>
+                                </> : <>
                                     <button
                                         disabled={resourcesLoading}
                                         onClick={() => resourcesHandle(ShowItem.data.id)}
-                                        className="btn butt-sm butt-primary"
-                                    >تسليم المشروع</button>
+                                        className="btn butt-xs butt-primary mx-1 flex-center"
+                                    ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
                                     <button
                                         disabled={rejectLoading}
                                         onClick={() => requestRejectHandle(ShowItem.data.id)}
-                                        className="btn butt-sm butt-primary2"
-                                    >طلب الإلغاء</button>
+                                        className="btn butt-xs butt-primary2 mx-1 flex-center"
+                                    ><span className="material-icons material-icons-outlined">highlight_off</span> طلب الإلغاء</button>
                                 </>
                                 }
                             </div>
@@ -208,7 +265,7 @@ const User = ({ query }) => {
                                     <div className="order-user-info d-flex">
                                         <div className="order-user-avatar">
                                             <img
-                                                src={profily && profily.avatar}
+                                                src={ShowItem && ShowItem.avatar}
                                                 width={100}
                                                 height={100}
                                             />

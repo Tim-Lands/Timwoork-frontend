@@ -13,12 +13,13 @@ import { DeleteOutlined, PauseCircleOutlined, EditOutlined } from '@ant-design/i
 import Unauthorized from '@/components/Unauthorized';
 import router from 'next/router'
 import Loading from '@/components/Loading'
+import { Menu } from 'antd';
+import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 function index() {
     const token = Cookies.get('token')
-    const [isLoading, setIsLoading] = useState(false)
-    //const [isError, setIsError] = useState(false)
-    const [postsList, setPostsList]: any = useState([])
+    const [statusType, setStatusType] = useState('')
+    
     function statusProduct(status: any) {
         switch (status) {
             case null:
@@ -31,30 +32,14 @@ function index() {
                 return <span className="badge bg-info">في الإنتظار...</span>
         }
     }
-    const getProducts = async () => {
-        setIsLoading(true)
-        try {
-            const res: any = await API.get(`api/my_products`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                setIsLoading(false)
-                setPostsList(res.data.data)
-            }
-        } catch (error) {
-            setIsLoading(false)
-        }
-    }
     useEffect(() => {
         if (!token) {
             router.push('/login')
         }
-        getProducts()
     }, [])
 
     const { data: userInfo }: any = useSWR('api/me')
+    const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
 
     const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
@@ -129,8 +114,8 @@ function index() {
     return (
         <div className="py-3">
             {!token && <Unauthorized />}
-            {isLoading && <Loading />}
-            {!isLoading && userInfo && userInfo.user_details.profile &&
+            
+            {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
                         title={'خدماتي'}
@@ -187,10 +172,27 @@ function index() {
                                 <div className="page-header">
                                     <h3 className="title">خدماتي</h3>
                                 </div>
-                                <div className="">
-
-                                </div>
-                                {postsList && postsList.length == 0 ?
+                                <Menu mode="horizontal">
+                                    <Menu.Item key="all" onClick={() => setStatusType('')} icon={<MailOutlined />}>
+                                        الكل
+                                    </Menu.Item>
+                                    <Menu.Item key="mail" onClick={() => setStatusType('/published')} icon={<MailOutlined />}>
+                                        النشطة
+                                    </Menu.Item>
+                                    <Menu.Item key="app" onClick={() => setStatusType('/rejected')} icon={<AppstoreOutlined />}>
+                                        المرفوضة
+                                    </Menu.Item>
+                                    <Menu.Item key="waiting" onClick={() => setStatusType('/pending')} icon={<AppstoreOutlined />}>
+                                        قيد الإنتظار
+                                    </Menu.Item>
+                                    <Menu.Item key="drafts" onClick={() => setStatusType('/drafts')} icon={<AppstoreOutlined />}>
+                                        المسودات
+                                    </Menu.Item>
+                                    <Menu.Item key="alipay" onClick={() => setStatusType('/paused')}>
+                                        المعطلة
+                                    </Menu.Item>
+                                </Menu>
+                                {postsList && postsList.data.length == 0 ?
                                     <Result
                                         status="404"
                                         title="لا يوجد لديك خدمات"
@@ -211,7 +213,7 @@ function index() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {postsList && postsList.map((e: any) => (
+                                            {postsList && postsList.data.map((e: any) => (
                                                 <tr key={e.id}>
                                                     <td>{e.title}</td>
                                                     <td>{e.is_completed == 0 ?
@@ -228,7 +230,7 @@ function index() {
                                                             <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
                                                         </Tooltip>
                                                         <Tooltip title="تعطيل هذه الخدمة">
-                                                            <Button type="primary" color='orange' size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                            <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => deleteHandle(e.id)} />
                                                         </Tooltip>
                                                         <Tooltip title="تعديل الخدمة">
                                                             <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => deleteHandle(e.id)} />
@@ -238,6 +240,7 @@ function index() {
                                             ))}
                                         </tbody>
                                     </table>
+                                    {!postsList && <Loading />}
                                 </div>
                             </div>
                         </div>

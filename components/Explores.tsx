@@ -78,13 +78,13 @@ function Explores() {
                     {postsList &&
                         <div className="main-explores-container">
                             <div className="main-item-category-header">
-                                <h2 className="title"><span className="material-icons material-icons-outlined">{postsList.icon}</span>  التصنيفات الفرعية</h2>
+                                <h2 className="title"><span className="material-icons material-icons-outlined">{postsList.icon}</span>  {postsList.name_ar}</h2>
                             </div>
                             <div className="main-item-category-body">
                                 <div className="row">
-                                    {postsList && postsList.slice(0, 12).map((e: any) => (
+                                    {postsList && postsList.sub_categories && postsList.sub_categories.slice(0, 12).map((e: any) => (
                                         <div className="col-sm-6" key={e.id}>
-                                            <a href={"/category/" + e.slug} className="sub-cat-link">
+                                            <a href={"/category/" + e.id} className="sub-cat-link">
                                                 <p className="text">{e.name_ar}</p>
                                                 <p className="count">{e.products_count}</p>
                                             </a>

@@ -32,7 +32,7 @@ const Register = (props: any): ReactElement => {
             if (response.status === 200) {
                 Cookies.set('username', res.profileObj.email);
                 Cookies.set('token', response.data.data.token)
-                
+
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {
                     case 0:
@@ -66,6 +66,7 @@ const Register = (props: any): ReactElement => {
     const router = useRouter()
     const SignupSchema = Yup.object().shape({
         email: Yup.string().required('هذا الحقل إجباري'),
+        username: Yup.string().required('هذا الحقل إجباري'),
         password: Yup.string().required('هذا الحقل إجباري'),
         repassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'كلمتا المرور غير متطابقتين')
@@ -83,6 +84,7 @@ const Register = (props: any): ReactElement => {
                     email: '',
                     password: '',
                     repassword: '',
+                    username: '',
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={async values => {
@@ -117,61 +119,92 @@ const Register = (props: any): ReactElement => {
                                                 التسجيل
                                             </h1>
                                         </div>
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
-                                            <Field
-                                                id="email"
-                                                name="email"
-                                                placeholder="البريد الإلكتروني..."
-                                                className="timlands-inputs"
-                                                autoComplete="off"
-                                            />
-                                            {errors.email && touched.email ?
-                                                <div style={{ overflow: 'hidden' }}>
-                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.email}</p>
-                                                    </motion.div>
+                                        <div className="row">
+                                            <div className="col-lg-6">
+
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
+                                                    <Field
+                                                        id="email"
+                                                        name="email"
+                                                        placeholder="البريد الإلكتروني..."
+                                                        className="timlands-inputs"
+                                                        autoComplete="off"
+                                                    />
+                                                    {errors.email && touched.email ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.email}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
                                                 </div>
-                                                :
-                                                null}
-                                        </div>
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="password">كلمة المرور</label>
-                                            <Field
-                                                type="password"
-                                                id="password"
-                                                name="password"
-                                                placeholder="كلمة المرور..."
-                                                className="timlands-inputs"
-                                                autoComplete="off"
-                                            />
-                                            {errors.password && touched.password ?
-                                                <div style={{ overflow: 'hidden' }}>
-                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.password}</p>
-                                                    </motion.div>
+                                            </div>
+                                            <div className="col-lg-6">
+
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="username">اسم المستخدم</label>
+                                                    <Field
+                                                        id="username"
+                                                        name="username"
+                                                        placeholder=" اسم المستخدم..."
+                                                        className="timlands-inputs"
+                                                        autoComplete="off"
+                                                    />
+                                                    {errors.username && touched.username ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.username}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
                                                 </div>
-                                                :
-                                                null}
-                                        </div>
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="password">إعادة كلمة المرور</label>
-                                            <Field
-                                                type="password"
-                                                id="password"
-                                                name="repassword"
-                                                placeholder="إعادة كلمة المرور..."
-                                                className="timlands-inputs"
-                                                autoComplete="off"
-                                            />
-                                            {errors.repassword && touched.repassword ?
-                                                <div style={{ overflow: 'hidden' }}>
-                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.repassword}</p>
-                                                    </motion.div>
+                                            </div>
+                                            <div className="col-lg-6">
+
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="password">كلمة المرور</label>
+                                                    <Field
+                                                        type="password"
+                                                        id="password"
+                                                        name="password"
+                                                        placeholder="كلمة المرور..."
+                                                        className="timlands-inputs"
+                                                        autoComplete="off"
+                                                    />
+                                                    {errors.password && touched.password ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.password}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
                                                 </div>
-                                                :
-                                                null}
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="password">إعادة كلمة المرور</label>
+                                                    <Field
+                                                        type="password"
+                                                        id="password"
+                                                        name="repassword"
+                                                        placeholder="إعادة كلمة المرور..."
+                                                        className="timlands-inputs"
+                                                        autoComplete="off"
+                                                    />
+                                                    {errors.repassword && touched.repassword ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.repassword}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="timlands-form">
                                             <div style={{ overflow: 'hidden' }}>
@@ -203,7 +236,7 @@ const Register = (props: any): ReactElement => {
                                                     </button>
                                                 </li>
                                                 <li>
-                                                <GoogleLogin
+                                                    <GoogleLogin
                                                         clientId={clientId}
                                                         buttonText="غوغل"
                                                         onSuccess={onLoginSuccess}

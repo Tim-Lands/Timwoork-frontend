@@ -193,7 +193,7 @@ function index() {
                                         {buysList && buysList.data.data.map((e: any) => (
                                             <tr key={e.id}>
                                                 <td>
-                                                    <Link href={`/mypurchases/${e.id}`}>
+                                                    <Link href={`/mysales/${e.id}`}>
                                                         <a className='text-dark'>
                                                             {statusLabel(e.status)} {e.title}
                                                         </a>
@@ -213,7 +213,7 @@ function index() {
                                                     <LastSeen date={e.created_at} />
                                                 </td>
                                                 <td>
-                                                    {e.status == 0 &&
+                                                    {e.status == 0 ?
                                                         <>
                                                             <Tooltip title="رفض الطلبية">
                                                                 <Button
@@ -235,9 +235,9 @@ function index() {
                                                                     size="small"
                                                                 >قبول</Button>
                                                             </Tooltip>
-                                                        </>
+                                                        </> : null
                                                     }
-                                                    {e.status == 1 &&
+                                                    {e.status == 1 ?
                                                         <>
                                                             <Tooltip title="طلب إلغاء هذه الطلبية">
                                                                 <Button
@@ -249,7 +249,7 @@ function index() {
                                                                     size="small"
                                                                 >طلب إلغاء</Button>
                                                             </Tooltip>
-                                                        </>
+                                                        </> : null
                                                     }
                                                 </td>
                                             </tr>
@@ -263,20 +263,22 @@ function index() {
                                 />}
                                 {!buysList && <Loading />}
                                 {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
-                                <div className="p-2 d-flex">
-                                    <button
-                                        className='btn butt-sm butt-primary me-auto'
-                                        onClick={() => setPageIndex(pageIndex + 1)}
-                                    >
-                                        الصفحة التالية
-                                    </button>
-                                    <button
-                                        className='btn butt-sm butt-primary'
-                                        onClick={() => setPageIndex(pageIndex - 1)}
-                                    >
-                                        الصفحة السابقة
-                                    </button>
-                                </div>
+                                {!BuysError && buysList && buysList.data.data.length !== 0 && 
+                                    <div className="p-2 px-3 d-flex">
+                                        <button
+                                            className='btn butt-sm butt-primary me-auto'
+                                            onClick={() => setPageIndex(pageIndex + 1)}
+                                        >
+                                            الصفحة التالية
+                                        </button>
+                                        <button
+                                            className='btn butt-sm butt-primary'
+                                            onClick={() => setPageIndex(pageIndex - 1)}
+                                        >
+                                            الصفحة السابقة
+                                        </button>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

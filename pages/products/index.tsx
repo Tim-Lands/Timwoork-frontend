@@ -6,20 +6,20 @@ import useSWR from 'swr'
 import API from '../../config'
 import Loading from '@/components/Loading';
 import PropTypes from "prop-types";
-import Slider from '@mui/material/Slider';
+//import Slider from '@mui/material/Slider';
 function Category() {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [products, setProducts]: any = useState([])
 
-  const [category, setCategory]: String = useState(''); 
+  //const [category, setCategory]: String = useState('');
 
 
   /********************** Slider **********************/
-function valuetext(value: number) {
-  return `${value}$`;
-} 
-// Pricing range from 0 to 5000
+  function valuetext(value: number) {
+    return `${value}$`;
+  }
+  // Pricing range from 0 to 5000
   const [priceRange, setpriceRange] = React.useState<number[]>([5, 5000]);
   const minDistance = 50; // minimum distance between any two values of price
   const handleChangeSlider = (
@@ -37,11 +37,11 @@ function valuetext(value: number) {
       setpriceRange([priceRange[0], Math.max(newValue[1], priceRange[0] + minDistance)]);
     }
     filterPrice(priceRange);
-    
-  };     
 
-   //filter price 
-   async function filterPrice (priceRange){
+  };
+
+  //filter price 
+  async function filterPrice(priceRange) {
 
     setTimeout(() => {
       setIsLoading(false)
@@ -51,9 +51,9 @@ function valuetext(value: number) {
     console.log("  waiting")
     setIsLoading(true)
 
-    if( isError || isLoading ){
-       try {
-        const res: any = await API.get(`api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}`) 
+    if (isError || isLoading) {
+      try {
+        const res: any = await API.get(`api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}`)
         if (res.status === 200) {
           setIsLoading(false)
           setProducts(res.data.data.data)
@@ -61,14 +61,14 @@ function valuetext(value: number) {
           console.log(products.length)
           console.log(priceRange + "price range") // هذه مصفوفه تحتوي السعر الاقر والسعر الاعلى 
         }
-      } catch (error) { 
+      } catch (error) {
         setIsLoading(false)
         setIsError(true)
         console.log(priceRange + "price range") // هذه مصفوفه تحتوي السعر الاقر والسعر الاعلى 
 
       }
     }
-   }
+  }
 
   /**-------------------------------------**/
 
@@ -77,7 +77,7 @@ function valuetext(value: number) {
   //const { data: products, errorP }: any = useSWR(`api/filter?paginate=12&between=price,100,24`)
   const { data: getCategories, error }: any = useSWR('api/get_categories')
 
-  async function handleChangeCategory( categoryID) {
+  async function handleChangeCategory(categoryID) {
     setIsLoading(true)
     setIsError(false)
     try {
@@ -124,11 +124,11 @@ function valuetext(value: number) {
         }}
         onSubmit={async values => {
           //setFilterVals(`between=price,${values.price_min},${values.price_max}`)
-         /* getDataFilter(
-            values.emptyPrice == '1' ? '' : values.price_min,
-            values.emptyPrice == '1' ? '' : values.price_max,
-            values.categoryID
-          )*/
+          /* getDataFilter(
+             values.emptyPrice == '1' ? '' : values.price_min,
+             values.emptyPrice == '1' ? '' : values.price_max,
+             values.categoryID
+           )*/
         }}
       >
         {({ values }) => (
@@ -142,17 +142,17 @@ function valuetext(value: number) {
                   <div className="filter-sidebar-panel">
                     <h3 className="title">السعر</h3>
                     <div className="timlands-form">
-                      <Slider
+                      {/*<Slider
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={priceRange}
-                        valueLabelDisplay="auto"  
+                        valueLabelDisplay="auto"
                         onChange={handleChangeSlider}
-                         getAriaValueText={valuetext}  
-                         max={5000}
-                         min = {0}
-                         step={50}
+                        getAriaValueText={valuetext}
+                        max={5000}
+                        min={0}
+                        step={50}
                         disableSwap
-                      />
+                      />*/}
                     </div>
                   </div>
                   <div className="filter-sidebar-panel">
@@ -178,7 +178,7 @@ function valuetext(value: number) {
                             name='categoryID'
                             value={`${e.id}`}
                             id={"getCategories-" + e.id}
-                            onChange={() =>handleChangeCategory(e.id)}
+                            onChange={() => handleChangeCategory(e.id)}
                           />
                           <label className="form-check-label" htmlFor={"getCategories-" + e.id}>
                             {e.name_ar}
@@ -196,7 +196,7 @@ function valuetext(value: number) {
                 <div className="page-header">
                   <h5 className="title">جميع الخدمات</h5>
                 </div>
-                <FilterContent products={ products} isLoading={isLoading} isError={isError} />
+                <FilterContent products={products} isLoading={isLoading} isError={isError} />
               </div>
             </div>
           </Form>
