@@ -171,7 +171,7 @@ export const login = (username: string, password: string): any => {
  * @param {string} password
  *   The password of the user.
  */
-export const register = (email: string, password: string): any => {
+export const register = (email: string, password: string, username: string): any => {
     return async (dispatch: CallableFunction) => {
         try {
             // Start loading.
@@ -180,6 +180,7 @@ export const register = (email: string, password: string): any => {
             const res = await API.post("api/register", {
                 email,
                 password,
+                username,
             })
             // Authentication was successful.
             if (res.status === 200) {

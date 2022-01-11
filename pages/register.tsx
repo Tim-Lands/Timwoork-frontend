@@ -88,7 +88,7 @@ const Register = (props: any): ReactElement => {
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={async values => {
-                    props.register(values.email, values.password);
+                    props.register(values.email, values.password, values.username);
                 }}
             >
                 {({ errors, touched }) => (
