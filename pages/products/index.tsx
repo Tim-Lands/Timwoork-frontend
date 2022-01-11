@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import Layout from '@/components/Layout/HomeLayout'
 import FilterContent from '../../components/products'
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import useSWR from 'swr'
 import API from '../../config'
 import Loading from '@/components/Loading';
