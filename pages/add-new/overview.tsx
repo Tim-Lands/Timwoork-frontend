@@ -16,7 +16,7 @@ import Tags from '../../components/Tags'
 
 const SignupSchema = Yup.object().shape({
     title: Yup.string().required('هذا الحقل إجباري'),
-    //product_tag: Yup.array().required('هذا الحقل إجباري'),
+    tags: Yup.array().required('هذا الحقل إجباري'),
 });
 function Overview({ query }) {
     
@@ -28,6 +28,11 @@ function Overview({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
+    const { data: getTags } = useSWR('dashboard/tags');
+    const values = getTags && getTags.data.map((e) => (e.id));
+    const labels = getTags && getTags.data.map((e) => (e.name_ar));
+    
+    const [selectedTags,setSelectedTags] = useState([''])
 
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
@@ -44,6 +49,11 @@ function Overview({ query }) {
    /* const setTagsStateHandle = (e) => {
         setTagsState(e)
     }*/
+
+    function log(){
+        console.log("selectedTags")
+        console.log(selectedTags)
+    }
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
@@ -80,11 +90,13 @@ function Overview({ query }) {
                                     title: getProduct && getProduct.data.title,
                                     subcategory: getProduct && getProduct.data.subcategory && getProduct.data.subcategory.id,
                                     category: mainCat,
-                                    product_tag: [],
+                                    tags: selectedTags, // هذه array
                                 }}
                                 enableReinitialize={true}
                                 validationSchema={SignupSchema}
                                 onSubmit={async values => {
+                                    console.log(values)
+                                    
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {
@@ -245,16 +257,16 @@ function Overview({ query }) {
                                                                 </div>
                                                                 :
                                                                 null}
-                                                        </div>
+                                                        </div> 
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                           <Tags />
-                                                            {errors.product_tag && touched.product_tag ?
+                                                           <Tags values={values} labels={labels} placeholder="أدخل الوسوم..." selected={selectedTags =>setSelectedTags(selectedTags)}/>
+                                                            {errors.tags && touched.tags ?
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.product_tag}</p>
+                                                                        <p className="text">{errors.tags}</p>
                                                                     </motion.div>
                                                                 </div>
                                                                 :

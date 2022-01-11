@@ -237,7 +237,7 @@ const personalInformations = () => {
                                                 </div>
                                                 <div className="panel-modal-footer">
                                                     <div className="d-flex">
-                                                        <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث المعلومات</button>
+                                                        <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث المعلومات اﻷساسية</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -331,7 +331,7 @@ const personalInformations = () => {
                                                 </div>
                                                 <div className="panel-modal-footer">
                                                     <div className="d-flex">
-                                                        <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث المعلومات</button>
+                                                        <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث الصورة الشخصية</button>
                                                     </div>
                                                 </div>
                                             </div>

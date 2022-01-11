@@ -45,7 +45,7 @@ function index(props: any) {
                                 <div className="timlands-add-new-body">
                                     <h3 className="title">إضافة خدمة جديدة</h3>
                                     <p className="text">
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
+                                   رائع ! وصلت الى خطوتك الأخيرة لتنظم الى قافلة بائعو تيموورك  
                                     </p>
                                     {!userData && 
                                         <div className="add-butts">

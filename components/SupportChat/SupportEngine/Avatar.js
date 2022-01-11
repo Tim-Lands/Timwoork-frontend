@@ -14,7 +14,7 @@ const Avatar = ({ style, onClick }) => {
                     ...{ display: hovered ? 'block' :'none'}
                 }}
             >
-               🤙 ?Need help  
+             تحتاج الى مساعدة ? 🤙
             </div>
 
             <div 

@@ -95,7 +95,7 @@ const NumberPhone = (): ReactElement => {
                                     </div>
                                     <div className="panel-modal-footer">
                                         <div className="d-flex">
-                                            <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث المعلومات</button>
+                                            <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث رقم الهاتف</button>
                                         </div>
                                     </div>
                                 </div>

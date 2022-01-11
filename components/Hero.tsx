@@ -106,11 +106,9 @@ function Hero() {
                 </motion.div>
                 <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
-                        هذا النص هو مثال لنص
-                    </motion.h1>
+                    اشتري. دردش .بيع                    </motion.h1>
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
-                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                    </motion.h1>
+                    اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة                     </motion.h1>
                 </div>
                 <div className="timlands-hero-search">
                     <div className="rel-search">
