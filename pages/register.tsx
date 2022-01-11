@@ -121,28 +121,6 @@ const Register = (props: any): ReactElement => {
                                         </div>
                                         <div className="row">
                                             <div className="col-lg-6">
-
-                                                <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
-                                                    <Field
-                                                        id="email"
-                                                        name="email"
-                                                        placeholder="البريد الإلكتروني..."
-                                                        className="timlands-inputs"
-                                                        autoComplete="off"
-                                                    />
-                                                    {errors.email && touched.email ?
-                                                        <div style={{ overflow: 'hidden' }}>
-                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.email}</p>
-                                                            </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6">
-
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="username">اسم المستخدم</label>
                                                     <Field
@@ -163,7 +141,26 @@ const Register = (props: any): ReactElement => {
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
-
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="email">البريد الإلكتروني</label>
+                                                    <Field
+                                                        id="email"
+                                                        name="email"
+                                                        placeholder="البريد الإلكتروني..."
+                                                        className="timlands-inputs"
+                                                        autoComplete="off"
+                                                    />
+                                                    {errors.email && touched.email ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.email}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6">
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="password">كلمة المرور</label>
                                                     <Field

@@ -305,7 +305,7 @@ function Single({ query }) {
                         <Link href="/users/Single">
                           <a className="category-link">
                             <span className="material-icons material-icons-outlined">label</span>
-                            {ProductData.data.subcategory.category.name_ar}
+                            {ProductData && ProductData.data.subcategory.category.name_ar}
                           </a>
                         </Link>
                       </li>
@@ -324,7 +324,7 @@ function Single({ query }) {
                           المستوى:
                         </span>
                         <span className="value-level">
-                          {ProductData.data.profile_seller.level.name_ar}
+                          {ProductData && ProductData.data.profile_seller.level !== null && ProductData.data.profile_seller.level.name_ar}
                         </span>
                       </li>
                     </ul>
@@ -390,7 +390,7 @@ function Single({ query }) {
                               </h3>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData.data.profile_seller.badge.name_ar}
+                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.badge !== null && ProductData.data.profile_seller.badge.name_ar}
                                 </li>
                                 {ProductData.data.profile_seller.profile.country !== null &&
                                   <li>

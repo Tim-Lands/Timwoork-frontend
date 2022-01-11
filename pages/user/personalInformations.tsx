@@ -14,12 +14,7 @@ import router from "next/router";
 import NumberPhone from "./numberPhone";
 
 const personalInformations = () => {
-    // Update personal information at chat database
-    // const updateChatData = (first_name,last_name,username,avator) => {}
-    
-
     const token = Cookies.get('token')
-
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Countries }: any = useSWR('dashboard/countries')
 
@@ -32,7 +27,7 @@ const personalInformations = () => {
         first_name: Yup.string().required('هذا الحقل إجباري'),
         last_name: Yup.string().required('هذا الحقل إجباري'),
         date_of_birth: Yup.string().required('هذا الحقل إجباري'),
-        gender: Yup.number().required('هذا الحقل إجباري'),
+        //gender: Yup.number().required('هذا الحقل إجباري'),
         username: Yup.string().required('هذا الحقل إجباري'),
         country_id: Yup.number().required('هذا الحقل إجباري'),
     });
@@ -73,19 +68,25 @@ const personalInformations = () => {
                                             mutate('api/me')
                                         }
                                     } catch (error: any) {
-                                        if (error.response && error.response.status === 200) {
-                                            message.success('لقد تم التحديث بنجاح')
-                                        }
-                                        if (error.response && error.response.status === 422) {
-                                            message.error("يرجى تعبئة البيانات")
-                                        }
-                                        if (error.response && error.response.status === 419) {
-                                            message.error("العملية غير ناجحة")
-                                        }
-                                        if (error.response && error.response.status === 400) {
-                                            message.error("حدث خطأ.. يرجى التأكد من البيانات")
-                                        } else {
-                                            message.error("حدث خطأ غير متوقع")
+                                        if (error.response && error.response.data.errors) {
+                                            if (error.response.data.errors.first_name) {
+                                                message.error(error.response.data.errors.first_name.map((e: any) => e));
+                                            }
+                                            if (error.response.data.errors.last_name) {
+                                                message.error(error.response.data.errors.last_name.map((e: any) => e));
+                                            }
+                                            if (error.response.data.errors.username) {
+                                                message.error(error.response.data.errors.username.map((e: any) => e));
+                                            }
+                                            if (error.response.data.errors.gender) {
+                                                message.error(error.response.data.errors.gender.map((e: any) => e));
+                                            }
+                                            if (error.response.data.errors.country_id) {
+                                                message.error(error.response.data.errors.country_id.map((e: any) => e));
+                                            }
+                                            if (error.response.data.errors.date_of_birth) {
+                                                message.error(error.response.data.errors.date_of_birth.map((e: any) => e));
+                                            }
                                         }
                                     }
                                 }}

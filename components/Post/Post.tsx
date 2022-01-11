@@ -105,7 +105,7 @@ function Post({
             </div>
             <div className="post-item-footer">
                 <p className="post-meta-price">
-                    السعر من: {price}.00$
+                    السعر من: {price}$
                 </p>
                 <p className="post-meta-bayer">
                     {((buyers == 0) ? buyers : buyers + ' اشتروا هذا') || "اشتري الآن"}

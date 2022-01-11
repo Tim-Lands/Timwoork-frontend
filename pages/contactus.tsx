@@ -22,6 +22,7 @@ function Overview() {
                             title: '',
                             full_name: '',
                             msg_type: 0,
+                            email: '',
                             message: '',
                         }}
                         enableReinitialize={true}
@@ -65,11 +66,11 @@ function Overview() {
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-title">العنوان</label>
+                                                    <label className="label-block" htmlFor="input-title">عنوان الرسالة</label>
                                                     <Field
                                                         id="input-title"
                                                         name="title"
-                                                        placeholder="العنوان..."
+                                                        placeholder="عنوان الرسالة..."
                                                         className="timlands-inputs"
                                                         autoComplete="off"
                                                     />
@@ -77,6 +78,26 @@ function Overview() {
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                                 <p className="text">{errors.title}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
+                                                </div>
+                                            </div>
+                                            <div className="col-md-12">
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="input-email">البريد الإلكتروني</label>
+                                                    <Field
+                                                        id="input-email"
+                                                        name="email"
+                                                        placeholder="البريد الإلكتروني..."
+                                                        className="timlands-inputs"
+                                                        autoComplete="off"
+                                                    />
+                                                    {errors.email && touched.email ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.email}</p>
                                                             </motion.div>
                                                         </div>
                                                         :

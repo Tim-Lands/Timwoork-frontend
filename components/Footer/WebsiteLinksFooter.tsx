@@ -25,35 +25,30 @@ function WebsiteLinksFooter() {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/trust-company">
-                            <a>شروط الاستخدام</a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/trust-company">
-                            <a>سياسة الخصوصية</a>
+                        <Link href="/contactus">
+                            <a>اتصل بنا</a>
                         </Link>
                     </li>
                 </ul>
             </div>
             <ul className="nav social-icons">
                 <li>
-                    <a href="#" target="_blank" className="social-link">
+                    <a href="#" target="_blank" className="social-link bt-twitter">
                         <i className="fab fa-twitter"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" target="_blank" className="social-link">
+                    <a href="#" target="_blank" className="social-link bt-youtube">
                         <i className="fab fa-youtube"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" target="_blank" className="social-link">
+                    <a href="#" target="_blank" className="social-link bt-facebook">
                         <i className="fab fa-facebook"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" target="_blank" className="social-link">
+                    <a href="#" target="_blank" className="social-link bt-linkedin">
                         <i className="fab fa-linkedin"></i>
                     </a>
                 </li>

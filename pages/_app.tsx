@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     }, []);
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
-        <div className={'mt-2 pt-5' + (dataDark == 1 ? ' is-dark' : '')}>
+        <div className={'pt-5 ' + (dataDark == 1 ? ' is-dark' : '')}>
             <SWRConfig value={{
                 fetcher: async (url: string) => await API.get(url, {
                     headers: { Authorization: `Bearer ${token}` }

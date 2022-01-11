@@ -3505,7 +3505,12 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         }
     }
 }
-
+.load-more-div {
+    border-top: 2px dashed #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
 .StripeElement {
     margin: 9px 0;
     font-size: 14px;
@@ -3516,3 +3521,31 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 .ant-tooltip-inner {
     font-size: 13px;
 }
+
+.social-link {
+    &.bt-twitter {
+        &:hover {
+            color: #fff;
+            background-color: rgb(27, 142, 219);
+        }
+    }
+    &.bt-youtube {
+        &:hover {
+            color: #fff;
+            background-color: rgb(235, 20, 20);
+        }
+    }
+    &.bt-facebook {
+        &:hover {
+            color: #fff;
+            background-color: rgb(16, 76, 165);
+        }
+    }
+    &.bt-linkedin {
+        &:hover {
+            color: #fff;
+            background-color: rgb(43, 53, 87);
+        }
+    }
+}
+@import 'is-dark';

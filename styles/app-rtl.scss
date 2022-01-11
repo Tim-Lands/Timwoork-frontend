@@ -3562,3 +3562,30 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     margin-top: 20px;
     text-align: center;
 }
+.social-link {
+    &.bt-twitter {
+        &:hover {
+            color: #fff;
+            background-color: rgb(27, 142, 219) !important;
+        }
+    }
+    &.bt-youtube {
+        &:hover {
+            color: #fff;
+            background-color: rgb(235, 20, 20) !important;
+        }
+    }
+    &.bt-facebook {
+        &:hover {
+            color: #fff;
+            background-color: rgb(16, 76, 165) !important;
+        }
+    }
+    &.bt-linkedin {
+        &:hover {
+            color: #fff;
+            background-color: rgb(43, 53, 87) !important;
+        }
+    }
+}
+@import 'is-dark';
