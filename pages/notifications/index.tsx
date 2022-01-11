@@ -7,10 +7,11 @@ import Cookies from 'js-cookie'
 import router from 'next/router';
 
 import API from '../../config'
+import { Result } from 'antd';
 function index() {
     const token = Cookies.get('token')
 
-    const { data: userInfo }: any = useSWR(`api/notifications`)
+    const { data: notifications }: any = useSWR(`api/notifications`)
     //const notifications = userInfo && userInfo.user_details.unread_notifications
     async function markAllRead() {
         try {
@@ -30,9 +31,7 @@ function index() {
         }
         markAllRead()
     }, [])
-    return (
-        <div>ekhfgekfhegkhf</div>
-    )
+    
     return (
         <div className="my-2 py-4">
             <div className="row justify-content-center">
@@ -42,15 +41,20 @@ function index() {
                             <h3 className="title">الإشعارات</h3>
                         </div>
                         {!notifications && <Loading />}
+                        {notifications && notifications.data.data.length == 0 && <Result
+                            status="404"
+                            title="لا يوجد لديك اشعارات"
+                            subTitle="ليس لديك اشعارات لعرضها"
+                        />}
                         <div className="notifications-panel">
                             <div className="list-group">
-                                {notifications && notifications.map((e: any) => (
+                                {notifications && notifications.data.data.map((e: any) => (
                                     <Notification
                                         key={e.id}
                                         title={e.data.title}
-                                        avatar={e.data.user.profile.avatar}
+                                        avatar={e.data.user_sender.avatar}
                                         created_at={e.created_at}
-                                        product_title={e.data.item.title}
+                                        product_title={e.data.content.title}
                                     />
                                 ))}
                             </div>

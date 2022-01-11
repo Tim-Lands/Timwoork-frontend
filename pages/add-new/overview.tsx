@@ -13,9 +13,12 @@ import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Tags from '../../components/Tags'
 
-
 const SignupSchema = Yup.object().shape({
-    title: Yup.string().required('هذا الحقل إجباري'),
+    title: Yup.string().trim().max(55, (obj) => {
+        const valueLength = obj.value.length;
+        return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن لا يتجاوز العدد:  ${obj.max}`;
+    }),
+
     tags: Yup.array().required('هذا الحقل إجباري'),
 });
 function Overview({ query }) {
@@ -49,11 +52,6 @@ function Overview({ query }) {
    /* const setTagsStateHandle = (e) => {
         setTagsState(e)
     }*/
-
-    function log(){
-        console.log("selectedTags")
-        console.log(selectedTags)
-    }
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {

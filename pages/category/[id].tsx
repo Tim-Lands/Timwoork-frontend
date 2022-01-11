@@ -17,7 +17,7 @@ function index({ query }) {
                         <div className="app-bill-header">
                             <h3 className="title">
                                 <span className={"material-icons material-icons-outlined"}>{subCategories.data.icon}</span>
-                               <span style={{ fontWeight: 200 }}> عرض خدمات التصنيف</span> <strong>" {subCategories.data.name_ar} "</strong>
+                               <span style={{ fontWeight: 200 }}> عرض خدمات التصنيف</span> <strong> {subCategories.data.name_ar} </strong>
                             </h3>
                         </div>
                     }

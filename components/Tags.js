@@ -1,14 +1,11 @@
 import React from 'react';
 import Select from 'react-select';
-import useSWR from 'swr'
 import Loading from './Loading';
+import PropTypes from "prop-types";
 
-const Tags = (props) => {
-    
+const Tags = ({ placeholder, values, labels, selected }) => {
+
     let checked =[''];
-    const placeholder = props.placeholder;
-    const values = props.values;
-    const labels = props.labels;
 
     if (!values) return <Loading />
    
@@ -20,7 +17,7 @@ const Tags = (props) => {
        checked= Array.isArray(e)?e.map(x=>x.value):[]; //selected array of value
         console.log(values)
         console.log("newArrayofObjects")
-        props.selected(checked) 
+        selected(checked) 
     }
     return (
         <div>
@@ -42,3 +39,9 @@ const Tags = (props) => {
     );
 }
 export default Tags;
+Tags.propTypes = {
+    placeholder: PropTypes.any,
+    values: PropTypes.any,
+    labels: PropTypes.any,
+    selected: PropTypes.any,
+}
