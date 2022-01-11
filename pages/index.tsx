@@ -8,11 +8,17 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
 import SupportEngine from '@/components/SupportChat/SupportEngine';
+import Cookies from 'js-cookie'
 
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at&sort[1]=id,asc')
   const { data: products, error }: any = useSWR('api/filter?paginate=4&sort=count_buying')
+  //***set email in cookie ***/
+  const { data: userInfo }: any = useSWR('api/me')
+  const token = Cookies.get('token');
+    if (token) { Cookies.set('username', userInfo && userInfo.user_details.email)}
+    
   return (
     <>
       <MetaTags
@@ -28,16 +34,14 @@ function Home() {
           </div>
 
           <div className="nanny-home-content">
-            <p className="new-label">هذا النص هو مثال لنص</p>
+            <p className="new-label">ألهم الناس من حولك!</p>
             <h2 className="title">
-              هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-            </h2>
+            اعرض خدماتك واشتري أخرى, ماذا تنتظر !            </h2>
             <p className="text">
-              هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
-            </p>
+            من شرفة منزلك لا تحتاج الخروج من بيتك للعمل, في تيموورك العمل يأتي أليك            </p>
             <div className="py-3">
               <Link href="/add-new">
-                <a className="btn butt-green butt-md">أنشئي خدمتك الآن</a>
+                <a className="btn butt-green butt-md">أنشئ خدمتك الآن</a>
               </Link>
             </div>
           </div>

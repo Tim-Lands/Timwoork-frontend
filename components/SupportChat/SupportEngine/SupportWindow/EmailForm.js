@@ -4,13 +4,15 @@ import { styles } from "../styles"
 import axios from 'axios'
 import { LoadingOutlined } from '@ant-design/icons'
 import Avatar from '../Avatar'
-
+import Cookies from 'js-cookie';
+ 
 const REACT_APP_CE_PROJECT_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
 const REACT_APP_CE_PRIVATE_KEY = "2805db84-87b8-4fef-bb94-7e3c5fd22b37"
 
 const EmailForm = ({ setUser, setChat, visible }) => {
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
+
 
     function getOrCreateUser(callback) {
         axios.put(
@@ -29,8 +31,8 @@ const EmailForm = ({ setUser, setChat, visible }) => {
             {
                 headers: {
                     "Project-ID": REACT_APP_CE_PROJECT_ID,
-                    "User-Name": email,
-                    "User-Secret": email,
+                    "User-Name": 'Timwoork Support',
+                    "User-Secret": 'Timwoork Support',
                 }
             }
         )
@@ -101,7 +103,7 @@ const EmailForm = ({ setUser, setChat, visible }) => {
                 />
 
                 <div style={styles.topText}>
-                    Welcome to Timwoork <br /> support 👋
+                    مرحبا بك في تيموورك  <br /> لخدمة العملاء 👋
                 </div>
 
                 <form
@@ -109,7 +111,7 @@ const EmailForm = ({ setUser, setChat, visible }) => {
                     style={{ position: 'relative', width: '100%', top: '19.75%' }}
                 >
                     <input
-                        placeholder='Your Email'
+                        placeholder='...Email'
                         onChange={e => setEmail(e.target.value)}
                         style={styles.emailInput}
                     />
