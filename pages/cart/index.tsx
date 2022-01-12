@@ -13,8 +13,8 @@ import router from 'next/router';
 function index() {
     const token = Cookies.get('token')
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
-    const [isLoading, setIsLoading]:any = useState(false)
-    const { data: cartList, error }: any = useSWR('api/cart')
+    const [isLoading, setIsLoading]: any = useState(false)
+    const { data: cartList }: any = useSWR('api/cart')
     //const { data: userInfo }: any = useSWR('api/me')
 
     const deleteItem = async (id: any) => {
@@ -28,16 +28,16 @@ function index() {
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoading(false)
-              //  message.success('لقد تم التحديث بنجاح')
+                //  message.success('لقد تم التحديث بنجاح')
                 mutate('api/cart')
             }
         } catch (error: any) {
-            setIsLoading(false)
-            //message.error('حدث خطأ غير متوقع')
+            setIsLoading(false)    
+            console.log(error);
         }
     }
     const updateItem = async (e: any, values: any) => {
-       // e.preventDefault()
+        // e.preventDefault()
         setIsLoading(true)
         try {
             const res = await API.post(`api/cart/cartitem/update/${values.id}`, values, {
@@ -48,17 +48,17 @@ function index() {
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoading(false)
-              //  message.success('لقد تم التحديث بنجاح')
+                //  message.success('لقد تم التحديث بنجاح')
                 mutate('api/cart')
                 mutate('api/me')
             }
         } catch (error: any) {
             setIsLoading(false)
-        //    message.error('حدث خطأ غير متوقع')
+            //    message.error('حدث خطأ غير متوقع')
         }
     }
     const buyNowBtn = () => {
-        if ((cartList && cartList.data.cart_items_count == 0) || (cartList && cartList.data.price_with_tax == 0)) {
+        if ((cartList && cartList.data == null) || (cartList && cartList.data.price_with_tax == 0)) {
             message.error('لا يمكنك الشراء الآن لأن السلة فارغة')
         } else {
             router.push('/purchase')
@@ -80,7 +80,7 @@ function index() {
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
-                        {error && cartList && cartList.data == null ?
+                        {cartList && cartList.data == null &&
                             <div className="cart-nothing">
                                 <div className="cart-nothing-inner">
                                     <div className="cart-nothing-img">
@@ -91,7 +91,8 @@ function index() {
                                         <p className="text">لاتوجد خدمات في سلة المشتريات يمكنك الذهاب إلى تصفح الخدمات</p>
                                     </div>
                                 </div>
-                            </div> :
+                            </div>}
+                        {cartList && cartList.data !== null &&
                             <Spin spinning={isLoading}>
                                 <div className="timwoork-single-post bg-white mt-4">
                                     <div className="timwoork-single-header">
@@ -101,7 +102,7 @@ function index() {
                                     </div>
                                     <div className="cart-list">
                                         <ul className="cart-list-item" style={{ listStyle: 'none', margin: 0, padding: 0, }}>
-                                            {cartList && cartList.data !== null && cartList.data.cart_items.map((e: any) => (
+                                            {cartList.data.cart_items.map((e: any) => (
                                                 <CartPost
                                                     key={e.id}
                                                     id={e.id}
@@ -112,7 +113,7 @@ function index() {
                                                     deleteItem={deleteItem}
                                                     updateItem={updateItem}
                                                     developments={e.cart_item_developments}
-                                                    />
+                                                />
                                             ))}
                                             <li className="cart-item">
                                                 <div className="d-flex">
@@ -149,6 +150,7 @@ function index() {
                                 </div>
                             </Spin>
                         }
+
                     </div>
                 </div>
             </div>

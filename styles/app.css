@@ -6132,6 +6132,10 @@ h3 {
   border-left: 0;
 }
 
+.is-dark .timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.rate-stars {
+  color: #fff;
+}
+
 .is-dark .timwoork-single .timwoork-single-post .timwoork-single-header .single-header-meta li.rate-stars .stars-icons .material-icons-outlined {
   color: #e9da08;
 }
@@ -6773,6 +6777,10 @@ h3 {
   border-left: 0;
 }
 
+.is-dark .timwoork-single-header .single-header-meta li.rate-stars {
+  color: #fff;
+}
+
 .is-dark .timwoork-single-header .single-header-meta li.rate-stars .stars-icons .material-icons-outlined {
   color: #e9c008;
 }
@@ -7190,5 +7198,138 @@ h3 {
 
 .is-dark .bottom-footer .copy-text a:hover {
   color: #ffd000;
+}
+
+.is-dark .timlands-inputs {
+  border: 1px solid #111;
+  background-color: #222;
+  color: #fff;
+}
+
+.is-dark .timlands-inputs:hover {
+  border: 1px solid #323233;
+}
+
+.is-dark .timlands-inputs:focus {
+  border: 1px solid #ffd000;
+}
+
+.is-dark .timlands-inputs.code {
+  border: 2px solid #111;
+}
+
+.is-dark .timlands-inputs.code:hover {
+  border: 2px solid #323232;
+}
+
+.is-dark .timlands-inputs.code:focus {
+  border: 2px solid #ffd000;
+}
+
+.is-dark .label-block {
+  color: #fff;
+}
+
+.is-dark .timlands-form .timlands-input {
+  background-color: #232323;
+  border: 1px solid #111;
+  color: #fff;
+}
+
+.is-dark .timlands-form .timlands-input::-webkit-input-placeholder {
+  color: #666;
+}
+
+.is-dark .timlands-form .timlands-input:-ms-input-placeholder {
+  color: #666;
+}
+
+.is-dark .timlands-form .timlands-input::-ms-input-placeholder {
+  color: #666;
+}
+
+.is-dark .timlands-form .timlands-input::placeholder {
+  color: #666;
+}
+
+.is-dark .timlands-form .timlands-input:hover {
+  border: 1px solid #323232;
+}
+
+.is-dark .timlands-form .timlands-input:focus {
+  border: 1px solid #ffd000;
+}
+
+.is-dark .timlands-form .timlands-input:focus::-webkit-input-placeholder {
+  color: #393939;
+}
+
+.is-dark .timlands-form .timlands-input:focus:-ms-input-placeholder {
+  color: #393939;
+}
+
+.is-dark .timlands-form .timlands-input:focus::-ms-input-placeholder {
+  color: #393939;
+}
+
+.is-dark .timlands-form .timlands-input:focus::placeholder {
+  color: #393939;
+}
+
+.is-dark .timlands-form .timlands-input.has-error {
+  border: 1px solid #fd8a8a;
+}
+
+.is-dark .timlands-form .timlands-form-note .text {
+  color: #ddd;
+}
+
+.is-dark .timlands-form .timlands-form-note.form-note-error .text {
+  color: #f77a7a;
+}
+
+.is-dark .timlands-form .icon-preview {
+  color: #555;
+}
+
+.is-dark .forms-methods .forms-methods-header {
+  border-bottom: 1px solid #222;
+}
+
+.is-dark .forms-methods .forms-methods-header .title {
+  color: #fff;
+}
+
+.is-dark .forms-methods .checked-items-list {
+  background-color: #111;
+  border: 1px solid #232323;
+}
+
+.is-dark .forms-methods .checked-items-list .checked-item {
+  border-bottom: 1px solid #323232;
+}
+
+.is-dark .forms-methods .checked-items-list .checked-item label {
+  color: #ddd;
+}
+
+.is-dark .forms-methods .checked-items-list .checked-item:hover {
+  background-color: #f2f2f2;
+}
+
+.is-dark .forms-methods .checked-items-list .checked-item.checked {
+  background-color: #121212;
+}
+
+.is-dark .forms-methods .checked-items-list .checked-item.checked .payment-method-icon {
+  opacity: 1;
+}
+
+.is-dark .forms-methods .checked-items-list .checked-item.checked label {
+  color: #fff;
+}
+
+.is-dark .forms-methods .checked-items-list input:checked ~ label {
+  color: #ff8f8f;
 }
 /*# sourceMappingURL=app.css.map */

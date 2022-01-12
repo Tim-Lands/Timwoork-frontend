@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -16,9 +16,10 @@ import { message } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (props: any): ReactElement => {
+    const [passVisibled, setPassVisibled] = useState(false)
+
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
-
         try {
             const response = await API.post("api/login/google", {
                 email: res.profileObj.email,
@@ -164,13 +165,19 @@ const Register = (props: any): ReactElement => {
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="password">كلمة المرور</label>
                                                     <Field
-                                                        type="password"
+                                                        type={passVisibled ? "text" : 'password'}
                                                         id="password"
                                                         name="password"
                                                         placeholder="كلمة المرور..."
                                                         className="timlands-inputs"
                                                         autoComplete="off"
                                                     />
+                                                    <button className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
+                                                        {
+                                                            passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
+                                                        }
+                                                        
+                                                    </button>
                                                     {errors.password && touched.password ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
@@ -185,13 +192,19 @@ const Register = (props: any): ReactElement => {
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="password">إعادة كلمة المرور</label>
                                                     <Field
-                                                        type="password"
+                                                        type={passVisibled ? "text" : 'password'}
                                                         id="password"
                                                         name="repassword"
                                                         placeholder="إعادة كلمة المرور..."
                                                         className="timlands-inputs"
                                                         autoComplete="off"
                                                     />
+                                                    <button className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
+                                                        {
+                                                            passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
+                                                        }
+                                                        
+                                                    </button>
                                                     {errors.repassword && touched.repassword ?
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">

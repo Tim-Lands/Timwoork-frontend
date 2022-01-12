@@ -498,6 +498,18 @@ function Single({ query }) {
                         </>}
                       </div>
                     </div>
+                    <div className="timwoork-single-comments">
+                      <div className="timwoork-single-comments-inner">
+                        <div className="single-comments-header">
+                          <div className="flex-center">
+                            <h1 className="title">
+                              <span className="material-icons material-icons-outlined">question_answer</span>
+                              خدمات لنفس البائع
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

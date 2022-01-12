@@ -11,18 +11,14 @@ import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
-import Tags from '../../components/Tags'
+//import Tags from '../../components/Tags'
 
 const SignupSchema = Yup.object().shape({
-    title: Yup.string().trim().max(55, (obj) => {
-        const valueLength = obj.value.length;
-        return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن لا يتجاوز العدد:  ${obj.max}`;
-    }),
-
-    tags: Yup.array().required('هذا الحقل إجباري'),
+    //title: Yup.string().max(55).nullable(),
+    tags: Yup.array(),
 });
 function Overview({ query }) {
-    
+
     //const [productTags, setProductTags] = useState([])
     const id = query.id
     const token = Cookies.get('token')
@@ -31,11 +27,11 @@ function Overview({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
-    const { data: getTags } = useSWR('dashboard/tags');
-    const values = getTags && getTags.data.map((e) => (e.id));
-    const labels = getTags && getTags.data.map((e) => (e.name_ar));
-    
-    const [selectedTags,setSelectedTags] = useState([''])
+    //const { data: getTags } = useSWR('dashboard/tags');
+    //const values = getTags && getTags.data.map((e) => (e.id));
+    //const labels = getTags && getTags.data.map((e) => (e.name_ar));
+
+    //const [selectedTags, setSelectedTags] = useState([''])
 
     if (!query) return message.error('حدث خطأ')
     useEffect(() => {
@@ -49,9 +45,9 @@ function Overview({ query }) {
             }
         }
     }, [])
-   /* const setTagsStateHandle = (e) => {
-        setTagsState(e)
-    }*/
+    /* const setTagsStateHandle = (e) => {
+         setTagsState(e)
+     }*/
     const deleteProduct = async () => {
         try {
             const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
@@ -88,13 +84,11 @@ function Overview({ query }) {
                                     title: getProduct && getProduct.data.title,
                                     subcategory: getProduct && getProduct.data.subcategory && getProduct.data.subcategory.id,
                                     category: mainCat,
-                                    tags: selectedTags, // هذه array
+                                    //tags: selectedTags, // هذه array
                                 }}
                                 enableReinitialize={true}
                                 validationSchema={SignupSchema}
                                 onSubmit={async values => {
-                                    console.log(values)
-                                    
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {
@@ -115,9 +109,9 @@ function Overview({ query }) {
                                         if (error.response && error.response.data && error.response.data.errors.title) {
                                             message.error(error.response.data.errors.title[0]);
                                         }
-                                         if (error.response && error.response.data && error.response.data.errors.subcategory) {
+                                        if (error.response && error.response.data && error.response.data.errors.subcategory) {
                                             message.error(error.response.data.errors.subcategory[0]);
-                                        }   
+                                        }
                                     }
 
                                 }}
@@ -178,7 +172,7 @@ function Overview({ query }) {
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
 
                                             <div className="timlands-content-form">
                                                 <div className="row">
@@ -255,12 +249,12 @@ function Overview({ query }) {
                                                                 </div>
                                                                 :
                                                                 null}
-                                                        </div> 
+                                                        </div>
                                                     </div>
-                                                    <div className="col-md-12">
+                                                    {/*<div className="col-md-12">
                                                         <div className="timlands-form">
                                                             <label className="label-block" htmlFor="input-tags">الوسوم</label>
-                                                           <Tags values={values} labels={labels} placeholder="أدخل الوسوم..." selected={selectedTags =>setSelectedTags(selectedTags)}/>
+                                                           <Tags values={values} labels={labels} placeholder="أدخل الوسوم..." selected={selectedTags => setSelectedTags(selectedTags)}/>
                                                             {errors.tags && touched.tags ?
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
@@ -270,7 +264,7 @@ function Overview({ query }) {
                                                                 :
                                                                 null}
                                                         </div>
-                                                    </div>
+                                                            </div>*/}
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
                                                             <Popconfirm

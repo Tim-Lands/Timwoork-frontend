@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from 'next/link'
@@ -17,11 +17,11 @@ import { message } from "antd";
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 const Login = (props: any): ReactElement => {
+    const [passVisibled, setPassVisibled] = useState(false)
 
     // Login with Google
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
-
         try {
             const response = await API.post("api/login/google", {
                 email: res.profileObj.email,
@@ -59,7 +59,7 @@ const Login = (props: any): ReactElement => {
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };
-     
+
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.
@@ -142,13 +142,19 @@ const Login = (props: any): ReactElement => {
                                         <div className="timlands-form">
                                             <label className="label-block" htmlFor="password">كلمة المرور</label>
                                             <Field
-                                                type="password"
+                                                type={passVisibled ? "text" : 'password'}
                                                 id="password"
                                                 name="password"
                                                 placeholder="كلمة المرور..."
                                                 className="timlands-inputs"
                                                 autoComplete="off"
                                             />
+                                            <button className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
+                                                {
+                                                    passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
+                                                }
+
+                                            </button>
                                             {errors.password && touched.password ?
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">

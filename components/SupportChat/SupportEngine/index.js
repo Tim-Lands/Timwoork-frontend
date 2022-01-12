@@ -25,15 +25,13 @@ const SupportEngine = () => {
 
     return (
         <div ref={wrapperRef}>
-            <SupportWindow visible={visible} />
-            {console.log("visible"+visible)}
-
+            <SupportWindow visible={visible} style={{ bottom: 0 }} />
             <Avatar 
                 onClick={() => setVisible(true)}
                 style={{
                     position: 'fixed',
-                    bottom: '24px',
-                    right: '24px',
+                    right: 24,
+                    bottom: 50
                 }}
             />
         </div>
