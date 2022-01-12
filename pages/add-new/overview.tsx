@@ -23,7 +23,7 @@ function Overview({ query }) {
     const id = query.id
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-    const [mainCat, setmainCat] = useState(getProduct && getProduct.data.subcategory && getProduct.data.subcategory.category.id || 1)
+    const [mainCat, setmainCat] = useState(getProduct && getProduct.data.subcategory && Number(getProduct.data.subcategory.category.id))
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
@@ -89,6 +89,7 @@ function Overview({ query }) {
                                 enableReinitialize={true}
                                 validationSchema={SignupSchema}
                                 onSubmit={async values => {
+
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {
@@ -173,7 +174,6 @@ function Overview({ query }) {
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div className="timlands-content-form">
                                                 <div className="row">
                                                     <div className="col-md-12">
@@ -207,7 +207,7 @@ function Overview({ query }) {
                                                                 autoComplete="off"
                                                                 onChange={(e: any) => setmainCat(e.target.value)}
                                                             >
-                                                                <option value={0}>اختر التصنيف الرئيسي</option>
+                                                                <option value="">اختر التصنيف الرئيسي</option>
                                                                 {!categories && <option value="">يرجى الانتظار...</option>}
                                                                 {categories && categories.data.map((e: any) => (
                                                                     <option value={e.id} key={e.id}>{e.name_ar}</option>
