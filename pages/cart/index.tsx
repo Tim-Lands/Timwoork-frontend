@@ -107,7 +107,7 @@ function index() {
                                                     key={e.id}
                                                     id={e.id}
                                                     quantity={e.quantity}
-                                                    title={e.title_product}
+                                                    title={e.product_title}
                                                     price={e.price_product_spicify}
                                                     itemTotal={e.price_product}
                                                     deleteItem={deleteItem}

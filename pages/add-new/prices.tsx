@@ -52,7 +52,6 @@ function Prices({ query }) {
             />
             {token &&
                 <div className="container-fluid">
-                    <h1>{getProduct && getProduct.data.price}</h1>
                     <div className="row">
                         <div className="col-md-4">
                             <SidebarAdvices />
@@ -63,10 +62,9 @@ function Prices({ query }) {
                                 initialValues={{
                                     price: (getProduct && getProduct.data.price),
                                     duration: (getProduct && getProduct.data.duration),
-                                    developments: [],
+                                    developments: (getProduct && getProduct.data.developments),
                                 }}
                                 enableReinitialize={true}
-                                //validationSchema={SignupSchema}
                                 onSubmit={async values => {
 
                                     try {
@@ -91,14 +89,9 @@ function Prices({ query }) {
                                         }
                                         if (error.response && error.response.data && error.response.data.errors.duration) {
                                             message.error(error.response.data.errors.duration[0]);
-                                        }
-                                        if (error.response && error.response.data && error.response.data.errors.developments) {
-                                            message.error(error.response.data.errors.developments[0]);
-                                        } else if (error.response) {
-                                            message.error(error.response);
-                                        }
+                                        } 
+                                        message.error('sjfgsdjfg');
                                     }
-                                    //router.push('/add-new/description')
                                 }}
                             >
                                 {({ errors, touched, isSubmitting, values, handleChange }) => (

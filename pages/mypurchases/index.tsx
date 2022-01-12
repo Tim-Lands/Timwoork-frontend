@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout/HomeLayout'
 import React, { ReactElement, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Button, Result, Tooltip } from 'antd';
+import { Button, Modal, Result, Tooltip } from 'antd';
 import Link from 'next/link'
 import useSWR, { mutate } from 'swr'
 import Loading from '@/components/Loading';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import API from '../../config'
 import Cookies from 'js-cookie'
+import router from 'next/router';
 
 function index() {
     const token = Cookies.get('token')
@@ -40,7 +41,7 @@ function index() {
             if (result.isConfirmed) {
                 setrejectLoading(true)
                 try {
-                    const res = await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`, {}, {
+                    const res = await API.post(`api/order/items/${id}/reject_item_buyer`, {}, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
@@ -71,6 +72,39 @@ function index() {
             }
         })
     }
+
+    async function cancelRequest(id: any) {
+        setrejectLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                Modal.info({
+                    title: 'تم بنجاح',
+                    content: (
+                        <p>لقد تم طلب الإلغاء . سيتم ارسال اشعار في حالة قبول الطلب</p>
+                    ),
+                    onOk() { },
+                });
+                mutate('api/my_sales')
+                setrejectLoading(false)
+                router.reload()
+
+            }
+        } catch (error) {
+            setrejectLoading(false)
+            Modal.error({
+                title: 'حدث خطأ',
+                content: (
+                    <p>تعذر طلب الإلغاء يرجى المحاولة مرة أخرى</p>
+                ),
+                onOk() { },
+            });
+        }
+    }
     const statusLabel = (status: any) => {
         switch (status) {
             case 0:
@@ -95,6 +129,7 @@ function index() {
                 return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
         }
     }
+
     return (
         <>
             <MetaTags
@@ -150,6 +185,20 @@ function index() {
                                                             <Button disabled={rejectLoading} onClick={() => rejectHandle(e.id)} danger type="primary" color='red' size="small" >إلغاء الشراء</Button>
                                                         </Tooltip>
                                                     }
+                                                    {e.status == 1 ?
+                                                        <>
+                                                            <Tooltip title="طلب إلغاء هذه الطلبية">
+                                                                <Button
+                                                                    disabled={rejectLoading}
+                                                                    onClick={() => cancelRequest(e.id)}
+                                                                    danger
+                                                                    type="primary"
+                                                                    color='red'
+                                                                    size="small"
+                                                                >طلب إلغاء</Button>
+                                                            </Tooltip>
+                                                        </> : null
+                                                    }
                                                 </td>
                                             </tr>
                                         ))}
@@ -162,10 +211,10 @@ function index() {
                                 />}
                                 {!buysList && <Loading />}
                                 {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
-                                <div className="p-2 d-flex">
+                                {buysList && buysList.data.data.length !== 0 && buysList.data.total > buysList.data.per_page && <div className="p-2 d-flex">
                                     <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
                                     <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>

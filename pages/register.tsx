@@ -16,7 +16,7 @@ import { message } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (props: any): ReactElement => {
-    const [passVisibled, setPassVisibled] = useState(false)
+        const [passVisibled, setPassVisibled] = useState(false)
 
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند

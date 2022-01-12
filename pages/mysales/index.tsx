@@ -12,9 +12,6 @@ import withReactContent from 'sweetalert2-react-content'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import router from 'next/router';
-import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
-
 function index() {
     const token = Cookies.get('token')
     const [pageIndex, setPageIndex] = useState(1);
@@ -164,20 +161,6 @@ function index() {
                             <div className="app-bill-header">
                                 <h3 className="title">مبيعاتي</h3>
                             </div>
-                            <Menu mode="horizontal">
-                                <Menu.Item key="all" icon={<MailOutlined />}>
-                                    الكل
-                                </Menu.Item>
-                                <Menu.Item key="mail" icon={<MailOutlined />}>
-                                    قيد التنفيذ
-                                </Menu.Item>
-                                <Menu.Item key="app" icon={<AppstoreOutlined />}>
-                                    المروضة
-                                </Menu.Item>
-                                <Menu.Item key="alipay">
-                                    المكتملة
-                                </Menu.Item>
-                            </Menu>
                             <div className="timlands-table">
                                 <table className="table">
                                     <thead>
@@ -263,22 +246,10 @@ function index() {
                                 />}
                                 {!buysList && <Loading />}
                                 {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
-                                {!BuysError && buysList && buysList.data.data.length !== 0 && 
-                                    <div className="p-2 px-3 d-flex">
-                                        <button
-                                            className='btn butt-sm butt-primary me-auto'
-                                            onClick={() => setPageIndex(pageIndex + 1)}
-                                        >
-                                            الصفحة التالية
-                                        </button>
-                                        <button
-                                            className='btn butt-sm butt-primary'
-                                            onClick={() => setPageIndex(pageIndex - 1)}
-                                        >
-                                            الصفحة السابقة
-                                        </button>
-                                    </div>
-                                }
+                                {buysList && buysList.data.data.length !== 0 && buysList.data.total > buysList.data.per_page && <div className="p-2 d-flex">
+                                    <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
+                                    <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
+                                </div>}
                             </div>
                         </div>
                     </div>
