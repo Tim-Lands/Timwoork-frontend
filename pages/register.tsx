@@ -172,7 +172,7 @@ const Register = (props: any): ReactElement => {
                                                         className="timlands-inputs"
                                                         autoComplete="off"
                                                     />
-                                                    <button className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
+                                                    <button type="button" className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
                                                         {
                                                             passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
                                                         }
@@ -199,7 +199,7 @@ const Register = (props: any): ReactElement => {
                                                         className="timlands-inputs"
                                                         autoComplete="off"
                                                     />
-                                                    <button className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
+                                                    <button type="button" className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
                                                         {
                                                             passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
                                                         }

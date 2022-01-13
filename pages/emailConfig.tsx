@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import router from 'next/router';
 import API from '../config'
@@ -16,10 +15,9 @@ function EmailConfig(props: any) {
     const { data: userInfo }: any = useSWR('api/me')
     //if (!userInfo) return console.log(userInfo)
     const email_verified = userInfo && userInfo.user_details.email_verified_at
-    
+
     useEffect(() => {
         if (email_verified) {
-            
             router.push('/')
         }
     }, [email_verified])
@@ -106,9 +104,24 @@ function EmailConfig(props: any) {
                                                 :
                                                 null}
                                         </div>
-                                        <div className="timlands-form">
-                                            <button type="button" className="btn butt-md butt-black">إعادة إرسال كود التفعيل</button>
-                                            <button type="submit" disabled={isSubmitting} className="btn butt-md butt-primary">إكمال عملية التسجيل</button>
+                                        <div className="timlands-form d-flex">
+                                            <button
+                                                type="button"
+                                                className="btn butt-md butt-black me-auto"
+                                            >إعادة إرسال كود التفعيل
+                                            </button>
+                                            <button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="btn butt-md butt-primary me-auto"
+                                            >إكمال عملية التسجيل
+                                            </button>
+                                            <Link href="/">
+                                                <a
+                                                    className="btn butt-md ml-auto"
+                                                >الرجوع للرئيسية
+                                                </a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -120,14 +133,9 @@ function EmailConfig(props: any) {
         </div>
     )
 }
-// Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-});
-
 // Define PropTypes.
-EmailConfig.propTypes = {   
+EmailConfig.propTypes = {
     verifyCode: PropTypes.func,
 };
 
-export default connect(mapStateToProps)(withAuth(EmailConfig));
+export default withAuth(EmailConfig);

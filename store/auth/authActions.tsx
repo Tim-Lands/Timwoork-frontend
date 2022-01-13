@@ -15,6 +15,7 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 import useSWR from 'swr'
 import { userInfo } from "os";
+import { message } from "antd";
 
 export const addNewProduct = () => {
     return async (dispatch: CallableFunction) => {
@@ -188,6 +189,7 @@ export const register = (email: string, password: string, username: string): any
                     type: types.REGISTER_SUCCESS,
                 });
                 Cookies.set('token', res.data.data.token)
+                return 
                 if (res.data.data.is_verified) {
                     switch (res.data.data.step) {
                         case 0:
@@ -207,29 +209,20 @@ export const register = (email: string, password: string, username: string): any
                 }
             }
         } catch (error: any) {
-            if (error.response && error.response.status === 422) {
-                return dispatch({
-                    type: types.REGISTER_ERROR,
-                    payload: "يرجى تعبئة البيانات",
-                });
+
+            if (error.response && error.response.data && error.response.data.errors.email) {
+                message.error(error.response.data.errors.email[0]);
             }
-            if (error.response && error.response.status === 419) {
-                return dispatch({
-                    type: types.REGISTER_ERROR,
-                    payload: "العملية غير ناجحة",
-                });
+            if (error.response && error.response.data && error.response.data.errors.password) {
+                message.error(error.response.data.errors.password[0]);
             }
-            if (error.response && error.response.status === 400) {
-                return dispatch({
-                    type: types.REGISTER_ERROR,
-                    payload: "حدث خطأ ما لم يتم العثور على رمز التفعيل الخاص بك",
-                });
-            } else {
-                return dispatch({
-                    type: types.LOGIN_ERROR,
-                    payload: "حدث خطأ غير متوقع",
-                });
+            if (error.response && error.response.data && error.response.data.errors.username) {
+                message.error(error.response.data.errors.username[0]);
             }
+            return dispatch({
+                type: types.REGISTER_ERROR,
+                payload: "",
+            });
         }
     };
 }
