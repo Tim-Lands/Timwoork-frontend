@@ -20,7 +20,7 @@ function Profile() {
             <div className="col-md-5">
                 <Result
                     status="warning"
-                    title="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
+                    title="حسابك غير كامل"
                     subTitle="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
                     extra={
                         <Link href="/user/personalInformations">

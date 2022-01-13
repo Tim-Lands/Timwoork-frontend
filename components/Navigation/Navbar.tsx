@@ -100,17 +100,42 @@ function Navbar(props: any): ReactElement {
         return `${userData.user_details.profile.avatar}`;
     }
     return (
-        <div className={"timlands-navbar-container"}>
-            <nav className="timlands-navbar">
+        <div className={"timlands-navbar-container"} style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 999,
+        }}>
+            <nav className="timlands-navbar" style={{
+                backgroundColor: '#fff',
+                paddingBlock: 7,
+                paddingInline: 19,
+                position: 'relative',
+                zIndex: 600
+            }}>
                 <div className="d-flex">
                     <div className="nav-container me-auto">
-                        <div className="d-flex">
+                        <div className="d-flex" style={{
+                            alignContent: 'center',
+                            alignItems: 'center'
+                        }}>
                             <div className="toggle-nav me-auto">
-                                <button className="toggle-nav-btn" onClick={setIsMenuShowenHandle}>
+                                <button className="toggle-nav-btn" onClick={setIsMenuShowenHandle} style={{
+                                    display: 'flex',
+                                    width: 35,
+                                    height: 35,
+                                    backgroundColor: 'transparent',
+                                    color: '#999',
+                                    alignItems: 'center',
+                                    alignContent: 'center',
+                                    justifyContent: 'center',
+                                    borderWidth: 0,
+                                }}>
                                     <span className="material-icons material-icons-outlined">menu</span>
                                 </button>
                             </div>
-                            <div className="logo-nav me-auto">
+                            <div className="logo-nav me-auto" style={{ display: 'flex' }}>
                                 <Link href="/">
                                     <a>
                                         <ImageLogo src={logoIMG} />
@@ -120,26 +145,52 @@ function Navbar(props: any): ReactElement {
                             {isMenuShowen && <Menus />}
                         </div>
                     </div>
-                    <ul className="nav nav-auth ml-auto">
+                    <ul className="nav nav-auth ml-auto" style={{
+                        alignItems: 'center',
+                        alignContent: 'center'
+                    }}>
                         {token ?
                             <>
                                 {!userData &&
-                                    <li className="nav-loading">
-                                        <p className="loading-text">
+                                    <li className="nav-loading" style={{
+                                        display: 'flex',
+                                        alignContent: 'center',
+                                        alignItems: 'center',
+                                        margin: 0
+                                    }}>
+                                        <p className="loading-text" style={{
+                                            fontSize: 13,
+                                            fontWeight: 'bold',
+                                            color: '#666',
+                                            margin: 0
+                                        }}>
                                             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> يرجى الإنتظار...
                                         </p>
                                     </li>
                                 }
                                 {userData &&
                                     <>
-                                        <li 
+                                        <li
                                             className="right-butts-icon"
                                             style={{
-                                                opacity: (darkLoading ? 0.5 : 1)
+                                                opacity: (darkLoading ? 0.5 : 1),
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                alignContent: 'center',
+                                                marginTop: 4
                                             }}
                                         >
                                             <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
-                                                <motion.a onClick={darkModeToggle} whileTap={{ scale: 0.9 }}>
+                                                <motion.a onClick={darkModeToggle} whileTap={{ scale: 0.9 }} style={{
+                                                    display: 'flex',
+                                                    alignContent: 'center',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    alignSelf: 'center',
+                                                    color: '#777',
+                                                    height: 40,
+                                                    width: 40,
+                                                }}>
                                                     <Badge count={0} offset={[2, -1]}>
                                                         {userData.user_details.profile.dark_mode == 1 ?
                                                             <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
@@ -214,7 +265,7 @@ function Navbar(props: any): ReactElement {
                                         </a>
                                     </Link>
                                 </li>
-                                <li className="register-nav-item">
+                                <li className="register-nav-item" style={{ padding: 7 }}>
                                     <Link href="/register">
                                         <a className="btn butt-sm butt-primary flex-center">
                                             <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
@@ -226,8 +277,8 @@ function Navbar(props: any): ReactElement {
                         }
                     </ul>
                 </div>
-            </nav>
-        </div>
+            </nav >
+        </div >
     );
 }
 Navbar.propTypes = {

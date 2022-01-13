@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react'
 //import HeroSearch from './HeroSearch'
 import API from '../config'
 import { motion, useAnimation } from 'framer-motion'
-import Link from 'next/link'
 import PostSearch from './Post/PostSearch';
 import heroIMG from '../public/hero.png'
 import Image from 'next/image'
 import { useOutsideAlerter } from './useOutsideAlerter'
 import { Result } from 'antd';
 //import Typical from 'react-typical';
+import bgIMG from '../styles/5313770.jpg'
 
 export function LoadingSearch() {
     return (
@@ -99,48 +99,68 @@ function Hero() {
     }
 
     return (
-        <div className="timlands-hero">
-            <div className="timlands-hero-inner">
-                <motion.div style={{ overflow: 'hidden' }} className="timlands-hero-image">
-                    <Image src={heroIMG} placeholder="blur" />
-                </motion.div>
-                <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
-                    <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
-                    اشتري. دردش .بيع                    </motion.h1>
-                    <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
-                    اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة                     </motion.h1>
-                </div>
-                <div className="timlands-hero-search">
-                    <div className="rel-search">
-                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيموورك..." className="timlands-inputs" />
-                        {!isLoading && <button className="search-btn">
-                            <span className="material-icons material-icons-outlined">search</span>
-                        </button>}
-                        {isLoading && <button className="search-btn">
-                            <span className="spinner-border text-secondary spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </button>}
-                        {isSearch && <motion.div ref={wrapperRef} initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.57, delay: 0.74 }} className="res-search-container">
-                            <div className="search-results-items">
-                                {!getSearchs && <NotFountSearch />}
-                                {isLoading && <LoadingSearch />}
-                                <div className="list-results-items">
-                                    {getSearchs && getSearchs.map((e: any) =>
-                                        <PostSearch
-                                            key={e.id}
-                                            title={e.title}
-                                            author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                                            rate={e.ratings_avg_rating}
-                                            price={e.price}
-                                            slug={e.slug}
-                                            thumbnail={e.thumbnail}
-                                            buyers={e.count_buying}
-                                            period={e.duration}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                        </motion.div>}
-
+        <div className="timlands-hero" style={{
+            backgroundImage: `url(${bgIMG})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+        }}>
+    <div className="timlands-hero-inner" style={{
+        paddingBlock: 20,
+        paddingInline: 0,
+        textAlign: 'center',
+    }}>
+        <motion.div style={{ paddingBlock: 7, overflow: 'hidden' }} className="timlands-hero-image">
+            <Image src={heroIMG} placeholder="blur" />
+        </motion.div>
+        <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
+            <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
+                اشتري. دردش .بيع
+            </motion.h1>
+            <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
+                اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة
+            </motion.h1>
+        </div>
+        <div className="timlands-hero-search">
+            <div className="rel-search">
+                <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيموورك..." className="timlands-inputs" style={{
+                        border: '1px solid #ddd',
+                        backgroundColor: '#fff',
+                        paddingBlock: 10,
+                        paddingInline: 20,
+                        fontSize: 13,
+                        display: 'block',
+                        borderRadius: 6,
+                        outline: 'none',
+                        width: '100%',
+                }} />
+                {!isLoading && <button className="search-btn">
+                    <span className="material-icons material-icons-outlined">search</span>
+                </button>}
+                {isLoading && <button className="search-btn">
+                    <span className="spinner-border text-secondary spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>}
+                {isSearch && <motion.div ref={wrapperRef} initial={{ opacity: 0, y: 70 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.57, delay: 0.74 }} className="res-search-container">
+                    <div className="search-results-items">
+                        {!getSearchs && <NotFountSearch />}
+                        {isLoading && <LoadingSearch />}
+                        <div className="list-results-items">
+                            {getSearchs && getSearchs.map((e: any) =>
+                                <PostSearch
+                                    key={e.id}
+                                    title={e.title}
+                                    author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                                    rate={e.ratings_avg_rating}
+                                    price={e.price}
+                                    slug={e.slug}
+                                    thumbnail={e.thumbnail}
+                                    buyers={e.count_buying}
+                                    period={e.duration}
+                                />
+                            )}
+                        </div>
+                    </div>
+                </motion.div>}
+                {/*
                         <ul className="popular-searchs-list nav">
                             <li className="popular-title">الأكثر بحثا: </li>
                             <li className="popular-item">
@@ -163,11 +183,11 @@ function Hero() {
                                     <a className="popular-link">غرافيك</a>
                                 </Link>
                             </li>
-                        </ul>
-                    </div>
-                </div>
+                        </ul>*/}
             </div>
         </div>
+    </div>
+        </div >
     )
 }
 

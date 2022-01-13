@@ -11,7 +11,7 @@ function Menus() {
     const setShowExploreHandle = () => {
         if (isMobile) {
             router.push('/category')
-        }else {
+        } else {
             setShowExplore(!showExplore)
         }
     }
@@ -23,7 +23,17 @@ function Menus() {
     return (
         <ul className="nav app-navbar">
             <li className={showExplore && 'is-open'}>
-                <a className="explore-butt" onClick={setShowExploreHandle}>
+                <a className="explore-butt" onClick={setShowExploreHandle} style={{
+                    fontWeight: 600,
+                    color: '#666',
+                    display: 'flex',
+                    paddingInline: 17,
+                    paddingBlock: 0,
+                    fontSize: 14,
+                    height: 50,
+                    alignItems: 'center',
+                    alignContent: 'center'
+                }}>
                     <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنيفات <i className="fa fa-angle-down"></i>
                 </a>
                 {showExplore && (
@@ -34,21 +44,51 @@ function Menus() {
             </li>
             <li>
                 <Link href="/products">
-                    <a>
+                    <a style={{
+                        fontWeight: 600,
+                        color: '#666',
+                        display: 'flex',
+                        paddingInline: 17,
+                        paddingBlock: 0,
+                        fontSize: 14,
+                        height: 50,
+                        alignItems: 'center',
+                        alignContent: 'center'
+                    }}>
                         <i className="material-icons material-icons-outlined">table_view</i> تصفح جميع الخدمات
                     </a>
                 </Link>
             </li>
             <li>
                 <Link href="">
-                    <a>
+                    <a style={{
+                        fontWeight: 600,
+                        color: '#666',
+                        display: 'flex',
+                        paddingInline: 17,
+                        paddingBlock: 0,
+                        fontSize: 14,
+                        height: 50,
+                        alignItems: 'center',
+                        alignContent: 'center'
+                    }}>
                         <i className="material-icons material-icons-outlined">article</i> المدونة
                     </a>
                 </Link>
             </li>
             <li>
                 <Link href="">
-                    <a>
+                    <a style={{
+                        fontWeight: 600,
+                        color: '#666',
+                        display: 'flex',
+                        paddingInline: 17,
+                        paddingBlock: 0,
+                        fontSize: 14,
+                        height: 50,
+                        alignItems: 'center',
+                        alignContent: 'center'
+                    }}>
                         <i className="material-icons material-icons-outlined">forum</i> مجتمع تيم ورك
                     </a>
                 </Link>
