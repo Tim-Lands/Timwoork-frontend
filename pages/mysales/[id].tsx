@@ -1,4 +1,3 @@
-
 import React, { ReactElement, useState } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import "antd/dist/antd.min.css";
@@ -16,8 +15,6 @@ import withReactContent from 'sweetalert2-react-content'
 const User = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
-    const { data: userInfo }: any = useSWR(`api/me`)
-    const profily = userInfo && userInfo.user_details.profile
     const [acceptLoading, setacceptLoading] = useState(false)
     const [resourcesLoading, setresourcesLoading] = useState(false)
     const [rejectLoading, setrejectLoading] = useState(false)
