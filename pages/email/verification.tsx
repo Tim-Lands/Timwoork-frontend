@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import PropTypes from "prop-types";
 import router from 'next/router';
-import API from '../config'
-import withAuth from './../services/withAuth'
+import API from '../../config'
+import withAuth from '../../services/withAuth'
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import { motion } from "framer-motion";

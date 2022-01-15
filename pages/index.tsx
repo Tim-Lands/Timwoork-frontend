@@ -12,8 +12,8 @@ import Cookies from 'js-cookie'
 
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
-  const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at&sort[1]=id,asc')
-  const { data: products, error }: any = useSWR('api/filter?paginate=4&sort=count_buying')
+  const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
+  const { data: products, error }: any = useSWR('api/filter?paginate=4&sort=count_buying,desc')
   //***set email in cookie ***/
   const { data: userInfo }: any = useSWR('api/me')
   const token = Cookies.get('token');

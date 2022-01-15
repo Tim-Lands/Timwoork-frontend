@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect } from "react";
 import Cookies from 'js-cookie'
 import Layout from '@/components/Layout/HomeLayout'
 import { Field, FieldArray, Form, Formik } from "formik";
-import * as Yup from 'yup';
 import API from "../../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
@@ -16,13 +15,6 @@ const EditSeller = () => {
 
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Skills }: any = useSWR('dashboard/skills')
-
-    // Redirect to user home route if user is authenticated.
-    const SignupSchema = Yup.object().shape({
-        bio: Yup.string().required('هذا الحقل إجباري'),
-        portfolio: Yup.string().required('هذا الحقل إجباري'),
-        //skills: Yup.string().required('هذا الحقل إجباري'),
-    });
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -42,7 +34,6 @@ const EditSeller = () => {
                                 portfolio: userInfo && userInfo.user_details.profile.profile_seller.portfolio,
                                 skills: (userInfo && userInfo.user_details.profile.profile_seller.skills) || [],
                             }}
-                            validationSchema={SignupSchema}
                             onSubmit={async values => {                                
                                 try {
                                     const res = await API.post("api/sellers/detailsStore", values, {

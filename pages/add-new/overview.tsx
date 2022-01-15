@@ -32,8 +32,8 @@ function Overview({ query }) {
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
     const { data: getTags } = useSWR('dashboard/tags');
-    const value = getTags && getTags.data.map((e) => (e.id));
-    const labels = getTags && getTags.data.map((e) => (e.name_ar));
+    const value = getTags && getTags.data.map((e) => (e.name));
+    const labels = getTags && getTags.data.map((e) => (e.name));
     
     const [selectedTags,setSelectedTags] = useState([''])
 

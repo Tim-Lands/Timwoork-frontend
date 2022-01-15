@@ -160,6 +160,25 @@ const User = ({ query }) => {
             setresourcesLoading(false)
         }
     }
+    const [resourceFile, setResourceFile] = useState(null)
+    const [uploading, setuploading] = useState(false)
+    const uploadProject = async (id: any) => {
+        const dataform = new FormData()
+        dataform.append('file_resource', resourceFile)
+        setuploading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/upload_resources`, dataform, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                setuploading(false)
+            }
+        } catch (error) {
+            setuploading(false)
+        }
+    }
     const statusLabel = (status: any) => {
         switch (status) {
             case 0:
@@ -179,6 +198,12 @@ const User = ({ query }) => {
 
             case 5:
                 return <span className='badge bg-success'>مكتملة</span>
+
+            case 6:
+                return <span className='badge bg-success'>قيد تسليم</span>
+
+            case 7:
+                return <span className='badge bg-success'>تم الإستلام</span>
 
             default:
                 return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
@@ -216,7 +241,7 @@ const User = ({ query }) => {
                         <div className="app-bill">
                             <div className="app-bill-header d-flex">
                                 <h3 className="title me-auto">تفاصيل الطلبية</h3>
-                                {ShowItem && ShowItem.data.status == 0 ? <>
+                                {ShowItem && ShowItem.data.status == 0 && <>
                                     <button
                                         disabled={acceptLoading}
                                         onClick={() => acceptHandle(ShowItem.data.id)}
@@ -227,12 +252,8 @@ const User = ({ query }) => {
                                         onClick={() => rejectHandle(ShowItem.data.id)}
                                         className="btn butt-xs butt-red mx-1 flex-center"
                                     ><span className="material-icons material-icons-outlined">done_all</span> رفض الطلب</button>
-                                </> : <>
-                                    <button
-                                        disabled={resourcesLoading}
-                                        onClick={() => resourcesHandle(ShowItem.data.id)}
-                                        className="btn butt-xs butt-primary mx-1 flex-center"
-                                    ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
+                                </>}
+                                {ShowItem && ShowItem.data.status == 1 && <>
                                     <button
                                         disabled={rejectLoading}
                                         onClick={() => requestRejectHandle(ShowItem.data.id)}
@@ -265,16 +286,16 @@ const User = ({ query }) => {
                                     <div className="order-user-info d-flex">
                                         <div className="order-user-avatar">
                                             <img
-                                                src={ShowItem && ShowItem.avatar}
+                                                src={ShowItem && ShowItem.data.order.cart.user.profile.avatar}
                                                 width={100}
                                                 height={100}
                                             />
                                         </div>
                                         <div className="order-user-content">
-                                            <h2 className="user-title">{profily && profily.full_name}</h2>
+                                            <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
                                             <p className="meta">
-                                                الشارة: {profily && profily.badge.name_ar} |
-                                                المستوى: {profily && profily.level.name_ar}
+                                                الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
                                             </p>
                                         </div>
                                     </div>
@@ -320,6 +341,27 @@ const User = ({ query }) => {
                                             </tr>
                                         </tbody>
                                     </table>
+                                    {ShowItem && ShowItem.data.status == 1 && <>
+                                        <div className="aside-header">
+                                            <h3 className="title">رفع العمل وتسليمه</h3>
+                                        </div>
+                                        <div className="p-3">
+                                            {ShowItem && ShowItem.data.resource !== null && ShowItem.data.resource.status == 0 ? <>
+                                                <button
+                                                    disabled={resourcesLoading}
+                                                    onClick={() => resourcesHandle(ShowItem.data.id)}
+                                                    className="btn butt-lg butt-primary mx-1 flex-center"
+                                                ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
+                                            </> : <>
+                                                {uploading && <p>يرجى الإنتظار...</p>}
+                                                <input type="file" className="timlands-inputs" onChange={(event) => {
+                                                    setResourceFile(event.currentTarget.files[0]);
+                                                }} />
+                                                <button className="btn butt-xs butt-primary" onClick={() => uploadProject(ShowItem.data.id)}>رفع</button>
+                                            </>
+                                            }
+                                        </div>
+                                    </>}
                                 </div>
                             </div>
                         </div>

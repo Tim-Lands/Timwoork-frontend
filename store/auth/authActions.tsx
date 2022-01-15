@@ -177,7 +177,6 @@ export const register = (email: string, password: string, username: string): any
         try {
             // Start loading.
             dispatch({ type: types.START_REGISTER_LOADING });
-
             const res = await API.post("api/register", {
                 email,
                 password,
@@ -189,7 +188,6 @@ export const register = (email: string, password: string, username: string): any
                     type: types.REGISTER_SUCCESS,
                 });
                 Cookies.set('token', res.data.data.token)
-                return 
                 if (res.data.data.is_verified) {
                     switch (res.data.data.step) {
                         case 0:
@@ -205,7 +203,7 @@ export const register = (email: string, password: string, username: string): any
                             router.push('/')
                     }
                 } else {
-                    router.push('/emailConfig')
+                    router.push('/email/verification')
                 }
             }
         } catch (error: any) {

@@ -5,8 +5,9 @@ import { motion } from 'framer-motion'
 import { useOutsideAlerter } from '../useOutsideAlerter'
 import { isMobile } from 'react-device-detect';
 import router from 'next/router'
+import PropTypes from "prop-types";
 
-function Menus() {
+function Menus({ darkMode }) {
     const [showExplore, setShowExplore] = useState(false)
     const setShowExploreHandle = () => {
         if (isMobile) {
@@ -25,7 +26,7 @@ function Menus() {
             <li className={showExplore && 'is-open'}>
                 <a className="explore-butt" onClick={setShowExploreHandle} style={{
                     fontWeight: 600,
-                    color: '#666',
+                    color: !darkMode ? '#666' : '#f1f1f1',
                     display: 'flex',
                     paddingInline: 17,
                     paddingBlock: 0,
@@ -46,7 +47,7 @@ function Menus() {
                 <Link href="/products">
                     <a style={{
                         fontWeight: 600,
-                        color: '#666',
+                        color: !darkMode ? '#666' : '#f1f1f1',
                         display: 'flex',
                         paddingInline: 17,
                         paddingBlock: 0,
@@ -63,7 +64,7 @@ function Menus() {
                 <Link href="">
                     <a style={{
                         fontWeight: 600,
-                        color: '#666',
+                        color: !darkMode ? '#666' : '#f1f1f1',
                         display: 'flex',
                         paddingInline: 17,
                         paddingBlock: 0,
@@ -80,7 +81,7 @@ function Menus() {
                 <Link href="">
                     <a style={{
                         fontWeight: 600,
-                        color: '#666',
+                        color: !darkMode ? '#666' : '#f1f1f1',
                         display: 'flex',
                         paddingInline: 17,
                         paddingBlock: 0,
@@ -98,3 +99,6 @@ function Menus() {
 }
 
 export default Menus
+Menus.propTypes = {
+    darkMode: PropTypes.any,
+};

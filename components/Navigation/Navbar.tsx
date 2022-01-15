@@ -99,6 +99,7 @@ function Navbar(props: any): ReactElement {
     const myLoader = () => {
         return `${userData.user_details.profile.avatar}`;
     }
+    const darkMode = userData && userData.user_details.profile.dark_mode
     return (
         <div className={"timlands-navbar-container"} style={{
             position: 'fixed',
@@ -108,7 +109,7 @@ function Navbar(props: any): ReactElement {
             zIndex: 999,
         }}>
             <nav className="timlands-navbar" style={{
-                backgroundColor: '#fff',
+                backgroundColor: !darkMode ? '#fff' : '#212121',
                 paddingBlock: 7,
                 paddingInline: 19,
                 position: 'relative',
@@ -126,7 +127,7 @@ function Navbar(props: any): ReactElement {
                                     width: 35,
                                     height: 35,
                                     backgroundColor: 'transparent',
-                                    color: '#999',
+                                    color: !darkMode ? '#999' : '#333',
                                     alignItems: 'center',
                                     alignContent: 'center',
                                     justifyContent: 'center',
@@ -142,7 +143,7 @@ function Navbar(props: any): ReactElement {
                                     </a>
                                 </Link>
                             </div>
-                            {isMenuShowen && <Menus />}
+                            {isMenuShowen && <Menus darkMode={darkMode} />}
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto" style={{
@@ -161,7 +162,7 @@ function Navbar(props: any): ReactElement {
                                         <p className="loading-text" style={{
                                             fontSize: 13,
                                             fontWeight: 'bold',
-                                            color: '#666',
+                                            color: !darkMode ? '#666' : '#ddd',
                                             margin: 0
                                         }}>
                                             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> يرجى الإنتظار...
@@ -187,7 +188,7 @@ function Navbar(props: any): ReactElement {
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     alignSelf: 'center',
-                                                    color: '#777',
+                                                    color: !darkMode ? '#777' : '#ddd',
                                                     height: 40,
                                                     width: 40,
                                                 }}>
