@@ -14,7 +14,6 @@ import Unauthorized from '@/components/Unauthorized';
 import router from 'next/router'
 import Loading from '@/components/Loading'
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 function index() {
     const token = Cookies.get('token')
@@ -173,19 +172,19 @@ function index() {
                                     <h3 className="title">خدماتي</h3>
                                 </div>
                                 <Menu mode="horizontal">
-                                    <Menu.Item key="all" onClick={() => setStatusType('')} icon={<MailOutlined />}>
+                                    <Menu.Item key="all" onClick={() => setStatusType('')}>
                                         الكل
                                     </Menu.Item>
-                                    <Menu.Item key="mail" onClick={() => setStatusType('/published')} icon={<MailOutlined />}>
+                                    <Menu.Item key="mail" onClick={() => setStatusType('/published')}>
                                         النشطة
                                     </Menu.Item>
-                                    <Menu.Item key="app" onClick={() => setStatusType('/rejected')} icon={<AppstoreOutlined />}>
+                                    <Menu.Item key="app" onClick={() => setStatusType('/rejected')}>
                                         المرفوضة
                                     </Menu.Item>
-                                    <Menu.Item key="waiting" onClick={() => setStatusType('/pending')} icon={<AppstoreOutlined />}>
+                                    <Menu.Item key="waiting" onClick={() => setStatusType('/pending')}>
                                         قيد الإنتظار
                                     </Menu.Item>
-                                    <Menu.Item key="drafts" onClick={() => setStatusType('/drafts')} icon={<AppstoreOutlined />}>
+                                    <Menu.Item key="drafts" onClick={() => setStatusType('/drafts')}>
                                         المسودات
                                     </Menu.Item>
                                     <Menu.Item key="alipay" onClick={() => setStatusType('/paused')}>
@@ -208,7 +207,7 @@ function index() {
                                                 <th>مكتملة</th>
                                                 <th>عدد المشتريين</th>
                                                 <th>حالة التفعيل</th>
-                                                <th>الحالة</th>
+                                                <th>حالة القبول</th>
                                                 <th>الأدوات</th>
                                             </tr>
                                         </thead>

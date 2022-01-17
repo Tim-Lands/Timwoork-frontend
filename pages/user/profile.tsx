@@ -1,8 +1,8 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Statistic, Card, Result, message } from 'antd'
+import { Badge, Statistic, Card, Result, message, Menu, Tooltip, Button } from 'antd'
 import React, { ReactElement, useState } from 'react'
 import Link from 'next/link'
-import { FallOutlined, RiseOutlined, ShrinkOutlined } from '@ant-design/icons';
+import { FallOutlined, RiseOutlined, ShrinkOutlined, DeleteOutlined, PauseCircleOutlined, EditOutlined } from '@ant-design/icons';
 import Image from 'next/image'
 import router from 'next/router'
 import API from '../../config'
@@ -10,6 +10,8 @@ import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import Unauthorized from '@/components/Unauthorized';
 
 function Profile() {
@@ -36,6 +38,22 @@ function Profile() {
     const myLoader = () => {
         return `${userInfo.user_details.profile.avatar}`;
     }
+    const [statusType, setStatusType] = useState('')
+
+    function statusProduct(status: any) {
+        switch (status) {
+            case null:
+                return <span className="badge bg-info">في الإنتظار...</span>
+            case 0:
+                return <span className="badge bg-danger">مرفوظة</span>
+            case 1:
+                return <span className="badge bg-success">مقبولة</span>
+            default:
+                return <span className="badge bg-info">في الإنتظار...</span>
+        }
+    }
+    const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
+
     const [isLoadingSeler, setIsLoadingSeler] = useState(false)
     const beseller = async () => {
         setIsLoadingSeler(true)
@@ -54,6 +72,60 @@ function Profile() {
             message.error('حدث خطأ غير متوقع')
             setIsLoadingSeler(false)
         }
+    }
+    const deleteHandle = (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الحذف',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await API.post(`api/product/${id}/deleteProduct`, null, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    if (res.status === 200) {
+                        message.success('تم حذف هذه الخدمة')
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+                swalWithBootstrapButtons.fire(
+                    'تم الحذف!',
+                    'لقد تم حذف هذا العنصر بنجاح',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'ملغى',
+                    'تم الإلغاء',
+                    'error'
+                )
+            }
+        })
+    }
+    const disactivateHandle = async (id: any) => {
+        console.log(id);
+
     }
     return (
         <div className="py-3">
@@ -263,6 +335,81 @@ function Profile() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="profile-content-body">
+                            <div className="page-header">
+                                <h3 className="title">خدماتي</h3>
+                            </div>
+                            <Menu mode="horizontal">
+                                <Menu.Item key="all" onClick={() => setStatusType('')}>
+                                    الكل
+                                </Menu.Item>
+                                <Menu.Item key="mail" onClick={() => setStatusType('/published')}>
+                                    النشطة
+                                </Menu.Item>
+                                <Menu.Item key="app" onClick={() => setStatusType('/rejected')}>
+                                    المرفوضة
+                                </Menu.Item>
+                                <Menu.Item key="waiting" onClick={() => setStatusType('/pending')}>
+                                    قيد الإنتظار
+                                </Menu.Item>
+                                <Menu.Item key="drafts" onClick={() => setStatusType('/drafts')}>
+                                    المسودات
+                                </Menu.Item>
+                                <Menu.Item key="alipay" onClick={() => setStatusType('/paused')}>
+                                    المعطلة
+                                </Menu.Item>
+                            </Menu>
+                            {postsList && postsList.data.length == 0 ?
+                                <Result
+                                    status="404"
+                                    title="لا يوجد لديك خدمات"
+                                    subTitle="يمكنك إضافة خدمة في أي وقت "
+                                    extra={<Link href='/add-new'><a className="btn butt-sm butt-primary">إضافة خدمة جديدة</a></Link>}
+                                /> : ''
+                            }
+                            <div className="timlands-table">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>العنوان</th>
+                                            <th>مكتملة</th>
+                                            <th>عدد المشتريين</th>
+                                            <th>حالة التفعيل</th>
+                                            <th>حالة القبول</th>
+                                            <th>الأدوات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {postsList && postsList.data.map((e: any) => (
+                                            <tr key={e.id}>
+                                                <td>{e.title}</td>
+                                                <td>{e.is_completed == 0 ?
+                                                    <span className="badge bg-danger">لا</span> :
+                                                    <span className="badge bg-success">نعم</span>}</td>
+                                                <td>{e.count_buying}</td>
+                                                <td>{e.is_active == 0 ?
+                                                    <span className="badge bg-danger">معطلة</span> :
+                                                    <span className="badge bg-success">مفعلة</span>}
+                                                </td>
+                                                <td>{statusProduct(e.status)}</td>
+                                                <td>
+                                                    <Tooltip title="حذف هذه الخدمة">
+                                                        <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                    </Tooltip>
+                                                    <Tooltip title="تعطيل هذه الخدمة">
+                                                        <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactivateHandle(e.id)} />
+                                                    </Tooltip>
+                                                    <Tooltip title="تعديل الخدمة">
+                                                        <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                {!postsList && <Loading />}
                             </div>
                         </div>
                     </div>

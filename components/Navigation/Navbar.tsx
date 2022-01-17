@@ -56,16 +56,16 @@ function Navbar(props: any): ReactElement {
     const { data: userData }: any = useSWR(`api/me`)
     const AccountList = (
         <Menu>
-            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
-                <Link href="/myproducts">
-                    <a>خدماتي</a>
-                </Link>
-            </Menu.Item>)}
             <Menu.Item key="0">
                 <Link href="/user/profile">
                     <a>الصفحة الشخصية</a>
                 </Link>
             </Menu.Item>
+            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
+                <Link href="/myproducts">
+                    <a>خدماتي</a>
+                </Link>
+            </Menu.Item>)}
             {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
                 <Link href="/add-new">
                     <a>إضافة خدمة جديدة</a>
