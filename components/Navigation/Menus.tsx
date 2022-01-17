@@ -61,7 +61,7 @@ function Menus({ darkMode }) {
                 </Link>
             </li>
             <li>
-                <Link href="">
+                <Link href="/blog">
                     <a style={{
                         fontWeight: 600,
                         color: !darkMode ? '#666' : '#f1f1f1',
