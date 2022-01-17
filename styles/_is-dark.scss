@@ -2,7 +2,25 @@
 
 background-color: #323232;
 
-
+.ant-card {
+    background-color: #212121;
+    border: 1px solid #333;  
+    .ant-card-head {
+        border-bottom: 1px solid #333;
+        color: #fff;
+    }
+    .ant-card-head-title {
+        color: #fff;
+    }
+}
+.statistic-item {
+    .ant-statistic {
+        color: #fff;
+        .ant-statistic-title {
+            color: #fff;
+        }
+    }
+}
 
     .timlands-navbar-container {
         box-shadow: 2px 4px 7px rgba(255, 255, 255, 0.034);
@@ -33,11 +51,11 @@ background-color: #323232;
                         }
                     }
                     .timlands-explores {
-                        background-color: #000;
-                        border: 1px solid #111;
+                        background-color: #212121;
+                        border: 1px solid #333;
                         box-shadow: 4px 7px 9px rgba(255, 255, 255, 0.068);
                         .main-explores {
-                            background-color: #111;
+                            background-color: #292929;
                             .main-explore-items {
                                 > li {
                                     > a {
@@ -215,9 +233,9 @@ background-color: #323232;
     */
     .timlands-profile-content {
         .profile-content-body {
-            background-color: #000;
+            background-color: #212121;
             .content-title {
-                border-bottom: 1px dashed #111;
+                border-bottom: 1px dashed #393939;
                 .title {
                     color: #fff;
                 }

@@ -351,10 +351,17 @@ const User = ({ query }) => {
                                                 ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
                                             </> : <>
                                                 {uploading && <p>يرجى الإنتظار...</p>}
-                                                <input type="file" className="timlands-inputs" onChange={(event) => {
-                                                    setResourceFile(event.currentTarget.files[0]);
-                                                }} />
-                                                <button className="btn butt-xs butt-primary" onClick={() => uploadProject(ShowItem.data.id)}>رفع</button>
+                                                <div className="row">
+                                                    <div className="col-sm-10">
+                                                        <input disabled={uploading} type="file" className="timlands-inputs" onChange={(event) => {
+                                                            setResourceFile(event.currentTarget.files[0]);
+                                                        }} />
+                                                    </div>
+                                                    <div className="col-sm-2">
+                                                        <button className="btn butt-md butt-primary" disabled={uploading} onClick={() => uploadProject(ShowItem.data.id)}>رفع</button>
+
+                                                    </div>
+                                                </div>
                                             </>
                                             }
                                         </div>

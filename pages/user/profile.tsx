@@ -15,6 +15,7 @@ import Unauthorized from '@/components/Unauthorized';
 function Profile() {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
+    const darkMode = userInfo && userInfo.user_details.profile.dark_mode
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
@@ -103,7 +104,7 @@ function Profile() {
                                                 title="الرصيد القابل للسحب"
                                                 value={userInfo && userInfo.user_details.profile.withdrawable_amount}
                                                 precision={2}
-                                                valueStyle={{ color: '#3f8600' }}
+                                                valueStyle={{ color: darkMode ? '#8ac557' : '#3f8600' }}
                                                 prefix={<RiseOutlined />}
                                                 suffix="$"
                                             />
@@ -113,7 +114,7 @@ function Profile() {
                                                 title="الرصيد الكلي"
                                                 value={userInfo && (Number(userInfo.user_details.profile.withdrawable_amount) + Number(userInfo.user_details.profile.pending_amount))}
                                                 precision={2}
-                                                valueStyle={{ color: '#222' }}
+                                                valueStyle={{ color: darkMode ? '#ddd' : '#222' }}
                                                 prefix={<ShrinkOutlined />}
                                                 suffix="$"
                                             />

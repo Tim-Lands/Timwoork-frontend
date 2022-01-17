@@ -6275,6 +6275,28 @@ h3 {
     */
 }
 
+.is-dark .ant-card {
+  background-color: #212121;
+  border: 1px solid #333;
+}
+
+.is-dark .ant-card .ant-card-head {
+  border-bottom: 1px solid #333;
+  color: #fff;
+}
+
+.is-dark .ant-card .ant-card-head-title {
+  color: #fff;
+}
+
+.is-dark .statistic-item .ant-statistic {
+  color: #fff;
+}
+
+.is-dark .statistic-item .ant-statistic .ant-statistic-title {
+  color: #fff;
+}
+
 .is-dark .timlands-navbar-container {
   -webkit-box-shadow: 2px 4px 7px rgba(255, 255, 255, 0.034);
           box-shadow: 2px 4px 7px rgba(255, 255, 255, 0.034);
@@ -6306,14 +6328,14 @@ h3 {
 }
 
 .is-dark .timlands-navbar .nav-container .app-navbar > li .timlands-explores {
-  background-color: #000;
-  border: 1px solid #111;
+  background-color: #212121;
+  border: 1px solid #333;
   -webkit-box-shadow: 4px 7px 9px rgba(255, 255, 255, 0.068);
           box-shadow: 4px 7px 9px rgba(255, 255, 255, 0.068);
 }
 
 .is-dark .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores {
-  background-color: #111;
+  background-color: #292929;
 }
 
 .is-dark .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li > a {
@@ -6463,11 +6485,11 @@ h3 {
 }
 
 .is-dark .timlands-profile-content .profile-content-body {
-  background-color: #000;
+  background-color: #212121;
 }
 
 .is-dark .timlands-profile-content .profile-content-body .content-title {
-  border-bottom: 1px dashed #111;
+  border-bottom: 1px dashed #393939;
 }
 
 .is-dark .timlands-profile-content .profile-content-body .content-title .title {
