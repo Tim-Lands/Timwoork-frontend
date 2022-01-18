@@ -13,7 +13,7 @@ import { Image } from 'antd';
 const User = ({ query }) => {
     const { data: getPosts }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/posts/?slug=${query.slug}`)
     const { data: getSamePosts }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/posts?categories=${getPosts && getPosts[0].categories[0]}&per_page=3`)
-    const { data: getAds }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/media?alt_text=ads&per_page=1`)
+    const { data: getAds }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/media?include=28,29`)
     return (
         <>
             { !getPosts && <Loading /> }
