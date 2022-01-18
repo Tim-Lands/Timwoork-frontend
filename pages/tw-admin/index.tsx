@@ -1,14 +1,17 @@
 import Link from "next/link";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { connect } from "react-redux";
 import { logout } from "@/store/auth/authActions";
 import useSWR from 'swr'
 import { message } from "antd";
 import { MetaTags } from '@/components/SEO/MetaTags'
+import router from "next/router";
+import Cookies from 'js-cookie'
 
 function index(): ReactElement {
     const { data: postsList, categoriesError }: any = useSWR('dashboard')
+
     // Return statement.
     return (
         <>

@@ -1,16 +1,20 @@
 import Navbar from "../Dashboard/Navbar";
 import Sidebar from "../Dashboard/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
-import withAuth from '../../services/withAuth'
 import { SWRConfig } from 'swr'
 import API from '../../config'
 import Cookies from 'js-cookie'
+import router from "next/router";
 
 function DashboardLayout(props: any) {
   const token = Cookies.get('token_dash')
-
+  useEffect(() => {
+      if (!token) {
+          router.push("/tw-admin/login")
+      }
+  }, [])
   const [isSidebarShowen, setIsSidebarShowen] = useState(false)
   const setIsSidebarShowenHandle = () => {
     setIsSidebarShowen(!isSidebarShowen)
@@ -42,4 +46,4 @@ const mapStateToProps = (state: any) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { logout })(withAuth(DashboardLayout));
+export default connect(mapStateToProps, { logout })(DashboardLayout);
