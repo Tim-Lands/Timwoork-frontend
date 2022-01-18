@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import { motion } from 'framer-motion';
-function index({ isDarken, setIsDarkenHandle, setIsSidebarShowenHandle }: any): ReactElement {
+function index({ setIsSidebarShowenHandle }: any): ReactElement {
 
     return (
         <>
@@ -17,7 +17,7 @@ function index({ isDarken, setIsDarkenHandle, setIsSidebarShowenHandle }: any): 
                         </li>
                     </ul>
                     <ul className="nav auth-dashboard left-dash-nav">
-                        <li className="dash-nav-item">
+                        {/*<li className="dash-nav-item">
                             <div className="circular-item">
                                 <motion.button whileTap={{ scale: 0.9 }} onClick={setIsDarkenHandle} className="language-nav-butt circular-center small-size">
                                     {isDarken ?
@@ -27,7 +27,7 @@ function index({ isDarken, setIsDarkenHandle, setIsSidebarShowenHandle }: any): 
                                     }
                                 </motion.button>
                             </div>
-                        </li>
+                        </li>*/}
                     </ul>
                 </div>
             </div>

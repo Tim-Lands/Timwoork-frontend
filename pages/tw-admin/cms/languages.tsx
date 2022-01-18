@@ -101,7 +101,7 @@ function Languages(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
                                     <td className="tools-col">
-                                        <Link href={`/dashboard/cms/edit/languages/${e.id}`}>
+                                        <Link href={`/tw-admin/cms/edit/languages/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>

@@ -62,7 +62,7 @@ export default function Id(): ReactElement {
             // Authentication was successful.
             if (res.status == 201 || res.status == 200 || res.status == 202 || res.status == 203) {
                 //alert('تمت الإضافة بنجاح')
-                router.push('/dashboard/cms/skills')
+                router.push('/tw-admin/cms/skills')
             } else {
                 alert('Error')
             }
@@ -77,7 +77,7 @@ export default function Id(): ReactElement {
                 <div className="panel-modal-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">edit</span>التعديل</h2>
                     <div className="panel-modal-left-tools">
-                        <button onClick={() => router.push('/dashboard/cms/skills')} className="close-modal">
+                        <button onClick={() => router.push('/tw-admin/cms/skills')} className="close-modal">
                             <span className="material-icons material-icons-outlined">close</span>
                         </button>
                     </div>
@@ -134,7 +134,7 @@ export default function Id(): ReactElement {
                         </div>
                     </div>
                     <div className="panel-modal-footer">
-                        <button onClick={() => router.push('/dashboard/cms/skills')} type="button" className="btn butt-red butt-sm">إغلاق</button>
+                        <button onClick={() => router.push('/tw-admin/cms/skills')} type="button" className="btn butt-red butt-sm">إغلاق</button>
                         <button type="submit" className="btn butt-primary butt-sm">حفظ التغييرات</button>
                     </div>
                 </form>

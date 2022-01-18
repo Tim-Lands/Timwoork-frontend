@@ -89,7 +89,7 @@ export default function EditCategory(): ReactElement {
             // Authentication was successful.
             if (res.status == 201 || res.status == 200 || res.status == 202 || res.status == 203) {
                 //alert('تمت الإضافة بنجاح')
-                router.push('/dashboard/cms/categories')
+                router.push('/tw-admin/cms/categories')
             } else {
                 alert('Error')
             }
@@ -104,7 +104,7 @@ export default function EditCategory(): ReactElement {
                 <div className="panel-modal-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">add_box</span>إضافة جديد</h2>
                     <div className="panel-modal-left-tools">
-                        <button onClick={() => router.push('/dashboard/cms/categories')} className="close-modal">
+                        <button onClick={() => router.push('/tw-admin/cms/categories')} className="close-modal">
                             <span className="material-icons material-icons-outlined">close</span>
                         </button>
                     </div>

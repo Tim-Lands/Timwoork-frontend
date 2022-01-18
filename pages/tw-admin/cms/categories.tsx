@@ -104,7 +104,7 @@ function Categories(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>
                                         <p className="with-icon">
-                                            <Link href={"/dashboard/cms/category/" + e.id}>
+                                            <Link href={"/tw-admin/cms/category/" + e.id}>
                                                 <a>
                                                     <span className="material-icons material-icons-outlined">{e.icon}</span>
                                                     {e.name_ar}
@@ -113,7 +113,7 @@ function Categories(): ReactElement {
                                         </p>
                                     </td>
                                     <td className="tools-col">
-                                        <Link href={`/dashboard/cms/category/edit/${e.id}`}>
+                                        <Link href={`/tw-admin/cms/category/edit/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>

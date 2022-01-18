@@ -94,7 +94,7 @@ function index(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
                                     <td className="tools-col">
-                                        <Link href={`/dashboard/cms/edit/tags/${e.id}`}>
+                                        <Link href={`/tw-admin/cms/edit/tags/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>

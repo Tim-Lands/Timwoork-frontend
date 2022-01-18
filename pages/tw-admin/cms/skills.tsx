@@ -96,7 +96,7 @@ function Skills(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
                                     <td className="tools-col">
-                                        <Link href={`/dashboard/cms/edit/skills/${e.id}`}>
+                                        <Link href={`/tw-admin/cms/edit/skills/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>

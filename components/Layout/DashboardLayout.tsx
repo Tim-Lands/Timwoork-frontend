@@ -9,10 +9,6 @@ import API from '../../config'
 import Cookies from 'js-cookie'
 
 function DashboardLayout(props: any) {
-  const [isDarken, setIsDarken] = useState(false)
-  const setIsDarkenHandle = () => {
-    setIsDarken(!isDarken)
-  }
   const token = Cookies.get('token_dash')
 
   const [isSidebarShowen, setIsSidebarShowen] = useState(false)
@@ -25,13 +21,13 @@ function DashboardLayout(props: any) {
         headers: { Authorization: `Bearer ${token}` }
       }).then((r: any) => r.data)
     }}>
-    <div className={'is-dashboard ' + (isDarken ? 'is-dark' : '')}>
+    <div className='is-dashboard'>
       <div className="clearflex">
         <div className={"right-column" + (isSidebarShowen ? ' hidden' : '')}>
           <Sidebar />
         </div>
         <div className={"left-column" + (isSidebarShowen ? ' full-width' : '')}>
-          <Navbar setIsSidebarShowenHandle={setIsSidebarShowenHandle} isDarken={isDarken} setIsDarkenHandle={setIsDarkenHandle} />
+          <Navbar setIsSidebarShowenHandle={setIsSidebarShowenHandle} />
           <div className="timlands-dashboard-content">
             {props.children}
           </div>

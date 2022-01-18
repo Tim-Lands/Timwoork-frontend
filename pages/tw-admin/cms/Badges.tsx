@@ -104,7 +104,7 @@ function Badges(): ReactElement {
                                     <td>{e.name_ar}</td>
                                     <td>{e.precent_deducation}%</td>
                                     <td className="tools-col">
-                                        <Link href={"/dashboard/cms/edit/badges/" + e.id}>
+                                        <Link href={"/tw-admin/cms/edit/badges/" + e.id}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>

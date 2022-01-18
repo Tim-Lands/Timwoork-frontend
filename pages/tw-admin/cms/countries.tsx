@@ -107,7 +107,7 @@ function Countries(): ReactElement {
                                     </td>
                                     <td>{e.code_phone}</td>
                                     <td className="tools-col">
-                                        <Link href={`/dashboard/cms/category/edit/${e.id}`}>
+                                        <Link href={`/tw-admin/cms/category/edit/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>
