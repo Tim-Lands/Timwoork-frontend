@@ -93,8 +93,6 @@ function Overview({ query }) {
                                 enableReinitialize={true}
                                 validationSchema={SignupSchema}
                                 onSubmit={async values => {
-                                    console.log(values)
-                                    
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {

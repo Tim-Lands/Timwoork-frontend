@@ -359,7 +359,6 @@ const User = ({ query }) => {
                                                     </div>
                                                     <div className="col-sm-2">
                                                         <button className="btn butt-md butt-primary" disabled={uploading} onClick={() => uploadProject(ShowItem.data.id)}>رفع</button>
-
                                                     </div>
                                                 </div>
                                             </>

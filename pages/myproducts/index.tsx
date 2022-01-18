@@ -18,7 +18,7 @@ import { Menu } from 'antd';
 function index() {
     const token = Cookies.get('token')
     const [statusType, setStatusType] = useState('')
-    
+
     function statusProduct(status: any) {
         switch (status) {
             case null:
@@ -90,6 +90,33 @@ function index() {
             }
         })
     }
+    const disactiveProductHandle = async (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+        try {
+            const res = await API.post(`api/my_products/${id}/disactive_product`, null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                swalWithBootstrapButtons.fire(
+                    'تم التعطيل!',
+                    'لقد تم تعطيل هذه الخدمة بنجاح',
+                    'success'
+                )
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
@@ -113,7 +140,7 @@ function index() {
     return (
         <div className="py-3">
             {!token && <Unauthorized />}
-            
+
             {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
@@ -229,10 +256,11 @@ function index() {
                                                             <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
                                                         </Tooltip>
                                                         <Tooltip title="تعطيل هذه الخدمة">
-                                                            <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                            <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
                                                         </Tooltip>
+                                                        
                                                         <Tooltip title="تعديل الخدمة">
-                                                            <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => deleteHandle(e.id)} />
+                                                            <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} />
                                                         </Tooltip>
                                                     </td>
                                                 </tr>

@@ -4,16 +4,17 @@ import { message } from 'antd';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import Cookies from 'js-cookie'
-import Link from 'next/link'
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Unauthorized from '@/components/Unauthorized';
+import API from '../../config'
 
 function Complete({ query }) {
     const token = Cookies.get('token')
     const { data: getUser }: any = useSWR('api/me')
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+
     if (!query) return message.error('حدث خطأ')
     if (!token) return <Unauthorized />
     useEffect(() => {
@@ -27,6 +28,27 @@ function Complete({ query }) {
             }
         }
     }, [])
+    async function stepFive() {
+        try {
+            const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                message.success('لقد تم التحديث بنجاح')
+                router.push({
+                    pathname: '/myproducts',
+                    query: {
+                        id: query.id, // pass the id 
+                    },
+                })
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع');
+        }
+    }
     return (
         <>
             <MetaTags
@@ -94,11 +116,9 @@ function Complete({ query }) {
                                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                                     </p>
                                     <div className="add-butts">
-                                        <Link href="/myproducts">
-                                            <a className="btn butt-md butt-primary2">
-                                              الانتقال إلى خدماتي
-                                            </a>
-                                        </Link>
+                                            <button onClick={stepFive} className="btn butt-md butt-primary2">
+                                              نشر الخدمة
+                                            </button>
                                     </div>
 
                                 </div>

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Post from '@/components/Post/Post';
-import { message } from 'antd';
+import { message, Result } from 'antd';
 
 function index({ products, isError, isLoading }): ReactElement {
     if (isError) message.error('حدث خطأ أثناء جلب الخدمات')
@@ -53,22 +53,29 @@ function index({ products, isError, isLoading }): ReactElement {
         </div>
     )
     return (
-        <div className="row">
-            {products && products.map((e: any) => (
-                <div className="col-md-4" key={e.id}>
-                    <Post
-                        size="small"
-                        title={e.title}
-                        author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                        rate={e.ratings_avg_rating}
-                        price={e.price}
-                        slug={e.slug}
-                        thumbnail={e.thumbnail}
-                        buyers={e.count_buying}
-                    />
-                </div>
-            ))}
-        </div>
+        <>
+            <div className="row">
+                {products && products.map((e: any) => (
+                    <div className="col-md-4" key={e.id}>
+                        <Post
+                            size="small"
+                            title={e.title}
+                            author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                            rate={e.ratings_avg_rating}
+                            price={e.price}
+                            slug={e.slug}
+                            thumbnail={e.thumbnail}
+                            buyers={e.count_buying}
+                        />
+                    </div>
+                ))}
+            </div>
+            {products && products.length == 0 && <Result
+                status="404"
+                title="لا توجد خدمات"
+                subTitle="لا توجد خدمات لعرضها"
+            />}
+        </>
     )
 }
 export default index

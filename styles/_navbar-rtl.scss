@@ -140,6 +140,18 @@
                                         }
                                     }
                                 }
+                                &:last-child {
+                                    > a {
+                                        border-top: 2px dashed #ddd;
+                                        color: #777;
+                                        font-size: 13px;
+                                        padding: 15px 19px;
+                                        &:hover {
+                                            background-color: transparent;
+                                            color: #000;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

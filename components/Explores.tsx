@@ -25,7 +25,7 @@ function Explores() {
             setIsError(true)
             setIsLoading(false)
         }
-    }    
+    }
     const getSubcatsInitial = async () => {
         setIsLoading(true)
         try {
@@ -61,7 +61,7 @@ function Explores() {
             <div className="col-md-4 p-0">
                 <div className="main-explores">
                     <ul className="main-explore-items">
-                        {categories && categories.data.slice(0, 8).map((e: any, i) => (
+                        {categories && categories.data.slice(0, 7).map((e: any, i) => (
                             <motion.li initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id} className="main-item-category">
                                 <a onClick={() => getSubcats(e.id)}>
                                     <span className={"material-icons material-icons-outlined"}>{e.icon}</span>{e.name_ar}
@@ -69,6 +69,11 @@ function Explores() {
                                 </a>
                             </motion.li>
                         ))}
+                        <li className="main-item-category">
+                            <a href='/category'>
+                                مشاهدة كل التصنفات...
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

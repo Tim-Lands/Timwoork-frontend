@@ -94,6 +94,60 @@ export const loadUser = () => {
 };
 
 /**
+ * Dashboard Login functionality.
+ *
+ * @param {string} email
+ *   The email of the user.
+ * @param {string} password
+ *   The password of the user.
+ */
+ export const dashLogin = (email: string, password: string): any => {
+    return async (dispatch: CallableFunction) => {
+        try {
+            // Start loading.
+            dispatch({ type: types.START_LOGIN_LOADING });
+
+            const res = await API.post("dashboard/login", {
+                email,
+                password,
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                dispatch({
+                    type: types.LOGIN_SUCCESS,
+                });                
+                Cookies.set('token_dash', res.data.data);
+                router.push('/tw-admin')
+                
+            }
+        } catch (error: any) {
+            if (error.response && error.response.status === 422) {
+                return dispatch({
+                    type: types.LOGIN_ERROR,
+                    payload: "يرجى تعبئة البيانات",
+                });
+            }
+            if (error.response && error.response.status === 419) {
+                return dispatch({
+                    type: types.LOGIN_ERROR,
+                    payload: "العملية غير ناجحة",
+                });
+            }
+            if (error.response && error.response.status === 401) {
+                return dispatch({
+                    type: types.LOGIN_ERROR,
+                    payload: "المعلومات التي أدخلتها خاطئة",
+                });
+            } else {
+                return dispatch({
+                    type: types.LOGIN_ERROR,
+                    payload: "حدث خطأ غير متوقع",
+                });
+            }
+        }
+    };
+};
+/**
  * Login functionality.
  *
  * @param {string} username

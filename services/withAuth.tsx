@@ -2,14 +2,14 @@ import { useRouter } from "next/router";
 import Cookies from 'js-cookie'
 
 const withAuth = (WrappedComponent: any) => {
-    const token = Cookies.get('token')
+    const token = Cookies.get('token_dash')
     return (props: any) => {
         // checks whether we are on client / browser or server.
         if (typeof window !== "undefined") {
             const Router = useRouter();
             // If there is no access token we redirect to "/" page.
             if (!token) {
-                Router.replace("/login");
+                Router.replace("/tw-admin/login");
                 return null;
             }
             // If this is an accessToken we just render the component that was passed with all its props

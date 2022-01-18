@@ -5,12 +5,15 @@ import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
-
+import { SWRConfig } from 'swr'
+import API from '../../config'
+import Cookies from 'js-cookie'
 
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
+  const token = Cookies.get('token')
 
-  useEffect(() => { 
+  useEffect(() => {
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };
@@ -21,14 +24,20 @@ function Layout(props: any) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
   return (
-    <>
-      <Navbar />
-      <Spin tip="يرجى الإنتظار..." spinning={loading}>
-        {props.children}
-      </Spin>
+    <SWRConfig value={{
+      fetcher: async (url: string) => await API.get(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then((r: any) => r.data)
+    }}>
+      <div className="pt-5">
+        <Navbar />
+        <Spin tip="يرجى الإنتظار..." spinning={loading}>
+          {props.children}
+        </Spin>
 
-      <Footer />
-    </>
+        <Footer />
+      </div>
+    </SWRConfig>
   )
 }
 const mapStateToProps = (state: any) => ({

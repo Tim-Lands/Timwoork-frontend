@@ -7,6 +7,24 @@
 @import 'table-rtl';
 @import 'footer-rtl';
 
+@font-face {
+	font-family: 'jf';
+	src: url('/fonts/JF-Flat-light.ttf') format('truetype');
+	font-weight: 100;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'jf';
+	src: url('/fonts/JF-Flat-regular.ttf') format('truetype');
+	font-weight: 200;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'jf';
+	src: url('/fonts/JF-Flat-medium.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
 // Create Circular Center
 .circular-center {
     display: flex;
@@ -74,7 +92,7 @@ a, a:hover {
 }
 body {
     direction: rtl;
-    font-family: 'jf';
+    font-family: 'jf' !important;
     background-color: #f7f7f7;
 }
 .is-home {
@@ -3565,25 +3583,25 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 .social-link {
     &.bt-twitter {
         &:hover {
-            color: #fff;
+            color: #fff !important;
             background-color: rgb(27, 142, 219) !important;
         }
     }
     &.bt-youtube {
         &:hover {
-            color: #fff;
+            color: #fff !important;
             background-color: rgb(235, 20, 20) !important;
         }
     }
     &.bt-facebook {
         &:hover {
-            color: #fff;
+            color: #fff !important;
             background-color: rgb(16, 76, 165) !important;
         }
     }
     &.bt-linkedin {
         &:hover {
-            color: #fff;
+            color: #fff !important;
             background-color: rgb(43, 53, 87) !important;
         }
     }

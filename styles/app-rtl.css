@@ -772,6 +772,18 @@
   color: #000;
 }
 
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li:last-child > a {
+  border-top: 2px dashed #ddd;
+  color: #777;
+  font-size: 13px;
+  padding: 15px 19px;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li:last-child > a:hover {
+  background-color: transparent;
+  color: #000;
+}
+
 .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container {
   background-image: url("../public/cat-bg.png");
   background-position: 0 300px;
@@ -1575,6 +1587,27 @@
   color: #475C80;
 }
 
+@font-face {
+  font-family: 'jf';
+  src: url("/fonts/JF-Flat-light.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'jf';
+  src: url("/fonts/JF-Flat-regular.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'jf';
+  src: url("/fonts/JF-Flat-medium.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
 .circular-center {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1668,7 +1701,7 @@ a, a:hover {
 
 body {
   direction: rtl;
-  font-family: 'jf';
+  font-family: 'jf' !important;
   background-color: #f7f7f7;
 }
 
@@ -6143,22 +6176,22 @@ h3 {
 }
 
 .social-link.bt-twitter:hover {
-  color: #fff;
+  color: #fff !important;
   background-color: #1b8edb !important;
 }
 
 .social-link.bt-youtube:hover {
-  color: #fff;
+  color: #fff !important;
   background-color: #eb1414 !important;
 }
 
 .social-link.bt-facebook:hover {
-  color: #fff;
+  color: #fff !important;
   background-color: #104ca5 !important;
 }
 
 .social-link.bt-linkedin:hover {
-  color: #fff;
+  color: #fff !important;
   background-color: #2b3557 !important;
 }
 

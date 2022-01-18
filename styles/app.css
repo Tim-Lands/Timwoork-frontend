@@ -997,7 +997,7 @@
 
 .app-footer .app-footer-aside .aside-body .aside-list-items > li > a {
   color: #555;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .app-footer .app-footer-aside .aside-body .aside-list-items > li > a:hover {
@@ -1036,7 +1036,7 @@
 .app-footer .app-footer-aside .social-icons li a:hover {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-  color: #000;
+  color: #fff;
   background-color: #ddd;
 }
 
