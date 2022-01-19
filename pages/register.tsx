@@ -217,7 +217,7 @@ const Register = (props: any): ReactElement => {
                                                         {
                                                             passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
                                                         }
-                                                        
+
                                                     </button>
                                                     {errors.repassword && touched.repassword ?
                                                         <div style={{ overflow: 'hidden' }}>
