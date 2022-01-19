@@ -12,7 +12,7 @@ import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Tags from '../../components/Tags'
-
+   
 const SignupSchema = Yup.object().shape({
     title: Yup.string().trim().max(55, (obj) => {
         const valueLength = obj.value.length;
