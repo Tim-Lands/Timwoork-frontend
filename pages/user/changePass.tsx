@@ -101,13 +101,13 @@ function ChangePass() {
                                                         </div>
                                                     </div>
                                                     <div className="timlands-form">
-                                                        <label className="label-block" htmlFor="old_password">كلمة المرور القدية</label>
+                                                        <label className="label-block" htmlFor="old_password">كلمة المرور القديمة</label>
                                                         <Field
                                                             type="password"
                                                             id="old_password"
                                                             name="old_password"
                                                             disabled={isSubmitting}
-                                                            placeholder="كلمة المرور القدية"
+                                                            placeholder="كلمة المرور القديمة"
                                                             className="timlands-inputs"
                                                             autoComplete="off"
                                                         />
