@@ -181,14 +181,11 @@ export const login = (username: string, password: string): any => {
                         case 1:
                             router.push('/user/personalInformations')
                             break;
-                        case 2:
-                            router.push('/user/numberPhone')
-                            break;
                         default:
                             router.push('/')
                     }
                 } else {
-                    router.push('/emailConfig')
+                    router.push('/email/verification')
                 }
             }
         } catch (error: any) {
@@ -283,14 +280,20 @@ export const register = (email: string, password: string, username: string): any
  */
 export const logout = () => {
     return async (dispatch: CallableFunction) => {
-        Cookies.remove('token')
-        router.reload()
+        
         try {
-            const res = await API.post("api/logout");
+            const token = Cookies.get('token_dash')
+            const res = await API.post("api/logout", {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             if (res.status === 200) {
                 dispatch({
                     type: types.LOGOUT,
                 });
+                Cookies.remove('token_dash')
+                router.reload()
             }
         } catch (error) {
             //console.log(error);

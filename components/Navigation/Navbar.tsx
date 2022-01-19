@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.min.css';
 //import { isMobile } from 'react-device-detect';
 import { ReactElement, useState } from "react";
 import Menus from "./Menus";
 import Link from "next/link";
 import ImageLogo from "next/image";
-import logoIMG from '../../public/logo2.png'
+import logoIMG from '../../public/logo.png'
 import { motion } from 'framer-motion'
 import API from '../../config'
 import { connect } from "react-redux";

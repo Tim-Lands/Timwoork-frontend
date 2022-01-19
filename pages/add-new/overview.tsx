@@ -22,7 +22,7 @@ const SignupSchema = Yup.object().shape({
     tags: Yup.array().required('هذا الحقل إجباري'),
 });
 function Overview({ query }) {
-    
+
     //const [productTags, setProductTags] = useState([])
     const id = query.id
     const token = Cookies.get('token')

@@ -98,7 +98,7 @@ const Login = (props: any): ReactElement => {
                 {({ errors, touched }) => (
                     <Form>
                         <div className="row justify-content-md-center">
-                            <div className="col-lg-6 p-0">
+                            <div className="col-lg-5 p-0">
                                 {props.loginError && (
                                     <Alert type="danger">{props.loginError}</Alert>
                                 )}
