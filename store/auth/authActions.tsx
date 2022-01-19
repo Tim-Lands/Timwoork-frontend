@@ -117,6 +117,7 @@ export const loadUser = () => {
                     type: types.LOGIN_SUCCESS,
                 });                
                 Cookies.set('token_dash', res.data.data);
+                Cookies.set('_email', email); // just for chat
                 router.push('/tw-admin')
                 
             }

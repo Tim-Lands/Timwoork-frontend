@@ -34,7 +34,8 @@ const Login = (props: any): ReactElement => {
             // Authentication was successful.
             if (response.status === 200) {
                 Cookies.set('token', response.data.data.token)
-                Cookies.set('username', res.profileObj.email);
+                // Cookies.set('username', );
+                // Cookies.set('userID', )
 
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {
@@ -55,7 +56,7 @@ const Login = (props: any): ReactElement => {
             message.error('حدث خطأ غير متوقع')
         }
     };
-
+    
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };

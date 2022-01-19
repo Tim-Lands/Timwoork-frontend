@@ -7,18 +7,22 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Unauthorized from '@/components/Unauthorized';
 
-const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
-const Chats = () => {
+const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03"; 
     const token = Cookies.get('token');
-    const email = Cookies.get('username');
+    const email = Cookies.get('_email');
+    const username = Cookies.get('_username');
+    const id = Cookies.get('_userID');
+    const _secret = (email + id);
+const Chats = () => {
+
     if (!token) return <Unauthorized />
     async function getChat() {
         try {
             const res = await axios.get('https://api.chatengine.io/users/me', {
                 headers: {
                     "projectID": REACT_APP_CHAT_ENGINE_ID,
-                    "user-name": email,
-                    "user-secret": email,
+                    "user-name": username,
+                    "user-secret": _secret,
                 }
             })
             if (res.status === 200) {
@@ -32,6 +36,7 @@ const Chats = () => {
     useEffect(() => {
 
         getChat();
+
     })
 
     //chat component
@@ -43,8 +48,8 @@ const Chats = () => {
                     // project id from chat engine https://chatengine.io 
                     projectID={REACT_APP_CHAT_ENGINE_ID}
                     // user information
-                    userName={email}
-                    userSecret={email}
+                    userName={username}
+                    userSecret={_secret}
                 />
             </NoSsr>
         </div>

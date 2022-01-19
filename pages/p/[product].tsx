@@ -208,26 +208,35 @@ function Single({ query }) {
   // ^--------------------*-------- Create New Chat----------*-------------------------------
 
 
-  /* Create or get new chat between seller nand buyer
+  /* Create or get new chat between seller and buyer
   ~ Chat title: product title 
   */
-  const getOrCreateChat = (seller_Email: string) => {
+  const getOrCreateChat = (seller_Email: string, seller_ID: String, seller_username: string) => {
+    //for buyer
+    const email = Cookies.get('_email');
+    const username = Cookies.get('_username');
+    const id = Cookies.get('_userID');
+    //const _secret = (seller_Email+seller_ID).toString();
+    console.log(`username: ${username} --> id: ${id}`);
+    
 
+    
+    //for seller
+    const seller_secret = (seller_Email+seller_ID);
+    console.log(`seller_username: ${seller_username}  seller_secret: ${seller_secret} --> seller_ID: ${seller_ID}`);
     axios.put('https://api.chatengine.io/chats/',
-      { usernames: [seller_Email, Cookies.get('username')], 'title': ProductData && ProductData.data.title, is_direct_chat: true },
+      { usernames: [seller_username, username], 'title': ProductData && ProductData.data.title, is_direct_chat: true },
 
       {
         headers: {
           'Project-ID': REACT_APP_CHAT_ENGINE_ID,
-          'User-Name': seller_Email,
-          'User-Secret': seller_Email
+          'User-Name': seller_username,
+          'User-Secret': seller_secret
         }
       }
     )
       .catch((error) => console.log(error))
-    console.log("seeler email: " + seller_Email);
-    console.log("ProductData && ProductData.data.title: " + ProductData && ProductData.data.title)
-
+   
     router.push('/chat');// Go to chat page
 
 
@@ -404,7 +413,7 @@ function Single({ query }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
                                   </a>
                                 </Link>
-                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email)}>
+                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email,ProductData.data.profile_seller.profile.user.id,ProductData.data.profile_seller.profile.user.username)}>
                                   <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
                                 </a>
                               </div>

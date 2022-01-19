@@ -18,6 +18,18 @@ import router from "next/router";
 
 function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
+    const { data: userInfo }: any = useSWR('api/me')
+
+    //store username, email & userID in Cookies just for chat
+    if(token){
+        const email = userInfo && userInfo.user_details.email;
+        const username = userInfo && userInfo.user_details.username;
+        const userID = userInfo && userInfo.user_details.id;
+        Cookies.set('_email', email)
+        Cookies.set('_username', username)
+        Cookies.set('_userID', userID)
+
+    }
     const [isMenuShowen, setIsMenuShowen] = useState(true);
     const setIsMenuShowenHandle = () => {
         setIsMenuShowen(!isMenuShowen)
