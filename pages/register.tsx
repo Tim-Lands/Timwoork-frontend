@@ -233,7 +233,7 @@ const Register = (props: any): ReactElement => {
                                         <div className="timlands-form">
                                             <div style={{ overflow: 'hidden' }}>
                                                 <div className="timlands-form-note">
-                                                    <p className="text">بمجرد قمت بالضغط على زر التسجيل فأنت توافق على <Link href="/"><a>شروط الاستخدام</a></Link> و <Link href="/"><a>سياسة الخصوصية</a></Link></p>
+                                                    <p className="text">بمجرد قمت بالضغط على زر التسجيل فأنت توافق على <Link href="/terms"><a>شروط الاستخدام</a></Link> و <Link href="/privacy"><a>سياسة الخصوصية</a></Link></p>
                                                 </div>
                                             </div>
                                         </div>

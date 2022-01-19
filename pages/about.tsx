@@ -5,7 +5,6 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 function About() {
     return (
         <>
-        
             <div className="about-hero">
                 <div className="container">
                     <h1 className="title">
