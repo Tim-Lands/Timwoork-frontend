@@ -27,11 +27,12 @@ const Register = (props: any): ReactElement => {
                 last_name: res.profileObj.familyName,
                 full_name: res.profileObj.name,
                 avatar: res.profileObj.imageUrl,
-                provider_id: res.profileObj.googleId
+                provider_id: res.profileObj.googleId,
+                username:generateUsername(res.profileObj.email) 
             })
             // Authentication was successful.
             if (response.status === 200) {
-                Cookies.set('username', res.profileObj.email);
+                // Cookies.set('username', generateUsername(res.profileObj.email) );// just  for chat
                 Cookies.set('token', response.data.data.token)
 
                 message.success('تم تسجيل الدخول بنجاح')
@@ -53,6 +54,19 @@ const Register = (props: any): ReactElement => {
             message.error('حدث خطأ غير متوقع')
         }
     };
+    /* Generate username from email and random 4 numbers 
+     * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234 
+     * then the username= roqaia.alrfou31234
+    */ 
+   const generateUsername = (email: string) =>{
+
+    const result = email.indexOf("@");
+    const len = email.length;
+    const mystr = email.slice(result,len);
+    const removeData = email.replace(mystr,"");
+    const username = removeData + Math.floor(Math.random() * 100000);
+    return username
+   }
 
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
