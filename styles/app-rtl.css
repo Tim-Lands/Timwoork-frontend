@@ -615,6 +615,11 @@
   display: flex;
 }
 
+.timlands-navbar .logo-nav img {
+  height: 45px;
+  margin-top: 4px !important;
+}
+
 .timlands-navbar .toggle-nav {
   display: none;
 }
