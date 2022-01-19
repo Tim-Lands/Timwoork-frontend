@@ -3,20 +3,24 @@ import API from '../../../config';
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
+import Cookies from 'js-cookie'
 
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    
+    const token = Cookies.get('token_dash')
 
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await API.get('dashboard/products')
+            const res: any = await API.get('dashboard/products', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
             if (res) {
                 setIsLoading(false)
                 setPostsList(res.data.data)
-                console.log(res.data);
 
                 setIsError(false)
             }
@@ -99,10 +103,12 @@ function index(): ReactElement {
         }),
         hidden: { opacity: 0, y: 9 },
     }
-    const activateProduct = async (id : any) => {
+    const activateProduct = async (id: any) => {
         setIsLoading(true)
         try {
-            const res: any = await API.post(`dashboard/products/${id}/activeProduct`)
+            const res: any = await API.post(`dashboard/products/${id}/activeProduct`, {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
             if (res) {
                 setIsLoading(false)
                 setIsError(false)
@@ -113,10 +119,12 @@ function index(): ReactElement {
             setIsLoading(false)
         }
     }
-    const rejectProduct = async (id : any) => {
+    const rejectProduct = async (id: any) => {
         setIsLoading(true)
         try {
-            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`)
+            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
             if (res) {
                 setIsLoading(false)
                 setIsError(false)
@@ -166,7 +174,7 @@ function index(): ReactElement {
                                             </button> : ''
                                         }
 
-                                        <button  title="حذف هذه الخدمة" className="table-del error">
+                                        <button title="حذف هذه الخدمة" className="table-del error">
                                             <span className="material-icons material-icons-outlined">
                                                 delete
                                             </span>

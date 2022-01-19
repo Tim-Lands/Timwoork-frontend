@@ -42,15 +42,6 @@ function Levels(): ReactElement {
                         'لقد تم حذف هذا العنصر بنجاح',
                         'success'
                     )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'ملغى',
-                        'تم الإلغاء',
-                        'error'
-                    )
                 }
             })
 
@@ -101,7 +92,7 @@ function Levels(): ReactElement {
                             {GetData && GetData.data.map((e: any, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
-                                    <td>{e.type == 0 ? 'مشتري' : 'بائع'}</td>
+                                    <td>{e.type !== 0 ? 'مشتري' : 'بائع'}</td>
                                     <td className="tools-col">
                                         <button className="table-del success">
                                             <span className="material-icons material-icons-outlined">edit</span>

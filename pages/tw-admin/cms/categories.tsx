@@ -45,15 +45,6 @@ function Categories(): ReactElement {
                     'لقد تم حذف هذا العنصر بنجاح',
                     'success'
                 )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
             }
         })
 
