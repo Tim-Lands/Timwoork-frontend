@@ -7,7 +7,7 @@ import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
-import SupportEngine from '@/components/SupportChat/SupportEngine';
+//import SupportEngine from '@/components/SupportChat/SupportEngine';
 import Cookies from 'js-cookie'
 
 function Home() {
@@ -70,8 +70,6 @@ function Home() {
           />
         </div>
       }
-      <SupportEngine />
-
     </>
   );
 }
