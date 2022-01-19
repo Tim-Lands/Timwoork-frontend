@@ -87,8 +87,8 @@ function ChangePass() {
                                                 } else {
                                                     message.error("حدث خطأ غير متوقع")
                                                 }
-                                            }
-                                        }}>
+                                            } // 
+                                        }}>       
                                         {({ errors, touched, isSubmitting }) => (
                                             <Form>
                                                 <div className="profile-content-body">
