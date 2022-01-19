@@ -213,7 +213,6 @@ function Single({ query }) {
   */
   const getOrCreateChat = (seller_Email: string, seller_ID: String, seller_username: string) => {
     //for buyer
-    const email = Cookies.get('_email');
     const username = Cookies.get('_username');
     const id = Cookies.get('_userID');
     //const _secret = (seller_Email+seller_ID).toString();

@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout/HomeLayout'
 import { ReactElement } from "react";
 import { MetaTags } from '@/components/SEO/MetaTags'
-import { Result, Button } from 'antd';
+import { Result } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import router from 'next/router'
 

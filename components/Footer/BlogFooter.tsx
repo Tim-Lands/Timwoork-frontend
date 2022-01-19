@@ -1,5 +1,5 @@
 import React from 'react'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import Link from 'next/link'
 
 function BlogFooter() {
@@ -12,7 +12,7 @@ function BlogFooter() {
         <div className="aside-body">
             <ul className="aside-list-items">
                 { getPosts && getPosts.map((item : any) => (
-                    <li>
+                    <li key={item.id}>
                         <Link href={`blog/${item.slug}`}>
                             <a>{ item.title.rendered }</a>
                         </Link>

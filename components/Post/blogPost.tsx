@@ -20,25 +20,31 @@ function Post({
     }
     return (
         <div className={"timlands-post-item" + sizeClass()}>
-            <a href={`/blog/${slug}`}>
-                <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
-            </a>
+            <Link href={`/blog/${slug}`}>
+                <a>
+                    <div className="post-item-img" style={{ backgroundImage: thumbnailUrl }}></div>
+                </a>
+            </Link>
             <div className="post-item-content">
                 <h3 className="title">
-                    <a href={`/blog/${slug}`}>
-                        {title}
-                    </a>
+                    <Link href={`/blog/${slug}`}>
+                        <a href={`/blog/${slug}`}>
+                            {title}
+                        </a>
+                    </Link>
                 </h3>
                 <ul className="nav post-meta">
-                    <li className="post-meta-user" dangerouslySetInnerHTML={{__html: excerpt}}>
+                    <li className="post-meta-user" dangerouslySetInnerHTML={{ __html: excerpt }}>
                     </li>
                 </ul>
             </div>
             <div className="post-item-footer">
                 <p className="post-meta-bayer">
-                    <a href={`/blog/${slug}`} className='btn butt-xs butt-primary'>
-                        قراءة المزيد  
-                    </a>
+                    <Link href={`/blog/${slug}`}>
+                        <a href={`/blog/${slug}`} className='btn butt-xs butt-primary'>
+                            قراءة المزيد
+                        </a>
+                    </Link>
                 </p>
             </div>
         </div>

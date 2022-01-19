@@ -1,9 +1,9 @@
 
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import "antd/dist/antd.min.css";
 import { MetaTags } from '@/components/SEO/MetaTags'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Post from '@/components/Post/blogPost';
@@ -87,10 +87,10 @@ const User = ({ query }) => {
     )
 };
 
-function ltrDateFormatted (theDate) {
+/*function ltrDateFormatted (theDate) {
     let date = new Date(theDate)
     return `${date.getDate() < 9 ? '0' + date.getDate() : date.getDate()}/${date.getMonth() + 1 < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getFullYear()}`
-}
+}*/
 
 function rtlDateFormatted (theDate) {
     return theDate.split('T')[0]
