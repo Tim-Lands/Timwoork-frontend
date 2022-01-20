@@ -300,16 +300,6 @@ function Overview({ query }) {
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
-                                                            {/*<Popconfirm
-                                                                title="هل تريد حقا إلغاء هذه الخدمة"
-                                                                onConfirm={deleteProduct}
-                                                                okText="نعم"
-                                                                cancelText="لا"
-                                                            >
-                                                                <button type="button" className="btn butt-red me-auto butt-sm">
-                                                                    إلغاء الأمر
-                                                                </button>
-                                                            </Popconfirm>*/}
                                                             <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">حفظ التغييرات</span>
                                                             </button>

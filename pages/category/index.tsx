@@ -2,8 +2,9 @@ import React, { ReactElement } from 'react'
 import Layout from '@/components/Layout/HomeLayout'
 import useSWR from 'swr'
 import Loading from '@/components/Loading'
+import Link from 'next/link'
 function index() {
-    const { data: subCategories }: any = useSWR(`dashboard/categories`)
+    const { data: categories }: any = useSWR(`dashboard/categories`)
     return (
         <div className="row py-4 justify-content-center">
             <div className="col-md-9">
@@ -14,11 +15,26 @@ function index() {
                         </h3>
                     </div>
                     <div className="app-bill-content">
-                        {!subCategories && <Loading />}
+                        {!categories && <Loading />}
                         <div className="row">
-                            <div className="col-md-3">
-
-                            </div>
+                            {categories && categories.data.map((e: any) => (
+                                <div className="col-md-3" key={e.id}>
+                                    <div className="category-item">
+                                        <div className="category-item-title">
+                                            <h3 className="title"><span className={"material-icons material-icons-outlined"}>{e.icon}</span> {e.name_ar}</h3>
+                                        </div>
+                                        <ul className="category-item-content">
+                                            {e.subcategories && e.subcategories.map((item: any) => (
+                                                <li key={item.id}>
+                                                    <Link href={`/category/${item.id}`}>
+                                                        {item.name_ar}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

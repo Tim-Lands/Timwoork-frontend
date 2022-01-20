@@ -105,14 +105,14 @@ function Single({ query }) {
     <Menu>
       {ProductData &&
         <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
-          <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fforum-wazzfny.com%2Fp%2F${ProductData.data.developments}`}>
+          <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=https://timwoork.com/p/${ProductData.data.title}`}>
             المشاركة على الفيسبووك
           </a>
         </Menu.Item>
       }
       {ProductData &&
         <Menu.Item key="2" icon={<i className="fa fa-facebook"></i>}>
-          <a target="_blank" rel="noreferrer" href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Fforum-wazzfny.com%2Fp%2F${ProductData.data.developments}&text=`}>
+          <a target="_blank" rel="noreferrer" href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.data.title}&text=`}>
             المشاركة على التويتر
           </a>
         </Menu.Item>
@@ -269,8 +269,8 @@ function Single({ query }) {
           title={ProductData.data.title + ' - تيموورك'}
           metaDescription={ProductData.data.content}
           ogDescription={ProductData.data.content}
-          ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData.data.thumbnail}
-          ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData.data.thumbnail}
+          ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
+          ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
         />
       }
       {ProductData &&
