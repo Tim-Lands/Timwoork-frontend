@@ -1,5 +1,4 @@
 import Layout from '@/components/Layout/DashboardLayout'
-import Notification from '@/components/Notification'
 import { ReactElement } from "react";
 
 function index() {
@@ -9,11 +8,6 @@ function index() {
                 <div className="col-md-6">
                     <div className="notifications-panel">
                         <div className="list-group">
-                            <Notification />
-                            <Notification />
-                            <Notification />
-                            <Notification />
-                            <Notification />
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,6 @@ import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
-
 const SignupSchema = Yup.object().shape({
     title: Yup.string().trim().max(55, (obj) => {
         const valueLength = obj.value.length;
