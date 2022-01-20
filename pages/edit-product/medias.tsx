@@ -5,12 +5,12 @@ import API from "../../config";
 import ImageUploading from "react-images-uploading";
 import { motion } from 'framer-motion';
 import router from 'next/router';
-import SidebarAdvices from './SidebarAdvices';
 import { message } from 'antd';
 import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
 import PropTypes from "prop-types";
 import { Alert } from '@/components/Alert/Alert';
+import Link from 'next/link'
 
 function Medias({ query }) {
     const id = query.id
@@ -45,17 +45,6 @@ function Medias({ query }) {
             }
         }
     }, [])
-    /*const props = {
-        beforeUpload: file => {
-            if (file.type !== 'application/pdf') {
-                message.error(`${file.name} is not a png file`);
-            }
-            return file.type === 'application/pdf' ? true : Upload.LIST_IGNORE;
-        },
-        onChange: info => {
-            console.log(info.fileList);
-        },
-    };*/
     const [url_video, setVideourl] = useState('')
     const handleSetVideourl = (e: any) => {
         setVideourl(e.target.value)
@@ -95,12 +84,6 @@ function Medias({ query }) {
                 setLoading(false)
                 message.success('لقد تم التحديث بنجاح')
                 mutate(`api/product/${query.id}`)
-                router.push({
-                    pathname: '/add-new/complete',
-                    query: {
-                        id: id, // pass the id 
-                    },
-                })
             }
         } catch (error: any) {
             setLoading(false)
@@ -127,52 +110,56 @@ function Medias({ query }) {
     return (
         <div className="container-fluid">
             {token &&
-                <div className="row">
-                    <div className="col-md-4">
-                        <SidebarAdvices />
-                    </div>
+                <div className="row justify-content-md-center">
                     <div className="col-md-8 pt-3">
                         <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
                             <div className="timlands-steps">
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">collections_bookmark</span>
-                                        </span>
-                                        معلومات عامة
+                                        <Link href={`/edit-product/overview?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                                                </span>
+                                                معلومات عامة
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">payments</span>
-                                        </span>
-                                        السعر والتطويرات
+                                        <Link href={`/edit-product/prices?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">payments</span>
+                                                </span>
+                                                السعر والتطويرات
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">description</span>
-                                        </span>
-                                        الوصف وتعليمات المشتري
+                                        <Link href={`/edit-product/description?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">description</span>
+                                                </span>
+                                                الوصف وتعليمات المشتري
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                                 <div className="timlands-step-item active">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">mms</span>
-                                        </span>
-                                        مكتبة الصور والملفات
-                                    </h3>
-                                </div>
-                                <div className="timlands-step-item">
-                                    <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">publish</span>
-                                        </span>
-                                        نشر الخدمة
+                                        <Link href={`/edit-product/medias?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">mms</span>
+                                                </span>
+                                                مكتبة الصور والملفات
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                             </div>
@@ -180,12 +167,8 @@ function Medias({ query }) {
                                 <div className="flex-center">
                                     <h2 className="title"><span className="material-icons material-icons-outlined">mms</span>مكتبة الصور والملفات</h2>
                                     <div className={"header-butt"}>
-                                        <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out mr-auto butt-xs">
-                                            <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
-                                            <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                        </button>
                                         <button type="submit" disabled={loading} onClick={loadImagesHandle} className="btn flex-center butt-green mr-auto butt-xs">
-                                            <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
+                                            <span className="text">حفظ التغييرات</span>
                                             <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                         </button>
                                     </div>
@@ -349,12 +332,8 @@ function Medias({ query }) {
 
                             <div className="col-md-12">
                                 <div className="py-4 d-flex">
-                                    <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out me-auto butt-xs">
-                                        <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
-                                        <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                    </button>
                                     <button type="submit" disabled={loading} className="btn flex-center butt-green ml-auto butt-sm">
-                                        <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
+                                        <span className="text">حفظ التغييرات</span>
                                     </button>
                                 </div>
                             </div>

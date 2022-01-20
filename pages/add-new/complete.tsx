@@ -17,11 +17,28 @@ function Complete({ query }) {
 
     if (!query) return message.error('حدث خطأ')
     if (!token) return <Unauthorized />
+    async function getProductId() {
+        try {
+            const res: any = await API.get(`api/my_products/product/${query.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 422) {
+                router.push("/add-new")
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 422) {
+                router.push("/add-new")
+            }
+        }
+    }
     useEffect(() => {
         if (!token) {
             router.push('/login')
             return
         }
+        getProductId()
         if (getProduct && getUser) {
             if (getProduct.profile_seller_id !== getUser.id) {
                 router.push('/add-new')
@@ -116,9 +133,9 @@ function Complete({ query }) {
                                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                                     </p>
                                     <div className="add-butts">
-                                            <button onClick={stepFive} className="btn butt-md butt-primary2">
-                                              نشر الخدمة
-                                            </button>
+                                        <button onClick={stepFive} className="btn butt-md butt-primary2">
+                                            نشر الخدمة
+                                        </button>
                                     </div>
 
                                 </div>

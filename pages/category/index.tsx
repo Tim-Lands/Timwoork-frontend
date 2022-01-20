@@ -3,7 +3,7 @@ import Layout from '@/components/Layout/HomeLayout'
 import useSWR from 'swr'
 import Loading from '@/components/Loading'
 function index() {
-    const { data: subCategories }: any = useSWR(`api/get_categories`)
+    const { data: subCategories }: any = useSWR(`dashboard/categories`)
     return (
         <div className="row py-4 justify-content-center">
             <div className="col-md-9">
@@ -15,6 +15,11 @@ function index() {
                     </div>
                     <div className="app-bill-content">
                         {!subCategories && <Loading />}
+                        <div className="row">
+                            <div className="col-md-3">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

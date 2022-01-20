@@ -258,9 +258,16 @@ function index() {
                                                         <Tooltip title="تعطيل هذه الخدمة">
                                                             <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
                                                         </Tooltip>
-                                                        
+
                                                         <Tooltip title="تعديل الخدمة">
-                                                            <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} />
+                                                            <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => {
+                                                                router.push({
+                                                                    pathname: '/edit-product/overview',
+                                                                    query: {
+                                                                        id: e.id, // pass the id 
+                                                                    },
+                                                                })
+                                                            }} />
                                                         </Tooltip>
                                                     </td>
                                                 </tr>

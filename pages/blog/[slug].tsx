@@ -16,20 +16,20 @@ const User = ({ query }) => {
     const { data: getAds }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/media?include=28,29`)
     return (
         <>
-            { !getPosts && <Loading /> }
-            { getPosts && 
+            {!getPosts && <Loading />}
+            {getPosts &&
                 <>
                     <MetaTags
-                    title={getPosts[0].title.rendered}
-                    metaDescription={getPosts[0].yoast_head_json.description}
-                    ogDescription={getPosts[0].yoast_head_json.description} />
+                        title={getPosts[0].title.rendered}
+                        metaDescription={getPosts[0].yoast_head_json.description}
+                        ogDescription={getPosts[0].yoast_head_json.description} />
 
                     <article className="py-5">
                         <div className="container">
                             <header>
                                 <div className="row" style={{ alignItems: 'center' }}>
                                     <div className="col-10">
-                                        <h1 className="mb-0" style={{ fontSize: '2em' }}>{getPosts[0].title.rendered}</h1>
+                                        <h1 className="mb-0" style={{ fontSize: 30, fontWeight: 'bold' }}>{getPosts[0].title.rendered}</h1>
                                     </div>
                                     <div className="col-2">
                                         <span>نُشرت في</span>
@@ -43,14 +43,14 @@ const User = ({ query }) => {
                                     <Image
                                         src={getPosts[0].jetpack_featured_media_url}
                                     />
-                                    <div className="mt-3" style={{ lineHeight: '2' }} dangerouslySetInnerHTML={{__html: getPosts[0].content.rendered}}></div>
+                                    <div className="blog-single-content mt-3" style={{ lineHeight: 2, fontSize: 20,  }} dangerouslySetInnerHTML={{ __html: getPosts[0].content.rendered }}></div>
                                     <Divider />
                                     <h3>مقالات ذات صلة:</h3>
-                                    { !getSamePosts && <Loading /> }
+                                    {!getSamePosts && <Loading />}
                                     <div className="row">
-                                        { getSamePosts && getSamePosts.map((item : any) => (
+                                        {getSamePosts && getSamePosts.map((item: any) => (
                                             <div className="col-md-4" key={item.id}>
-                                                <Post 
+                                                <Post
                                                     title={item.title.rendered.length > 22 ? item.title.rendered.substring(0, 22) + '...' : item.title.rendered}
                                                     thumbnail={item.jetpack_featured_media_url}
                                                     size={'small'}
@@ -58,22 +58,22 @@ const User = ({ query }) => {
                                                     excerpt={item.excerpt.rendered.substring(0, 100) + '...'}
                                                 />
                                             </div>
-                                        )) }
+                                        ))}
                                     </div>
-                                    { getSamePosts && getSamePosts.length == 0 && 
+                                    {getSamePosts && getSamePosts.length == 0 &&
                                         <p>لا يوجد مقالات ذات صلة الآن.</p>
-                                    } 
+                                    }
                                 </div>
 
                                 <div className="col-md-4">
-                                    { !getAds && <Loading /> }
-                                    { getAds && getAds.map((item : any) => (
+                                    {!getAds && <Loading />}
+                                    {getAds && getAds.map((item: any) => (
                                         <div key={item.id}>
                                             <Image
                                                 src={item.link}
                                             />
                                         </div>
-                                    )) }
+                                    ))}
 
                                 </div>
                             </div>
@@ -81,8 +81,8 @@ const User = ({ query }) => {
                         </div>
                     </article>
                 </>
-            } 
-            
+            }
+
         </>
     )
 };
@@ -92,7 +92,7 @@ const User = ({ query }) => {
     return `${date.getDate() < 9 ? '0' + date.getDate() : date.getDate()}/${date.getMonth() + 1 < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}/${date.getFullYear()}`
 }*/
 
-function rtlDateFormatted (theDate) {
+function rtlDateFormatted(theDate) {
     return theDate.split('T')[0]
 }
 

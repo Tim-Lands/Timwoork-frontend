@@ -10,14 +10,19 @@ import { motion } from "framer-motion";
 import { Alert } from '@/components/Alert/Alert';
 import useSWR from 'swr'
 import { message } from 'antd';
+import Cookies from 'js-cookie'
 
 function EmailConfig(props: any) {
     const { data: userInfo }: any = useSWR('api/me')
     //if (!userInfo) return console.log(userInfo)
     const email_verified = userInfo && userInfo.user_details.email_verified_at
+    const token = Cookies.get('token')
 
     useEffect(() => {
-        if (email_verified) {
+        if (!token) {
+            router.push('/login')
+        }
+        if (email_verified !== null) {
             router.push('/')
         }
     }, [email_verified])

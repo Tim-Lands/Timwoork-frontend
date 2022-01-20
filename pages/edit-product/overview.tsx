@@ -4,13 +4,13 @@ import { Field, Form, Formik, FieldArray } from 'formik';
 import { message } from 'antd';
 import { motion } from 'framer-motion';
 import router from 'next/router';
-import SidebarAdvices from './SidebarAdvices';
 import Cookies from 'js-cookie'
 import * as Yup from 'yup';
 import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
+import Link from 'next/link'
 
 const SignupSchema = Yup.object().shape({
     title: Yup.string().trim().max(55, (obj) => {
@@ -60,24 +60,6 @@ function Overview({ query }) {
             }
         }
     }, [])
-    /* const setTagsStateHandle = (e) => {
-         setTagsState(e)
-     }
-    const deleteProduct = async () => {
-        try {
-            const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status == 200) {
-                message.success('لقد تم الحذف بنجاح')
-                router.push("/add-new")
-            }
-        } catch (error) {
-            message.error('للأسف لم يتم الحذف ')
-        }
-    }*/
     return (
         <>
             <MetaTags
@@ -88,10 +70,7 @@ function Overview({ query }) {
             {token &&
                 <div className="container-fluid">
                     {(!getProduct) && <div>يرجى الانتظار...</div>}
-                    <div className="row">
-                        <div className="col-md-4">
-                            <SidebarAdvices />
-                        </div>
+                    <div className="row justify-content-md-center">
                         <div className="col-md-8 pt-3">
                             <Formik
                                 isInitialValid={true}
@@ -113,12 +92,6 @@ function Overview({ query }) {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
-                                            router.push({
-                                                pathname: '/add-new/prices',
-                                                query: {
-                                                    id: id, // pass the id 
-                                                },
-                                            })
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.data && error.response.data.errors.title) {
@@ -137,43 +110,50 @@ function Overview({ query }) {
                                             <div className="timlands-steps">
                                                 <div className="timlands-step-item active">
                                                     <h3 className="text">
-                                                        <span className="icon-circular">
-                                                            <span className="material-icons material-icons-outlined">collections_bookmark</span>
-                                                        </span>
-                                                        معلومات عامة
+                                                        <Link href={`/edit-product/overview?id=${id}`}>
+                                                            <a>
+                                                                <span className="icon-circular">
+                                                                    <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                                                                </span>
+                                                                معلومات عامة
+                                                            </a>
+                                                        </Link>
                                                     </h3>
                                                 </div>
                                                 <div className="timlands-step-item">
                                                     <h3 className="text">
-
-                                                        <span className="icon-circular">
-                                                            <span className="material-icons material-icons-outlined">payments</span>
-                                                        </span>
-                                                        السعر والتطويرات
+                                                        <Link href={`/edit-product/prices?id=${id}`}>
+                                                            <a>
+                                                                <span className="icon-circular">
+                                                                    <span className="material-icons material-icons-outlined">payments</span>
+                                                                </span>
+                                                                السعر والتطويرات
+                                                            </a>
+                                                        </Link>
                                                     </h3>
                                                 </div>
                                                 <div className="timlands-step-item">
                                                     <h3 className="text">
-                                                        <span className="icon-circular">
-                                                            <span className="material-icons material-icons-outlined">description</span>
-                                                        </span>
-                                                        الوصف وتعليمات المشتري
+                                                        <Link href={`/edit-product/description?id=${id}`}>
+                                                            <a>
+                                                                <span className="icon-circular">
+                                                                    <span className="material-icons material-icons-outlined">description</span>
+                                                                </span>
+                                                                الوصف وتعليمات المشتري
+                                                            </a>
+                                                        </Link>
                                                     </h3>
                                                 </div>
                                                 <div className="timlands-step-item">
                                                     <h3 className="text">
-                                                        <span className="icon-circular">
-                                                            <span className="material-icons material-icons-outlined">mms</span>
-                                                        </span>
-                                                        مكتبة الصور والملفات
-                                                    </h3>
-                                                </div>
-                                                <div className="timlands-step-item">
-                                                    <h3 className="text">
-                                                        <span className="icon-circular">
-                                                            <span className="material-icons material-icons-outlined">publish</span>
-                                                        </span>
-                                                        نشر الخدمة
+                                                        <Link href={`/edit-product/medias?id=${id}`}>
+                                                            <a>
+                                                                <span className="icon-circular">
+                                                                    <span className="material-icons material-icons-outlined">mms</span>
+                                                                </span>
+                                                                مكتبة الصور والملفات
+                                                            </a>
+                                                        </Link>
                                                     </h3>
                                                 </div>
                                             </div>
@@ -182,7 +162,7 @@ function Overview({ query }) {
                                                     <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>معلومات عامة</h2>
                                                     <div className={"header-butt" + (isSubmitting ? ' is-loader' : '')}>
                                                         <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
-                                                            <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
+                                                            <span className="text">حفظ التغييرات</span>
                                                             <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                                         </button>
                                                     </div>
@@ -330,12 +310,8 @@ function Overview({ query }) {
                                                                     إلغاء الأمر
                                                                 </button>
                                                             </Popconfirm>*/}
-                                                            <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out me-auto butt-xs">
-                                                                <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
-                                                                <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                                            </button>
                                                             <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
-                                                                <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
+                                                                <span className="text">حفظ التغييرات</span>
                                                             </button>
                                                         </div>
                                                     </div>

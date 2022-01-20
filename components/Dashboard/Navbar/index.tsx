@@ -37,7 +37,5 @@ function index({ setIsSidebarShowenHandle }: any): ReactElement {
 
 export default index
 index.propTypes = {
-    setIsDarkenHandle: PropTypes.func,
     setIsSidebarShowenHandle: PropTypes.func,
-    isDarken: PropTypes.bool,
-};
+}

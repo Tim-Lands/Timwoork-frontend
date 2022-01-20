@@ -207,21 +207,16 @@ function Single({ query }) {
   };
   // ^--------------------*-------- Create New Chat----------*-------------------------------
 
-
   /* Create or get new chat between seller and buyer
   ~ Chat title: product title 
   */
   const getOrCreateChat = (seller_Email: string, seller_ID: String, seller_username: string) => {
     //for buyer
     const username = Cookies.get('_username');
-    const id = Cookies.get('_userID');
+    //const id = Cookies.get('_userID');
     //const _secret = (seller_Email+seller_ID).toString();
-    console.log(`username: ${username} --> id: ${id}`);
-    
-
-    
     //for seller
-    const seller_secret = (seller_Email+seller_ID);
+    const seller_secret = (seller_Email + seller_ID);
     console.log(`seller_username: ${seller_username}  seller_secret: ${seller_secret} --> seller_ID: ${seller_ID}`);
     axios.put('https://api.chatengine.io/chats/',
       { usernames: [seller_username, username], 'title': ProductData && ProductData.data.title, is_direct_chat: true },
@@ -235,7 +230,7 @@ function Single({ query }) {
       }
     )
       .catch((error) => console.log(error))
-   
+
     router.push('/chat');// Go to chat page
 
 
@@ -412,7 +407,7 @@ function Single({ query }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
                                   </a>
                                 </Link>
-                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email,ProductData.data.profile_seller.profile.user.id,ProductData.data.profile_seller.profile.user.username)}>
+                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email, ProductData.data.profile_seller.profile.user.id, ProductData.data.profile_seller.profile.user.username)}>
                                   <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
                                 </a>
                               </div>
@@ -529,7 +524,9 @@ function Single({ query }) {
                     <div className="panel-aside-header">
                       <ul className="nav top-aside-nav">
                         <li className="delevr-time me-auto">
-                          <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
+                          <span
+                            className="material-icons material-icons-outlined"
+                          >timer</span> مدة التسليم: {durationFunc()}
                         </li>
                         <li className="cat-post ml-auto">
                           <Dropdown overlay={menu}>
@@ -540,14 +537,22 @@ function Single({ query }) {
                         </li>
                       </ul>
                     </div>
-                    <div className="row mx-auto py-2">
-                      <div className="col-7">
-                        <p className="text-quatity">عدد مرات الشراء: </p>
+                    {token &&
+                      <div className="row mx-auto py-2">
+                        <div className="col-7">
+                          <p className="text-quatity">عدد مرات الشراء: </p>
+                        </div>
+                        <div className="col-5">
+                          <input
+                            type="number"
+                            value={quantutyCount}
+                            name="quantity_count"
+                            className="timlands-inputs sm"
+                            onChange={(e: any) => setQuantutyCount(e.target.value)}
+                          />
+                        </div>
                       </div>
-                      <div className="col-5">
-                        <input type="number" value={quantutyCount} name="quantity_count" className="timlands-inputs sm" onChange={(e: any) => setQuantutyCount(e.target.value)} />
-                      </div>
-                    </div>
+                    }
                     {ProductData.data.developments &&
                       <div className="panel-aside-body">
                         <div className="add-devloppers-header">
@@ -558,13 +563,13 @@ function Single({ query }) {
                             return (
                               <li key={e.id} className="devloppers-item">
                                 <div className="form-check">
-                                  <input
+                                  {token && <input
                                     className="form-check-input"
                                     type="checkbox"
                                     id={"flexCheckDefault-id" + e.id}
                                     value={e.id}
                                     onChange={handleOnChangeAddID} {..._totalPrice()}
-                                  />
+                                  />}
                                   <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                                     {e.title}
                                     <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>

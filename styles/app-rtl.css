@@ -1727,6 +1727,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .align-center {
@@ -3779,7 +3782,7 @@ h3 {
   font-size: 14px;
   font-weight: 300;
   margin: 0;
-  opacity: 0.5;
+  opacity: 0.7;
   color: #111;
 }
 
@@ -3797,6 +3800,27 @@ h3 {
           align-items: center;
   font-weight: 200;
   margin: 0;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item .text a {
+  font-size: 12px;
+  opacity: 0.5;
+  color: #222;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 200;
+  margin: 0;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item .text a:hover {
+  color: #000;
+  opacity: 1;
 }
 
 .timlands-panel .timlands-steps .timlands-step-item .text .material-icons {
@@ -3834,6 +3858,11 @@ h3 {
 }
 
 .timlands-panel .timlands-steps .timlands-step-item.active .title, .timlands-panel .timlands-steps .timlands-step-item.active .text {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.timlands-panel .timlands-steps .timlands-step-item.active .title a, .timlands-panel .timlands-steps .timlands-step-item.active .text a {
   opacity: 1;
   font-weight: bold;
 }
@@ -6239,6 +6268,102 @@ h3 {
 .timlands-form-btn.active {
   background-color: #f9f9f9;
   color: #ccc;
+}
+
+.tags-item {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  padding-bottom: 9px;
+}
+
+.tags-item input {
+  outline: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: #f9f8f7;
+  font-size: 13px;
+}
+
+.tags-item input:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 1px solid #ccc !important;
+  background-color: #fff !important;
+}
+
+.tags-item button {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  color: #555;
+  border: 1px solid #ddd;
+  top: 6px;
+  left: -2px;
+}
+
+.tags-item button.minse {
+  left: 22px;
+}
+
+.meta-note {
+  font-size: 13px;
+  color: #555;
+}
+
+.rel-form {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.rel-form .label-block {
+  width: 100%;
+}
+
+.rel-form .timlands-inputs {
+  border-radius: 0 5px 5px 0;
+  width: 70%;
+}
+
+.rel-form .timlands-form-label {
+  background-color: #ddd;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  width: 30%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  padding: 0 12px;
+  border-radius: 5px 0 0 5px;
+}
+
+.rel-form .timlands-form-label p {
+  color: #666;
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .is-dark {

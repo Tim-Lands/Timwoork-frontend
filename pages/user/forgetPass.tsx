@@ -4,8 +4,8 @@ import * as Yup from 'yup';
 import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
-import "antd/dist/antd.min.css";
 import router from "next/router";
+import Link from "next/link"
 
 const ForgetPass = (): ReactElement => {
     const SignupSchema = Yup.object().shape({
@@ -28,19 +28,8 @@ const ForgetPass = (): ReactElement => {
                             router.push('/user/sentToken')
                         }
                     } catch (error: any) {
-                        if (error.response && error.response.status === 200) {
+                        if (error.response && error.response.data.errors) {
                             message.success('لقد تم التحديث بنجاح')
-                        }
-                        if (error.response && error.response.status === 422) {
-                            message.error("يرجى تعبئة البيانات")
-                        }
-                        if (error.response && error.response.status === 419) {
-                            message.error("العملية غير ناجحة")
-                        }
-                        if (error.response && error.response.status === 400) {
-                            message.error("حدث خطأ.. يرجى التأكد من البيانات")
-                        } else {
-                            message.error("حدث خطأ غير متوقع")
                         }
                     }
                 }}
@@ -66,7 +55,7 @@ const ForgetPass = (): ReactElement => {
                                                         id="email"
                                                         name="email"
                                                         placeholder="البريد الإلكتروني..."
-                                                        className="timlands-inputs code"
+                                                        className="timlands-inputs"
                                                         autoComplete="off"
                                                     />
                                                     {errors.email && touched.email ?
@@ -84,6 +73,9 @@ const ForgetPass = (): ReactElement => {
                                         <div className="panel-modal-footer">
                                             <div className="d-flex">
                                                 <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">استعادة</button>
+                                                <Link href="/">
+                                                    <a className="btn ml-auto butt-light butt-md flex-center"> الرئيسية <span className="material-icons material-icons-outlined">arrow_back</span></a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
