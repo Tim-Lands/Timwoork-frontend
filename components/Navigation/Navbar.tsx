@@ -4,6 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 //import { isMobile } from 'react-device-detect';
 import { ReactElement, useState } from "react";
 import Menus from "./Menus";
+import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
 import logoIMG from '../../public/logo.png'
@@ -14,6 +15,7 @@ import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from "next/router";
+import {isMobile} from 'react-device-detect';
 
 function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
@@ -30,8 +32,10 @@ function Navbar(props: any): ReactElement {
 
     }
     const [isMenuShowen, setIsMenuShowen] = useState(true);
+    const [isMenuShowenMob, setIsMenuShowenMob] = useState(false);
     const setIsMenuShowenHandle = () => {
         setIsMenuShowen(!isMenuShowen)
+        setIsMenuShowenMob(!isMenuShowenMob)
     }
     const DarkIconvariants = {
         visible: {
@@ -154,7 +158,8 @@ function Navbar(props: any): ReactElement {
                                     </a>
                                 </Link>
                             </div>
-                            {isMenuShowen && <Menus darkMode={darkMode} />}
+                            { isMenuShowen && <Menus darkMode={darkMode} />}
+                            { isMenuShowen && <MenusMobile darkMode={darkMode} />}
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto" style={{

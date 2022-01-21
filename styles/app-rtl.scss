@@ -105,7 +105,6 @@ body {
     display: flex;
     align-content: center;
     align-items: center;
-    justify-content: center;
 }
 .align-center {
     text-align: center;
@@ -533,6 +532,9 @@ h3 {
     text-align: center;
     display: flex;
     justify-content: center;
+    img {
+        height: 35px;
+    }
 }
 .login-image {
     height: 100%;
@@ -3751,5 +3753,28 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             }
         }
     }
+}
+
+.is-mobile {
+    &.nav {
+        display: none !important;
+        @media (max-width: 700px) {
+            display: flex !important;
+        }
+    }
+}
+.is-desktop {
+    &.nav {
+        display: flex !important;
+        @media (max-width: 700px) {
+            display: none !important;
+        }
+    }
+}
+.flex-center-just {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center
 }
 @import 'is-dark';

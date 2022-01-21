@@ -264,7 +264,7 @@ function Overview({ query }) {
                                                                 name="tags"
                                                                 render={arrayHelpers => (
                                                                     <div className='row'>
-                                                                        {values.tags && values.tags.length > 0 ? (
+                                                                        {values.tags && values.tags.length > 0 && (
                                                                             values.tags.map((friend, index) => (
                                                                                 <div className='col-sm-3' key={index}>
                                                                                     <div className="tags-item" style={{
@@ -296,14 +296,11 @@ function Overview({ query }) {
                                                                                     </div>
                                                                                 </div>
                                                                             ))
-                                                                        ) : (
-                                                                            <>
-                                                                                <p className="meta-note">الوسوم/التاغ تساعد ظهور خدمتك في محركات البحث</p>
-                                                                                <button className='btn butt-md butt-primary2 flex-center' type="button" onClick={() => arrayHelpers.push('')}>
-                                                                                    <span className="material-icons material-icons-outlined">local_offer</span> إضافة وسوم/تاغ لهذه الخدمة
-                                                                                </button>
-                                                                            </>
                                                                         )}
+                                                                        <p className="meta-note">الوسوم/التاغ تساعد ظهور خدمتك في محركات البحث</p>
+                                                                        <button className='btn butt-md butt-primary2 flex-center-just' type="button" onClick={() => arrayHelpers.push('')}>
+                                                                            <span className="material-icons material-icons-outlined">local_offer</span> إضافة وسوم/تاغ لهذه الخدمة
+                                                                        </button>
                                                                     </div>
                                                                 )}
                                                             />
@@ -329,10 +326,7 @@ function Overview({ query }) {
                                                                     إلغاء الأمر
                                                                 </button>
                                                             </Popconfirm>*/}
-                                                            <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out me-auto butt-xs">
-                                                                <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
-                                                                <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                                            </button>
+                                                            <span className="me-auto"></span>
                                                             <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                                             </button>

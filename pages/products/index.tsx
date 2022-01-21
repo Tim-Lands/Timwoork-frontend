@@ -14,6 +14,8 @@ function Category() {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [products, setProducts]: any = useState([])
+  const [pageIndex, setPageIndex] = useState(1);
+
   const { data: getCategories, error }: any = useSWR('api/get_categories')
   const setValue = getCategories && getCategories.data.map((e) => (e.id));
   const setLabel = getCategories && getCategories.data.map((e) => (e.name_ar));
@@ -68,7 +70,7 @@ function Category() {
     setIsLoading(true)
     setIsError(false)
     try {
-      const res: any = await API.get(`api/filter?paginate=12`)
+      const res: any = await API.get(`api/filter?page=${pageIndex}`)
       if (res) {
         setIsLoading(false)
         setProducts(res.data.data.data)
@@ -113,7 +115,7 @@ function Category() {
                       getAriaValueText={valuetext}
                       max={5000}
                       min={0}
-                      step={50}
+                      step={10}
                       disableSwap
                     />}
                   </div>
@@ -132,6 +134,10 @@ function Category() {
                 <h5 className="title">جميع الخدمات</h5>
               </div>
               <FilterContent products={products} isLoading={isLoading} isError={isError} />
+              {products && products.length !== 0 && products.total > products.per_page && <div className="p-2 d-flex">
+                <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
+                <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
+              </div>}
             </div>
           </div>
         </Form>
