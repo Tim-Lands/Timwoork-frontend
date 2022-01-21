@@ -1,14 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import Link from 'next/link'
 import API from '../config'
-import { login } from "@/store/auth/authActions";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import * as Yup from 'yup';
 import { useRouter } from "next/router";
-import { Alert } from "@/components/Alert/Alert";
 import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import { GoogleLogin } from 'react-google-login';
@@ -16,8 +11,9 @@ import { message } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
-const Login = (props: any): ReactElement => {
+const Login = (): ReactElement => {
     const [passVisibled, setPassVisibled] = useState(false)
+    const [validationsErrors, setValidationsErrors]: any = useState({})
 
     // Login with Google
     const onLoginSuccess = async (res) => {
@@ -56,7 +52,7 @@ const Login = (props: any): ReactElement => {
             message.error('حدث خطأ غير متوقع')
         }
     };
-    
+
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };
@@ -71,11 +67,6 @@ const Login = (props: any): ReactElement => {
             return;
         }
     }, [token]);
-    // Yup Validations
-    const SignupSchema = Yup.object().shape({
-        username: Yup.string().required('هذا الحقل إجباري'),
-        password: Yup.string().required('هذا الحقل إجباري'),
-    });
 
     // Return statement.
     return (
@@ -90,21 +81,35 @@ const Login = (props: any): ReactElement => {
                     username: '',
                     password: '',
                 }}
-                validationSchema={SignupSchema}
                 onSubmit={async values => {
-                    props.login(values.username, values.password);
+                    setValidationsErrors({})
+                    try {
+                        const res = await API.post("api/login", values)
+                        // Authentication was successful.
+                        if (res.status === 200) {
+                            Cookies.set('token', res.data.data.token);
+                            Cookies.set('username', values.username);
+
+                            if (res.data.data.is_verified) {
+                                router.push('/')
+                            } else {
+                                router.push('/email/verification')
+                            }
+                        }
+                    } catch (error: any) {
+                        if (error.response && error.response.data && error.response.data.errors) {
+                            setValidationsErrors(error.response.data.errors);
+                        }
+                    }
                 }}
             >
-                {({ errors, touched }) => (
+                {({ isSubmitting }) => (
                     <Form>
                         <div className="row justify-content-md-center">
                             <div className="col-lg-5 p-0">
-                                {props.loginError && (
-                                    <Alert type="danger">{props.loginError}</Alert>
-                                )}
                                 <div className="login-panel">
-                                    <div className={"panel-modal-body login-panel-body auto-height" + (props.loading ? ' is-loading' : '')}>
-                                        {!props.loading ? '' :
+                                    <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
+                                        {!isSubmitting ? '' :
                                             <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                                 <div className="spinner-border" role="status">
                                                     <span className="visually-hidden">Loading...</span>
@@ -129,16 +134,14 @@ const Login = (props: any): ReactElement => {
                                                 id="email"
                                                 name="username"
                                                 placeholder="البريد الإلكتروني..."
-                                                className="timlands-inputs"
+                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.username && ' has-error')}
                                             />
-                                            {errors.username && touched.username ?
+                                            {validationsErrors && validationsErrors.username && 
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.username}</p>
+                                                        <p className="text">{validationsErrors.username[0]}</p>
                                                     </motion.div>
-                                                </div>
-                                                :
-                                                null}
+                                                </div>}
                                         </div>
                                         <div className="timlands-form">
                                             <label className="label-block" htmlFor="password">كلمة المرور</label>
@@ -147,7 +150,7 @@ const Login = (props: any): ReactElement => {
                                                 id="password"
                                                 name="password"
                                                 placeholder="كلمة المرور..."
-                                                className="timlands-inputs"
+                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.password && ' has-error')}
                                                 autoComplete="off"
                                             />
                                             <button type="button" className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
@@ -155,14 +158,12 @@ const Login = (props: any): ReactElement => {
                                                     passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
                                                 }
                                             </button>
-                                            {errors.password && touched.password ?
+                                            {validationsErrors && validationsErrors.password && 
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{errors.password}</p>
+                                                        <p className="text">{validationsErrors.password[0]}</p>
                                                     </motion.div>
-                                                </div>
-                                                :
-                                                null}
+                                                </div>}
                                         </div>
                                         <div className="timlands-form">
                                             <div className="flex-center remember-text">
@@ -182,7 +183,7 @@ const Login = (props: any): ReactElement => {
                                         </div>
                                         <div className="panel-modal-footer">
                                             <div className="d-flex">
-                                                <button type="submit" disabled={props.loading} className="btn me-auto butt-primary butt-md">تسجيل الدخول</button>
+                                                <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تسجيل الدخول</button>
                                                 <div className="footer-text">
                                                     <p className="text">ليس لديك حساب؟
                                                         <Link href="/register">
@@ -231,18 +232,4 @@ const Login = (props: any): ReactElement => {
         </>
     );
 };
-
-// Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    loginError: state.auth.loginError,
-    loading: state.auth.loginLoading,
-});
-
-// Define PropTypes.
-Login.propTypes = {
-    props: PropTypes.object,
-    login: PropTypes.func,
-};
-
-export default connect(mapStateToProps, { login })(Login);
+export default Login;

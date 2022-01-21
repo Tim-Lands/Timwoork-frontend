@@ -230,9 +230,15 @@ function Prices({ query }) {
                                                                                                 <Field
                                                                                                     id={"input-name-" + index}
                                                                                                     placeholder="عنوان التطوير..."
-                                                                                                    className="timlands-inputs"
+                                                                                                    className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.title`] && ' has-error')}
                                                                                                     name={`developments[${index}].title`}
                                                                                                 />
+                                                                                                {validationsErrors && validationsErrors[`developments.${index}.title`] &&
+                                                                                                    <div style={{ overflow: 'hidden' }}>
+                                                                                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                                                            <p className="text">{validationsErrors[`developments.${index}.title`][0]}</p>
+                                                                                                        </motion.div>
+                                                                                                    </div>}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="col-sm-6">
@@ -241,10 +247,15 @@ function Prices({ query }) {
                                                                                                 <Field
                                                                                                     id={"input-price-" + index}
                                                                                                     placeholder="سعر التطوير..."
-                                                                                                    className="timlands-inputs"
+                                                                                                    className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.price`] && ' has-error')}
                                                                                                     name={`developments[${index}].price`}
                                                                                                 />
-
+                                                                                                {validationsErrors && validationsErrors[`developments.${index}.price`] &&
+                                                                                                    <div style={{ overflow: 'hidden' }}>
+                                                                                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                                                            <p className="text">{validationsErrors[`developments.${index}.price`][0]}</p>
+                                                                                                        </motion.div>
+                                                                                                    </div>}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="col-sm-6">
@@ -255,13 +266,19 @@ function Prices({ query }) {
                                                                                                         type="number"
                                                                                                         id="input-duration"
                                                                                                         name={`developments[${index}].duration`}
-                                                                                                        className="timlands-inputs"
+                                                                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.duration`] && ' has-error')}
                                                                                                         autoComplete="off"
                                                                                                     />
                                                                                                     <div className="timlands-form-label">
                                                                                                         <p className="text">بالأيام</p>
                                                                                                     </div>
                                                                                                 </div>
+                                                                                                {validationsErrors && validationsErrors[`developments.${index}.duration`] &&
+                                                                                                    <div style={{ overflow: 'hidden' }}>
+                                                                                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                                                            <p className="text">{validationsErrors[`developments.${index}.duration`][0]}</p>
+                                                                                                        </motion.div>
+                                                                                                    </div>}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>

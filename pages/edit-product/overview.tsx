@@ -1,25 +1,16 @@
 import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useEffect, useState } from "react";
 import { Field, Form, Formik, FieldArray } from 'formik';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import Cookies from 'js-cookie'
-import * as Yup from 'yup';
 import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Link from 'next/link'
 
-const SignupSchema = Yup.object().shape({
-    title: Yup.string().trim().max(55, (obj) => {
-        const valueLength = obj.value.length;
-        return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن لا يتجاوز العدد:  ${obj.max}`;
-    }),
-
-    tags: Yup.array().required('هذا الحقل إجباري'),
-});
 function Overview({ query }) {
 
     //const [productTags, setProductTags] = useState([])
@@ -30,6 +21,7 @@ function Overview({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
+    const [validationsErrors, setValidationsErrors]: any = useState({})
 
     if (!query) return message.error('حدث خطأ')
     async function getProductId() {
@@ -81,8 +73,8 @@ function Overview({ query }) {
                                     tags: getProduct && getProduct.data.product_tag.map((e: any) => e.name),
                                 }}
                                 enableReinitialize={true}
-                                validationSchema={SignupSchema}
                                 onSubmit={async values => {
+                                    setValidationsErrors({});
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {
@@ -91,14 +83,14 @@ function Overview({ query }) {
                                         })
                                         // Authentication was successful.
                                         if (res.status === 200) {
-                                            message.success('لقد تم التحديث بنجاح')
+                                            notification['success']({
+                                                message: 'رسالة نجاح',
+                                                description: 'لقد تم تعديل المعلومات بنجاح',
+                                            });
                                         }
                                     } catch (error: any) {
-                                        if (error.response && error.response.data && error.response.data.errors.title) {
-                                            message.error(error.response.data.errors.title[0]);
-                                        }
-                                        if (error.response && error.response.data && error.response.data.errors.subcategory) {
-                                            message.error(error.response.data.errors.subcategory[0]);
+                                        if (error.response && error.response.data && error.response.data.errors) {
+                                            setValidationsErrors(error.response.data.errors);
                                         }
                                     }
 
@@ -178,17 +170,15 @@ function Overview({ query }) {
                                                                 id="input-title"
                                                                 name="title"
                                                                 placeholder="العنوان..."
-                                                                className="timlands-inputs"
+                                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.title && ' has-error')}
                                                                 autoComplete="off"
                                                             />
-                                                            {errors.title && touched.title ?
+                                                            {validationsErrors && validationsErrors.title &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.title}</p>
+                                                                        <p className="text">{validationsErrors.title[0]}</p>
                                                                     </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
+                                                                </div>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-5">
@@ -198,7 +188,7 @@ function Overview({ query }) {
                                                             <select
                                                                 id="input-category"
                                                                 name="category"
-                                                                className="timlands-inputs select"
+                                                                className={"timlands-inputs select " + (validationsErrors && validationsErrors.subcategory && ' has-error')}
                                                                 autoComplete="off"
                                                                 onChange={(e: any) => setmainCat(e.target.value)}
                                                             >
@@ -228,14 +218,12 @@ function Overview({ query }) {
                                                                 ))
                                                                 }
                                                             </Field>
-                                                            {errors.subcategory && touched.subcategory ?
+                                                            {validationsErrors && validationsErrors.subcategory &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.subcategory}</p>
+                                                                        <p className="text">{validationsErrors.subcategory[0]}</p>
                                                                     </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
+                                                                </div>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">

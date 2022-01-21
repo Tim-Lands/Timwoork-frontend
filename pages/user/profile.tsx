@@ -298,41 +298,6 @@ function Profile() {
                                                 </div>
                                             </div>
                                         </div>
-                                        {userInfo.user_details.profile.profile_seller &&
-                                            <div className="content-title">
-                                                <div className="d-flex">
-                                                    <h3 className="title flex-center me-auto">
-                                                        <span className="material-icons material-icons-outlined">account_circle</span>
-                                                        المعلومات التقنية
-                                                    </h3>
-                                                    <Link href="/user/editSeller">
-                                                        <a className='edit-button flex-center ml-auto'>
-                                                            <span className="material-icons material-icons-outlined">edit</span>
-                                                        </a>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        }
-                                        <div className="row">
-                                            {userInfo.user_details.profile.profile_seller &&
-                                                <div className="col-sm-6">
-                                                    <div className="content-text-item">
-                                                        <h3 className="text-label">المهارات</h3>
-                                                        {userInfo.user_details.profile.profile_seller.skills &&
-                                                            <ul className="text-skills">
-                                                                {userInfo.user_details.profile.profile_seller.skills.map((e: any, i) => (
-                                                                    <li key={i}>
-                                                                        <Link href="">
-                                                                            <a>{e.name_ar}</a>
-                                                                        </Link>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
                                     </div>
                                 </div>
                             </div>

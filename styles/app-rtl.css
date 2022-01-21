@@ -6446,6 +6446,61 @@ h3 {
           justify-content: center;
 }
 
+.playerProfilePic_home_tile {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+}
+
+.avatar-uploader {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.avatar-uploader input {
+  position: absolute;
+  opacity: 0;
+  z-index: 44;
+  cursor: pointer;
+}
+
+.avatar-uploader input:hover ~ .upload-btn {
+  background-color: rgba(0, 0, 0, 0.281);
+}
+
+.avatar-uploader .upload-btn {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 50%;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.158);
+}
+
 .is-dark {
   background-color: #323232;
   /*

@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import Loading from '@/components/Loading'
 import Link from 'next/link'
 function index() {
-    const { data: categories }: any = useSWR(`dashboard/categories`)
+    const { data: categories }: any = useSWR(`api/categories`)
     return (
         <div className="row py-4 justify-content-center">
             <div className="col-md-9">

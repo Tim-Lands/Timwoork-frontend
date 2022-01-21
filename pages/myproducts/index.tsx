@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Button, message, Result, Tooltip } from 'antd'
+import { Badge, Button, message, notification, Result, Tooltip } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
 import API from '../../config'
 import Link from 'next/link'
@@ -115,7 +115,10 @@ function index() {
                 mutate(`api/my_products${statusType}`)
             }
         } catch (error) {
-            console.log(error);
+            notification['error']({
+                message: 'رسالة خطأ',
+                description: 'للأسف لم يتم تعطيل هذه الخدمة',
+            });
         }
     }
     const activeProductHandle = async (id: any) => {
@@ -143,7 +146,10 @@ function index() {
                 mutate(`api/my_products${statusType}`)
             }
         } catch (error) {
-            console.log(error);
+            notification['error']({
+                message: 'رسالة خطأ',
+                description: 'للأسف لم يتم تفعيل هذه الخدمة',
+            });
         }
     }
     if (userInfo && userInfo.user_details.profile.steps < 1)
@@ -169,7 +175,6 @@ function index() {
     return (
         <div className="py-3">
             {!token && <Unauthorized />}
-
             {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags

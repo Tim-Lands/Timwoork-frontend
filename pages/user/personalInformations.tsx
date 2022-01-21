@@ -8,8 +8,8 @@ import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR, { mutate } from 'swr'
 import Loading from "@/components/Loading";
-import ImageLogo from "next/image";
 import router from "next/router";
+import UploadPicture from "@/components/UploadPicture";
 
 const personalInformations = () => {
     const token = Cookies.get('token')
@@ -17,10 +17,6 @@ const personalInformations = () => {
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})
 
-    const myLoader = () => {
-        return `${userInfo.user_details.profile.avatar}`;
-    }
-    const [avatarState, setavatarState] = useState(null)
     // Redirect to user home route if user is authenticated.
     useEffect(() => {
         if (!token) {
@@ -35,97 +31,7 @@ const personalInformations = () => {
                 {userInfo && userInfo.user_details.profile && <>
                     <div className="row justify-content-md-center">
                         <div className="col-lg-9">
-                            <Formik
-                                isInitialValid={true}
-                                initialValues={{ avatar: ('https://api.timwoork.com/avatars/' + userInfo.user_details.profile.avatar) || null }}
-                                onSubmit={async values => {
-                                    try {
-                                        const dataform = new FormData()
-                                        dataform.append('avatar', values.avatar)
-                                        const res = await API.post("api/profiles/step_two", dataform, {
-                                            headers: {
-                                                'Authorization': `Bearer ${token}`
-                                            }
-                                        })
-                                        // Authentication was successful.
-                                        if (res.status === 200) {
-                                            message.success('لقد تم التحديث بنجاح')
-                                        }
-                                    } catch (error: any) {
-                                        if (error.response && error.response.status === 200) {
-                                            message.success('لقد تم التحديث بنجاح')
-                                        }
-                                        if (error.response && error.response.status === 422) {
-                                            message.error("يرجى تعبئة البيانات")
-                                        }
-                                        if (error.response && error.response.status === 419) {
-                                            message.error("العملية غير ناجحة")
-                                        }
-                                        if (error.response && error.response.status === 400) {
-                                            message.error("حدث خطأ.. يرجى التأكد من البيانات")
-                                        } else {
-                                            message.error("حدث خطأ غير متوقع")
-                                        }
-                                    }
-                                }}
-                            >
-                                {({ errors, touched, isSubmitting, handleSubmit, setFieldValue }) => (
-                                    <form onSubmit={handleSubmit}>
-                                        <div className="login-panel update-form">
-                                            <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
-                                                {!isSubmitting ? '' :
-                                                    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
-                                                        <div className="spinner-border" role="status">
-                                                            <span className="visually-hidden">Loading...</span>
-                                                        </div>
-                                                    </motion.div>
-                                                }
-                                                <div className="update-form-header">
-                                                    <h1 className="title">
-                                                        تعديل الصورة الشخصية
-                                                    </h1>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-12 align-center">
-                                                        {userInfo.user_details.profile.avatar == 'avatar.png' ?
-                                                            <img src={avatarState} width={100} height={100} /> :
-                                                            <ImageLogo
-                                                                loader={myLoader}
-                                                                src={userInfo.user_details.profile.avatar}
-                                                                quality={60}
-                                                                width={100}
-                                                                height={100}
-                                                                placeholder='blur'
-                                                                blurDataURL='/avatar2.jpg'
-                                                            />
-                                                        }
-                                                        <div className="timlands-form">
-                                                            <label className="label-block" htmlFor="avatar">اختر الصورة الشخصية</label>
-                                                            <input id="avatar" name="avatar" type="file" onChange={(event) => {
-                                                                setFieldValue("avatar", event.currentTarget.files[0]);
-                                                                setavatarState(URL.createObjectURL(event.target.files[0]))
-                                                            }} className="form-control" />
-                                                            {errors.avatar && touched.avatar ?
-                                                                <div style={{ overflow: 'hidden' }}>
-                                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.avatar}</p>
-                                                                    </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="panel-modal-footer">
-                                                    <div className="d-flex">
-                                                        <button type="submit" disabled={isSubmitting} className="btn me-auto butt-primary butt-md">تحديث الصورة الشخصية</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                )}
-                            </Formik>
+                            <UploadPicture token={token} avatarPicture={userInfo.user_details.profile.avatar} />
                             <Formik
                                 isInitialValid={true}
                                 initialValues={{

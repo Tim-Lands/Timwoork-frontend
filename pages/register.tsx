@@ -102,19 +102,7 @@ const Register = (): ReactElement => {
                             setRegisterLoading(false)
                             Cookies.set('token', res.data.data.token)
                             if (res.data.data.is_verified) {
-                                switch (res.data.data.step) {
-                                    case 0:
-                                        router.push('/user/personalInformations')
-                                        break;
-                                    case 1:
-                                        router.push('/user/personalInformations')
-                                        break;
-                                    case 2:
-                                        router.push('/user/personalInformations')
-                                        break;
-                                    default:
-                                        router.push('/')
-                                }
+                                router.push('/')
                             } else {
                                 router.push('/email/verification')
                             }
@@ -127,7 +115,6 @@ const Register = (): ReactElement => {
                     }
                 }}
             >
-                {({ errors, touched }) => (
                     <Form>
                         <div className="row justify-content-md-center">
                             <div className="col-lg-6 p-0">
@@ -216,13 +203,13 @@ const Register = (): ReactElement => {
                                             </div>
                                             <div className="col-lg-6">
                                                 <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="password">إعادة كلمة المرور</label>
+                                                    <label className="label-block" htmlFor="repassword">إعادة كلمة المرور</label>
                                                     <Field
                                                         type={passVisibled ? "text" : 'password'}
-                                                        id="password"
+                                                        id="repassword"
                                                         name="repassword"
                                                         placeholder="إعادة كلمة المرور..."
-                                                        className="timlands-inputs"
+                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.repassword && ' has-error')}
                                                         autoComplete="off"
                                                     />
                                                     <button type="button" className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
@@ -231,14 +218,12 @@ const Register = (): ReactElement => {
                                                         }
 
                                                     </button>
-                                                    {errors.repassword && touched.repassword ?
+                                                    {validationsErrors && validationsErrors.repassword &&
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.repassword}</p>
+                                                                <p className="text">{validationsErrors.repassword[0]}</p>
                                                             </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
+                                                        </div>}
                                                 </div>
                                             </div>
                                         </div>
@@ -295,7 +280,6 @@ const Register = (): ReactElement => {
                         </div>
 
                     </Form>
-                )}
             </Formik>
         </>
     );

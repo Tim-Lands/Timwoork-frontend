@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Field, FieldArray, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import Layout from "@/components/Layout/HomeLayout";
@@ -16,6 +16,8 @@ function Prices({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const { id } = query
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
+    const [validationsErrors, setValidationsErrors]: any = useState({})
+
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${id}`, {
@@ -41,7 +43,7 @@ function Prices({ query }) {
             })
             if (res.status === 200) {
                 console.log('success');
-                
+
             }
         } catch (error: any) {
             message.error('حدث خطأ غير متوقع');
@@ -80,6 +82,7 @@ function Prices({ query }) {
                                 }}
                                 enableReinitialize={true}
                                 onSubmit={async values => {
+                                    setValidationsErrors({})
                                     try {
                                         const res = await API.post(`api/product/${id}/product-step-two`, values, {
                                             headers: {
@@ -92,11 +95,8 @@ function Prices({ query }) {
                                             stepFive()
                                         }
                                     } catch (error: any) {
-                                        if (error.response && error.response.data && error.response.data.errors.price) {
-                                            message.error(error.response.data.errors.price[0]);
-                                        }
-                                        if (error.response && error.response.data && error.response.data.errors.duration) {
-                                            message.error(error.response.data.errors.duration[0]);
+                                        if (error.response && error.response.data && error.response.data.errors) {
+                                            setValidationsErrors(error.response.data.errors);
                                         }
                                     }
                                 }}
@@ -173,16 +173,14 @@ function Prices({ query }) {
                                                             <Field
                                                                 id="input-price"
                                                                 name="price"
-                                                                className="timlands-inputs"
+                                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.price && ' has-error')}
                                                             />
-                                                            {errors.price && touched.price ?
+                                                            {validationsErrors && validationsErrors.price &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.price}</p>
+                                                                        <p className="text">{validationsErrors.price[0]}</p>
                                                                     </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
+                                                                </div>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6">
@@ -193,7 +191,7 @@ function Prices({ query }) {
                                                                     id="input-duration"
                                                                     type="number"
                                                                     name="duration"
-                                                                    className="timlands-inputs select"
+                                                                    className={"timlands-inputs select " + (validationsErrors && validationsErrors.duration && ' has-error')}
                                                                     autoComplete="off"
                                                                 />
                                                                 <div className="timlands-form-label">
@@ -203,14 +201,12 @@ function Prices({ query }) {
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                                 <p className="text">حدد مدة تسليم مناسبة لك. يستطيع المشتري إلغاء الخدمة مباشرة في حال التأخر بتسليم الخدمة في الموعد المحدد</p>
                                                             </motion.div>
-                                                            {errors.duration && touched.duration ?
+                                                            {validationsErrors && validationsErrors.duration &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.duration}</p>
+                                                                        <p className="text">{validationsErrors.duration[0]}</p>
                                                                     </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
+                                                                </div>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -230,9 +226,15 @@ function Prices({ query }) {
                                                                                                 <Field
                                                                                                     id={"input-name-" + index}
                                                                                                     placeholder="عنوان التطوير..."
-                                                                                                    className="timlands-inputs"
+                                                                                                    className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.title`] && ' has-error')}
                                                                                                     name={`developments[${index}].title`}
                                                                                                 />
+                                                                                                {validationsErrors && validationsErrors[`developments.${index}.title`] &&
+                                                                                                    <div style={{ overflow: 'hidden' }}>
+                                                                                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                                                            <p className="text">{validationsErrors[`developments.${index}.title`][0]}</p>
+                                                                                                        </motion.div>
+                                                                                                    </div>}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className="col-sm-6">
@@ -241,9 +243,15 @@ function Prices({ query }) {
                                                                                                 <Field
                                                                                                     id={"input-price-" + index}
                                                                                                     placeholder="سعر التطوير..."
-                                                                                                    className="timlands-inputs"
+                                                                                                    className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.price`] && ' has-error')}
                                                                                                     name={`developments[${index}].price`}
                                                                                                 />
+                                                                                                {validationsErrors && validationsErrors[`developments.${index}.price`] &&
+                                                                                                    <div style={{ overflow: 'hidden' }}>
+                                                                                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                                                            <p className="text">{validationsErrors[`developments.${index}.price`][0]}</p>
+                                                                                                        </motion.div>
+                                                                                                    </div>}
 
                                                                                             </div>
                                                                                         </div>
@@ -255,13 +263,19 @@ function Prices({ query }) {
                                                                                                         type="number"
                                                                                                         id="input-duration"
                                                                                                         name={`developments[${index}].duration`}
-                                                                                                        className="timlands-inputs"
+                                                                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.duration`] && ' has-error')}
                                                                                                         autoComplete="off"
                                                                                                     />
                                                                                                     <div className="timlands-form-label">
                                                                                                         <p className="text">بالأيام</p>
                                                                                                     </div>
                                                                                                 </div>
+                                                                                                {validationsErrors && validationsErrors[`developments.${index}.duration`] &&
+                                                                                                    <div style={{ overflow: 'hidden' }}>
+                                                                                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                                                            <p className="text">{validationsErrors[`developments.${index}.duration`][0]}</p>
+                                                                                                        </motion.div>
+                                                                                                    </div>}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -304,16 +318,6 @@ function Prices({ query }) {
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
-                                                            {/*<Popconfirm
-                                                                title="هل تريد حقا إلغاء هذه الخدمة"
-                                                                onConfirm={deleteProduct}
-                                                                okText="نعم"
-                                                                cancelText="لا"
-                                                            >
-                                                                <button type="button" className="btn butt-red me-auto butt-sm">
-                                                                    إلغاء الأمر
-                                                                </button>
-                                                            </Popconfirm>*/}
                                                             <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">حفظ التغييرات</span>
                                                             </button>

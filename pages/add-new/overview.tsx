@@ -6,17 +6,11 @@ import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import Cookies from 'js-cookie'
-import * as Yup from 'yup';
 import API from "../../config";
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
-const SignupSchema = Yup.object().shape({
-    title: Yup.string().trim().max(55, (obj) => {
-        const valueLength = obj.value.length;
-        return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن لا يتجاوز العدد:  ${obj.max}`;
-    }).nullable(),
-});
+
 function Overview({ query }) {
 
     //const [productTags, setProductTags] = useState([])
@@ -99,9 +93,10 @@ function Overview({ query }) {
                                     tags: getProduct && getProduct.data.product_tag.map((e: any) => e.name),
                                 }}
                                 enableReinitialize={true}
-                                validationSchema={SignupSchema}
+                                //validationSchema={SignupSchema}
                                 onSubmit={async values => {
                                     try {
+                                        setValidationsErrors({})
                                         const res = await API.post(`api/product/${id}/product-step-one`, values, {
                                             headers: {
                                                 'Authorization': `Bearer ${token}`
@@ -243,7 +238,7 @@ function Overview({ query }) {
                                                             {validationsErrors && validationsErrors.subcategory &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{validationsErrors.subcategory}</p>
+                                                                        <p className="text">{validationsErrors.subcategory[0]}</p>
                                                                     </motion.div>
                                                                 </div>}
                                                         </div>
