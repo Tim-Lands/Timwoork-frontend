@@ -14,7 +14,7 @@ function CategoriesFooter() {
         <div className="aside-body">
             {!popularProducts && <Loading />}
             <ul className="aside-list-items">
-                {popularProducts && popularProducts.data.data.map((e: any) => (
+                {popularProducts && popularProducts.data.length !== 0 && popularProducts.data.data.map((e: any) => (
                     <li key={e.id}>
                         <Link href={`/p/${e.slug}`}>
                             <a>{e.title}</a>

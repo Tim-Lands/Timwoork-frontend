@@ -43,7 +43,7 @@ function Home() {
         </div>
       </div>
 
-      {products && popularProducts && latestProducts &&
+      {products && popularProducts && latestProducts && products.data.length !== 0 && popularProducts.data.length !== 0 && latestProducts.data.length !== 0 &&
         <div className="container">
           <PostsAside
             title="الخدمات الأكثر شعبية "

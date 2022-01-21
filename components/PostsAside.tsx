@@ -63,7 +63,7 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
                     </div>
                 </div>
             </div>}
-            {PostData && <div className="posts-aside">
+            {PostData && PostData.length !== 0 && <div className="posts-aside">
                 <div className="posts-aside-header">
                     <h1 className="title">{title}</h1>
                 </div>

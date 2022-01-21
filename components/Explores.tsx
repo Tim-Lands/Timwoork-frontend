@@ -65,7 +65,7 @@ function Explores() {
                             <motion.li initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id} className="main-item-category">
                                 <a onClick={() => getSubcats(e.id)}>
                                     <span className={"material-icons material-icons-outlined"}>{e.icon}</span>{e.name_ar}
-                                    <p className="count">{e.products_count}</p>
+                                    {/*<p className="count">{e.products_count}</p>*/}
                                 </a>
                             </motion.li>
                         ))}
@@ -91,7 +91,6 @@ function Explores() {
                                         <div className="col-sm-6" key={e.id}>
                                             <a href={"/category/" + e.id} className="sub-cat-link">
                                                 <p className="text">{e.name_ar}</p>
-                                                <p className="count">{e.products_count}</p>
                                             </a>
                                         </div>
                                     ))}

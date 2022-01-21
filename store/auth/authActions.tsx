@@ -215,66 +215,7 @@ export const login = (username: string, password: string): any => {
         }
     };
 };
-/**
- * Register functionality.
- *
- * @param {string} email
- *   The username of the user.
- * @param {string} password
- *   The password of the user.
- */
-export const register = (email: string, password: string, username: string): any => {
-    return async (dispatch: CallableFunction) => {
-        try {
-            // Start loading.
-            dispatch({ type: types.START_REGISTER_LOADING });
-            const res = await API.post("api/register", {
-                email,
-                password,
-                username,
-            })
-            // Authentication was successful.
-            if (res.status === 200) {
-                dispatch({
-                    type: types.REGISTER_SUCCESS,
-                });
-                Cookies.set('token', res.data.data.token)
-                if (res.data.data.is_verified) {
-                    switch (res.data.data.step) {
-                        case 0:
-                            router.push('/user/personalInformations')
-                            break;
-                        case 1:
-                            router.push('/user/personalInformations')
-                            break;
-                        case 2:
-                            router.push('/user/personalInformations')
-                            break;
-                        default:
-                            router.push('/')
-                    }
-                } else {
-                    router.push('/email/verification')
-                }
-            }
-        } catch (error: any) {
 
-            if (error.response && error.response.data && error.response.data.errors.email) {
-                message.error(error.response.data.errors.email[0]);
-            }
-            if (error.response && error.response.data && error.response.data.errors.password) {
-                message.error(error.response.data.errors.password[0]);
-            }
-            if (error.response && error.response.data && error.response.data.errors.username) {
-                message.error(error.response.data.errors.username[0]);
-            }
-            return dispatch({
-                type: types.REGISTER_ERROR,
-                payload: "",
-            });
-        }
-    };
-}
 /**
  * Log current user out.
  */

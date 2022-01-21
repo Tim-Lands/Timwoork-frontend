@@ -140,6 +140,14 @@
   border-radius: 4px;
 }
 
+.timlands-inputs.has-error {
+  border: 1px solid #fd9797;
+}
+
+.timlands-inputs.has-error:hover {
+  border: 1px solid #df5757;
+}
+
 .label-block {
   font-size: 14px;
   color: #333;

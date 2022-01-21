@@ -32,7 +32,7 @@ function index() {
                 mutate('api/cart')
             }
         } catch (error: any) {
-            setIsLoading(false)    
+            setIsLoading(false)
             console.log(error);
         }
     }
@@ -81,7 +81,7 @@ function index() {
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
                         {cartList && cartList.data == null &&
-                            <div className="cart-nothing">
+                            <div className="cart-nothing my-5 py-5">
                                 <div className="cart-nothing-inner">
                                     <div className="cart-nothing-img">
                                         <img src="/carticon.png" alt="" />

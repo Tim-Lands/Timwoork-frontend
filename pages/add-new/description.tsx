@@ -8,24 +8,15 @@ import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from 'js-cookie'
 import API from "../../config";
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import useSWR from 'swr';
-import * as Yup from 'yup';
 
-const SignupSchema = Yup.object().shape({
-    buyer_instruct: Yup.string().required('هذا الحقل إجباري').nullable(),
-    content: Yup.string()
-        .trim()
-        .min(300, (obj) => {
-            const valueLength = obj.value.length;
-            return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن يتجاوز العدد:  ${obj.min}`;
-        })
-        .required('هذا الحقل إجباري')
-});
 function Description({ query }) {
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
     const { data: getUser }: any = useSWR('api/me')
     const token = Cookies.get('token')
+    const [validationsErrors, setValidationsErrors]: any = useState({})
+
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -90,8 +81,6 @@ function Description({ query }) {
                                     content: (getProduct && getProduct.data.content) || '',
                                 }}
                                 enableReinitialize={true}
-
-                                validationSchema={SignupSchema}
                                 onSubmit={async (values) => {
                                     try {
                                         const id = query.id
@@ -111,27 +100,13 @@ function Description({ query }) {
                                             })
                                         }
                                     } catch (error: any) {
-                                        if (error.response && error.response.status === 200) {
-                                            message.success('لقد تم التحديث بنجاح')
-                                        }
-                                        if (error.response && error.response.status === 422) {
-                                            message.error("يرجى تعبئة البيانات")
-                                        }
-                                        if (error.response && error.response.status === 403) {
-                                            message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك")
-                                        }
-                                        if (error.response && error.response.status === 419) {
-                                            message.error("العملية غير ناجحة")
-                                        }
-                                        if (error.response && error.response.status === 400) {
-                                            message.error("حدث خطأ.. يرجى التأكد من البيانات")
-                                        } else {
-                                            message.error("حدث خطأ غير متوقع")
+                                        if (error.response && error.response.data && error.response.data.errors) {
+                                            setValidationsErrors(error.response.data.errors);
                                         }
                                     }
                                 }}
                             >
-                                {({ errors, touched, isSubmitting }) => (
+                                {({ isSubmitting }) => (
                                     <Form>
                                         <div className={"timlands-panel" + (isSubmitting ? ' is-loader' : '')}>
                                             <div className="timlands-steps">
@@ -203,21 +178,20 @@ function Description({ query }) {
                                                                 id="input-content"
                                                                 name="content"
                                                                 placeholder="وصف الخدمة..."
-                                                                className="timlands-inputs"
+                                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.content && ' has-error')}
                                                                 autoComplete="off"
                                                                 style={{ minHeight: 170 }}
                                                             ></Field>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                                 <p className="text">أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط . يمنع وضع البريد الالكتروني، رقم الهاتف أو أي معلومات اتصال أخرى.</p>
                                                             </motion.div>
-                                                            {errors.content && touched.content ?
+                                                            {validationsErrors && validationsErrors.content && 
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.content}</p>
+                                                                        <p className="text">{validationsErrors.content[0]}</p>
                                                                     </motion.div>
                                                                 </div>
-                                                                :
-                                                                null}
+                                                                }
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -228,21 +202,20 @@ function Description({ query }) {
                                                                 id="input-buyer_instruct"
                                                                 name="buyer_instruct"
                                                                 placeholder="تعليمات المشتري..."
-                                                                className="timlands-inputs"
+                                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.buyer_instruct && ' has-error')}
                                                                 autoComplete="off"
                                                                 style={{ minHeight: 170 }}
                                                             ></Field>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                                 <p className="text">المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة. تظهر هذه المعلومات بعد شراء الخدمة فقط</p>
                                                             </motion.div>
-                                                            {errors.buyer_instruct && touched.buyer_instruct ?
+                                                            {validationsErrors && validationsErrors.buyer_instruct &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.buyer_instruct}</p>
+                                                                        <p className="text">{validationsErrors.buyer_instruct[0]}</p>
                                                                     </motion.div>
                                                                 </div>
-                                                                :
-                                                                null}
+                                                                }
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">

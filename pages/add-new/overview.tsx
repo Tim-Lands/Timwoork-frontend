@@ -15,9 +15,7 @@ const SignupSchema = Yup.object().shape({
     title: Yup.string().trim().max(55, (obj) => {
         const valueLength = obj.value.length;
         return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن لا يتجاوز العدد:  ${obj.max}`;
-    }),
-
-    tags: Yup.array().required('هذا الحقل إجباري'),
+    }).nullable(),
 });
 function Overview({ query }) {
 
@@ -29,6 +27,7 @@ function Overview({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${mainCat}`)
+    const [validationsErrors, setValidationsErrors]: any = useState({})
 
     if (!query) return message.error('حدث خطأ')
     async function getProductId() {
@@ -97,7 +96,6 @@ function Overview({ query }) {
                                 initialValues={{
                                     title: getProduct && getProduct.data.title,
                                     subcategory: getProduct && getProduct.data.subcategory && getProduct.data.subcategory.id,
-                                    //category: mainCat,
                                     tags: getProduct && getProduct.data.product_tag.map((e: any) => e.name),
                                 }}
                                 enableReinitialize={true}
@@ -120,11 +118,8 @@ function Overview({ query }) {
                                             })
                                         }
                                     } catch (error: any) {
-                                        if (error.response && error.response.data && error.response.data.errors.title) {
-                                            message.error(error.response.data.errors.title[0]);
-                                        }
-                                        if (error.response && error.response.data && error.response.data.errors.subcategory) {
-                                            message.error(error.response.data.errors.subcategory[0]);
+                                        if (error.response && error.response.data && error.response.data.errors) {
+                                            setValidationsErrors(error.response.data.errors);
                                         }
                                     }
 
@@ -197,17 +192,15 @@ function Overview({ query }) {
                                                                 id="input-title"
                                                                 name="title"
                                                                 placeholder="العنوان..."
-                                                                className="timlands-inputs"
+                                                                className={"timlands-inputs " + (validationsErrors && validationsErrors.title && ' has-error')}
                                                                 autoComplete="off"
                                                             />
-                                                            {errors.title && touched.title ?
+                                                            {validationsErrors && validationsErrors.title &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.title}</p>
+                                                                        <p className="text">{validationsErrors.title[0]}</p>
                                                                     </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
+                                                                </div>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-5">
@@ -236,7 +229,7 @@ function Overview({ query }) {
                                                                 as="select"
                                                                 id="input-subcategory"
                                                                 name="subcategory"
-                                                                className="timlands-inputs select"
+                                                                className={"timlands-inputs select " + (validationsErrors && validationsErrors.subcategory && ' has-error')}
                                                                 autoComplete="off"
                                                             >
                                                                 <option value={0}>اختر التصنيف الفرعي</option>
@@ -247,14 +240,12 @@ function Overview({ query }) {
                                                                 ))
                                                                 }
                                                             </Field>
-                                                            {errors.subcategory && touched.subcategory ?
+                                                            {validationsErrors && validationsErrors.subcategory &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                        <p className="text">{errors.subcategory}</p>
+                                                                        <p className="text">{validationsErrors.subcategory}</p>
                                                                     </motion.div>
-                                                                </div>
-                                                                :
-                                                                null}
+                                                                </div>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -264,6 +255,10 @@ function Overview({ query }) {
                                                                 name="tags"
                                                                 render={arrayHelpers => (
                                                                     <div className='row'>
+                                                                        <p className="meta-note">الوسوم/التاغ تساعد ظهور خدمتك في محركات البحث</p>
+                                                                        <button className='btn butt-md butt-primary2 flex-center-just mb-3' type="button" onClick={() => arrayHelpers.push('')}>
+                                                                            <span className="material-icons material-icons-outlined">local_offer</span> إضافة وسوم/تاغ لهذه الخدمة
+                                                                        </button>
                                                                         {values.tags && values.tags.length > 0 && (
                                                                             values.tags.map((friend, index) => (
                                                                                 <div className='col-sm-3' key={index}>
@@ -297,10 +292,7 @@ function Overview({ query }) {
                                                                                 </div>
                                                                             ))
                                                                         )}
-                                                                        <p className="meta-note">الوسوم/التاغ تساعد ظهور خدمتك في محركات البحث</p>
-                                                                        <button className='btn butt-md butt-primary2 flex-center-just' type="button" onClick={() => arrayHelpers.push('')}>
-                                                                            <span className="material-icons material-icons-outlined">local_offer</span> إضافة وسوم/تاغ لهذه الخدمة
-                                                                        </button>
+
                                                                     </div>
                                                                 )}
                                                             />

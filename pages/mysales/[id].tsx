@@ -185,10 +185,10 @@ const User = ({ query }) => {
                 return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية من طرف البائع</span>
+                return <span className='badge bg-danger'>ملغية من طرفك</span>
 
             case 3:
-                return <span className='badge bg-warning'>ملغية من طرفك</span>
+                return <span className='badge bg-warning'>ملغية من المشتري</span>
 
             case 4:
                 return <span className='badge bg-warning'>ملغية من طرفكما</span>

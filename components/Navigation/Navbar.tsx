@@ -15,7 +15,6 @@ import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from "next/router";
-import {isMobile} from 'react-device-detect';
 
 function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')

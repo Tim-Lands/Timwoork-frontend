@@ -1,22 +1,19 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import Link from 'next/link'
 import API from '../config'
 import { Field, Form, Formik } from "formik";
-import * as Yup from 'yup';
 import { motion } from "framer-motion";
-import { register } from "@/store/auth/authActions";
 import { GoogleLogin } from 'react-google-login';
 import Cookies from 'js-cookie'
-import { Alert } from "@/components/Alert/Alert";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import { message } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
-const Register = (props: any): ReactElement => {
-        const [passVisibled, setPassVisibled] = useState(false)
+const Register = (): ReactElement => {
+    const [passVisibled, setPassVisibled] = useState(false)
+    const [registerLoading, setRegisterLoading] = useState(false)
+    const [validationsErrors, setValidationsErrors]: any = useState({})
 
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
@@ -28,7 +25,7 @@ const Register = (props: any): ReactElement => {
                 full_name: res.profileObj.name,
                 avatar: res.profileObj.imageUrl,
                 provider_id: res.profileObj.googleId,
-                username:generateUsername(res.profileObj.email) 
+                username: generateUsername(res.profileObj.email)
             })
             // Authentication was successful.
             if (response.status === 200) {
@@ -57,16 +54,16 @@ const Register = (props: any): ReactElement => {
     /* Generate username from email and random 4 numbers 
      * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234 
      * then the username= roqaia.alrfou31234
-    */ 
-   const generateUsername = (email: string) =>{
+    */
+    const generateUsername = (email: string) => {
 
-    const result = email.indexOf("@");
-    const len = email.length;
-    const mystr = email.slice(result,len);
-    const removeData = email.replace(mystr,"");
-    const username = removeData + Math.floor(Math.random() * 100000);
-    return username
-   }
+        const result = email.indexOf("@");
+        const len = email.length;
+        const mystr = email.slice(result, len);
+        const removeData = email.replace(mystr, "");
+        const username = removeData + Math.floor(Math.random() * 100000);
+        return username
+    }
 
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
@@ -79,13 +76,6 @@ const Register = (props: any): ReactElement => {
         }
     }, []);
     const router = useRouter()
-    const SignupSchema = Yup.object().shape({
-        email: Yup.string().required('هذا الحقل إجباري'),
-        username: Yup.string().required('هذا الحقل إجباري'),
-        password: Yup.string().required('هذا الحقل إجباري'),
-        repassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'كلمتا المرور غير متطابقتين')
-    });
     // Return statement.
     return (
         <>
@@ -101,21 +91,49 @@ const Register = (props: any): ReactElement => {
                     repassword: '',
                     username: '',
                 }}
-                validationSchema={SignupSchema}
                 onSubmit={async values => {
-                    props.register(values.email, values.password, values.username);
+                    setRegisterLoading(true)
+                    setValidationsErrors({})
+                    try {
+                        // Start loading.
+                        const res = await API.post("api/register", values)
+                        // Authentication was successful.
+                        if (res.status === 200) {
+                            setRegisterLoading(false)
+                            Cookies.set('token', res.data.data.token)
+                            if (res.data.data.is_verified) {
+                                switch (res.data.data.step) {
+                                    case 0:
+                                        router.push('/user/personalInformations')
+                                        break;
+                                    case 1:
+                                        router.push('/user/personalInformations')
+                                        break;
+                                    case 2:
+                                        router.push('/user/personalInformations')
+                                        break;
+                                    default:
+                                        router.push('/')
+                                }
+                            } else {
+                                router.push('/email/verification')
+                            }
+                        }
+                    } catch (error: any) {
+                        setRegisterLoading(false)
+                        if (error.response && error.response.data && error.response.data.errors) {
+                            setValidationsErrors(error.response.data.errors);
+                        }
+                    }
                 }}
             >
                 {({ errors, touched }) => (
                     <Form>
                         <div className="row justify-content-md-center">
                             <div className="col-lg-6 p-0">
-                                {props.registerError && (
-                                    <Alert type="danger">{props.registerError}</Alert>
-                                )}
                                 <div className="login-panel">
-                                    <div className={"panel-modal-body login-panel-body auto-height" + (props.registerLoading ? ' is-loading' : '')}>
-                                        {!props.registerLoading ? '' :
+                                    <div className={"panel-modal-body login-panel-body auto-height" + (registerLoading ? ' is-loading' : '')}>
+                                        {!registerLoading ? '' :
                                             <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
                                                 <div className="spinner-border" role="status">
                                                     <span className="visually-hidden">Loading...</span>
@@ -142,17 +160,15 @@ const Register = (props: any): ReactElement => {
                                                         id="username"
                                                         name="username"
                                                         placeholder=" اسم المستخدم..."
-                                                        className="timlands-inputs"
+                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.username && ' has-error')}
                                                         autoComplete="off"
                                                     />
-                                                    {errors.username && touched.username ?
+                                                    {validationsErrors && validationsErrors.username &&
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.username}</p>
+                                                                <p className="text">{validationsErrors.username[0]}</p>
                                                             </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
+                                                        </div>}
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
@@ -162,17 +178,15 @@ const Register = (props: any): ReactElement => {
                                                         id="email"
                                                         name="email"
                                                         placeholder="البريد الإلكتروني..."
-                                                        className="timlands-inputs"
+                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.email && ' has-error')}
                                                         autoComplete="off"
                                                     />
-                                                    {errors.email && touched.email ?
+                                                    {validationsErrors && validationsErrors.email &&
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.email}</p>
+                                                                <p className="text">{validationsErrors.email}</p>
                                                             </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
+                                                        </div>}
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
@@ -183,23 +197,21 @@ const Register = (props: any): ReactElement => {
                                                         id="password"
                                                         name="password"
                                                         placeholder="كلمة المرور..."
-                                                        className="timlands-inputs"
+                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.password && ' has-error')}
                                                         autoComplete="off"
                                                     />
                                                     <button type="button" className={"timlands-form-btn" + (passVisibled ? ' active' : '')} onClick={() => setPassVisibled(!passVisibled)}>
                                                         {
                                                             passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
                                                         }
-                                                        
+
                                                     </button>
-                                                    {errors.password && touched.password ?
+                                                    {validationsErrors && validationsErrors.password &&
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.password}</p>
+                                                                <p className="text">{validationsErrors.password[0]}</p>
                                                             </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
+                                                        </div>}
                                                 </div>
                                             </div>
                                             <div className="col-lg-6">
@@ -239,7 +251,7 @@ const Register = (props: any): ReactElement => {
                                         </div>
                                         <div className="panel-modal-footer">
                                             <div className="d-flex">
-                                                <button type="submit" disabled={props.registerLoading} className="btn me-auto butt-primary butt-md">إنشاء حساب</button>
+                                                <button type="submit" disabled={registerLoading} className="btn me-auto butt-primary butt-md">إنشاء حساب</button>
                                                 <div className="footer-text">
                                                     <p className="text"> لديك حساب؟
                                                         <Link href="/login">
@@ -289,17 +301,4 @@ const Register = (props: any): ReactElement => {
     );
 };
 
-// Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    registerError: state.auth.registerError,
-    registerLoading: state.auth.registerLoading,
-});
-
-// Define PropTypes.
-Register.propTypes = {
-    props: PropTypes.object,
-    register: PropTypes.func,
-};
-
-export default connect(mapStateToProps, { register })(Register);
+export default Register
