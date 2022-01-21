@@ -25,8 +25,8 @@ function Category() {
   function valuetext(value: number) {
     return `${value}$`;
   }
-  // Pricing range from 0 to 5000
-  const [priceRange, setpriceRange] = React.useState<number[]>([5, 5000]);
+  // Pricing range from 0 to 1000
+  const [priceRange, setpriceRange] = React.useState<number[]>([5, 1000]);
   const minDistance = 50; // minimum distance between any two values of price
 
   const handleChangeSlider = (
