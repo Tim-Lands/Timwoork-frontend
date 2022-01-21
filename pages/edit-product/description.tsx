@@ -27,7 +27,21 @@ function Description({ query }) {
     const { data: getUser }: any = useSWR('api/me')
     const token = Cookies.get('token')
     const id = query.id
-
+    async function stepFive() {
+        try {
+            const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                console.log('success');
+                
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع');
+        }
+    }
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -36,11 +50,11 @@ function Description({ query }) {
                 }
             })
             if (res.status === 422) {
-                router.push("/add-new")
+                router.back()
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                router.push("/add-new")
+                router.back()
             }
         }
     }
@@ -87,6 +101,7 @@ function Description({ query }) {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
+                                            stepFive()
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.status === 200) {

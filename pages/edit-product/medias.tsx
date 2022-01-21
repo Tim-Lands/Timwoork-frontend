@@ -25,12 +25,27 @@ function Medias({ query }) {
                 }
             })
             if (res.status === 422) {
-                router.push("/add-new")
+                router.back()
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                router.push("/add-new")
+                router.back()
             }
+        }
+    }
+    async function stepFive() {
+        try {
+            const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                console.log('success');
+                
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع');
         }
     }
     useEffect(() => {
@@ -84,6 +99,7 @@ function Medias({ query }) {
                 setLoading(false)
                 message.success('لقد تم التحديث بنجاح')
                 mutate(`api/product/${query.id}`)
+                stepFive()
             }
         } catch (error: any) {
             setLoading(false)
@@ -293,14 +309,6 @@ function Medias({ query }) {
                             </div>
 
                             <div className="timlands-content-form">
-                                {/*<div className="choose-images-file">
-                                    <h4 className="timlands-content-form-subtitle">
-                                        اختيار ملف PDF
-                                    </h4>
-                                    <Upload {...props} multiple={false}>
-                                        <button className="btn butt-md butt-primary2">تحميل ملف PDF من جهازك</button>
-                                    </Upload>
-                                </div>*/}
                                 <div className="choose-images-file">
                                     <h4 className="timlands-content-form-subtitle">
                                         فيديو تعريفي للخدمة

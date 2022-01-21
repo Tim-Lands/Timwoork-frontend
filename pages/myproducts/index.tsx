@@ -4,12 +4,12 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import API from '../../config'
 import Link from 'next/link'
 import Image from 'next/image'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Cookies from 'js-cookie'
-import { DeleteOutlined, PauseCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PauseCircleOutlined, EditOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import Unauthorized from '@/components/Unauthorized';
 import router from 'next/router'
 import Loading from '@/components/Loading'
@@ -112,6 +112,35 @@ function index() {
                     'لقد تم تعطيل هذه الخدمة بنجاح',
                     'success'
                 )
+                mutate(`api/my_products${statusType}`)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const activeProductHandle = async (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+        try {
+            const res = await API.post(`api/my_products/${id}/active_product`, null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                swalWithBootstrapButtons.fire(
+                    'تم التفعيل!',
+                    'لقد تم تفعيل هذه الخدمة بنجاح',
+                    'success'
+                )
+                mutate(`api/my_products${statusType}`)
             }
         } catch (error) {
             console.log(error);
@@ -246,7 +275,7 @@ function index() {
                                                         <span className="badge bg-danger">لا</span> :
                                                         <span className="badge bg-success">نعم</span>}</td>
                                                     <td>{e.count_buying}</td>
-                                                    <td>{e.is_active == 0 ?
+                                                    <td>{e.is_active == null ?
                                                         <span className="badge bg-danger">معطلة</span> :
                                                         <span className="badge bg-success">مفعلة</span>}
                                                     </td>
@@ -255,10 +284,14 @@ function index() {
                                                         <Tooltip title="حذف هذه الخدمة">
                                                             <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
                                                         </Tooltip>
-                                                        <Tooltip title="تعطيل هذه الخدمة">
-                                                            <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
-                                                        </Tooltip>
-
+                                                        {e.is_active !== null ?
+                                                            <Tooltip title="تعطيل هذه الخدمة">
+                                                                <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange', borderColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
+                                                            </Tooltip> :
+                                                            <Tooltip title="تفعيل هذه الخدمة">
+                                                                <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => activeProductHandle(e.id)} />
+                                                            </Tooltip>
+                                                        }
                                                         <Tooltip title="تعديل الخدمة">
                                                             <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => {
                                                                 router.push({

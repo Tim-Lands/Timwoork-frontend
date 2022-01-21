@@ -32,6 +32,21 @@ function Prices({ query }) {
             }
         }
     }
+    async function stepFive() {
+        try {
+            const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                console.log('success');
+                
+            }
+        } catch (error: any) {
+            message.error('حدث خطأ غير متوقع');
+        }
+    }
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -74,6 +89,7 @@ function Prices({ query }) {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
+                                            stepFive()
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.data && error.response.data.errors.price) {
@@ -82,7 +98,6 @@ function Prices({ query }) {
                                         if (error.response && error.response.data && error.response.data.errors.duration) {
                                             message.error(error.response.data.errors.duration[0]);
                                         }
-                                        message.error('sjfgsdjfg');
                                     }
                                 }}
                             >

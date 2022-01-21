@@ -1,12 +1,16 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { Field, Form, Formik } from 'formik';
 import { message } from 'antd';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout/HomeLayout'
 import API from "../config";
 import { MetaTags } from '@/components/SEO/MetaTags'
+import { Image } from 'antd';
 
 function Overview() {
+
+    const [attachState, setAttachState] = useState(null)
+
     return (
         <>
             <MetaTags
@@ -24,6 +28,7 @@ function Overview() {
                             msg_type: 0,
                             email: '',
                             message: '',
+                            attach: null,
                         }}
                         enableReinitialize={true}
                         onSubmit={async values => {
@@ -56,7 +61,7 @@ function Overview() {
 
                         }}
                     >
-                        {({ errors, touched, isSubmitting }) => (
+                        {({ errors, touched, isSubmitting, setFieldValue }) => (
                             <Form>
                                 <div className={"timlands-panel" + (isSubmitting ? ' is-loader' : '')}>
                                     <div className="timlands-content-form">
@@ -164,6 +169,35 @@ function Overview() {
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                                 <p className="text">{errors.message}</p>
+                                                            </motion.div>
+                                                        </div>
+                                                        :
+                                                        null}
+                                                </div>
+                                            </div>
+                                            <div className="col-md-12">
+                                                <div className="timlands-form">
+                                                    <label className="label-block" htmlFor="attachment">يمكنك إضافة مرفق من هنا</label>
+                                                    <input id="attachment" name="attach" type="file" onChange={(event) => {
+                                                        if (event.currentTarget.files[0].size / 1024 / 1024 > 10) {
+                                                            message.error("حجم الملف يجب أن لا يتجاوز 10 MB")
+                                                            event.currentTarget.value = null
+                                                        } else {
+                                                            setFieldValue("attach", event.currentTarget.files[0]);
+                                                            setAttachState(URL.createObjectURL(event.target.files[0]))
+                                                        }
+                                                    }} className="form-control" />
+                                                    
+                                                    {attachState && 
+                                                        <div style={{width: '150px', maxHeight: '150px', border: '1px solid #ccc', borderRadius: '.4rem', marginTop: '1rem', overflow: 'hidden'}}>
+                                                            <Image src={attachState} />
+                                                        </div>
+                                                    }
+
+                                                    {errors.attach && touched.attach ?
+                                                        <div style={{ overflow: 'hidden' }}>
+                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{errors.attach}</p>
                                                             </motion.div>
                                                         </div>
                                                         :
