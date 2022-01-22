@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Button, message, notification, Result, Tooltip } from 'antd'
+import { Badge, message, notification, Result } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
 import API from '../../config'
 import Link from 'next/link'
@@ -9,28 +9,13 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Cookies from 'js-cookie'
-import { DeleteOutlined, PauseCircleOutlined, EditOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import Unauthorized from '@/components/Unauthorized';
 import router from 'next/router'
-import Loading from '@/components/Loading'
-import { Menu } from 'antd';
+import MyProducts from '@/components/Profile/MyProducts'
 
 function index() {
     const token = Cookies.get('token')
     const [statusType, setStatusType] = useState('')
-
-    function statusProduct(status: any) {
-        switch (status) {
-            case null:
-                return <span className="badge bg-info">في الإنتظار...</span>
-            case 0:
-                return <span className="badge bg-danger">مرفوظة</span>
-            case 1:
-                return <span className="badge bg-success">مقبولة</span>
-            default:
-                return <span className="badge bg-info">في الإنتظار...</span>
-        }
-    }
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -90,6 +75,7 @@ function index() {
             }
         })
     }
+
     const disactiveProductHandle = async (id: any) => {
         const MySwal = withReactContent(Swal)
 
@@ -118,37 +104,6 @@ function index() {
             notification['error']({
                 message: 'رسالة خطأ',
                 description: 'للأسف لم يتم تعطيل هذه الخدمة',
-            });
-        }
-    }
-    const activeProductHandle = async (id: any) => {
-        const MySwal = withReactContent(Swal)
-
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-        try {
-            const res = await API.post(`api/my_products/${id}/active_product`, null, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                swalWithBootstrapButtons.fire(
-                    'تم التفعيل!',
-                    'لقد تم تفعيل هذه الخدمة بنجاح',
-                    'success'
-                )
-                mutate(`api/my_products${statusType}`)
-            }
-        } catch (error) {
-            notification['error']({
-                message: 'رسالة خطأ',
-                description: 'للأسف لم يتم تفعيل هذه الخدمة',
             });
         }
     }
@@ -214,107 +169,14 @@ function index() {
                                             style={{ backgroundColor: '#52c41a' }}
                                         />
                                     </p>
-                                    <div className="button-edit">
-                                        <Link href="/user/personalInformations">
-                                            <a className="btn butt-primary flex-center butt-sm">
-                                                <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
-                                            </a>
-                                        </Link>
-                                        <Link href="/user/changePass">
-                                            <a className="btn butt-primary2 flex-center butt-sm mt-1">
-                                                <span className="material-icons material-icons-outlined">lock</span> تغيير كلمة المرور
-                                            </a>
-                                        </Link>
-                                    </div>
                                 </div>
                             </div>
-                            <div className="profile-content-body">
-                                <div className="page-header">
-                                    <h3 className="title">خدماتي</h3>
-                                </div>
-                                <Menu mode="horizontal">
-                                    <Menu.Item key="all" onClick={() => setStatusType('')}>
-                                        الكل
-                                    </Menu.Item>
-                                    <Menu.Item key="mail" onClick={() => setStatusType('/published')}>
-                                        النشطة
-                                    </Menu.Item>
-                                    <Menu.Item key="app" onClick={() => setStatusType('/rejected')}>
-                                        المرفوضة
-                                    </Menu.Item>
-                                    <Menu.Item key="waiting" onClick={() => setStatusType('/pending')}>
-                                        قيد الإنتظار
-                                    </Menu.Item>
-                                    <Menu.Item key="drafts" onClick={() => setStatusType('/drafts')}>
-                                        المسودات
-                                    </Menu.Item>
-                                    <Menu.Item key="alipay" onClick={() => setStatusType('/paused')}>
-                                        المعطلة
-                                    </Menu.Item>
-                                </Menu>
-                                {postsList && postsList.data.length == 0 ?
-                                    <Result
-                                        status="404"
-                                        title="لا يوجد لديك خدمات"
-                                        subTitle="يمكنك إضافة خدمة في أي وقت "
-                                        extra={<Link href='/add-new'><a className="btn butt-sm butt-primary">إضافة خدمة جديدة</a></Link>}
-                                    /> : ''
-                                }
-                                <div className="timlands-table">
-                                    <table className="table">
-                                        <thead>
-                                            <tr>
-                                                <th>العنوان</th>
-                                                <th>مكتملة</th>
-                                                <th>عدد المشتريين</th>
-                                                <th>حالة التفعيل</th>
-                                                <th>حالة القبول</th>
-                                                <th>الأدوات</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {postsList && postsList.data.map((e: any) => (
-                                                <tr key={e.id}>
-                                                    <td>{e.title}</td>
-                                                    <td>{e.is_completed == 0 ?
-                                                        <span className="badge bg-danger">لا</span> :
-                                                        <span className="badge bg-success">نعم</span>}</td>
-                                                    <td>{e.count_buying}</td>
-                                                    <td>{e.is_active == null ?
-                                                        <span className="badge bg-danger">معطلة</span> :
-                                                        <span className="badge bg-success">مفعلة</span>}
-                                                    </td>
-                                                    <td>{statusProduct(e.status)}</td>
-                                                    <td>
-                                                        <Tooltip title="حذف هذه الخدمة">
-                                                            <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
-                                                        </Tooltip>
-                                                        {e.is_active !== null ?
-                                                            <Tooltip title="تعطيل هذه الخدمة">
-                                                                <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange', borderColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
-                                                            </Tooltip> :
-                                                            <Tooltip title="تفعيل هذه الخدمة">
-                                                                <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => activeProductHandle(e.id)} />
-                                                            </Tooltip>
-                                                        }
-                                                        <Tooltip title="تعديل الخدمة">
-                                                            <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => {
-                                                                router.push({
-                                                                    pathname: '/edit-product/overview',
-                                                                    query: {
-                                                                        id: e.id, // pass the id 
-                                                                    },
-                                                                })
-                                                            }} />
-                                                        </Tooltip>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                    {!postsList && <Loading />}
-                                </div>
-                            </div>
+                            <MyProducts
+                                setStatusType={setStatusType}
+                                postsList={postsList}
+                                disactivateHandle={disactiveProductHandle}
+                                deleteHandle={deleteHandle}
+                            />
                         </div>
                     </div>
                 </>

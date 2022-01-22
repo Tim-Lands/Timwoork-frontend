@@ -5,11 +5,10 @@ import { Field, Form, Formik } from "formik";
 import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
-import "antd/dist/antd.min.css";
 import useSWR, { mutate } from 'swr'
 import Loading from "@/components/Loading";
 import router from "next/router";
-import UploadPicture from "@/components/UploadPicture";
+import UploadPicture from "@/components/Profile/UploadPicture";
 
 const personalInformations = () => {
     const token = Cookies.get('token')
@@ -44,6 +43,7 @@ const personalInformations = () => {
                                 }}
                                 //validationSchema={SignupSchema}
                                 onSubmit={async values => {
+                                    setValidationsErrors({});
                                     try {
                                         const res = await API.post("api/profiles/step_one", values, {
                                             headers: {
@@ -64,7 +64,6 @@ const personalInformations = () => {
                             >
                                 {({ isSubmitting }) => (
                                     <Form>
-
                                         <div className="login-panel update-form">
                                             <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
                                                 {!isSubmitting ? '' :

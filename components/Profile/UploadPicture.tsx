@@ -1,4 +1,4 @@
-import API from "../config";
+import API from "../../config";
 import { useState } from "react";
 import { Progress } from "antd";
 import PropTypes from "prop-types";
