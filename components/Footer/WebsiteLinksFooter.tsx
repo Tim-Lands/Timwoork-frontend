@@ -20,7 +20,7 @@ function WebsiteLinksFooter() {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/trust-company">
+                        <Link href="/about-us">
                             <a>حول الموقع</a>
                         </Link>
                     </li>

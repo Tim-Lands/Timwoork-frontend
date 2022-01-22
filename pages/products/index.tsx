@@ -19,7 +19,7 @@ function Category() {
   const { data: getCategories, error }: any = useSWR('api/get_categories')
   const setValue = getCategories && getCategories.data.map((e) => (e.id));
   const setLabel = getCategories && getCategories.data.map((e) => (e.name_ar));
-  const [selectedTags, setSelectedTags]: any = useState(['']);
+  const [selectedTags, setSelectedTags]: any = useState([getCategories && getCategories.data]);
 
   /********************** price Slider **********************/
   function valuetext(value: number) {
@@ -48,7 +48,10 @@ function Category() {
 
   //filter data 
   async function filterData() {
-
+    if (selectedTags == 0) {getData() }
+    
+    else{
+      console.log(selectedTags.length)
     setIsLoading(true);
     try {
       setTimeout(() => {
@@ -64,6 +67,7 @@ function Category() {
       setIsLoading(false)
       setIsError(true)
     }
+  }
   }
 
   async function getData() {
@@ -113,7 +117,7 @@ function Category() {
                       valueLabelDisplay="auto"
                       onChange={handleChangeSlider}
                       getAriaValueText={valuetext}
-                      max={5000}
+                      max={1000}
                       min={0}
                       step={10}
                       disableSwap
@@ -122,7 +126,7 @@ function Category() {
                 </div>
                 <div className="filter-sidebar-panel">
                   <h3 className="title">التصنيف الرئيسي</h3>
-                  <Tags values={setValue} labels={setLabel} placeholder="أدخل التصنيفات..." selected={selectedTags => setSelectedTags(selectedTags)} />
+                  <Tags values={setValue} labels={setLabel} placeholder="جميع التصنيفات" selected={selectedTags => setSelectedTags(selectedTags)} />
                 </div>
                 <div className="py-3">
                   <button type="submit" className='btn butt-primary butt-sm' onClick={filterData}>فلترة النتائج</button>
