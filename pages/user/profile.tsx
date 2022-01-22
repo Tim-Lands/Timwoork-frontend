@@ -11,8 +11,6 @@ import Loading from '@/components/Loading'
 import Sidebar from '@/components/Profile/Sidebar'
 import MyProducts from '@/components/Profile/MyProducts'
 import Cookies from 'js-cookie'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import Unauthorized from '@/components/Unauthorized';
 
 function Profile() {
@@ -60,59 +58,6 @@ function Profile() {
             message.error('حدث خطأ غير متوقع')
             setIsLoadingSeler(false)
         }
-    }
-    const deleteHandle = (id: any) => {
-        const MySwal = withReactContent(Swal)
-
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الحذف',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res = await API.post(`api/product/${id}/deleteProduct`, null, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    if (res.status === 200) {
-                        message.success('تم حذف هذه الخدمة')
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-                swalWithBootstrapButtons.fire(
-                    'تم الحذف!',
-                    'لقد تم حذف هذا العنصر بنجاح',
-                    'success'
-                )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
-            }
-        })
-    }
-    const disactivateHandle = async (id: any) => {
-        console.log(id);
     }
     return (
         <div className="py-3">
@@ -247,8 +192,6 @@ function Profile() {
                             <MyProducts
                                 setStatusType={setStatusType}
                                 postsList={postsList}
-                                disactivateHandle={disactivateHandle}
-                                deleteHandle={deleteHandle}
                             />
                         }
                     </div>

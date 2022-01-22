@@ -1,12 +1,9 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, message, notification, Result } from 'antd'
+import { Badge, Result } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
-import API from '../../config'
 import Link from 'next/link'
 import Image from 'next/image'
-import useSWR, { mutate } from 'swr'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
@@ -25,88 +22,6 @@ function index() {
     const { data: userInfo }: any = useSWR('api/me')
     const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
 
-    const deleteHandle = (id: any) => {
-        const MySwal = withReactContent(Swal)
-
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الحذف',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res = await API.post(`api/product/${id}/deleteProduct`, null, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    if (res.status === 200) {
-                        message.success('تم حذف هذه الخدمة')
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-                swalWithBootstrapButtons.fire(
-                    'تم الحذف!',
-                    'لقد تم حذف هذا العنصر بنجاح',
-                    'success'
-                )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
-            }
-        })
-    }
-
-    const disactiveProductHandle = async (id: any) => {
-        const MySwal = withReactContent(Swal)
-
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-        try {
-            const res = await API.post(`api/my_products/${id}/disactive_product`, null, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                swalWithBootstrapButtons.fire(
-                    'تم التعطيل!',
-                    'لقد تم تعطيل هذه الخدمة بنجاح',
-                    'success'
-                )
-                mutate(`api/my_products${statusType}`)
-            }
-        } catch (error) {
-            notification['error']({
-                message: 'رسالة خطأ',
-                description: 'للأسف لم يتم تعطيل هذه الخدمة',
-            });
-        }
-    }
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
@@ -174,8 +89,6 @@ function index() {
                             <MyProducts
                                 setStatusType={setStatusType}
                                 postsList={postsList}
-                                disactivateHandle={disactiveProductHandle}
-                                deleteHandle={deleteHandle}
                             />
                         </div>
                     </div>

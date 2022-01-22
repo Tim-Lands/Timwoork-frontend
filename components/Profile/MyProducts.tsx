@@ -1,11 +1,89 @@
 import Loading from '@/components/Loading'
 import Link from 'next/link'
 import PropTypes from "prop-types";
-import { Result, Menu, Tooltip, Button } from 'antd'
-import { DeleteOutlined, PauseCircleOutlined, EditOutlined } from '@ant-design/icons';
+import API from '../../config'
+import Cookies from 'js-cookie'
+import { Result, Menu, Tooltip, Button, message, notification } from 'antd'
+import { DeleteOutlined, PauseCircleOutlined, EditOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import router from "next/router";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-export default function MyProducts({ setStatusType, postsList, deleteHandle, disactivateHandle }) {
+export default function MyProducts({ setStatusType, postsList }) {
+    const token = Cookies.get('token')
+
+    const deleteHandle = (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد الحذف',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await API.post(`api/product/${id}/deleteProduct`, null, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    if (res.status === 200) {
+                        swalWithBootstrapButtons.fire(
+                            'تم الحذف!',
+                            'لقد تم حذف هذه الخدمة بنجاح',
+                            'success'
+                        )
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        })
+    }
+
+    const disactiveProductHandle = async (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+        try {
+            const res = await API.post(`api/my_products/${id}/disactive_product`, null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                swalWithBootstrapButtons.fire(
+                    'تم التعطيل!',
+                    'لقد تم تعطيل هذه الخدمة بنجاح',
+                    'success'
+                )
+                router.reload()
+            }
+        } catch (error) {
+            notification['error']({
+                message: 'رسالة خطأ',
+                description: 'للأسف لم يتم تعطيل هذه الخدمة',
+            });
+        }
+    }
     function statusProduct(status: any) {
         switch (status) {
             case null:
@@ -80,9 +158,15 @@ export default function MyProducts({ setStatusType, postsList, deleteHandle, dis
                                             <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
                                         </Tooltip>
                                         {e.status == 1 &&
-                                            <Tooltip title="تعطيل هذه الخدمة">
-                                                <Button type="primary" color='orange' style={{ marginInline: 2 }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactivateHandle(e.id)} />
-                                            </Tooltip>
+                                            <>
+                                            {e.is_active == 0 ?
+                                                <Tooltip title="تفعيل هذه الخدمة">
+                                                    <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'green' }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
+                                                </Tooltip> :
+                                                <Tooltip title="تعطيل هذه الخدمة">
+                                                    <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
+                                                </Tooltip>}
+                                            </>
                                         }
                                         <Tooltip title="تعديل الخدمة">
                                             <Button type="default" color='orange' size="small" shape="circle" icon={<EditOutlined />} onClick={() => {
@@ -107,6 +191,4 @@ export default function MyProducts({ setStatusType, postsList, deleteHandle, dis
 MyProducts.propTypes = {
     setStatusType: PropTypes.func,
     postsList: PropTypes.any,
-    disactivateHandle: PropTypes.func,
-    deleteHandle: PropTypes.func,
 };
