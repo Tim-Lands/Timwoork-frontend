@@ -197,7 +197,7 @@ function Profile() {
                             <div className="col-lg-8">
                                 <div className="timlands-profile-content">
                                     <div className="profile-content-header">
-                                        <Badge color={'green'} count="متصل" offset={[10, 10]} >
+                                        <Badge color={'green'} count="متصل" offset={[10, 10]} > {/**من أجل معرفة اليوزر متصل او غير متصل */}
                                             <div className="profile-content-avatar">
                                                 {userInfo.user_details.profile.avatar == 'avatar.png' ?
                                                     <Image src="/avatar2.jpg" width={120} height={120} /> :
