@@ -9,7 +9,7 @@ import 'react-slideshow-image/dist/styles.css'
 import Image from 'next/image'
 import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
-import { Dropdown, message, Spin, Menu, notification } from 'antd'
+import { message, Spin, Menu, notification } from 'antd'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
 import { Field, Form, Formik } from "formik";
@@ -17,6 +17,8 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 import NotFound from "@/components/NotFound";
 import axios from 'axios';
+import AsideBox from "@/components/Product/AsideBox";
+import AboutSeller from "@/components/Product/AboutSeller";
 
 const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
 
@@ -101,7 +103,7 @@ function Single({ query }) {
       return yut.concat(yut2)
     }
   }
-  const menu = (
+  const menuShare = (
     <Menu>
       {ProductData &&
         <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
@@ -365,56 +367,17 @@ function Single({ query }) {
                       </div>
                     }
                     {ProductData.data.profile_seller &&
-                      <div className="timwoork-single-seller-info">
-                        <div className="seller-info-header">
-                          <h2 className="title">حول البائع</h2>
-                        </div>
-                        <div className="seller-info-container">
-                          <div className="d-flex">
-                            <div className="seller-info-avatar">
-                              {ProductData.data.profile_seller.profile.avatar == 'avatar.png' ?
-                                <Image className="circular-img huge-size" src="/avatar2.jpg" width={100} height={100} /> :
-                                <Image
-                                  className="circular-img huge-size"
-                                  loader={myLoader}
-                                  src={ProductData && ProductData.data.profile_seller.profile.avatar}
-                                  quality={1}
-                                  width={100}
-                                  height={100}
-                                  placeholder='blur'
-                                  blurDataURL='/avatar2.jpg'
-                                />
-                              }
-                              <span className="is-online"></span>
-                            </div>
-                            <div className="seller-info-content">
-                              <h3 className="user-title">
-                                {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
-                              </h3>
-                              <ul className="user-meta nav">
-                                <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.badge !== null && ProductData.data.profile_seller.badge.name_ar}
-                                </li>
-                                {ProductData.data.profile_seller.profile.country !== null &&
-                                  <li>
-                                    <span className="material-icons material-icons-outlined">place</span> الجزائر
-                                  </li>
-                                }
-                              </ul>
-                              <div className="seller-info-butts d-flex">
-                                <Link href={"/u/" + ProductData.data.profile_seller.profile.user.username}>
-                                  <a className="btn butt-primary butt-sm flex-center">
-                                    <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
-                                  </a>
-                                </Link>
-                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email, ProductData.data.profile_seller.profile.user.id, ProductData.data.profile_seller.profile.user.username)}>
-                                  <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <AboutSeller 
+                        avatar={ProductData.data.profile_seller.profile.avatar}
+                        myLoader={myLoader}
+                        fullname={ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
+                        country={ProductData.data.profile_seller.profile.country}
+                        badge={ProductData && ProductData.data.profile_seller.badge}
+                        username={ProductData.data.profile_seller.profile.user.username}
+                        getOrCreateChat={getOrCreateChat}
+                        email={ProductData.data.profile_seller.profile.user.email}
+                        userId={ProductData.data.profile_seller.profile.user.id}
+                      />
                     }
                     <div className="timwoork-single-comments">
                       <div className="timwoork-single-comments-inner">
@@ -501,120 +464,24 @@ function Single({ query }) {
                         </>}
                       </div>
                     </div>
-                    <div className="timwoork-single-comments">
-                      <div className="timwoork-single-comments-inner">
-                        <div className="single-comments-header">
-                          <div className="flex-center">
-                            <h1 className="title">
-                              <span className="material-icons material-icons-outlined">question_answer</span>
-                              خدمات لنفس البائع
-                            </h1>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
-              <div className="single-sidebar">
-                <Spin spinning={isLoadingCart}>
-                  <div className="single-panel-aside">
-                    <div className="panel-aside-header">
-                      <ul className="nav top-aside-nav">
-                        <li className="delevr-time me-auto">
-                          <span
-                            className="material-icons material-icons-outlined"
-                          >timer</span> مدة التسليم: {durationFunc()}
-                        </li>
-                        <li className="cat-post ml-auto">
-                          <Dropdown overlay={menu}>
-                            <a>
-                              <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
-                            </a>
-                          </Dropdown>
-                        </li>
-                      </ul>
-                    </div>
-                    {token &&
-                      <div className="row mx-auto py-2">
-                        <div className="col-7">
-                          <p className="text-quatity">عدد مرات الشراء: </p>
-                        </div>
-                        <div className="col-5">
-                          <input
-                            type="number"
-                            value={quantutyCount}
-                            name="quantity_count"
-                            className="timlands-inputs sm"
-                            onChange={(e: any) => setQuantutyCount(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    }
-                    {ProductData.data.developments &&
-                      <div className="panel-aside-body">
-                        <div className="add-devloppers-header">
-                          <h3 className="title">التطويرات المتوفرة</h3>
-                        </div>
-                        <ul className="add-devloppers-nav">
-                          {ProductData.data.developments.map((e: any) => {
-                            return (
-                              <li key={e.id} className="devloppers-item">
-                                <div className="form-check">
-                                  {token && <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id={"flexCheckDefault-id" + e.id}
-                                    value={e.id}
-                                    onChange={handleOnChangeAddID} {..._totalPrice()}
-                                  />}
-                                  <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
-                                    {e.title}
-                                    <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
-                                  </label>
-                                </div>
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      </div>
-                    }
-                    <div className="panel-aside-footer">
-                      <div className="aside-footer-total-price">
-                        <h1 className="price-total me-auto">
-                          <strong>المجموع </strong> {_totalPrice()}$
-                        </h1>
-                        <div className="bayers-count">
-                          <p className="num">
-                            <span className="count">{ProductData && ProductData.data.count_buying} </span>
-                            <span className="text"> اشتروا هذا</span>
-                          </p>
-                        </div>
-                      </div>
-                      <div className="aside-footer-note">
-                        <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
-                      </div>
-                      {token &&
-                        <div className="aside-footer-addtocart">
-                          {/*<button disabled={true} className="btn butt-white butt-lg">
-                            <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
-                            تمت الإضافة
-                          </button>*/}
-
-                          <button
-                            onClick={addToCart}
-                            className="btn butt-primary butt-lg">
-                            <span className="material-icons material-icons-outlined">add_shopping_cart</span>
-                            إضافة إلى السلة
-                          </button>
-                        </div>
-                      }
-                    </div>
-                  </div>
-                </Spin>
-              </div>
+              <AsideBox 
+                count_buying={ProductData && ProductData.data.count_buying}
+                menuShare={menuShare}
+                _totalPrice={_totalPrice}
+                isLoadingCart={isLoadingCart}
+                addToCart={addToCart}
+                durationFunc={durationFunc}
+                handleOnChangeAddID={handleOnChangeAddID}
+                quantutyCount={quantutyCount}
+                setQuantutyCount={setQuantutyCount}
+                developments={ProductData && ProductData.data.developments}
+                DevdurationFunc={DevdurationFunc}
+              />
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import PropTypes from "prop-types";
 import API from '../../config'
 import Cookies from 'js-cookie'
-import { Result, Menu, Tooltip, Button, message, notification } from 'antd'
+import { Result, Menu, Tooltip, Button, notification } from 'antd'
 import { DeleteOutlined, PauseCircleOutlined, EditOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import router from "next/router";
 import Swal from 'sweetalert2'
