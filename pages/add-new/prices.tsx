@@ -153,21 +153,6 @@ function Prices({ query }) {
                                                     </h3>
                                                 </div>
                                             </div>
-                                            <div className="timlands-panel-header mt-3">
-                                                <div className="flex-center">
-                                                    <h2 className="title"><span className="material-icons material-icons-outlined">payments</span>إضافة السعر</h2>
-                                                    <div className={"header-butt" + (isSubmitting ? ' is-loader' : '')}>
-                                                        <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out mr-auto butt-xs">
-                                                            <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
-                                                            <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                                        </button>
-                                                        <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
-                                                            <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
-                                                            <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div className="timlands-content-form ">
                                                 <div className="row">
                                                     <div className="col-md-6">

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Badge, Tooltip, message } from 'antd';
+import { Menu, Dropdown, Badge, Tooltip } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 //import { isMobile } from 'react-device-detect';
 import { ReactElement, useState } from "react";
@@ -9,19 +9,17 @@ import Link from "next/link";
 import ImageLogo from "next/image";
 import logoIMG from '../../public/logo.png'
 import { motion } from 'framer-motion'
-import API from '../../config'
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
-import router from "next/router";
 
 function Navbar(props: any): ReactElement {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
 
     //store username, email & userID in Cookies just for chat
-    if(token){
+    if (token) {
         const email = userInfo && userInfo.user_details.email;
         const username = userInfo && userInfo.user_details.username;
         const userID = userInfo && userInfo.user_details.id;
@@ -36,7 +34,7 @@ function Navbar(props: any): ReactElement {
         setIsMenuShowen(!isMenuShowen)
         setIsMenuShowenMob(!isMenuShowenMob)
     }
-    const DarkIconvariants = {
+    /*const DarkIconvariants = {
         visible: {
             opacity: 1,
             y: 0,
@@ -66,7 +64,7 @@ function Navbar(props: any): ReactElement {
             message.error('حدث خطأ غير متوقع')
             setSarkLoading(false)
         }
-    }
+    }*/
     const { data: userData }: any = useSWR(`api/me`)
     const AccountList = (
         <Menu>
@@ -157,8 +155,8 @@ function Navbar(props: any): ReactElement {
                                     </a>
                                 </Link>
                             </div>
-                            { isMenuShowen && <Menus darkMode={darkMode} />}
-                            { isMenuShowen && <MenusMobile darkMode={darkMode} />}
+                            {isMenuShowen && <Menus darkMode={darkMode} />}
+                            {isMenuShowen && <MenusMobile darkMode={darkMode} />}
                         </div>
                     </div>
                     <ul className="nav nav-auth ml-auto" style={{
@@ -186,7 +184,7 @@ function Navbar(props: any): ReactElement {
                                 }
                                 {userData &&
                                     <>
-                                        <li
+                                        {/*<li
                                             className="right-butts-icon"
                                             style={{
                                                 opacity: (darkLoading ? 0.5 : 1),
@@ -216,7 +214,7 @@ function Navbar(props: any): ReactElement {
                                                     </Badge>
                                                 </motion.a>
                                             </Tooltip>
-                                        </li>
+                                        </li>*/}
                                         <li className="right-butts-icon">
                                             <Tooltip placement="bottom" title='سلة المشتريات'>
                                                 <Link href='/cart'>

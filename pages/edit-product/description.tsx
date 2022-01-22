@@ -9,19 +9,8 @@ import Cookies from 'js-cookie'
 import API from "../../config";
 import { ReactElement, useEffect } from 'react';
 import useSWR from 'swr';
-import * as Yup from 'yup';
 import Link from 'next/link'
 
-const SignupSchema = Yup.object().shape({
-    buyer_instruct: Yup.string().required('هذا الحقل إجباري').nullable(),
-    content: Yup.string()
-        .trim()
-        .min(300, (obj) => {
-            const valueLength = obj.value.length;
-            return `(عدد الحروف الحالية: ${valueLength}) عدد الحروف يجب أن يتجاوز العدد:  ${obj.min}`;
-        })
-        .required('هذا الحقل إجباري')
-});
 function Description({ query }) {
     const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
     const { data: getUser }: any = useSWR('api/me')
@@ -89,7 +78,6 @@ function Description({ query }) {
                                 }}
                                 enableReinitialize={true}
 
-                                validationSchema={SignupSchema}
                                 onSubmit={async (values) => {
                                     try {
                                         const id = query.id

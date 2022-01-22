@@ -176,21 +176,6 @@ function Medias({ query }) {
                                     </h3>
                                 </div>
                             </div>
-                            <div className="timlands-panel-header mt-3">
-                                <div className="flex-center">
-                                    <h2 className="title"><span className="material-icons material-icons-outlined">mms</span>مكتبة الصور والملفات</h2>
-                                    <div className={"header-butt"}>
-                                        <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out mr-auto butt-xs">
-                                            <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
-                                            <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                        </button>
-                                        <button type="submit" disabled={loading} onClick={loadImagesHandle} className="btn flex-center butt-green mr-auto butt-xs">
-                                            <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
-                                            <div className="spinner-border spinner-border-sm text-white" role="status"></div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="choose-images-file">
                                 <div className="choose-images-list">
                                     <div className={"panel-modal-body login-panel-body auto-height"}>
@@ -353,7 +338,7 @@ function Medias({ query }) {
                                         <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
                                         <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                     </button>
-                                    <button type="submit" disabled={loading} className="btn flex-center butt-green ml-auto butt-sm">
+                                    <button type="submit" disabled={loading} onClick={loadImagesHandle} className="btn flex-center butt-green ml-auto butt-sm">
                                         <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                     </button>
                                 </div>

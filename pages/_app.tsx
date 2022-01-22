@@ -37,12 +37,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page: any) => page)
     return (
         <div className={dataDark == 1 ? ' is-dark' : ''}>
-                <Provider store={store}>
-                    <ConfigProvider direction="rtl">
-                        {getLayout(<Component {...pageProps} />)}
-                    </ConfigProvider>
-                </Provider>
-            
+            <Provider store={store}>
+                <ConfigProvider direction="rtl">
+                    {getLayout(<Component {...pageProps} />)}
+                </ConfigProvider>
+            </Provider>
         </div>
     );
 }

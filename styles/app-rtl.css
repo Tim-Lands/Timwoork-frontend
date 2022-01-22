@@ -1972,6 +1972,7 @@ h3 {
   font-size: 14px;
   line-height: 27px;
   color: #444;
+  overflow: hidden;
 }
 
 .statistic-item {

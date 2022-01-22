@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Result, message } from 'antd'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import router from 'next/router'
@@ -59,6 +59,11 @@ function Profile() {
             setIsLoadingSeler(false)
         }
     }
+    useEffect(() =>{
+        if (!token) {
+            router.push('/login')
+        }
+    }, [])
     return (
         <div className="py-3">
             {!userInfo && <Loading />}
@@ -156,15 +161,6 @@ function Profile() {
                                                     </div>
                                                 </div>
                                             }
-
-                                            <div className="col-sm-4">
-                                                {/* <Badge.Ribbon text="مفعل" color="green">*/}
-                                                <div className="content-text-item">
-                                                    <h3 className="text-label">رقم الهاتف</h3>
-                                                    <p className="text-value">{userInfo.user_details.phone}</p>
-                                                </div>
-                                                {/* </Badge.Ribbon>*/}
-                                            </div>
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">الجنس</h3>

@@ -59,16 +59,6 @@ function index() {
                     'لقد تم إلغاء هذه الطلبية بنجاح',
                     'success'
                 )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                setrejectLoading(false)
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
             }
         })
     }

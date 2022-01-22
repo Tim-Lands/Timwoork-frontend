@@ -71,7 +71,7 @@ function Explores() {
                         ))}
                         <li className="main-item-category">
                             <a href='/category'>
-                                مشاهدة كل التصنفات...
+                                مشاهدة كل التصنيفات...
                             </a>
                         </li>
                     </ul>

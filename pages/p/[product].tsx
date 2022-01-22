@@ -19,6 +19,7 @@ import NotFound from "@/components/NotFound";
 import axios from 'axios';
 import AsideBox from "@/components/Product/AsideBox";
 import AboutSeller from "@/components/Product/AboutSeller";
+import { NextSeo } from 'next-seo';
 
 const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
 
@@ -267,13 +268,19 @@ function Single({ query }) {
       {!ProductData && <Loading />}
       {errorLoad && <NotFound />}
       {ProductData &&
-        <MetaTags
-          title={ProductData.data.title + ' - تيموورك'}
-          metaDescription={ProductData.data.content}
-          ogDescription={ProductData.data.content}
-          ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
-          ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
-        />
+        <>
+          <NextSeo
+            title={ProductData.data.title + ' - تيموورك'}
+            description={ProductData.data.content}
+          />
+          <MetaTags
+            title={ProductData.data.title + ' - تيموورك'}
+            metaDescription={ProductData.data.content}
+            ogDescription={ProductData.data.content}
+            ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
+            ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
+          />
+        </>
       }
       {ProductData &&
         <div className="timwoork-single">
@@ -367,7 +374,7 @@ function Single({ query }) {
                       </div>
                     }
                     {ProductData.data.profile_seller &&
-                      <AboutSeller 
+                      <AboutSeller
                         avatar={ProductData.data.profile_seller.profile.avatar}
                         myLoader={myLoader}
                         fullname={ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
@@ -469,7 +476,7 @@ function Single({ query }) {
               </div>
             </div>
             <div className="col-lg-4">
-              <AsideBox 
+              <AsideBox
                 count_buying={ProductData && ProductData.data.count_buying}
                 menuShare={menuShare}
                 _totalPrice={_totalPrice}

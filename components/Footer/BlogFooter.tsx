@@ -13,7 +13,7 @@ function BlogFooter() {
             <ul className="aside-list-items">
                 { getPosts && getPosts.map((item : any) => (
                     <li key={item.id}>
-                        <Link href={`blog/${item.slug}`}>
+                        <Link href={`/blog/${item.slug}`}>
                             <a>{ item.title.rendered }</a>
                         </Link>
                     </li>

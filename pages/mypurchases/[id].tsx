@@ -19,6 +19,7 @@ const User = ({ query }) => {
     const { data: userInfo }: any = useSWR(`api/me`)
     const profily = userInfo && userInfo.user_details.profile
     const [rejectLoading, setrejectLoading] = useState(false)
+    
     const rejectHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({

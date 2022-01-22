@@ -1,5 +1,4 @@
 import { Statistic, Card } from 'antd'
-import { FallOutlined, RiseOutlined, ShrinkOutlined } from '@ant-design/icons';
 import PropTypes from "prop-types";
 import Link from 'next/link'
 
@@ -33,7 +32,6 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             value={pending_amount}
                             precision={2}
                             valueStyle={{ color: '#cf1322' }}
-                            prefix={<FallOutlined />}
                             suffix="$"
                         />
                     </div>
@@ -43,7 +41,6 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             value={withdrawable_amount}
                             precision={2}
                             valueStyle={{ color: darkMode ? '#8ac557' : '#3f8600' }}
-                            prefix={<RiseOutlined />}
                             suffix="$"
                         />
                     </div>
@@ -53,7 +50,6 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             value={Number(withdrawable_amount) + Number(pending_amount)}
                             precision={2}
                             valueStyle={{ color: darkMode ? '#ddd' : '#222' }}
-                            prefix={<ShrinkOutlined />}
                             suffix="$"
                         />
                     </div>
