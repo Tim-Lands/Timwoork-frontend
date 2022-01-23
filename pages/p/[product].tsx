@@ -277,8 +277,8 @@ function Single({ query }) {
             title={ProductData.data.title + ' - تيموورك'}
             metaDescription={ProductData.data.content}
             ogDescription={ProductData.data.content}
-            ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
-            ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
+            //ogImage={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
+            //ogUrl={'https://api.icoursat.com/products/thumbnails/' + ProductData && ProductData.data.thumbnail}
           />
         </>
       }
