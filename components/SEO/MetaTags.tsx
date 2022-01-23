@@ -33,7 +33,7 @@ export function MetaTags({
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={ogDescription} />
-
+        
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@KhamsatDotCom" />
                 <meta name="twitter:creator" content="@KhamsatDotCom" />
@@ -43,8 +43,6 @@ export function MetaTags({
                 <meta property="og:url" content="https://khamsat.com/business/research-services/1251462-%D8%AF%D8%B1%D8%A7%D8%B3%D9%87-%D8%A7%D9%84%D8%AC%D8%AF%D9%88%D9%8A-%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9-%D9%88%D8%A7%D9%84%D8%B3%D9%88%D9%82%D9%8A%D8%A9-%D8%A7%D9%84%D8%AD%D9%82%D9%8A%D8%A8%D8%A9-%D8%A7%D9%84%D8%B4%D8%A7%D9%85%D9%84%D8%A9" />
                 <meta property="og:image:height" content="470" />
                 <meta property="og:image:width" content="800" />
-
-
                 <meta name="image" property="og:image" content="https://khamsat.hsoubcdn.com/images/services/1049303/03c344f73fa2b3c4c548e0a9eb538cbe.jpg" />
 
                 <meta name="image" property="og:image" content="https://khamsat.hsoubcdn.com/images/services/1049303/ff4dac9ab34104d86a0fcaa6c6af48b7.jpg" />

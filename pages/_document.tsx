@@ -10,14 +10,23 @@ export default class CustomDocument extends Document {
                     <title>تيموورك</title>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" />
                     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-                    
+                    <meta name="description" content={'اشتري. دردش .بيع اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة'} />
+                    <meta name="keywords" content={'خمسات, تيموورك, فايفر'} />
+
+                    <meta name="theme-color" content="#444" />
+                    <meta property="og:site_name" content={'اشتري. دردش .بيع اكتشف سوق تيموورك للخدمات'} />
+                    <meta property="og:locale" content="ar" />
+                    <meta property="og:locale:alternate" content="ar" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:title" content={'خمسات, تيموورك, فايفر'} />
+                    <meta property="og:description" content={'اشتري. دردش .بيع اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة'}/>
+
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:site" content="@KhamsatDotCom" />
+                    <meta name="twitter:creator" content="@KhamsatDotCom" />
+                    <meta name="twitter:title" content={'خمسات, تيموورك, فايفر'} />
+                    <meta name="twitter:description" content={'اشتري. دردش .بيع اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة'} />
                     <link rel="icon" href="/icon.png" />
-                    <script dangerouslySetInnerHTML={{
-                        __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                                })(window,document,'script','dataLayer','GTM-PC97CFG');`}}></script>
                 </Head>
                 <body>
                     <noscript dangerouslySetInnerHTML={{
