@@ -1,24 +1,24 @@
-import React, { ReactElement, useEffect, useState } from 'react'
-import Layout from '@/components/Layout/HomeLayout'
-import FilterContent from '../../components/products'
+import React, { ReactElement, useEffect, useState } from "react";
+import Layout from "@/components/Layout/HomeLayout";
+import FilterContent from "../../components/products";
 import { Form, Formik } from "formik";
-import useSWR from 'swr'
-import API from '../../config'
-import Loading from '@/components/Loading';
+import useSWR from "swr";
+import API from "../../config";
+import Loading from "@/components/Loading";
 import PropTypes from "prop-types";
-import Slider from '@mui/material/Slider';
-import { setTimeout } from 'timers';
-import Tags from '@/components/Tags'
+import Slider from "@mui/material/Slider";
+import { setTimeout } from "timers";
+import Tags from "@/components/Tags";
 
 function Category() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [products, setProducts]: any = useState([])
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [products, setProducts]: any = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
 
-  const { data: getCategories, error }: any = useSWR('api/get_categories')
-  const setValue = getCategories && getCategories.data.map((e) => (e.id));
-  const setLabel = getCategories && getCategories.data.map((e) => (e.name_ar));
+  const { data: getCategories, error }: any = useSWR("api/get_categories");
+  const setValue = getCategories && getCategories.data.map((e) => e.id);
+  const setLabel = getCategories && getCategories.data.map((e) => e.name_ar);
   const [selectedTags, setSelectedTags]: any = useState([getCategories && getCategories.data]);
 
   /********************** price Slider **********************/
@@ -32,72 +32,98 @@ function Category() {
   const handleChangeSlider = (
     event: Event,
     newValue: number | number[],
-    activeThumb: number,
+    activeThumb: number
   ) => {
     if (!Array.isArray(newValue)) {
       return;
     }
 
     if (activeThumb === 0) {
-      setpriceRange([Math.min(newValue[0], priceRange[1] - minDistance), priceRange[1]]);
+      setpriceRange([
+        Math.min(newValue[0], priceRange[1] - minDistance),
+        priceRange[1],
+      ]);
     } else {
-      setpriceRange([priceRange[0], Math.max(newValue[1], priceRange[0] + minDistance)]);
+      setpriceRange([
+        priceRange[0],
+        Math.max(newValue[1], priceRange[0] + minDistance),
+      ]);
     }
   };
   /**----------------------------------------------------------**/
 
-  //filter data 
+  //filter data
   async function filterData() {
-    if (selectedTags == 0) {getData() }
-    
-    else{
-      console.log(selectedTags.length)
-    setIsLoading(true);
+    if (selectedTags == 0) {
+    getCategoryFiltrPricing();
+    } else {
+      console.log(selectedTags.length);
+      setIsLoading(true);
+      try {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500);
+        const res: any = await API.get(
+          `api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}&category=${selectedTags}`
+        );
+        if (res.status === 200) {
+          setIsLoading(false);
+          setProducts(res.data.data.data);
+          setIsError(false);
+        }
+      } catch (error) {
+        setIsLoading(false);
+        setIsError(true);
+      }
+    }
+  }
+  async function getCategoryFiltrPricing(){
     try {
       setTimeout(() => {
         setIsLoading(false);
-      }, 1500)
-      const res: any = await API.get(`api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}&category=${selectedTags}`)
+      }, 1500);
+      const res: any = await API.get(
+        `api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}&category=${getCategories && getCategories.data}`
+      );
       if (res.status === 200) {
-        setIsLoading(false)
-        setProducts(res.data.data.data)
-        setIsError(false)
+        setIsLoading(false);
+        setProducts(res.data.data.data);
+        setIsError(false);
       }
     } catch (error) {
-      setIsLoading(false)
-      setIsError(true)
+      setIsLoading(false);
+      setIsError(true);
     }
-  }
   }
 
   async function getData() {
-    setIsLoading(true)
-    setIsError(false)
+    setIsLoading(true);
+    setIsError(false);
     try {
-      const res: any = await API.get(`api/filter?page=${pageIndex}`)
+      const res: any = await API.get(`api/filter?page=${pageIndex}`);
       if (res) {
-        setIsLoading(false)
-        setProducts(res.data.data.data)
-        setIsError(false)
+        setIsLoading(false);
+        setProducts(res.data.data.data);
+        setIsError(false);
       }
     } catch (error) {
-      setIsLoading(false)
-      setIsError(true)
+      setIsLoading(false);
+      setIsError(true);
     }
   }
   useEffect(() => {
-    getData()
-  }, [])
-  if (!getCategories) return <Loading />
-  if (error) return <div>Error</div>
+    getData();
+  }, []);
+  if (!getCategories) return <Loading />;
+  if (error) return <div>Error</div>;
   return (
     <div className="container py-5">
       <Formik
         isInitialValid={true}
         initialValues={{
-          categoryID: []
+          categoryID: [],
         }}
-        onSubmit={async values => {
+        onSubmit={async (values) => {
           console.log(values);
         }}
       >
@@ -111,25 +137,38 @@ function Category() {
                 <div className="filter-sidebar-panel">
                   <h3 className="title">السعر</h3>
                   <div className="timlands-form">
-                    {<Slider
-                      getAriaLabel={() => 'Minimum distance shift'}
-                      value={priceRange}
-                      valueLabelDisplay="auto"
-                      onChange={handleChangeSlider}
-                      getAriaValueText={valuetext}
-                      max={1000}
-                      min={0}
-                      step={10}
-                      disableSwap
-                    />}
+                    {
+                      <Slider
+                        getAriaLabel={() => "Minimum distance shift"}
+                        value={priceRange}
+                        valueLabelDisplay="auto"
+                        onChange={handleChangeSlider}
+                        getAriaValueText={valuetext}
+                        max={1000}
+                        min={0}
+                        step={10}
+                        disableSwap
+                      />
+                    }
                   </div>
                 </div>
                 <div className="filter-sidebar-panel">
                   <h3 className="title">التصنيف الرئيسي</h3>
-                  <Tags values={setValue} labels={setLabel} placeholder="جميع التصنيفات" selected={selectedTags => setSelectedTags(selectedTags)} />
+                  <Tags
+                    values={setValue}
+                    labels={setLabel}
+                    placeholder="جميع التصنيفات"
+                    selected={(selectedTags) => setSelectedTags(selectedTags)}
+                  />
                 </div>
                 <div className="py-3">
-                  <button type="submit" className='btn butt-primary butt-sm' onClick={filterData}>فلترة النتائج</button>
+                  <button
+                    type="submit"
+                    className="btn butt-primary butt-sm"
+                    onClick={filterData}
+                  >
+                    فلترة النتائج
+                  </button>
                 </div>
               </div>
             </div>
@@ -137,26 +176,40 @@ function Category() {
               <div className="page-header">
                 <h5 className="title">جميع الخدمات</h5>
               </div>
-              <FilterContent products={products} isLoading={isLoading} isError={isError} />
-              {products && products.length !== 0 && products.total > products.per_page && <div className="p-2 d-flex">
-                <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
-                <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
-              </div>}
+              <FilterContent
+                products={products}
+                isLoading={isLoading}
+                isError={isError}
+              />
+              {products &&
+                products.length !== 0 &&
+                products.total > products.per_page && (
+                  <div className="p-2 d-flex">
+                    <button
+                      className="btn butt-sm butt-primary me-auto"
+                      onClick={() => setPageIndex(pageIndex + 1)}
+                    >
+                      الصفحة التالية
+                    </button>
+                    <button
+                      className="btn butt-sm butt-primary"
+                      onClick={() => setPageIndex(pageIndex - 1)}
+                    >
+                      الصفحة السابقة
+                    </button>
+                  </div>
+                )}
             </div>
           </div>
         </Form>
       </Formik>
     </div>
-  )
+  );
 }
 Category.getLayout = function getLayout(page: any): ReactElement {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  )
-}
-export default Category
+  return <Layout>{page}</Layout>;
+};
+export default Category;
 Category.propTypes = {
   query: PropTypes.any,
 };
