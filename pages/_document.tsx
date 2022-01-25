@@ -29,9 +29,6 @@ export default class CustomDocument extends Document {
                     <link rel="icon" href="/icon.png" />
                 </Head>
                 <body>
-                    <noscript dangerouslySetInnerHTML={{
-                        __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC97CFG"
-                        height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript>
                     <Main />
                     <NextScript />
                 </body>
