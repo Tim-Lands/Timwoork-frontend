@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
 
-const APIURL = 'https://api.icoursat.com/products/thumbnails/'
 function PostSearch({
     title,
     thumbnail,
@@ -10,10 +9,11 @@ function PostSearch({
     buyers,
     price,
     period,
+    username,
     slug,
     rate = 2,
 }): ReactElement {
-    const thumbnailUrl = `url(${APIURL}${thumbnail})`;
+    const thumbnailUrl = `url(${thumbnail})`;
     const showStars = () => {
         const xAr: any = [
             {
@@ -108,7 +108,7 @@ function PostSearch({
                     </h3>
                     <ul className="nav post-meta">
                         <li className="post-meta-user">
-                            <Link href='/'>
+                            <Link href={`/u/${username}`}>
                                 <a>
                                     <span className="material-icons material-icons-outlined">person_outline</span> {author}
                                 </a>
@@ -132,6 +132,7 @@ PostSearch.propTypes = {
     thumbnail: PropTypes.string,
     author: PropTypes.string,
     slug: PropTypes.string,
+    username: PropTypes.string,
     rate: PropTypes.number,
     period: PropTypes.number,
     buyers: PropTypes.number,

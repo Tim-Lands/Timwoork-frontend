@@ -4,17 +4,17 @@ import { DownOutlined } from '@ant-design/icons';
 //import { isMobile } from 'react-device-detect';
 import { ReactElement, useState } from "react";
 import Menus from "./Menus";
+import API from '../../config'
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
 import logoIMG from '../../public/logo.png'
 import { motion } from 'framer-motion'
-import { connect } from "react-redux";
-import { logout } from "./../../store/auth/authActions";
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
+import router from "next/router";
 
-function Navbar(props: any): ReactElement {
+function Navbar(): ReactElement {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
 
@@ -66,6 +66,21 @@ function Navbar(props: any): ReactElement {
         }
     }*/
     const { data: userData }: any = useSWR(`api/me`)
+    const logout = async () => {
+        try {
+            const res = await API.post("api/logout", {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (res.status === 200) {
+                Cookies.remove('token')
+                router.reload()
+            }
+        } catch (error) {
+            //console.log(error);
+        }
+    }
     const AccountList = (
         <Menu>
             <Menu.Item key="0">
@@ -73,17 +88,17 @@ function Navbar(props: any): ReactElement {
                     <a>الصفحة الشخصية</a>
                 </Link>
             </Menu.Item>
-            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
-                <Link href="/myproducts">
-                    <a>خدماتي</a>
-                </Link>
-            </Menu.Item>)}
             {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
                 <Link href="/add-new">
                     <a>إضافة خدمة جديدة</a>
                 </Link>
             </Menu.Item>)}
 
+            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
+                <Link href="/myproducts">
+                    <a>خدماتي</a>
+                </Link>
+            </Menu.Item>)}
             <Menu.Item key="1">
                 <Link href="/mypurchases">
                     <a>مشترياتي</a>
@@ -102,7 +117,7 @@ function Navbar(props: any): ReactElement {
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="3">
-                <a onClick={props.logout}>
+                <a onClick={logout}>
                     تسجيل الخروج
                 </a>
             </Menu.Item>
@@ -301,8 +316,5 @@ Navbar.propTypes = {
     isDarken: PropTypes.bool,
     userData: PropTypes.object
 };
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-});
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default Navbar

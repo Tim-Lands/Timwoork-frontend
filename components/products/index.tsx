@@ -64,7 +64,8 @@ function index({ products, isError, isLoading }): ReactElement {
                             rate={e.ratings_avg_rating}
                             price={e.price}
                             slug={e.slug}
-                            thumbnail={e.thumbnail}
+                            username={e.profile_seller && e.profile_seller.profile.username}         
+                            thumbnail={e.full_path_thumbnail}
                             buyers={e.count_buying}
                         />
                     </div>

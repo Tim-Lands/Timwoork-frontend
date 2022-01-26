@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 import router from 'next/router';
 import API from '../../config'
 import Loading from '@/components/Loading';
-import { Result, Modal } from 'antd';
+import { Result } from 'antd';
 import {
     CardElement,
     Elements,
@@ -20,32 +20,6 @@ const CheckoutForm = () => {
     const elements = useElements();
     const token = Cookies.get('token')
     const [isLoading, setIsLoading] = useState(false)
-    const [getBill, setGetBill]: any = useState(
-        {
-            cart: {
-                total_price: '0',
-                tax: '0',
-                price_with_tax: '0',
-            },
-            order: {
-                created_at: 'لايوجد'
-            }
-        }
-    )
-    const [visible, setVisible] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false);
-
-    const showModal = () => {
-        setVisible(true);
-    };
-
-    const handleOk = () => {
-        setConfirmLoading(true);
-        setTimeout(() => {
-            setVisible(false);
-            setConfirmLoading(false);
-        }, 2000);
-    };
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -64,9 +38,7 @@ const CheckoutForm = () => {
                 }
             })
             if (res.status === 200) {
-                setIsLoading(false)
-                setGetBill(res.data.data)
-                showModal()
+                router.push('/mypurchases')
             }
         } catch (error) {
             setIsLoading(false)
@@ -75,50 +47,14 @@ const CheckoutForm = () => {
 
     return (
         <>
-            <Modal
-                title="الفاتورة النهائية"
-                visible={visible}
-                onOk={handleOk}
-                okText="موافق"
-                confirmLoading={confirmLoading}
-                cancelText={false}
-            >
-                {!getBill && isLoading && <Loading />}
-                {!isLoading &&
-                    <div className="app-bill">
-                        <div className="app-bill-header">
-                            <h3 className="title">الفاتورة النهائية</h3>
-                        </div>
-                        <div className="app-bill-content">
-                            <ul className="list-group">
-                                <li className="list-group-item d-flex justify-content-between align-items-center">
-                                    تاريخ العملية
-                                    <span className="">{getBill && getBill.order.created_at}</span>
-                                </li>
-                                <li className="list-group-item d-flex justify-content-between align-items-center">
-                                    السعر الكلي
-                                    <span className="">{getBill && getBill.cart && getBill.cart.total_price}$</span>
-                                </li>
-                                <li className="list-group-item d-flex justify-content-between align-items-center">
-                                    سعر التحويل
-                                    <span className="">{getBill && getBill.cart && getBill.cart.tax}$</span>
-                                </li>
-                                <li className="list-group-item total d-flex justify-content-between align-items-center">
-                                    المجموع الكلي
-                                    <span className="">{getBill && getBill.cart && getBill.cart.price_with_tax}$</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                }
-            </Modal>
-            <form onSubmit={handleSubmit}>
-                <CardElement />
-                <button type="submit" className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
-                    {isLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
-                    {!isLoading && <span>شراء الآن</span>}
-                </button>
-            </form>
+            {isLoading ? <Loading /> :
+                <form onSubmit={handleSubmit}>
+                    <CardElement />
+                    <button type="submit" className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span>شراء الآن</span>
+                    </button>
+                </form>}
         </>
     );
 };
@@ -162,7 +98,7 @@ function Bill() {
             return
         }
         if (cartList && cartList.data == null) {
-            router.push('/myorders')
+            router.push('/mypurchases')
             return
         }
         getPaypal()

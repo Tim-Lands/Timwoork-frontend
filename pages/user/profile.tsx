@@ -59,7 +59,7 @@ function Profile() {
             setIsLoadingSeler(false)
         }
     }
-    useEffect(() =>{
+    useEffect(() => {
         if (!token) {
             router.push('/login')
         }
@@ -88,22 +88,20 @@ function Profile() {
                             <div className="col-lg-8">
                                 <div className="timlands-profile-content">
                                     <div className="profile-content-header">
-                                        <Badge color={'green'} count="متصل" offset={[10, 10]} > {/**من أجل معرفة اليوزر متصل او غير متصل */}
-                                            <div className="profile-content-avatar">
-                                                {userInfo.user_details.profile.avatar == 'avatar.png' ?
-                                                    <Image src="/avatar2.jpg" width={120} height={120} /> :
-                                                    <Image
-                                                        loader={myLoader}
-                                                        src={userInfo.user_details.profile.avatar}
-                                                        quality={1}
-                                                        width={120}
-                                                        height={120}
-                                                        placeholder='blur'
-                                                        blurDataURL='/avatar2.jpg'
-                                                    />
-                                                }
-                                            </div>
-                                        </Badge>
+                                        <div className="profile-content-avatar">
+                                            {userInfo.user_details.profile.avatar == 'avatar.png' ?
+                                                <Image src="/avatar2.jpg" width={120} height={120} /> :
+                                                <Image
+                                                    loader={myLoader}
+                                                    src={userInfo.user_details.profile.avatar}
+                                                    quality={1}
+                                                    width={120}
+                                                    height={120}
+                                                    placeholder='blur'
+                                                    blurDataURL='/avatar2.jpg'
+                                                />
+                                            }
+                                        </div>
                                         <div className="profile-content-head">
                                             <h4 className="title">
                                                 {userInfo.user_details.profile.first_name + ' ' + userInfo.user_details.profile.last_name}

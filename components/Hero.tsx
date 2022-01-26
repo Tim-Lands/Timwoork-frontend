@@ -152,7 +152,7 @@ function Hero() {
                                     rate={e.ratings_avg_rating}
                                     price={e.price}
                                     slug={e.slug}
-                                    thumbnail={e.thumbnail}
+                                    thumbnail={e.full_path_thumbnail}
                                     buyers={e.count_buying}
                                     period={e.duration}
                                 />

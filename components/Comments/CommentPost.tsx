@@ -67,19 +67,16 @@ function CommentPost(props: any): ReactElement {
         <li className="comment-item">
             <div className="d-flex">
                 <div className="comment-item-avatar">
-                    {props.avatar == 'avatar.png' ?
-                        <Image className="circular-img huge-size" src="/avatar2.jpg" width={45} height={45} /> :
-                        <Image
-                            className="circular-img huge-size"
-                            loader={myLoader}
-                            src={APIURL + props.avatar}
-                            quality={1}
-                            width={45}
-                            height={45}
-                            placeholder='blur'
-                            blurDataURL='/avatar2.jpg'
-                        />
-                    }
+                    <Image
+                        className="circular-img huge-size"
+                        loader={myLoader}
+                        src={APIURL + props.avatar}
+                        quality={1}
+                        width={45}
+                        height={45}
+                        placeholder='blur'
+                        blurDataURL='/avatar2.jpg'
+                    />
                 </div>
                 <div className="comment-item-content">
                     <p className="meta-time">

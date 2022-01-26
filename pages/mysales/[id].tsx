@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from "react";
 import Layout from '@/components/Layout/HomeLayout'
-import "antd/dist/antd.min.css";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR, { mutate } from 'swr'
 import PropTypes from "prop-types";
@@ -221,7 +220,7 @@ const User = ({ query }) => {
         }
     }
     return (
-        <>
+        <div style={{ backgroundColor: '#f6f6f6' }}>
             <MetaTags
                 title={'عرض الطلبية'}
                 metaDescription={"عرض الطلبية"}
@@ -234,144 +233,199 @@ const User = ({ query }) => {
             {!ShowItem && <Loading />}
             {ShowItem &&
                 <div className="row py-4 justify-content-center">
-                    <div className="col-md-10">
-                        <div className="app-bill">
-                            <div className="app-bill-header d-flex">
-                                <h3 className="title me-auto">تفاصيل الطلبية</h3>
-                                {ShowItem && ShowItem.data.status == 0 && <>
-                                    <button
-                                        disabled={acceptLoading}
-                                        onClick={() => acceptHandle(ShowItem.data.id)}
-                                        className="btn butt-xs butt-green mx-1 flex-center"
-                                    ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
-                                    <button
-                                        disabled={rejectOrderLoading}
-                                        onClick={() => rejectHandle(ShowItem.data.id)}
-                                        className="btn butt-xs butt-red mx-1 flex-center"
-                                    ><span className="material-icons material-icons-outlined">done_all</span> رفض الطلب</button>
-                                </>}
-                                {ShowItem && ShowItem.data.status == 1 && <>
-                                    <button
-                                        disabled={rejectLoading}
-                                        onClick={() => requestRejectHandle(ShowItem.data.id)}
-                                        className="btn butt-xs butt-primary2 mx-1 flex-center"
-                                    ><span className="material-icons material-icons-outlined">highlight_off</span> طلب الإلغاء</button>
-                                </>
-                                }
-                            </div>
+                    <div className="col-md-11">
+                        <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
                             <div className="row">
-                                <div className="col-xl-4">
-                                    <div className="aside-header">
-                                        <h3 className="title">معلومات البائع</h3>
-                                    </div>
-                                    <div className="order-user-info d-flex">
-                                        <div className="order-user-avatar">
-                                            <img
-                                                src={ShowItem && ShowItem.data.profile_seller.profile.avatar}
-                                                width={100}
-                                                height={100}
-                                            />
-                                        </div>
-                                        <div className="order-user-content">
-                                            <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div className="aside-header">
-                                        <h3 className="title">معلومات المشتري</h3>
-                                    </div>
-                                    <div className="order-user-info d-flex">
-                                        <div className="order-user-avatar">
-                                            <img
-                                                src={ShowItem && ShowItem.data.order.cart.user.profile.avatar}
-                                                width={100}
-                                                height={100}
-                                            />
-                                        </div>
-                                        <div className="order-user-content">
-                                            <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
-                                            <p className="meta">
-                                                الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-8">
-                                    <table className="table">
-                                        <tbody>
-                                            <tr>
-                                                <th>رقم العملية</th>
-                                                <td>
-                                                    {ShowItem.data.uuid}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>عنوان الخدمة</th>
-                                                <td>
-                                                    {statusLabel(ShowItem.data.status)} {ShowItem.data.title}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>تاريخ العملية</th>
-                                                <td>
-                                                    <LastSeen date={ShowItem.data.created_at} />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>مدة الإنجاز</th>
-                                                <td>
-                                                    {durationFunc()}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>سعر الخدمة</th>
-                                                <td>
-                                                    ${ShowItem.data.price_product}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>السعر الكلي للطلبية</th>
-                                                <td>
-                                                    ${ShowItem.data.order.cart.price_with_tax}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    {ShowItem && ShowItem.data.status == 1 && <>
+                                <div className="col-md-3">
+                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
                                         <div className="aside-header">
-                                            <h3 className="title">رفع العمل وتسليمه</h3>
+                                            <h3 className="title">الأدوات</h3>
                                         </div>
-                                        <div className="p-3">
-                                            {ShowItem && ShowItem.data.resource !== null && ShowItem.data.resource.status == 0 ? <>
+                                        <div className="d-grid gap-2">
+                                            {ShowItem && ShowItem.data.status == 2 && <>
                                                 <button
-                                                    disabled={resourcesLoading}
-                                                    onClick={() => resourcesHandle(ShowItem.data.id)}
-                                                    className="btn butt-lg butt-primary mx-1 flex-center"
-                                                ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
-                                            </> : <>
-                                                {uploading && <p>يرجى الإنتظار...</p>}
-                                                <div className="row">
-                                                    <div className="col-sm-10">
-                                                        <input disabled={uploading} type="file" className="timlands-inputs" onChange={(event) => {
-                                                            setResourceFile(event.currentTarget.files[0]);
-                                                        }} />
-                                                    </div>
-                                                    <div className="col-sm-2">
-                                                        <button className="btn butt-md butt-primary" disabled={uploading} onClick={() => uploadProject(ShowItem.data.id)}>رفع</button>
-                                                    </div>
-                                                </div>
+                                                    disabled={acceptLoading}
+                                                    onClick={() => acceptHandle(ShowItem.data.id)}
+                                                    className="btn butt-sm butt-green mx-1 flex-center-just"
+                                                ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
+                                                <button
+                                                    disabled={rejectOrderLoading}
+                                                    onClick={() => rejectHandle(ShowItem.data.id)}
+                                                    className="btn butt-sm butt-red mx-1 flex-center-just"
+                                                ><span className="material-icons material-icons-outlined">done_all</span> رفض الطلب</button>
+                                            </>}
+                                            {ShowItem && ShowItem.data.status == 1 && <>
+                                                <button
+                                                    disabled={rejectLoading}
+                                                    onClick={() => requestRejectHandle(ShowItem.data.id)}
+                                                    className="btn butt-sm butt-red mx-1 flex-center-just"
+                                                ><span className="material-icons material-icons-outlined">highlight_off</span> طلب الإلغاء</button>
                                             </>
                                             }
                                         </div>
-                                    </>}
+                                    </div>
+                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                        <div className="aside-header">
+                                            <h3 className="title">البائع</h3>
+                                        </div>
+                                        <div className="order-user-info d-flex flex-center">
+                                            <div className="order-user-avatar">
+                                                <img
+                                                    src={ShowItem && ShowItem.data.order.cart.user.profile.avatar}
+                                                    width={50}
+                                                    height={50}
+                                                />
+                                            </div>
+                                            <div className="order-user-content">
+                                                <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
+                                                <p className="meta">
+                                                    الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                    المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style={{ backgroundColor: '#fff', padding: 9 }}>
+                                        {ShowItem && ShowItem.data.status == 1 && <>
+                                            <div className="aside-header">
+                                                <h3 className="title">رفع العمل وتسليمه</h3>
+                                            </div>
+                                            <div className="px-1">
+                                                {ShowItem && ShowItem.data.resource !== null && ShowItem.data.resource.status == 0 ? <>
+                                                    <button
+                                                        disabled={resourcesLoading}
+                                                        onClick={() => resourcesHandle(ShowItem.data.id)}
+                                                        className="btn butt-lg butt-primary mx-1 flex-center"
+                                                    ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
+                                                </> : <>
+                                                    {uploading && <p>يرجى الإنتظار...</p>}
+                                                    <input
+                                                        disabled={uploading}
+                                                        type="file"
+                                                        className="timlands-inputs"
+                                                        onChange={(event) => {
+                                                            setResourceFile(event.currentTarget.files[0]);
+                                                        }}
+                                                    />
+                                                    <div className="d-grid gap-2 mt-2">
+                                                        <button
+                                                            className="btn butt-md butt-primary flex-center-just"
+                                                            disabled={uploading}
+                                                            onClick={() => uploadProject(ShowItem.data.id)}
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">file_upload</span>
+                                                            رفع</button>
+                                                    </div>
+                                                </>
+                                                }
+                                            </div>
+                                        </>}
+                                    </div>
+                                </div>
+                                <div className="col-md-5">
+                                    <div className="aside-header">
+                                        <h3 className="title">{ShowItem.data.title}</h3>
+                                    </div>
+                                    <div style={{ backgroundColor: '#fff', padding: 9 }}>
+                                        <div className="aside-header">
+                                            <h3 className="title">تعليمات المشتري</h3>
+                                        </div>
+                                    </div>
+                                    <div className="aside-header">
+                                        <h3 className="title">المحادثة</h3>
+                                    </div>
+                                    <div className="conversations-list">
+                                        <ul className="conversations-items" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                                            <li className="d-flex" style={{ backgroundColor: '#fff', padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
+                                                <div className="item-avatar" style={{ marginInline: 6 }}>
+                                                    <img src="/avatar2.jpg" width={45} height={45} className="rounded-pill" alt="" />
+                                                </div>
+                                                <div className="item-content">
+                                                    <p className="text" style={{ color: '#333', margin: 0 }}>يمكنك الآن تحميل الملف لقد تم اكماله بنجاح شكرا لك اخي لبكريم</p>
+                                                    <p className="meta" style={{ color: '#666', marginBlock: 4, fontSize: 12, fontWeight: 200 }}>منذ دقيقتين</p>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
+                                        <div className="timlands-form">
+                                            <label className="label-block" htmlFor="input-buyer_instruct">نص الرسالة</label>
+                                            <textarea
+                                                id="input-buyer_instruct"
+                                                name="buyer_instruct"
+                                                placeholder="نص الرسالة..."
+                                                className={"timlands-inputs "}
+                                                autoComplete="off"
+                                                style={{ minHeight: 80 }}
+                                            ></textarea>
+                                            <div className="send-attachments">
+                                                
+                                            </div>
+                                        </div>
+                                        <div className="py-1">
+                                            <button className="btn butt-sm butt-primary">إرسال</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div style={{ backgroundColor: '#fff', padding: 9 }}>
+                                        <div className="aside-header">
+                                            <h3 className="title">تفاصيل العملية</h3>
+                                        </div>
+                                        <table className="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th>رقم العملية</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        {ShowItem.data.uuid}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>حالة العملية</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        {statusLabel(ShowItem.data.status)}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>تاريخ العملية</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <LastSeen date={ShowItem.data.created_at} />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>مدة الإنجاز</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        {durationFunc()}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>السعر الكلي للطلبية</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        ${ShowItem.data.order.cart.price_with_tax}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             }
-        </>
+        </div>
     )
 };
 

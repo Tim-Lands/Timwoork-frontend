@@ -63,7 +63,7 @@ const User = ({ query }) => {
                         <div className="col-lg-8">
                             <div className="timlands-profile-content">
                                 <div className="profile-content-header">
-                                    <Badge count="غير متصل" offset={[10, 10]} >
+                                    <Badge color={User.status == 0 ? '#ccc' : 'green'} count={User.status == 0 ? "غير متصل" : "متصل"} offset={[10, 10]} >
                                         <div className="profile-content-avatar">
                                             {User.profile.avatar == 'avatar.png' ?
                                                 <Image src="/avatar2.jpg" width={120} height={120} /> :

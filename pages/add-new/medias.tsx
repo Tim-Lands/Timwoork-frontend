@@ -1,16 +1,15 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Cookies from 'js-cookie'
 import API from "../../config";
-import ImageUploading from "react-images-uploading";
-import { motion } from 'framer-motion';
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
-import { message } from 'antd';
+import { message, Progress } from 'antd';
 import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
 import PropTypes from "prop-types";
-import { Alert } from '@/components/Alert/Alert';
+import useFileUpload from 'react-use-file-upload';
+import Image from 'next/image'
 
 function Medias({ query }) {
     const id = query.id
@@ -45,45 +44,52 @@ function Medias({ query }) {
             }
         }
     }, [])
-    /*const props = {
-        beforeUpload: file => {
-            if (file.type !== 'application/pdf') {
-                message.error(`${file.name} is not a png file`);
+    const [imageProgress, setImageProgress] = useState(0);
+
+    const {
+        files,
+        fileNames,
+        fileTypes,
+        totalSize,
+        totalSizeInBytes,
+        //handleDragDropEvent,
+        clearAllFiles,
+        //createFormData,
+        setFiles,
+        removeFile,
+      } = useFileUpload();
+    
+      const inputRef: any = useRef();
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const galleries = new FormData();
+        files.map((file: any) =>
+            galleries.append('images[]', file)
+        )
+        try {
+          API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            onUploadProgress: uploadEvent => {
+                setImageProgress(Math.round(uploadEvent.loaded / uploadEvent.total * 100))
             }
-            return file.type === 'application/pdf' ? true : Upload.LIST_IGNORE;
-        },
-        onChange: info => {
-            console.log(info.fileList);
-        },
-    };*/
+        });
+        } catch (error) {
+          console.error('Failed to submit files.');
+        }
+      };
     const [url_video, setVideourl] = useState('')
     const handleSetVideourl = (e: any) => {
         setVideourl(e.target.value)
     }
-    const [thumbnailImage, setThumbnailImage]: any = useState([]);
-    const onChangeThumbnailImage = (imageList) => {
-        // data for submit
-        setThumbnailImage(imageList);
-    };
-    const [images, setImages]: any = useState([]);
-    const maxNumber = 69;
-    const onChangeL = (imageList) => {
-        // data for submit
-        console.log(images.map(e => (e.file)))
-        setImages(imageList);
-    };
     const [loading, setLoading] = useState(false);
     const loadImagesHandle = async () => {
         setLoading(true)
         try {
-            const datathumb = new FormData()
-            images.map(e => (
-                datathumb.append('thumbnail', e.file)
-            ))
-            thumbnailImage.map(e => (
-                datathumb.append('images[]', e.file)
-            ))
-            const res = await API.post(`api/product/${id}/product-step-four`, datathumb,
+            const res = await API.post(`api/product/${id}/product-step-four`, { url_video: url_video },
                 {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -180,113 +186,60 @@ function Medias({ query }) {
                                 <div className="choose-images-list">
                                     <div className={"panel-modal-body login-panel-body auto-height"}>
                                         <div className="row">
-                                            <div className="col-md-12 align-center">
-                                                <div className="timlands-form">
-                                                    <div className="page-header">
-                                                        <h3 className="title">اختر الصورة البارزة</h3>
-                                                    </div>
-                                                    <ImageUploading
-                                                        value={images}
-                                                        onChange={onChangeL}
-                                                        maxNumber={maxNumber}
-                                                        dataURLKey="data_url"
-                                                    >
-                                                        {({
-                                                            imageList,
-                                                            onImageUpload,
-                                                            onImageUpdate,
-                                                            onImageRemove,
-                                                            isDragging,
-                                                            dragProps
-                                                        }) => (
-                                                            // write your building UI
-                                                            <div className="choose-images-file featured-image">
-                                                                <div className="choose-images-list d-flex">
-                                                                    {imageList.map((image, index) => (
-                                                                        <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="choose-images-item" key={index}>
-                                                                            <div className="image-item">
-                                                                                <img src={image["data_url"]} alt="" width="100" />
-                                                                                <div className="image-item__btn-wrapper">
-                                                                                    <button onClick={() => onImageUpdate(index)}>
-                                                                                        <span className="material-icons-outlined">edit</span>
-                                                                                    </button>
-                                                                                    <button onClick={() => onImageRemove(index)}>
-                                                                                        <span className="material-icons-outlined">delete</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </motion.div>
-                                                                    ))}
-                                                                    {(imageList.length && imageList.length >= 1) ? <Alert type='info'>يمكنك فقط إضافة صورة واحدة بارزة</Alert> :
-
-                                                                        <button
-                                                                            style={isDragging ? { color: "red" } : undefined}
-                                                                            className="uploader-btn"
-                                                                            onClick={onImageUpload}
-                                                                            {...dragProps}
-                                                                        >
-                                                                            <span className="material-icons-outlined">upload</span>
-                                                                        </button>
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </ImageUploading>
+                                            {getProduct && getProduct.galaries.map((e: any) => (
+                                                <div className="col-sm-4" key={e.id}>
+                                                    <Image src={e.full_path_galary} alt="" />
                                                 </div>
-                                                <div className="timlands-form">
-                                                    <div className="page-header">
-                                                        <h3 className="title">معرض الصور</h3>
-                                                    </div>
-                                                    <ImageUploading
-                                                        multiple
-                                                        value={thumbnailImage}
-                                                        onChange={onChangeThumbnailImage}
-                                                        dataURLKey="data_url"
-                                                    >
-                                                        {({
-                                                            imageList,
-                                                            onImageUpload,
-                                                            onImageRemoveAll,
-                                                            onImageUpdate,
-                                                            onImageRemove,
-                                                            isDragging,
-                                                            dragProps
-                                                        }) => (
-                                                            // write your building UI
-                                                            <div className="choose-images-file">
-                                                                <div className="choose-images-list d-flex">
-                                                                    {imageList.map((image, index) => (
-                                                                        <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="choose-images-item" key={index}>
-                                                                            <div className="image-item">
-                                                                                <img src={image["data_url"]} alt="" width="100" />
-                                                                                <div className="image-item__btn-wrapper">
-                                                                                    <button onClick={() => onImageUpdate(index)}>
-                                                                                        <span className="material-icons-outlined">edit</span>
-                                                                                    </button>
-                                                                                    <button onClick={() => onImageRemove(index)}>
-                                                                                        <span className="material-icons-outlined">delete</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </motion.div>
-                                                                    ))}
-                                                                    {(imageList.length && imageList.length >= 5) ? <Alert type="info"><p className="text">لايمكنك إضافة أكثر من 5 صور</p></Alert> :
+                                            ))}
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-12 align-center">
+                                                <div>
+                                                    <h1>Upload Files</h1>
+                                                    {imageProgress !== 0 && <Progress percent={imageProgress} />}
+                                                    <p>Please use the form to your right to upload any file(s) of your choosing.</p>
 
-                                                                        <button
-                                                                            style={isDragging ? { color: "red" } : undefined}
-                                                                            className="uploader-btn"
-                                                                            onClick={onImageUpload}
-                                                                            {...dragProps}
-                                                                        >
-                                                                            <span className="material-icons-outlined">upload</span>
-                                                                        </button>
-                                                                    }
-                                                                    &nbsp;
-                                                                    <button className="uploader-btn clear" onClick={onImageRemoveAll}><span className="material-icons-outlined">clear</span></button>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </ImageUploading>
+                                                    <div className="form-container">
+                                                        {/* Display the files to be uploaded */}
+                                                        <div>
+                                                            <ul>
+                                                                {fileNames.map((name) => (
+                                                                    <li key={name}>
+                                                                        <span>{name}</span>
+
+                                                                        <span onClick={() => removeFile(name)}>
+                                                                            <i className="fa fa-times" />
+                                                                        </span>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+
+                                                            {files.length > 0 && (
+                                                                <ul>
+                                                                    <li>File types found: {fileTypes.join(', ')}</li>
+                                                                    <li>Total Size: {totalSize}</li>
+                                                                    <li>Total Bytes: {totalSizeInBytes}</li>
+
+                                                                    <li className="clear-all">
+                                                                        <button onClick={() => clearAllFiles()}>Clear All</button>
+                                                                    </li>
+                                                                </ul>
+                                                            )}
+                                                        </div>
+
+                                                        {/* Provide a drop zone and an alternative button inside it to upload files. */}
+                                                        <div>
+                                                            <p>Drag and drop files here</p>
+
+                                                            <button onClick={() => inputRef.current.click()}>Or select files to upload</button>
+                                                            {/* Hide the crappy looking default HTML input */}
+                                                            <input ref={inputRef} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFiles(e)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="submit">
+                                                        <button onClick={handleSubmit}>Submit</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,14 +248,6 @@ function Medias({ query }) {
                             </div>
 
                             <div className="timlands-content-form">
-                                {/*<div className="choose-images-file">
-                                    <h4 className="timlands-content-form-subtitle">
-                                        اختيار ملف PDF
-                                    </h4>
-                                    <Upload {...props} multiple={false}>
-                                        <button className="btn butt-md butt-primary2">تحميل ملف PDF من جهازك</button>
-                                    </Upload>
-                                </div>*/}
                                 <div className="choose-images-file">
                                     <h4 className="timlands-content-form-subtitle">
                                         فيديو تعريفي للخدمة

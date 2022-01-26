@@ -12,9 +12,8 @@ export default function AsideBox({
   count_buying,
   product_id,
   price,
-  durationFunc,
+  duration,
   developments,
-  DevdurationFunc
 }) {
   const token = Cookies.get('token')
   const [theIDs, settheIDs] = useState([])
@@ -22,6 +21,34 @@ export default function AsideBox({
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
 
+  function durationFunc() {
+    if (duration == 1) {
+      return 'يوم واحد'
+    }
+    if (duration == 2) {
+      return 'يومين'
+    }
+    if (duration > 2 && duration < 11) {
+      return duration + ' أيام '
+    }
+    if (duration >= 11) {
+      return duration + ' يوم '
+    }
+  }
+  function DevdurationFunc(duration) {
+    if (duration == 1) {
+      return 'يوم واحد'
+    }
+    if (duration == 2) {
+      return 'يومين'
+    }
+    if (duration > 2 && duration < 11) {
+      return duration + ' أيام '
+    }
+    if (duration >= 11) {
+      return duration + ' يوم '
+    }
+  }
   const addToCart = async () => {
     setIsLoadingCart(true)
     try {
@@ -37,8 +64,6 @@ export default function AsideBox({
       // Authentication was successful.
       if (res.status === 200) {
         mutate('api/me')
-
-        message.success('لقد تم التحديث بنجاح')
         const key = `open${Date.now()}`;
         const btn = (
           <button onClick={() => router.push("/cart")} className="btn butt-sm butt-primary">
@@ -59,7 +84,12 @@ export default function AsideBox({
     } catch (error: any) {
       setIsLoadingCart(false)
       if (error.response && error.response.status === 400) {
-        message.error('لا يمكنك شراء هذه الخدمة, لأن هذه خدمتك')
+        notification.open({
+          message: 'رسالة خطأ',
+          description:
+            'لا يمكن شراء خدمتك',
+          onClose: close,
+        });
       } else {
 
         message.error('حدث خطأ غير متوقع')
@@ -73,7 +103,7 @@ export default function AsideBox({
     let __checkedDevelopments_sum = 0;
     const b = [],
       c = checkedDevelopments,
-      a = developments.map(e => e.id);
+      a = developments && developments.map(e => e.id);
 
     for (let i = 0; i < a.length; i++) {
 
@@ -153,17 +183,17 @@ export default function AsideBox({
               <h3 className="title">التطويرات المتوفرة</h3>
             </div>
             <ul className="add-devloppers-nav">
-              {developments.map((e: any) => {
+              {developments && developments.map((e: any) => {
                 return (
                   <li key={e.id} className="devloppers-item">
                     <div className="form-check">
-                      {token && <input
+                      <input
                         className="form-check-input"
                         type="checkbox"
                         id={"flexCheckDefault-id" + e.id}
                         value={e.id}
                         onChange={handleOnChangeAddID} {..._totalPrice()}
-                      />}
+                      />
                       <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                         {e.title}
                         <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
@@ -185,9 +215,6 @@ export default function AsideBox({
                   <span className="text"> اشتروا هذا</span>
                 </p>
               </div>
-            </div>
-            <div className="aside-footer-note">
-              <p className="text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا</p>
             </div>
             {token &&
               <div className="aside-footer-addtocart">
@@ -216,6 +243,5 @@ AsideBox.propTypes = {
   developments: PropTypes.any,
   product_id: PropTypes.func,
   price: PropTypes.any,
-  DevdurationFunc: PropTypes.func,
-  durationFunc: PropTypes.func,
+  duration: PropTypes.any,
 };
