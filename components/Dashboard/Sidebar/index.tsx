@@ -89,11 +89,11 @@ function index(): ReactElement {
                         <div className="dashbord-user-details">
                             <Link href={`/u/${userData.user_details.username}`}>
                                 <a className="dashbord-user-avatar">
-                                    {userData.user_details.profile.avatar == 'avatar.png' ?
+                                    {userData.user_details.profile.avatar_url == 'avatar.png' ?
                                         <ImageLogo src="/avatar2.jpg" width={30} height={30} /> :
                                         <ImageLogo
                                             loader={myLoader}
-                                            src={userData.user_details.profile.avatar}
+                                            src={userData.user_details.profile.avatar_url}
                                             quality={60}
                                             width={30}
                                             height={30}

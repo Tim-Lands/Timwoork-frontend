@@ -271,7 +271,7 @@ const User = ({ query }) => {
                                         <div className="order-user-info d-flex flex-center">
                                             <div className="order-user-avatar">
                                                 <img
-                                                    src={ShowItem && ShowItem.data.order.cart.user.profile.avatar}
+                                                    src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
                                                     width={50}
                                                     height={50}
                                                 />
@@ -360,7 +360,7 @@ const User = ({ query }) => {
                                                 style={{ minHeight: 80 }}
                                             ></textarea>
                                             <div className="send-attachments">
-                                                
+
                                             </div>
                                         </div>
                                         <div className="py-1">

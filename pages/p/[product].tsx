@@ -35,7 +35,7 @@ function Single({ query }) {
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   const myLoader = () => {
-    return `${ProductData && ProductData.data.profile_seller.profile.avatar}`;
+    return `${ProductData && ProductData.data.profile_seller.profile.avatar_url}`;
   }
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
@@ -289,12 +289,12 @@ function Single({ query }) {
                       <li className="user-item">
                         <Link href={`/u/${ProductData.data.profile_seller.profile.user.username}`}>
                           <a className="user-link">
-                            {ProductData.data.profile_seller.profile.avatar == 'avatar.png' ?
+                            {ProductData.data.profile_seller.profile.avatar_url == 'avatar.png' ?
                               <Image className="circular-center tiny-size ml-3" src="/avatar2.jpg" width={32} height={32} /> :
                               <Image
                                 className="circular-center tiny-size"
                                 loader={myLoader}
-                                src={ProductData && ProductData.data.profile_seller.profile.avatar}
+                                src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
                                 quality={1}
                                 width={32}
                                 height={32}
@@ -377,7 +377,7 @@ function Single({ query }) {
                               <Image
                                 className="circular-img huge-size"
                                 loader={myLoader}
-                                src={ProductData && ProductData.data.profile_seller.profile.avatar}
+                                src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
                                 quality={1}
                                 width={100}
                                 height={100}

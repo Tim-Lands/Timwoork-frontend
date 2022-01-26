@@ -145,7 +145,7 @@ const User = ({ query }) => {
                                     <div className="order-user-info d-flex">
                                         <div className="order-user-avatar">
                                             <img
-                                                src={ShowItem && ShowItem.data.profile_seller.profile.avatar}
+                                                src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
                                                 width={100}
                                                 height={100}
                                             />  

@@ -25,7 +25,7 @@ const profileAvatar = (): ReactElement => {
             {userInfo && userInfo.profile &&
                 <Formik
                     isInitialValid={true}
-                    initialValues={{ avatar: ('https://api.timwoork.com/avatars/' + userInfo.profile.avatar) || null }}
+                    initialValues={{ avatar: ('https://api.timwoork.com/avatars/' + userInfo.profile.avatar_url) || null }}
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
 

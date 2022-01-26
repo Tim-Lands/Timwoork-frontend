@@ -124,7 +124,7 @@ function Navbar(): ReactElement {
         </Menu>
     )
     const myLoader = () => {
-        return `${userData.user_details.profile.avatar}`;
+        return `${userData.user_details.profile.avatar_url}`;
     }
     const darkMode = userData && userData.user_details.profile.dark_mode
     return (
@@ -266,11 +266,11 @@ function Navbar(): ReactElement {
                                         <li className="login-user">
                                             <Dropdown overlay={AccountList} trigger={['click']}>
                                                 <a>
-                                                    {userData.user_details.profile.avatar == 'avatar.png' ?
+                                                    {userData.user_details.profile.avatar_url == 'avatar.png' ?
                                                         <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
                                                         <ImageLogo
                                                             loader={myLoader}
-                                                            src={userData.user_details.profile.avatar}
+                                                            src={userData.user_details.profile.avatar_url}
                                                             quality={60}
                                                             width={32}
                                                             height={32}

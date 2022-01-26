@@ -30,7 +30,7 @@ const personalInformations = () => {
                 {userInfo && userInfo.user_details.profile && <>
                     <div className="row justify-content-md-center">
                         <div className="col-lg-9">
-                            <UploadPicture token={token} avatarPicture={userInfo.user_details.profile.avatar} />
+                            <UploadPicture token={token} avatarPicture={userInfo.user_details.profile.avatar_url} />
                             <Formik
                                 isInitialValid={true}
                                 initialValues={{

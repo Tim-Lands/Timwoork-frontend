@@ -1,6 +1,5 @@
 
 import React, { ReactElement } from "react";
-import Link from 'next/link'
 import Image from 'next/image'
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Card } from "antd";
@@ -16,7 +15,7 @@ const User = ({ query }) => {
     const User = userInfo && userInfo.data
     const APIURL = ''
     const myLoader = () => {
-        return `${APIURL}${User.profile.avatar}`;
+        return `${APIURL}${User.profile.avatar_url}`;
     }
     return (
         <div className="py-3">
@@ -38,26 +37,6 @@ const User = ({ query }) => {
                                         </p>
                                     </Card>
                                 </div>
-                                <div className="py-1">
-                                    <Card title="المهارات">
-                                        {User.profile.profile_seller &&
-                                            <div className="content-text-item">
-                                                <h3 className="text-label">المهارات</h3>
-                                                {User.profile.profile_seller.skills &&
-                                                    <ul className="text-skills">
-                                                        {User.profile.profile_seller.skills.map((e: any, i) => (
-                                                            <li key={i}>
-                                                                <Link href="">
-                                                                    <a>{e.name_ar}</a>
-                                                                </Link>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                }
-                                            </div>
-                                        }
-                                    </Card>
-                                </div>
                             </div>
                         }
                         <div className="col-lg-8">
@@ -65,11 +44,11 @@ const User = ({ query }) => {
                                 <div className="profile-content-header">
                                     <Badge color={User.status == 0 ? '#ccc' : 'green'} count={User.status == 0 ? "غير متصل" : "متصل"} offset={[10, 10]} >
                                         <div className="profile-content-avatar">
-                                            {User.profile.avatar == 'avatar.png' ?
+                                            {User.profile.avatar_url == 'avatar.png' ?
                                                 <Image src="/avatar2.jpg" width={120} height={120} /> :
                                                 <Image
                                                     loader={myLoader}
-                                                    src={APIURL + User.profile.avatar}
+                                                    src={APIURL + User.profile.avatar_url}
                                                     quality={1}
                                                     width={120}
                                                     height={120}
@@ -86,10 +65,10 @@ const User = ({ query }) => {
                                         </h4>
                                         <p className="text">
                                             @{User.username} |
-                                            <span className="app-label"> {User.profile && User.profile.level.name_ar} </span>
+                                            <span className="app-label"> {User && User.profile && User.profile.level && User.profile.level.name_ar} </span>
                                             <Badge
                                                 className="site-badge-count-109"
-                                                count={User.profile && User.profile.badge.name_ar}
+                                                count={User && User.profile && User.profile.badge && User.profile.badge.name_ar}
                                                 style={{ backgroundColor: '#52c41a' }}
                                             />
                                         </p>
@@ -117,11 +96,11 @@ const User = ({ query }) => {
                                                 <p className="text-value">{User.profile && User.profile.last_name}</p>
                                             </div>
                                         </div>
-                                        {User.profile.country !== null &&
+                                        {User && User.profile.country !== null &&
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">البلد</h3>
-                                                    <p className="text-value">{User && User.profile.country.name_ar}</p>
+                                                    <p className="text-value">dfrgth</p>
                                                 </div>
                                             </div>
                                         }

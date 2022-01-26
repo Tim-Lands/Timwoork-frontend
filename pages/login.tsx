@@ -14,6 +14,18 @@ const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleuser
 const Login = (): ReactElement => {
     const [passVisibled, setPassVisibled] = useState(false)
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    /* Generate username from email and random 4 numbers 
+     * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234 
+     * then the username= roqaia.alrfou31234
+    */
+    const generateUsername = (email: string) => {
+        const result = email.indexOf("@");
+        const len = email.length;
+        const mystr = email.slice(result, len);
+        const removeData = email.replace(mystr, "");
+        const username = removeData + Math.floor(Math.random() * 100000);
+        return username
+    }
 
     // Login with Google
     const onLoginSuccess = async (res) => {
@@ -25,7 +37,8 @@ const Login = (): ReactElement => {
                 last_name: res.profileObj.familyName,
                 full_name: res.profileObj.name,
                 avatar: res.profileObj.imageUrl,
-                provider_id: res.profileObj.googleId
+                provider_id: res.profileObj.googleId,
+                username: generateUsername(res.profileObj.email)
             })
             // Authentication was successful.
             if (response.status === 200) {
@@ -136,7 +149,7 @@ const Login = (): ReactElement => {
                                                 placeholder="البريد الإلكتروني..."
                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.username && ' has-error')}
                                             />
-                                            {validationsErrors && validationsErrors.username && 
+                                            {validationsErrors && validationsErrors.username &&
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                         <p className="text">{validationsErrors.username[0]}</p>
@@ -158,7 +171,7 @@ const Login = (): ReactElement => {
                                                     passVisibled ? <span className="material-icons material-icons-outlined">visibility_off</span> : <span className="material-icons material-icons-outlined">visibility</span>
                                                 }
                                             </button>
-                                            {validationsErrors && validationsErrors.password && 
+                                            {validationsErrors && validationsErrors.password &&
                                                 <div style={{ overflow: 'hidden' }}>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                         <p className="text">{validationsErrors.password[0]}</p>

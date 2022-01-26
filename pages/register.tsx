@@ -56,7 +56,6 @@ const Register = (): ReactElement => {
      * then the username= roqaia.alrfou31234
     */
     const generateUsername = (email: string) => {
-
         const result = email.indexOf("@");
         const len = email.length;
         const mystr = email.slice(result, len);
