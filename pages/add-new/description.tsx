@@ -77,8 +77,8 @@ function Description({ query }) {
                             <Formik
                                 isInitialValid={true}
                                 initialValues={{
-                                    buyer_instruct: (getProduct && getProduct.data.buyer_instruct) || '',
-                                    content: (getProduct && getProduct.data.content) || '',
+                                    buyer_instruct: (getProduct && getProduct.data.buyer_instruct),
+                                    content: (getProduct && getProduct.data.content),
                                 }}
                                 enableReinitialize={true}
                                 onSubmit={async (values) => {

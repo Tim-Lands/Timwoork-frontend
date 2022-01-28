@@ -28,6 +28,8 @@ const Login = (): ReactElement => {
     }
 
     // Login with Google
+
+    // Login with Google
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
         try {
@@ -45,7 +47,6 @@ const Login = (): ReactElement => {
                 Cookies.set('token', response.data.data.token)
                 // Cookies.set('username', );
                 // Cookies.set('userID', )
-
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {
                     case 0:
@@ -102,7 +103,6 @@ const Login = (): ReactElement => {
                         if (res.status === 200) {
                             Cookies.set('token', res.data.data.token);
                             Cookies.set('username', values.username);
-
                             if (res.data.data.is_verified) {
                                 router.push('/')
                             } else {

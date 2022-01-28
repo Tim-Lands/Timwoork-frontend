@@ -193,7 +193,6 @@ function Bill() {
                                     {billPayment == 1 ?
                                         <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                                             <a href={getLink} className='btn butt-primary2 butt-md'>
-                                                {isLoading && <span className="spinner-border spinner-border-sm" role="status"></span>}
                                                 {!isLoading && <> <i className='fab fa-paypal'></i> | عن طريق Paypal</>}
                                             </a>
                                         </motion.div>

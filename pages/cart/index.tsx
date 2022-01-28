@@ -80,7 +80,7 @@ function index() {
                 <div className="row justify-content-md-center">
                     <div className="col-lg-9">
                         {!cartList && <Loading />}
-                        {cartList && cartList.data == null &&
+                        {cartList && cartList.data && cartList.data.cart_items.length == 0 &&
                             <div className="cart-nothing my-5 py-5">
                                 <div className="cart-nothing-inner">
                                     <div className="cart-nothing-img">
@@ -92,7 +92,7 @@ function index() {
                                     </div>
                                 </div>
                             </div>}
-                        {cartList && cartList.data !== null &&
+                        {cartList && cartList.data && cartList.data.cart_items.length !== 0 &&
                             <Spin spinning={isLoading}>
                                 <div className="timwoork-single-post bg-white mt-4">
                                     <div className="timwoork-single-header">

@@ -6,7 +6,6 @@ import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 //import { useTranslation } from "react-i18next";
-import Image from 'next/image'
 import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
 import { Dropdown, message, Spin, Menu, notification } from 'antd'
@@ -26,17 +25,10 @@ const properties = {
   prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
-
-// 
-//const getFormattedPrice = (price: number) => `$${price}`;
-
 function Single({ query }) {
 
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
-  const myLoader = () => {
-    return `${ProductData && ProductData.data.profile_seller.profile.avatar_url}`;
-  }
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
 
@@ -142,9 +134,10 @@ function Single({ query }) {
           );
 
           notification.open({
-            message: 'رسالة توضيحية',
+            message: 'إشعار',
             description:
               'لقد تم إضافة هذه الخدمة إلى السلة',
+            placement: 'bottomRight',
             btn,
             key,
             onClose: close,
@@ -154,8 +147,19 @@ function Single({ query }) {
       } catch (error: any) {
         setIsLoadingCart(false)
         if (error.response && error.response.status === 400) {
-          message.error('لا يمكنك شراء هذه الخدمة, لأن هذه خدمتك')
-        } else {
+          notification.warning({
+            message: `تحذير`,
+            description: 'لا يمكنك شراء خدمتك!',
+            placement: 'bottomRight'
+          });
+        } else if (error.response && error.response.status === 404) {
+          notification.warning({
+            message: `تحذير`,
+            description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
+            placement: 'bottomRight'
+          });
+        }
+        else {
 
           message.error('حدث خطأ غير متوقع')
         }
@@ -218,7 +222,6 @@ function Single({ query }) {
     const id = Cookies.get('_userID');
     //const _secret = (seller_Email+seller_ID).toString();
     console.log(`username: ${username} --> id: ${id}`);
-
 
 
     //for seller
@@ -289,19 +292,16 @@ function Single({ query }) {
                       <li className="user-item">
                         <Link href={`/u/${ProductData.data.profile_seller.profile.user.username}`}>
                           <a className="user-link">
-                            {ProductData.data.profile_seller.profile.avatar_url == 'avatar.png' ?
-                              <Image className="circular-center tiny-size ml-3" src="/avatar2.jpg" width={32} height={32} /> :
-                              <Image
-                                className="circular-center tiny-size"
-                                loader={myLoader}
-                                src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
-                                quality={1}
-                                width={32}
-                                height={32}
-                                placeholder='blur'
-                                blurDataURL='/avatar2.jpg'
-                              />
-                            }
+                            {/*<Image
+                              className="circular-center tiny-size"
+                              loader={myLoader}
+                              src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
+                              quality={1}
+                              width={32}
+                              height={32}
+                              placeholder='blur'
+                              blurDataURL='/avatar2.jpg'
+      />*/}
                             <span className="pe-2">
                               {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
                             </span>
@@ -374,7 +374,7 @@ function Single({ query }) {
                         <div className="seller-info-container">
                           <div className="d-flex">
                             <div className="seller-info-avatar">
-                              <Image
+                              {/*<Image
                                 className="circular-img huge-size"
                                 loader={myLoader}
                                 src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
@@ -383,7 +383,7 @@ function Single({ query }) {
                                 height={100}
                                 placeholder='blur'
                                 blurDataURL='/avatar2.jpg'
-                              />
+                              />*/}
                             </div>
                             <div className="seller-info-content">
                               <h3 className="user-title">

@@ -1,5 +1,6 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useRef } from "react";
 import Layout from '@/components/Layout/HomeLayout'
+import { Alert } from '@/components/Alert/Alert'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR, { mutate } from 'swr'
 import PropTypes from "prop-types";
@@ -7,172 +8,251 @@ import Loading from "@/components/Loading";
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Result } from "antd";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import { Progress, Result, Timeline } from "antd";
+import useFileUpload from 'react-use-file-upload';
+import { motion } from "framer-motion";
+import router from "next/router";
 
 const User = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
-    const [acceptLoading, setacceptLoading] = useState(false)
-    const [resourcesLoading, setresourcesLoading] = useState(false)
-    const [rejectLoading, setrejectLoading] = useState(false)
-    const [rejectOrderLoading, setrejectOrderLoading] = useState(false)
 
-    const requestRejectHandle = (id: any) => {
-        const MySwal = withReactContent(Swal)
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
+    const inputRef: any = useRef();
+    const [imageProgress, setImageProgress] = useState(0);
 
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد إلغاء هذه الطلبية",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الإلغاء',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setrejectLoading(true)
-                try {
-                    const res = await API.post(`api/order/items/${id}/accept_cancel_request_by_seller`, {}, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    if (res.status === 200) {
-                        mutate('api/my_purchases')
-                        setrejectLoading(false)
-                    }
-                } catch (error) {
-                    setrejectLoading(false)
-                }
-                swalWithBootstrapButtons.fire(
-                    'تم الإلغاء!',
-                    'لقد تم إلغاء هذه الطلبية بنجاح',
-                    'success'
-                )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                setrejectLoading(false)
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
-            }
-        })
-    }
-    const rejectHandle = (id: any) => {
-        const MySwal = withReactContent(Swal)
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
+    const {
+        files,
+        fileNames,
+        totalSize,
+        setFiles,
+        removeFile,
+    } = useFileUpload();
 
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد إلغاء هذه الطلبية",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الإلغاء',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setrejectOrderLoading(true)
-                try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_seller`, {}, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    if (res.status === 200) {
-                        mutate('api/my_sales')
-                        setrejectOrderLoading(false)
-                    }
-                } catch (error) {
-                    setrejectOrderLoading(false)
-                }
-                swalWithBootstrapButtons.fire(
-                    'تم الإلغاء!',
-                    'لقد تم إلغاء هذه الطلبية بنجاح',
-                    'success'
-                )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                setrejectLoading(false)
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
-            }
-        })
-    }
+    const [acceptedBySellerLoadingLoading, setAcceptedBySellerLoading] = useState(false)
+    const [rejectedBySellerLoading, setRejectedBySellerLoading] = useState(false)
+    const [acceptCancelRequestBySellerLoading, setAcceptCancelRequestBySellerLoading] = useState(false)
+    const [rejectCancelRequestBySellerLoading, setRejectCancelRequestBySellerLoading] = useState(false)
+    const [resolveConflictBetweenRejectedLoading, setResolveConflictBetweenRejectedLoading] = useState(false)
+    const [acceptModifiedSellerLoading, setAcceptModifiedSellerLoading] = useState(false)
+    const [rejectModifiedSellerLoading, setRejectModifiedSellerLoading] = useState(false)
+    const [dileveredSellerLoading, setDileveredSellerLoading] = useState(false)
+    const [resolveConflictBetweenThemModifiedLoading, setResolveConflictBetweenThemModifiedLoading] = useState(false)
 
-    const acceptHandle = async (id: any) => {
-        setacceptLoading(true)
+    const item_accepted_by_seller = async (id: any) => {
+        setAcceptedBySellerLoading(true)
         try {
-            const res = await API.post(`api/order/items/${id}/accept_item_seller`, {}, {
+            const res = await API.post(`api/order/items/${id}/item_accepted_by_seller`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             if (res.status === 200) {
                 mutate('api/my_sales')
-                setacceptLoading(false)
+                router.reload()
             }
         } catch (error) {
-            setacceptLoading(false)
+            setAcceptedBySellerLoading(false)
         }
     }
-    const resourcesHandle = async (id: any) => {
-        setresourcesLoading(true)
+    const item_rejected_by_seller = async (id: any) => {
+        setRejectedBySellerLoading(true)
         try {
-            const res = await API.post(`api/order/items/${id}/dilevery_resources`, {}, {
+            const res = await API.post(`api/order/items/${id}/item_rejected_by_seller`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             if (res.status === 200) {
                 mutate('api/my_sales')
-                setresourcesLoading(false)
+                router.reload()
             }
         } catch (error) {
-            setresourcesLoading(false)
+            setRejectedBySellerLoading(false)
         }
     }
-    const [resourceFile, setResourceFile] = useState(null)
-    const [uploading, setuploading] = useState(false)
-    const uploadProject = async (id: any) => {
-        const dataform = new FormData()
-        dataform.append('file_resource', resourceFile)
-        setuploading(true)
+    //  رفض طلب الالغاء الخدمة من قبل البائع
+    const reject_cancel_request_by_seller = async (id: any) => {
+        setRejectCancelRequestBySellerLoading(true)
         try {
-            const res = await API.post(`api/order/items/${id}/upload_resources`, dataform, {
+            const res = await API.post(`api/order/items/${id}/reject_cancel_request_by_seller`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             if (res.status === 200) {
-                setuploading(false)
+                mutate('api/my_sales')
+                router.reload()
             }
         } catch (error) {
-            setuploading(false)
+            setRejectCancelRequestBySellerLoading(false)
+        }
+    }
+
+    //  تسليم العمل من طرف البائع
+    const dilevered_by_seller = async (id: any) => {
+
+        setDileveredSellerLoading(true)
+        try {
+            const attachments: any = new FormData()
+            files.map((file: any) =>
+                attachments.append('item_attachments[]', file)
+            )
+            const res = await API.post(`api/order/items/${id}/dilevered_by_seller`, attachments, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                onUploadProgress: uploadEvent => {
+                    setImageProgress(Math.round(uploadEvent.loaded / uploadEvent.total * 100))
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                router.reload()
+            }
+        } catch (error) {
+            setDileveredSellerLoading(false)
+        }
+    }
+
+    //  قبول طلب الالغاء الخدمة من قبل البائع
+    const accept_cancel_request_by_seller = async (id: any) => {
+        setAcceptCancelRequestBySellerLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/accept_cancel_request_by_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                router.reload()
+            }
+        } catch (error) {
+            setAcceptCancelRequestBySellerLoading(false)
+        }
+    }
+    // حل النزاع بين الطرفين في حالة الغاء الطلبية
+
+    const resolve_the_conflict_between_them_in_rejected = async (id: any) => {
+        setResolveConflictBetweenRejectedLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/resolve_the_conflict_between_them_in_rejected`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                router.reload()
+            }
+        } catch (error) {
+            setResolveConflictBetweenRejectedLoading(false)
+        }
+    }
+    // قبول تعديل الخدمة من قبل المشتري
+    const accept_modified_by_seller = async (id: any) => {
+        setAcceptModifiedSellerLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/accept_modified_by_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                router.reload()
+            }
+        } catch (error) {
+            setAcceptModifiedSellerLoading(false)
+        }
+    }
+
+    // رفض تعديل الخدمة من قبل المشتري
+
+    const reject_modified_by_seller = async (id: any) => {
+        setRejectModifiedSellerLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/reject_modified_by_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                router.reload()
+            }
+        } catch (error) {
+            setRejectModifiedSellerLoading(false)
+        }
+    }
+    // رفض تعديل الخدمة من قبل المشتري
+
+    const resolve_the_conflict_between_them_in_modified = async (id: any) => {
+        setResolveConflictBetweenThemModifiedLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/resolve_the_conflict_between_them_in_modified`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+                router.reload()
+            }
+        } catch (error) {
+            setResolveConflictBetweenThemModifiedLoading(false)
+        }
+    }
+
+    const switchFileTypes = (type: any) => {
+        switch (type) {
+            case 'png':
+                return <span style={{ color: 'orange' }} className="material-icons material-icons-outlined">image</span>
+
+            case 'jpg':
+                return <span style={{ color: 'orange' }} className="material-icons material-icons-outlined">image</span>
+
+            case 'gif':
+                return <span style={{ color: 'orange' }} className="material-icons material-icons-outlined">image</span>
+
+            case 'psd':
+                return <span style={{ color: 'orange' }} className="material-icons material-icons-outlined">image</span>
+
+            case 'zip':
+                return <span style={{ color: 'plum' }} className="material-icons material-icons-outlined">folder_zip</span>
+
+            case 'rar':
+                return <span style={{ color: 'plum' }} className="material-icons material-icons-outlined">folder_zip</span>
+
+            case 'mp3':
+                return <span style={{ color: 'springgreen' }} className="material-icons material-icons-outlined">headphones</span>
+
+            case 'wma':
+                return <span style={{ color: 'springgreen' }} className="material-icons material-icons-outlined">headphones</span>
+
+            case 'aac':
+                return <span style={{ color: 'springgreen' }} className="material-icons material-icons-outlined">headphones</span>
+
+            case 'ogg':
+                return <span style={{ color: 'springgreen' }} className="material-icons material-icons-outlined">headphones</span>
+
+            case 'wav':
+                return <span style={{ color: 'springgreen' }} className="material-icons material-icons-outlined">headphones</span>
+
+            case 'mp4':
+                return <span style={{ color: 'yellowgreen' }} className="material-icons material-icons-outlined">smart_display</span>
+
+            case 'avi':
+                return <span style={{ color: 'yellowgreen' }} className="material-icons material-icons-outlined">smart_display</span>
+
+            case 'mpg':
+                return <span style={{ color: 'yellowgreen' }} className="material-icons material-icons-outlined">smart_display</span>
+
+            case 'pdf':
+                return <span style={{ color: 'maroon' }} className="material-icons material-icons-outlined">picture_as_pdf</span>
+
+            default:
+                return <span className="material-icons material-icons-outlined">description</span>
         }
     }
     const statusLabel = (status: any) => {
@@ -181,25 +261,34 @@ const User = ({ query }) => {
                 return <span className='badge bg-secondary'>قيد الانتظار...</span>
 
             case 1:
-                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
+                return <span className='badge bg-warning'>ملغية من طرف المشتري</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية من طرفك</span>
+                return <span className='badge bg-danger'>مرفوضة من طرف البائع</span>
 
             case 3:
-                return <span className='badge bg-warning'>ملغية من المشتري</span>
+                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 4:
-                return <span className='badge bg-warning'>ملغية من طرفكما</span>
+                return <span className='badge bg-warning'>طلب إلغاء من طرف المشتري</span>
 
             case 5:
-                return <span className='badge bg-success'>مكتملة</span>
+                return <span className='badge bg-warning'>ملغية من طرف البائع</span>
 
             case 6:
-                return <span className='badge bg-success'>قيد تسليم</span>
+                return <span className='badge bg-primary'>قيد الإستلام</span>
 
             case 7:
-                return <span className='badge bg-success'>تم الإستلام</span>
+                return <span className='badge bg-dark text-light'>مكتملة</span>
+
+            case 8:
+                return <span className='badge bg-danger text-light'>معلقة</span>
+
+            case 9:
+                return <span className='badge bg-light text-dark'>حالة طلب تعديل</span>
+
+            case 10:
+                return <span className='badge bg-danger text-light'>معلقة بسبب رفض التعديل</span>
 
             default:
                 return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
@@ -236,37 +325,10 @@ const User = ({ query }) => {
                     <div className="col-md-11">
                         <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
                             <div className="row">
-                                <div className="col-md-3">
+                                <div className="col-md-4">
                                     <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
                                         <div className="aside-header">
-                                            <h3 className="title">الأدوات</h3>
-                                        </div>
-                                        <div className="d-grid gap-2">
-                                            {ShowItem && ShowItem.data.status == 2 && <>
-                                                <button
-                                                    disabled={acceptLoading}
-                                                    onClick={() => acceptHandle(ShowItem.data.id)}
-                                                    className="btn butt-sm butt-green mx-1 flex-center-just"
-                                                ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
-                                                <button
-                                                    disabled={rejectOrderLoading}
-                                                    onClick={() => rejectHandle(ShowItem.data.id)}
-                                                    className="btn butt-sm butt-red mx-1 flex-center-just"
-                                                ><span className="material-icons material-icons-outlined">done_all</span> رفض الطلب</button>
-                                            </>}
-                                            {ShowItem && ShowItem.data.status == 1 && <>
-                                                <button
-                                                    disabled={rejectLoading}
-                                                    onClick={() => requestRejectHandle(ShowItem.data.id)}
-                                                    className="btn butt-sm butt-red mx-1 flex-center-just"
-                                                ><span className="material-icons material-icons-outlined">highlight_off</span> طلب الإلغاء</button>
-                                            </>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
-                                        <div className="aside-header">
-                                            <h3 className="title">البائع</h3>
+                                            <h3 className="title">المشتري</h3>
                                         </div>
                                         <div className="order-user-info d-flex flex-center">
                                             <div className="order-user-avatar">
@@ -285,44 +347,33 @@ const User = ({ query }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div style={{ backgroundColor: '#fff', padding: 9 }}>
-                                        {ShowItem && ShowItem.data.status == 1 && <>
+                                    {ShowItem && ShowItem.data.attachments && <>
+                                        <div style={{ backgroundColor: '#fff', padding: 9 }}>
                                             <div className="aside-header">
-                                                <h3 className="title">رفع العمل وتسليمه</h3>
+                                                <h3 className="title">مرفقات المشروع</h3>
                                             </div>
-                                            <div className="px-1">
-                                                {ShowItem && ShowItem.data.resource !== null && ShowItem.data.resource.status == 0 ? <>
-                                                    <button
-                                                        disabled={resourcesLoading}
-                                                        onClick={() => resourcesHandle(ShowItem.data.id)}
-                                                        className="btn butt-lg butt-primary mx-1 flex-center"
-                                                    ><span className="material-icons material-icons-outlined">source</span> تسليم المشروع</button>
-                                                </> : <>
-                                                    {uploading && <p>يرجى الإنتظار...</p>}
-                                                    <input
-                                                        disabled={uploading}
-                                                        type="file"
-                                                        className="timlands-inputs"
-                                                        onChange={(event) => {
-                                                            setResourceFile(event.currentTarget.files[0]);
-                                                        }}
-                                                    />
-                                                    <div className="d-grid gap-2 mt-2">
-                                                        <button
-                                                            className="btn butt-md butt-primary flex-center-just"
-                                                            disabled={uploading}
-                                                            onClick={() => uploadProject(ShowItem.data.id)}
-                                                        >
-                                                            <span className="material-icons material-icons-outlined">file_upload</span>
-                                                            رفع</button>
-                                                    </div>
-                                                </>
-                                                }
+                                            <div className="aside-attachments">
+                                                <Timeline>
+                                                    {ShowItem.data.attachments.map((e: any, i) => (
+                                                        <Timeline.Item key={i} dot={<>{switchFileTypes(e.mime_type)}</>}>
+                                                            <a href={e.full_path} rel="noreferrer" target="_blank">
+                                                                تحميل الملف {i + 1}#
+                                                            </a>
+                                                        </Timeline.Item>
+                                                    ))}
+                                                </Timeline>
                                             </div>
-                                        </>}
-                                    </div>
+                                        </div>
+                                    </>}
                                 </div>
                                 <div className="col-md-5">
+                                    {ShowItem && ShowItem.data.status == 4 && <>
+                                        {ShowItem && ShowItem.data.item_rejected && ShowItem.data.item_rejected.status == 2 &&
+                                            <Alert type="error">
+                                                <p className="text">يجب عليكم الوصول إلى اتفاق وإلا ستتدخل الإدارة في ظرف 48 ساعة</p>
+                                            </Alert>}
+                                    </>
+                                    }
                                     <div className="aside-header">
                                         <h3 className="title">{ShowItem.data.title}</h3>
                                     </div>
@@ -368,7 +419,153 @@ const User = ({ query }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-3">
+                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                        <div className="aside-header">
+                                            <h3 className="title">الأدوات</h3>
+                                        </div>
+                                        <div className="d-grid gap-2">
+                                            {ShowItem && ShowItem.data.status == 0 && <>
+                                                <button
+                                                    disabled={acceptedBySellerLoadingLoading}
+                                                    onClick={() => item_accepted_by_seller(ShowItem.data.id)}
+                                                    className="btn butt-md butt-green mx-1 flex-center-just"
+                                                ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
+                                                <button
+                                                    disabled={rejectedBySellerLoading}
+                                                    onClick={() => item_rejected_by_seller(ShowItem.data.id)}
+                                                    className="btn butt-md butt-red mx-1 flex-center-just"
+                                                ><span className="material-icons material-icons-outlined">highlight_off</span> رفض الطلب</button>
+                                            </>}
+                                            {ShowItem && ShowItem.data.status == 1 && <>
+                                                <div className="box-note red">
+                                                    <p className="text">هذه العملية ملغية من طرف المشتري</p>
+                                                </div>
+                                            </>
+                                            }
+                                            {ShowItem && ShowItem.data.status == 2 && <div className="box-note warning">
+                                                <p className="text">هذه العملية مرفوضة من طرفك</p>
+                                            </div>}
+                                            {ShowItem && ShowItem.data.status == 3 && <>
+                                                <div className="order-uploader-files">
+                                                    <div className="uploader-header">
+                                                        <h3 className="title">إرفاق ملفات مع تسليم العمل</h3>
+                                                    </div>
+                                                    {imageProgress !== 0 && <Progress percent={imageProgress} />}
+                                                    <div className="form-conainer">
+                                                        <ul className="attachment-list-items">
+                                                            {fileNames.map((name) => (
+                                                                <motion.li initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
+                                                                    <span className="name-file">{name}</span>
+                                                                    <span className="remove-icon" onClick={() => removeFile(name)}>
+                                                                        <i className="fa fa-times" />
+                                                                    </span>
+                                                                </motion.li>
+                                                            ))}
+                                                        </ul>
+                                                        {files.length == 0 && (
+                                                            <div className="select-files">
+                                                                <p className="text">
+                                                                    يمكنك اختيار ملفات من جهازك
+                                                                </p>
+                                                            </div>
+                                                        )}
+                                                        {files.length > 0 && (
+                                                            <ul className="files-proprieties">
+                                                                <li><strong>الحجم الكلي: </strong>{totalSize}</li>
+                                                            </ul>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    className="btn butt-md butt-primary2 mx-1 flex-center-just"
+                                                    onClick={() => inputRef.current.click()}
+                                                >
+                                                    <span className="material-icons material-icons-outlined">file_upload</span> إضافة ملفات
+                                                </button>
+                                                <input ref={inputRef} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFiles(e)} />
+                                                <button
+                                                    disabled={dileveredSellerLoading}
+                                                    onClick={() => dilevered_by_seller(ShowItem.data.id)}
+                                                    className="btn butt-md butt-primary mx-1 flex-center-just"
+                                                ><span className="material-icons material-icons-outlined">file_upload</span> تسليم الطلب </button>
+                                            </>}
+                                            {ShowItem && ShowItem.data.status == 4 &&
+                                                <>
+                                                    {ShowItem.data.item_rejected.status == 0 && <>
+                                                        <p className="note-text">
+                                                            قام فلان بن فلان بطلب إلغاء الطلبية
+                                                        </p>
+                                                        <button
+                                                            disabled={acceptCancelRequestBySellerLoading}
+                                                            onClick={() => accept_cancel_request_by_seller(ShowItem.data.id)}
+                                                            className="btn butt-md butt-green mx-1 flex-center-just">
+                                                            <span className="material-icons material-icons-outlined">done_all</span>
+                                                            قبول طلب الإلغاء
+                                                        </button>
+                                                        <button
+                                                            disabled={rejectCancelRequestBySellerLoading}
+                                                            onClick={() => reject_cancel_request_by_seller(ShowItem.data.id)}
+                                                            className="btn butt-md butt-red mx-1 flex-center-just">
+                                                            <span className="material-icons material-icons-outlined">highlight_off</span>
+                                                            رفض طلب الإلغاء
+                                                        </button>
+                                                    </>}
+                                                </>
+                                            }
+                                            {ShowItem && ShowItem.data.status == 5 && <div className="box-note warning">
+                                                <p className="text">هذه العملية ملغية من طرفك</p>
+                                            </div>}
+                                            {ShowItem && ShowItem.data.status == 6 && <div className="box-note primary">
+                                                <p className="text">هذه العملية قيد الإستلام</p>
+                                            </div>}
+                                            {ShowItem && ShowItem.data.status == 7 && <div className="box-note primary-fill">
+                                                <p className="text"><strong>هذه العملية مكتملة</strong></p>
+                                            </div>}
+                                            {ShowItem && ShowItem.data.status == 8 &&
+                                                <button
+                                                    disabled={resolveConflictBetweenRejectedLoading}
+                                                    onClick={() => resolve_the_conflict_between_them_in_rejected(ShowItem.data.id)}
+
+                                                    className="btn butt-md butt-green mx-1 flex-center-just">
+                                                    <span className="material-icons material-icons-outlined">highlight_off</span>
+                                                    تم حل النزاع
+                                                </button>}
+
+                                            {ShowItem && ShowItem.data.status == 9 && <>
+                                                {ShowItem && ShowItem.data.item_modified.status == 0 &&
+                                                    <>
+                                                        <button
+                                                            disabled={acceptModifiedSellerLoading}
+                                                            onClick={() => accept_modified_by_seller(ShowItem.data.id)}
+                                                            className="btn butt-md butt-green mx-1 flex-center-just"
+                                                        ><span className="material-icons material-icons-outlined">done_all</span> قبول طلب التعديل</button>
+                                                        <button
+                                                            disabled={rejectModifiedSellerLoading}
+                                                            onClick={() => reject_modified_by_seller(ShowItem.data.id)}
+                                                            className="btn butt-md butt-red mx-1 flex-center-just"
+                                                        ><span className="material-icons material-icons-outlined">highlight_off</span> رفض طلب التعديل</button>
+                                                    </>
+                                                }
+                                            </>}
+
+                                            {ShowItem && ShowItem.data.status == 10 && <>
+                                                <div className="box-note red">
+                                                    <p className="text">إذا تواصلتما إلى حل يمكنك تحويل العملية إلى قيد التنفيد مرة اخرى</p>
+                                                </div>
+                                                <button
+                                                    disabled={resolveConflictBetweenThemModifiedLoading}
+                                                    onClick={() => resolve_the_conflict_between_them_in_modified(ShowItem.data.id)}
+
+                                                    className="btn butt-md butt-green mx-1 flex-center-just">
+                                                    <span className="material-icons material-icons-outlined">highlight_off</span>
+                                                    تم حل النزاع
+                                                </button>
+                                                
+                                            </>
+                                                }
+                                        </div>
+                                    </div>
                                     <div style={{ backgroundColor: '#fff', padding: 9 }}>
                                         <div className="aside-header">
                                             <h3 className="title">تفاصيل العملية</h3>
