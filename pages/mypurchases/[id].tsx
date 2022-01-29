@@ -74,7 +74,7 @@ const Order = ({ query }) => {
                 const audio = new Audio('/effect.mp3');
                 audio.play();
                 console.log(e);
-                ShowItem.data.conversation.messages.push(e.data.data)
+                ShowItem && ShowItem.data.conversation.messages.push(e.data.data)
                 myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
             })
         }
