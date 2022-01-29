@@ -37,17 +37,21 @@ const User = ({ query }) => {
         } : undefined,
 
     })
+    //const audio = new Audio('/effect.mp3');
+    const musicPlayers = useRef<HTMLAudioElement | undefined>(
+        typeof Audio !== "undefined" ? new Audio("effect.mp3") : undefined
+    );
     useEffect(() => {
+        //audio.play();
+        musicPlayers.current?.play()
         const mounted = true
         if (mounted) {
             //myRef && myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
             const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
             channel.bind('message.sent', (e) => {
-                const audio = new Audio('/effect.mp3');
-                audio.play();
-                myRef && myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
                 console.log(e);
-                ShowItem && ShowItem.data.conversation.messages.push(e.data.data)
+                musicPlayers.current?.play()
+                ShowItem && ShowItem.data.conversation.messages.push(e.message)
             })
         }
     }, [])
@@ -512,12 +516,12 @@ const User = ({ query }) => {
                                                     }}
                                                 >
                                                     {ShowItem.data.conversation.messages.map((item: any) => (
-                                                        <motion.li 
-                                                        initial={{ y: -4, opacity: 0 }} 
-                                                        animate={{ y: 0, opacity: 1 }} 
-                                                        key={item.id} 
-                                                        className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)} 
-                                                        style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
+                                                        <motion.li
+                                                            initial={{ y: -4, opacity: 0 }}
+                                                            animate={{ y: 0, opacity: 1 }}
+                                                            key={item.id}
+                                                            className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)}
+                                                            style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
                                                             <div className="item-avatar" style={{ marginInline: 6 }}>
                                                                 <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
                                                             </div>
