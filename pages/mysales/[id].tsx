@@ -277,7 +277,7 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
+                router.reload()
             }
         } catch (error) {
             setCreateConversationLoading(false)

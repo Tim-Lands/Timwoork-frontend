@@ -166,7 +166,7 @@ const Order = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
+                router.reload();
             }
         } catch (error) {
             setCreateConversationLoading(false)
@@ -176,6 +176,7 @@ const Order = ({ query }) => {
     //const scrollToRef = (ref) => window.scrollTo(5764, ref.current.offsetTop)
     // console.log(ref.current.scrollTop + ' ', ref.current.scrollHeight)
 
+    const messageRef: any = useRef()
 
     const sendMessageHandle = async (e: any) => {
         e.preventDefault()
@@ -202,6 +203,7 @@ const Order = ({ query }) => {
                 setSendMessageLoading(false)
                 myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
                 setMessage('')
+                messageRef.current.focus()
             }
         } catch (error) {
             setSendMessageLoading(false)
@@ -383,145 +385,147 @@ const Order = ({ query }) => {
                                         </div>
                                     </div>
                                     {ShowItem && ShowItem.data.conversation && <>
-                                            <div className="aside-header">
-                                                <h3 className="title">المحادثة</h3>
-                                            </div>
-                                            <div className="conversations-list">
-                                                <ul
-                                                    ref={myRef}
-                                                    className="conversations-items"
-                                                    style={{
-                                                        margin: 0,
-                                                        padding: 0,
-                                                        listStyle: 'none',
-                                                        height: 350,
-                                                        overflow: 'hidden',
-                                                        overflowY: 'scroll'
-                                                    }}
-                                                >
-                                                    {ShowItem.data.conversation.messages.map((item: any) => (
-                                                        <motion.li initial={{ y: -4, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={item.id} className={(item.user.id == ShowItem.data.order.cart.user_id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)} style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
-                                                            <div className="item-avatar" style={{ marginInline: 6 }}>
-                                                                <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
-                                                            </div>
-                                                            <div className="item-content">
-                                                                <p className="text" style={{ margin: 0 }}>{item.message}</p>
-                                                                <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
-                                                            </div>
-                                                        </motion.li>
-                                                    ))}
-
-                                                </ul>
-                                            </div>
-                                            <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
-                                                <form onSubmit={sendMessageHandle}>
-                                                    <div className="timlands-form">
-                                                        <input
-                                                            id="input-buyer_instruct"
-                                                            name="buyer_instruct"
-                                                            onKeyUp={() => { setMessageErrors({}) }}
-                                                            placeholder="نص الرسالة..."
-                                                            className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
-                                                            disabled={sendMessageLoading}
-                                                            autoComplete="off"
-                                                            onChange={(e: any) => setMessage(e.target.value)}
-                                                            style={{ minHeight: 60 }}
-                                                        />
-                                                        <button
-                                                            style={{
-                                                                width: 90,
-                                                                height: 60,
-                                                                position: 'absolute',
-                                                                top: 11,
-                                                                left: 0,
-                                                                borderRadius: '5px 0 0 5px'
-                                                            }}
-                                                            disabled={sendMessageLoading}
-                                                            className="btn butt-sm butt-primary flex-center-just"
-                                                            type="submit"
-                                                        >
-                                                            <span className="material-icons material-icons-outlined">send</span>
-                                                            إرسال
-                                                        </button>
-                                                        {messageErrors && messageErrors.message &&
-                                                            <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{messageErrors.message[0]}</p>
-                                                            </motion.div>
-                                                        }
-                                                        <div className="send-attachments">
-                                                            {messageProgress !== 0 && <Progress percent={messageProgress} />}
-                                                            <div className="form-conainer">
-                                                                <ul
-                                                                    className="attachment-list-items"
-                                                                    style={{
-                                                                        listStyle: 'none',
-                                                                        paddingInline: 0,
-                                                                        paddingTop: 6,
-                                                                        overflow: 'hidden',
-                                                                    }}>
-                                                                    {fileNamesMsg.map((name) => (
-                                                                        <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
-                                                                            <span className="name-file">{name}</span>
-                                                                            <span className="remove-icon d-flex" style={{ position: 'absolute', left: 0, fontSize: 13 }} onClick={() => removeFileMsg(name)}>
-                                                                                <i className="fa fa-times"></i>
-                                                                            </span>
-                                                                        </motion.li>
-                                                                    ))}
-                                                                </ul>
-                                                                {filesMsg.length > 0 && (
-                                                                    <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
-                                                                        <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
-                                                                    </ul>
-                                                                )}
-                                                            </div>
+                                        <div className="aside-header">
+                                            <h3 className="title">المحادثة</h3>
+                                        </div>
+                                        <div className="conversations-list">
+                                            <ul
+                                                ref={myRef}
+                                                className="conversations-items"
+                                                style={{
+                                                    margin: 0,
+                                                    padding: 0,
+                                                    listStyle: 'none',
+                                                    height: 350,
+                                                    overflow: 'hidden',
+                                                    overflowY: 'scroll'
+                                                }}
+                                            >
+                                                {ShowItem.data.conversation.messages.map((item: any) => (
+                                                    <motion.li initial={{ y: -4, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={item.id} className={(item.user.id == ShowItem.data.order.cart.user_id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)} style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
+                                                        <div className="item-avatar" style={{ marginInline: 6 }}>
+                                                            <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
                                                         </div>
+                                                        <div className="item-content">
+                                                            <p className="text" style={{ margin: 0 }}>{item.message}</p>
+                                                            <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
+                                                        </div>
+                                                    </motion.li>
+                                                ))}
 
-                                                        <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
-
+                                            </ul>
+                                        </div>
+                                        <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
+                                            <form onSubmit={sendMessageHandle}>
+                                                <div className="timlands-form">
+                                                    <input
+                                                        id="input-buyer_instruct"
+                                                        name="buyer_instruct"
+                                                        onKeyUp={() => { setMessageErrors({}) }}
+                                                        placeholder="نص الرسالة..."
+                                                        className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
+                                                        disabled={sendMessageLoading}
+                                                        autoComplete="off"
+                                                        value={message}
+                                                        ref={messageRef}
+                                                        onChange={(e: any) => setMessage(e.target.value)}
+                                                        style={{ minHeight: 60 }}
+                                                    />
+                                                    <button
+                                                        style={{
+                                                            width: 90,
+                                                            height: 60,
+                                                            position: 'absolute',
+                                                            top: 11,
+                                                            left: 0,
+                                                            borderRadius: '5px 0 0 5px'
+                                                        }}
+                                                        disabled={sendMessageLoading}
+                                                        className="btn butt-sm butt-primary flex-center-just"
+                                                        type="submit"
+                                                    >
+                                                        <span className="material-icons material-icons-outlined">send</span>
+                                                        إرسال
+                                                    </button>
+                                                    {messageErrors && messageErrors.message &&
+                                                        <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                            <p className="text">{messageErrors.message[0]}</p>
+                                                        </motion.div>
+                                                    }
+                                                    <div className="send-attachments">
+                                                        {messageProgress !== 0 && <Progress percent={messageProgress} />}
+                                                        <div className="form-conainer">
+                                                            <ul
+                                                                className="attachment-list-items"
+                                                                style={{
+                                                                    listStyle: 'none',
+                                                                    paddingInline: 0,
+                                                                    paddingTop: 6,
+                                                                    overflow: 'hidden',
+                                                                }}>
+                                                                {fileNamesMsg.map((name) => (
+                                                                    <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
+                                                                        <span className="name-file">{name}</span>
+                                                                        <span className="remove-icon d-flex" style={{ position: 'absolute', left: 0, fontSize: 13 }} onClick={() => removeFileMsg(name)}>
+                                                                            <i className="fa fa-times"></i>
+                                                                        </span>
+                                                                    </motion.li>
+                                                                ))}
+                                                            </ul>
+                                                            {filesMsg.length > 0 && (
+                                                                <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
+                                                                    <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
+                                                                </ul>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    <div className="py-1 d-flex">
 
-                                                        <button
-                                                            type="button"
-                                                            style={{ width: '65%' }}
-                                                            disabled={sendMessageLoading}
-                                                            className="btn butt-sm butt-primary2 mx-1 flex-center-just"
-                                                            onClick={() => inputRefMsg.current.click()}
-                                                        >
-                                                            <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
-                                                        </button>
-                                                        <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
-                                                            <option value="0">نص عادي</option>
-                                                            <option value="1">تعليمة</option>
-                                                            <option value="2">سبب إلغاء</option>
-                                                        </select>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </>}
-                                        {ShowItem && ShowItem.data.conversation == null && <>
-                                            <div className="conversation-start">
-                                                <div className="icon">
-                                                    <span className="material-icons material-icons-outlined">
-                                                        forum
-                                                    </span>
+                                                    <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
+
                                                 </div>
-                                                <h3 className="title">تواصل مع المشتري</h3>
-                                                <p className="text">حاول ان تتفق مع المشتري قبل البدء في تنفيذ العملية</p>
-                                                <textarea
-                                                    id="input-initial_message"
-                                                    name="initial_message"
-                                                    placeholder="نص الرسالة..."
-                                                    className={"timlands-inputs mt-2"}
-                                                    autoComplete="off"
-                                                    style={{ minHeight: 80 }}
-                                                    onChange={(e: any) => setMessage(e.target.value)}
-                                                ></textarea>
-                                                <div className="mt-3 conversion-btn">
-                                                    <button type="button" disabled={createConversationLoading} onClick={() => createConversation(ShowItem && ShowItem.data.id)} className="btn butt-lg butt-primary">إنشاء المحادثة</button>
+                                                <div className="py-1 d-flex">
+
+                                                    <button
+                                                        type="button"
+                                                        style={{ width: '65%' }}
+                                                        disabled={sendMessageLoading}
+                                                        className="btn butt-sm butt-primary2 mx-1 flex-center-just"
+                                                        onClick={() => inputRefMsg.current.click()}
+                                                    >
+                                                        <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
+                                                    </button>
+                                                    <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
+                                                        <option value="0">نص عادي</option>
+                                                        <option value="1">تعليمة</option>
+                                                        <option value="2">سبب إلغاء</option>
+                                                    </select>
                                                 </div>
+                                            </form>
+                                        </div>
+                                    </>}
+                                    {ShowItem && ShowItem.data.conversation == null && <>
+                                        <div className="conversation-start">
+                                            <div className="icon">
+                                                <span className="material-icons material-icons-outlined">
+                                                    forum
+                                                </span>
                                             </div>
-                                        </>}
+                                            <h3 className="title">تواصل مع المشتري</h3>
+                                            <p className="text">حاول ان تتفق مع المشتري قبل البدء في تنفيذ العملية</p>
+                                            <textarea
+                                                id="input-initial_message"
+                                                name="initial_message"
+                                                placeholder="نص الرسالة..."
+                                                className={"timlands-inputs mt-2"}
+                                                autoComplete="off"
+                                                style={{ minHeight: 80 }}
+                                                onChange={(e: any) => setMessage(e.target.value)}
+                                            ></textarea>
+                                            <div className="mt-3 conversion-btn">
+                                                <button type="button" disabled={createConversationLoading} onClick={() => createConversation(ShowItem && ShowItem.data.id)} className="btn butt-lg butt-primary">إنشاء المحادثة</button>
+                                            </div>
+                                        </div>
+                                    </>}
                                 </div>
                                 <div className="col-md-3">
 
