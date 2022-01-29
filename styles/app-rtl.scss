@@ -3984,6 +3984,8 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 .message-item {
     background-color: #fff;
     border: 2px dashed #ddd;
+    flex-direction: row-reverse;
+    text-align: left;
     .text {
         padding: 4px 13px;
         background-color: $primary;
@@ -4002,8 +4004,8 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 
     }
     &.recieved {
-        flex-direction: row-reverse;
-        text-align: left;
+        flex-direction: row;
+        text-align: right;
         .text {
             background-color: #fff;
             color: #222;

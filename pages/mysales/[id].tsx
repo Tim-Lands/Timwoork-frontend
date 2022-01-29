@@ -287,6 +287,7 @@ const User = ({ query }) => {
     //const scrollToRef = (ref) => window.scrollTo(5764, ref.current.offsetTop)
     // console.log(ref.current.scrollTop + ' ', ref.current.scrollHeight)
 
+    const messageRef: any = useRef()
 
     const sendMessageHandle = async (e: any) => {
         e.preventDefault()
@@ -313,6 +314,7 @@ const User = ({ query }) => {
                 setSendMessageLoading(false)
                 myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
                 setMessage('')
+                messageRef.current.focus()
             }
         } catch (error) {
             setSendMessageLoading(false)
@@ -519,7 +521,12 @@ const User = ({ query }) => {
                                                     }}
                                                 >
                                                     {ShowItem.data.conversation.messages.map((item: any) => (
-                                                        <motion.li initial={{ y: -4, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={item.id} className={(item.user.id == ShowItem.data.order.cart.user_id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)} style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
+                                                        <motion.li 
+                                                        initial={{ y: -4, opacity: 0 }} 
+                                                        animate={{ y: 0, opacity: 1 }} 
+                                                        key={item.id} 
+                                                        className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)} 
+                                                        style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
                                                             <div className="item-avatar" style={{ marginInline: 6 }}>
                                                                 <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
                                                             </div>
@@ -543,6 +550,8 @@ const User = ({ query }) => {
                                                             className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
                                                             disabled={sendMessageLoading}
                                                             autoComplete="off"
+                                                            value={message}
+                                                            ref={messageRef}
                                                             onChange={(e: any) => setMessage(e.target.value)}
                                                             style={{ minHeight: 60 }}
                                                         />

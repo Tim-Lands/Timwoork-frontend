@@ -6707,6 +6707,11 @@ h3 {
 .message-item {
   background-color: #fff;
   border: 2px dashed #ddd;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  text-align: left;
 }
 
 .message-item .text {
@@ -6729,10 +6734,10 @@ h3 {
 
 .message-item.recieved {
   -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-  text-align: left;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  text-align: right;
 }
 
 .message-item.recieved .text {
