@@ -71,11 +71,11 @@ const Order = ({ query }) => {
         if (mounted) {
             const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
             channel.bind('message.sent', (e) => {
+                const audio = new Audio('/effect.mp3');
+                audio.play();
                 console.log(e);
                 ShowItem.data.conversation.messages.push(e.data.data)
                 myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-                const audio = new Audio('/effect.mp3');
-                audio.play();
             })
         }
     }, [])
