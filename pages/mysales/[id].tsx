@@ -2,7 +2,7 @@ import React, { ReactElement, useState, useRef, useEffect } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { Alert } from '@/components/Alert/Alert'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Link from 'next/link'
@@ -24,7 +24,7 @@ const User = ({ query }) => {
     const [messageProgress, setMessageProgress] = useState(0);
     const [messageErrors, setMessageErrors]: any = useState({});
 
-    const myRef = useRef(null)
+    const myRef: any = useRef()
 
     const pusher = new Pusher('510f53f8ccb3058a96fc', {
         cluster: 'eu',
@@ -38,10 +38,10 @@ const User = ({ query }) => {
 
     })
     useEffect(() => {
-        //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
         const mounted = true
         if (mounted) {
-            const channel = pusher.subscribe('presence-conversations.1')
+            //myRef && myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+            const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
             channel.bind('message.sent', (e) => {
                 const audio = new Audio('/effect.mp3');
                 audio.play();
@@ -106,7 +106,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -122,7 +121,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -139,7 +137,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -165,7 +162,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -183,7 +179,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -201,7 +196,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -218,7 +212,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -237,7 +230,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -255,7 +247,6 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {

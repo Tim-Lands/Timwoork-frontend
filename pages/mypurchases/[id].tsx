@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import PropTypes from "prop-types";
 import useFileUpload from 'react-use-file-upload';
 import Loading from "@/components/Loading";
@@ -69,7 +69,7 @@ const Order = ({ query }) => {
         //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
         const mounted = true
         if (mounted) {
-            const channel = pusher.subscribe('presence-conversations.1')
+            const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
             channel.bind('message.sent', (e) => {
                 console.log(e);
                 ShowItem.data.conversation.messages.push(e.data.data)
@@ -90,7 +90,6 @@ const Order = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -108,7 +107,6 @@ const Order = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -126,7 +124,6 @@ const Order = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
@@ -144,7 +141,6 @@ const Order = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                mutate('api/my_sales')
                 router.reload()
             }
         } catch (error) {
