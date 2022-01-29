@@ -167,7 +167,6 @@ function Single({ query }) {
     } else {
       router.push('/login')
     }
-
   }
   function durationFunc() {
     if (ProductData.data.duration == 1) {

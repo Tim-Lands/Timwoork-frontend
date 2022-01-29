@@ -104,22 +104,7 @@
             border: 1px solid rgb(240, 53, 53);
         }
     }
-    .timlands-form-note {
-        margin-top: 5px;
-        padding: 8px 0;
-        .text {
-            font-size: 12px;
-            color: #666;
-            margin: 0;
-            font-weight: 200;
-        }
-        &.form-note-error {
-            .text {
-                color: rgb(196, 61, 61);
-                font-weight: 700;
-            }
-        }
-    }
+
     @media (max-width: 500px) {
         margin: 20px 0;
     }
@@ -134,7 +119,22 @@
     }
 
 }
-
+.timlands-form-note {
+    margin-top: 5px;
+    padding: 8px 0;
+    .text {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
+        font-weight: 300;
+    }
+    &.form-note-error {
+        .text {
+            color: rgb(196, 61, 61);
+            font-weight: 700;
+        }
+    }
+}
 .forms-methods {
     .forms-methods-header {
         padding: 12px 0;

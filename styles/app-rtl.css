@@ -250,23 +250,6 @@
   border: 1px solid #f03535;
 }
 
-.timlands-form .timlands-form-note {
-  margin-top: 5px;
-  padding: 8px 0;
-}
-
-.timlands-form .timlands-form-note .text {
-  font-size: 12px;
-  color: #666;
-  margin: 0;
-  font-weight: 200;
-}
-
-.timlands-form .timlands-form-note.form-note-error .text {
-  color: #c43d3d;
-  font-weight: 700;
-}
-
 @media (max-width: 500px) {
   .timlands-form {
     margin: 20px 0;
@@ -282,6 +265,23 @@
 
 .timlands-form .icon-preview .material-icons {
   font-size: 32px;
+}
+
+.timlands-form-note {
+  margin-top: 5px;
+  padding: 8px 0;
+}
+
+.timlands-form-note .text {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  font-weight: 300;
+}
+
+.timlands-form-note.form-note-error .text {
+  color: #c43d3d;
+  font-weight: 700;
 }
 
 .forms-methods .forms-methods-header {
@@ -6667,6 +6667,77 @@ h3 {
 
 .aside-attachments .ant-timeline-item-content a:hover {
   color: #475C80;
+}
+
+.conversation-start {
+  border-radius: 6px;
+  border: 2px dashed #ddd;
+  padding: 23px 15px;
+  text-align: center;
+  margin: 13px 0;
+}
+
+.conversation-start .icon {
+  margin-top: 18px;
+}
+
+.conversation-start .icon .material-icons {
+  font-size: 90px;
+  color: #ccc;
+  padding: 15px 0;
+}
+
+.conversation-start .title {
+  font-weight: bold;
+  color: #444;
+}
+
+.conversation-start .text {
+  font-size: 14px;
+  list-style: 28px;
+  margin: 0;
+  color: #222;
+}
+
+.conversation-start .conversion-btn {
+  border-top: 2px dashed #ddd;
+  padding-top: 13px;
+}
+
+.message-item {
+  background-color: #fff;
+  border: 2px dashed #ddd;
+}
+
+.message-item .text {
+  padding: 4px 13px;
+  background-color: #475C80;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.message-item.instruct {
+  background-color: #f1fcff;
+  border: 2px dashed #b4e4f1;
+}
+
+.message-item.cause {
+  background-color: #fffbf1;
+  border: 2px dashed #f1e1b4;
+}
+
+.message-item.recieved {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  text-align: left;
+}
+
+.message-item.recieved .text {
+  background-color: #fff;
+  color: #222;
 }
 
 .is-dark {

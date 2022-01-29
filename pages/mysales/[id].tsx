@@ -1,10 +1,11 @@
-import React, { ReactElement, useState, useRef } from "react";
+import React, { ReactElement, useState, useRef, useEffect } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { Alert } from '@/components/Alert/Alert'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR, { mutate } from 'swr'
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
+import Link from 'next/link'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
@@ -12,13 +13,44 @@ import { Progress, Result, Timeline } from "antd";
 import useFileUpload from 'react-use-file-upload';
 import { motion } from "framer-motion";
 import router from "next/router";
-
+import Pusher from 'pusher-js'
 const User = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
-
     const inputRef: any = useRef();
+    const inputRefMsg: any = useRef();
+
     const [imageProgress, setImageProgress] = useState(0);
+    const [messageProgress, setMessageProgress] = useState(0);
+    const [messageErrors, setMessageErrors]: any = useState({});
+
+    const myRef = useRef(null)
+
+    const pusher = new Pusher('510f53f8ccb3058a96fc', {
+        cluster: 'eu',
+        authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
+        auth: token ? {
+            headers: {
+                // pass the authorization token when using private channels
+                Authorization: `Bearer ${token}`,
+            },
+        } : undefined,
+
+    })
+    useEffect(() => {
+        //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+        const mounted = true
+        if (mounted) {
+            const channel = pusher.subscribe('presence-conversations.1')
+            channel.bind('message.sent', (e) => {
+                const audio = new Audio('/effect.mp3');
+                audio.play();
+                myRef && myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+                console.log(e);
+                ShowItem && ShowItem.data.conversation.messages.push(e.data.data)
+            })
+        }
+    }, [])
 
     const {
         files,
@@ -26,6 +58,14 @@ const User = ({ query }) => {
         totalSize,
         setFiles,
         removeFile,
+    } = useFileUpload();
+
+    const {
+        files: filesMsg,
+        fileNames: fileNamesMsg,
+        totalSize: totalSizeMsg,
+        setFiles: setFilesMsg,
+        removeFile: removeFileMsg,
     } = useFileUpload();
 
     const [acceptedBySellerLoadingLoading, setAcceptedBySellerLoading] = useState(false)
@@ -37,6 +77,25 @@ const User = ({ query }) => {
     const [rejectModifiedSellerLoading, setRejectModifiedSellerLoading] = useState(false)
     const [dileveredSellerLoading, setDileveredSellerLoading] = useState(false)
     const [resolveConflictBetweenThemModifiedLoading, setResolveConflictBetweenThemModifiedLoading] = useState(false)
+
+    const [createConversationLoading, setCreateConversationLoading] = useState(false)
+    const [sendMessageLoading, setSendMessageLoading] = useState(false)
+
+    const [message, setMessage] = useState('')
+    const [messageType, setMessageType] = useState(0)
+
+    function switchTypeMessage(type: any) {
+        switch (type) {
+            case 0:
+                return ''
+            case 1:
+                return 'instruct'
+            case 2:
+                return 'cause'
+            default:
+                return ''
+        }
+    }
 
     const item_accepted_by_seller = async (id: any) => {
         setAcceptedBySellerLoading(true)
@@ -203,7 +262,65 @@ const User = ({ query }) => {
             setResolveConflictBetweenThemModifiedLoading(false)
         }
     }
+    // إنشاء محادثة جديدة بين البائع والمشتري
 
+    const createConversation = async (id: any) => {
+        setCreateConversationLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/create/conversation`, {
+                initial_message: message,
+                receiver_id: ShowItem && ShowItem.data.order.cart.user.id,
+                title: ShowItem && ShowItem.data.title,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                mutate('api/my_sales')
+            }
+        } catch (error) {
+            setCreateConversationLoading(false)
+        }
+    }
+    // دالة إرسال الرسالة
+    //const scrollToRef = (ref) => window.scrollTo(5764, ref.current.offsetTop)
+    // console.log(ref.current.scrollTop + ' ', ref.current.scrollHeight)
+
+
+    const sendMessageHandle = async (e: any) => {
+        e.preventDefault()
+        setSendMessageLoading(true)
+        setMessageErrors({})
+        try {
+            const id = ShowItem && ShowItem.data.conversation.id
+            const conversation: any = new FormData()
+            filesMsg.map((file: any) =>
+                conversation.append('attachments', file)
+            )
+            conversation.append('type', messageType)
+            conversation.append('message', message)
+            const res = await API.post(`api/conversations/${id}/sendMessage`, conversation, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                onUploadProgress: uploadEvent => {
+                    if (filesMsg.length !== 0) setMessageProgress(Math.round(uploadEvent.loaded / uploadEvent.total * 100))
+                }
+            })
+            if (res.status === 200) {
+                ShowItem.data.conversation.messages.push(res.data.data)
+                setSendMessageLoading(false)
+                myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+                setMessage('')
+            }
+        } catch (error) {
+            setSendMessageLoading(false)
+            if (error && error.response) {
+                setMessageErrors(error.response.data.errors);
+            }
+        }
+    }
     const switchFileTypes = (type: any) => {
         switch (type) {
             case 'png':
@@ -309,320 +426,429 @@ const User = ({ query }) => {
         }
     }
     return (
-        <div style={{ backgroundColor: '#f6f6f6' }}>
+        <>
             <MetaTags
                 title={'عرض الطلبية'}
                 metaDescription={"عرض الطلبية"}
                 ogDescription={"عرض الطلبية"}
             />
-            {errorItem && !ShowItem.data && <Result
-                status="warning"
-                title="حدث خطأ غير متوقع"
-            />}
-            {!ShowItem && <Loading />}
-            {ShowItem &&
-                <div className="row py-4 justify-content-center">
-                    <div className="col-md-11">
-                        <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
-                                        <div className="aside-header">
-                                            <h3 className="title">المشتري</h3>
-                                        </div>
-                                        <div className="order-user-info d-flex flex-center">
-                                            <div className="order-user-avatar">
-                                                <img
-                                                    src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
-                                                    width={50}
-                                                    height={50}
-                                                />
+            <div style={{ backgroundColor: '#f6f6f6' }}>
+                {errorItem && !ShowItem.data && <Result
+                    status="warning"
+                    title="حدث خطأ غير متوقع"
+                />}
+                {!ShowItem && <Loading />}
+                {ShowItem &&
+                    <div className="row py-4 justify-content-center">
+                        <div className="col-md-11">
+                            <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                            <div className="aside-header">
+                                                <h3 className="title">المشتري</h3>
                                             </div>
-                                            <div className="order-user-content">
-                                                <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
-                                                <p className="meta">
-                                                    الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                    المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
-                                                </p>
-                                            </div>
+                                            <Link href={`/u/${ShowItem.data.order.cart.user.username}`}>
+                                                <a className="order-user-info d-flex flex-center">
+                                                    <div className="order-user-avatar">
+                                                        <img
+                                                            src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
+                                                            width={50}
+                                                            height={50}
+                                                        />
+                                                    </div>
+                                                    <div className="order-user-content">
+                                                        <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
+                                                        <p className="meta">
+                                                            الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                            المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </div>
+                                        {ShowItem && ShowItem.data.attachments && <>
+                                            <div style={{ backgroundColor: '#fff', padding: 9 }}>
+                                                <div className="aside-header">
+                                                    <h3 className="title">مرفقات المشروع</h3>
+                                                </div>
+                                                <div className="aside-attachments">
+                                                    <Timeline>
+                                                        {ShowItem.data.attachments.map((e: any, i) => (
+                                                            <Timeline.Item key={i} dot={<>{switchFileTypes(e.mime_type)}</>}>
+                                                                <a href={e.full_path} rel="noreferrer" target="_blank">
+                                                                    تحميل الملف {i + 1}#
+                                                                </a>
+                                                            </Timeline.Item>
+                                                        ))}
+                                                    </Timeline>
+                                                </div>
+                                            </div>
+                                        </>}
                                     </div>
-                                    {ShowItem && ShowItem.data.attachments && <>
+                                    <div className="col-md-5">
+                                        {ShowItem && ShowItem.data.status == 4 && <>
+                                            {ShowItem && ShowItem.data.item_rejected && ShowItem.data.item_rejected.status == 2 &&
+                                                <Alert type="error">
+                                                    <p className="text">يجب عليكم الوصول إلى اتفاق وإلا ستتدخل الإدارة في ظرف 48 ساعة</p>
+                                                </Alert>}
+                                        </>}
+                                        <div className="aside-header">
+                                            <h3 className="title">{ShowItem.data.title}</h3>
+                                        </div>
                                         <div style={{ backgroundColor: '#fff', padding: 9 }}>
                                             <div className="aside-header">
-                                                <h3 className="title">مرفقات المشروع</h3>
-                                            </div>
-                                            <div className="aside-attachments">
-                                                <Timeline>
-                                                    {ShowItem.data.attachments.map((e: any, i) => (
-                                                        <Timeline.Item key={i} dot={<>{switchFileTypes(e.mime_type)}</>}>
-                                                            <a href={e.full_path} rel="noreferrer" target="_blank">
-                                                                تحميل الملف {i + 1}#
-                                                            </a>
-                                                        </Timeline.Item>
-                                                    ))}
-                                                </Timeline>
+                                                <h3 className="title">تعليمات المشتري</h3>
                                             </div>
                                         </div>
-                                    </>}
-                                </div>
-                                <div className="col-md-5">
-                                    {ShowItem && ShowItem.data.status == 4 && <>
-                                        {ShowItem && ShowItem.data.item_rejected && ShowItem.data.item_rejected.status == 2 &&
-                                            <Alert type="error">
-                                                <p className="text">يجب عليكم الوصول إلى اتفاق وإلا ستتدخل الإدارة في ظرف 48 ساعة</p>
-                                            </Alert>}
-                                    </>
-                                    }
-                                    <div className="aside-header">
-                                        <h3 className="title">{ShowItem.data.title}</h3>
-                                    </div>
-                                    <div style={{ backgroundColor: '#fff', padding: 9 }}>
-                                        <div className="aside-header">
-                                            <h3 className="title">تعليمات المشتري</h3>
-                                        </div>
-                                    </div>
-                                    <div className="aside-header">
-                                        <h3 className="title">المحادثة</h3>
-                                    </div>
-                                    <div className="conversations-list">
-                                        <ul className="conversations-items" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-                                            <li className="d-flex" style={{ backgroundColor: '#fff', padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
-                                                <div className="item-avatar" style={{ marginInline: 6 }}>
-                                                    <img src="/avatar2.jpg" width={45} height={45} className="rounded-pill" alt="" />
-                                                </div>
-                                                <div className="item-content">
-                                                    <p className="text" style={{ color: '#333', margin: 0 }}>يمكنك الآن تحميل الملف لقد تم اكماله بنجاح شكرا لك اخي لبكريم</p>
-                                                    <p className="meta" style={{ color: '#666', marginBlock: 4, fontSize: 12, fontWeight: 200 }}>منذ دقيقتين</p>
-                                                </div>
-
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
-                                        <div className="timlands-form">
-                                            <label className="label-block" htmlFor="input-buyer_instruct">نص الرسالة</label>
-                                            <textarea
-                                                id="input-buyer_instruct"
-                                                name="buyer_instruct"
-                                                placeholder="نص الرسالة..."
-                                                className={"timlands-inputs "}
-                                                autoComplete="off"
-                                                style={{ minHeight: 80 }}
-                                            ></textarea>
-                                            <div className="send-attachments">
-
+                                        {ShowItem && ShowItem.data.conversation && <>
+                                            <div className="aside-header">
+                                                <h3 className="title">المحادثة</h3>
                                             </div>
-                                        </div>
-                                        <div className="py-1">
-                                            <button className="btn butt-sm butt-primary">إرسال</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
-                                        <div className="aside-header">
-                                            <h3 className="title">الأدوات</h3>
-                                        </div>
-                                        <div className="d-grid gap-2">
-                                            {ShowItem && ShowItem.data.status == 0 && <>
-                                                <button
-                                                    disabled={acceptedBySellerLoadingLoading}
-                                                    onClick={() => item_accepted_by_seller(ShowItem.data.id)}
-                                                    className="btn butt-md butt-green mx-1 flex-center-just"
-                                                ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
-                                                <button
-                                                    disabled={rejectedBySellerLoading}
-                                                    onClick={() => item_rejected_by_seller(ShowItem.data.id)}
-                                                    className="btn butt-md butt-red mx-1 flex-center-just"
-                                                ><span className="material-icons material-icons-outlined">highlight_off</span> رفض الطلب</button>
-                                            </>}
-                                            {ShowItem && ShowItem.data.status == 1 && <>
-                                                <div className="box-note red">
-                                                    <p className="text">هذه العملية ملغية من طرف المشتري</p>
-                                                </div>
-                                            </>
-                                            }
-                                            {ShowItem && ShowItem.data.status == 2 && <div className="box-note warning">
-                                                <p className="text">هذه العملية مرفوضة من طرفك</p>
-                                            </div>}
-                                            {ShowItem && ShowItem.data.status == 3 && <>
-                                                <div className="order-uploader-files">
-                                                    <div className="uploader-header">
-                                                        <h3 className="title">إرفاق ملفات مع تسليم العمل</h3>
-                                                    </div>
-                                                    {imageProgress !== 0 && <Progress percent={imageProgress} />}
-                                                    <div className="form-conainer">
-                                                        <ul className="attachment-list-items">
-                                                            {fileNames.map((name) => (
-                                                                <motion.li initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
-                                                                    <span className="name-file">{name}</span>
-                                                                    <span className="remove-icon" onClick={() => removeFile(name)}>
-                                                                        <i className="fa fa-times" />
-                                                                    </span>
-                                                                </motion.li>
-                                                            ))}
-                                                        </ul>
-                                                        {files.length == 0 && (
-                                                            <div className="select-files">
-                                                                <p className="text">
-                                                                    يمكنك اختيار ملفات من جهازك
-                                                                </p>
-                                                            </div>
-                                                        )}
-                                                        {files.length > 0 && (
-                                                            <ul className="files-proprieties">
-                                                                <li><strong>الحجم الكلي: </strong>{totalSize}</li>
-                                                            </ul>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    className="btn butt-md butt-primary2 mx-1 flex-center-just"
-                                                    onClick={() => inputRef.current.click()}
+                                            <div className="conversations-list">
+                                                <ul
+                                                    ref={myRef}
+                                                    className="conversations-items"
+                                                    style={{
+                                                        margin: 0,
+                                                        padding: 0,
+                                                        listStyle: 'none',
+                                                        height: 350,
+                                                        overflow: 'hidden',
+                                                        overflowY: 'scroll'
+                                                    }}
                                                 >
-                                                    <span className="material-icons material-icons-outlined">file_upload</span> إضافة ملفات
-                                                </button>
-                                                <input ref={inputRef} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFiles(e)} />
-                                                <button
-                                                    disabled={dileveredSellerLoading}
-                                                    onClick={() => dilevered_by_seller(ShowItem.data.id)}
-                                                    className="btn butt-md butt-primary mx-1 flex-center-just"
-                                                ><span className="material-icons material-icons-outlined">file_upload</span> تسليم الطلب </button>
-                                            </>}
-                                            {ShowItem && ShowItem.data.status == 4 &&
-                                                <>
-                                                    {ShowItem.data.item_rejected.status == 0 && <>
-                                                        <p className="note-text">
-                                                            قام فلان بن فلان بطلب إلغاء الطلبية
-                                                        </p>
+                                                    {ShowItem.data.conversation.messages.map((item: any) => (
+                                                        <motion.li initial={{ y: -4, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={item.id} className={(item.user.id == ShowItem.data.order.cart.user_id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)} style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
+                                                            <div className="item-avatar" style={{ marginInline: 6 }}>
+                                                                <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
+                                                            </div>
+                                                            <div className="item-content">
+                                                                <p className="text" style={{ margin: 0 }}>{item.message}</p>
+                                                                <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
+                                                            </div>
+                                                        </motion.li>
+                                                    ))}
+
+                                                </ul>
+                                            </div>
+                                            <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
+                                                <form onSubmit={sendMessageHandle}>
+                                                    <div className="timlands-form">
+                                                        <input
+                                                            id="input-buyer_instruct"
+                                                            name="buyer_instruct"
+                                                            onKeyUp={() => { setMessageErrors({}) }}
+                                                            placeholder="نص الرسالة..."
+                                                            className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
+                                                            disabled={sendMessageLoading}
+                                                            autoComplete="off"
+                                                            onChange={(e: any) => setMessage(e.target.value)}
+                                                            style={{ minHeight: 60 }}
+                                                        />
                                                         <button
-                                                            disabled={acceptCancelRequestBySellerLoading}
-                                                            onClick={() => accept_cancel_request_by_seller(ShowItem.data.id)}
-                                                            className="btn butt-md butt-green mx-1 flex-center-just">
-                                                            <span className="material-icons material-icons-outlined">done_all</span>
-                                                            قبول طلب الإلغاء
+                                                            style={{
+                                                                width: 90,
+                                                                height: 60,
+                                                                position: 'absolute',
+                                                                top: 11,
+                                                                left: 0,
+                                                                borderRadius: '5px 0 0 5px'
+                                                            }}
+                                                            disabled={sendMessageLoading}
+                                                            className="btn butt-sm butt-primary flex-center-just"
+                                                            type="submit"
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">send</span>
+                                                            إرسال
                                                         </button>
+                                                        {messageErrors && messageErrors.message &&
+                                                            <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                <p className="text">{messageErrors.message[0]}</p>
+                                                            </motion.div>
+                                                        }
+                                                        <div className="send-attachments">
+                                                            {messageProgress !== 0 && <Progress percent={messageProgress} />}
+                                                            <div className="form-conainer">
+                                                                <ul
+                                                                    className="attachment-list-items"
+                                                                    style={{
+                                                                        listStyle: 'none',
+                                                                        paddingInline: 0,
+                                                                        paddingTop: 6,
+                                                                        overflow: 'hidden',
+                                                                    }}>
+                                                                    {fileNamesMsg.map((name) => (
+                                                                        <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
+                                                                            <span className="name-file">{name}</span>
+                                                                            <span className="remove-icon d-flex" style={{ position: 'absolute', left: 0, fontSize: 13 }} onClick={() => removeFileMsg(name)}>
+                                                                                <i className="fa fa-times"></i>
+                                                                            </span>
+                                                                        </motion.li>
+                                                                    ))}
+                                                                </ul>
+                                                                {filesMsg.length > 0 && (
+                                                                    <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
+                                                                        <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
+                                                                    </ul>
+                                                                )}
+                                                            </div>
+                                                        </div>
+
+                                                        <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
+
+                                                    </div>
+                                                    <div className="py-1 d-flex">
+
                                                         <button
-                                                            disabled={rejectCancelRequestBySellerLoading}
-                                                            onClick={() => reject_cancel_request_by_seller(ShowItem.data.id)}
-                                                            className="btn butt-md butt-red mx-1 flex-center-just">
-                                                            <span className="material-icons material-icons-outlined">highlight_off</span>
-                                                            رفض طلب الإلغاء
+                                                            type="button"
+                                                            style={{ width: '65%' }}
+                                                            disabled={sendMessageLoading}
+                                                            className="btn butt-sm butt-primary2 mx-1 flex-center-just"
+                                                            onClick={() => inputRefMsg.current.click()}
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
                                                         </button>
-                                                    </>}
+                                                        <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
+                                                            <option value="0">نص عادي</option>
+                                                            <option value="1">تعليمة</option>
+                                                            <option value="2">سبب إلغاء</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </>}
+                                        {ShowItem && ShowItem.data.conversation == null && <>
+                                            <div className="conversation-start">
+                                                <div className="icon">
+                                                    <span className="material-icons material-icons-outlined">
+                                                        forum
+                                                    </span>
+                                                </div>
+                                                <h3 className="title">تواصل مع المشتري</h3>
+                                                <p className="text">حاول ان تتفق مع المشتري قبل البدء في تنفيذ العملية</p>
+                                                <textarea
+                                                    id="input-initial_message"
+                                                    name="initial_message"
+                                                    placeholder="نص الرسالة..."
+                                                    className={"timlands-inputs mt-2"}
+                                                    autoComplete="off"
+                                                    style={{ minHeight: 80 }}
+                                                    onChange={(e: any) => setMessage(e.target.value)}
+                                                ></textarea>
+                                                <div className="mt-3 conversion-btn">
+                                                    <button type="button" disabled={createConversationLoading} onClick={() => createConversation(ShowItem && ShowItem.data.id)} className="btn butt-lg butt-primary">إنشاء المحادثة</button>
+                                                </div>
+                                            </div>
+                                        </>}
+
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                            <div className="aside-header">
+                                                <h3 className="title">الأدوات</h3>
+                                            </div>
+                                            <div className="d-grid gap-2">
+                                                {ShowItem && ShowItem.data.status == 0 && <>
+                                                    <button
+                                                        disabled={acceptedBySellerLoadingLoading}
+                                                        onClick={() => item_accepted_by_seller(ShowItem.data.id)}
+                                                        className="btn butt-md butt-green mx-1 flex-center-just"
+                                                    ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
+                                                    <button
+                                                        disabled={rejectedBySellerLoading}
+                                                        onClick={() => item_rejected_by_seller(ShowItem.data.id)}
+                                                        className="btn butt-md butt-red mx-1 flex-center-just"
+                                                    ><span className="material-icons material-icons-outlined">highlight_off</span> رفض الطلب</button>
+                                                </>}
+                                                {ShowItem && ShowItem.data.status == 1 && <>
+                                                    <div className="box-note red">
+                                                        <p className="text">هذه العملية ملغية من طرف المشتري</p>
+                                                    </div>
                                                 </>
-                                            }
-                                            {ShowItem && ShowItem.data.status == 5 && <div className="box-note warning">
-                                                <p className="text">هذه العملية ملغية من طرفك</p>
-                                            </div>}
-                                            {ShowItem && ShowItem.data.status == 6 && <div className="box-note primary">
-                                                <p className="text">هذه العملية قيد الإستلام</p>
-                                            </div>}
-                                            {ShowItem && ShowItem.data.status == 7 && <div className="box-note primary-fill">
-                                                <p className="text"><strong>هذه العملية مكتملة</strong></p>
-                                            </div>}
-                                            {ShowItem && ShowItem.data.status == 8 &&
-                                                <button
-                                                    disabled={resolveConflictBetweenRejectedLoading}
-                                                    onClick={() => resolve_the_conflict_between_them_in_rejected(ShowItem.data.id)}
-
-                                                    className="btn butt-md butt-green mx-1 flex-center-just">
-                                                    <span className="material-icons material-icons-outlined">highlight_off</span>
-                                                    تم حل النزاع
-                                                </button>}
-
-                                            {ShowItem && ShowItem.data.status == 9 && <>
-                                                {ShowItem && ShowItem.data.item_modified.status == 0 &&
+                                                }
+                                                {ShowItem && ShowItem.data.status == 2 && <div className="box-note warning">
+                                                    <p className="text">هذه العملية مرفوضة من طرفك</p>
+                                                </div>}
+                                                {ShowItem && ShowItem.data.status == 3 && <>
+                                                    <div className="order-uploader-files">
+                                                        <div className="uploader-header">
+                                                            <h3 className="title">إرفاق ملفات مع تسليم العمل</h3>
+                                                        </div>
+                                                        {imageProgress !== 0 && <Progress percent={imageProgress} />}
+                                                        <div className="form-conainer">
+                                                            <ul className="attachment-list-items">
+                                                                {fileNames.map((name) => (
+                                                                    <motion.li initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
+                                                                        <span className="name-file">{name}</span>
+                                                                        <span className="remove-icon" onClick={() => removeFile(name)}>
+                                                                            <i className="fa fa-times" />
+                                                                        </span>
+                                                                    </motion.li>
+                                                                ))}
+                                                            </ul>
+                                                            {files.length == 0 && (
+                                                                <div className="select-files">
+                                                                    <p className="text">
+                                                                        يمكنك اختيار ملفات من جهازك
+                                                                    </p>
+                                                                </div>
+                                                            )}
+                                                            {files.length > 0 && (
+                                                                <ul className="files-proprieties">
+                                                                    <li><strong>الحجم الكلي: </strong>{totalSize}</li>
+                                                                </ul>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        className="btn butt-md butt-primary2 mx-1 flex-center-just"
+                                                        onClick={() => inputRef.current.click()}
+                                                    >
+                                                        <span className="material-icons material-icons-outlined">file_upload</span> إضافة ملفات
+                                                    </button>
+                                                    <input ref={inputRef} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFiles(e)} />
+                                                    <button
+                                                        disabled={dileveredSellerLoading}
+                                                        onClick={() => dilevered_by_seller(ShowItem.data.id)}
+                                                        className="btn butt-md butt-primary mx-1 flex-center-just"
+                                                    ><span className="material-icons material-icons-outlined">file_upload</span> تسليم الطلب </button>
+                                                </>}
+                                                {ShowItem && ShowItem.data.status == 4 &&
                                                     <>
-                                                        <button
-                                                            disabled={acceptModifiedSellerLoading}
-                                                            onClick={() => accept_modified_by_seller(ShowItem.data.id)}
-                                                            className="btn butt-md butt-green mx-1 flex-center-just"
-                                                        ><span className="material-icons material-icons-outlined">done_all</span> قبول طلب التعديل</button>
-                                                        <button
-                                                            disabled={rejectModifiedSellerLoading}
-                                                            onClick={() => reject_modified_by_seller(ShowItem.data.id)}
-                                                            className="btn butt-md butt-red mx-1 flex-center-just"
-                                                        ><span className="material-icons material-icons-outlined">highlight_off</span> رفض طلب التعديل</button>
+                                                        {ShowItem.data.item_rejected.status == 0 && <>
+                                                            <p className="note-text">
+                                                                قام فلان بن فلان بطلب إلغاء الطلبية
+                                                            </p>
+
+                                                            <button
+                                                                disabled={acceptCancelRequestBySellerLoading}
+                                                                onClick={() => accept_cancel_request_by_seller(ShowItem.data.id)}
+                                                                className="btn butt-md butt-green mx-1 flex-center-just">
+                                                                <span className="material-icons material-icons-outlined">done_all</span>
+                                                                قبول طلب الإلغاء
+                                                            </button>
+                                                            <button
+                                                                disabled={rejectCancelRequestBySellerLoading}
+                                                                onClick={() => reject_cancel_request_by_seller(ShowItem.data.id)}
+                                                                className="btn butt-md butt-red mx-1 flex-center-just">
+                                                                <span className="material-icons material-icons-outlined">highlight_off</span>
+                                                                رفض طلب الإلغاء
+                                                            </button>
+                                                        </>}
                                                     </>
                                                 }
-                                            </>}
+                                                {ShowItem && ShowItem.data.status == 5 && <div className="box-note warning">
+                                                    <p className="text">هذه العملية ملغية من طرفك</p>
+                                                </div>}
+                                                {ShowItem && ShowItem.data.status == 6 && <div className="box-note primary">
+                                                    <p className="text">هذه العملية قيد الإستلام</p>
+                                                </div>}
+                                                {ShowItem && ShowItem.data.status == 7 && <div className="box-note primary-fill">
+                                                    <p className="text"><strong>هذه العملية مكتملة</strong></p>
+                                                </div>}
+                                                {ShowItem && ShowItem.data.status == 8 &&
+                                                    <button
+                                                        disabled={resolveConflictBetweenRejectedLoading}
+                                                        onClick={() => resolve_the_conflict_between_them_in_rejected(ShowItem.data.id)}
 
-                                            {ShowItem && ShowItem.data.status == 10 && <>
-                                                <div className="box-note red">
-                                                    <p className="text">إذا تواصلتما إلى حل يمكنك تحويل العملية إلى قيد التنفيد مرة اخرى</p>
-                                                </div>
-                                                <button
-                                                    disabled={resolveConflictBetweenThemModifiedLoading}
-                                                    onClick={() => resolve_the_conflict_between_them_in_modified(ShowItem.data.id)}
+                                                        className="btn butt-md butt-green mx-1 flex-center-just">
+                                                        <span className="material-icons material-icons-outlined">highlight_off</span>
+                                                        تم حل النزاع
+                                                    </button>}
 
-                                                    className="btn butt-md butt-green mx-1 flex-center-just">
-                                                    <span className="material-icons material-icons-outlined">highlight_off</span>
-                                                    تم حل النزاع
-                                                </button>
-                                                
-                                            </>
+                                                {ShowItem && ShowItem.data.status == 9 && <>
+                                                    {ShowItem && ShowItem.data.item_modified.status == 0 &&
+                                                        <>
+                                                            <button
+                                                                disabled={acceptModifiedSellerLoading}
+                                                                onClick={() => accept_modified_by_seller(ShowItem.data.id)}
+                                                                className="btn butt-md butt-green mx-1 flex-center-just"
+                                                            ><span className="material-icons material-icons-outlined">done_all</span> قبول طلب التعديل</button>
+                                                            <button
+                                                                disabled={rejectModifiedSellerLoading}
+                                                                onClick={() => reject_modified_by_seller(ShowItem.data.id)}
+                                                                className="btn butt-md butt-red mx-1 flex-center-just"
+                                                            ><span className="material-icons material-icons-outlined">highlight_off</span> رفض طلب التعديل</button>
+                                                        </>
+                                                    }
+                                                </>}
+
+                                                {ShowItem && ShowItem.data.status == 10 && <>
+                                                    <div className="box-note red">
+                                                        <p className="text">إذا تواصلتما إلى حل يمكنك تحويل العملية إلى قيد التنفيد مرة اخرى</p>
+                                                    </div>
+                                                    <button
+                                                        disabled={resolveConflictBetweenThemModifiedLoading}
+                                                        onClick={() => resolve_the_conflict_between_them_in_modified(ShowItem.data.id)}
+
+                                                        className="btn butt-md butt-green mx-1 flex-center-just">
+                                                        <span className="material-icons material-icons-outlined">highlight_off</span>
+                                                        تم حل النزاع
+                                                    </button>
+
+                                                </>
                                                 }
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div style={{ backgroundColor: '#fff', padding: 9 }}>
-                                        <div className="aside-header">
-                                            <h3 className="title">تفاصيل العملية</h3>
+                                        <div style={{ backgroundColor: '#fff', padding: 9 }}>
+                                            <div className="aside-header">
+                                                <h3 className="title">تفاصيل العملية</h3>
+                                            </div>
+                                            <table className="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>رقم العملية</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            {ShowItem.data.uuid}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>حالة العملية</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            {statusLabel(ShowItem.data.status)}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>تاريخ العملية</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <LastSeen date={ShowItem.data.created_at} />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>مدة الإنجاز</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            {durationFunc()}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>السعر الكلي للطلبية</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            ${ShowItem.data.order.cart.price_with_tax}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <table className="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <th>رقم العملية</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        {ShowItem.data.uuid}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>حالة العملية</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        {statusLabel(ShowItem.data.status)}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>تاريخ العملية</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <LastSeen date={ShowItem.data.created_at} />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>مدة الإنجاز</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        {durationFunc()}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>السعر الكلي للطلبية</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        ${ShowItem.data.order.cart.price_with_tax}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        </>
     )
 };
 

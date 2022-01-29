@@ -3952,4 +3952,62 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         }
     }
 }
+.conversation-start {
+    border-radius: 6px;
+    border: 2px dashed #ddd;
+    padding: 23px 15px;
+    text-align: center;
+    margin: 13px 0;
+    .icon {
+        margin-top: 18px;
+        .material-icons {
+            font-size: 90px;
+            color: #ccc;
+            padding: 15px 0;
+        }
+    }
+    .title {
+        font-weight: bold;
+        color: #444;
+    }
+    .text {
+        font-size: 14px;
+        list-style: 28px;
+        margin: 0;
+        color: #222;
+    }
+    .conversion-btn {
+        border-top: 2px dashed #ddd;
+        padding-top: 13px;
+    }
+}
+.message-item {
+    background-color: #fff;
+    border: 2px dashed #ddd;
+    .text {
+        padding: 4px 13px;
+        background-color: $primary;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    &.instruct {
+        background-color: #f1fcff;
+        border: 2px dashed #b4e4f1;
+
+    }
+    &.cause {
+        background-color: #fffbf1;
+        border: 2px dashed #f1e1b4;
+
+    }
+    &.recieved {
+        flex-direction: row-reverse;
+        text-align: left;
+        .text {
+            background-color: #fff;
+            color: #222;
+        }
+    }
+}
 @import 'is-dark';
