@@ -18,7 +18,7 @@ import { MessageOutlined } from '@ant-design/icons';
 
 const User = ({ query }) => {
     const token = Cookies.get('token')
-    const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
+    const { data: ShowItem, errorItem }: any = useSWR(`api/my_sales/${query.id}`)
     const inputRef: any = useRef();
     const inputRefMsg: any = useRef();
 
@@ -63,6 +63,7 @@ const User = ({ query }) => {
         totalSize: totalSizeMsg,
         setFiles: setFilesMsg,
         removeFile: removeFileMsg,
+        clearAllFiles: clearAllFilesMsg,
     } = useFileUpload();
 
     const [acceptedBySellerLoadingLoading, setAcceptedBySellerLoading] = useState(false)
@@ -303,6 +304,8 @@ const User = ({ query }) => {
                 myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
                 setMessage('')
                 messageRef.current.focus()
+                setMessageProgress(0)
+                clearAllFilesMsg()
             }
         } catch (error) {
             setSendMessageLoading(false)
@@ -518,9 +521,33 @@ const User = ({ query }) => {
                                                             <div className="item-avatar" style={{ marginInline: 6 }}>
                                                                 <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
                                                             </div>
+
                                                             <div className="item-content">
+                                                                {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: 4, fontSize: 12, marginBottom: 5 }}>تعليمة</span>}
+                                                                {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: 4, fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
                                                                 <p className="text" style={{ margin: 0 }}>{item.message}</p>
                                                                 <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
+                                                                {item.attachments &&
+                                                                    <div className="attach-items" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}>
+                                                                        {item.attachments.map((att: any, i: number) => (
+                                                                            <div className="att-item" key={att.id}>
+                                                                                <a href={att.full_path} rel="noreferrer" target="_blank">
+                                                                                    {switchFileTypes(att.mime_type)} تحميل الملف {i}#
+                                                                                </a>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                }
+                                                                {item.read_at && <span className="readed is-readed">
+                                                                    <span className="material-icons material-icons-outlined">
+                                                                        done_all
+                                                                    </span>
+                                                                </span>}
+                                                                {!item.read_at && <span className="readed is-unreaded">
+                                                                    <span className="material-icons material-icons-outlined">
+                                                                        done
+                                                                    </span>
+                                                                </span>}
                                                             </div>
                                                         </motion.li>
                                                     ))}
@@ -530,6 +557,50 @@ const User = ({ query }) => {
                                             <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
                                                 <form onSubmit={sendMessageHandle}>
                                                     <div className="timlands-form">
+                                                        <div className="py-1 d-flex">
+                                                            <button
+                                                                type="button"
+                                                                style={{ width: '65%' }}
+                                                                disabled={sendMessageLoading}
+                                                                className="btn butt-sm butt-primary2 mx-1 flex-center-just"
+                                                                onClick={() => inputRefMsg.current.click()}
+                                                            >
+                                                                <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
+                                                            </button>
+                                                            <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
+                                                                <option value="0">نص عادي</option>
+                                                                <option value="1">تعليمة</option>
+                                                                <option value="2">سبب إلغاء</option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="send-attachments">
+                                                            {messageProgress !== 0 && <Progress percent={messageProgress} />}
+                                                            <div className="form-conainer">
+                                                                <ul
+                                                                    className="attachment-list-items"
+                                                                    style={{
+                                                                        listStyle: 'none',
+                                                                        paddingInline: 0,
+                                                                        paddingTop: 6,
+                                                                        overflow: 'hidden',
+                                                                    }}>
+                                                                    {fileNamesMsg.map((name) => (
+                                                                        <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
+                                                                            <span className="name-file">{name}</span>
+                                                                            <span className="remove-icon d-flex" style={{ position: 'absolute', left: 10, fontSize: 13, top: 7, color: 'red', cursor: 'pointer' }} onClick={() => removeFileMsg(name)}>
+                                                                                <i className="fa fa-times"></i>
+                                                                            </span>
+                                                                        </motion.li>
+                                                                    ))}
+                                                                </ul>
+                                                                {filesMsg.length > 0 && (
+                                                                    <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
+                                                                        <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
+                                                                    </ul>
+                                                                )}
+                                                            </div>
+                                                            <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
+                                                        </div>
                                                         <input
                                                             id="input-buyer_instruct"
                                                             name="buyer_instruct"
@@ -548,7 +619,7 @@ const User = ({ query }) => {
                                                                 width: 90,
                                                                 height: 60,
                                                                 position: 'absolute',
-                                                                top: 11,
+                                                                bottom: 11,
                                                                 left: 0,
                                                                 borderRadius: '5px 0 0 5px'
                                                             }}
@@ -564,53 +635,6 @@ const User = ({ query }) => {
                                                                 <p className="text">{messageErrors.message[0]}</p>
                                                             </motion.div>
                                                         }
-                                                        <div className="send-attachments">
-                                                            {messageProgress !== 0 && <Progress percent={messageProgress} />}
-                                                            <div className="form-conainer">
-                                                                <ul
-                                                                    className="attachment-list-items"
-                                                                    style={{
-                                                                        listStyle: 'none',
-                                                                        paddingInline: 0,
-                                                                        paddingTop: 6,
-                                                                        overflow: 'hidden',
-                                                                    }}>
-                                                                    {fileNamesMsg.map((name) => (
-                                                                        <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
-                                                                            <span className="name-file">{name}</span>
-                                                                            <span className="remove-icon d-flex" style={{ position: 'absolute', left: 0, fontSize: 13 }} onClick={() => removeFileMsg(name)}>
-                                                                                <i className="fa fa-times"></i>
-                                                                            </span>
-                                                                        </motion.li>
-                                                                    ))}
-                                                                </ul>
-                                                                {filesMsg.length > 0 && (
-                                                                    <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
-                                                                        <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
-                                                                    </ul>
-                                                                )}
-                                                            </div>
-                                                        </div>
-
-                                                        <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
-
-                                                    </div>
-                                                    <div className="py-1 d-flex">
-
-                                                        <button
-                                                            type="button"
-                                                            style={{ width: '65%' }}
-                                                            disabled={sendMessageLoading}
-                                                            className="btn butt-sm butt-primary2 mx-1 flex-center-just"
-                                                            onClick={() => inputRefMsg.current.click()}
-                                                        >
-                                                            <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
-                                                        </button>
-                                                        <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
-                                                            <option value="0">نص عادي</option>
-                                                            <option value="1">تعليمة</option>
-                                                            <option value="2">سبب إلغاء</option>
-                                                        </select>
                                                     </div>
                                                 </form>
                                             </div>

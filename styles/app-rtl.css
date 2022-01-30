@@ -6708,11 +6708,12 @@ h3 {
   background-color: #fff;
   border: 2px solid #f1f1f1;
   -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   padding: 20px 10px;
-  text-align: left;
+  text-align: right;
+  position: relative;
 }
 
 .message-item .text {
@@ -6733,17 +6734,72 @@ h3 {
   border: 2px dashed #f1e1b4;
 }
 
+.message-item .readed {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #ccc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  left: 12px;
+  top: 10px;
+}
+
+.message-item .readed.is-readed {
+  color: #5dbd6a;
+}
+
+.message-item .readed.is-unreaded {
+  color: #d8d8d8;
+}
+
 .message-item.recieved {
   -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  text-align: right;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  text-align: left;
 }
 
 .message-item.recieved .text {
   background-color: #fff;
   color: #222;
+}
+
+.message-item.recieved .readed {
+  right: 12px;
+}
+
+.message-item .attach-items .att-item a {
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.message-item .attach-items .att-item a:hover {
+  color: #475C80;
+}
+
+.message-item .attach-items .att-item a .material-icons {
+  font-size: 15px;
 }
 
 .is-dark {
