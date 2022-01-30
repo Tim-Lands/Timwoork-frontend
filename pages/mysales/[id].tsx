@@ -32,9 +32,8 @@ const User = ({ query }) => {
     useEffect(() => {
         //audio.play();
         const mounted = true
-        if (mounted) {
-            //myRef && myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-            const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
+        if (ShowItem && mounted) {
+            const channel = pusher.subscribe(`presence-conversations.${ShowItem.data.conversation.id}`)
             channel.bind('message.sent', (e: any) => {
                 const audio = new Audio('/effect.mp3');
                 console.log(e);
@@ -42,7 +41,7 @@ const User = ({ query }) => {
                 ShowItem.data.conversation.messages.push(e.message)
                 notification.open({
                     message: 'لديك رسالة جديدة',
-                    description: 'This is the content of the notification. This is the content of the notification.',
+                    description: e.message.message,
                     icon: <MessageOutlined style={{ color: '#108ee9' }} />,
                 });
             })
@@ -491,7 +490,7 @@ const User = ({ query }) => {
                                         </div>
                                         <div style={{ backgroundColor: '#fff', padding: 9 }}>
                                             <div className="aside-header">
-                                                <h3 className="title">تعليمات المشتري</h3>
+                                                <h3 className="title">تعليمات للمشتري</h3>
                                             </div>
                                         </div>
                                         {ShowItem && ShowItem.data.conversation && <>
@@ -516,7 +515,7 @@ const User = ({ query }) => {
                                                             initial={{ y: -4, opacity: 0 }}
                                                             animate={{ y: 0, opacity: 1 }}
                                                             key={item.id}
-                                                            className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)}
+                                                            className={(ShowItem && ShowItem.data.profile_seller.id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
                                                             style={{ marginBlock: 6, borderRadius: 6 }}>
                                                             <div className="item-avatar" style={{ marginInline: 6 }}>
                                                                 <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
@@ -532,22 +531,27 @@ const User = ({ query }) => {
                                                                         {item.attachments.map((att: any, i: number) => (
                                                                             <div className="att-item" key={att.id}>
                                                                                 <a href={att.full_path} rel="noreferrer" target="_blank">
-                                                                                    {switchFileTypes(att.mime_type)} تحميل الملف {i}#
+                                                                                    {switchFileTypes(att.mime_type)} تحميل الملف {i + 1}#
                                                                                 </a>
                                                                             </div>
                                                                         ))}
                                                                     </div>
                                                                 }
-                                                                {item.read_at && <span className="readed is-readed">
-                                                                    <span className="material-icons material-icons-outlined">
-                                                                        done_all
-                                                                    </span>
-                                                                </span>}
-                                                                {!item.read_at && <span className="readed is-unreaded">
-                                                                    <span className="material-icons material-icons-outlined">
-                                                                        done
-                                                                    </span>
-                                                                </span>}
+                                                                {(ShowItem && ShowItem.data.profile_seller.id == item.user.id) &&
+                                                                    <>
+                                                                        {item.read_at && <span className="readed is-readed">
+                                                                            <span className="material-icons material-icons-outlined">
+                                                                                done_all
+                                                                            </span>
+                                                                        </span>}
+                                                                        {!item.read_at && <span className="readed is-unreaded">
+                                                                            <span className="material-icons material-icons-outlined">
+                                                                                done
+                                                                            </span>
+                                                                        </span>}
+                                                                    </>
+                                                                }
+
                                                             </div>
                                                         </motion.li>
                                                     ))}
@@ -601,35 +605,34 @@ const User = ({ query }) => {
                                                             </div>
                                                             <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
                                                         </div>
-                                                        <input
-                                                            id="input-buyer_instruct"
-                                                            name="buyer_instruct"
-                                                            onKeyUp={() => { setMessageErrors({}) }}
-                                                            placeholder="نص الرسالة..."
-                                                            className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
-                                                            disabled={sendMessageLoading}
-                                                            autoComplete="off"
-                                                            value={message}
-                                                            ref={messageRef}
-                                                            onChange={(e: any) => setMessage(e.target.value)}
-                                                            style={{ minHeight: 60 }}
-                                                        />
-                                                        <button
-                                                            style={{
-                                                                width: 90,
-                                                                height: 60,
-                                                                position: 'absolute',
-                                                                bottom: 11,
-                                                                left: 0,
-                                                                borderRadius: '5px 0 0 5px'
-                                                            }}
-                                                            disabled={sendMessageLoading}
-                                                            className="btn butt-sm butt-primary flex-center-just"
-                                                            type="submit"
-                                                        >
-                                                            <span className="material-icons material-icons-outlined">send</span>
-                                                            إرسال
-                                                        </button>
+                                                        <div className="relative-form" style={{ position: 'relative', minHeight: 60 }}>
+                                                            <input
+                                                                id="input-buyer_instruct"
+                                                                name="buyer_instruct"
+                                                                onKeyUp={() => { setMessageErrors({}) }}
+                                                                placeholder="نص الرسالة..."
+                                                                className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
+                                                                disabled={sendMessageLoading}
+                                                                autoComplete="off"
+                                                                value={message}
+                                                                ref={messageRef}
+                                                                onChange={(e: any) => setMessage(e.target.value)}
+                                                                style={{ height: '100%', width: 'calc(100% - 110)', borderRadius: '0 5px 5px 0' }}
+                                                            />
+                                                            <button
+                                                                style={{
+                                                                    width: 110,
+                                                                    height: '100%',
+                                                                    borderRadius: '5px 0 0 5px'
+                                                                }}
+                                                                disabled={sendMessageLoading}
+                                                                className="btn butt-sm butt-primary flex-center-just"
+                                                                type="submit"
+                                                            >
+                                                                <span className="material-icons material-icons-outlined">send</span>
+                                                                إرسال
+                                                            </button>
+                                                        </div>
                                                         {messageErrors && messageErrors.message &&
                                                             <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                                 <p className="text">{messageErrors.message[0]}</p>

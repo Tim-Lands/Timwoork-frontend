@@ -59,8 +59,8 @@ const Order = ({ query }) => {
     useEffect(() => {
         //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
         const mounted = true
-        if (mounted) {
-            const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
+        if (ShowItem && mounted) {
+            const channel = pusher.subscribe(`presence-conversations.${ShowItem.data.conversation.id}`)
             channel.bind('message.sent', (e: any) => {
                 const audio = new Audio('/effect.mp3');
                 console.log(e);
@@ -68,7 +68,7 @@ const Order = ({ query }) => {
                 ShowItem.data.conversation.messages.push(e.message)
                 notification.open({
                     message: 'لديك رسالة جديدة',
-                    description: 'This is the content of the notification. This is the content of the notification.',
+                    description: e.message.message,
                     icon: <MessageOutlined style={{ color: '#108ee9' }} />,
                 });
             })
@@ -374,7 +374,7 @@ const Order = ({ query }) => {
                                     </div>
                                     <div style={{ backgroundColor: '#fff', padding: 9 }}>
                                         <div className="aside-header">
-                                            <h3 className="title">تعليمات المشتري</h3>
+                                            <h3 className="title">تعليمات للمشتري</h3>
                                         </div>
                                     </div>
                                     {ShowItem && ShowItem.data.conversation && <>
@@ -400,7 +400,7 @@ const Order = ({ query }) => {
                                                         initial={{ y: -4, opacity: 0 }}
                                                         animate={{ y: 0, opacity: 1 }}
                                                         key={item.id}
-                                                        className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)}
+                                                        className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
                                                         style={{ marginBlock: 6, borderRadius: 6 }}>
                                                         <div className="item-avatar" style={{ marginInline: 6 }}>
                                                             <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
@@ -416,22 +416,26 @@ const Order = ({ query }) => {
                                                                     {item.attachments.map((att: any, i: number) => (
                                                                         <div className="att-item" key={att.id}>
                                                                             <a href={att.full_path} rel="noreferrer" target="_blank">
-                                                                                {switchFileTypes(att.mime_type)} تحميل الملف {i}#
+                                                                                {switchFileTypes(att.mime_type)} تحميل الملف {i + 1}#
                                                                             </a>
                                                                         </div>
                                                                     ))}
                                                                 </div>
                                                             }
-                                                            {item.read_at && <span className="readed is-readed">
-                                                                <span className="material-icons material-icons-outlined">
-                                                                    done_all
-                                                                </span>
-                                                            </span>}
-                                                            {!item.read_at && <span className="readed is-unreaded">
-                                                                <span className="material-icons material-icons-outlined">
-                                                                    done
-                                                                </span>
-                                                            </span>}
+                                                            {(ShowItem && ShowItem.data.order.cart.user_id == item.user.id) &&
+                                                                <>
+                                                                    {item.read_at && <span className="readed is-readed">
+                                                                        <span className="material-icons material-icons-outlined">
+                                                                            done_all
+                                                                        </span>
+                                                                    </span>}
+                                                                    {!item.read_at && <span className="readed is-unreaded">
+                                                                        <span className="material-icons material-icons-outlined">
+                                                                            done
+                                                                        </span>
+                                                                    </span>}
+                                                                </>
+                                                            }
                                                         </div>
                                                     </motion.li>
                                                 ))}
@@ -496,7 +500,7 @@ const Order = ({ query }) => {
                                                         value={message}
                                                         ref={messageRef}
                                                         onChange={(e: any) => setMessage(e.target.value)}
-                                                        style={{ minHeight: 60 }}
+                                                        style={{ minHeight: 60, }}
                                                     />
                                                     <button
                                                         style={{
@@ -530,8 +534,8 @@ const Order = ({ query }) => {
                                                     forum
                                                 </span>
                                             </div>
-                                            <h3 className="title">تواصل مع المشتري</h3>
-                                            <p className="text">حاول ان تتفق مع المشتري قبل البدء في تنفيذ العملية</p>
+                                            <h3 className="title">تواصل مع البائع</h3>
+                                            <p className="text">حاول ان تتفق مع البائع قبل البدء في تنفيذ العملية</p>
                                             <textarea
                                                 id="input-initial_message"
                                                 name="initial_message"
