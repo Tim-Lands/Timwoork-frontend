@@ -6706,11 +6706,12 @@ h3 {
 
 .message-item {
   background-color: #fff;
-  border: 2px dashed #ddd;
+  border: 2px solid #f1f1f1;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
+  padding: 20px 10px;
   text-align: left;
 }
 

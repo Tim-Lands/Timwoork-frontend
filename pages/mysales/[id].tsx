@@ -9,11 +9,13 @@ import Link from 'next/link'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Progress, Result, Timeline } from "antd";
+import { Progress, Result, Timeline, notification } from "antd";
 import useFileUpload from 'react-use-file-upload';
 import { motion } from "framer-motion";
 import router from "next/router";
-import Pusher from 'pusher-js'
+import { pusher } from "../../config/pusher";
+import { MessageOutlined } from '@ant-design/icons';
+
 const User = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/order/items/${query.id}/show_item`)
@@ -26,32 +28,23 @@ const User = ({ query }) => {
 
     const myRef: any = useRef()
 
-    const pusher = new Pusher('510f53f8ccb3058a96fc', {
-        cluster: 'eu',
-        authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
-        auth: token ? {
-            headers: {
-                // pass the authorization token when using private channels
-                Authorization: `Bearer ${token}`,
-            },
-        } : undefined,
-
-    })
     //const audio = new Audio('/effect.mp3');
-    const musicPlayers = useRef<HTMLAudioElement | undefined>(
-        typeof Audio !== "undefined" ? new Audio("effect.mp3") : undefined
-    );
     useEffect(() => {
         //audio.play();
-        musicPlayers.current?.play()
         const mounted = true
         if (mounted) {
             //myRef && myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
             const channel = pusher.subscribe(`presence-conversations.${ShowItem && ShowItem.data.conversation.id}`)
-            channel.bind('message.sent', (e) => {
+            channel.bind('message.sent', (e: any) => {
+                const audio = new Audio('/effect.mp3');
                 console.log(e);
-                musicPlayers.current?.play()
-                ShowItem && ShowItem.data.conversation.messages.push(e.message)
+                audio.play();
+                ShowItem.data.conversation.messages.push(e.message)
+                notification.open({
+                    message: 'لديك رسالة جديدة',
+                    description: 'This is the content of the notification. This is the content of the notification.',
+                    icon: <MessageOutlined style={{ color: '#108ee9' }} />,
+                });
             })
         }
     }, [])
@@ -437,10 +430,10 @@ const User = ({ query }) => {
                 {!ShowItem && <Loading />}
                 {ShowItem &&
                     <div className="row py-4 justify-content-center">
-                        <div className="col-md-11">
+                        <div className="col-md-12">
                             <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
                                 <div className="row">
-                                    <div className="col-md-4">
+                                    <div className="col-md-3">
                                         <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
                                             <div className="aside-header">
                                                 <h3 className="title">المشتري</h3>
@@ -483,7 +476,7 @@ const User = ({ query }) => {
                                             </div>
                                         </>}
                                     </div>
-                                    <div className="col-md-5">
+                                    <div className="col-md-6">
                                         {ShowItem && ShowItem.data.status == 4 && <>
                                             {ShowItem && ShowItem.data.item_rejected && ShowItem.data.item_rejected.status == 2 &&
                                                 <Alert type="error">
@@ -521,7 +514,7 @@ const User = ({ query }) => {
                                                             animate={{ y: 0, opacity: 1 }}
                                                             key={item.id}
                                                             className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? 'recieved ' : '') + "d-flex message-item " + switchTypeMessage(item.type)}
-                                                            style={{ padding: 10, marginBlock: 6, borderRadius: 6, boxShadow: '2px 1px 12px #f1f1f1' }}>
+                                                            style={{ marginBlock: 6, borderRadius: 6 }}>
                                                             <div className="item-avatar" style={{ marginInline: 6 }}>
                                                                 <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
                                                             </div>
