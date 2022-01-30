@@ -3992,8 +3992,9 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         padding: 4px 13px;
         background-color: lighten($primary, 47);
         color: #000;
-        border-radius: 4px;
         font-size: 13px;
+        border-radius: 4px 0 4px 4px;
+
     }
     &.instruct {
         background-color: #f1fcff;

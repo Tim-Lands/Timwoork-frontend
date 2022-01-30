@@ -407,8 +407,8 @@ const Order = ({ query }) => {
                                                         </div>
 
                                                         <div className="item-content">
-                                                            {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: 4, fontSize: 12, marginBottom: 5 }}>تعليمة</span>}
-                                                            {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: 4, fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
+                                                            {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمة</span>}
+                                                            {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
                                                             <p className="text" style={{ margin: 0 }}>{item.message}</p>
                                                             <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
                                                             {item.attachments &&
