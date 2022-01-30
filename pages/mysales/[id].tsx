@@ -286,7 +286,7 @@ const User = ({ query }) => {
             const id = ShowItem && ShowItem.data.conversation.id
             const conversation: any = new FormData()
             filesMsg.map((file: any) =>
-                conversation.append('attachments', file)
+                conversation.append('attachments[]', file)
             )
             conversation.append('type', messageType)
             conversation.append('message', message)
