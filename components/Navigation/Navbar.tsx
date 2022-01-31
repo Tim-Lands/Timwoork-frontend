@@ -21,7 +21,7 @@ function Navbar(): ReactElement {
     const { data: userInfo }: any = useSWR('api/me')
     const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
 
-    const [msg, setMsg] = useState();
+    //const [msg, setMsg] = useState();
     useEffect(() => {
         const pusher = new Pusher('510f53f8ccb3058a96fc', {
             cluster: 'eu',
@@ -39,7 +39,7 @@ function Navbar(): ReactElement {
         const channel = pusher.subscribe(channelName);
         channel.bind("message.sent", (data) => {
             const effect = new Audio('/effect.mp3')
-            setMsg(data);
+            //setMsg(data);
             console.log(data);
             effect.play()
             setCountMsg(countMsg + 1)
@@ -82,6 +82,7 @@ function Navbar(): ReactElement {
             y: 80,
             transition: { duration: 0.41 },
         },
+        
     }
     const [darkLoading, setSarkLoading] = useState(false)
     async function darkModeToggle() {
