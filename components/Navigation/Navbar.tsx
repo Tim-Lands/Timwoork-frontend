@@ -21,7 +21,7 @@ function Navbar(): ReactElement {
     const { data: userInfo }: any = useSWR('api/me')
     const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
 
-    const pusher = new Pusher('a00614632e45ad3d49ff', {
+    const pusher = new Pusher('510f53f8ccb3058a96fc', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
         forceTLS: true,
