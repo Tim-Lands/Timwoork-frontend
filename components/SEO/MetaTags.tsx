@@ -54,8 +54,8 @@ export function MetaTags({
 
                 <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                {/* Title
                 <title>{title}</title>
+                {/* Title
 
                 <meta name="description" content={metaDescription} />
                 
