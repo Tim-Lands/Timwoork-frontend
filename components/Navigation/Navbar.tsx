@@ -20,7 +20,8 @@ function Navbar(): ReactElement {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
     const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
-    const pusher = new Pusher('31365e7905d4a38d6318', {
+    
+    const pusher = new Pusher('a00614632e45ad3d49ff', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
         auth: token ? {
@@ -29,7 +30,6 @@ function Navbar(): ReactElement {
                 Authorization: `Bearer ${token}`,
             },
         } : undefined,
-
     })
     useEffect(() => {
         //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
