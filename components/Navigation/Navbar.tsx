@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Badge, Tooltip } from 'antd';
+import { Menu, Dropdown, Badge, Tooltip, notification } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 //import { isMobile } from 'react-device-detect';
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import API from '../../config'
 import MenusMobile from "./MenusMobile";
@@ -13,10 +13,41 @@ import { motion } from 'framer-motion'
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from "next/router";
+import { MessageOutlined } from '@ant-design/icons';
+import Pusher from 'pusher-js'
 
 function Navbar(): ReactElement {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
+    const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
+    const pusher = new Pusher('31365e7905d4a38d6318', {
+        cluster: 'eu',
+        authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
+        auth: token ? {
+            headers: {
+                // pass the authorization token when using private channels
+                Authorization: `Bearer ${token}`,
+            },
+        } : undefined,
+
+    })
+    useEffect(() => {
+        //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+        
+            const channel = pusher.subscribe(`presence-receiver.${userInfo && userInfo.user_details.id}`)
+            channel.bind('message.sent', (event: any) => {
+                console.log(event);
+                setCountMsg(countMsg + 1)
+                notification.open({
+                    message: 'لديك رسالة جديدة',
+                    description:`jnhbugt`,
+                    icon: <MessageOutlined style={{ color: '#108ee9' }} />,
+                });
+                //ShowItem.data.conversation.messages.push(e.message)
+
+            })
+        
+    }, [])
 
     //store username, email & userID in Cookies just for chat
     if (token) {
@@ -124,7 +155,7 @@ function Navbar(): ReactElement {
         </Menu>
     )
     const myLoader = () => {
-        return `${userData.user_details.profile.avatar_url}`;
+        return `${userData && userData.user_details.profile.avatar_url}`;
     }
     const darkMode = userData && userData.user_details.profile.dark_mode
     return (
@@ -245,7 +276,7 @@ function Navbar(): ReactElement {
                                             <Tooltip placement="bottom" title='صندوق الرسائل'>
                                                 <Link href='/chat'>
                                                     <motion.a whileTap={{ scale: 0.9 }}>
-                                                        <Badge count={userData && userData.msg_unread_count} offset={[2, -1]}>
+                                                        <Badge count={countMsg} offset={[2, -1]}>
                                                             <i className="material-icons material-icons-outlined">email</i>
                                                         </Badge>
                                                     </motion.a>

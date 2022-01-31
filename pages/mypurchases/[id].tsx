@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
@@ -8,11 +8,9 @@ import Loading from "@/components/Loading";
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { notification, Progress, Result, Timeline } from "antd";
+import { Progress, Result, Timeline } from "antd";
 import router from "next/router";
 import { motion } from "framer-motion";
-import { pusher } from "../../config/pusher";
-import { MessageOutlined } from '@ant-design/icons';
 
 const Order = ({ query }) => {
     const token = Cookies.get('token')
@@ -55,25 +53,6 @@ const Order = ({ query }) => {
         removeFile: removeFileMsg,
         clearAllFiles: clearAllFilesMsg,
     } = useFileUpload();
-
-    useEffect(() => {
-        //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-        const mounted = true
-        if (ShowItem && mounted) {
-            const channel = pusher.subscribe(`presence-conversations.${ShowItem.data.conversation.id}`)
-            channel.bind('message.sent', (e: any) => {
-                const audio = new Audio('/effect.mp3');
-                console.log(e);
-                audio.play();
-                ShowItem.data.conversation.messages.push(e.message)
-                notification.open({
-                    message: 'لديك رسالة جديدة',
-                    description: e.message.message,
-                    icon: <MessageOutlined style={{ color: '#108ee9' }} />,
-                });
-            })
-        }
-    }, [])
 
     // الغاء الطلبية من قبل المشتري
     const item_cancelled_by_buyer = async (id: any) => {
@@ -149,7 +128,7 @@ const Order = ({ query }) => {
         try {
             const res = await API.post(`api/order/items/${id}/create/conversation`, {
                 initial_message: message,
-                receiver_id: ShowItem && ShowItem.data.order.cart.user.id,
+                receiver_id: ShowItem && ShowItem.data.user_id,
                 title: ShowItem && ShowItem.data.title,
             }, {
                 headers: {
@@ -190,7 +169,6 @@ const Order = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                ShowItem.data.conversation.messages.push(res.data.data)
                 setSendMessageLoading(false)
                 myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
                 setMessage('')

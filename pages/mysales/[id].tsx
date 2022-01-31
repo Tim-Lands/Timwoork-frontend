@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef, useEffect } from "react";
+import React, { ReactElement, useState, useRef } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { Alert } from '@/components/Alert/Alert'
 import { MetaTags } from '@/components/SEO/MetaTags'
@@ -9,12 +9,12 @@ import Link from 'next/link'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Progress, Result, Timeline, notification } from "antd";
+import { Progress, Result, Timeline } from "antd";
 import useFileUpload from 'react-use-file-upload';
 import { motion } from "framer-motion";
 import router from "next/router";
-import { pusher } from "../../config/pusher";
-import { MessageOutlined } from '@ant-design/icons';
+//import { pusher } from "../../config/pusher";
+
 
 const User = ({ query }) => {
     const token = Cookies.get('token')
@@ -27,26 +27,6 @@ const User = ({ query }) => {
     const [messageErrors, setMessageErrors]: any = useState({});
 
     const myRef: any = useRef()
-
-    //const audio = new Audio('/effect.mp3');
-    useEffect(() => {
-        //audio.play();
-        const mounted = true
-        if (ShowItem && mounted) {
-            const channel = pusher.subscribe(`presence-conversations.${ShowItem.data.conversation.id}`)
-            channel.bind('message.sent', (e: any) => {
-                const audio = new Audio('/effect.mp3');
-                console.log(e);
-                audio.play();
-                ShowItem.data.conversation.messages.push(e.message)
-                notification.open({
-                    message: 'لديك رسالة جديدة',
-                    description: e.message.message,
-                    icon: <MessageOutlined style={{ color: '#108ee9' }} />,
-                });
-            })
-        }
-    }, [])
 
     const {
         files,

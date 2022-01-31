@@ -14,13 +14,6 @@ function Layout(props: any) {
   const token = Cookies.get('token')
 
   useEffect(() => {
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) {
-        console.log("Browser tab is hidden")
-      } else {
-        console.log("Browser tab is visible")
-      }
-    });
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };

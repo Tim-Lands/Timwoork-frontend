@@ -2,7 +2,7 @@ import Pusher from 'pusher-js'
 import Cookies from 'js-cookie'
 
 const token = Cookies.get('token')
-export const pusher = new Pusher('a00614632e45ad3d49ff', {
+export const pusher = new Pusher('31365e7905d4a38d6318', {
     cluster: 'eu',
     authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
     auth: token ? {

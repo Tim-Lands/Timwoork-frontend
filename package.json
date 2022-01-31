@@ -75,7 +75,6 @@
     "eslint-config-next": "^11.0.1",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-react": "^7.22.0",
-    "postcss": "^8.3.6",
     "pusher-js": "^7.0.3",
     "redux-devtools-extension": "^2.13.8",
     "tailwindcss": "^2.0.2",
