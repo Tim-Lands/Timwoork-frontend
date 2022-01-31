@@ -24,6 +24,7 @@ function Navbar(): ReactElement {
     const pusher = new Pusher('a00614632e45ad3d49ff', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
+        forceTLS: true,
         auth: token ? {
             headers: {
                 // pass the authorization token when using private channels
@@ -44,8 +45,6 @@ function Navbar(): ReactElement {
                     description: `jnhbugt`,
                     icon: <MessageOutlined style={{ color: '#108ee9' }} />,
                 });
-                //ShowItem.data.conversation.messages.push(e.message)
-    
             })
         }
 
