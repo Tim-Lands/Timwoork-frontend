@@ -20,7 +20,7 @@ function Navbar(): ReactElement {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
     const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
-    
+
     const pusher = new Pusher('a00614632e45ad3d49ff', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
@@ -33,20 +33,22 @@ function Navbar(): ReactElement {
     })
     useEffect(() => {
         //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-        
+        const mounted = true
+        if (mounted) {
             const channel = pusher.subscribe(`presence-receiver.${userInfo && userInfo.user_details.id}`)
-            channel.bind('message.sent', (event: any) => {
-                console.log(event);
+            channel.bind('message.sent', () => {
+                console.log('event');
                 setCountMsg(countMsg + 1)
                 notification.open({
                     message: 'لديك رسالة جديدة',
-                    description:`jnhbugt`,
+                    description: `jnhbugt`,
                     icon: <MessageOutlined style={{ color: '#108ee9' }} />,
                 });
                 //ShowItem.data.conversation.messages.push(e.message)
-
+    
             })
-        
+        }
+
     }, [])
 
     //store username, email & userID in Cookies just for chat
