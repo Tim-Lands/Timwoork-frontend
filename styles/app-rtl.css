@@ -449,6 +449,24 @@
   border-color: #bd9a00;
 }
 
+.btn.butt-primary2-out {
+  background-color: transparent;
+  border-color: #ffd000;
+  color: #222;
+}
+
+.btn.butt-primary2-out:hover {
+  background-color: #e6bb00;
+  border-color: #e6bb00;
+  color: #111;
+}
+
+.btn.butt-primary2-out:focus {
+  background-color: #bd9a00;
+  border-color: #bd9a00;
+  color: #000;
+}
+
 .btn.butt-green {
   background-color: #43b465;
   border-color: #43b465;

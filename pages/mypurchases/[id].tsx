@@ -11,7 +11,7 @@ import LastSeen from "@/components/LastSeen";
 import { Progress, Result, Timeline } from "antd";
 import router from "next/router";
 import { motion } from "framer-motion";
-
+import Link from 'next/link'
 const Order = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/my_purchases/${query.id}`)
@@ -170,7 +170,8 @@ const Order = ({ query }) => {
             })
             if (res.status === 200) {
                 setSendMessageLoading(false)
-                myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+                //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+                ShowItem && ShowItem.data.conversation.messages.unshift(res.data.data)
                 setMessage('')
                 messageRef.current.focus()
                 setMessageProgress(0)
@@ -307,24 +308,49 @@ const Order = ({ query }) => {
                                 <div className="col-md-3">
                                     <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
                                         <div className="aside-header">
+                                            <h3 className="title">المشتري</h3>
+                                        </div>
+                                        <Link href={`/u/${ShowItem && ShowItem.data.order.cart.user.username}`}>
+                                            <a className="order-user-info d-flex flex-center">
+                                                <div className="order-user-avatar">
+                                                    <img
+                                                        src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
+                                                        width={50}
+                                                        height={50}
+                                                    />
+                                                </div>
+                                                <div className="order-user-content">
+                                                    <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
+                                                    <p className="meta">
+                                                        الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                        المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        </Link>
+                                    </div>
+                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                        <div className="aside-header">
                                             <h3 className="title">البائع</h3>
                                         </div>
-                                        <div className="order-user-info d-flex flex-center">
-                                            <div className="order-user-avatar">
-                                                <img
-                                                    src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
-                                                    width={50}
-                                                    height={50}
-                                                />
-                                            </div>
-                                            <div className="order-user-content">
-                                                <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
-                                                <p className="meta">
-                                                    الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                    المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
-                                                </p>
-                                            </div>
-                                        </div>
+                                        <Link href={`/u/${ShowItem && ShowItem.data.profile_seller.profile.user.username}`}>
+                                            <a className="order-user-info d-flex flex-center">
+                                                <div className="order-user-avatar">
+                                                    <img
+                                                        src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
+                                                        width={50}
+                                                        height={50}
+                                                    />
+                                                </div>
+                                                <div className="order-user-content">
+                                                    <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
+                                                    <p className="meta">
+                                                        الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                        المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        </Link>
                                     </div>
 
                                     {ShowItem && ShowItem.data.attachments && <>
@@ -423,21 +449,23 @@ const Order = ({ query }) => {
                                         <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
                                             <form onSubmit={sendMessageHandle}>
                                                 <div className="timlands-form">
+                                                    <label htmlFor="message_type" className="form-text">اختر نوع الرسالة</label>
                                                     <div className="py-1 d-flex">
-                                                        <button
-                                                            type="button"
-                                                            style={{ width: '65%' }}
-                                                            disabled={sendMessageLoading}
-                                                            className="btn butt-sm butt-primary2 mx-1 flex-center-just"
-                                                            onClick={() => inputRefMsg.current.click()}
-                                                        >
-                                                            <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
-                                                        </button>
-                                                        <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
+
+                                                        <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
                                                             <option value="0">نص عادي</option>
                                                             <option value="1">تعليمة</option>
                                                             <option value="2">سبب إلغاء</option>
                                                         </select>
+                                                        <button
+                                                            type="button"
+                                                            style={{ width: '65%' }}
+                                                            disabled={sendMessageLoading}
+                                                            className="btn butt-sm butt-primary2-out mx-1 flex-center-just"
+                                                            onClick={() => inputRefMsg.current.click()}
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
+                                                        </button>
                                                     </div>
                                                     <div className="send-attachments">
                                                         {messageProgress !== 0 && <Progress percent={messageProgress} />}
@@ -467,35 +495,34 @@ const Order = ({ query }) => {
                                                         </div>
                                                         <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
                                                     </div>
-                                                    <input
-                                                        id="input-buyer_instruct"
-                                                        name="buyer_instruct"
-                                                        onKeyUp={() => { setMessageErrors({}) }}
-                                                        placeholder="نص الرسالة..."
-                                                        className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
-                                                        disabled={sendMessageLoading}
-                                                        autoComplete="off"
-                                                        value={message}
-                                                        ref={messageRef}
-                                                        onChange={(e: any) => setMessage(e.target.value)}
-                                                        style={{ minHeight: 60, }}
-                                                    />
-                                                    <button
-                                                        style={{
-                                                            width: 90,
-                                                            height: 60,
-                                                            position: 'absolute',
-                                                            bottom: 11,
-                                                            left: 0,
-                                                            borderRadius: '5px 0 0 5px'
-                                                        }}
-                                                        disabled={sendMessageLoading}
-                                                        className="btn butt-sm butt-primary flex-center-just"
-                                                        type="submit"
-                                                    >
-                                                        <span className="material-icons material-icons-outlined">send</span>
-                                                        إرسال
-                                                    </button>
+                                                    <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                                        <input
+                                                            id="input-buyer_instruct"
+                                                            name="buyer_instruct"
+                                                            onKeyUp={() => { setMessageErrors({}) }}
+                                                            placeholder="نص الرسالة..."
+                                                            className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
+                                                            disabled={sendMessageLoading}
+                                                            autoComplete="off"
+                                                            value={message}
+                                                            ref={messageRef}
+                                                            onChange={(e: any) => setMessage(e.target.value)}
+                                                            style={{ height: 60, width: 'calc(100% - 110px)', borderRadius: '0 5px 5px 0' }}
+                                                        />
+                                                        <button
+                                                            style={{
+                                                                width: 110,
+                                                                height: 60,
+                                                                borderRadius: '5px 0 0 5px'
+                                                            }}
+                                                            disabled={sendMessageLoading}
+                                                            className="btn butt-sm butt-primary flex-center-just"
+                                                            type="submit"
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">send</span>
+                                                            إرسال
+                                                        </button>
+                                                    </div>
                                                     {messageErrors && messageErrors.message &&
                                                         <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                             <p className="text">{messageErrors.message[0]}</p>

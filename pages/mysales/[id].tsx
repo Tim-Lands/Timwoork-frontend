@@ -278,9 +278,9 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                ShowItem.data.conversation.messages.push(res.data.data)
+                //ShowItem.data.conversation.messages.push(res.data.data)
                 setSendMessageLoading(false)
-                myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+                ShowItem && ShowItem.data.conversation.messages.unshift(res.data.data)
                 setMessage('')
                 messageRef.current.focus()
                 setMessageProgress(0)
@@ -416,6 +416,30 @@ const User = ({ query }) => {
                             <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
                                 <div className="row">
                                     <div className="col-md-3">
+                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                        <div className="aside-header">
+                                            <h3 className="title">البائع</h3>
+                                        </div>
+                                        <Link href={`/u/${ShowItem && ShowItem.data.profile_seller.profile.user.username}`}>
+                                            <a className="order-user-info d-flex flex-center">
+                                                <div className="order-user-avatar">
+                                                    <img
+                                                        src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
+                                                        width={50}
+                                                        height={50}
+                                                    />
+                                                </div>
+                                                <div className="order-user-content">
+                                                    <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
+                                                    <p className="meta">
+                                                        الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                        المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        </Link>
+                                    </div>
+
                                         <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
                                             <div className="aside-header">
                                                 <h3 className="title">المشتري</h3>
@@ -541,21 +565,23 @@ const User = ({ query }) => {
                                             <div className="conversations-form" style={{ backgroundColor: '#fff', padding: 9 }}>
                                                 <form onSubmit={sendMessageHandle}>
                                                     <div className="timlands-form">
+                                                        <label htmlFor="message_type" className="form-text">اختر نوع الرسالة</label>
                                                         <div className="py-1 d-flex">
-                                                            <button
-                                                                type="button"
-                                                                style={{ width: '65%' }}
-                                                                disabled={sendMessageLoading}
-                                                                className="btn butt-sm butt-primary2 mx-1 flex-center-just"
-                                                                onClick={() => inputRefMsg.current.click()}
-                                                            >
-                                                                <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
-                                                            </button>
-                                                            <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
+
+                                                            <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
                                                                 <option value="0">نص عادي</option>
                                                                 <option value="1">تعليمة</option>
                                                                 <option value="2">سبب إلغاء</option>
                                                             </select>
+                                                            <button
+                                                                type="button"
+                                                                style={{ width: '65%' }}
+                                                                disabled={sendMessageLoading}
+                                                                className="btn butt-sm butt-primary2-out mx-1 flex-center-just"
+                                                                onClick={() => inputRefMsg.current.click()}
+                                                            >
+                                                                <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
+                                                            </button>
                                                         </div>
                                                         <div className="send-attachments">
                                                             {messageProgress !== 0 && <Progress percent={messageProgress} />}
@@ -585,7 +611,7 @@ const User = ({ query }) => {
                                                             </div>
                                                             <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
                                                         </div>
-                                                        <div className="relative-form" style={{ position: 'relative', minHeight: 60 }}>
+                                                        <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
                                                             <input
                                                                 id="input-buyer_instruct"
                                                                 name="buyer_instruct"
@@ -597,12 +623,12 @@ const User = ({ query }) => {
                                                                 value={message}
                                                                 ref={messageRef}
                                                                 onChange={(e: any) => setMessage(e.target.value)}
-                                                                style={{ height: '100%', width: 'calc(100% - 110)', borderRadius: '0 5px 5px 0' }}
+                                                                style={{ height: 60, width: 'calc(100% - 110px)', borderRadius: '0 5px 5px 0' }}
                                                             />
                                                             <button
                                                                 style={{
                                                                     width: 110,
-                                                                    height: '100%',
+                                                                    height: 60,
                                                                     borderRadius: '5px 0 0 5px'
                                                                 }}
                                                                 disabled={sendMessageLoading}
