@@ -15,6 +15,7 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 import { MessageOutlined } from '@ant-design/icons';
 import Pusher from 'pusher-js'
+import LastSeen from "../LastSeen";
 
 function Navbar(): ReactElement {
     const token = Cookies.get('token')
@@ -45,7 +46,11 @@ function Navbar(): ReactElement {
             setCountMsg(countMsg + 1)
             notification.open({
                 message: 'لديك رسالة جديدة',
-                description: `jnhbugt`,
+                description: <div className="msg-notification">
+                    <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                    <h4 className="title">{data.message.message}</h4>
+                    <p className="text">{data.message.conversation.title}</p>
+                </div>,
                 icon: <MessageOutlined style={{ color: '#108ee9' }} />,
             });
         });

@@ -4056,4 +4056,24 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         }
     }
 }
+.msg-notification {
+    .meta {
+        color: #777;
+        font-weight: 200;
+        font-size: 12px;
+        margin: 0;
+    }
+    .title {
+        color: #222;
+        font-weight: bold;
+        font-size: 17px;
+        margin: 3px 0;
+    }
+    .text {
+        color: #222;
+        font-weight: 200;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
 @import 'is-dark';

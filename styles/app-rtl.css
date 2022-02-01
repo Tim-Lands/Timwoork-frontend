@@ -6802,6 +6802,27 @@ h3 {
   font-size: 15px;
 }
 
+.msg-notification .meta {
+  color: #777;
+  font-weight: 200;
+  font-size: 12px;
+  margin: 0;
+}
+
+.msg-notification .title {
+  color: #222;
+  font-weight: bold;
+  font-size: 17px;
+  margin: 3px 0;
+}
+
+.msg-notification .text {
+  color: #222;
+  font-weight: 200;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 .is-dark {
   background-color: #323232;
   /*

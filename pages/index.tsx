@@ -44,7 +44,7 @@ function Home() {
             <Image src={nannyIMG} placeholder="blur" />
           </div>
           <div className="nanny-home-content">
-            <p className="new-label">ألهم الناس من حولك!  Timwoork</p>
+            <p className="new-label">ألهم الناس من حولك!</p>
             <h2 className="title">
               اعرض خدماتك واشتري أخرى, ماذا تنتظر !</h2>
             <p className="text">
