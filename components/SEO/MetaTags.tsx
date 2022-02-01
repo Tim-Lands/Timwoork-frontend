@@ -11,6 +11,7 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { ReactElement } from "react";
+import useSWR from 'swr'
 
 export function MetaTags({
     title,
@@ -20,6 +21,8 @@ export function MetaTags({
     //ogImage,
     //ogUrl,
 }): ReactElement {
+    const { data: userInfo }: any = useSWR('api/me')
+
     return (
         <>
             <Head>
@@ -33,7 +36,7 @@ export function MetaTags({
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={ogDescription} />
-        
+
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@KhamsatDotCom" />
                 <meta name="twitter:creator" content="@KhamsatDotCom" />
@@ -54,7 +57,10 @@ export function MetaTags({
 
                 <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <title>{title}</title>
+                <title>
+                    {title}
+                    {userInfo && userInfo.unread_messages_count !== 0 && '(' + userInfo.unread_messages_count + ')'}
+                </title>
                 {/* Title
 
                 <meta name="description" content={metaDescription} />

@@ -20,7 +20,6 @@ import LastSeen from "../LastSeen";
 function Navbar(): ReactElement {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
-    const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
 
     //const [msg, setMsg] = useState();
     const pusher = new Pusher('510f53f8ccb3058a96fc', {
@@ -38,52 +37,104 @@ function Navbar(): ReactElement {
     const channelName = `presence-receiver.${userInfo && userInfo.user_details.id}`
     const channel = pusher.subscribe(channelName);
     useEffect(() => {
-        channel.bind("message.sent", (data) => {
-            const effect = new Audio('/effect.mp3')
-            //setMsg(data);
-            console.log(data);
-            effect.play()
-            setCountMsg(countMsg + 1)
-            if (data.message.type == 0) {
-                notification.open({
-                    message: 'لديك رسالة جديدة',
-                    description: <div className="msg-notification">
-                        <p className="meta"><LastSeen date={data.message.created_at} /></p>
-                        <h4 className="title">{data.message.message}</h4>
-                        <p className="text">{data.message.conversation.title}</p>
-                    </div>,
-                    icon: <MessageOutlined style={{ color: '#108ee9' }} />,
-                    placement: 'bottomLeft'
-                });
-            }
-            if (data.message.type == 1) {
-                notification['info']({
-                    message: 'لديك تعليمة جديدة',
-                    description: <div className="msg-notification">
-                        <p className="meta"><LastSeen date={data.message.created_at} /></p>
-                        <h4 className="title">{data.message.message}</h4>
-                        <p className="text">{data.message.conversation.title}</p>
-                    </div>,
-                    icon: <InfoCircleOutlined style={{ color: '#80c26c' }} />,
-                    placement: 'bottomLeft'
-                });
-            }
-            if (data.message.type == 2) {
-                notification['error']({
-                    message: 'لديك سبب إلغاء',
-                    description: <div className="msg-notification">
-                        <p className="meta"><LastSeen date={data.message.created_at} /></p>
-                        <h4 className="title">{data.message.message}</h4>
-                        <p className="text">{data.message.conversation.title}</p>
-                    </div>,
-                    icon: <CloseCircleOutlined style={{ color: '#d33232' }} />,
-                    placement: 'bottomLeft'
-                });
-            }
-        });
-        return () => {
-            pusher.unsubscribe(channelName);
-        };
+        if (token) {
+            channel.bind("message.sent", (data) => {
+                const effect = new Audio('/bell.mp3')
+                //setMsg(data);
+                effect.play()
+                //setCountMsg(countMsg + 1)
+                if (data.message.type == 0) {
+                    notification.open({
+                        message: 'لديك رسالة جديدة',
+                        description: <div className="msg-notification">
+                            <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                            <h4 className="title">{data.message.message}</h4>
+                            <p className="text">
+                                <small className="ml-1">
+                                    <strong>من طرف: </strong>
+                                </small>
+                                <Link href={`/u/${data.message.user.username}`}>
+                                    <a style={{ color: '#666', fontWeight: 300, }}>
+                                        <img
+                                            width={20}
+                                            height={20}
+                                            className="rounded-circle mx-1"
+                                            src={data.message.user.profile.avatar_url} alt=""
+                                        />
+                                        <span style={{ color: '#666', fontWeight: 300, }}>
+                                            {data.message.user.profile.full_name}
+                                        </span>
+                                    </a>
+                                </Link>
+                            </p>
+                        </div>,
+                        icon: <MessageOutlined style={{ color: '#108ee9' }} />,
+                        placement: 'bottomLeft'
+                    });
+                }
+                if (data.message.type == 1) {
+                    notification['info']({
+                        message: 'لديك تعليمة جديدة',
+                        description: <div className="msg-notification">
+                            <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                            <h4 className="title">{data.message.message}</h4>
+                            <p className="text">
+                                <small className="ml-1">
+                                    <strong>من طرف: </strong>
+                                </small>
+                                <Link href={`/u/${data.message.user.username}`}>
+                                    <a style={{ color: '#666', fontWeight: 300, }}>
+                                        <img
+                                            width={20}
+                                            height={20}
+                                            className="rounded-circle mx-1"
+                                            src={data.message.user.profile.avatar_url} alt=""
+                                        />
+                                        <span style={{ color: '#666', fontWeight: 300, }}>
+                                            {data.message.user.profile.full_name}
+                                        </span>
+                                    </a>
+                                </Link>
+                            </p>
+                        </div>,
+                        icon: <InfoCircleOutlined style={{ color: '#80c26c' }} />,
+                        placement: 'bottomLeft'
+                    });
+                }
+                if (data.message.type == 2) {
+                    notification['error']({
+                        message: 'لديك سبب إلغاء',
+                        description: <div className="msg-notification">
+                            <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                            <h4 className="title">{data.message.message}</h4>
+                            <p className="text">
+                                <small className="ml-1">
+                                    <strong>من طرف: </strong>
+                                </small>
+                                <Link href={`/u/${data.message.user.username}`}>
+                                    <a style={{ color: '#666', fontWeight: 300, }}>
+                                        <img
+                                            width={20}
+                                            height={20}
+                                            className="rounded-circle mx-1"
+                                            src={data.message.user.profile.avatar_url} alt=""
+                                        />
+                                        <span style={{ color: '#666', fontWeight: 300, }}>
+                                            {data.message.user.profile.full_name}
+                                        </span>
+                                    </a>
+                                </Link>
+                            </p>
+                        </div>,
+                        icon: <CloseCircleOutlined style={{ color: '#d33232' }} />,
+                        placement: 'bottomLeft'
+                    });
+                }
+            });
+            return () => {
+                pusher.unsubscribe(channelName);
+            };
+        }
 
     }, [channelName])
 
@@ -198,78 +249,79 @@ function Navbar(): ReactElement {
     }
     const darkMode = userData && userData.user_details.profile.dark_mode
     return (
-        <div className={"timlands-navbar-container"} style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 999,
-        }}>
-            <nav className="timlands-navbar" style={{
-                backgroundColor: !darkMode ? '#fff' : '#212121',
-                paddingBlock: 7,
-                paddingInline: 19,
-                position: 'relative',
-                zIndex: 600
+        <>
+            <div className={"timlands-navbar-container"} style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                zIndex: 999,
             }}>
-                <div className="d-flex">
-                    <div className="nav-container me-auto">
-                        <div className="d-flex" style={{
-                            alignContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <div className="toggle-nav me-auto">
-                                <button className="toggle-nav-btn" onClick={setIsMenuShowenHandle} style={{
-                                    display: 'flex',
-                                    width: 35,
-                                    height: 35,
-                                    backgroundColor: 'transparent',
-                                    color: !darkMode ? '#999' : '#333',
-                                    alignItems: 'center',
-                                    alignContent: 'center',
-                                    justifyContent: 'center',
-                                    borderWidth: 0,
-                                }}>
-                                    <span className="material-icons material-icons-outlined">menu</span>
-                                </button>
-                            </div>
-                            <div className="logo-nav me-auto" style={{ display: 'flex' }}>
-                                <Link href="/">
-                                    <a>
-                                        <ImageLogo src={logoIMG} />
-                                    </a>
-                                </Link>
-                            </div>
-                            {isMenuShowen && <Menus darkMode={darkMode} />}
-                            {isMenuShowen && <MenusMobile darkMode={darkMode} />}
-                        </div>
-                    </div>
-                    <ul className="nav nav-auth ml-auto" style={{
-                        alignItems: 'center',
-                        alignContent: 'center'
-                    }}>
-                        {token ?
-                            <>
-                                {!userData &&
-                                    <li className="nav-loading" style={{
+                <nav className="timlands-navbar" style={{
+                    backgroundColor: !darkMode ? '#fff' : '#212121',
+                    paddingBlock: 7,
+                    paddingInline: 19,
+                    position: 'relative',
+                    zIndex: 600
+                }}>
+                    <div className="d-flex">
+                        <div className="nav-container me-auto">
+                            <div className="d-flex" style={{
+                                alignContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <div className="toggle-nav me-auto">
+                                    <button className="toggle-nav-btn" onClick={setIsMenuShowenHandle} style={{
                                         display: 'flex',
-                                        alignContent: 'center',
+                                        width: 35,
+                                        height: 35,
+                                        backgroundColor: 'transparent',
+                                        color: !darkMode ? '#999' : '#333',
                                         alignItems: 'center',
-                                        margin: 0
+                                        alignContent: 'center',
+                                        justifyContent: 'center',
+                                        borderWidth: 0,
                                     }}>
-                                        <p className="loading-text" style={{
-                                            fontSize: 13,
-                                            fontWeight: 'bold',
-                                            color: !darkMode ? '#666' : '#ddd',
+                                        <span className="material-icons material-icons-outlined">menu</span>
+                                    </button>
+                                </div>
+                                <div className="logo-nav me-auto" style={{ display: 'flex' }}>
+                                    <Link href="/">
+                                        <a>
+                                            <ImageLogo src={logoIMG} />
+                                        </a>
+                                    </Link>
+                                </div>
+                                {isMenuShowen && <Menus darkMode={darkMode} />}
+                                {isMenuShowen && <MenusMobile darkMode={darkMode} />}
+                            </div>
+                        </div>
+                        <ul className="nav nav-auth ml-auto" style={{
+                            alignItems: 'center',
+                            alignContent: 'center'
+                        }}>
+                            {token ?
+                                <>
+                                    {!userData &&
+                                        <li className="nav-loading" style={{
+                                            display: 'flex',
+                                            alignContent: 'center',
+                                            alignItems: 'center',
                                             margin: 0
                                         }}>
-                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> يرجى الإنتظار...
-                                        </p>
-                                    </li>
-                                }
-                                {userData &&
-                                    <>
-                                        {/*<li
+                                            <p className="loading-text" style={{
+                                                fontSize: 13,
+                                                fontWeight: 'bold',
+                                                color: !darkMode ? '#666' : '#ddd',
+                                                margin: 0
+                                            }}>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> يرجى الإنتظار...
+                                            </p>
+                                        </li>
+                                    }
+                                    {userData &&
+                                        <>
+                                            {/*<li
                                             className="right-butts-icon"
                                             style={{
                                                 opacity: (darkLoading ? 0.5 : 1),
@@ -300,84 +352,85 @@ function Navbar(): ReactElement {
                                                 </motion.a>
                                             </Tooltip>
                                         </li>*/}
-                                        <li className="right-butts-icon">
-                                            <Tooltip placement="bottom" title='سلة المشتريات'>
-                                                <Link href='/cart'>
-                                                    <motion.a whileTap={{ scale: 0.9 }}>
-                                                        <Badge count={userData && userData.cart_items_count} offset={[2, -1]}>
-                                                            <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                                        </Badge>
-                                                    </motion.a>
-                                                </Link>
-                                            </Tooltip>
-                                        </li>
-                                        <li className="right-butts-icon">
-                                            <Tooltip placement="bottom" title='صندوق الرسائل'>
-                                                <Link href='/chat'>
-                                                    <motion.a whileTap={{ scale: 0.9 }}>
-                                                        <Badge count={countMsg} offset={[2, -1]}>
-                                                            <i className="material-icons material-icons-outlined">email</i>
-                                                        </Badge>
-                                                    </motion.a>
-                                                </Link>
-                                            </Tooltip>
-                                        </li>
-                                        <li className="right-butts-icon">
-                                            <Tooltip placement="bottom" title='الإشعارات'>
-                                                <Link href="/notifications">
+                                            <li className="right-butts-icon">
+                                                <Tooltip placement="bottom" title='سلة المشتريات'>
+                                                    <Link href='/cart'>
+                                                        <motion.a whileTap={{ scale: 0.9 }}>
+                                                            <Badge count={userData && userData.cart_items_count} offset={[2, -1]}>
+                                                                <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                                            </Badge>
+                                                        </motion.a>
+                                                    </Link>
+                                                </Tooltip>
+                                            </li>
+                                            <li className="right-butts-icon">
+                                                <Tooltip placement="bottom" title='صندوق الرسائل'>
+                                                    <Link href='/conversations'>
+                                                        <motion.a whileTap={{ scale: 0.9 }}>
+                                                            <Badge count={userInfo && userInfo.unread_messages_count} offset={[2, -1]}>
+                                                                <i className="material-icons material-icons-outlined">email</i>
+                                                            </Badge>
+                                                        </motion.a>
+                                                    </Link>
+                                                </Tooltip>
+                                            </li>
+                                            <li className="right-butts-icon">
+                                                <Tooltip placement="bottom" title='الإشعارات'>
+                                                    <Link href="/notifications">
+                                                        <a>
+                                                            <Badge count={userData && userData.unread_notifications_count} offset={[2, -1]}>
+                                                                <i className="material-icons material-icons-outlined">notifications</i>
+                                                            </Badge>
+                                                        </a>
+                                                    </Link>
+                                                </Tooltip>
+                                            </li>
+                                            <li className="login-user">
+                                                <Dropdown overlay={AccountList} trigger={['click']}>
                                                     <a>
-                                                        <Badge count={userData && userData.unread_notifications_count} offset={[2, -1]}>
-                                                            <i className="material-icons material-icons-outlined">notifications</i>
-                                                        </Badge>
+                                                        {userData.user_details.profile.avatar_url == 'avatar.png' ?
+                                                            <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
+                                                            <ImageLogo
+                                                                loader={myLoader}
+                                                                src={userData.user_details.profile.avatar_url}
+                                                                quality={60}
+                                                                width={32}
+                                                                height={32}
+                                                                placeholder='blur'
+                                                                blurDataURL='/avatar2.jpg'
+                                                            />
+                                                        }
+                                                        <span className="text"> {userData.user_details.profile.last_name} </span><DownOutlined />
                                                     </a>
-                                                </Link>
-                                            </Tooltip>
-                                        </li>
-                                        <li className="login-user">
-                                            <Dropdown overlay={AccountList} trigger={['click']}>
-                                                <a>
-                                                    {userData.user_details.profile.avatar_url == 'avatar.png' ?
-                                                        <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
-                                                        <ImageLogo
-                                                            loader={myLoader}
-                                                            src={userData.user_details.profile.avatar_url}
-                                                            quality={60}
-                                                            width={32}
-                                                            height={32}
-                                                            placeholder='blur'
-                                                            blurDataURL='/avatar2.jpg'
-                                                        />
-                                                    }
-                                                    <span className="text"> {userData.user_details.profile.last_name} </span><DownOutlined />
-                                                </a>
-                                            </Dropdown>
-                                        </li>
-                                    </>
-                                }
-                            </>
-                            :
-                            <>
-                                <li className="login-nav-item">
-                                    <Link href="/login">
-                                        <a className="btn butt-xs flex-center">
-                                            تسجيل الدخول
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li className="register-nav-item" style={{ padding: 7 }}>
-                                    <Link href="/register">
-                                        <a className="btn butt-sm butt-primary flex-center">
-                                            <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
-                                        </a>
-                                    </Link>
-                                </li>
+                                                </Dropdown>
+                                            </li>
+                                        </>
+                                    }
+                                </>
+                                :
+                                <>
+                                    <li className="login-nav-item">
+                                        <Link href="/login">
+                                            <a className="btn butt-xs flex-center">
+                                                تسجيل الدخول
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="register-nav-item" style={{ padding: 7 }}>
+                                        <Link href="/register">
+                                            <a className="btn butt-sm butt-primary flex-center">
+                                                <i className="material-icons material-icons-outlined">person_add_alt</i> التسجيل
+                                            </a>
+                                        </Link>
+                                    </li>
 
-                            </>
-                        }
-                    </ul>
-                </div>
-            </nav >
-        </div >
+                                </>
+                            }
+                        </ul>
+                    </div>
+                </nav >
+            </div>
+        </>
     );
 }
 Navbar.propTypes = {

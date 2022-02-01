@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
@@ -25,13 +25,16 @@ const Order = ({ query }) => {
     const [requestCancelItemBuyerLoading, setRequestCancelItemBuyerLoading] = useState(false)
     const [acceptedDeliveryBuyerLoading, setAcceptedDeliveryBuyerLoading] = useState(false)
     const [requestModifiedBuyerLoading, setRequestModifiedBuyerLoading] = useState(false)
-
     const [createConversationLoading, setCreateConversationLoading] = useState(false)
     const [sendMessageLoading, setSendMessageLoading] = useState(false)
 
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState(0)
-
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+        }
+    }, [])
     function switchTypeMessage(type: any) {
         switch (type) {
             case 0:
@@ -411,7 +414,17 @@ const Order = ({ query }) => {
                                                         </div>
 
                                                         <div className="item-content">
-                                                            {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمة</span>}
+                                                            {item.type == 1 &&
+                                                                <span
+                                                                    className="bg-success text-light d-inline-block"
+                                                                    style={{
+                                                                        paddingInline: 9,
+                                                                        paddingBlock: 3,
+                                                                        borderRadius: '4px 4px 0 4px',
+                                                                        fontSize: 12,
+                                                                        marginBottom: 5
+                                                                    }}>تعليمات
+                                                                </span>}
                                                             {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
                                                             <p className="text" style={{ margin: 0 }}>{item.message}</p>
                                                             <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
@@ -454,7 +467,7 @@ const Order = ({ query }) => {
 
                                                         <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
                                                             <option value="0">نص عادي</option>
-                                                            <option value="1">تعليمة</option>
+                                                            <option value="1">تعليمات</option>
                                                             <option value="2">سبب إلغاء</option>
                                                         </select>
                                                         <button

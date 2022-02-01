@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef } from "react";
+import React, { ReactElement, useState, useRef, useEffect } from "react";
 import Layout from '@/components/Layout/HomeLayout'
 import { Alert } from '@/components/Alert/Alert'
 import { MetaTags } from '@/components/SEO/MetaTags'
@@ -27,6 +27,12 @@ const User = ({ query }) => {
     const [messageErrors, setMessageErrors]: any = useState({});
 
     const myRef: any = useRef()
+
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+        }
+    }, [])
 
     const {
         files,
@@ -526,7 +532,7 @@ const User = ({ query }) => {
                                                             </div>
 
                                                             <div className="item-content">
-                                                                {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمة</span>}
+                                                                {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمات</span>}
                                                                 {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
                                                                 <p className="text" style={{ margin: 0 }}>{item.message}</p>
                                                                 <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
@@ -570,7 +576,7 @@ const User = ({ query }) => {
 
                                                             <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
                                                                 <option value="0">نص عادي</option>
-                                                                <option value="1">تعليمة</option>
+                                                                <option value="1">تعليمات</option>
                                                                 <option value="2">سبب إلغاء</option>
                                                             </select>
                                                             <button

@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
 import { Button, Modal, Result, Tooltip } from 'antd';
 import Link from 'next/link'
@@ -19,6 +19,11 @@ function index() {
     const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
 
     const [rejectLoading, setrejectLoading] = useState(false)
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+        }
+    }, [])
     const rejectHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
