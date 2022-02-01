@@ -22,21 +22,21 @@ function Navbar(): ReactElement {
     const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count || 0)
 
     //const [msg, setMsg] = useState();
+    const pusher = new Pusher('510f53f8ccb3058a96fc', {
+        cluster: 'eu',
+        authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
+        forceTLS: true,
+        auth: token ? {
+            headers: {
+                // pass the authorization token when using private channels
+                Authorization: `Bearer ${token}`,
+            },
+        } : undefined,
+    })
+    //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
+    const channelName = `presence-receiver.${userInfo && userInfo.user_details.id}`
+    const channel = pusher.subscribe(channelName);
     useEffect(() => {
-        const pusher = new Pusher('510f53f8ccb3058a96fc', {
-            cluster: 'eu',
-            authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
-            forceTLS: true,
-            auth: token ? {
-                headers: {
-                    // pass the authorization token when using private channels
-                    Authorization: `Bearer ${token}`,
-                },
-            } : undefined,
-        })
-        //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-        const channelName = `presence-receiver.${userInfo && userInfo.user_details.id}`
-        const channel = pusher.subscribe(channelName);
         channel.bind("message.sent", (data) => {
             const effect = new Audio('/effect.mp3')
             //setMsg(data);
@@ -53,7 +53,7 @@ function Navbar(): ReactElement {
             pusher.unsubscribe(channelName);
         };
 
-    }, [])
+    }, [channelName])
 
     //store username, email & userID in Cookies just for chat
     if (token) {
