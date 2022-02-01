@@ -13,7 +13,7 @@ import { motion } from 'framer-motion'
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from "next/router";
-import { MessageOutlined } from '@ant-design/icons';
+import { MessageOutlined, InfoCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import Pusher from 'pusher-js'
 import LastSeen from "../LastSeen";
 
@@ -44,15 +44,42 @@ function Navbar(): ReactElement {
             console.log(data);
             effect.play()
             setCountMsg(countMsg + 1)
-            notification.open({
-                message: 'لديك رسالة جديدة',
-                description: <div className="msg-notification">
-                    <p className="meta"><LastSeen date={data.message.created_at} /></p>
-                    <h4 className="title">{data.message.message}</h4>
-                    <p className="text">{data.message.conversation.title}</p>
-                </div>,
-                icon: <MessageOutlined style={{ color: '#108ee9' }} />,
-            });
+            if (data.message.type == 0) {
+                notification.open({
+                    message: 'لديك رسالة جديدة',
+                    description: <div className="msg-notification">
+                        <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                        <h4 className="title">{data.message.message}</h4>
+                        <p className="text">{data.message.conversation.title}</p>
+                    </div>,
+                    icon: <MessageOutlined style={{ color: '#108ee9' }} />,
+                    placement: 'bottomLeft'
+                });
+            }
+            if (data.message.type == 1) {
+                notification['info']({
+                    message: 'لديك تعليمة جديدة',
+                    description: <div className="msg-notification">
+                        <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                        <h4 className="title">{data.message.message}</h4>
+                        <p className="text">{data.message.conversation.title}</p>
+                    </div>,
+                    icon: <InfoCircleOutlined style={{ color: '#80c26c' }} />,
+                    placement: 'bottomLeft'
+                });
+            }
+            if (data.message.type == 2) {
+                notification['error']({
+                    message: 'لديك سبب إلغاء',
+                    description: <div className="msg-notification">
+                        <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                        <h4 className="title">{data.message.message}</h4>
+                        <p className="text">{data.message.conversation.title}</p>
+                    </div>,
+                    icon: <CloseCircleOutlined style={{ color: '#d33232' }} />,
+                    placement: 'bottomLeft'
+                });
+            }
         });
         return () => {
             pusher.unsubscribe(channelName);

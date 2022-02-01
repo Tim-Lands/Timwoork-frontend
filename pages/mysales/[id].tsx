@@ -278,9 +278,9 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                //ShowItem.data.conversation.messages.push(res.data.data)
+                ShowItem && ShowItem.data.conversation.messages.push(res.data.data)
                 setSendMessageLoading(false)
-                ShowItem && ShowItem.data.conversation.messages.unshift(res.data.data)
+                myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
                 setMessage('')
                 messageRef.current.focus()
                 setMessageProgress(0)

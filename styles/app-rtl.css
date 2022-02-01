@@ -6841,6 +6841,16 @@ h3 {
   margin-top: 5px;
 }
 
+.ant-notification-notice-info {
+  background-color: #ecf7e9;
+  border: 1px solid #93db8c;
+}
+
+.ant-notification-notice-error {
+  background-color: #f7e9e9;
+  border: 1px solid #db8c8c;
+}
+
 .is-dark {
   background-color: #323232;
   /*
