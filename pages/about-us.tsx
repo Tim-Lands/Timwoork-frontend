@@ -1,15 +1,10 @@
 import Layout from '../components/Layout/HomeLayout'
 import { ReactElement } from "react";
-import { MetaTags } from '@/components/SEO/MetaTags'
+//import { MetaTags } from '@/components/SEO/MetaTags'
 
 function About() {
     return (
         <div className="py-4">
-            <MetaTags
-                title={'حول موقع تيم ورك'}
-                metaDescription={"تيم ورك هو سوق عربي لبيع وشراء الخدمات المصغرة، حيث انتشرت مؤخراً عمليات البيع والشراء عبر الإنترنت بشكل كبير. ورغبة المشتري بالحصول على المنتج وهو في بيته وذلك لاستثمار وقته في أمور أخرى"}
-                ogDescription={"تيم ورك هو سوق عربي لبيع وشراء الخدمات المصغرة، حيث انتشرت مؤخراً عمليات البيع والشراء عبر الإنترنت بشكل كبير. ورغبة المشتري بالحصول على المنتج وهو في بيته وذلك لاستثمار وقته في أمور أخرى"}
-            />
             <div className="container">
                 <div className="bg-white p-2 px-4">
                     <div className="page-header">
