@@ -277,6 +277,8 @@ function Single({ query }) {
           title={ProductData.data.title + ' - تيموورك'}
           metaDescription={ProductData.data.content}
           ogDescription={ProductData.data.content}
+          ogImage={ProductData.data.full_path_thumbnail}
+          ogUrl={`https://timwoork.com/p/${ProductData.data.slug}`}
         />
       }
       {ProductData &&

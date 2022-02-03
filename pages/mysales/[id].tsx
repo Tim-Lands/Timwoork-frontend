@@ -9,7 +9,7 @@ import Link from 'next/link'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Progress, Result, Timeline } from "antd";
+import { Modal, Progress, Result, Timeline } from "antd";
 import useFileUpload from 'react-use-file-upload';
 import { motion } from "framer-motion";
 import router from "next/router";
@@ -28,6 +28,26 @@ const User = ({ query }) => {
 
     const myRef: any = useRef()
 
+    const rejectMessageCause = async (messageText: any, typeCause = 2 ) => {
+        try {
+            const id = ShowItem && ShowItem.data.conversation.id
+            const conversation: any = new FormData()
+            conversation.append('type', typeCause)
+            conversation.append('message', messageText)
+            const res = await API.post(`api/conversations/${id}/sendMessage`, conversation, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                router.reload()
+            }
+        } catch (error) {
+            if (error && error.response) {
+                setMessageErrors(error.response.data.errors);
+            }
+        }
+    }
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -66,7 +86,10 @@ const User = ({ query }) => {
 
     const [message, setMessage] = useState('')
     const [messageType, setMessageType] = useState(0)
-
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisibleDilevered, setModalVisibleDilevered] = useState(false);
+    const [isModalVisibleRejectModified, setModalVisibleRejectModified] = useState(false);
+    
     function switchTypeMessage(type: any) {
         switch (type) {
             case 0:
@@ -120,7 +143,7 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                router.reload()
+                rejectMessageCause(message)
             }
         } catch (error) {
             setRejectCancelRequestBySellerLoading(false)
@@ -202,7 +225,7 @@ const User = ({ query }) => {
         }
     }
 
-    // رفض تعديل الخدمة من قبل المشتري
+    // رفض تعديل الخدمة من قبل البائع
 
     const reject_modified_by_seller = async (id: any) => {
         setRejectModifiedSellerLoading(true)
@@ -219,7 +242,7 @@ const User = ({ query }) => {
             setRejectModifiedSellerLoading(false)
         }
     }
-    // رفض تعديل الخدمة من قبل المشتري
+    // حل النزاع من طرف البائع
 
     const resolve_the_conflict_between_them_in_modified = async (id: any) => {
         setResolveConflictBetweenThemModifiedLoading(true)
@@ -403,6 +426,8 @@ const User = ({ query }) => {
             return ShowItem.data.duration + ' يوم '
         }
     }
+
+
     return (
         <>
             <MetaTags
@@ -416,35 +441,101 @@ const User = ({ query }) => {
                     title="حدث خطأ غير متوقع"
                 />}
                 {!ShowItem && <Loading />}
+                <Modal
+                    title="سبب إلغاء"
+                    visible={isModalVisible}
+                    okText='أنا متأكد'
+                    onOk={() => reject_cancel_request_by_seller(ShowItem.data.id)}
+                    onCancel={() => setIsModalVisible(false)}
+                >
+                    <div className="timlands-form">
+                        <label htmlFor="message_type" className="form-text">أكتب سبب الرفض</label>
+                        <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                            <input
+                                id="input-buyer_instruct"
+                                name="buyer_instruct"
+                                placeholder="أكتب سبب الرفض..."
+                                className={"timlands-inputs"}
+                                autoComplete="off"
+                                value={message}
+                                onChange={(e: any) => setMessage(e.target.value)}
+                            />
+                        </div>
+                        {messageErrors && messageErrors.message &&
+                            <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                <p className="text">{messageErrors.message[0]}</p>
+                            </motion.div>
+                        }
+                    </div>
+                </Modal>
+                <Modal
+                    title="سبب إلغاء"
+                    visible={isModalVisibleRejectModified}
+                    okText='أنا متأكد'
+                    onOk={() => reject_modified_by_seller(ShowItem.data.id)}
+                    onCancel={() => setModalVisibleRejectModified(false)}
+                >
+                    <div className="timlands-form">
+                        <label htmlFor="message_type" className="form-text">أكتب سبب الإلغاء</label>
+                        <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                            <input
+                                id="input-buyer_instruct"
+                                name="buyer_instruct"
+                                placeholder="أكتب سبب الإلغاء..."
+                                className={"timlands-inputs"}
+                                autoComplete="off"
+                                value={message}
+                                onChange={(e: any) => setMessage(e.target.value)}
+                            />
+                        </div>
+                        {messageErrors && messageErrors.message &&
+                            <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                <p className="text">{messageErrors.message[0]}</p>
+                            </motion.div>
+                        }
+                    </div>
+                </Modal>
+                
+                <Modal
+                    title="رسالة تأكيد"
+                    visible={isModalVisibleDilevered}
+                    okText='أنا متأكد'
+                    onOk={() => dilevered_by_seller(ShowItem.data.id)}
+                    onCancel={() => setModalVisibleDilevered(false)}
+                >
+                    <Alert type="error">
+                        هل أنت متأكد من انك تريد تسليم المشروع ؟ بمجرد ضغطك على الزر <strong>أنا متأكد</strong> فأنت راض على ذلك
+                    </Alert>
+                </Modal>
                 {ShowItem &&
                     <div className="row py-4 justify-content-center">
                         <div className="col-md-12">
                             <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
                                 <div className="row">
                                     <div className="col-md-3">
-                                    <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
-                                        <div className="aside-header">
-                                            <h3 className="title">البائع</h3>
+                                        <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
+                                            <div className="aside-header">
+                                                <h3 className="title">البائع</h3>
+                                            </div>
+                                            <Link href={`/u/${ShowItem && ShowItem.data.profile_seller.profile.user.username}`}>
+                                                <a className="order-user-info d-flex flex-center">
+                                                    <div className="order-user-avatar">
+                                                        <img
+                                                            src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
+                                                            width={50}
+                                                            height={50}
+                                                        />
+                                                    </div>
+                                                    <div className="order-user-content">
+                                                        <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
+                                                        <p className="meta">
+                                                            الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
+                                                            المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </div>
-                                        <Link href={`/u/${ShowItem && ShowItem.data.profile_seller.profile.user.username}`}>
-                                            <a className="order-user-info d-flex flex-center">
-                                                <div className="order-user-avatar">
-                                                    <img
-                                                        src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
-                                                        width={50}
-                                                        height={50}
-                                                    />
-                                                </div>
-                                                <div className="order-user-content">
-                                                    <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
-                                                    <p className="meta">
-                                                        الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                        المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </Link>
-                                    </div>
 
                                         <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
                                             <div className="aside-header">
@@ -746,17 +837,13 @@ const User = ({ query }) => {
                                                     <input ref={inputRef} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFiles(e)} />
                                                     <button
                                                         disabled={dileveredSellerLoading}
-                                                        onClick={() => dilevered_by_seller(ShowItem.data.id)}
+                                                        onClick={() => setModalVisibleDilevered(true)}
                                                         className="btn butt-md butt-primary mx-1 flex-center-just"
                                                     ><span className="material-icons material-icons-outlined">file_upload</span> تسليم الطلب </button>
                                                 </>}
                                                 {ShowItem && ShowItem.data.status == 4 &&
                                                     <>
                                                         {ShowItem.data.item_rejected.status == 0 && <>
-                                                            <p className="note-text">
-                                                                قام فلان بن فلان بطلب إلغاء الطلبية
-                                                            </p>
-
                                                             <button
                                                                 disabled={acceptCancelRequestBySellerLoading}
                                                                 onClick={() => accept_cancel_request_by_seller(ShowItem.data.id)}
@@ -766,7 +853,7 @@ const User = ({ query }) => {
                                                             </button>
                                                             <button
                                                                 disabled={rejectCancelRequestBySellerLoading}
-                                                                onClick={() => reject_cancel_request_by_seller(ShowItem.data.id)}
+                                                                onClick={() => setIsModalVisible(true)}
                                                                 className="btn butt-md butt-red mx-1 flex-center-just">
                                                                 <span className="material-icons material-icons-outlined">highlight_off</span>
                                                                 رفض طلب الإلغاء
@@ -803,7 +890,7 @@ const User = ({ query }) => {
                                                             ><span className="material-icons material-icons-outlined">done_all</span> قبول طلب التعديل</button>
                                                             <button
                                                                 disabled={rejectModifiedSellerLoading}
-                                                                onClick={() => reject_modified_by_seller(ShowItem.data.id)}
+                                                                onClick={() => setModalVisibleRejectModified(true)}
                                                                 className="btn butt-md butt-red mx-1 flex-center-just"
                                                             ><span className="material-icons material-icons-outlined">highlight_off</span> رفض طلب التعديل</button>
                                                         </>
@@ -817,7 +904,6 @@ const User = ({ query }) => {
                                                     <button
                                                         disabled={resolveConflictBetweenThemModifiedLoading}
                                                         onClick={() => resolve_the_conflict_between_them_in_modified(ShowItem.data.id)}
-
                                                         className="btn butt-md butt-green mx-1 flex-center-just">
                                                         <span className="material-icons material-icons-outlined">highlight_off</span>
                                                         تم حل النزاع

@@ -22,6 +22,7 @@ function Navbar(): ReactElement {
     const { data: userInfo }: any = useSWR('api/me')
 
     //const [msg, setMsg] = useState();
+    const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count);
     const pusher = new Pusher('510f53f8ccb3058a96fc', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
@@ -39,16 +40,20 @@ function Navbar(): ReactElement {
     useEffect(() => {
         if (token) {
             channel.bind("message.sent", (data) => {
-                const effect = new Audio('/bell.mp3')
+                const effect = new Audio('/effect.mp3')
                 //setMsg(data);
                 effect.play()
-                //setCountMsg(countMsg + 1)
+                setCountMsg(1)
+                console.log(data);
+
                 if (data.message.type == 0) {
                     notification.open({
                         message: 'لديك رسالة جديدة',
                         description: <div className="msg-notification">
-                            <p className="meta"><LastSeen date={data.message.created_at} /></p>
-                            <h4 className="title">{data.message.message}</h4>
+                            <a href={`/conversations/${data.message.conversation.id}#msg-item-${data.message.id}`} style={{ color: '#666', fontWeight: 300, }}>
+                                <p className="meta"><LastSeen date={data.message.created_at} /></p>
+                                <h4 className="title">{data.message.message}</h4>
+                            </a>
                             <p className="text">
                                 <small className="ml-1">
                                     <strong>من طرف: </strong>
@@ -367,7 +372,7 @@ function Navbar(): ReactElement {
                                                 <Tooltip placement="bottom" title='صندوق الرسائل'>
                                                     <Link href='/conversations'>
                                                         <motion.a whileTap={{ scale: 0.9 }}>
-                                                            <Badge count={userInfo && userInfo.unread_messages_count} offset={[2, -1]}>
+                                                            <Badge count={countMsg} offset={[2, -1]}>
                                                                 <i className="material-icons material-icons-outlined">email</i>
                                                             </Badge>
                                                         </motion.a>

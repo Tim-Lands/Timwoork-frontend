@@ -3988,13 +3988,15 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     padding: 20px 10px;
     text-align: right;
     position: relative;
+    .item-content {
+        width: 65%;
+    }
     .text {
         padding: 4px 13px;
         background-color: lighten($primary, 47);
         color: #000;
         font-size: 13px;
         border-radius: 4px 0 4px 4px;
-
     }
     &.instruct {
         background-color: #f1fcff;
@@ -4107,7 +4109,9 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     top: 70px;
     background-color: #fff;
     padding: 10px;
-    min-height: 600px;
+    @media (min-width: 580px) {
+        min-height: 600px;
+    }
     .conversations-items {
         .conversations-items-list {
             list-style: none;

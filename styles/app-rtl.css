@@ -6734,6 +6734,10 @@ h3 {
   position: relative;
 }
 
+.message-item .item-content {
+  width: 65%;
+}
+
 .message-item .text {
   padding: 4px 13px;
   background-color: #d1d9e6;
@@ -6877,7 +6881,12 @@ h3 {
   top: 70px;
   background-color: #fff;
   padding: 10px;
-  min-height: 600px;
+}
+
+@media (min-width: 580px) {
+  .conversations-sidebar {
+    min-height: 600px;
+  }
 }
 
 .conversations-sidebar .conversations-items .conversations-items-list {

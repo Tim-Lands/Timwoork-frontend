@@ -12,12 +12,12 @@ import { Progress } from 'antd';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import Loading from '@/components/Loading';
+
 function Conversation({ query }) {
     const token = Cookies.get('token')
     const inputRefMsg: any = useRef();
     const { data: conversationsSingle }: any = useSWR(`api/conversations/${query.id}`)
     const { data: profileInfo }: any = useSWR(`api/me`)
-
     const [messageProgress, setMessageProgress] = useState(0);
     const [messageErrors, setMessageErrors]: any = useState({});
     const [sendMessageLoading, setSendMessageLoading] = useState(false)
@@ -60,7 +60,7 @@ function Conversation({ query }) {
             })
             if (res.status === 200) {
                 setSendMessageLoading(false)
-                conversationsSingle && conversationsSingle.data.messages.push(res.data.data)
+                conversationsSingle.data.messages.push(res.data.data)
                 setMessage('')
                 messageRef.current.focus()
                 setMessageProgress(0)
@@ -146,6 +146,7 @@ function Conversation({ query }) {
             <div className="timwoork-single">
                 <div className="row py-4 justify-content-center">
                     <div className="col-lg-11">
+                        
                         <div className="row">
                             <div className="col-lg-4">
                                 <Sidebar RouterId={query.id} />
@@ -156,7 +157,7 @@ function Conversation({ query }) {
                                     <div className="conversations-list">
                                         <div className="conversations-title">
                                             <h4 className="title">
-                                               {conversationsSingle && conversationsSingle.data.title}
+                                                {conversationsSingle && conversationsSingle.data.title}
                                             </h4>
                                         </div>
                                         <ul
@@ -171,6 +172,7 @@ function Conversation({ query }) {
                                                 <motion.li
                                                     initial={{ y: -4, opacity: 0 }}
                                                     animate={{ y: 0, opacity: 1 }}
+                                                    id={`msg-item-${item.id}`}
                                                     key={1}
                                                     className={(profileInfo && profileInfo.user_details.id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
                                                     style={{ marginBlock: 9 }}>

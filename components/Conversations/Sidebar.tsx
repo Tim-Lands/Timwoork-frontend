@@ -37,7 +37,7 @@ function Sidebar({ RouterId }) {
                 <ul className="conversations-items-list">
                     {conversationsList && conversationsList.data.data.map((item: any) => (
                         <li className={(item.messages_count !== 0 && 'is-readed ') + (RouterId == item.id && ' active') } key={item.id}>
-                            <Link href={`/conversations/${item.id}`}>
+                            <Link href={`/conversations/${item.id}#msg-item-${item.latest_message.id}`}>
                                 <a>
                                     <div className="conv-item-inner">
                                         <div className="conv-item-head">
