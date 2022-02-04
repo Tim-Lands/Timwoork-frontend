@@ -146,7 +146,6 @@ function Conversation({ query }) {
             <div className="timwoork-single">
                 <div className="row py-4 justify-content-center">
                     <div className="col-lg-11">
-                        
                         <div className="row">
                             <div className="col-lg-4">
                                 <Sidebar RouterId={query.id} />

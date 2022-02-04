@@ -35,15 +35,22 @@ function Navbar(): ReactElement {
         } : undefined,
     })
     //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-    const channelName = `presence-receiver.${userInfo && userInfo.user_details.id}`
-    const channel = pusher.subscribe(channelName);
+    const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id}`
+    const channel = pusher.subscribe(channelChat);
+
+    const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id}`
+    const channelNoty = pusher.subscribe(channelNotification);
     useEffect(() => {
         if (token) {
+            channel.bind("notification.sent", (data) => {
+                console.log(data);
+                
+            })
             channel.bind("message.sent", (data) => {
                 const effect = new Audio('/effect.mp3')
                 //setMsg(data);
                 effect.play()
-                setCountMsg(1)
+                //setCountMsg(1)
                 console.log(data);
 
                 if (data.message.type == 0) {
@@ -137,11 +144,12 @@ function Navbar(): ReactElement {
                 }
             });
             return () => {
-                pusher.unsubscribe(channelName);
+                pusher.unsubscribe(channelChat);
+                pusher.unsubscribe(channelNotification);
             };
         }
 
-    }, [channelName])
+    }, [channelChat, channelNotification])
 
     //store username, email & userID in Cookies just for chat
     if (token) {

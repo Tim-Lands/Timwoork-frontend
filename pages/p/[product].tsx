@@ -9,13 +9,12 @@ import 'react-slideshow-image/dist/styles.css'
 import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
 import { Dropdown, message, Spin, Menu, notification } from 'antd'
-//import { MetaTags } from '@/components/SEO/MetaTags'
+import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie'
 import router from "next/router";
 import NotFound from "@/components/NotFound";
 import axios from 'axios';
-import { Head } from "next/document";
 
 const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
 
@@ -274,17 +273,13 @@ function Single({ query }) {
       {!ProductData && <Loading />}
       {errorLoad && <NotFound />}
       {ProductData &&
-        <Head>
-          <meta name="description" content={ProductData.data.content} key="description" />
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content={ProductData.data.title + ' - تيموورك'} key="title" />
-          <meta property="og:description" content={ProductData.data.content} />
-          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <title>{ProductData.data.title + ' - تيموورك'}</title>
-          <meta property="og:image" content={ProductData.data.full_path_thumbnail} key="image" />
-          <meta property="og:url" content={`https://timwoork.com/p/${ProductData.data.slug}`} />
-        </Head>
+        <MetaTags
+          title={ProductData.data.title + ' - تيموورك'}
+          metaDescription={ProductData.data.content}
+          ogDescription={ProductData.data.content}
+          ogImage={ProductData.data.full_path_thumbnail}
+          ogUrl={`https://timwoork.com/p/${ProductData.data.slug}`}
+        />
       }
       {ProductData &&
         <div className="timwoork-single">
