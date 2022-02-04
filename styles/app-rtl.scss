@@ -4210,4 +4210,12 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         }
     }
 }
+.is-hover-primary {
+    a {
+        &:hover {
+            color: $primary !important;
+            text-decoration: underline;
+        }
+    }
+}
 @import 'is-dark';

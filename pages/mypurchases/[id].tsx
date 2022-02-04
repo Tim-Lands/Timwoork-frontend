@@ -325,8 +325,8 @@ const Order = ({ query }) => {
                                                 <div className="order-user-content">
                                                     <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
                                                     <p className="meta">
-                                                        الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                        المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                        <span className="badge bg-secondary"> {ShowItem && ShowItem.data.order.cart.user.profile.badge && ShowItem.data.order.cart.user.profile.badge.name_ar}</span> |
+                                                        <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.order.cart.user.profile.level && ShowItem.data.order.cart.user.profile.level.name_ar}</span>
                                                     </p>
                                                 </div>
                                             </a>
@@ -348,8 +348,8 @@ const Order = ({ query }) => {
                                                 <div className="order-user-content">
                                                     <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
                                                     <p className="meta">
-                                                        الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                        المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                        <span className="badge bg-secondary">{ShowItem && ShowItem.data.profile_seller.profile.badge && ShowItem.data.profile_seller.profile.badge.name_ar}</span> |
+                                                        <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.profile_seller.profile.level && ShowItem.data.profile_seller.profile.level.name_ar}</span>
                                                     </p>
                                                 </div>
                                             </a>
@@ -678,11 +678,11 @@ const Order = ({ query }) => {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>السعر الكلي للطلبية</th>
+                                                    <th>السعر الطلبية</th>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        ${ShowItem.data.order.cart.price_with_tax}
+                                                        ${ShowItem.data.price_product}
                                                     </td>
                                                 </tr>
                                             </tbody>

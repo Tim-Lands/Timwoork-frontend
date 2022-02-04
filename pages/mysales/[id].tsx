@@ -9,7 +9,7 @@ import Link from 'next/link'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Modal, Progress, Result, Timeline } from "antd";
+import { Modal, Progress, Result, Spin, Timeline } from "antd";
 import useFileUpload from 'react-use-file-upload';
 import { motion } from "framer-motion";
 import router from "next/router";
@@ -25,10 +25,12 @@ const User = ({ query }) => {
     const [imageProgress, setImageProgress] = useState(0);
     const [messageProgress, setMessageProgress] = useState(0);
     const [messageErrors, setMessageErrors]: any = useState({});
+    const [BySellerMSGLoading, setBySellerMSGLoading]: any = useState(false);
 
     const myRef: any = useRef()
 
-    const rejectMessageCause = async (messageText: any, typeCause = 2 ) => {
+    const rejectMessageCause = async (messageText: any, typeCause = 2) => {
+        setBySellerMSGLoading(true)
         try {
             const id = ShowItem && ShowItem.data.conversation.id
             const conversation: any = new FormData()
@@ -40,7 +42,10 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                router.reload()
+                //router.reload()
+                setBySellerMSGLoading(false)
+                setIsModalVisible(false)
+                setModalVisibleRejectModified(false)
             }
         } catch (error) {
             if (error && error.response) {
@@ -89,7 +94,7 @@ const User = ({ query }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalVisibleDilevered, setModalVisibleDilevered] = useState(false);
     const [isModalVisibleRejectModified, setModalVisibleRejectModified] = useState(false);
-    
+
     function switchTypeMessage(type: any) {
         switch (type) {
             case 0:
@@ -448,25 +453,27 @@ const User = ({ query }) => {
                     onOk={() => reject_cancel_request_by_seller(ShowItem.data.id)}
                     onCancel={() => setIsModalVisible(false)}
                 >
-                    <div className="timlands-form">
-                        <label htmlFor="message_type" className="form-text">أكتب سبب الرفض</label>
-                        <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
-                            <input
-                                id="input-buyer_instruct"
-                                name="buyer_instruct"
-                                placeholder="أكتب سبب الرفض..."
-                                className={"timlands-inputs"}
-                                autoComplete="off"
-                                value={message}
-                                onChange={(e: any) => setMessage(e.target.value)}
-                            />
+                    <Spin spinning={BySellerMSGLoading}>
+                        <div className="timlands-form">
+                            <label htmlFor="message_type" className="form-text">أكتب سبب الرفض</label>
+                            <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                <input
+                                    id="input-buyer_instruct"
+                                    name="buyer_instruct"
+                                    placeholder="أكتب سبب الرفض..."
+                                    className={"timlands-inputs"}
+                                    autoComplete="off"
+                                    value={message}
+                                    onChange={(e: any) => setMessage(e.target.value)}
+                                />
+                            </div>
+                            {messageErrors && messageErrors.message &&
+                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                    <p className="text">{messageErrors.message[0]}</p>
+                                </motion.div>
+                            }
                         </div>
-                        {messageErrors && messageErrors.message &&
-                            <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                <p className="text">{messageErrors.message[0]}</p>
-                            </motion.div>
-                        }
-                    </div>
+                    </Spin>
                 </Modal>
                 <Modal
                     title="سبب إلغاء"
@@ -475,27 +482,29 @@ const User = ({ query }) => {
                     onOk={() => reject_modified_by_seller(ShowItem.data.id)}
                     onCancel={() => setModalVisibleRejectModified(false)}
                 >
-                    <div className="timlands-form">
-                        <label htmlFor="message_type" className="form-text">أكتب سبب الإلغاء</label>
-                        <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
-                            <input
-                                id="input-buyer_instruct"
-                                name="buyer_instruct"
-                                placeholder="أكتب سبب الإلغاء..."
-                                className={"timlands-inputs"}
-                                autoComplete="off"
-                                value={message}
-                                onChange={(e: any) => setMessage(e.target.value)}
-                            />
+                    <Spin spinning={BySellerMSGLoading}>
+                        <div className="timlands-form">
+                            <label htmlFor="message_type" className="form-text">أكتب سبب الإلغاء</label>
+                            <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                <input
+                                    id="input-buyer_instruct"
+                                    name="buyer_instruct"
+                                    placeholder="أكتب سبب الإلغاء..."
+                                    className={"timlands-inputs"}
+                                    autoComplete="off"
+                                    value={message}
+                                    onChange={(e: any) => setMessage(e.target.value)}
+                                />
+                            </div>
+                            {messageErrors && messageErrors.message &&
+                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                    <p className="text">{messageErrors.message[0]}</p>
+                                </motion.div>
+                            }
                         </div>
-                        {messageErrors && messageErrors.message &&
-                            <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                <p className="text">{messageErrors.message[0]}</p>
-                            </motion.div>
-                        }
-                    </div>
+                    </Spin>
                 </Modal>
-                
+
                 <Modal
                     title="رسالة تأكيد"
                     visible={isModalVisibleDilevered}
@@ -529,8 +538,8 @@ const User = ({ query }) => {
                                                     <div className="order-user-content">
                                                         <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
                                                         <p className="meta">
-                                                            الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                            المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                            <span className="badge bg-secondary">{ShowItem && ShowItem.data.profile_seller.profile.badge && ShowItem.data.profile_seller.profile.badge.name_ar}</span> |
+                                                            <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.profile_seller.profile.level && ShowItem.data.profile_seller.profile.level.name_ar}</span>
                                                         </p>
                                                     </div>
                                                 </a>
@@ -553,8 +562,8 @@ const User = ({ query }) => {
                                                     <div className="order-user-content">
                                                         <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
                                                         <p className="meta">
-                                                            الشارة: {/*ShowItem && ShowItem.data.order.cart.user.profile.badge.name_ar*/} |
-                                                            المستوى: {/*ShowItem && ShowItem.data.order.cart.user.profile.level.name_ar*/}
+                                                            <span className="badge bg-secondary"> {ShowItem && ShowItem.data.order.cart.user.profile.badge && ShowItem.data.order.cart.user.profile.badge.name_ar}</span> |
+                                                            <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.order.cart.user.profile.level && ShowItem.data.order.cart.user.profile.level.name_ar}</span>
                                                         </p>
                                                     </div>
                                                 </a>
@@ -952,11 +961,11 @@ const User = ({ query }) => {
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <th>السعر الكلي للطلبية</th>
+                                                        <th>السعر الطلبية</th>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            ${ShowItem.data.order.cart.price_with_tax}
+                                                            ${ShowItem.data.price_product}
                                                         </td>
                                                     </tr>
                                                 </tbody>

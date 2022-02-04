@@ -1,95 +1,50 @@
 import Layout from '@/components/Layout/HomeLayout'
 import React, { ReactElement, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Button, message, Modal, Result, Tooltip } from 'antd';
+import { Button, Result, Tooltip } from 'antd';
 import Link from 'next/link'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import Loading from '@/components/Loading';
 import { Alert } from '@/components/Alert/Alert';
 import LastSeen from '@/components/LastSeen';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import router from 'next/router';
 function index() {
     const token = Cookies.get('token')
-    const [pageIndex, setPageIndex] = useState(1);
+    const [pageIndex, setPageIndex] = useState(1)
+    const [acceptedBySellerLoading, setAcceptedBySellerLoading] = useState(false)
+    const [rejectedBySellerLoading, setRejectedBySellerLoading] = useState(false)
+
     const { data: buysList, BuysError }: any = useSWR(`api/my_sales?page=${pageIndex}`)
-
-    const [rejectLoading, setrejectLoading] = useState(false)
-    const rejectHandle = (id: any) => {
-        const MySwal = withReactContent(Swal)
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد إلغاء هذه الطلبية",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الإلغاء',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setrejectLoading(true)
-                try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_seller`, {}, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    if (res.status === 200) {
-                        mutate('api/my_sales')
-                        setrejectLoading(false)
-                        router.reload()
-                    }
-                } catch (error) {
-                    setrejectLoading(false)
-                }
-                swalWithBootstrapButtons.fire(
-                    'تم الإلغاء!',
-                    'لقد تم إلغاء هذه الطلبية بنجاح',
-                    'success'
-                )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                setrejectLoading(false)
-                swalWithBootstrapButtons.fire(
-                    'ملغى',
-                    'تم الإلغاء',
-                    'error'
-                )
-            }
-        })
-
-    }
-
-    const acceptHandle = async (id: any) => {
-        setrejectLoading(true)
+    const item_accepted_by_seller = async (id: any) => {
+        setAcceptedBySellerLoading(true)
         try {
-            const res = await API.post(`api/order/items/${id}/accept_item_seller`, {}, {
+            const res = await API.post(`api/order/items/${id}/item_accepted_by_seller`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             if (res.status === 200) {
-                message.success('تم قبول هذه الطلبية بنجاح')
-                mutate('api/my_sales')
-                setrejectLoading(false)
                 router.reload()
-
             }
         } catch (error) {
-            setrejectLoading(false)
+            setAcceptedBySellerLoading(false)
+        }
+    }
+    const item_rejected_by_seller = async (id: any) => {
+        setRejectedBySellerLoading(true)
+        try {
+            const res = await API.post(`api/order/items/${id}/item_rejected_by_seller`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                router.reload()
+            }
+        } catch (error) {
+            setRejectedBySellerLoading(false)
         }
     }
     const statusLabel = (status: any) => {
@@ -98,53 +53,37 @@ function index() {
                 return <span className='badge bg-secondary'>قيد الانتظار...</span>
 
             case 1:
-                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
+                return <span className='badge bg-warning'>ملغية من طرف المشتري</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية من مطرفك</span>
+                return <span className='badge bg-danger'>مرفوضة من طرف البائع</span>
 
             case 3:
-                return <span className='badge bg-warning'>ملغية من المشتري</span>
+                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 4:
-                return <span className='badge bg-warning'>ملغية من طرفكما</span>
+                return <span className='badge bg-warning'>طلب إلغاء من طرف المشتري</span>
 
             case 5:
-                return <span className='badge bg-success'>مكتملة</span>
+                return <span className='badge bg-warning'>ملغية من طرف البائع</span>
+
+            case 6:
+                return <span className='badge bg-primary'>قيد الإستلام</span>
+
+            case 7:
+                return <span className='badge bg-dark text-light'>مكتملة</span>
+
+            case 8:
+                return <span className='badge bg-danger text-light'>معلقة</span>
+
+            case 9:
+                return <span className='badge bg-light text-dark'>حالة طلب تعديل</span>
+
+            case 10:
+                return <span className='badge bg-danger text-light'>معلقة بسبب رفض التعديل</span>
 
             default:
-        }
-    }
-    async function cancelRequest(id: any) {
-        setrejectLoading(true)
-        try {
-            const res = await API.post(`api/order/items/${id}/request_cancel_item_by_seller`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                Modal.info({
-                    title: 'تم بنجاح',
-                    content: (
-                        <p>لقد تم طلب الإلغاء . سيتم ارسال اشعار في حالة قبول الطلب</p>
-                    ),
-                    onOk() { },
-                });
-                mutate('api/my_sales')
-                setrejectLoading(false)
-                router.reload()
-
-            }
-        } catch (error) {
-            setrejectLoading(false)
-            Modal.error({
-                title: 'حدث خطأ',
-                content: (
-                    <p>تعذر طلب الإلغاء يرجى المحاولة مرة أخرى</p>
-                ),
-                onOk() { },
-            });
+                return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
         }
     }
     return (
@@ -175,7 +114,7 @@ function index() {
                                     <tbody>
                                         {buysList && buysList.data.data.map((e: any) => (
                                             <tr key={e.id}>
-                                                <td>
+                                                <td className='is-hover-primary'>
                                                     <Link href={`/mysales/${e.id}`}>
                                                         <a className='text-dark'>
                                                             {statusLabel(e.status)} {e.title}
@@ -184,7 +123,7 @@ function index() {
                                                 </td>
                                                 <td>{e.price_product}$</td>
                                                 <td>
-                                                    <p className="m-0">
+                                                    <p className="m-0 is-hover-primary">
                                                         <Link href={`/u/${e.profile_seller.profile.user.username}`}>
                                                             <a className='flex-center' style={{ color: "gray" }}>
                                                                 <span className='mx-1'>{e.order.cart.user.profile.full_name}</span>
@@ -200,8 +139,8 @@ function index() {
                                                         <>
                                                             <Tooltip title="رفض الطلبية">
                                                                 <Button
-                                                                    disabled={rejectLoading}
-                                                                    onClick={() => rejectHandle(e.id)}
+                                                                    disabled={rejectedBySellerLoading}
+                                                                    onClick={() => item_rejected_by_seller(e.id)}
                                                                     danger
                                                                     type="primary"
                                                                     color='red'
@@ -211,8 +150,8 @@ function index() {
 
                                                             <Tooltip title="قبول الطلبية">
                                                                 <Button
-                                                                    disabled={rejectLoading}
-                                                                    onClick={() => acceptHandle(e.id)}
+                                                                    disabled={acceptedBySellerLoading}
+                                                                    onClick={() => item_accepted_by_seller(e.id)}
                                                                     type="primary"
                                                                     color='green'
                                                                     size="small"
@@ -220,20 +159,7 @@ function index() {
                                                             </Tooltip>
                                                         </> : null
                                                     }
-                                                    {e.status == 1 ?
-                                                        <>
-                                                            <Tooltip title="طلب إلغاء هذه الطلبية">
-                                                                <Button
-                                                                    disabled={rejectLoading}
-                                                                    onClick={() => cancelRequest(e.id)}
-                                                                    danger
-                                                                    type="primary"
-                                                                    color='red'
-                                                                    size="small"
-                                                                >طلب إلغاء</Button>
-                                                            </Tooltip>
-                                                        </> : null
-                                                    }
+                                                    {e.status > 0 && statusLabel(e.status)}
                                                 </td>
                                             </tr>
                                         ))}
@@ -247,8 +173,8 @@ function index() {
                                 {!buysList && <Loading />}
                                 {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
                                 {buysList && buysList.data.data.length !== 0 && buysList.data.total > buysList.data.per_page && <div className="p-2 d-flex">
-                                    <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
-                                    <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
+                                    <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
+                                    <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
                                 </div>}
                             </div>
                         </div>

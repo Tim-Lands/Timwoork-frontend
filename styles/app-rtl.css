@@ -6987,6 +6987,11 @@ h3 {
   color: #fff;
 }
 
+.is-hover-primary a:hover {
+  color: #475C80 !important;
+  text-decoration: underline;
+}
+
 .is-dark {
   background-color: #323232;
   /*

@@ -106,19 +106,34 @@ function index() {
                 return <span className='badge bg-secondary'>قيد الانتظار...</span>
 
             case 1:
-                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
+                return <span className='badge bg-warning'>ملغية من طرف المشتري</span>
 
             case 2:
-                return <span className='badge bg-danger'>ملغية من طرف البائع</span>
+                return <span className='badge bg-danger'>مرفوضة من طرف البائع</span>
 
             case 3:
-                return <span className='badge bg-warning'>ملغية من طرفك</span>
+                return <span className='badge bg-info text-dark'>قيد التنفيذ...</span>
 
             case 4:
-                return <span className='badge bg-warning'>ملغية من طرفكما</span>
+                return <span className='badge bg-warning'>طلب إلغاء من طرف المشتري</span>
 
             case 5:
-                return <span className='badge bg-success'>مكتملة</span>
+                return <span className='badge bg-warning'>ملغية من طرف البائع</span>
+
+            case 6:
+                return <span className='badge bg-primary'>قيد الإستلام</span>
+
+            case 7:
+                return <span className='badge bg-dark text-light'>مكتملة</span>
+
+            case 8:
+                return <span className='badge bg-red text-light'>معلقة</span>
+
+            case 9:
+                return <span className='badge bg-light text-dark'>حالة تعديل</span>
+
+            case 10:
+                return <span className='badge bg-danger text-light'>معلقة بسبب رفض التعديل</span>
 
             default:
                 return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
@@ -154,7 +169,7 @@ function index() {
                                     <tbody>
                                         {buysList && buysList.data.data.map((e: any) => (
                                             <tr key={e.id}>
-                                                <td>
+                                                <td className='is-hover-primary'>
                                                     <Link href={`/mypurchases/${e.id}`}>
                                                         <a className='text-dark'>
                                                             {statusLabel(e.status)} {e.title}
@@ -163,7 +178,7 @@ function index() {
                                                 </td>
                                                 <td>{e.price_product}$</td>
                                                 <td>
-                                                    <p className="m-0">
+                                                    <p className="m-0 is-hover-primary">
                                                         <Link href={`/u/${e.profile_seller.profile.user.username}`}>
                                                             <a className='flex-center' style={{ color: "gray" }}>
                                                                 <span className='mx-1'>{e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}</span>
