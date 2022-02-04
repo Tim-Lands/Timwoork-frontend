@@ -22,7 +22,7 @@ function Navbar(): ReactElement {
     const { data: userInfo }: any = useSWR('api/me')
 
     //const [msg, setMsg] = useState();
-    const [countMsg, setCountMsg] = useState(userInfo && userInfo.unread_messages_count);
+    const countMsg = userInfo && userInfo.unread_messages_count
     const pusher = new Pusher('510f53f8ccb3058a96fc', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
@@ -42,7 +42,7 @@ function Navbar(): ReactElement {
     const channelNoty = pusher.subscribe(channelNotification);
     useEffect(() => {
         if (token) {
-            channel.bind("notification.sent", (data) => {
+            channelNoty.bind("notification.sent", (data) => {
                 console.log(data);
                 
             })
