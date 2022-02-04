@@ -46,7 +46,7 @@ function Home() {
           <div className="nanny-home-content">
             <p className="new-label">ألهم الناس من حولك! </p>
             <h2 className="title">
-              اعرض خدماتك واشتري أخرى, ماذا تنتظر ! TEST</h2>
+              اعرض خدماتك واشتري أخرى, ماذا تنتظر !</h2>
             <p className="text">
               من شرفة منزلك لا تحتاج الخروج من بيتك للعمل, في تيموورك العمل يأتي أليك</p>
             <div className="py-3">
