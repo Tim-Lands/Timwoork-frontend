@@ -6992,6 +6992,19 @@ h3 {
   text-decoration: underline;
 }
 
+.conversations-item-head {
+  padding: 23px 9px;
+  border-bottom: 2px dashed #f1f1f1;
+  margin-bottom: 8px;
+}
+
+.conversations-item-head .title {
+  margin: 0;
+  color: #555;
+  font-size: 17px;
+  font-weight: bold;
+}
+
 .is-dark {
   background-color: #323232;
   /*

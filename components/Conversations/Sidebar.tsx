@@ -34,6 +34,11 @@ function Sidebar({ RouterId }) {
                         </div>
                     </div>
                 }
+                <div className="conversations-item-head">
+                    <h3 className="title">
+                        جميع المحادثات
+                    </h3>
+                </div>
                 <ul className="conversations-items-list">
                     {conversationsList && conversationsList.data.data.map((item: any) => (
                         <li className={(item.messages_count !== 0 && 'is-readed ') + (RouterId == item.id && ' active') } key={item.id}>

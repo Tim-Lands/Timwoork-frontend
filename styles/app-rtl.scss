@@ -4218,4 +4218,15 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         }
     }
 }
+.conversations-item-head {
+    padding: 23px 9px;
+    border-bottom: 2px dashed #f1f1f1;
+    margin-bottom: 8px;
+    .title {
+        margin: 0;
+        color: #555;
+        font-size: 17px;
+        font-weight: bold;
+    }
+}
 @import 'is-dark';
