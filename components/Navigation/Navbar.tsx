@@ -13,7 +13,7 @@ import { motion } from 'framer-motion'
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from "next/router";
-import { MessageOutlined, InfoCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { MessageOutlined, InfoCircleOutlined, CloseCircleOutlined, BellOutlined } from '@ant-design/icons';
 import Pusher from 'pusher-js'
 import LastSeen from "../LastSeen";
 
@@ -42,16 +42,9 @@ function Navbar(): ReactElement {
     const channelNoty = pusher.subscribe(channelNotification);
     useEffect(() => {
         if (token) {
-            channelNoty.bind("notification.sent", (data) => {
-                console.log(data);
-                
-            })
             channel.bind("message.sent", (data) => {
                 const effect = new Audio('/effect.mp3')
-                //setMsg(data);
                 effect.play()
-                //setCountMsg(1)
-                console.log(data);
 
                 if (data.message.type == 0) {
                     notification.open({
@@ -143,6 +136,47 @@ function Navbar(): ReactElement {
                     });
                 }
             });
+
+            channelNoty.bind("notification.sent", (data) => {
+                console.log(data);
+                const NotifyEffect = new Audio('/bell.mp3')
+                NotifyEffect.play()
+                notification.open({
+                    message: 'لديك اشعار جديد',
+                    description: <div className="msg-notification">
+                        {data.to == 'seller' &&
+                            <a href={`/mysales/${data.content.item_id}`} style={{ color: '#666', fontWeight: 300, }}>
+                                <h4 className="title">{data.title}</h4>
+                            </a>
+                        }
+                        {data.to == 'buyer' &&
+                            <a href={`/mypurchases/${data.content.item_id}`} style={{ color: '#666', fontWeight: 300, }}>
+                                <h4 className="title">{data.title}</h4>
+                            </a>
+                        }
+                        <p className="text">
+                            <small className="ml-1">
+                                <strong>من طرف: </strong>
+                            </small>
+                            <Link href={`/u/${data.user_sender.username}`}>
+                                <a style={{ color: '#666', fontWeight: 300, }}>
+                                    <img
+                                        width={20}
+                                        height={20}
+                                        className="rounded-circle mx-1"
+                                        src={data.user_sender.avatar_url} alt=""
+                                    />
+                                    <span style={{ color: '#666', fontWeight: 300, }}>
+                                        {data.user_sender.full_name}
+                                    </span>
+                                </a>
+                            </Link>
+                        </p>
+                    </div>,
+                    icon: <BellOutlined style={{ color: '#108ee9' }} />,
+                    placement: 'bottomRight'
+                });
+            })
             return () => {
                 pusher.unsubscribe(channelChat);
                 pusher.unsubscribe(channelNotification);
