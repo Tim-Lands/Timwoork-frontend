@@ -383,6 +383,11 @@ const Order = ({ query }) => {
                                         <div className="aside-header">
                                             <h3 className="title">تعليمات للمشتري</h3>
                                         </div>
+                                        <div className="seller-info">
+                                            <p className="text">
+                                                {ShowItem && ShowItem.data.profile_seller.products[0].buyer_instruct}
+                                            </p>
+                                        </div>
                                     </div>
                                     {ShowItem && ShowItem.data.conversation && <>
                                         <div className="aside-header">
