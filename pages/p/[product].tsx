@@ -268,6 +268,11 @@ function Single({ query }) {
 
     return Math.abs(total_price);
   }
+  const handleChange = (evt) => {
+    const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
+    
+    setQuantutyCount(financialGoal);
+  }
   return (
     <>
       {!ProductData && <Loading />}
@@ -302,7 +307,7 @@ function Single({ query }) {
                               height={32}
                               placeholder='blur'
                               blurDataURL='/avatar2.jpg'
-      />*/}
+                            />*/}
                             <span className="pe-2">
                               {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
                             </span>
@@ -310,12 +315,13 @@ function Single({ query }) {
                         </Link>
                       </li>
                       <li className="category-item">
-                        <Link href="/users/Single">
+                        <Link href={`/category/${ProductData && ProductData.data.subcategory.id}`}>
                           <a className="category-link">
                             <span className="material-icons material-icons-outlined">label</span>
-                            {ProductData && ProductData.data.subcategory.category.name_ar}
+                            {ProductData && ProductData.data.subcategory.name_ar}
                           </a>
-                        </Link>
+                        </Link> <span style={{ marginInline: 5 }}>|</span>
+                        <small style={{ marginInline: 5 }}>{ProductData && ProductData.data.subcategory.category.name_ar}</small>
                       </li>
                     </ul>
                     <ul className="single-header-meta nav ml-auto">
@@ -415,9 +421,9 @@ function Single({ query }) {
                         </div>
                       </div>
                     }
-                    <div className="timwoork-single-comments">
-                      <div className="timwoork-single-comments-inner">
-                        {ProductData.data.ratings && <>
+                    {ProductData.data.ratings && ProductData.data.ratings.length !== 0 &&
+                      <div className="timwoork-single-comments">
+                        <div className="timwoork-single-comments-inner">
                           <div className="single-comments-header">
                             <div className="flex-center">
                               <h1 className="title">
@@ -429,10 +435,9 @@ function Single({ query }) {
                           <div className="single-comments-body">
                             <Comments comments={ProductData.data.ratings} />
                           </div>
-                        </>
-                        }
+                        </div>
                       </div>
-                    </div>
+                    }
                   </div>
                 </div>
               </div>
@@ -460,7 +465,16 @@ function Single({ query }) {
                         <p className="text-quatity">عدد مرات الشراء: </p>
                       </div>
                       <div className="col-5">
-                        <input type="number" value={quantutyCount} name="quantity_count" className="timlands-inputs sm" onChange={(e: any) => setQuantutyCount(e.target.value)} />
+                        <input
+                          type="text"
+                          maxLength={9}
+                          onInput={handleChange}
+                          pattern="[0-9]*"
+                          value={quantutyCount}
+                          name="quantity_count"
+                          className="timlands-inputs sm"
+                          onChange={(e: any) => setQuantutyCount(e.target.value)}
+                        />
                       </div>
                     </div>
                     {ProductData.data.developments &&

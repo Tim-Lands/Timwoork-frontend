@@ -80,7 +80,7 @@ function Home() {
           />
         </div>
       }
-          <div className='shadow' style={{ position: 'fixed', bottom: '3rem', left: '3rem', borderRadius: '50%' }}>
+          <div className='shadow' style={{ position: 'fixed', bottom: '3rem', left: '3rem', borderRadius: '50%', zIndex: 9999 }}>
             <Dropdown overlay={menu} placement="topCenter" arrow>
               <Button style={{
                 width: '75px',

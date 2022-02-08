@@ -46,6 +46,7 @@ const User = ({ query }) => {
                 setBySellerMSGLoading(false)
                 setIsModalVisible(false)
                 setModalVisibleRejectModified(false)
+                setModalVisibleReject(false)
             }
         } catch (error) {
             if (error && error.response) {
@@ -93,6 +94,7 @@ const User = ({ query }) => {
     const [messageType, setMessageType] = useState(0)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalVisibleDilevered, setModalVisibleDilevered] = useState(false);
+    const [isModalVisibleReject, setModalVisibleReject] = useState(false);
     const [isModalVisibleRejectModified, setModalVisibleRejectModified] = useState(false);
 
     function switchTypeMessage(type: any) {
@@ -132,7 +134,7 @@ const User = ({ query }) => {
                 }
             })
             if (res.status === 200) {
-                router.reload()
+                rejectMessageCause(message)
             }
         } catch (error) {
             setRejectedBySellerLoading(false)
@@ -446,6 +448,35 @@ const User = ({ query }) => {
                     title="حدث خطأ غير متوقع"
                 />}
                 {!ShowItem && <Loading />}
+                <Modal
+                    title="سبب الرفض"
+                    visible={isModalVisibleReject}
+                    okText='أنا متأكد'
+                    onOk={() => item_rejected_by_seller(ShowItem.data.id)}
+                    onCancel={() => setModalVisibleReject(false)}
+                >
+                    <Spin spinning={BySellerMSGLoading}>
+                        <div className="timlands-form">
+                            <label htmlFor="message_type" className="form-text">أكتب سبب الرفض</label>
+                            <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                <input
+                                    id="input-buyer_instruct"
+                                    name="buyer_instruct"
+                                    placeholder="أكتب سبب الرفض..."
+                                    className={"timlands-inputs"}
+                                    autoComplete="off"
+                                    value={message}
+                                    onChange={(e: any) => setMessage(e.target.value)}
+                                />
+                            </div>
+                            {messageErrors && messageErrors.message &&
+                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                    <p className="text">{messageErrors.message[0]}</p>
+                                </motion.div>
+                            }
+                        </div>
+                    </Spin>
+                </Modal>
                 <Modal
                     title="سبب إلغاء"
                     visible={isModalVisible}
@@ -798,7 +829,7 @@ const User = ({ query }) => {
                                                     ><span className="material-icons material-icons-outlined">done_all</span> قبول الطلب</button>
                                                     <button
                                                         disabled={rejectedBySellerLoading}
-                                                        onClick={() => item_rejected_by_seller(ShowItem.data.id)}
+                                                        onClick={() => setModalVisibleReject(true)}
                                                         className="btn butt-md butt-red mx-1 flex-center-just"
                                                     ><span className="material-icons material-icons-outlined">highlight_off</span> رفض الطلب</button>
                                                 </>}

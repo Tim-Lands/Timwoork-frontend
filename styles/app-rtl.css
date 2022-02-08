@@ -761,7 +761,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 13px 19px;
+  padding: 14px 19px;
   font-size: 14px;
   font-weight: 700;
   -ms-flex-line-pack: center;
@@ -807,7 +807,7 @@
   border-top: 2px dashed #ddd;
   color: #777;
   font-size: 13px;
-  padding: 15px 19px;
+  padding: 17px 19px;
 }
 
 .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores .main-explore-items > li:last-child > a:hover {
@@ -2045,6 +2045,12 @@ h3 {
   margin: 0;
   padding: 0;
   margin-bottom: 20px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.timwoork-single-tags .single-tags-list li {
+  padding-bottom: 3px;
 }
 
 .timwoork-single-tags .single-tags-list li.title {

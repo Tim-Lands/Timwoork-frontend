@@ -24,7 +24,7 @@ const ForgetPass = (): ReactElement => {
                         const res = await API.post("api/password/forget/sendResetLink", values)
                         // Authentication was successful.
                         if (res.status === 200) {
-                            message.success('لقد تم التحديث بنجاح')
+                            message.success('تم ارسال رابط تعيين كلمة المرور الى الايميل بنجاح')
                             router.push('/user/sentToken')
                         }
                     } catch (error: any) {
