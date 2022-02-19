@@ -2048,7 +2048,7 @@ h3 {
   padding: 5px;
 }
 
-.timwoork-single-tags .single-tags-list li a {
+.timwoork-single-tags .single-tags-list li span {
   display: block;
   padding: 6px 13px;
   color: #444;
@@ -2058,7 +2058,7 @@ h3 {
   margin-left: 3px;
 }
 
-.timwoork-single-tags .single-tags-list li a:hover {
+.timwoork-single-tags .single-tags-list li span:hover {
   background-color: #f1f1f1;
   color: #000;
 }

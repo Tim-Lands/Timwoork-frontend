@@ -364,7 +364,7 @@ function Single({ query }) {
 
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
-                              <a>{e.name}</a>
+                              <span>{e.name}</span>
                             </li>
                           ))}
                         </ul>
@@ -409,9 +409,9 @@ function Single({ query }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
                                   </a>
                                 </Link>
-                                <a className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email, ProductData.data.profile_seller.profile.user.id, ProductData.data.profile_seller.profile.user.username)}>
+                                <button className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email, ProductData.data.profile_seller.profile.user.id, ProductData.data.profile_seller.profile.user.username)}>
                                   <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
-                                </a>
+                                </button>
                               </div>
                             </div>
                           </div>
