@@ -218,10 +218,7 @@ function Single({ query }) {
   const getOrCreateChat = (seller_Email: string, seller_ID: String, seller_username: string) => {
     //for buyer
     const username = Cookies.get('_username');
-    const id = Cookies.get('_userID');
     //const _secret = (seller_Email+seller_ID).toString();
-    console.log(`username: ${username} --> id: ${id}`);
-
 
     //for seller
     const seller_secret = (seller_Email + seller_ID);
@@ -270,22 +267,22 @@ function Single({ query }) {
   }
   const handleChange = (evt) => {
     const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-    
+
     setQuantutyCount(financialGoal);
   }
   return (
     <>
       {!ProductData && <Loading />}
       {errorLoad && <NotFound />}
-      {ProductData &&
-        <MetaTags
-          title={ProductData.data.title + ' - تيموورك'}
-          metaDescription={ProductData.data.content}
-          ogDescription={ProductData.data.content}
-          ogImage={ProductData.data.full_path_thumbnail}
-          ogUrl={`https://timwoork.com/p/${ProductData.data.slug}`}
-        />
-      }
+
+      <MetaTags
+        title={ProductData && ProductData.data.title + ' - تيموورك'}
+        metaDescription={ProductData && ProductData.data.content}
+        ogDescription={ProductData && ProductData.data.content}
+        ogImage={ProductData && ProductData.data.full_path_thumbnail}
+        ogUrl={`https://timwoork.com/p/${ProductData && ProductData.data.slug}`}
+      />
+
       {ProductData &&
         <div className="timwoork-single">
           <div className="row">
@@ -309,7 +306,7 @@ function Single({ query }) {
                               blurDataURL='/avatar2.jpg'
                             />*/}
                             <span className="pe-2">
-                              {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
+                              {ProductData.data.profile_seller.profile.full_name}
                             </span>
                           </a>
                         </Link>

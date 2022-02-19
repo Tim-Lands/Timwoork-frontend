@@ -23,20 +23,22 @@ function Menus({ darkMode }) {
     useOutsideAlerter(wrapperRef, setHideExploreHandle);
     return (
         <ul className="nav app-navbar is-desktop">
-            <li className={showExplore && 'is-open'}>
-                <a className="explore-butt" onClick={setShowExploreHandle} style={{
+            <li>
+                <button className={"explore-butt " + (showExplore && 'is-open')} onClick={setShowExploreHandle} style={{
                     fontWeight: 600,
                     color: !darkMode ? '#666' : '#f1f1f1',
                     display: 'flex',
                     paddingInline: 17,
                     paddingBlock: 0,
+                    border: 0,
+                    backgroundColor: 'transparent',
                     fontSize: 14,
                     height: 50,
                     alignItems: 'center',
                     alignContent: 'center'
                 }}>
                     <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنيفات <i className="fa fa-angle-down"></i>
-                </a>
+                </button>
                 {showExplore && (
                     <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
                         <Explores />

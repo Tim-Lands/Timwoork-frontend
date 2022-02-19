@@ -246,14 +246,7 @@
                 }
             }
             &.login-user {
-                > a {
-                    display: flex;
-                    padding: 9px 10px;
-                    font-size: 14px;
-                    color: #555;
-                    font-weight: 300;
-                    align-items: center;
-                    align-content: center;
+                cursor: pointer;
                     img {
                         border-radius: 50%;
                         display: inline-block;
@@ -271,7 +264,7 @@
                             margin-left: 4px;
                         }
                     }
-                }
+                
             }
             &.nav-error, &.nav-loading {
                 display: flex;

@@ -922,37 +922,26 @@
   font-weight: 700;
 }
 
-.timlands-navbar .nav-auth > li.login-user > a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 9px 10px;
-  font-size: 14px;
-  color: #555;
-  font-weight: 300;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
+.timlands-navbar .nav-auth > li.login-user {
+  cursor: pointer;
 }
 
-.timlands-navbar .nav-auth > li.login-user > a img {
+.timlands-navbar .nav-auth > li.login-user img {
   border-radius: 50%;
   display: inline-block;
   margin: 1px 6px;
   margin-right: 10px;
 }
 
-.timlands-navbar .nav-auth > li.login-user > a .text {
+.timlands-navbar .nav-auth > li.login-user .text {
   margin-inline: 6px;
 }
 
 @media (max-width: 580px) {
-  .timlands-navbar .nav-auth > li.login-user > a .text {
+  .timlands-navbar .nav-auth > li.login-user .text {
     display: none;
   }
-  .timlands-navbar .nav-auth > li.login-user > a img {
+  .timlands-navbar .nav-auth > li.login-user img {
     margin-left: 4px;
   }
 }

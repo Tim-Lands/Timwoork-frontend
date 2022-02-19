@@ -9,7 +9,7 @@ import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
 import logoIMG from '../../public/logo.png'
-import { motion } from 'framer-motion'
+//import { motion } from 'framer-motion'
 import useSWR from 'swr'
 import Cookies from 'js-cookie'
 import router from "next/router";
@@ -426,22 +426,22 @@ function Navbar(): ReactElement {
                                             <li className="right-butts-icon">
                                                 <Tooltip placement="bottom" title='سلة المشتريات'>
                                                     <Link href='/cart'>
-                                                        <motion.a whileTap={{ scale: 0.9 }}>
+                                                        <a>
                                                             <Badge count={userData && userData.cart_items_count} offset={[2, -1]}>
                                                                 <i className="material-icons material-icons-outlined">shopping_cart</i>
                                                             </Badge>
-                                                        </motion.a>
+                                                        </a>
                                                     </Link>
                                                 </Tooltip>
                                             </li>
                                             <li className="right-butts-icon">
                                                 <Tooltip placement="bottom" title='صندوق الرسائل'>
                                                     <Link href='/conversations'>
-                                                        <motion.a whileTap={{ scale: 0.9 }}>
+                                                        <a>
                                                             <Badge count={countMsg} offset={[2, -1]}>
                                                                 <i className="material-icons material-icons-outlined">email</i>
                                                             </Badge>
-                                                        </motion.a>
+                                                        </a>
                                                     </Link>
                                                 </Tooltip>
                                             </li>
@@ -458,21 +458,16 @@ function Navbar(): ReactElement {
                                             </li>
                                             <li className="login-user">
                                                 <Dropdown overlay={AccountList} trigger={['click']}>
-                                                    <a>
-                                                        {userData.user_details.profile.avatar_url == 'avatar.png' ?
-                                                            <ImageLogo src="/avatar2.jpg" width={32} height={32} /> :
-                                                            <ImageLogo
-                                                                loader={myLoader}
-                                                                src={userData.user_details.profile.avatar_url}
-                                                                quality={60}
-                                                                width={32}
-                                                                height={32}
-                                                                placeholder='blur'
-                                                                blurDataURL='/avatar2.jpg'
-                                                            />
-                                                        }
-                                                        <DownOutlined />
-                                                    </a>
+                                                        <ImageLogo
+                                                            loader={myLoader}
+                                                            src={userData.user_details.profile.avatar_url}
+                                                            quality={60}
+                                                            width={32}
+                                                            height={32}
+                                                            alt={userData && userData.user_details.profile.full_name}
+                                                            placeholder='blur'
+                                                            blurDataURL='/avatar2.jpg'
+                                                        />
                                                 </Dropdown>
                                             </li>
                                         </>
