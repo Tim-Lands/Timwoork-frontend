@@ -60,15 +60,16 @@ function Navbar(): ReactElement {
                                 </small>
                                 <Link href={`/u/${data.message.user.username}`}>
                                     <a style={{ color: '#666', fontWeight: 300, }}>
-                                        <img
+                                        <ImageLogo
                                             width={20}
                                             height={20}
                                             className="rounded-circle mx-1"
-                                            src={data.message.user.profile.avatar_url} alt=""
+                                            src={data.message.user.profile.avatar_url}
+                                            alt={data.message.user.profile.full_name}
                                         />
-                                        <span style={{ color: '#666', fontWeight: 300, }}>
+                                        {/*<span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
-                                        </span>
+                                        </span>*/}
                                     </a>
                                 </Link>
                             </p>
@@ -89,11 +90,12 @@ function Navbar(): ReactElement {
                                 </small>
                                 <Link href={`/u/${data.message.user.username}`}>
                                     <a style={{ color: '#666', fontWeight: 300, }}>
-                                        <img
+                                        <ImageLogo
                                             width={20}
                                             height={20}
                                             className="rounded-circle mx-1"
-                                            src={data.message.user.profile.avatar_url} alt=""
+                                            src={data.message.user.profile.avatar_url}
+                                            alt={data.message.user.profile.full_name}
                                         />
                                         <span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
@@ -118,11 +120,12 @@ function Navbar(): ReactElement {
                                 </small>
                                 <Link href={`/u/${data.message.user.username}`}>
                                     <a style={{ color: '#666', fontWeight: 300, }}>
-                                        <img
+                                        <ImageLogo
                                             width={20}
                                             height={20}
                                             className="rounded-circle mx-1"
-                                            src={data.message.user.profile.avatar_url} alt=""
+                                            src={data.message.user.profile.avatar_url}
+                                            alt={data.message.user.profile.full_name}
                                         />
                                         <span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
@@ -160,11 +163,13 @@ function Navbar(): ReactElement {
                             </small>
                             <Link href={`/u/${data.user_sender.username}`}>
                                 <a style={{ color: '#666', fontWeight: 300, }}>
-                                    <img
+                                    <ImageLogo
                                         width={20}
                                         height={20}
                                         className="rounded-circle mx-1"
-                                        src={data.user_sender.avatar_url} alt=""
+                                        src={data.user_sender.avatar_url}
+                                        alt={data.user_sender.full_name}
+
                                     />
                                     <span style={{ color: '#666', fontWeight: 300, }}>
                                         {data.user_sender.full_name}
@@ -253,39 +258,58 @@ function Navbar(): ReactElement {
         <Menu>
             <Menu.Item key="0">
                 <Link href="/user/profile">
-                    <a>الصفحة الشخصية</a>
+                    <a>
+                        <span className="material-icons material-icons-outlined">account_circle</span>
+                        {userData && userData.user_details.profile.full_name}
+                    </a>
                 </Link>
             </Menu.Item>
             {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
                 <Link href="/add-new">
-                    <a>إضافة خدمة جديدة</a>
+                    <a>
+                        <span className="material-icons material-icons-outlined">add_circle_outline</span>
+                        إضافة خدمة جديدة
+                    </a>
                 </Link>
             </Menu.Item>)}
 
             {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
                 <Link href="/myproducts">
-                    <a>خدماتي</a>
+                    <a>
+                        <span className="material-icons material-icons-outlined">inventory_2</span>
+                        خدماتي
+                    </a>
                 </Link>
             </Menu.Item>)}
             <Menu.Item key="1">
                 <Link href="/mypurchases">
-                    <a>مشترياتي</a>
+                    <a>
+                        <span className="material-icons material-icons-outlined">shopping_cart</span>
+                        مشترياتي
+                    </a>
                 </Link>
             </Menu.Item>
             {userData && (userData.user_details.profile.is_seller == 1) && (
                 <Menu.Item key="43">
                     <Link href="/mysales">
-                        <a>مبيعاتي</a>
+                        <a>
+                            <span className="material-icons material-icons-outlined">shop_2</span>
+                            مبيعاتي
+                        </a>
                     </Link>
                 </Menu.Item>)}
             <Menu.Item key="14">
                 <Link href="/user/personalInformations">
-                    <a>الإعدادات</a>
+                    <a>
+                        <span className="material-icons material-icons-outlined">settings</span>
+                        الإعدادات
+                    </a>
                 </Link>
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="3">
                 <a onClick={logout}>
+                    <span className="material-icons material-icons-outlined">logout</span>
                     تسجيل الخروج
                 </a>
             </Menu.Item>
@@ -335,7 +359,7 @@ function Navbar(): ReactElement {
                                 <div className="logo-nav me-auto" style={{ display: 'flex' }}>
                                     <Link href="/">
                                         <a>
-                                            <ImageLogo src={logoIMG} />
+                                            <ImageLogo src={logoIMG} alt="Timwoork" />
                                         </a>
                                     </Link>
                                 </div>
@@ -447,7 +471,7 @@ function Navbar(): ReactElement {
                                                                 blurDataURL='/avatar2.jpg'
                                                             />
                                                         }
-                                                        <span className="text"> {userData.user_details.profile.last_name} </span><DownOutlined />
+                                                        <DownOutlined />
                                                     </a>
                                                 </Dropdown>
                                             </li>

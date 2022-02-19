@@ -83,44 +83,44 @@ function Complete({ query }) {
                         <div className={"timlands-panel"}>
                             <div className="timlands-steps">
                                 <div className="timlands-step-item">
-                                    <h3 className="text">
+                                    <h4 className="text">
                                         <span className="icon-circular">
                                             <span className="material-icons material-icons-outlined">collections_bookmark</span>
                                         </span>
                                         معلومات عامة
-                                    </h3>
+                                    </h4>
                                 </div>
                                 <div className="timlands-step-item">
-                                    <h3 className="text">
+                                    <h4 className="text">
                                         <span className="icon-circular">
                                             <span className="material-icons material-icons-outlined">payments</span>
                                         </span>
                                         السعر والتطويرات
-                                    </h3>
+                                    </h4>
                                 </div>
                                 <div className="timlands-step-item">
-                                    <h3 className="text">
+                                    <h4 className="text">
                                         <span className="icon-circular">
                                             <span className="material-icons material-icons-outlined">description</span>
                                         </span>
                                         الوصف وتعليمات المشتري
-                                    </h3>
+                                    </h4>
                                 </div>
                                 <div className="timlands-step-item">
-                                    <h3 className="text">
+                                    <h4 className="text">
                                         <span className="icon-circular">
                                             <span className="material-icons material-icons-outlined">mms</span>
                                         </span>
                                         مكتبة الصور والملفات
-                                    </h3>
+                                    </h4>
                                 </div>
                                 <div className="timlands-step-item active">
-                                    <h3 className="text">
+                                    <h4 className="text">
                                         <span className="icon-circular">
                                             <span className="material-icons material-icons-outlined">publish</span>
                                         </span>
                                         نشر الخدمة
-                                    </h3>
+                                    </h4>
                                 </div>
                             </div>
                             <div className="timlands-add-new">
@@ -128,7 +128,7 @@ function Complete({ query }) {
                                     <span className="material-icons material-icons-outlined">check_circle</span>
                                 </div>
                                 <div className="timlands-add-new-body">
-                                    <h3 className="title">تمت إضافة الخدمة بنجاح</h3>
+                                    <h4 className="title">تمت إضافة الخدمة بنجاح</h4>
                                     <p className="text">
                                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                                     </p>

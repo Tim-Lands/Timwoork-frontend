@@ -83,7 +83,7 @@ function CommentPost(props: any): ReactElement {
                         <span className="material-icons material-icons-outlined">schedule</span>
                         {props.time}
                     </p>
-                    <h3 className="user-title">{props.author}</h3>
+                    <h4 className="user-title">{props.author}</h4>
                     <p className="user-ratting">
                         <span className="stars-icons">
                             {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
@@ -107,7 +107,7 @@ function CommentPost(props: any): ReactElement {
                                         <span className="material-icons material-icons-outlined">schedule</span>
                                         {e.time}
                                     </p>
-                                    <h3 className="user-title">{e.author}</h3>
+                                    <h4 className="user-title">{e.author}</h4>
                                     <p className="item-text">
                                         {e.content}
                                     </p>

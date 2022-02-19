@@ -111,29 +111,29 @@ function Description({ query }) {
                                         <div className={"timlands-panel" + (isSubmitting ? ' is-loader' : '')}>
                                             <div className="timlands-steps">
                                                 <div className="timlands-step-item">
-                                                    <h3 className="text">
+                                                    <h4 className="text">
                                                         <span className="icon-circular">
                                                             <span className="material-icons material-icons-outlined">collections_bookmark</span>
                                                         </span>
                                                         معلومات عامة
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                                 <div className="timlands-step-item">
-                                                    <h3 className="text">
+                                                    <h4 className="text">
                                                         <span className="icon-circular">
                                                             <span className="material-icons material-icons-outlined">payments</span>
                                                         </span>
                                                         السعر والتطويرات
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                                 <div className="timlands-step-item active">
-                                                    <h3 className="text">
+                                                    <h4 className="text">
 
                                                         <span className="icon-circular">
                                                             <span className="material-icons material-icons-outlined">description</span>
                                                         </span>
                                                         الوصف وتعليمات المشتري
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                                 <div className="timlands-step-item">
                                                     <h3 className="text">

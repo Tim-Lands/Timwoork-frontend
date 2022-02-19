@@ -22,7 +22,7 @@ function CartPost({ id, quantity, title, price, itemTotal, developments, deleteI
             <div className="row">
                 <div className="col-md-7">
                     <div className="cart-item-content me-auto" style={{ padding: 15 }}>
-                        <h2
+                        <h4
                             className="title"
                             style={{
                                 fontSize: 18,
@@ -30,7 +30,7 @@ function CartPost({ id, quantity, title, price, itemTotal, developments, deleteI
                                 color: '#444',
                                 margin: 0,
                                 marginBottom: 13,
-                            }}>{title}</h2>
+                            }}>{title}</h4>
                         <div className="panel-aside-body">
                             <ul className="add-devloppers-nav">
                                 {developments.map((e: any) => {

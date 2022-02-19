@@ -47,14 +47,13 @@ const CheckoutForm = () => {
 
     return (
         <>
-            {isLoading ? <Loading /> :
-                <form onSubmit={handleSubmit}>
-                    <CardElement />
-                    <button type="submit" className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
-                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span>شراء الآن</span>
-                    </button>
-                </form>}
+            <form onSubmit={handleSubmit}>
+                <CardElement />
+                <button type="submit" onClick={() => setIsLoading(true)} className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
+                    <span>شراء الآن</span>
+                    {isLoading && <span className="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span>}
+                </button>
+            </form>
         </>
     );
 };

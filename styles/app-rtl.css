@@ -1895,6 +1895,7 @@ h3 {
   width: 120px;
   overflow: hidden;
   border-radius: 50%;
+  margin: auto;
 }
 
 .timlands-profile-content .profile-content-header .profile-content-avatar img {
@@ -7009,6 +7010,22 @@ h3 {
   color: #555;
   font-size: 17px;
   font-weight: bold;
+}
+
+.ant-dropdown-menu-title-content a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.ant-dropdown-menu-title-content a .material-icons {
+  font-size: 19px;
+  margin-left: 3px;
 }
 
 .is-dark {

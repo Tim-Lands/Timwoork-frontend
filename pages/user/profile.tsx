@@ -89,22 +89,19 @@ function Profile() {
                                 <div className="timlands-profile-content">
                                     <div className="profile-content-header">
                                         <div className="profile-content-avatar">
-                                            {userInfo.user_details.profile.avatar_url == 'avatar.png' ?
-                                                <Image src="/avatar2.jpg" width={120} height={120} /> :
-                                                <Image
-                                                    loader={myLoader}
-                                                    src={userInfo.user_details.profile.avatar_url}
-                                                    quality={1}
-                                                    width={120}
-                                                    height={120}
-                                                    placeholder='blur'
-                                                    blurDataURL='/avatar2.jpg'
-                                                />
-                                            }
+                                            <Image
+                                                loader={myLoader}
+                                                src={userInfo && userInfo.user_details.profile.avatar_url}
+                                                quality={1}
+                                                width={120}
+                                                height={120}
+                                                placeholder='blur'
+                                                blurDataURL='/avatar2.jpg'
+                                            />
                                         </div>
                                         <div className="profile-content-head">
                                             <h4 className="title">
-                                                {userInfo.user_details.profile.first_name + ' ' + userInfo.user_details.profile.last_name}
+                                                {userInfo.user_details.profile.full_name}
                                             </h4>
                                             <p className="text">
                                                 @{userInfo.user_details.username} |

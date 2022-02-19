@@ -7,7 +7,7 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
     return (
         <div className="col-lg-4">
             {!profile_seller &&
-                <div className="be-seller-aside">
+                <div className="be-seller-aside mt-2">
                     <h3 className="title">كن بائعا</h3>
                     <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
                     <button onClick={beseller} disabled={isLoadingSeler} className='btn butt-green butt-md' style={{ width: '100%' }}>
@@ -15,14 +15,23 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                     </button>
                 </div>
             }
-            {profile_seller &&
-                <div className="py-1">
+            {profile_seller && <>
+                <div className="py-1 mt-2">
                     <Card title="نبذة عني" extra={<Link href="/user/editSeller"><a className='edit-button flex-center'><span className="material-icons material-icons-outlined">edit</span></a></Link>}>
                         <p className="user-bro">
                             {profile_seller.bio}
                         </p>
                     </Card>
                 </div>
+                <div className="p-4 bg-white">
+                    <p className="text">
+                        <strong>شارة البائع: </strong> <span className='text-inop'>{profile_seller.badge.name_ar}</span>
+                    </p>
+                    <p className="text m-0">
+                        <strong>مستوى البائع: </strong> <span className='text-inop'>{profile_seller.level.name_ar}</span>
+                    </p>
+                </div>
+            </>
             }
             <div className="py-1">
                 <Card title="الرصيد">

@@ -12,11 +12,11 @@ function BottomFooter() {
                 <ul className="nav center-nav-footer col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><Link href="/"><a className="nav-link px-2 link-dark">الرئيسية</a></Link></li>
                     <li><Link href="/about-us"><a className="nav-link px-2 link-dark">حول الموقع</a></Link></li>
-                    <li><Link href="/contact"><a className="nav-link px-2 link-dark">اتصل بنا</a></Link></li>
+                    <li><Link href="/contactus"><a className="nav-link px-2 link-dark">اتصل بنا</a></Link></li>
                 </ul>
 
                 <div className="col-md-3 text-end">
-                    <p className="copy-text">© 2021-2022 <a href="/">TimWoork</a> جميع الحقوق محفوظة </p>
+                    <p className="copy-text">© 2021-2022 <a href="/">Timwoork</a> جميع الحقوق محفوظة </p>
                 </div>
             </header>
         </div>

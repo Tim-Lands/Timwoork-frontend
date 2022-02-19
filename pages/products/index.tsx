@@ -132,10 +132,10 @@ function Category() {
             <div className="col-md-3">
               <div className="filter-search-sidebar">
                 <div className="filter-sidebar-title">
-                  <h3 className="title">فلترة الخدمات</h3>
+                  <h4 className="title">فلترة الخدمات</h4>
                 </div>
                 <div className="filter-sidebar-panel">
-                  <h3 className="title">السعر</h3>
+                  <h4 className="title">السعر</h4>
                   <div className="timlands-form">
                     {
                       <Slider
@@ -153,7 +153,7 @@ function Category() {
                   </div>
                 </div>
                 <div className="filter-sidebar-panel">
-                  <h3 className="title">التصنيف الرئيسي</h3>
+                  <h4 className="title">التصنيف الرئيسي</h4>
                   <Tags
                     values={setValue}
                     labels={setLabel}
@@ -174,7 +174,7 @@ function Category() {
             </div>
             <div className="col-md-9">
               <div className="page-header">
-                <h5 className="title">جميع الخدمات</h5>
+                <h4 className="title">جميع الخدمات</h4>
               </div>
               <FilterContent
                 products={products}

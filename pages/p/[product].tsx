@@ -376,7 +376,7 @@ function Single({ query }) {
                     {ProductData.data.profile_seller &&
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
-                          <h2 className="title">حول البائع</h2>
+                          <h4 className="title">حول البائع</h4>
                         </div>
                         <div className="seller-info-container">
                           <div className="d-flex">
@@ -393,9 +393,9 @@ function Single({ query }) {
                               />*/}
                             </div>
                             <div className="seller-info-content">
-                              <h3 className="user-title">
+                              <h4 className="user-title">
                                 {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
-                              </h3>
+                              </h4>
                               <ul className="user-meta nav">
                                 <li>
                                   <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.badge !== null && ProductData.data.profile_seller.badge.name_ar}
@@ -426,10 +426,10 @@ function Single({ query }) {
                         <div className="timwoork-single-comments-inner">
                           <div className="single-comments-header">
                             <div className="flex-center">
-                              <h1 className="title">
+                              <h4 className="title">
                                 <span className="material-icons material-icons-outlined">question_answer</span>
                                 التعليقات
-                              </h1>
+                              </h4>
                             </div>
                           </div>
                           <div className="single-comments-body">
@@ -480,7 +480,7 @@ function Single({ query }) {
                     {ProductData.data.developments &&
                       <div className="panel-aside-body">
                         <div className="add-devloppers-header">
-                          <h3 className="title">التطويرات المتوفرة</h3>
+                          <h4 className="title">التطويرات المتوفرة</h4>
                         </div>
                         <ul className="add-devloppers-nav">
                           {ProductData.data.developments.map((e: any) => {
@@ -507,9 +507,9 @@ function Single({ query }) {
                     }
                     <div className="panel-aside-footer">
                       <div className="aside-footer-total-price">
-                        <h1 className="price-total me-auto">
+                        <h4 className="price-total me-auto">
                           <strong>المجموع </strong> {_totalPrice()}$
-                        </h1>
+                        </h4>
                         <div className="bayers-count">
                           <p className="num">
                             <span className="count">{ProductData && ProductData.data.count_buying} </span>
