@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
 import Comments from '../../components/Comments'
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
@@ -25,8 +25,11 @@ const properties = {
   prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
-function Single({ query }) {
+function Single({ query, stars }) {
+  useEffect(() => {
+    console.log(stars.data);
 
+  }, [])
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   const [quantutyCount, setQuantutyCount] = useState(1)
@@ -276,11 +279,11 @@ function Single({ query }) {
       {errorLoad && <NotFound />}
 
       <MetaTags
-        title={ProductData && ProductData.data.title + ' - تيموورك'}
-        metaDescription={ProductData && ProductData.data.content}
-        ogDescription={ProductData && ProductData.data.content}
-        ogImage={ProductData && ProductData.data.full_path_thumbnail}
-        ogUrl={`https://timwoork.com/p/${ProductData && ProductData.data.slug}`}
+        title={stars.data.title + ' - تيموورك'}
+        metaDescription={stars.data.content}
+        ogDescription={stars.data.content}
+        ogImage={stars.data.full_path_thumbnail}
+        ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
       />
 
       {ProductData &&
@@ -361,7 +364,6 @@ function Single({ query }) {
                           <li className="title">
                             الوسوم:
                           </li>
-
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -549,10 +551,14 @@ Single.getLayout = function getLayout(page: any): ReactElement {
   )
 }
 export default Single;
+export async function getServerSideProps({ query }) {
+  // Fetch data from external API
+  const res = await API.get(`api/product/${query.product}`)
 
-Single.getInitialProps = async ({ query }) => {
-  return { query }
+  // Pass data to the page via props
+  return { props: { stars: res.data, query } }
 }
 Single.propTypes = {
   query: PropTypes.any,
+  stars: PropTypes.any
 };
