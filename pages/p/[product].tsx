@@ -552,8 +552,9 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Single;
 export async function getServerSideProps({ query }) {
+  const uriString = encodeURI(`api/product/${query.product}`)
   // Fetch data from external API
-  const res = await API.get(`api/product/${query.product}`)
+  const res = await API.get(uriString)
 
   // Pass data to the page via props
   return { props: { stars: res.data, query } }
