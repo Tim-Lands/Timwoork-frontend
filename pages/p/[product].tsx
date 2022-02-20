@@ -26,10 +26,7 @@ const properties = {
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
 function Single({ query, stars }) {
-  useEffect(() => {
-    console.log(stars.data);
 
-  }, [])
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   const [quantutyCount, setQuantutyCount] = useState(1)
@@ -452,9 +449,9 @@ function Single({ query, stars }) {
                         </li>
                         <li className="cat-post ml-auto">
                           <Dropdown overlay={menu}>
-                            <a>
+                            <span>
                               <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
-                            </a>
+                            </span>
                           </Dropdown>
                         </li>
                       </ul>
