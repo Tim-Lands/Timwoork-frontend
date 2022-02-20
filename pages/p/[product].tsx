@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
 import Comments from '../../components/Comments'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
