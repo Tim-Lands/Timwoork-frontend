@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Link from 'next/link'
 
 export default function UploadPicture({ profile_seller, beseller, isLoadingSeler, pending_amount, withdrawable_amount, darkMode }) {
-
     return (
         <div className="col-lg-4">
             {!profile_seller &&

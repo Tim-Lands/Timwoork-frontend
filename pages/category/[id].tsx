@@ -7,7 +7,7 @@ import Loading from '@/components/Loading';
 import Post from '@/components/Post/Post';
 
 function index({ query }) {
-    const { data: popularProducts }: any = useSWR(`api/filter?paginate=12&category=${query.id}`)
+    const { data: popularProducts }: any = useSWR(`api/filter?paginate=12&category_id=${query.id}`)
     const { data: subCategories }: any = useSWR(`api/get_categories/${query.id}`)
     return (
         <div className="row py-4 justify-content-center">

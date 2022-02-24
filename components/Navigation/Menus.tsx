@@ -24,21 +24,29 @@ function Menus({ darkMode }) {
     return (
         <ul className="nav app-navbar is-desktop">
             <li>
-                <button className={"explore-butt " + (showExplore && 'is-open')} onClick={setShowExploreHandle} style={{
-                    fontWeight: 600,
-                    color: !darkMode ? '#666' : '#f1f1f1',
-                    display: 'flex',
-                    paddingInline: 17,
-                    paddingBlock: 0,
-                    border: 0,
-                    backgroundColor: 'transparent',
-                    fontSize: 14,
-                    height: 50,
-                    alignItems: 'center',
-                    alignContent: 'center'
-                }}>
+                <motion.button
+                    whileHover={{
+                        color: !darkMode ? '#000' : '#fff',
+                        scale: 1.07
+                    }}
+                    whileTap={{
+                        scale: 1.02
+                    }}
+                    className={"explore-butt " + (showExplore && 'is-open')} onClick={setShowExploreHandle} style={{
+                        fontWeight: 600,
+                        color: !darkMode ? '#666' : '#f1f1f1',
+                        display: 'flex',
+                        paddingInline: 17,
+                        paddingBlock: 0,
+                        border: 0,
+                        backgroundColor: 'transparent',
+                        fontSize: 14,
+                        height: 50,
+                        alignItems: 'center',
+                        alignContent: 'center'
+                    }}>
                     <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنيفات <i className="fa fa-angle-down"></i>
-                </button>
+                </motion.button>
                 {showExplore && (
                     <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">
                         <Explores />
@@ -47,53 +55,77 @@ function Menus({ darkMode }) {
             </li>
             <li>
                 <Link href="/products">
-                    <a style={{
-                        fontWeight: 600,
-                        color: !darkMode ? '#666' : '#f1f1f1',
-                        display: 'flex',
-                        paddingInline: 17,
-                        paddingBlock: 0,
-                        fontSize: 14,
-                        height: 50,
-                        alignItems: 'center',
-                        alignContent: 'center'
-                    }}>
-                        <i className="material-icons material-icons-outlined">table_view</i> تصفح جميع الخدمات
-                    </a>
+                    <motion.a
+                        whileHover={{
+                            color: !darkMode ? '#000' : '#fff',
+                            scale: 1.07
+                        }}
+                        whileTap={{
+                            scale: 1.02
+                        }}
+                        style={{
+                            fontWeight: 600,
+                            color: !darkMode ? '#666' : '#f1f1f1',
+                            display: 'flex',
+                            paddingInline: 17,
+                            paddingBlock: 0,
+                            fontSize: 14,
+                            height: 50,
+                            alignItems: 'center',
+                            alignContent: 'center'
+                        }}>
+                        <i className="material-icons material-icons-outlined">table_view</i> تصفح الخدمات
+                    </motion.a>
                 </Link>
             </li>
             <li>
                 <Link href="/blog">
-                    <a style={{
-                        fontWeight: 600,
-                        color: !darkMode ? '#666' : '#f1f1f1',
-                        display: 'flex',
-                        paddingInline: 17,
-                        paddingBlock: 0,
-                        fontSize: 14,
-                        height: 50,
-                        alignItems: 'center',
-                        alignContent: 'center'
-                    }}>
+                    <motion.a
+                        whileHover={{
+                            color: !darkMode ? '#000' : '#fff',
+                            scale: 1.07
+                        }}
+                        whileTap={{
+                            scale: 1.02
+                        }}
+                        style={{
+                            fontWeight: 600,
+                            color: !darkMode ? '#666' : '#f1f1f1',
+                            display: 'flex',
+                            paddingInline: 17,
+                            paddingBlock: 0,
+                            fontSize: 14,
+                            height: 50,
+                            alignItems: 'center',
+                            alignContent: 'center'
+                        }}>
                         <i className="material-icons material-icons-outlined">article</i> المدونة
-                    </a>
+                    </motion.a>
                 </Link>
             </li>
             <li>
                 <Link href="/community">
-                    <a style={{
-                        fontWeight: 600,
-                        color: !darkMode ? '#666' : '#f1f1f1',
-                        display: 'flex',
-                        paddingInline: 17,
-                        paddingBlock: 0,
-                        fontSize: 14,
-                        height: 50,
-                        alignItems: 'center',
-                        alignContent: 'center'
-                    }}>
+                    <motion.a
+                        whileHover={{
+                            color: !darkMode ? '#000' : '#fff',
+                            scale: 1.07
+                        }}
+                        whileTap={{
+                            scale: 1.02
+                        }}
+                        style={{
+                            fontWeight: 600,
+                            color: !darkMode ? '#666' : '#f1f1f1',
+                            display: 'flex',
+                            paddingInline: 17,
+                            paddingBlock: 0,
+                            fontSize: 14,
+                            height: 50,
+                            alignItems: 'center',
+                            alignContent: 'center'
+                        }}>
                         <i className="material-icons material-icons-outlined">forum</i> مجتمع تيم ورك
-                    </a>
+                    </motion.a>
                 </Link>
             </li>
         </ul>

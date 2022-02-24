@@ -84,6 +84,37 @@ export default function MyProducts({ setStatusType, postsList }) {
             });
         }
     }
+    const activeProductHandle = async (id: any) => {
+        const MySwal = withReactContent(Swal)
+
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+        try {
+            const res = await API.post(`api/my_products/${id}/active_product`, null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                swalWithBootstrapButtons.fire(
+                    'تم التنشيط!',
+                    'لقد تم تنشسط هذه الخدمة بنجاح',
+                    'success'
+                )
+                router.reload()
+            }
+        } catch (error) {
+            notification['error']({
+                message: 'رسالة خطأ',
+                description: 'للأسف لم يتم تنشيط هذه الخدمة',
+            });
+        }
+    }
     function statusProduct(status: any) {
         switch (status) {
             case null:
@@ -143,7 +174,13 @@ export default function MyProducts({ setStatusType, postsList }) {
                         <tbody>
                             {postsList && postsList.data.map((e: any) => (
                                 <tr key={e.id}>
-                                    <td>{e.title}</td>
+                                    <td>
+                                        <Link href={`/myproducts/${e.slug}`}>
+                                        <a>
+                                        {e.title}
+                                        </a>
+                                        </Link>
+                                        </td>
                                     <td>{e.is_completed == 0 ?
                                         <span className="badge bg-danger">لا</span> :
                                         <span className="badge bg-success">نعم</span>}</td>
@@ -159,13 +196,13 @@ export default function MyProducts({ setStatusType, postsList }) {
                                         </Tooltip>
                                         {e.status == 1 &&
                                             <>
-                                            {e.is_active == 0 ?
-                                                <Tooltip title="تفعيل هذه الخدمة">
-                                                    <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'green' }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
-                                                </Tooltip> :
-                                                <Tooltip title="تعطيل هذه الخدمة">
-                                                    <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
-                                                </Tooltip>}
+                                                {e.is_active == 0 ?
+                                                    <Tooltip title="تفعيل هذه الخدمة">
+                                                        <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'green' }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
+                                                    </Tooltip> :
+                                                    <Tooltip title="تعطيل هذه الخدمة">
+                                                        <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => activeProductHandle(e.id)} />
+                                                    </Tooltip>}
                                             </>
                                         }
                                         <Tooltip title="تعديل الخدمة">
