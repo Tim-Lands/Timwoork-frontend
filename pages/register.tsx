@@ -14,7 +14,9 @@ const Register = (): ReactElement => {
     const [passVisibled, setPassVisibled] = useState(false)
     const [registerLoading, setRegisterLoading] = useState(false)
     const [validationsErrors, setValidationsErrors]: any = useState({})
-
+    const clearValidationHandle = () => {
+        setValidationsErrors({})
+    }
     const onLoginSuccess = async (res) => {
         //أرسل هذا الريسبونس الى الباكند
         try {
@@ -145,6 +147,7 @@ const Register = (): ReactElement => {
                                                 <Field
                                                     id="username"
                                                     name="username"
+                                                    onKeyUp={clearValidationHandle}
                                                     placeholder=" اسم المستخدم..."
                                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.username && ' has-error')}
                                                     autoComplete="off"
@@ -163,6 +166,7 @@ const Register = (): ReactElement => {
                                                 <Field
                                                     id="email"
                                                     name="email"
+                                                    onKeyUp={clearValidationHandle}
                                                     placeholder="البريد الإلكتروني..."
                                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.email && ' has-error')}
                                                     autoComplete="off"
@@ -182,6 +186,7 @@ const Register = (): ReactElement => {
                                                     type={passVisibled ? "text" : 'password'}
                                                     id="password"
                                                     name="password"
+                                                    onKeyUp={clearValidationHandle}
                                                     placeholder="كلمة المرور..."
                                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.password && ' has-error')}
                                                     autoComplete="off"
@@ -207,6 +212,7 @@ const Register = (): ReactElement => {
                                                     type={passVisibled ? "text" : 'password'}
                                                     id="password_confirmation"
                                                     name="password_confirmation"
+                                                    onKeyUp={clearValidationHandle}
                                                     placeholder="إعادة كلمة المرور..."
                                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.password_confirmation && ' has-error')}
                                                     autoComplete="off"
@@ -250,11 +256,11 @@ const Register = (): ReactElement => {
                                             <h4 className="title">أو التسجيل بواسطة</h4>
                                         </div>
                                         <ul className="login-external-links nav justify-content-center">
-                                            <li>
+                                            {/* <li>
                                                 <button className="ext-butt">
                                                     <i className="fab fa-facebook"></i> | فيسبووك
                                                 </button>
-                                            </li>
+                                            </li> */}
                                             <li>
                                                 <GoogleLogin
                                                     clientId={clientId}
@@ -265,11 +271,6 @@ const Register = (): ReactElement => {
                                                     //isSignedIn={true}
                                                     className="ext-butt"
                                                 />
-                                            </li>
-                                            <li>
-                                                <button className="ext-butt">
-                                                    <i className="fab fa-twitter"></i> | تويتر
-                                                </button>
                                             </li>
                                         </ul>
                                     </div>

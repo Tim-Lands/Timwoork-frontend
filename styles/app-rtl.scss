@@ -1668,7 +1668,6 @@ h3 {
 .timlands-panel {
     background-color: #fff;
     padding: 20px;
-    overflow: hidden;
     .timlands-steps {
         border-bottom: 1px solid lighten($primary, 54);
         border-radius: 6px;
@@ -2760,13 +2759,16 @@ h3 {
     .choose-images-list {
         transition: all 0.3s;
         .image-item {
-            width: 90px;
-            height: 90px;
-            margin-left: 7px;
+            width: 100%;
+            height: 150px;
+            margin: 4px;
             border: 1px dashed #ddd;
             border-radius: 5px;
             overflow: hidden;
             position: relative;
+            &.featured-wrapper {
+                height: 250px;
+            }
             .image-item__btn-wrapper {
                 background-color: rgba(0, 0, 0, 0.671);
                 position: absolute;
@@ -2805,8 +2807,22 @@ h3 {
 
                 }
             }
+            &.featured-wrapper{
+
+                .image-item__btn-wrapper {
+                    button {
+                        width: 65px;
+                        height: 65px;
+                        .material-icons-outlined {
+                            font-size: 23px;
+                        }
+    
+                    }
+                }
+            }
             img {
                 height: 100%;
+                width: 100%;
             }
             &:hover {
                 .image-item__btn-wrapper {
@@ -3611,10 +3627,10 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             background-color: rgb(27, 142, 219) !important;
         }
     }
-    &.bt-youtube {
+    &.bt-instagram {
         &:hover {
             color: #fff !important;
-            background-color: rgb(235, 20, 20) !important;
+            background-color: rgb(179, 29, 141) !important;
         }
     }
     &.bt-facebook {
@@ -4241,6 +4257,62 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             font-size: 19px;
             margin-left: 3px;
         }
+    }
+}
+.purchase-by-wallet {
+    padding: 25px 30px;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #f1f1f1;
+    text-align: center;
+    margin-top: 12px;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.089);
+    .purchase-text {
+        color: #444;
+        font-size: 17px;
+        margin: 0;
+        margin-bottom: 16px;
+        font-weight: 200;
+    }
+    .btn {
+        width: 100%;
+        img {
+            margin-left: 6px;
+        }
+    }
+}
+// Purchace By Paypal Button
+.purchace-by-paypal-btn {
+    width: 100%;
+    margin: 10px 0;
+}
+// Purchace By Stripe Button
+.purchace-by-stripe-btn {
+    width: 100%;
+    margin: 10px 0;
+}
+.select-tags-form {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    .spinner-border {
+        position: absolute;
+        left: 83px;
+        top: 25px;
+        z-index: 100;
+    }
+}
+.nothing-images {
+    padding: 20px 10px;
+    margin-block: 10px;
+    .nothing-title {
+        font-weight: bold;
+        color: #666;
+    }
+    .nothing-text {
+        color: #666;
+        margin: 0;
+        font-size: 14px;
     }
 }
 @import 'is-dark';

@@ -12,7 +12,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 function Description({ query }) {
-    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+    const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const { data: getUser }: any = useSWR('api/me')
     const token = Cookies.get('token')
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -45,21 +45,6 @@ function Description({ query }) {
             }
         }
     }, [])
-    /*const deleteProduct = async () => {
-        try {
-            const res: any = API.post(`api/product/${query.id}/deleteProduct`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status == 200) {
-                message.success('لقد تم الحذف بنجاح')
-                router.push("/add-new")
-            }
-        } catch (error) {
-            message.error('للأسف لم يتم الحذف ')
-        }
-    }*/
     return (
         <>
             <MetaTags

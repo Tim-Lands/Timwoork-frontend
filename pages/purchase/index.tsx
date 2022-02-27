@@ -49,7 +49,7 @@ const CheckoutForm = () => {
         <>
             <form onSubmit={handleSubmit}>
                 <CardElement />
-                <button type="submit" onClick={() => setIsLoading(true)} className='btn butt-md butt-primary mt-2' disabled={!stripe || !elements}>
+                <button type="submit" onClick={() => setIsLoading(true)} className='btn butt-md purchace-by-stripe-btn butt-primary mt-2' disabled={!stripe || !elements}>
                     <span>شراء الآن</span>
                     {isLoading && <span className="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span>}
                 </button>
@@ -152,7 +152,7 @@ function Bill() {
                         </div>
                         {cartList && cartList.data !== null &&
                             <div className="app-bill-payment">
-                                <div className="form-check">
+                                <div className="form-check" style={{ marginBlock: 9 }}>
                                     <input
                                         className="form-check-input"
                                         type="radio"
@@ -174,7 +174,7 @@ function Bill() {
                                         </motion.div>
                                         : null}
                                 </div>
-                                <div className="form-check">
+                                <div className="form-check" style={{ marginBlock: 9 }}>
                                     <input
                                         className="form-check-input"
                                         type="radio"
@@ -187,16 +187,43 @@ function Bill() {
                                         الدفع عن طريق البايبال Paypal
                                     </label>
                                 </div>
-                                {isLoading && <span className="spinner-border spinner-border-sm" role="status"></span>}
                                 <div style={{ overflow: 'hidden' }}>
                                     {billPayment == 1 ?
                                         <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                            <a href={getLink} className='btn butt-primary2 butt-md'>
+                                            <a href={getLink} className='btn butt-primary2 butt-lg purchace-by-paypal-btn'>
+                                                {isLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
                                                 {!isLoading && <> <i className='fab fa-paypal'></i> | عن طريق Paypal</>}
                                             </a>
                                         </motion.div>
                                         : null}
                                 </div>
+
+                                <div className="form-check" style={{ marginBlock: 9 }}>
+                                    <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        value='2'
+                                        name="billPayment"
+                                        id="billPayment-wallet"
+                                        onChange={(e: any) => setBillPayment(e.target.value)}
+                                    />
+                                    <label className="form-check-label" htmlFor="billPayment-wallet">
+                                        الدفع عن طريق المحفظة
+                                    </label>
+                                </div>
+                                <div style={{ overflow: 'hidden' }}>
+                                    {billPayment == 2 ?
+                                        <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                            <div className="purchase-by-wallet">
+                                                <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
+                                                <button className='btn butt-lg butt-green flex-center-just'>
+                                                    <img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                        : null}
+                                </div>
+
                             </div>
                         }
                     </div>

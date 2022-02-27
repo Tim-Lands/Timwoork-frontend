@@ -1,29 +1,32 @@
 
 import React, { ReactElement } from "react";
 import Layout from '@/components/Layout/HomeLayout'
-import "antd/dist/antd.min.css";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
+import API from '../../config'
+
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Post from '@/components/Post/blogPost';
 import { Divider } from 'antd';
 import { Image } from 'antd';
 
-const User = ({ query }) => {
+const User = ({ query, stars }) => {
     const { data: getPosts }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/posts/?slug=${query.slug}`)
     const { data: getSamePosts }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/posts?categories=${getPosts && getPosts[0].categories[0]}&per_page=3`)
     const { data: getAds }: any = useSWR(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/media?include=28,29`)
     return (
         <>
             {!getPosts && <Loading />}
+            <MetaTags
+                title={stars[0].title.rendered + ' - تيموورك'}
+                metaDescription={stars[0].excerpt.rendered}
+                ogDescription={stars[0].excerpt.rendered}
+                ogImage={stars[0].jetpack_featured_media_url}
+                ogUrl={`https://timwoork.com/blog/${stars[0].slug}`}
+            />
             {getPosts &&
                 <>
-                    <MetaTags
-                        title={getPosts[0].title.rendered}
-                        metaDescription={getPosts[0].yoast_head_json.description}
-                        ogDescription={getPosts[0].yoast_head_json.description} />
-
                     <article className="py-5">
                         <div className="container">
                             <header>
@@ -43,7 +46,7 @@ const User = ({ query }) => {
                                     <Image
                                         src={getPosts[0].jetpack_featured_media_url}
                                     />
-                                    <div className="blog-single-content mt-3" style={{ lineHeight: 2, fontSize: 20,  }} dangerouslySetInnerHTML={{ __html: getPosts[0].content.rendered }}></div>
+                                    <div className="blog-single-content mt-3" style={{ lineHeight: 2, fontSize: 20, }} dangerouslySetInnerHTML={{ __html: getPosts[0].content.rendered }}></div>
                                     <Divider />
                                     <h3>مقالات ذات صلة:</h3>
                                     {!getSamePosts && <Loading />}
@@ -104,9 +107,15 @@ User.getLayout = function getLayout(page: any): ReactElement {
         </Layout>
     )
 }
-User.getInitialProps = async ({ query }) => {
-    return { query }
-}
+export async function getServerSideProps({ query }) {
+    const uriString = encodeURI(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/posts/?slug=${query.slug}`)
+    // Fetch data from external API
+    const res = await API.get(uriString)
+  
+    // Pass data to the page via props
+    return { props: { stars: res.data, query } }
+  }
 User.propTypes = {
     query: PropTypes.any,
+    stars: PropTypes.any,
 };

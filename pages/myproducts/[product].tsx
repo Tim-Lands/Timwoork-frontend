@@ -24,9 +24,7 @@ const properties = {
 }
 const token = Cookies.get('token')
 function Single({ query, stars }) {
-
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`)
-
   // const disactiveProductHandle = async (id: any) => {
   //   const MySwal = withReactContent(Swal)
 
@@ -61,7 +59,7 @@ function Single({ query, stars }) {
   const [isProductActive, setIsProductActive] = useState(false)
   const activeProductHandle = async (id: any) => {
     const MySwal = withReactContent(Swal)
-    
+
     const swalWithBootstrapButtons = MySwal.mixin({
       customClass: {
         confirmButton: 'btn butt-red butt-sm me-1',
@@ -242,11 +240,11 @@ function Single({ query, stars }) {
       />
       {ProductData &&
         <div className="timwoork-single">
-        {ProductData.data.is_active == null &&
-          <div style={{ marginTop: 27 }}>
-            <Alert type="warning">هذه الخدمة غير كامة تنقصها بعض التعديلات يمكنك <Link href={`/edit-product/overview?id=${ProductData.data.id}`}> التعديل </Link></Alert>
-          </div>
-        }
+          {ProductData.data.is_active == null &&
+            <div style={{ marginTop: 27 }}>
+              <Alert type="warning">هذه الخدمة غير كامة تنقصها بعض التعديلات يمكنك <Link href={`/edit-product/overview?id=${ProductData.data.id}`}> التعديل </Link></Alert>
+            </div>
+          }
           <div className="row">
             <div className="col-lg-8">
               <div className="timwoork-single-post">

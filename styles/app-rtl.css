@@ -553,6 +553,24 @@
   color: #fff;
 }
 
+.btn.butt-red-out {
+  background-color: transparent;
+  border-color: #da1616;
+  color: #da1616;
+}
+
+.btn.butt-red-out:hover {
+  background-color: #da1616;
+  border-color: #c31414;
+  color: #f2f2f2;
+}
+
+.btn.butt-red-out:focus {
+  background-color: #9e1010;
+  border-color: #9e1010;
+  color: #fff;
+}
+
 .btn.butt-dark-out {
   background-color: transparent;
   border-color: #333;
@@ -3776,7 +3794,6 @@ h3 {
 .timlands-panel {
   background-color: #fff;
   padding: 20px;
-  overflow: hidden;
 }
 
 .timlands-panel .timlands-steps {
@@ -5175,13 +5192,17 @@ h3 {
 }
 
 .choose-images-file .choose-images-list .image-item {
-  width: 90px;
-  height: 90px;
-  margin-left: 7px;
+  width: 100%;
+  height: 150px;
+  margin: 4px;
   border: 1px dashed #ddd;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
+}
+
+.choose-images-file .choose-images-list .image-item.featured-wrapper {
+  height: 250px;
 }
 
 .choose-images-file .choose-images-list .image-item .image-item__btn-wrapper {
@@ -5241,8 +5262,18 @@ h3 {
   font-size: 17px;
 }
 
+.choose-images-file .choose-images-list .image-item.featured-wrapper .image-item__btn-wrapper button {
+  width: 65px;
+  height: 65px;
+}
+
+.choose-images-file .choose-images-list .image-item.featured-wrapper .image-item__btn-wrapper button .material-icons-outlined {
+  font-size: 23px;
+}
+
 .choose-images-file .choose-images-list .image-item img {
   height: 100%;
+  width: 100%;
 }
 
 .choose-images-file .choose-images-list .image-item:hover .image-item__btn-wrapper {
@@ -6233,9 +6264,9 @@ h3 {
   background-color: #1b8edb !important;
 }
 
-.social-link.bt-youtube:hover {
+.social-link.bt-instagram:hover {
   color: #fff !important;
-  background-color: #eb1414 !important;
+  background-color: #b31d8d !important;
 }
 
 .social-link.bt-facebook:hover {
@@ -7015,6 +7046,77 @@ h3 {
 .ant-dropdown-menu-title-content a .material-icons {
   font-size: 19px;
   margin-left: 3px;
+}
+
+.purchase-by-wallet {
+  padding: 25px 30px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #f1f1f1;
+  text-align: center;
+  margin-top: 12px;
+  -webkit-box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.089);
+          box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.089);
+}
+
+.purchase-by-wallet .purchase-text {
+  color: #444;
+  font-size: 17px;
+  margin: 0;
+  margin-bottom: 16px;
+  font-weight: 200;
+}
+
+.purchase-by-wallet .btn {
+  width: 100%;
+}
+
+.purchase-by-wallet .btn img {
+  margin-left: 6px;
+}
+
+.purchace-by-paypal-btn {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.purchace-by-stripe-btn {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.select-tags-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.select-tags-form .spinner-border {
+  position: absolute;
+  left: 83px;
+  top: 25px;
+  z-index: 100;
+}
+
+.nothing-images {
+  padding: 20px 10px;
+  margin-block: 10px;
+}
+
+.nothing-images .nothing-title {
+  font-weight: bold;
+  color: #666;
+}
+
+.nothing-images .nothing-text {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
 }
 
 .is-dark {

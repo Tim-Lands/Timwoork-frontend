@@ -161,6 +161,21 @@
             color: #fff;
         }
     }
+    &.butt-red-out {
+        background-color: transparent;
+        border-color: #da1616;
+        color: #da1616;
+        &:hover {
+            background-color: #da1616;
+            border-color: darken(#da1616, 5);
+            color: #f2f2f2;
+        }
+        &:focus {
+            background-color: darken(#da1616, 13);
+            border-color: darken(#da1616, 13);
+            color: #fff;
+        }
+    }
     &.butt-dark-out {
         background-color: transparent;
         border-color: #333;

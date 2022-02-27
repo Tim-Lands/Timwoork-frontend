@@ -8,12 +8,18 @@ import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import { GoogleLogin } from 'react-google-login';
 import { message } from "antd";
+import { Alert } from "@/components/Alert/Alert";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 const Login = (): ReactElement => {
     const [passVisibled, setPassVisibled] = useState(false)
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
+    function setValidationsErrorsHandle() {
+        setValidationsErrors({})
+        setValidationsGeneral({})
+    }
     /* Generate username from email and random 4 numbers 
      * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234 
      * then the username= roqaia.alrfou31234
@@ -31,6 +37,7 @@ const Login = (): ReactElement => {
 
     // Login with Google
     const onLoginSuccess = async (res) => {
+        setValidationsErrorsHandle()
         //أرسل هذا الريسبونس الى الباكند
         try {
             const response = await API.post("api/login/google", {
@@ -44,6 +51,7 @@ const Login = (): ReactElement => {
             })
             // Authentication was successful.
             if (response.status === 200) {
+                
                 Cookies.set('token', response.data.data.token)
                 // Cookies.set('username', );
                 // Cookies.set('userID', )
@@ -113,6 +121,9 @@ const Login = (): ReactElement => {
                         if (error.response && error.response.data && error.response.data.errors) {
                             setValidationsErrors(error.response.data.errors);
                         }
+                        if (error.response && error.response.data) {
+                            setValidationsGeneral(error.response.data);
+                        }
                     }
                 }}
             >
@@ -121,6 +132,7 @@ const Login = (): ReactElement => {
                         <div className="row justify-content-md-center">
                             <div className="col-lg-5 p-0">
                                 <div className="login-panel">
+                                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                                     <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
                                         {!isSubmitting ? '' :
                                             <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
@@ -146,6 +158,7 @@ const Login = (): ReactElement => {
                                             <Field
                                                 id="email"
                                                 name="username"
+                                                onKeyUp={setValidationsErrorsHandle}
                                                 placeholder="البريد الإلكتروني..."
                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.username && ' has-error')}
                                             />
@@ -163,6 +176,7 @@ const Login = (): ReactElement => {
                                                 id="password"
                                                 name="password"
                                                 placeholder="كلمة المرور..."
+                                                onKeyUp={setValidationsErrorsHandle}
                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.password && ' has-error')}
                                                 autoComplete="off"
                                             />
@@ -212,11 +226,11 @@ const Login = (): ReactElement => {
                                                 <h4 className="title">أو تسجيل الدخول بواسطة</h4>
                                             </div>
                                             <ul className="login-external-links nav justify-content-center">
-                                                <li>
+                                                {/* <li>
                                                     <button className="ext-butt">
                                                         <i className="fab fa-facebook"></i> | فيسبووك
                                                     </button>
-                                                </li>
+                                                </li> */}
                                                 <li>
                                                     <GoogleLogin
                                                         clientId={clientId}
@@ -227,11 +241,6 @@ const Login = (): ReactElement => {
                                                         //isSignedIn={true}
                                                         className="ext-butt"
                                                     />
-                                                </li>
-                                                <li>
-                                                    <button className="ext-butt">
-                                                        <i className="fab fa-twitter"></i> | تويتر
-                                                    </button>
                                                 </li>
                                             </ul>
                                         </div>

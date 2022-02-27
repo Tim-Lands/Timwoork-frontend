@@ -18,21 +18,9 @@ function Prices({ query }) {
     const { id } = query
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const [validationsErrors, setValidationsErrors]: any = useState({})
-    /*const deleteProduct = async () => {
-        try {
-            const res: any = API.post(`api/product/${id}/deleteProduct`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status == 200) {
-                message.success('لقد تم الحذف بنجاح')
-                router.push("/add-new")
-            }
-        } catch (error) {
-            message.error('للأسف لم يتم الحذف ')
-        }
-    }*/
+    const clearValidationHandle = () => {
+        setValidationsErrors({})
+    }
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${id}`, {
@@ -161,6 +149,7 @@ function Prices({ query }) {
                                                             <Field
                                                                 id="input-price"
                                                                 name="price"
+                                                                onKeyUp={clearValidationHandle}
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.price && ' has-error')}
                                                             />
                                                             {validationsErrors && validationsErrors.price &&
@@ -179,6 +168,7 @@ function Prices({ query }) {
                                                                     id="input-duration"
                                                                     type="number"
                                                                     name="duration"
+                                                                    onKeyUp={clearValidationHandle}
                                                                     className={"timlands-inputs select " + (validationsErrors && validationsErrors.duration && ' has-error')}
                                                                     autoComplete="off"
                                                                 />
@@ -215,6 +205,7 @@ function Prices({ query }) {
                                                                                                 <Field
                                                                                                     id={"input-name-" + index}
                                                                                                     placeholder="عنوان التطوير..."
+                                                                                                    onKeyUp={clearValidationHandle}
                                                                                                     className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.title`] && ' has-error')}
                                                                                                     name={`developments[${index}].title`}
                                                                                                 />
@@ -232,6 +223,7 @@ function Prices({ query }) {
                                                                                                 <Field
                                                                                                     id={"input-price-" + index}
                                                                                                     placeholder="سعر التطوير..."
+                                                                                                    onKeyUp={clearValidationHandle}
                                                                                                     className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.price`] && ' has-error')}
                                                                                                     name={`developments[${index}].price`}
                                                                                                 />
@@ -250,6 +242,7 @@ function Prices({ query }) {
                                                                                                     <Field
                                                                                                         type="number"
                                                                                                         id="input-duration"
+                                                                                                        onKeyUp={clearValidationHandle}
                                                                                                         name={`developments[${index}].duration`}
                                                                                                         className={"timlands-inputs " + (validationsErrors && validationsErrors[`developments.${index}.duration`] && ' has-error')}
                                                                                                         autoComplete="off"

@@ -33,23 +33,18 @@ function WebsiteLinksFooter() {
             </div>
             <ul className="nav social-icons">
                 <li>
-                    <a href="#" target="_blank" className="social-link bt-twitter">
+                    <a href="https://twitter.com/timwoorkDotCom" rel="noreferrer" target="_blank" className="social-link bt-twitter">
                         <i className="fab fa-twitter"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" target="_blank" className="social-link bt-youtube">
-                        <i className="fab fa-youtube"></i>
+                    <a href="https://www.instagram.com/timwoorkdotcom/" rel="noreferrer" target="_blank" className="social-link bt-instagram">
+                        <i className="fab fa-instagram"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" target="_blank" className="social-link bt-facebook">
+                    <a href="https://www.facebook.com/timwoorkDotCom" rel="noreferrer" target="_blank" className="social-link bt-facebook">
                         <i className="fab fa-facebook"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank" className="social-link bt-linkedin">
-                        <i className="fab fa-linkedin"></i>
                     </a>
                 </li>
             </ul>
