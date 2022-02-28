@@ -103,7 +103,7 @@ function Single({ query, stars }) {
       }
       {ProductData &&
         <Menu.Item key="2" icon={<i className="fa fa-facebook"></i>}>
-          <a target="_blank" rel="noreferrer" href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Fforum-wazzfny.com%2Fp%2F${ProductData.data.developments}&text=`}>
+          <a target="_blank" rel="noreferrer" href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.data.slug}&text=`}>
             المشاركة على التويتر
           </a>
         </Menu.Item>

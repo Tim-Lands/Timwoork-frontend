@@ -271,6 +271,14 @@ function Navbar(): ReactElement {
                     </a>
                 </Link>
             </Menu.Item>)}
+            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
+                <Link href="/mywallet">
+                    <a>
+                        <span className="material-icons material-icons-outlined">account_balance_wallet</span>
+                        الرصيد
+                    </a>
+                </Link>
+            </Menu.Item>)}
 
             {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
                 <Link href="/myproducts">

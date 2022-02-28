@@ -7,7 +7,7 @@ import Loading from '@/components/Loading';
 import Post from '@/components/Post/Post';
 
 function index({ query }) {
-    const { data: popularProducts }: any = useSWR(`api/filter?paginate=12&category_id=${query.id}`)
+    const { data: popularProducts }: any = useSWR(`api/get_products_subcategory/${query.id}`)
     const { data: subCategories }: any = useSWR(`api/get_categories/${query.id}`)
     return (
         <div className="row py-4 justify-content-center">
@@ -23,14 +23,14 @@ function index({ query }) {
                     }
                     <div className="app-bill-content">
                         {!popularProducts && <Loading />}
-                        {popularProducts && popularProducts.data.length == 0 &&
+                        {popularProducts && popularProducts.data.products.length == 0 &&
                             <Result
                                 status="404"
                                 title="لا توجد خدمات"
                                 subTitle="لا توجد خدمات لعرضها في هذا الصنف"
                             />}
                         <div className="row">
-                            {popularProducts && popularProducts.data.length !== 0 && popularProducts.data.data.map((e: any) => (
+                            {popularProducts && popularProducts.data.length !== 0 && popularProducts.data.products.map((e: any) => (
                                 <div key={e.id} className={"col-md-4"}>
                                     <Post
                                         size="small"
@@ -39,6 +39,7 @@ function index({ query }) {
                                         rate={e.ratings_avg}
                                         price={e.price}
                                         slug={e.slug}
+                                        username={e.profile_seller.profile.user.username}
                                         thumbnail={e.thumbnail}
                                         buyers={e.count_buying}
                                     />

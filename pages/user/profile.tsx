@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Result, message } from 'antd'
+import { Result, message } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -106,11 +106,6 @@ function Profile() {
                                             <p className="text">
                                                 @{userInfo.user_details.username} |
                                                 <span className="app-label"> {userInfo.user_details.profile.level.name_ar} </span>
-                                                <Badge
-                                                    className="site-badge-count-109"
-                                                    count={userInfo.user_details.profile.badge.name_ar}
-                                                    style={{ backgroundColor: '#52c41a' }}
-                                                />
                                             </p>
                                             <div className="button-edit">
                                                 <Link href="/user/personalInformations">
@@ -171,7 +166,6 @@ function Profile() {
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">تاريخ الميلاد</h3>
                                                     <p className="text-value">{userInfo.user_details.profile.date_of_birth == null ? '' : userInfo.user_details.profile.date_of_birth}</p>
-
                                                 </div>
                                             </div>
                                         </div>

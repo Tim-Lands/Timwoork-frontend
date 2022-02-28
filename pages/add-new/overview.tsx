@@ -265,6 +265,11 @@ function Overview({ query }) {
                                                         </div>}
                                                 </div>
                                             </div>
+                                            <p className="label-text" style={{
+                                                fontWeight: 'bold',
+                                                marginTop: 10,
+                                                marginBottom: -9
+                                            }}>الوسوم / التاج</p>
                                             <MySelect
                                                 value={formik.values.tags}
                                                 onChange={formik.setFieldValue}

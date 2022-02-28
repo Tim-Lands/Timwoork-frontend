@@ -1,6 +1,5 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { Field, Form, Formik } from "formik";
-import * as Yup from 'yup';
 import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
@@ -8,9 +7,10 @@ import router from "next/router";
 import Link from "next/link"
 
 const ForgetPass = (): ReactElement => {
-    const SignupSchema = Yup.object().shape({
-        email: Yup.string().required('هذا الحقل إجباري'),
-    });
+    const [validationsErrors, setValidationsErrors]: any = useState({})
+    function setValidationsErrorsHandle() {
+        setValidationsErrors({})
+    }
     // Return statement.
     return (
         <>
@@ -18,7 +18,6 @@ const ForgetPass = (): ReactElement => {
                 initialValues={{
                     email: '',
                 }}
-                validationSchema={SignupSchema}
                 onSubmit={async values => {
                     try {
                         const res = await API.post("api/password/forget/sendResetLink", values)
@@ -28,13 +27,13 @@ const ForgetPass = (): ReactElement => {
                             router.push('/user/sentToken')
                         }
                     } catch (error: any) {
-                        if (error.response && error.response.data.errors) {
-                            message.success('لقد تم التحديث بنجاح')
+                        if (error.response && error.response.data && error.response.data.errors) {
+                            setValidationsErrors(error.response.data.errors);
                         }
                     }
                 }}
             >
-                {({ errors, touched, isSubmitting }) => (
+                {({ isSubmitting }) => (
                     <Form>
                         <div className="row justify-content-md-center pt-5">
                             <div className="col-lg-6 p-0">
@@ -47,6 +46,13 @@ const ForgetPass = (): ReactElement => {
                                                 </div>
                                             </motion.div>
                                         }
+                                        <div className="timwoork-logo">
+                                            <Link href="/">
+                                                <a>
+                                                    <img src="/logo6.png" alt="" />
+                                                </a>
+                                            </Link>
+                                        </div>
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
@@ -55,17 +61,16 @@ const ForgetPass = (): ReactElement => {
                                                         id="email"
                                                         name="email"
                                                         placeholder="البريد الإلكتروني..."
-                                                        className="timlands-inputs"
+                                                        onKeyUp={setValidationsErrorsHandle}
+                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.email && ' has-error')}
                                                         autoComplete="off"
                                                     />
-                                                    {errors.email && touched.email ?
+                                                    {validationsErrors && validationsErrors.email &&
                                                         <div style={{ overflow: 'hidden' }}>
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{errors.email}</p>
+                                                                <p className="text">{validationsErrors.email[0]}</p>
                                                             </motion.div>
-                                                        </div>
-                                                        :
-                                                        null}
+                                                        </div>}
                                                 </div>
                                             </div>
 

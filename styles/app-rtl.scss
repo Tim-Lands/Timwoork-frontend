@@ -269,25 +269,32 @@ h3 {
         color: #555;
         margin: 0;
     }
-    .text-skills {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        li {
-            padding: 3px;
-            float: right;
-            a {
-                display: flex;
-                padding: 5px 7px;
-                background-color: #f8f8f8;
-                color: #444;
-                font-size: 11px;
-                font-weight: bold;
-                border-radius: 5px;
-                &:hover {
-                    background-color: $primary;
-                    color: #fff;
-                }
+    &.wallet-info {
+        text-align: center;
+        .text-label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #000;
+        }
+        .text-value {
+            font-size: 26px;
+            color: #555;
+        }
+        
+        &.red {
+            .text-label {
+                color: rgb(105, 30, 30);
+            }
+            .text-value {
+                color: rgb(216, 30, 30);
+            }
+        }
+        &.green {
+            .text-label {
+                color: rgb(30, 105, 53);
+            }
+            .text-value {
+                color: rgb(23, 170, 60);
             }
         }
     }
@@ -3192,11 +3199,44 @@ h3 {
     padding: 18px 0;
     border-bottom: 1px dashed #f1f1f1;
     margin-bottom: 15px;
+    display: flex;
+    .add-new-product {
+        display: flex;
+        width: 35px;
+        height: 35px;
+        margin-right: auto;
+        border-radius: 50%;
+        background-color: #ddd;
+        color: #555;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            color: #000;
+            background-color: #ccc;
+        }
+        .material-icons {
+            font-size: 17px;
+        }
+    }
     .title {
         font-size: 28px;
         font-weight: bold;
         color: #333;
         margin: 0;
+    }
+    &.sm {
+        padding: 15px 0;
+        margin-bottom: 12px;
+        .title {
+            font-size: 25px;
+        }
+    }
+    &.xs {
+        padding: 12px 0;
+        margin-bottom: 10px;
+        .title {
+            font-size: 20px;
+        }
     }
 }
 .page-content {

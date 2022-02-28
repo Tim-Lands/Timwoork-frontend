@@ -11,9 +11,10 @@ import router from "next/router";
 function DashboardLayout(props: any) {
   const token = Cookies.get('token_dash')
   useEffect(() => {
-      if (!token) {
-          router.push("/tw-admin/login")
-      }
+    if (!token) {
+      router.push("/tw-admin/login")
+      return
+    }
   }, [])
   const [isSidebarShowen, setIsSidebarShowen] = useState(false)
   const setIsSidebarShowenHandle = () => {
@@ -25,19 +26,19 @@ function DashboardLayout(props: any) {
         headers: { Authorization: `Bearer ${token}` }
       }).then((r: any) => r.data)
     }}>
-    <div className='is-dashboard'>
-      <div className="clearflex">
-        <div className={"right-column" + (isSidebarShowen ? ' hidden' : '')}>
-          <Sidebar />
-        </div>
-        <div className={"left-column" + (isSidebarShowen ? ' full-width' : '')}>
-          <Navbar setIsSidebarShowenHandle={setIsSidebarShowenHandle} />
-          <div className="timlands-dashboard-content">
-            {props.children}
+      <div className='is-dashboard'>
+        <div className="clearflex">
+          <div className={"right-column" + (isSidebarShowen ? ' hidden' : '')}>
+            <Sidebar />
+          </div>
+          <div className={"left-column" + (isSidebarShowen ? ' full-width' : '')}>
+            <Navbar setIsSidebarShowenHandle={setIsSidebarShowenHandle} />
+            <div className="timlands-dashboard-content">
+              {props.children}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </SWRConfig>
   )
 }

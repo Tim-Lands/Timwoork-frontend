@@ -131,6 +131,11 @@ export default function MyProducts({ setStatusType, postsList }) {
         <div className="profile-content-body">
             <div className="page-header">
                 <h3 className="title">خدماتي</h3>
+                <Link href={'/add-new'}>
+                    <a className='add-new-product'>
+                        <span className="material-icons material-icons-outlined">add_circle_outline</span>
+                    </a>
+                </Link>
             </div>
             <Menu mode="horizontal">
                 <Menu.Item key="all" onClick={() => setStatusType('')}>
@@ -176,11 +181,11 @@ export default function MyProducts({ setStatusType, postsList }) {
                                 <tr key={e.id}>
                                     <td>
                                         <Link href={`/myproducts/${e.slug}`}>
-                                        <a>
-                                        {e.title}
-                                        </a>
+                                            <a>
+                                                {e.title}
+                                            </a>
                                         </Link>
-                                        </td>
+                                    </td>
                                     <td>{e.is_completed == 0 ?
                                         <span className="badge bg-danger">لا</span> :
                                         <span className="badge bg-success">نعم</span>}</td>
@@ -198,10 +203,10 @@ export default function MyProducts({ setStatusType, postsList }) {
                                             <>
                                                 {e.is_active == 0 ?
                                                     <Tooltip title="تفعيل هذه الخدمة">
-                                                        <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'green' }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
+                                                        <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'green' }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => activeProductHandle(e.id)} />
                                                     </Tooltip> :
                                                     <Tooltip title="تعطيل هذه الخدمة">
-                                                        <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => activeProductHandle(e.id)} />
+                                                        <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'orange' }} size="small" shape="circle" icon={<PauseCircleOutlined />} onClick={() => disactiveProductHandle(e.id)} />
                                                     </Tooltip>}
                                             </>
                                         }

@@ -10,7 +10,7 @@ import ReactPlayer from "react-player"
 import PropTypes from "prop-types";
 import ImageUploading from 'react-images-uploading';
 
-function Medias({ query, stars }) {
+function Medias({ query }) {
     const token = Cookies.get('token')
     const id = query.id
     const { data: getUser }: any = useSWR('api/me')
@@ -31,10 +31,10 @@ function Medias({ query, stars }) {
             }
         }
     }
-    const [images, setImages] = useState(stars.data.galaries);
+    const [images, setImages] = useState(getProduct && getProduct.data.galaries);
     const [featuredImages, setFeaturedImages]: any = useState([
         {
-            data_url: stars.data.full_path_thumbnail
+            data_url: getProduct && getProduct.data.full_path_thumbnail
         }
     ]);
 
@@ -442,19 +442,18 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
 
 export async function getServerSideProps(ctx) {
 
-    //const tokenUser = Cookies.get('token')
-    const uriString = `api/my_products/product/${ctx.query.id}`
-    // Fetch data from external API
-    const res = await API.get(uriString, {
-        headers: {
-            'Authorization': `Bearer 140|Ed81daBjWs4KgoB6T3szJyO84FfLMHJgt3Xv4Tz3`
-        }
-    })
+    // const tokenUser = Cookies.get('token')
+    // const uriString = `api/my_products/product/${ctx.query.id}`
+    // // Fetch data from external API
+    // const res = await API.get(uriString, {
+    //     headers: {
+    //         'Authorization': `Bearer ${tokenUser}`
+    //     }
+    // })
     // Pass data to the page via props
-    return { props: { stars: res.data, query: ctx.query } }
+    return { props: { query: ctx.query } }
 }
 export default Medias
 Medias.propTypes = {
     query: PropTypes.any,
-    stars: PropTypes.any
 };

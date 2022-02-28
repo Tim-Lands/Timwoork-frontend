@@ -1,7 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge } from 'antd'
 import React, { ReactElement, useEffect } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import router from 'next/router'
 import useSWR from 'swr'
@@ -33,7 +31,7 @@ function index() {
                         ogDescription={"الصفحة الرئيسية"}
                     />
                     <div className="container">
-                        <div className="row">
+                        <div className="row justify-content-center">
                             <div className="col-lg-8">
                                 <div className="timlands-profile-content">
                                     <div className="profile-content-header">
@@ -55,34 +53,36 @@ function index() {
                                             <p className="text">
                                                 @{userInfo.user_details.username} |
                                                 <span className="app-label"> {userInfo.user_details.profile.level.name_ar} </span>
-                                                <Badge
-                                                    className="site-badge-count-109"
-                                                    count={userInfo.user_details.profile.badge.name_ar}
-                                                    style={{ backgroundColor: '#52c41a' }}
-                                                />
                                             </p>
-                                            <div className="button-edit">
-                                                <Link href="/user/personalInformations">
-                                                    <a className="btn butt-primary flex-center butt-sm">
-                                                        <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
-                                                    </a>
-                                                </Link>
-                                                <Link href="/user/changePass">
-                                                    <a className="btn butt-primary2 flex-center butt-sm mt-1">
-                                                        <span className="material-icons material-icons-outlined">lock</span> تغيير كلمة المرور
-                                                    </a>
-                                                </Link>
-                                            </div>
                                         </div>
                                     </div>
                                     <div className="profile-content-body">
+                                        <div className="page-header xs">
+                                            <h3 className='title'>محفظتي</h3>
+                                        </div>
                                         <div className="row">
                                             <div className="col-sm-4">
-                                                <div className="content-text-item">
-                                                    <h3 className="text-label">تاريخ الميلاد</h3>
-                                                    <p className="text-value">{userInfo.user_details.profile.date_of_birth == null ? '' : userInfo.user_details.profile.date_of_birth}</p>
+                                                <div className="content-text-item wallet-info red">
+                                                    <h3 className="text-label">الرصيد المعلق</h3>
+                                                    <p className="text-value">{userInfo && userInfo.user_details.profile.pending_amount}</p>
                                                 </div>
                                             </div>
+                                            <div className="col-sm-4">
+                                                <div className="content-text-item wallet-info green">
+                                                    <h3 className="text-label">الرصيد القابل للسحب</h3>
+                                                    <p className="text-value">{userInfo && userInfo.user_details.profile.withdrawable_amount}</p>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-4">
+                                                <div className="content-text-item wallet-info ">
+                                                    <h3 className="text-label">الرصيد الكلي</h3>
+                                                    <p className="text-value">{Number(userInfo && userInfo.user_details.profile.withdrawable_amount) + Number(userInfo && userInfo.user_details.profile.pending_amount)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="page-header xs">
+                                            <h3 className='title'>المعاملات المالية</h3>
                                         </div>
                                     </div>
                                 </div>

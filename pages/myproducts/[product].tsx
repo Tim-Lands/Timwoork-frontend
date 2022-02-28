@@ -413,7 +413,27 @@ function Single({ query, stars }) {
                   </div>
                   <Spin spinning={isProductActive}>
                     <Alert type="error">
-                      هذه الخدمة معطلة يمكنك تفعيلها <button disabled={isProductActive} onClick={() => activeProductHandle(ProductData.data.id)} className="btn butt-xs butt-primary">تفعيل</button>
+                      هذه الخدمة معطلة يمكنك تفعيلها
+
+                      {ProductData.data.status == 1 &&
+                        <>
+                          {ProductData.data.is_active == 0 ?
+                            <button
+                              disabled={isProductActive}
+                              onClick={() => activeProductHandle(ProductData.data.id)}
+                              className="btn butt-xs butt-primary"
+                            >تفعيل
+                            </button>
+                            :
+                            <button
+                              disabled={isProductActive}
+                              onClick={() => activeProductHandle(ProductData.data.id)}
+                              className="btn butt-xs butt-red"
+                            >تعطيل
+                            </button>
+                          }
+                        </>
+                      }
                     </Alert>
                   </Spin>
                 </div>

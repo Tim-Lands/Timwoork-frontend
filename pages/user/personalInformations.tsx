@@ -15,7 +15,9 @@ const personalInformations = () => {
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})
-
+    function setValidationsErrorsHandle() {
+        setValidationsErrors({})
+    }
     // Redirect to user home route if user is authenticated.
     useEffect(() => {
         if (!token) {
@@ -85,6 +87,7 @@ const personalInformations = () => {
                                                             <Field
                                                                 id="first_name"
                                                                 name="first_name"
+                                                                onKeyUp={setValidationsErrorsHandle}
                                                                 placeholder="الاسم الأول..."
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.first_name && ' has-error')}
                                                                 autoComplete="off"
@@ -106,6 +109,7 @@ const personalInformations = () => {
                                                                 placeholder="الاسم الأخير..."
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.last_name && ' has-error')}
                                                                 autoComplete="off"
+                                                                onKeyUp={setValidationsErrorsHandle}
                                                             />
                                                             {validationsErrors && validationsErrors.last_name &&
                                                                 <div style={{ overflow: 'hidden' }}>
@@ -121,6 +125,7 @@ const personalInformations = () => {
                                                             <Field
                                                                 id="username"
                                                                 name="username"
+                                                                onKeyUp={setValidationsErrorsHandle}
                                                                 placeholder="اسم المستخدم..."
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.username && ' has-error')}
                                                                 autoComplete="off"
@@ -161,6 +166,7 @@ const personalInformations = () => {
                                                                 type="date"
                                                                 id="date_of_birth"
                                                                 name="date_of_birth"
+                                                                onKeyUp={setValidationsErrorsHandle}
                                                                 placeholder="تاريخ الميلاد..."
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.date_of_birth && ' has-error')}
                                                                 autoComplete="off"
