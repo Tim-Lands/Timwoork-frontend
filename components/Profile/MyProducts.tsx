@@ -45,6 +45,7 @@ export default function MyProducts({ setStatusType, postsList }) {
                             'لقد تم حذف هذه الخدمة بنجاح',
                             'success'
                         )
+                        
                     }
                 } catch (error) {
                     console.log(error);
@@ -199,9 +200,9 @@ export default function MyProducts({ setStatusType, postsList }) {
                                         <Tooltip title="حذف هذه الخدمة">
                                             <Button danger type="primary" color='red' size="small" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteHandle(e.id)} />
                                         </Tooltip>
-                                        {e.status == 1 &&
+                                        {e.status !== null &&
                                             <>
-                                                {e.is_active == 0 ?
+                                                {e.is_active == 0 && e.is_completed == 1 ?
                                                     <Tooltip title="تفعيل هذه الخدمة">
                                                         <Button type="primary" color='orange' style={{ marginInline: 2, backgroundColor: 'green' }} size="small" shape="circle" icon={<PlayCircleOutlined />} onClick={() => activeProductHandle(e.id)} />
                                                     </Tooltip> :

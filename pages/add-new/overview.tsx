@@ -126,8 +126,8 @@ function Overview({ query }) {
             return
         }
         getProductId()
-        if (getProduct) {
-            if (getProduct.profile_seller_id !== getUser.id) {
+        if (getProduct && getUser) {
+            if (getProduct.data.profile_seller_id !== getUser.user_details.id) {
                 router.push('/add-new')
             }
         }

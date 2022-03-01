@@ -13,7 +13,7 @@ import API from '../../config'
 function Complete({ query }) {
     const token = Cookies.get('token')
     const { data: getUser }: any = useSWR('api/me')
-    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
+    const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
 
     if (!query) return message.error('حدث خطأ')
     if (!token) return <Unauthorized />
@@ -39,10 +39,10 @@ function Complete({ query }) {
             return
         }
         getProductId()
-        if (getProduct && getUser) {
-            if (getProduct.profile_seller_id !== getUser.id) {
-                router.push('/add-new')
-            }
+
+        if (getProduct && getProduct.data.profile_seller_id !== getUser && getUser.user_details.id) {
+            router.push('/add-new')
+            return
         }
     }, [])
     async function stepFive() {

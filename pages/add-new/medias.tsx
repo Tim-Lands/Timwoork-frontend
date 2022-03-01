@@ -9,8 +9,9 @@ import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
 import PropTypes from "prop-types";
 import ImageUploading from 'react-images-uploading';
+import cookies from 'next-cookies'
 
-function Medias({ query }) {
+function Medias({ query, stars }) {
     const token = Cookies.get('token')
     const id = query.id
     const { data: getUser }: any = useSWR('api/me')
@@ -22,8 +23,9 @@ function Medias({ query }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.status === 422) {
-                router.push("/add-new")
+            if (res.status === 200) {
+                console.log("Success");
+                
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
@@ -31,23 +33,23 @@ function Medias({ query }) {
             }
         }
     }
-    const [images, setImages] = useState(getProduct && getProduct.data.galaries);
+    const [images, setImages] = useState(stars.data.galaries);
     const [featuredImages, setFeaturedImages]: any = useState([
         {
-            data_url: getProduct && getProduct.data.full_path_thumbnail
+            data_url: stars.data.full_path_thumbnail
         }
     ]);
 
     useEffect(() => {
-
         if (!token) {
             router.push('/login')
             return
         }
         getProductId()
-        if (getProduct && getUser) {
-            if (getProduct.data.profile_seller_id !== getUser.user_details.id) {
+        if (getUser && getProduct) {
+            if (getUser.user_details.id !== getProduct.data.profile_seller.profile.user_id) {
                 router.push('/add-new')
+                return
             }
         }
     }, [])
@@ -60,14 +62,12 @@ function Medias({ query }) {
 
     const maxNumber = 5;
 
-    const onChange = (imageList, addUpdateIndex) => {
+    const onChange = (imageList) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImages(imageList);
-    };
-    const onChangeFeatured = (imageListc, addUpdateIndexc) => {
+    }
+    const onChangeFeatured = (imageListc) => {
         // data for submit
-        console.log(imageListc, addUpdateIndexc);
         setFeaturedImages(imageListc);
     };
 
@@ -78,7 +78,6 @@ function Medias({ query }) {
         images.map((e: any) => (
             galleries.append('images[]', e.file)
         ))
-        console.log(galleries);
         //galleries.append('images[]', images)
         try {
             const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
@@ -98,7 +97,6 @@ function Medias({ query }) {
                 seGalariesLoading(false)
             }
         } catch (error) {
-            console.error('Failed to submit files.');
             seGalariesLoading(false)
         }
     };
@@ -128,7 +126,6 @@ function Medias({ query }) {
                 seFeaturedLoading(false)
             }
         } catch (error) {
-            console.error('Failed to submit files.');
             seFeaturedLoading(false)
         }
     };
@@ -244,6 +241,7 @@ function Medias({ query }) {
                                                 <div className="images-list-uploading">
                                                     <div className="page-header">
                                                         <h4 className="title">الصورة البارزة</h4>
+
                                                     </div>
                                                     <ImageUploading
                                                         value={featuredImages}
@@ -441,19 +439,19 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
 }
 
 export async function getServerSideProps(ctx) {
+    const token = cookies(ctx).token || ''
+    const uriString = `api/my_products/product/${ctx.query.id}`
+    // Fetch data from external API
+    const res = await API.get(uriString, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
 
-    // const tokenUser = Cookies.get('token')
-    // const uriString = `api/my_products/product/${ctx.query.id}`
-    // // Fetch data from external API
-    // const res = await API.get(uriString, {
-    //     headers: {
-    //         'Authorization': `Bearer ${tokenUser}`
-    //     }
-    // })
-    // Pass data to the page via props
-    return { props: { query: ctx.query } }
+    return { props: { query: ctx.query, stars: res.data } }
 }
 export default Medias
 Medias.propTypes = {
     query: PropTypes.any,
+    stars: PropTypes.any,
 };

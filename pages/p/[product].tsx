@@ -92,6 +92,10 @@ function Single({ query, stars }) {
       return yut.concat(yut2)
     }
   }
+  const allowOnlyNumericsOrDigits = (evt) => {
+    const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
+    setQuantutyCount(financialGoal);
+  }
   const menu = (
     <Menu>
       {ProductData &&
@@ -264,11 +268,6 @@ function Single({ query, stars }) {
 
 
     return Math.abs(total_price);
-  }
-  const handleChange = (evt) => {
-    const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-
-    setQuantutyCount(financialGoal);
   }
   return (
     <>
@@ -464,12 +463,12 @@ function Single({ query, stars }) {
                         <input
                           type="text"
                           maxLength={9}
-                          onInput={handleChange}
+                          onInput={allowOnlyNumericsOrDigits}
                           pattern="[0-9]*"
                           value={quantutyCount}
                           name="quantity_count"
                           className="timlands-inputs sm"
-                          onChange={(e: any) => setQuantutyCount(e.target.value)}
+                          //onChange={(e: any) => setQuantutyCount(e.target.value)}
                         />
                       </div>
                     </div>

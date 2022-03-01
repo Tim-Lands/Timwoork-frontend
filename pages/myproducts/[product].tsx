@@ -25,37 +25,37 @@ const properties = {
 const token = Cookies.get('token')
 function Single({ query, stars }) {
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`)
-  // const disactiveProductHandle = async (id: any) => {
-  //   const MySwal = withReactContent(Swal)
+  const disactiveProductHandle = async (id: any) => {
+    const MySwal = withReactContent(Swal)
 
-  //   const swalWithBootstrapButtons = MySwal.mixin({
-  //     customClass: {
-  //       confirmButton: 'btn butt-red butt-sm me-1',
-  //       cancelButton: 'btn butt-green butt-sm'
-  //     },
-  //     buttonsStyling: false
-  //   })
-  //   try {
-  //     const res = await API.post(`api/my_products/${id}/disactive_product`, null, {
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`
-  //       }
-  //     })
-  //     if (res.status === 200) {
-  //       swalWithBootstrapButtons.fire(
-  //         'تم التعطيل!',
-  //         'لقد تم تعطيل هذه الخدمة بنجاح',
-  //         'success'
-  //       )
-  //       router.reload()
-  //     }
-  //   } catch (error) {
-  //     notification['error']({
-  //       message: 'رسالة خطأ',
-  //       description: 'للأسف لم يتم تعطيل هذه الخدمة',
-  //     });
-  //   }
-  // }
+    const swalWithBootstrapButtons = MySwal.mixin({
+      customClass: {
+        confirmButton: 'btn butt-red butt-sm me-1',
+        cancelButton: 'btn butt-green butt-sm'
+      },
+      buttonsStyling: false
+    })
+    try {
+      const res = await API.post(`api/my_products/${id}/disactive_product`, null, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (res.status === 200) {
+        swalWithBootstrapButtons.fire(
+          'تم التعطيل!',
+          'لقد تم تعطيل هذه الخدمة بنجاح',
+          'success'
+        )
+        router.reload()
+      }
+    } catch (error) {
+      notification['error']({
+        message: 'رسالة خطأ',
+        description: 'للأسف لم يتم تعطيل هذه الخدمة',
+      });
+    }
+  }
   const [isProductActive, setIsProductActive] = useState(false)
   const activeProductHandle = async (id: any) => {
     const MySwal = withReactContent(Swal)
@@ -411,31 +411,28 @@ function Single({ query, stars }) {
                       </div>
                     </div>
                   </div>
-                  <Spin spinning={isProductActive}>
-                    <Alert type="error">
-                      هذه الخدمة معطلة يمكنك تفعيلها
+                  {ProductData.data.status !== null &&
+                    <Spin spinning={isProductActive}>
 
-                      {ProductData.data.status == 1 &&
-                        <>
-                          {ProductData.data.is_active == 0 ?
-                            <button
-                              disabled={isProductActive}
-                              onClick={() => activeProductHandle(ProductData.data.id)}
-                              className="btn butt-xs butt-primary"
-                            >تفعيل
-                            </button>
-                            :
-                            <button
-                              disabled={isProductActive}
-                              onClick={() => activeProductHandle(ProductData.data.id)}
-                              className="btn butt-xs butt-red"
-                            >تعطيل
-                            </button>
-                          }
-                        </>
-                      }
-                    </Alert>
-                  </Spin>
+                      {ProductData.data.is_active == 0 && ProductData.data.is_completed == 1 ?
+                        <Alert type="error">
+                          هذه الخدمة معطلة يمكنك تفعيلها
+                          <button
+                            disabled={isProductActive}
+                            onClick={() => activeProductHandle(ProductData.data.id)}
+                            className="btn butt-xs butt-primary"
+                          >تفعيل
+                          </button> </Alert> :
+                        <button
+                          disabled={isProductActive}
+                          style={{ width: '100%', marginTop: 5 }}
+                          onClick={() => disactiveProductHandle(ProductData.data.id)}
+                          className="btn butt-sm butt-red"
+                        >تعطيل هذه الخدمة
+                        </button>}
+
+                    </Spin>
+                  }
                 </div>
               </div>
             </div>
