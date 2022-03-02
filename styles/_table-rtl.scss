@@ -11,7 +11,14 @@
     box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
     border: 1px solid #ddd;
     position: relative;
+    @media (max-width: 600px) {
+        width: 100%;
+    }
     .table {
+        @media (max-width: 600px) {
+            width: 900px;
+            overflow-x: scroll;
+        }
         tr {
             td, th {
                 font-size: 13px;

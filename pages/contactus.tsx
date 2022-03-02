@@ -38,7 +38,7 @@ function Overview() {
     return (
         <>
             <MetaTags
-                title="اتصل بنا - تيموورك"
+                title="اتصل بنا"
                 metaDescription="اتصل بنا - تيموورك"
                 ogDescription="اتصل بنا - تيموورك"
             />

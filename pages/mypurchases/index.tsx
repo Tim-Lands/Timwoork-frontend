@@ -143,9 +143,9 @@ function index() {
     return (
         <>
             <MetaTags
-                title={'مشترياتي - تيموورك'}
-                metaDescription={'مشترياتي - تيموورك'}
-                ogDescription={'مشترياتي - تيموورك'}
+                title={'مشترياتي'}
+                metaDescription={'مشترياتي'}
+                ogDescription={'مشترياتي'}
             />
             <div className="timwoork-single">
                 <div className="row py-4 justify-content-center">

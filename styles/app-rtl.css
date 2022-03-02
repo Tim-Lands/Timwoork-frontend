@@ -1385,6 +1385,19 @@
   position: relative;
 }
 
+@media (max-width: 600px) {
+  .timlands-table {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .timlands-table .table {
+    width: 900px;
+    overflow-x: scroll;
+  }
+}
+
 .timlands-table .table tr td, .timlands-table .table tr th {
   font-size: 13px;
   padding: 10px 15px;
@@ -5205,7 +5218,7 @@ h3 {
 }
 
 .choose-images-file .choose-images-list .image-item.featured-wrapper {
-  height: 250px;
+  height: 270px;
 }
 
 .choose-images-file .choose-images-list .image-item .image-item__btn-wrapper {
@@ -5763,6 +5776,12 @@ h3 {
   border-right-color: transparent;
 }
 
+.app-label .material-icons {
+  font-size: 17px;
+  margin-right: 3px;
+  padding-top: 5px;
+}
+
 .page-header {
   padding: 18px 0;
   border-bottom: 1px dashed #f1f1f1;
@@ -5776,12 +5795,11 @@ h3 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 35px;
-  height: 35px;
   margin-right: auto;
-  border-radius: 50%;
+  border-radius: 5px;
   background-color: #ddd;
   color: #555;
+  padding: 7px 10px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -7168,6 +7186,10 @@ h3 {
   color: #666;
   margin: 0;
   font-size: 14px;
+}
+
+.css-b62m3t-container {
+  width: 100%;
 }
 
 .is-dark {

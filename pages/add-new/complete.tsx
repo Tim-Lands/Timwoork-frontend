@@ -12,7 +12,6 @@ import API from '../../config'
 
 function Complete({ query }) {
     const token = Cookies.get('token')
-    const { data: getUser }: any = useSWR('api/me')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
 
     if (!query) return message.error('حدث خطأ')
@@ -24,11 +23,14 @@ function Complete({ query }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.status === 422) {
-                router.push("/add-new")
+            if (res.status === 200) {
+                console.log(true)
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
+                router.push("/add-new")
+            }
+            if (error.response && error.response.status === 404) {
                 router.push("/add-new")
             }
         }
@@ -40,10 +42,6 @@ function Complete({ query }) {
         }
         getProductId()
 
-        if (getProduct && getProduct.data.profile_seller_id !== getUser && getUser.user_details.id) {
-            router.push('/add-new')
-            return
-        }
     }, [])
     async function stepFive() {
         try {
@@ -130,7 +128,7 @@ function Complete({ query }) {
                                 <div className="timlands-add-new-body">
                                     <h4 className="title">تمت إضافة الخدمة بنجاح</h4>
                                     <p className="text">
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
+                                        تهانينا, يمكنك الآن نشر خدمتك ومشاركتها عبر مواقع التواصل الاجتماعي بعد الموافقة عليها من طرف الإدارة
                                     </p>
                                     <div className="add-butts">
                                         <button onClick={stepFive} className="btn butt-md butt-primary2">

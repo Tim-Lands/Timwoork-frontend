@@ -5,12 +5,18 @@ import useSWR from 'swr'
 import { Result } from 'antd';
 import Loading from '@/components/Loading';
 import Post from '@/components/Post/Post';
+import { MetaTags } from '@/components/SEO/MetaTags';
 
 function index({ query }) {
     const { data: popularProducts }: any = useSWR(`api/get_products_subcategory/${query.id}`)
     const { data: subCategories }: any = useSWR(`api/get_categories/${query.id}`)
     return (
         <div className="row py-4 justify-content-center">
+            <MetaTags
+                title={subCategories.data.name_ar}
+                metaDescription={subCategories.data.name_ar}
+                ogDescription={subCategories.data.name_ar}
+            />
             <div className="col-md-9">
                 <div className="app-bill">
                     {subCategories &&

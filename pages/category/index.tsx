@@ -3,10 +3,17 @@ import Layout from '@/components/Layout/HomeLayout'
 import useSWR from 'swr'
 import Loading from '@/components/Loading'
 import Link from 'next/link'
+import { MetaTags } from '@/components/SEO/MetaTags'
+
 function index() {
     const { data: categories }: any = useSWR(`api/categories`)
     return (
         <div className="row py-4 justify-content-center">
+            <MetaTags
+                title='التصنيفات'
+                metaDescription="التصنيفات"
+                ogDescription="التصنيفات"
+            />
             <div className="col-md-9">
                 <div className="app-bill">
                     <div className="app-bill-header">

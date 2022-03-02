@@ -15,7 +15,7 @@ function index() {
     return (
         <>
             <MetaTags
-                title={'المحادثات - تيموورك'}
+                title={'المحادثات'}
                 metaDescription={'مبيعاتي - تيموورك'}
                 ogDescription={'مبيعاتي - تيموورك'}
             />

@@ -6,7 +6,7 @@ const SentToken = (): ReactElement => {
     return (
         <div className="row justify-content-md-center pt-5">
             <div className="col-lg-6 p-0">
-                <div className="login-panel">
+                <div className="login-panel">   
                     <div className={"panel-modal-body login-panel-body auto-height"}>
                         <div className="timwoork-logo">
                             <Link href="/">

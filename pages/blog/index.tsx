@@ -13,7 +13,7 @@ function Category(): JSX.Element {
     return (
         <div>
             <MetaTags
-                title={'المدونة' + ' - تيموورك'}
+                title={'المدونة'}
                 metaDescription={'المدونة'}
                 ogDescription={'المدونة'}
             />

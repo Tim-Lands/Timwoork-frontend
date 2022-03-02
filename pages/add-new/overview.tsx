@@ -60,7 +60,6 @@ function Overview({ query }) {
     const id = query.id
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-    const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const clearValidationHandle = () => {
@@ -111,11 +110,14 @@ function Overview({ query }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.status === 422) {
-                router.push("/add-new")
+            if (res.status === 200) {
+                console.log(false)
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
+                router.push("/add-new")
+            }
+            if (error.response && error.response.status === 404) {
                 router.push("/add-new")
             }
         }
@@ -126,12 +128,8 @@ function Overview({ query }) {
             return
         }
         getProductId()
-        if (getProduct && getUser) {
-            if (getProduct.data.profile_seller_id !== getUser.user_details.id) {
-                router.push('/add-new')
-            }
-        }
-    }, [])
+    }, [])  
+    
     return (
         <>
             <MetaTags
@@ -203,6 +201,7 @@ function Overview({ query }) {
                                                         id="input-title"
                                                         name="title"
                                                         placeholder="العنوان..."
+                                                        disabled={(!getProduct ? true : false)}
                                                         className={"timlands-inputs " + (validationsErrors && validationsErrors.title && ' has-error')}
                                                         autoComplete="off"
                                                         onKeyUp={clearValidationHandle}
@@ -226,6 +225,7 @@ function Overview({ query }) {
                                                         name="catetory"
                                                         className="timlands-inputs select"
                                                         autoComplete="off"
+                                                        disabled={(!getProduct ? true : false)}
                                                         onChange={formik.handleChange}
                                                         value={formik.values.catetory}
                                                     //onChange={() => setmainCat(values.catetory)}
@@ -246,6 +246,7 @@ function Overview({ query }) {
                                                         name="subcategory"
                                                         className={"timlands-inputs select " + (validationsErrors && validationsErrors.subcategory && ' has-error')}
                                                         autoComplete="off"
+                                                        disabled={(!getProduct ? true : false)}
                                                         onChange={formik.handleChange}
                                                         value={formik.values.subcategory}
                                                     >
@@ -274,11 +275,18 @@ function Overview({ query }) {
                                                 value={formik.values.tags}
                                                 onChange={formik.setFieldValue}
                                                 onBlur={formik.setFieldTouched}
+                                                disabled={(!getProduct ? true : false)}
                                             />
+                                            {validationsErrors && validationsErrors.tags &&
+                                                <div style={{ overflow: 'hidden' }}>
+                                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                        <p className="text">{validationsErrors.tags[0]}</p>
+                                                    </motion.div>
+                                                </div>}
                                             <div className="col-md-12">
                                                 <div className="py-4 d-flex">
                                                     <span className="me-auto"></span>
-                                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                                    <button type="submit" disabled={(!getProduct ? true : false) || formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                         <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                                     </button>
                                                 </div>

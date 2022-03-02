@@ -26,7 +26,7 @@ function index() {
             {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
-                        title={'محفظتي - تيموورك'}
+                        title={'محفظتي'}
                         metaDescription={"الصفحة الرئيسية"}
                         ogDescription={"الصفحة الرئيسية"}
                     />

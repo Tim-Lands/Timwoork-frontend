@@ -33,7 +33,7 @@ function Home() {
   return (
     <>
       <MetaTags
-        title={"تيموورك | لبيع وشراء الخدمات المصغرة Timwoork"}
+        title={"لبيع وشراء الخدمات المصغرة"}
         metaDescription={"الصفحة الرئيسية"}
         ogDescription={"الصفحة الرئيسية"}
       />

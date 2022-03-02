@@ -77,12 +77,7 @@ function index() {
                                     </h4>
                                     <p className="text">
                                         @{userInfo.user_details.username} |
-                                        <span className="app-label"> {userInfo.user_details.profile && userInfo.user_details.profile.level.name_ar} </span>
-                                        <Badge
-                                            className="site-badge-count-109"
-                                            count={userInfo.user_details.profile.badge.name_ar}
-                                            style={{ backgroundColor: '#52c41a' }}
-                                        />
+                                        <span className="app-label"><span className="material-icons material-icons-outlined">badge</span> {userInfo.user_details.profile && userInfo.user_details.profile.profile_seller.level.name_ar} </span>
                                     </p>
                                 </div>
                             </div>

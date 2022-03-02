@@ -9,6 +9,8 @@ import useSWR, { mutate } from 'swr'
 import Loading from "@/components/Loading";
 import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
+import { MetaTags } from "@/components/SEO/MetaTags";
+import ChangePass from "@/components/ChangePass";
 
 const personalInformations = () => {
     const token = Cookies.get('token')
@@ -27,6 +29,11 @@ const personalInformations = () => {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title="تعديل الملف الشخصي"
+                metaDescription="تعديل الملف الشخصي"
+                ogDescription="تعديل الملف الشخصي"
+            />
             {!userInfo && <Loading />}
             <div className="container py-4">
                 {userInfo && userInfo.user_details.profile && <>
@@ -66,7 +73,7 @@ const personalInformations = () => {
                             >
                                 {({ isSubmitting }) => (
                                     <Form>
-                                        <div className="login-panel update-form">
+                                        <div className="login-panel update-form my-1">
                                             <div className={"panel-modal-body login-panel-body auto-height" + (isSubmitting ? ' is-loading' : '')}>
                                                 {!isSubmitting ? '' :
                                                     <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="is-loading">
@@ -213,8 +220,10 @@ const personalInformations = () => {
                                     </Form>
                                 )}
                             </Formik>
+                            <ChangePass />
                         </div>
                     </div>
+
                 </>
 
                 }

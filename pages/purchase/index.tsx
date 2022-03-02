@@ -14,6 +14,7 @@ import {
     useElements,
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { MetaTags } from '@/components/SEO/MetaTags'
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -104,7 +105,11 @@ function Bill() {
     }, [])
     return (
         <>
-
+            <MetaTags
+                title="عملية الشراء"
+                metaDescription="عملية الشراء"
+                ogDescription="عملية الشراء"
+            />
             {cartList && cartList.data == null && isError && error && <div className="row py-4 justify-content-center">
                 <div className="col-md-5">
                     <Result

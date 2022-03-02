@@ -8,6 +8,7 @@ import useSWR from 'swr'
 import { message } from 'antd';
 import Cookies from 'js-cookie'
 import Layout from '@/components/Layout/HomeLayout'
+import { MetaTags } from '@/components/SEO/MetaTags';
 
 function EmailConfig() {
     const token = Cookies.get('token')
@@ -24,6 +25,11 @@ function EmailConfig() {
     }, [])
     return (
         <div className="row justify-content-md-center">
+            <MetaTags
+                title="تفعيل البريد الإلكتروني"
+                metaDescription="تفعيل البريد الإلكتروني"
+                ogDescription="تفعيل البريد الإلكتروني"
+            />
             <div className="col-lg-6 p-0">
                 <Formik
                     isInitialValid={true}
@@ -61,7 +67,7 @@ function EmailConfig() {
                                         </motion.div>
                                     }
                                     <h1 className="login-title-form">
-                                        التأكد من البريد الإلكتروني
+                                        تفعيل البريد الإلكتروني
                                     </h1>
                                     <p className="login-text-form">
                                         تحقق من بريدك الإلكتروني هل وصلك كود تفعيل يتكون من 6 أرقام
@@ -94,24 +100,33 @@ function EmailConfig() {
                                                     <p className="text">{validationsErrors.msg}</p>
                                                 </motion.div>
                                             </div>}
-                                            
-                                    </div>
-                                    <div className="timlands-form d-flex">
                                         <button
                                             type="button"
-                                            className="btn butt-md butt-black me-auto"
-                                        >إعادة إرسال كود التفعيل
+                                            className="btn flex-center butt-sm butt-black me-auto"
+                                        >
+                                            <span className="material-icons material-icons-outlined">
+                                                replay
+                                            </span>  إعادة إرسال كود التفعيل
                                         </button>
+                                    </div>
+                                    <div className="timlands-form d-flex">
+
                                         <button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="btn butt-md butt-primary me-auto"
-                                        >إكمال عملية التسجيل
+                                            className="btn flex-center butt-md butt-primary me-auto"
+                                        >
+                                          <span className="material-icons material-icons-outlined">
+                                          check_circle_outline
+                                            </span>  تأكيد البريد الإلكتروني
                                         </button>
                                         <Link href="/">
                                             <a
-                                                className="btn butt-md ml-auto"
-                                            >الرجوع للرئيسية
+                                                className="btn flex-center butt-md ml-auto"
+                                            >
+                                             <span className="material-icons material-icons-outlined">
+                                             home
+                                            </span> العودة للرئيسية
                                             </a>
                                         </Link>
                                     </div>
@@ -129,8 +144,8 @@ export default EmailConfig
 
 EmailConfig.getLayout = function getLayout(page: any): ReactElement {
     return (
-      <Layout>
-        {page}
-      </Layout>
+        <Layout>
+            {page}
+        </Layout>
     )
-  }
+}

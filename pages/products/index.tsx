@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import Slider from "@mui/material/Slider";
 import { setTimeout } from "timers";
 import Tags from "@/components/Tags";
+import { MetaTags } from "@/components/SEO/MetaTags";
 
 function Category() {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +56,7 @@ function Category() {
   //filter data
   async function filterData() {
     if (selectedTags == 0) {
-    getCategoryFiltrPricing();
+      getCategoryFiltrPricing();
     } else {
       console.log(selectedTags.length);
       setIsLoading(true);
@@ -77,7 +78,7 @@ function Category() {
       }
     }
   }
-  async function getCategoryFiltrPricing(){
+  async function getCategoryFiltrPricing() {
     try {
       setTimeout(() => {
         setIsLoading(false);
@@ -118,6 +119,11 @@ function Category() {
   if (error) return <div>Error</div>;
   return (
     <div className="container py-5">
+      <MetaTags
+        title={'تصفح الخدمات'}
+        metaDescription={'تصفح الخدمات'}
+        ogDescription={'تصفح الخدمات'}
+      />
       <Formik
         isInitialValid={true}
         initialValues={{

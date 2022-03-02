@@ -13,10 +13,8 @@ import useSWR from 'swr';
 
 function Description({ query }) {
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-    const { data: getUser }: any = useSWR('api/me')
     const token = Cookies.get('token')
     const [validationsErrors, setValidationsErrors]: any = useState({})
-
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -24,11 +22,14 @@ function Description({ query }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.status === 422) {
-                router.push("/add-new")
+            if (res.status === 200) {
+                console.log(true)
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
+                router.push("/add-new")
+            }
+            if (error.response && error.response.status === 404) {
                 router.push("/add-new")
             }
         }
@@ -39,11 +40,6 @@ function Description({ query }) {
             return
         }
         getProductId()
-        if (getProduct) {
-            if (getProduct.profile_seller_id !== getUser.id) {
-                router.push('/add-new')
-            }
-        }
     }, [])
     return (
         <>
@@ -146,6 +142,7 @@ function Description({ query }) {
                                                             <Field
                                                                 as="textarea"
                                                                 id="input-content"
+                                                                disabled={(!getProduct ? true : false)}
                                                                 name="content"
                                                                 placeholder="وصف الخدمة..."
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.content && ' has-error')}
@@ -155,13 +152,13 @@ function Description({ query }) {
                                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                                 <p className="text">أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط . يمنع وضع البريد الالكتروني، رقم الهاتف أو أي معلومات اتصال أخرى.</p>
                                                             </motion.div>
-                                                            {validationsErrors && validationsErrors.content && 
+                                                            {validationsErrors && validationsErrors.content &&
                                                                 <div style={{ overflow: 'hidden' }}>
                                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                                         <p className="text">{validationsErrors.content[0]}</p>
                                                                     </motion.div>
                                                                 </div>
-                                                                }
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -170,6 +167,7 @@ function Description({ query }) {
                                                             <Field
                                                                 as="textarea"
                                                                 id="input-buyer_instruct"
+                                                                disabled={(!getProduct ? true : false)}
                                                                 name="buyer_instruct"
                                                                 placeholder="تعليمات المشتري..."
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.buyer_instruct && ' has-error')}
@@ -185,26 +183,16 @@ function Description({ query }) {
                                                                         <p className="text">{validationsErrors.buyer_instruct[0]}</p>
                                                                     </motion.div>
                                                                 </div>
-                                                                }
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
-                                                            {/*<Popconfirm
-                                                                title="هل تريد حقا إلغاء هذه الخدمة"
-                                                                onConfirm={deleteProduct}
-                                                                okText="نعم"
-                                                                cancelText="لا"
-                                                            >
-                                                                <button type="button" className="btn butt-red me-auto butt-sm">
-                                                                    إلغاء الأمر
-                                                                </button>
-                                                            </Popconfirm>*/}
                                                             <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out me-auto butt-xs">
                                                                 <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
                                                                 <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                                             </button>
-                                                            <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                                            <button type="submit" disabled={(!getProduct ? true : false) || isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                                             </button>
                                                         </div>

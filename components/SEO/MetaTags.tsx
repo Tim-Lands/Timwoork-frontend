@@ -29,7 +29,7 @@ export function MetaTags({
                 <meta property="og:description" content={ogDescription} />
                 <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <title>{title}</title>
+                <title>تيموورك | {title}</title>
                 {ogImage && <meta property="og:image" content={ogImage} key="image" />}
                 {ogUrl && <meta property="og:url" content={ogUrl} />}
             </Head>

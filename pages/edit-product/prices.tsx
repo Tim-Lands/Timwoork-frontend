@@ -65,9 +65,9 @@ function Prices({ query }) {
     return (
         <>
             <MetaTags
-                title="إضافة خدمة جديدة - السعر والمدة"
-                metaDescription="إضافة خدمة جديدة - السعر والمدة "
-                ogDescription="إضافة خدمة جديدة - السعر والمدة"
+                title="تعديل الخدمة - السعر والمدة"
+                metaDescription="تعديل الخدمة - السعر والمدة"
+                ogDescription="تعديل الخدمة - السعر والمدة"
             />
             {token &&
                 <div className="container-fluid">
@@ -158,7 +158,7 @@ function Prices({ query }) {
                                                 <div className="flex-center">
                                                     <h2 className="title"><span className="material-icons material-icons-outlined">payments</span>إضافة السعر</h2>
                                                     <div className={"header-butt" + (isSubmitting ? ' is-loader' : '')}>
-                                                        <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
+                                                        <button type="submit" disabled={(!getProduct ? true : false) || isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
                                                             <span className="text">حفظ التغييرات</span>
                                                             <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                                         </button>
@@ -173,6 +173,7 @@ function Prices({ query }) {
                                                             <Field
                                                                 id="input-price"
                                                                 name="price"
+                                                                disabled={(!getProduct ? true : false)}
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.price && ' has-error')}
                                                             />
                                                             {validationsErrors && validationsErrors.price &&
@@ -190,6 +191,7 @@ function Prices({ query }) {
                                                                 <Field
                                                                     id="input-duration"
                                                                     type="number"
+                                                                    disabled={(!getProduct ? true : false)}
                                                                     name="duration"
                                                                     className={"timlands-inputs select " + (validationsErrors && validationsErrors.duration && ' has-error')}
                                                                     autoComplete="off"
@@ -318,7 +320,7 @@ function Prices({ query }) {
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
-                                                            <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                                            <button type="submit" disabled={(!getProduct ? true : false) || isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">حفظ التغييرات</span>
                                                             </button>
                                                         </div>

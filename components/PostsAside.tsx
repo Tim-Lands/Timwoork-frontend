@@ -76,7 +76,7 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
                                     title={e.title}
                                     author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
                                     rate={e.ratings_avg}
-                                    username={e.profile_seller && e.profile_seller.profile.username}
+                                    username={e.profile_seller && e.profile_seller.profile.user.username}
                                     price={e.price}
                                     slug={e.slug}
                                     thumbnail={e.full_path_thumbnail}

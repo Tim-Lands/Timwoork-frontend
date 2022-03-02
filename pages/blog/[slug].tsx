@@ -19,7 +19,7 @@ const User = ({ query, stars }) => {
         <>
             {!getPosts && <Loading />}
             <MetaTags
-                title={stars[0].title.rendered + ' - تيموورك'}
+                title={stars[0].title.rendered}
                 metaDescription={stars[0].excerpt.rendered}
                 ogDescription={stars[0].excerpt.rendered}
                 ogImage={stars[0].jetpack_featured_media_url}

@@ -71,9 +71,9 @@ function Profile() {
             {userInfo && userInfo.user_details.profile &&
                 <>
                     <MetaTags
-                        title={userInfo.user_details.profile.first_name + " " + userInfo.user_details.profile.last_name}
-                        metaDescription={"الصفحة الرئيسية"}
-                        ogDescription={"الصفحة الرئيسية"}
+                        title={'الملف الشخصي لـ ' + userInfo.user_details.profile.first_name + " " + userInfo.user_details.profile.last_name}
+                        metaDescription={'الملف الشخصي لـ ' + userInfo.user_details.profile.first_name + " " + userInfo.user_details.profile.last_name}
+                        ogDescription={'الملف الشخصي لـ ' + userInfo.user_details.profile.first_name + " " + userInfo.user_details.profile.last_name}
                     />
                     <div className="container">
                         <div className="row">

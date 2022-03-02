@@ -8,6 +8,7 @@ import router from 'next/router';
 
 import API from '../../config'
 import { Result } from 'antd';
+import { MetaTags } from '@/components/SEO/MetaTags';
 function index() {
     const token = Cookies.get('token')
 
@@ -34,6 +35,11 @@ function index() {
     
     return (
         <div className="my-2 py-4">
+            <MetaTags
+                title="الإشعارات"
+                metaDescription="الإشعارات"
+                ogDescription="الإشعارات"
+            />
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="app-bill">

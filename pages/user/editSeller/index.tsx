@@ -9,6 +9,7 @@ import "antd/dist/antd.min.css";
 import useSWR from 'swr'
 import Loading from "@/components/Loading";
 import router from "next/router";
+import { MetaTags } from "@/components/SEO/MetaTags";
 
 const EditSeller = () => {
     const token = Cookies.get('token')
@@ -22,6 +23,11 @@ const EditSeller = () => {
     // Return statement.
     return (
         <>
+            <MetaTags
+                title="تعديل الملف الشخصي للبائع"
+                metaDescription="تعديل الملف الشخصي للبائع"
+                ogDescription="تعديل الملف الشخصي للبائع"
+            />
             {!userInfo && <Loading />}
             {userInfo && userInfo.user_details.profile && userInfo.user_details.profile.profile_seller !== null && <>
                 <div className="row justify-content-md-center">
@@ -33,7 +39,7 @@ const EditSeller = () => {
                                 portfolio: userInfo && userInfo.user_details.profile.profile_seller.portfolio,
                                 skills: (userInfo && userInfo.user_details.profile.profile_seller.skills) || [],
                             }}
-                            onSubmit={async values => {                                
+                            onSubmit={async values => {
                                 try {
                                     const res = await API.post("api/sellers/detailsStore", values, {
                                         headers: {

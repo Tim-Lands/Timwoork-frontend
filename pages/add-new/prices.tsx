@@ -14,7 +14,6 @@ import PropTypes from "prop-types";
 
 function Prices({ query }) {
     const token = Cookies.get('token')
-    const { data: getUser }: any = useSWR('api/me')
     const { id } = query
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -23,17 +22,32 @@ function Prices({ query }) {
     }
     async function getProductId() {
         try {
-            const res: any = await API.get(`api/my_products/product/${id}`, {
+            const res: any = await API.get(`api/my_products/product/${query.id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            return res
+            if (res.status === 200) {
+                console.log(true)
+            }
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 router.push("/add-new")
             }
+            if (error.response && error.response.status === 404) {
+                router.push("/add-new")
+            }
         }
+    }
+    const [priceCount, setPriceCount] = useState(0)
+    const [durationCount, setDurationCount] = useState(0)
+    const allowOnlyNumericsOrDigits = (evt) => {
+        const financialGoal = (evt.target.validity.valid) ? evt.target.value : priceCount;
+        setPriceCount(financialGoal);
+    }
+    const allowOnlyNumericsOrDigitsDuration = (evt) => {
+        const financialGoal = (evt.target.validity.valid) ? evt.target.value : durationCount;
+        setDurationCount(financialGoal);
     }
     useEffect(() => {
         if (!token) {
@@ -41,12 +55,6 @@ function Prices({ query }) {
             return
         }
         getProductId()
-        if (getProduct) {
-            if (getProduct.profile_seller_id !== getUser.id) {
-                router.push('/add-new')
-            }
-        }
-
     }, [])
     return (
         <>
@@ -149,6 +157,11 @@ function Prices({ query }) {
                                                             <Field
                                                                 id="input-price"
                                                                 name="price"
+                                                                maxLength={9}
+                                                                onInput={allowOnlyNumericsOrDigits}
+                                                                value={priceCount}
+                                                                pattern="[0-9]*"
+                                                                disabled={!getProduct ? true : false}
                                                                 onKeyUp={clearValidationHandle}
                                                                 className={"timlands-inputs " + (validationsErrors && validationsErrors.price && ' has-error')}
                                                             />
@@ -166,8 +179,12 @@ function Prices({ query }) {
                                                             <div className="rel-form">
                                                                 <Field
                                                                     id="input-duration"
-                                                                    type="number"
+                                                                    maxLength={4}
+                                                                    onInput={allowOnlyNumericsOrDigitsDuration}
+                                                                    value={durationCount}
+                                                                    pattern="[0-9]*"
                                                                     name="duration"
+                                                                    disabled={!getProduct ? true : false}
                                                                     onKeyUp={clearValidationHandle}
                                                                     className={"timlands-inputs select " + (validationsErrors && validationsErrors.duration && ' has-error')}
                                                                     autoComplete="off"
@@ -299,21 +316,11 @@ function Prices({ query }) {
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
-                                                            {/*<Popconfirm
-                                                                title="هل تريد حقا إلغاء هذه الخدمة"
-                                                                onConfirm={deleteProduct}
-                                                                okText="نعم"
-                                                                cancelText="لا"
-                                                            >
-                                                                <button type="button" className="btn butt-red me-auto butt-sm">
-                                                                    إلغاء الأمر
-                                                                </button>
-                                                            </Popconfirm>*/}
                                                             <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out me-auto butt-xs">
                                                                 <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
                                                                 <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                                             </button>
-                                                            <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                                            <button type="submit" disabled={(!getProduct ? true : false) || isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                                             </button>
                                                         </div>

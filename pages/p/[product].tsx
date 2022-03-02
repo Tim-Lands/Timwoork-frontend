@@ -1,22 +1,20 @@
 import Link from "next/link";
 import Layout from '@/components/Layout/HomeLayout'
 import Comments from '../../components/Comments'
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 //import { useTranslation } from "react-i18next";
 import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
-import { Dropdown, message, Spin, Menu, notification } from 'antd'
+import { Dropdown, message, Spin, Menu, notification, Modal } from 'antd'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie'
 import router from "next/router";
 import NotFound from "@/components/NotFound";
-import axios from 'axios';
-
-const REACT_APP_CHAT_ENGINE_ID = "ac320c2f-2637-48b3-879a-3fb1da5dbe03";
+import Image from 'next/image'
 
 const properties = {
   duration: 5000,
@@ -25,13 +23,21 @@ const properties = {
   prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
-function Single({ query, stars }) {
+function Single({ query, stars, errorFetch }) {
 
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [createConversationLoading, setCreateConversationLoading] = useState(false)
 
+  useEffect(() => {
+    if (errorFetch) {
+      router.push('/404')
+    }
+
+  }, [])
   const showStars = () => {
     const rate = Number(ProductData.data.ratings_count) || 0
     const xAr: any = [
@@ -114,6 +120,28 @@ function Single({ query, stars }) {
       }
     </Menu>
   );
+  const [messageConv, setMessageConv] = useState('')
+  // Start Conversation 
+  async function startConversation(message: string) {
+    setCreateConversationLoading(true)
+    try {
+      const res = await API.post(`api/product/${ProductData && ProductData.id}/create/conversation`, {
+        initial_message: message,
+        receiver_id: ProductData && ProductData.data.profile_seller.profile.user_id,
+        title: ProductData && ProductData.data.title,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (res.status === 200) {
+        router.push('/conversations');
+      }
+    } catch (error) {
+      setCreateConversationLoading(false)
+    }
+
+  }
   const addToCart = async () => {
     if (token) {
       setIsLoadingCart(true)
@@ -141,7 +169,7 @@ function Single({ query, stars }) {
             message: 'إشعار',
             description:
               'لقد تم إضافة هذه الخدمة إلى السلة',
-            placement: 'bottomRight',
+            placement: 'topLeft',
             btn,
             key,
             onClose: close,
@@ -154,13 +182,13 @@ function Single({ query, stars }) {
           notification.warning({
             message: `تحذير`,
             description: 'لا يمكنك شراء خدمتك!',
-            placement: 'bottomRight'
+            placement: 'topLeft'
           });
         } else if (error.response && error.response.status === 404) {
           notification.warning({
             message: `تحذير`,
             description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
-            placement: 'bottomRight'
+            placement: 'topLeft'
           });
         }
         else {
@@ -213,37 +241,6 @@ function Single({ query, stars }) {
     setcheckedDevelopments(newArray);
 
   };
-  // ^--------------------*-------- Create New Chat----------*-------------------------------
-
-
-  /* Create or get new chat between seller and buyer
-  ~ Chat title: product title 
-  */
-  const getOrCreateChat = (seller_Email: string, seller_ID: String, seller_username: string) => {
-    //for buyer
-    const username = Cookies.get('_username');
-    //const _secret = (seller_Email+seller_ID).toString();
-
-    //for seller
-    const seller_secret = (seller_Email + seller_ID);
-    console.log(`seller_username: ${seller_username}  seller_secret: ${seller_secret} --> seller_ID: ${seller_ID}`);
-    axios.put('https://api.chatengine.io/chats/',
-      { usernames: [seller_username, username], 'title': ProductData && ProductData.data.title, is_direct_chat: true },
-
-      {
-        headers: {
-          'Project-ID': REACT_APP_CHAT_ENGINE_ID,
-          'User-Name': seller_username,
-          'User-Secret': seller_secret
-        }
-      }
-    )
-      .catch((error) => console.log(error))
-
-    router.push('/chat');// Go to chat page
-
-
-  }
   /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
   function _totalPrice() {
 
@@ -263,27 +260,26 @@ function Single({ query, stars }) {
     for (let i = 0; i < b.length; i++) {
       __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price);
     }
-
     const total_price = (parseInt(ProductData.data.price) + __checkedDevelopments_sum) * quantutyCount;
-
-
     return Math.abs(total_price);
   }
   return (
     <>
       {!ProductData && <Loading />}
       {errorLoad && <NotFound />}
-
-      <MetaTags
+      {!errorFetch && <MetaTags
         title={stars.data.title + ' - تيموورك'}
         metaDescription={stars.data.content}
         ogDescription={stars.data.content}
         ogImage={stars.data.full_path_thumbnail}
         ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
-      />
+      />}
 
       {ProductData &&
         <div className="timwoork-single">
+          <Modal title="Basic Modal" visible={isModalVisible} onOk={() => startConversation(messageConv)} okText="بدء المحادثة" onCancel={() => setIsModalVisible(false)}>
+            <textarea name="messageConv" value={messageConv} onChange={(e: any) => setMessageConv(e.target.value)}></textarea>
+          </Modal>
           <div className="row">
             <div className="col-lg-8">
               <div className="timwoork-single-post">
@@ -294,16 +290,16 @@ function Single({ query, stars }) {
                       <li className="user-item">
                         <Link href={`/u/${ProductData.data.profile_seller.profile.user.username}`}>
                           <a className="user-link">
-                            {/*<Image
+                            <Image
                               className="circular-center tiny-size"
-                              loader={myLoader}
-                              src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
-                              quality={1}
+                              src={ProductData.data.profile_seller.profile.avatar_url}
+                              quality={80}
                               width={32}
                               height={32}
+                              alt={ProductData.data.profile_seller.profile.full_name}
                               placeholder='blur'
-                              blurDataURL='/avatar2.jpg'
-                            />*/}
+                              blurDataURL={ProductData.data.profile_seller.profile.avatar_url}
+                            />
                             <span className="pe-2">
                               {ProductData.data.profile_seller.profile.full_name}
                             </span>
@@ -311,13 +307,15 @@ function Single({ query, stars }) {
                         </Link>
                       </li>
                       <li className="category-item">
-                        <Link href={`/category/${ProductData && ProductData.data.subcategory.id}`}>
-                          <a className="category-link">
-                            <span className="material-icons material-icons-outlined">label</span>
-                            {ProductData && ProductData.data.subcategory.name_ar}
-                          </a>
-                        </Link> <span style={{ marginInline: 5 }}>|</span>
-                        <small style={{ marginInline: 5 }}>{ProductData && ProductData.data.subcategory.category.name_ar}</small>
+                        <span className="material-icons material-icons-outlined">label</span>{ProductData && ProductData.data.subcategory.category.name_ar}
+                        <span style={{ marginInline: 5 }}>||</span>
+                        <small>
+                          <Link href={`/category/${ProductData && ProductData.data.subcategory.id}`}>
+                            <a style={{ marginInline: 5 }} className="category-link">
+                              {ProductData && ProductData.data.subcategory.name_ar}
+                            </a>
+                          </Link>
+                        </small>
                       </li>
                     </ul>
                     <ul className="single-header-meta nav ml-auto">
@@ -376,16 +374,16 @@ function Single({ query, stars }) {
                         <div className="seller-info-container">
                           <div className="d-flex">
                             <div className="seller-info-avatar">
-                              {/*<Image
+                              <Image
                                 className="circular-img huge-size"
-                                loader={myLoader}
                                 src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
-                                quality={1}
+                                quality={80}
                                 width={100}
-                                height={100}
+                                alt={ProductData.data.profile_seller.profile.full_name}
                                 placeholder='blur'
-                                blurDataURL='/avatar2.jpg'
-                              />*/}
+                                blurDataURL={ProductData.data.profile_seller.profile.avatar_url}
+                                height={100}
+                              />
                             </div>
                             <div className="seller-info-content">
                               <h4 className="user-title">
@@ -393,7 +391,7 @@ function Single({ query, stars }) {
                               </h4>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.badge !== null && ProductData.data.profile_seller.badge.name_ar}
+                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.level !== null && ProductData.data.profile_seller.level.name_ar}
                                 </li>
                                 {ProductData.data.profile_seller.profile.country !== null &&
                                   <li>
@@ -407,8 +405,8 @@ function Single({ query, stars }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
                                   </a>
                                 </Link>
-                                <button className="btn butt-green butt-sm flex-center" onClick={() => getOrCreateChat(ProductData.data.profile_seller.profile.user.email, ProductData.data.profile_seller.profile.user.id, ProductData.data.profile_seller.profile.user.username)}>
-                                  <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع
+                                <button className="btn butt-green butt-sm flex-center" disabled={createConversationLoading} onClick={() => setIsModalVisible(true)}>
+                                  <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع {createConversationLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
                                 </button>
                               </div>
                             </div>
@@ -462,13 +460,13 @@ function Single({ query, stars }) {
                       <div className="col-5">
                         <input
                           type="text"
-                          maxLength={9}
+                          maxLength={2}
                           onInput={allowOnlyNumericsOrDigits}
                           pattern="[0-9]*"
                           value={quantutyCount}
                           name="quantity_count"
                           className="timlands-inputs sm"
-                          //onChange={(e: any) => setQuantutyCount(e.target.value)}
+                        //onChange={(e: any) => setQuantutyCount(e.target.value)}
                         />
                       </div>
                     </div>
@@ -548,14 +546,20 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Single;
 export async function getServerSideProps({ query }) {
-  const uriString = encodeURI(`api/product/${query.product}`)
-  // Fetch data from external API
-  const res = await API.get(uriString)
+  try {
+    const uriString = encodeURI(`api/product/${query.product}`)
+    // Fetch data from external API
+    const res = await API.get(uriString)
 
-  // Pass data to the page via props
-  return { props: { stars: res.data, query } }
+    // Pass data to the page via props
+    return { props: { stars: res.data, query, errorFetch: false } }
+
+  } catch (error) {
+    return { props: { stars: null, query, errorFetch: true } }
+  }
 }
 Single.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any
+  stars: PropTypes.any,
+  errorFetch: PropTypes.bool,
 };

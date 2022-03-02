@@ -134,8 +134,8 @@ export default function MyProducts({ setStatusType, postsList }) {
                 <h3 className="title">خدماتي</h3>
                 <Link href={'/add-new'}>
                     <a className='add-new-product'>
-                        <span className="material-icons material-icons-outlined">add_circle_outline</span>
-                    </a>
+                        <span className="material-icons material-icons-outlined">add_circle_outline</span> إضافة خدمة جديدة
+                    </a> 
                 </Link>
             </div>
             <Menu mode="horizontal">

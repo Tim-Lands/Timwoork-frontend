@@ -52,7 +52,7 @@ const Login = (): ReactElement => {
             // Authentication was successful.
             if (response.status === 200) {
                 
-                Cookies.set('token', response.data.data.token)
+                Cookies.set('token', response.data.data.token, { expires: 365 } )
                 // Cookies.set('username', );
                 // Cookies.set('userID', )
                 message.success('تم تسجيل الدخول بنجاح')
@@ -109,7 +109,7 @@ const Login = (): ReactElement => {
                         const res = await API.post("api/login", values)
                         // Authentication was successful.
                         if (res.status === 200) {
-                            Cookies.set('token', res.data.data.token);
+                            Cookies.set('token', res.data.data.token, { expires: 365 });
                             Cookies.set('username', values.username);
                             if (res.data.data.is_verified) {
                                 router.push('/')

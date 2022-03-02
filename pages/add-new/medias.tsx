@@ -5,30 +5,30 @@ import API from "../../config";
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
 import { message, notification, Progress, Spin } from 'antd';
-import useSWR, { mutate } from 'swr'
 import ReactPlayer from "react-player"
 import PropTypes from "prop-types";
 import ImageUploading from 'react-images-uploading';
 import cookies from 'next-cookies'
+import { MetaTags } from '@/components/SEO/MetaTags';
 
 function Medias({ query, stars }) {
     const token = Cookies.get('token')
     const id = query.id
-    const { data: getUser }: any = useSWR('api/me')
-    const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     async function getProductId() {
         try {
-            const res: any = await API.get(`api/my_products/product/${id}`, {
+            const res: any = await API.get(`api/my_products/product/${query.id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             if (res.status === 200) {
-                console.log("Success");
-                
+                console.log(true)
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
+                router.push("/add-new")
+            }
+            if (error.response && error.response.status === 404) {
                 router.push("/add-new")
             }
         }
@@ -46,12 +46,6 @@ function Medias({ query, stars }) {
             return
         }
         getProductId()
-        if (getUser && getProduct) {
-            if (getUser.user_details.id !== getProduct.data.profile_seller.profile.user_id) {
-                router.push('/add-new')
-                return
-            }
-        }
     }, [])
 
     const [imageProgress, setImageProgress] = useState(0);
@@ -148,7 +142,6 @@ function Medias({ query, stars }) {
             if (res.status === 200) {
                 setLoading(false)
                 message.success('لقد تم التحديث بنجاح')
-                mutate(`api/product/${query.id}`)
                 router.push({
                     pathname: '/add-new/complete',
                     query: {
@@ -180,6 +173,11 @@ function Medias({ query, stars }) {
 
     return (
         <div className="container-fluid">
+            <MetaTags
+                title="إضافة خدمة جديدة - إضافة وسائط"
+                metaDescription="اتصل بنا - تيموورك"
+                ogDescription="اتصل بنا - تيموورك"
+            />
             {token &&
                 <div className="row">
                     <div className="col-md-4">
@@ -241,7 +239,6 @@ function Medias({ query, stars }) {
                                                 <div className="images-list-uploading">
                                                     <div className="page-header">
                                                         <h4 className="title">الصورة البارزة</h4>
-
                                                     </div>
                                                     <ImageUploading
                                                         value={featuredImages}

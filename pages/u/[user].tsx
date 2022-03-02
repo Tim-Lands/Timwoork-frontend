@@ -30,8 +30,8 @@ const User = ({ query }) => {
                     <div className={'row justify-content-md-center'}>
                         {User.profile.profile_seller &&
                             <div className="col-lg-4">
-                                <div className="py-1">
-                                    <Card title="نبذة عني">
+                                <div className="py-1 mt-2">
+                                    <Card title="نبذة عن البائع">
                                         <p className="user-bro">
                                             {User.profile.profile_seller.bio}
                                         </p>

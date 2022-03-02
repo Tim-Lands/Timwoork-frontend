@@ -62,7 +62,7 @@ function Description({ query }) {
     return (
         <>
             <MetaTags
-                title="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
+                title="تعديل الخدمة - الوصف وتعليمات المشتري"
                 metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
                 ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
             />
@@ -169,7 +169,7 @@ function Description({ query }) {
                                                 <div className="flex-center">
                                                     <h2 className="title"><span className="material-icons material-icons-outlined">description</span>الوصف وتعليمات المشتري</h2>
                                                     <div className={"header-butt" + (isSubmitting ? ' is-loader' : '')}>
-                                                        <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
+                                                        <button type="submit" disabled={(!getProduct ? true : false) || isSubmitting} className="btn flex-center butt-green mr-auto butt-xs">
                                                             <span className="text">حفظ التغييرات</span>
                                                             <div className="spinner-border spinner-border-sm text-white" role="status"></div>
                                                         </button>
@@ -186,6 +186,7 @@ function Description({ query }) {
                                                                 as="textarea"
                                                                 id="input-content"
                                                                 name="content"
+                                                                disabled={(!getProduct ? true : false)}
                                                                 placeholder="وصف الخدمة..."
                                                                 className="timlands-inputs"
                                                                 autoComplete="off"
@@ -210,6 +211,7 @@ function Description({ query }) {
                                                             <Field
                                                                 as="textarea"
                                                                 id="input-buyer_instruct"
+                                                                disabled={(!getProduct ? true : false)}
                                                                 name="buyer_instruct"
                                                                 placeholder="تعليمات المشتري..."
                                                                 className="timlands-inputs"
@@ -231,7 +233,7 @@ function Description({ query }) {
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className="py-4 d-flex">
-                                                            <button type="submit" disabled={isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                                            <button type="submit" disabled={(!getProduct ? true : false) || isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
                                                                 <span className="text">حفظ التغييرات</span>
                                                             </button>
                                                         </div>

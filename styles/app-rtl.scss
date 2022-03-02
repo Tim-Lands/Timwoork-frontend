@@ -2774,7 +2774,7 @@ h3 {
             overflow: hidden;
             position: relative;
             &.featured-wrapper {
-                height: 250px;
+                height: 270px;
             }
             .image-item__btn-wrapper {
                 background-color: rgba(0, 0, 0, 0.671);
@@ -3195,6 +3195,13 @@ h3 {
         border-right-color: transparent;
     }
 }
+.app-label {
+    .material-icons {
+        font-size: 17px;
+        margin-right: 3px;
+        padding-top: 5px;
+    }
+}
 .page-header {
     padding: 18px 0;
     border-bottom: 1px dashed #f1f1f1;
@@ -3202,12 +3209,11 @@ h3 {
     display: flex;
     .add-new-product {
         display: flex;
-        width: 35px;
-        height: 35px;
         margin-right: auto;
-        border-radius: 50%;
+        border-radius: 5px;
         background-color: #ddd;
         color: #555;
+        padding: 7px 10px;
         align-items: center;
         justify-content: center;
         &:hover {
@@ -4354,5 +4360,8 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         margin: 0;
         font-size: 14px;
     }
+}
+.css-b62m3t-container {
+    width: 100%;
 }
 @import 'is-dark';

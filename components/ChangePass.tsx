@@ -2,7 +2,7 @@ import Layout from '@/components/Layout/HomeLayout'
 import { Result, message, Spin } from 'antd'
 import React, { ReactElement, useState } from 'react'
 import Link from 'next/link'
-import API from '../../config'
+import API from '../config'
 import useSWR from 'swr'
 import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
@@ -38,7 +38,7 @@ function ChangePass() {
         <>
             {!userInfo && <Loading />}
             {userInfo && userInfo.user_details.profile &&
-                <div className="timlands-profile-content">
+                <div className="timlands-profile-content my-2">
                     <Formik
                         initialValues={{
                             old_password: '',
@@ -74,7 +74,7 @@ function ChangePass() {
                                         <div className="content-title">
                                             <div className="d-flex">
                                                 <h3 className="title flex-center">
-                                                    <span className="material-icons material-icons-outlined">account_circle</span>
+                                                    <span className="material-icons material-icons-outlined">lock</span>
                                                     تغيير كلمة المرور
                                                 </h3>
                                             </div>

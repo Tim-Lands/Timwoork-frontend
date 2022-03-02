@@ -10,6 +10,7 @@ import useSWR from 'swr'
 import PropTypes from "prop-types";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import CreatableSelect from 'react-select/creatable';
+import Link from 'next/link'
 
 const MySelect = (props: any) => {
     const [dataTags, setDataTags] = useState([])
@@ -53,11 +54,9 @@ const MySelect = (props: any) => {
     )
 }
 function Overview({ query }) {
-
     const id = query.id
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-    const { data: getUser }: any = useSWR('api/me')
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const clearValidationHandle = () => {
@@ -83,12 +82,6 @@ function Overview({ query }) {
                 // Authentication was successful.
                 if (res.status === 200) {
                     message.success('لقد تم التحديث بنجاح')
-                    router.push({
-                        pathname: '/add-new/prices',
-                        query: {
-                            id: id, // pass the id 
-                        },
-                    })
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -108,12 +101,16 @@ function Overview({ query }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.status === 422) {
-                router.push("/add-new")
+            if (res.status === 200) {
+                console.log('');
+
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                router.push("/add-new")
+                router.push("/myproducts")
+            }
+            if (error.response && error.response.status === 404) {
+                router.push("/myproducts")
             }
         }
     }
@@ -123,11 +120,6 @@ function Overview({ query }) {
             return
         }
         getProductId()
-        if (getProduct) {
-            if (getProduct.profile_seller_id !== getUser.id) {
-                router.push('/add-new')
-            }
-        }
     }, [])
     return (
         <>
@@ -139,51 +131,57 @@ function Overview({ query }) {
             {token &&
                 <div className="container-fluid">
                     {(!getProduct) && <div>يرجى الانتظار...</div>}
-                    <div className="row">
+                    <div className="row justify-content-md-center">
                         <div className="col-md-8 pt-3">
                             <form onSubmit={formik.handleSubmit}>
                                 <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
                                     <div className="timlands-steps">
                                         <div className="timlands-step-item active">
                                             <h3 className="text">
-                                                <span className="icon-circular">
-                                                    <span className="material-icons material-icons-outlined">collections_bookmark</span>
-                                                </span>
-                                                معلومات عامة
+                                                <Link href={`/edit-product/overview?id=${id}`}>
+                                                    <a>
+                                                        <span className="icon-circular">
+                                                            <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                                                        </span>
+                                                        معلومات عامة
+                                                    </a>
+                                                </Link>
                                             </h3>
                                         </div>
                                         <div className="timlands-step-item">
                                             <h3 className="text">
-
-                                                <span className="icon-circular">
-                                                    <span className="material-icons material-icons-outlined">payments</span>
-                                                </span>
-                                                السعر والتطويرات
+                                                <Link href={`/edit-product/prices?id=${id}`}>
+                                                    <a>
+                                                        <span className="icon-circular">
+                                                            <span className="material-icons material-icons-outlined">payments</span>
+                                                        </span>
+                                                        السعر والتطويرات
+                                                    </a>
+                                                </Link>
                                             </h3>
                                         </div>
                                         <div className="timlands-step-item">
                                             <h3 className="text">
-                                                <span className="icon-circular">
-                                                    <span className="material-icons material-icons-outlined">description</span>
-                                                </span>
-                                                الوصف وتعليمات المشتري
+                                                <Link href={`/edit-product/description?id=${id}`}>
+                                                    <a>
+                                                        <span className="icon-circular">
+                                                            <span className="material-icons material-icons-outlined">description</span>
+                                                        </span>
+                                                        الوصف وتعليمات المشتري
+                                                    </a>
+                                                </Link>
                                             </h3>
                                         </div>
                                         <div className="timlands-step-item">
                                             <h3 className="text">
-                                                <span className="icon-circular">
-                                                    <span className="material-icons material-icons-outlined">mms</span>
-                                                </span>
-                                                مكتبة الصور والملفات
-                                            </h3>
-                                        </div>
-                                        <div className="timlands-step-item">
-                                            <h3 className="text">
-                                                <span className="icon-circular">
-                                                    <span className="material-icons material-icons-outlined">publish</span>
-                                                </span>
-                                                نشر الخدمة
-
+                                                <Link href={`/edit-product/medias?id=${id}`}>
+                                                    <a>
+                                                        <span className="icon-circular">
+                                                            <span className="material-icons material-icons-outlined">mms</span>
+                                                        </span>
+                                                        مكتبة الصور والملفات
+                                                    </a>
+                                                </Link>
                                             </h3>
                                         </div>
                                     </div>
@@ -199,6 +197,7 @@ function Overview({ query }) {
                                                         placeholder="العنوان..."
                                                         className={"timlands-inputs " + (validationsErrors && validationsErrors.title && ' has-error')}
                                                         autoComplete="off"
+                                                        disabled={(!getProduct ? true : false)}
                                                         onKeyUp={clearValidationHandle}
                                                         onChange={formik.handleChange}
                                                         value={formik.values.title}
@@ -219,6 +218,7 @@ function Overview({ query }) {
                                                         id="input-catetory"
                                                         name="catetory"
                                                         className="timlands-inputs select"
+                                                        disabled={(!getProduct ? true : false)}
                                                         autoComplete="off"
                                                         onChange={formik.handleChange}
                                                         value={formik.values.catetory}
@@ -237,6 +237,7 @@ function Overview({ query }) {
                                                     <label className="label-block" htmlFor="input-subcategory">اختر التصنيف الفرعي</label>
                                                     <select
                                                         id="input-subcategory"
+                                                        disabled={(!getProduct ? true : false)}
                                                         name="subcategory"
                                                         className={"timlands-inputs select " + (validationsErrors && validationsErrors.subcategory && ' has-error')}
                                                         autoComplete="off"
@@ -262,13 +263,14 @@ function Overview({ query }) {
                                             <MySelect
                                                 value={formik.values.tags}
                                                 onChange={formik.setFieldValue}
+                                                disabled={(!getProduct ? true : false)}
                                                 onBlur={formik.setFieldTouched}
                                             />
                                             <div className="col-md-12">
                                                 <div className="py-4 d-flex">
                                                     <span className="me-auto"></span>
-                                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
-                                                        <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
+                                                    <button type="submit" disabled={(!getProduct ? true : false) || formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                                        <span className="text">حفظ التغييرات</span>
                                                     </button>
                                                 </div>
                                             </div>

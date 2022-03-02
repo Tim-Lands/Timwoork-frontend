@@ -12,6 +12,7 @@ import { Progress, Result, Timeline } from "antd";
 import router from "next/router";
 import { motion } from "framer-motion";
 import Link from 'next/link'
+import Image from 'next/image'
 const Order = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/my_purchases/${query.id}`)
@@ -316,10 +317,11 @@ const Order = ({ query }) => {
                                         <Link href={`/u/${ShowItem && ShowItem.data.order.cart.user.username}`}>
                                             <a className="order-user-info d-flex flex-center">
                                                 <div className="order-user-avatar">
-                                                    <img
+                                                    <Image
                                                         src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
                                                         width={50}
                                                         height={50}
+                                                        quality={80}
                                                     />
                                                 </div>
                                                 <div className="order-user-content">
@@ -339,10 +341,11 @@ const Order = ({ query }) => {
                                         <Link href={`/u/${ShowItem && ShowItem.data.profile_seller.profile.user.username}`}>
                                             <a className="order-user-info d-flex flex-center">
                                                 <div className="order-user-avatar">
-                                                    <img
+                                                    <Image
                                                         src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
                                                         width={50}
                                                         height={50}
+                                                        quality={80}
                                                     />
                                                 </div>
                                                 <div className="order-user-content">
@@ -415,7 +418,14 @@ const Order = ({ query }) => {
                                                         className={(ShowItem && ShowItem.data.order.cart.user_id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
                                                         style={{ marginBlock: 6, borderRadius: 6 }}>
                                                         <div className="item-avatar" style={{ marginInline: 6 }}>
-                                                            <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
+                                                            <Image
+                                                                src={item.user.profile.avatar_url}
+                                                                width={45}
+                                                                height={45}
+                                                                quality={80}
+                                                                className="rounded-pill"
+                                                                alt=""
+                                                            />
                                                         </div>
 
                                                         <div className="item-content">
