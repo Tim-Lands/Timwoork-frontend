@@ -168,7 +168,6 @@ function Navbar(): ReactElement {
                                         className="rounded-circle mx-1"
                                         src={data.user_sender.avatar_url}
                                         alt={data.user_sender.full_name}
-
                                     />
                                     <span style={{ color: '#666', fontWeight: 300, }}>
                                         {data.user_sender.full_name}
@@ -271,14 +270,14 @@ function Navbar(): ReactElement {
                     </a>
                 </Link>
             </Menu.Item>)}
-            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
+            <Menu.Item key="70">
                 <Link href="/mywallet">
                     <a>
                         <span className="material-icons material-icons-outlined">account_balance_wallet</span>
-                        الرصيد
+                        محفظتي
                     </a>
                 </Link>
-            </Menu.Item>)}
+            </Menu.Item>
 
             {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
                 <Link href="/myproducts">
@@ -465,16 +464,16 @@ function Navbar(): ReactElement {
                                             </li>
                                             <li className="login-user">
                                                 <Dropdown overlay={AccountList} trigger={['click']}>
-                                                        <ImageLogo
-                                                            loader={myLoader}
-                                                            src={userData.user_details.profile.avatar_url}
-                                                            quality={60}
-                                                            width={32}
-                                                            height={32}
-                                                            alt={userData && userData.user_details.profile.full_name}
-                                                            placeholder='blur'
-                                                            blurDataURL='/avatar2.jpg'
-                                                        />
+                                                    <ImageLogo
+                                                        loader={myLoader}
+                                                        src={userData.user_details.profile.avatar_url}
+                                                        quality={60}
+                                                        width={32}
+                                                        height={32}
+                                                        alt={userData && userData.user_details.profile.full_name}
+                                                        placeholder='blur'
+                                                        blurDataURL='/avatar2.jpg'
+                                                    />
                                                 </Dropdown>
                                             </li>
                                         </>
