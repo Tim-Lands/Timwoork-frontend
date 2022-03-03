@@ -71,7 +71,7 @@ function Prices({ query }) {
             />
             {token &&
                 <div className="container-fluid">
-                    <div className="row justify-content-md-center">
+                    <div className="row justify-content-md-center my-3">
                         <div className="col-md-8 pt-3">
                             <Formik
                                 isInitialValid={true}

@@ -80,7 +80,11 @@ function index() {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                        <div className="d-flex justify-content-center py-4">
+                                            <button type='button' className='btn butt-green butt-md px-5'>
+                                                طلب سحب الأموال 
+                                            </button>
+                                        </div>
                                         <div className="page-header xs">
                                             <h3 className='title'>المعاملات المالية</h3>
                                         </div>

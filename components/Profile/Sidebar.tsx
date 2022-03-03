@@ -51,6 +51,13 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             valueStyle={{ color: darkMode ? '#8ac557' : '#3f8600' }}
                             suffix="$"
                         />
+                        <div className="d-flex justify-content-center pt-1">
+                            <Link href={'/'}>
+                                <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
+                                    طلب سحب الأموال
+                                </a>
+                            </Link>
+                        </div>
                     </div>
                     <div className="statistic-item">
                         <Statistic

@@ -189,7 +189,7 @@ function Medias({ query, stars }) {
                 ogDescription="تعديل الخدمة - الوسائط"
             />
             {token &&
-                <div className="row justify-content-md-center">
+                <div className="row justify-content-md-center my-3">
                     <div className="col-md-8 pt-3">
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />

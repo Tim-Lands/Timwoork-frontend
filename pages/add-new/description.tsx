@@ -50,7 +50,7 @@ function Description({ query }) {
             />
             {token &&
                 <div className="container-fluid">
-                    <div className="row">
+                    <div className="row my-3">
                         <div className="col-md-4">
                             <SidebarAdvices />
                         </div>

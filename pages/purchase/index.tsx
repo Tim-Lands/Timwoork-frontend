@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 import router from 'next/router';
 import API from '../../config'
 import Loading from '@/components/Loading';
-import { Result } from 'antd';
+import { Badge, Result, Tooltip } from 'antd';
 import {
     CardElement,
     Elements,
@@ -69,7 +69,7 @@ function Bill() {
 
     const { data: cartList, error }: any = useSWR('api/cart')
     const { data: userInfo }: any = useSWR('api/me')
-
+    const mybalance = userInfo && userInfo.user_details.profile.withdrawable_amount
     async function getPaypal() {
         setIsLoading(true)
         setIsBuyer(false)
@@ -125,7 +125,7 @@ function Bill() {
                         <div className="app-bill-header">
                             <h3 className="title">الفاتورة النهائية</h3>
                         </div>
-                        {!cartList && !userInfo && <Loading />}
+                        {!cartList && <Loading />}
                         {cartList && cartList.data !== null && isBuyer &&
                             <div className="app-bill-content">
                                 <ul className="list-group">
@@ -138,7 +138,15 @@ function Bill() {
                                         <span className="">{cartList && cartList.data.total_price}$</span>
                                     </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        سعر التحويل
+                                        الرسوم
+
+                                        <span className='me-auto'>
+                                            <Tooltip
+                                                title="هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك."
+                                            >
+                                                <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                            </Tooltip>
+                                        </span>
                                         <span className="">{cartList && cartList.data.tax}$</span>
                                     </li>
                                     <li className="list-group-item total d-flex justify-content-between align-items-center">
@@ -202,32 +210,34 @@ function Bill() {
                                         </motion.div>
                                         : null}
                                 </div>
-
-                                <div className="form-check" style={{ marginBlock: 9 }}>
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        value='2'
-                                        name="billPayment"
-                                        id="billPayment-wallet"
-                                        onChange={(e: any) => setBillPayment(e.target.value)}
-                                    />
-                                    <label className="form-check-label" htmlFor="billPayment-wallet">
-                                        الدفع عن طريق المحفظة
-                                    </label>
-                                </div>
-                                <div style={{ overflow: 'hidden' }}>
-                                    {billPayment == 2 ?
-                                        <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                            <div className="purchase-by-wallet">
-                                                <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
-                                                <button className='btn butt-lg butt-green flex-center-just'>
-                                                    <img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)
-                                                </button>
-                                            </div>
-                                        </motion.div>
-                                        : null}
-                                </div>
+                                {(mybalance > cartList && cartList.data.price_with_tax) ?? <>
+                                    <div className="form-check" style={{ marginBlock: 9 }}>
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            value='2'
+                                            name="billPayment"
+                                            id="billPayment-wallet"
+                                            onChange={(e: any) => setBillPayment(e.target.value)}
+                                        />
+                                        <label className="form-check-label" htmlFor="billPayment-wallet">
+                                            الدفع عن طريق المحفظة
+                                        </label>
+                                    </div>
+                                    <div style={{ overflow: 'hidden' }}>
+                                        {billPayment == 2 ?
+                                            <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                <div className="purchase-by-wallet">
+                                                    <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
+                                                    <button className='btn butt-lg butt-green flex-center-just'>
+                                                        <img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)
+                                                    </button>
+                                                </div>
+                                            </motion.div>
+                                            : null}
+                                    </div>
+                                </>
+                                }
 
                             </div>
                         }

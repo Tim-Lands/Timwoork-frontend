@@ -327,7 +327,6 @@ const Order = ({ query }) => {
                                                 <div className="order-user-content">
                                                     <h2 className="user-title">{ShowItem && ShowItem.data.order.cart.user.profile.full_name}</h2>
                                                     <p className="meta">
-                                                        <span className="badge bg-secondary"> {ShowItem && ShowItem.data.order.cart.user.profile.badge && ShowItem.data.order.cart.user.profile.badge.name_ar}</span> |
                                                         <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.order.cart.user.profile.level && ShowItem.data.order.cart.user.profile.level.name_ar}</span>
                                                     </p>
                                                 </div>
@@ -351,8 +350,7 @@ const Order = ({ query }) => {
                                                 <div className="order-user-content">
                                                     <h2 className="user-title">{ShowItem && ShowItem.data.profile_seller.profile.full_name}</h2>
                                                     <p className="meta">
-                                                        <span className="badge bg-secondary">{ShowItem && ShowItem.data.profile_seller.profile.badge && ShowItem.data.profile_seller.profile.badge.name_ar}</span> |
-                                                        <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.profile_seller.profile.level && ShowItem.data.profile_seller.profile.level.name_ar}</span>
+                                                        <span className="badge bg-light text-dark">{ShowItem && ShowItem.data.profile_seller.level && ShowItem.data.profile_seller.level.name_ar}</span>
                                                     </p>
                                                 </div>
                                             </a>

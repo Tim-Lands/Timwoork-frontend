@@ -32,7 +32,7 @@ function index(props: any) {
             />
             <div className="container">
             {token &&
-                <div className="row justify-content-center">
+                <div className="row justify-content-center my-3">
                     <div className="col-md-8">
                         <Spin spinning={props.addNewProductLoading}>
                             {props.addNewProductError && (

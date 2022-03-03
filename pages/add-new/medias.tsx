@@ -179,7 +179,7 @@ function Medias({ query, stars }) {
                 ogDescription="اتصل بنا - تيموورك"
             />
             {token &&
-                <div className="row">
+                <div className="row my-3">
                     <div className="col-md-4">
                         <SidebarAdvices />
                     </div>

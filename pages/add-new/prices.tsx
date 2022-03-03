@@ -39,8 +39,8 @@ function Prices({ query }) {
             }
         }
     }
-    const [priceCount, setPriceCount] = useState(0)
-    const [durationCount, setDurationCount] = useState(0)
+    const [priceCount, setPriceCount] = useState(getProduct && getProduct.data.price)
+    const [durationCount, setDurationCount] = useState(getProduct && getProduct.data.duration)
     const allowOnlyNumericsOrDigits = (evt) => {
         const financialGoal = (evt.target.validity.valid) ? evt.target.value : priceCount;
         setPriceCount(financialGoal);
@@ -65,7 +65,7 @@ function Prices({ query }) {
             />
             {token &&
                 <div className="container-fluid">
-                    <div className="row">
+                    <div className="row my-3">
                         <div className="col-md-4">
                             <SidebarAdvices />
                         </div>

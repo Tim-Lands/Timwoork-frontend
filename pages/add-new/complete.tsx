@@ -73,7 +73,7 @@ function Complete({ query }) {
             />
             <div className="container-fluid">
                 {(!getProduct) && <div>يرجى الانتظار...</div>}
-                <div className="row">
+                <div className="row my-3">
                     <div className="col-md-4">
                         <SidebarAdvices />
                     </div>
