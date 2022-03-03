@@ -20,10 +20,6 @@ type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
 }
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-    //const { data: userData }: any = useSWR(`api/me`)
-    //const dataDark = userData && userData.user_details.profile.dark_mode
-    // Check if we're on a protected route.
-    // Handle current user in redux.
     useEffect(() => {
         const tt: string = i18n.dir()
         if (tt !== "rtl") {

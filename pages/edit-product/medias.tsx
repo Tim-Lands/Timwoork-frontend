@@ -10,6 +10,8 @@ import ImageUploading from 'react-images-uploading';
 import cookies from 'next-cookies'
 import { MetaTags } from '@/components/SEO/MetaTags';
 import Link from 'next/link'
+import Image from 'next/image'
+
 function Medias({ query, stars }) {
     const id = query.id
     const token = Cookies.get('token')
@@ -190,7 +192,7 @@ function Medias({ query, stars }) {
             />
             {token &&
                 <div className="row justify-content-md-center my-3">
-                    <div className="col-md-8 pt-3">
+                    <div className="col-md-7 pt-3">
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
@@ -280,7 +282,15 @@ function Medias({ query, stars }) {
                                                                         {imageList && imageList.map((image, index) => (
                                                                             <div className="col-md p-0" key={index}>
                                                                                 <div className="image-item featured-wrapper">
-                                                                                    <img src={image['data_url']} alt="" />
+                                                                                <Image
+                                                                                    src={image['data_url']}
+                                                                                    alt="الصورة البارزة"
+                                                                                    width={755}
+                                                                                    height={418}
+                                                                                    quality={85}
+                                                                                    placeholder='blur'
+                                                                                    //blurDataURL={image['data_url']}
+                                                                                />
                                                                                     <div className="image-item__btn-wrapper">
                                                                                         <button
                                                                                             disabled={featuredLoading}

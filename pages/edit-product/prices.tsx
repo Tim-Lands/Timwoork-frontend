@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 
 function Prices({ query }) {
     const token = Cookies.get('token')
-    const { data: getUser }: any = useSWR('api/me')
     const { id } = query
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -30,6 +29,9 @@ function Prices({ query }) {
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
+                router.push("/add-new")
+            }
+            if (error.response && error.response.status === 404) {
                 router.push("/add-new")
             }
         }
@@ -55,12 +57,6 @@ function Prices({ query }) {
             return
         }
         getProductId()
-        if (getProduct) {
-            if (getProduct.profile_seller_id !== getUser.id) {
-                router.push('/add-new')
-            }
-        }
-
     }, [])
     return (
         <>
@@ -72,7 +68,7 @@ function Prices({ query }) {
             {token &&
                 <div className="container-fluid">
                     <div className="row justify-content-md-center my-3">
-                        <div className="col-md-8 pt-3">
+                        <div className="col-md-7 pt-3">
                             <Formik
                                 isInitialValid={true}
                                 initialValues={{

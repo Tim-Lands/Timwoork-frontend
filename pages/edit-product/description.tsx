@@ -12,8 +12,7 @@ import useSWR from 'swr';
 import Link from 'next/link'
 
 function Description({ query }) {
-    const { data: getProduct }: any = useSWR(`api/product/${query.id}`)
-    const { data: getUser }: any = useSWR('api/me')
+    const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const token = Cookies.get('token')
     const id = query.id
     async function stepFive() {
@@ -38,12 +37,15 @@ function Description({ query }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            if (res.status === 422) {
-                router.back()
+            if (res.status === 200) {
+                console.log(true)
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {
-                router.back()
+                router.push("/add-new")
+            }
+            if (error.response && error.response.status === 404) {
+                router.push("/add-new")
             }
         }
     }
@@ -53,11 +55,6 @@ function Description({ query }) {
             return
         }
         getProductId()
-        if (getProduct) {
-            if (getProduct.profile_seller_id !== getUser.id) {
-                router.push('/add-new')
-            }
-        }
     }, [])
     return (
         <>
@@ -69,7 +66,7 @@ function Description({ query }) {
             {token &&
                 <div className="container-fluid">
                     <div className="row justify-content-md-center my-3">
-                        <div className="col-md-8 pt-3">
+                        <div className="col-md-7 pt-3">
                             <Formik
                                 isInitialValid={true}
                                 initialValues={{

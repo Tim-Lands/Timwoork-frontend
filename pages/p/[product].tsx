@@ -125,7 +125,7 @@ function Single({ query, stars, errorFetch }) {
   async function startConversation(message: string) {
     setCreateConversationLoading(true)
     try {
-      const res = await API.post(`api/product/${ProductData && ProductData.data.id}/create/conversation`, {
+      const res = await API.post(`api/product/${ProductData && ProductData.data.id}/conversations/create`, {
         initial_message: message,
         receiver_id: ProductData && ProductData.data.profile_seller.profile.user_id,
         title: ProductData && ProductData.data.title,

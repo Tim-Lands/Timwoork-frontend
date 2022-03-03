@@ -54,7 +54,6 @@ const MySelect = (props: any) => {
     )
 }
 
-
 function Overview({ query }) {
 
     const id = query.id
@@ -67,6 +66,7 @@ function Overview({ query }) {
     }
     const formik = useFormik({
         initialValues: {
+            content: 'ejrferjgh erfkerh whgferg',
             catetory: getProduct && getProduct.data.subcategory && getProduct.data.subcategory.category && getProduct.data.subcategory.category.id,
             title: getProduct && getProduct.data.title,
             subcategory: getProduct && getProduct.data.subcategory && getProduct.data.subcategory.id,

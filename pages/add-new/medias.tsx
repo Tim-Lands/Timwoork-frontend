@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import ImageUploading from 'react-images-uploading';
 import cookies from 'next-cookies'
 import { MetaTags } from '@/components/SEO/MetaTags';
+import Image from 'next/image'
 
 function Medias({ query, stars }) {
     const token = Cookies.get('token')
@@ -240,11 +241,14 @@ function Medias({ query, stars }) {
                                                     <div className="page-header">
                                                         <h4 className="title">الصورة البارزة</h4>
                                                     </div>
+                                                    <p className="text-note mt-3" style={{ color: '#555', margin: 0, fontSize: 13 }}>يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة</p>
+                                                    <p className="text-resolotion" style={{ color: '#222', margin: 0, fontSize: 13, fontWeight: 'bold' }}>من الأفضل أن تكون الأبعاد: 755X418</p>
                                                     <ImageUploading
                                                         value={featuredImages}
                                                         onChange={onChangeFeatured}
                                                         maxNumber={1}
                                                         dataURLKey="data_url"
+
                                                     >
                                                         {({
                                                             imageList,
@@ -262,23 +266,31 @@ function Medias({ query, stars }) {
                                                                             يجب أن تختار الصورة البارزة للخدمة ويجب ان تكون الصورة متناسقة مع محتوى الخدمة
                                                                         </p>
                                                                     </div>}
-                                                                    <div className="row">
-                                                                        {imageList && imageList.map((image, index) => (
-                                                                            <div className="col-md p-0" key={index}>
-                                                                                <div className="image-item featured-wrapper">
-                                                                                    <img src={image['data_url']} alt="" />
-                                                                                    <div className="image-item__btn-wrapper">
-                                                                                        <button
-                                                                                            disabled={featuredLoading}
-                                                                                            type='button'
-                                                                                            onClick={() => onImageUpdate(index)}>
-                                                                                            <span className="material-icons-outlined">edit</span>
-                                                                                        </button>
-                                                                                    </div>
+                                                                    {imageList && imageList.map((image, index) => (
+                                                                        <div className="p-0" key={index}>
+                                                                            <div className="image-item featured-wrapper">
+                                                                                <Image
+                                                                                    src={image['data_url']}
+                                                                                    alt="الصورة البارزة"
+                                                                                    width={755}
+                                                                                    height={418}
+                                                                                    quality={85}
+                                                                                    placeholder='blur'
+                                                                                    blurDataURL={image['data_url']}
+                                                                                />
+
+                                                                                <div className="image-item__btn-wrapper">
+                                                                                    <button
+                                                                                        disabled={featuredLoading}
+                                                                                        type='button'
+                                                                                        onClick={() => onImageUpdate(index)}>
+                                                                                        <span className="material-icons-outlined">edit</span>
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                        ))}
-                                                                    </div>
+                                                                        </div>
+                                                                    ))}
+
                                                                     <hr />
                                                                     <button type='button' disabled={featuredLoading} className='btn butt-lg butt-primary' onClick={uploadFeaturedHandle}>رفع الصورة الآن</button>
                                                                 </div>
@@ -347,6 +359,15 @@ function Medias({ query, stars }) {
                                                                             <div className="col-md p-0" key={index}>
                                                                                 <div className="image-item">
                                                                                     <img src={image['data_url']} alt="" width="100" />
+                                                                                    <Image
+                                                                                        src={image['data_url']}
+                                                                                        alt="صورة "
+                                                                                        width={120}
+                                                                                        height={100}
+                                                                                        quality={85}
+                                                                                        placeholder='blur'
+                                                                                        blurDataURL={image['data_url']}
+                                                                                    />
                                                                                     <div className="image-item__btn-wrapper">
                                                                                         <button
                                                                                             disabled={galariesLoading}

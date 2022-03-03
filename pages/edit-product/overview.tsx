@@ -132,7 +132,7 @@ function Overview({ query }) {
                 <div className="container-fluid">
                     {(!getProduct) && <div>يرجى الانتظار...</div>}
                     <div className="row justify-content-md-center my-3">
-                        <div className="col-md-8 pt-3">
+                        <div className="col-md-7 pt-3">
                             <form onSubmit={formik.handleSubmit}>
                                 <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
                                     <div className="timlands-steps">
