@@ -1989,6 +1989,27 @@ h3 {
   color: #555;
 }
 
+.content-text-item.wallet-info .text-note {
+  font-size: 12px;
+  font-weight: 200;
+  color: #555;
+  margin: 0;
+}
+
+@media (min-width: 760px) {
+  .content-text-item.wallet-info {
+    height: 170px;
+    position: relative;
+  }
+  .content-text-item.wallet-info .text-note {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+  }
+}
+
 .content-text-item.wallet-info.red .text-label {
   color: #691e1e;
 }

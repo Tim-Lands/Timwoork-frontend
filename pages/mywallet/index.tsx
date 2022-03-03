@@ -61,22 +61,27 @@ function index() {
                                             <h3 className='title'>محفظتي</h3>
                                         </div>
                                         <div className="row">
-                                            <div className="col-sm-4">
+                                        <div className="col-sm-4">
                                                 <div className="content-text-item wallet-info red">
                                                     <h3 className="text-label">الرصيد المعلق</h3>
                                                     <p className="text-value">{userInfo && userInfo.user_details.profile.pending_amount}</p>
+                                                    <p className="text-note">يتم تعليق الأرباح لمدة 3 أيام قبل أن تتمكن من استخدامها</p>
                                                 </div>
                                             </div>
                                             <div className="col-sm-4">
                                                 <div className="content-text-item wallet-info green">
                                                     <h3 className="text-label">الرصيد القابل للسحب</h3>
                                                     <p className="text-value">{userInfo && userInfo.user_details.profile.withdrawable_amount}</p>
+                                                    <p className="text-note">المبلغ الذي حققته من بيع الخدمات يمكنك سحبه</p>
+
                                                 </div>
                                             </div>
                                             <div className="col-sm-4">
                                                 <div className="content-text-item wallet-info ">
                                                     <h3 className="text-label">الرصيد الكلي</h3>
                                                     <p className="text-value">{Number(userInfo && userInfo.user_details.profile.withdrawable_amount) + Number(userInfo && userInfo.user_details.profile.pending_amount)}</p>
+                                                    <p className="text-note">كامل الرصيد الموجود في حسابك الآن يضمن الأرباح والرصيد المعلق أيضا</p>
+
                                                 </div>
                                             </div>
                                         </div>
