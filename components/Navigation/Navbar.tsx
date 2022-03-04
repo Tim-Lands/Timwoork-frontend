@@ -15,6 +15,7 @@ import router from "next/router";
 import { MessageOutlined, InfoCircleOutlined, CloseCircleOutlined, BellOutlined } from '@ant-design/icons';
 import Pusher from 'pusher-js'
 import LastSeen from "../LastSeen";
+import { motion } from 'framer-motion'
 
 function Navbar(): ReactElement {
     const token = Cookies.get('token')
@@ -271,14 +272,16 @@ function Navbar(): ReactElement {
                     </a>
                 </Link>
             </Menu.Item>)}
-            <Menu.Item key="70">
-                <Link href="/mywallet">
-                    <a>
-                        <span className="material-icons material-icons-outlined">account_balance_wallet</span>
-                        محفظتي
-                    </a>
-                </Link>
-            </Menu.Item>
+            {veriedEmail &&
+                <Menu.Item key="70">
+                    <Link href="/mywallet">
+                        <a>
+                            <span className="material-icons material-icons-outlined">account_balance_wallet</span>
+                            محفظتي
+                        </a>
+                    </Link>
+                </Menu.Item>
+            }
 
             {veriedEmail && userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
                 <Link href="/myproducts">
@@ -288,15 +291,17 @@ function Navbar(): ReactElement {
                     </a>
                 </Link>
             </Menu.Item>)}
-            <Menu.Item key="1">
-                <Link href="/mypurchases">
-                    <a>
-                        <span className="material-icons material-icons-outlined">shopping_cart</span>
-                        مشترياتي
-                    </a>
-                </Link>
-            </Menu.Item>
-            {userData && (userData.user_details.profile.is_seller == 1) && (
+            {veriedEmail &&
+                <Menu.Item key="1">
+                    <Link href="/mypurchases">
+                        <a>
+                            <span className="material-icons material-icons-outlined">shopping_cart</span>
+                            مشترياتي
+                        </a>
+                    </Link>
+                </Menu.Item>
+            }
+            {veriedEmail && userData && (userData.user_details.profile.is_seller == 1) && (
                 <Menu.Item key="43">
                     <Link href="/mysales">
                         <a>
@@ -431,8 +436,8 @@ function Navbar(): ReactElement {
                                             </Tooltip>
                                         </li>*/}
                                             {!veriedEmail &&
-                                                <li className="right-butts-icon">
-                                                    <Tooltip title='حسابك غير مفعل يرجى التحقق من بريدك الإلكتروني انها وصلك رمز تأكيد.'>
+                                                <li className="right-butts-icon" style={{ marginInline: 5 }}>
+                                                    <Tooltip placement="bottom" title='حسابك غير مفعل يرجى التحقق من بريدك الإلكتروني انها وصلك رمز تأكيد.'>
                                                         <a href='/email/verification' style={{
                                                             display: 'flex',
                                                             alignContent: 'center',
@@ -454,29 +459,33 @@ function Navbar(): ReactElement {
                                                     </Tooltip>
                                                 </li>
                                             }
-                                            <li className="right-butts-icon">
-                                                <Tooltip placement="bottom" title='سلة المشتريات'>
-                                                    <Link href='/cart'>
-                                                        <a>
-                                                            <Badge count={userData && userData.cart_items_count} offset={[2, -1]}>
-                                                                <i className="material-icons material-icons-outlined">shopping_cart</i>
-                                                            </Badge>
-                                                        </a>
-                                                    </Link>
-                                                </Tooltip>
-                                            </li>
-                                            <li className="right-butts-icon">
-                                                <Tooltip placement="bottom" title='صندوق الرسائل'>
-                                                    <Link href='/conversations'>
-                                                        <a>
-                                                            <Badge count={countMsg} offset={[2, -1]}>
-                                                                <i className="material-icons material-icons-outlined">email</i>
-                                                            </Badge>
-                                                        </a>
-                                                    </Link>
-                                                </Tooltip>
-                                            </li>
-                                            <li className="right-butts-icon">
+                                            {veriedEmail &&
+                                                <li className="right-butts-icon" style={{ marginInline: 5 }}>
+                                                    <Tooltip placement="bottom" title='سلة المشتريات'>
+                                                        <Link href='/cart'>
+                                                            <a>
+                                                                <Badge count={userData && userData.cart_items_count} offset={[2, -1]}>
+                                                                    <i className="material-icons material-icons-outlined">shopping_cart</i>
+                                                                </Badge>
+                                                            </a>
+                                                        </Link>
+                                                    </Tooltip>
+                                                </li>
+                                            }
+                                            {veriedEmail &&
+                                                <li className="right-butts-icon" style={{ marginInline: 5 }}>
+                                                    <Tooltip placement="bottom" title='صندوق الرسائل'>
+                                                        <Link href='/conversations'>
+                                                            <a>
+                                                                <Badge count={countMsg} offset={[2, -1]}>
+                                                                    <i className="material-icons material-icons-outlined">email</i>
+                                                                </Badge>
+                                                            </a>
+                                                        </Link>
+                                                    </Tooltip>
+                                                </li>
+                                            }
+                                            <li className="right-butts-icon" style={{ marginInline: 5 }}>
                                                 <Tooltip placement="bottom" title='الإشعارات'>
                                                     <Link href="/notifications">
                                                         <a>
@@ -487,18 +496,27 @@ function Navbar(): ReactElement {
                                                     </Link>
                                                 </Tooltip>
                                             </li>
-                                            <li className="login-user">
+                                            <li className="login-user" style={{ marginInline: 5 }}>
                                                 <Dropdown overlay={AccountList} trigger={['click']}>
-                                                    <ImageLogo
-                                                        loader={myLoader}
-                                                        src={userData.user_details.profile.avatar_url}
-                                                        quality={60}
-                                                        width={32}
-                                                        height={32}
-                                                        alt={userData && userData.user_details.profile.full_name}
-                                                        placeholder='blur'
-                                                        blurDataURL='/avatar2.jpg'
-                                                    />
+                                                    <motion.span
+                                                        style={{ display: 'inline-block' }}
+                                                        whileHover={{
+                                                            scale: 1.07
+                                                        }}
+                                                        whileTap={{
+                                                            scale: 1
+                                                        }}>
+                                                        <ImageLogo
+                                                            loader={myLoader}
+                                                            src={userData.user_details.profile.avatar_url}
+                                                            quality={60}
+                                                            width={32}
+                                                            height={32}
+                                                            alt={userData && userData.user_details.profile.full_name}
+                                                            placeholder='blur'
+                                                            blurDataURL='/avatar2.jpg'
+                                                        />
+                                                    </motion.span>
                                                 </Dropdown>
                                             </li>
                                         </>

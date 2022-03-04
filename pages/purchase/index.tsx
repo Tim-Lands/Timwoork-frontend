@@ -69,6 +69,8 @@ function Bill() {
 
     const { data: cartList, error }: any = useSWR('api/cart')
     const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    
     const mybalance = userInfo && userInfo.user_details.profile.withdrawable_amount
     async function getPaypal() {
         setIsLoading(true)
@@ -110,140 +112,143 @@ function Bill() {
                 metaDescription="عملية الشراء"
                 ogDescription="عملية الشراء"
             />
-            {cartList && cartList.data == null && isError && error && <div className="row py-4 justify-content-center">
-                <div className="col-md-5">
-                    <Result
-                        status="warning"
-                        title="حدث خطأ "
-                        subTitle="حدث خطأ أثناء التحضير لعملية الشراء  "
-                    />
-                </div>
-            </div>}
-            <div className="row py-4 justify-content-center">
-                <div className="col-md-3">
-                    <div className="app-bill">
-                        <div className="app-bill-header">
-                            <h3 className="title">الفاتورة النهائية</h3>
-                        </div>
-                        {!cartList && <Loading />}
-                        {cartList && cartList.data !== null && isBuyer &&
-                            <div className="app-bill-content">
-                                <ul className="list-group">
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        عدد الخدمات
-                                        <span className="">{cartList && cartList.data.cart_items_count}</span>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        السعر الكلي
-                                        <span className="">{cartList && cartList.data.total_price}$</span>
-                                    </li>
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        الرسوم
-
-                                        <span className='me-auto'>
-                                            <Tooltip
-                                                title="هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك."
-                                            >
-                                                <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
-                                            </Tooltip>
-                                        </span>
-                                        <span className="">{cartList && cartList.data.tax}$</span>
-                                    </li>
-                                    <li className="list-group-item total d-flex justify-content-between align-items-center">
-                                        المجموع الكلي
-                                        <span className="">{cartList && cartList.data.price_with_tax}$</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
+            {veriedEmail && <>
+                {cartList && cartList.data == null && isError && error && <div className="row py-4 justify-content-center">
+                    <div className="col-md-5">
+                        <Result
+                            status="warning"
+                            title="حدث خطأ "
+                            subTitle="حدث خطأ أثناء التحضير لعملية الشراء  "
+                        />
                     </div>
-                </div>
-                <div className="col-md-5">
-                    <div className="app-bill">
-                        <div className="app-bill-header">
-                            <h3 className="title">اختيار طريقة الدفع</h3>
+                </div>}
+                <div className="row py-4 justify-content-center">
+                    <div className="col-md-3">
+                        <div className="app-bill">
+                            <div className="app-bill-header">
+                                <h3 className="title">الفاتورة النهائية</h3>
+                            </div>
+                            {!cartList && <Loading />}
+                            {cartList && cartList.data !== null && isBuyer &&
+                                <div className="app-bill-content">
+                                    <ul className="list-group">
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                                            عدد الخدمات
+                                            <span className="">{cartList && cartList.data.cart_items_count}</span>
+                                        </li>
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                                            السعر الكلي
+                                            <span className="">{cartList && cartList.data.total_price}$</span>
+                                        </li>
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                                            الرسوم
+
+                                            <span className='me-auto'>
+                                                <Tooltip
+                                                    title="هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك."
+                                                >
+                                                    <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                                </Tooltip>
+                                            </span>
+                                            <span className="">{cartList && cartList.data.tax}$</span>
+                                        </li>
+                                        <li className="list-group-item total d-flex justify-content-between align-items-center">
+                                            المجموع الكلي
+                                            <span className="">{cartList && cartList.data.price_with_tax}$</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
                         </div>
-                        {cartList && cartList.data !== null &&
-                            <div className="app-bill-payment">
-                                <div className="form-check" style={{ marginBlock: 9 }}>
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        value='0'
-                                        name="billPayment"
-                                        id="billPayment-strap"
-                                        onChange={(e: any) => setBillPayment(e.target.value)}
-                                    />
-                                    <label className="form-check-label" htmlFor="billPayment-strap">
-                                        الدفع عن طريق البطاقات البنكية
-                                    </label>
-                                </div>
-                                <div style={{ overflow: 'hidden' }}>
-                                    {billPayment == 0 ?
-                                        <motion.div dir='ltr' initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                            <Elements stripe={stripePromise}>
-                                                <CheckoutForm />
-                                            </Elements>
-                                        </motion.div>
-                                        : null}
-                                </div>
-                                <div className="form-check" style={{ marginBlock: 9 }}>
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        value='1'
-                                        name="billPayment"
-                                        id="billPayment-paypal"
-                                        onChange={(e: any) => setBillPayment(e.target.value)}
-                                    />
-                                    <label className="form-check-label" htmlFor="billPayment-paypal">
-                                        الدفع عن طريق البايبال Paypal
-                                    </label>
-                                </div>
-                                <div style={{ overflow: 'hidden' }}>
-                                    {billPayment == 1 ?
-                                        <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                            <a href={getLink} className='btn butt-primary2 butt-lg purchace-by-paypal-btn'>
-                                                {isLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
-                                                {!isLoading && <> <i className='fab fa-paypal'></i> | عن طريق Paypal</>}
-                                            </a>
-                                        </motion.div>
-                                        : null}
-                                </div>
-                                {(mybalance > cartList && cartList.data.price_with_tax) ?? <>
+                    </div>
+                    <div className="col-md-5">
+                        <div className="app-bill">
+                            <div className="app-bill-header">
+                                <h3 className="title">اختيار طريقة الدفع</h3>
+                            </div>
+                            {cartList && cartList.data !== null &&
+                                <div className="app-bill-payment">
                                     <div className="form-check" style={{ marginBlock: 9 }}>
                                         <input
                                             className="form-check-input"
                                             type="radio"
-                                            value='2'
+                                            value='0'
                                             name="billPayment"
-                                            id="billPayment-wallet"
+                                            id="billPayment-strap"
                                             onChange={(e: any) => setBillPayment(e.target.value)}
                                         />
-                                        <label className="form-check-label" htmlFor="billPayment-wallet">
-                                            الدفع عن طريق المحفظة
+                                        <label className="form-check-label" htmlFor="billPayment-strap">
+                                            الدفع عن طريق البطاقات البنكية
                                         </label>
                                     </div>
                                     <div style={{ overflow: 'hidden' }}>
-                                        {billPayment == 2 ?
-                                            <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                                <div className="purchase-by-wallet">
-                                                    <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
-                                                    <button className='btn butt-lg butt-green flex-center-just'>
-                                                        <img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)
-                                                    </button>
-                                                </div>
+                                        {billPayment == 0 ?
+                                            <motion.div dir='ltr' initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                <Elements stripe={stripePromise}>
+                                                    <CheckoutForm />
+                                                </Elements>
                                             </motion.div>
                                             : null}
                                     </div>
-                                </>
-                                }
+                                    <div className="form-check" style={{ marginBlock: 9 }}>
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            value='1'
+                                            name="billPayment"
+                                            id="billPayment-paypal"
+                                            onChange={(e: any) => setBillPayment(e.target.value)}
+                                        />
+                                        <label className="form-check-label" htmlFor="billPayment-paypal">
+                                            الدفع عن طريق البايبال Paypal
+                                        </label>
+                                    </div>
+                                    <div style={{ overflow: 'hidden' }}>
+                                        {billPayment == 1 ?
+                                            <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                <a href={getLink} className='btn butt-primary2 butt-lg purchace-by-paypal-btn'>
+                                                    {isLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
+                                                    {!isLoading && <> <i className='fab fa-paypal'></i> | عن طريق Paypal</>}
+                                                </a>
+                                            </motion.div>
+                                            : null}
+                                    </div>
+                                    {(mybalance > cartList && cartList.data.price_with_tax) ?? <>
+                                        <div className="form-check" style={{ marginBlock: 9 }}>
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                value='2'
+                                                name="billPayment"
+                                                id="billPayment-wallet"
+                                                onChange={(e: any) => setBillPayment(e.target.value)}
+                                            />
+                                            <label className="form-check-label" htmlFor="billPayment-wallet">
+                                                الدفع عن طريق المحفظة
+                                            </label>
+                                        </div>
+                                        <div style={{ overflow: 'hidden' }}>
+                                            {billPayment == 2 ?
+                                                <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                    <div className="purchase-by-wallet">
+                                                        <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
+                                                        <button className='btn butt-lg butt-green flex-center-just'>
+                                                            <img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)
+                                                        </button>
+                                                    </div>
+                                                </motion.div>
+                                                : null}
+                                        </div>
+                                    </>
+                                    }
 
-                            </div>
-                        }
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
+            }
         </>
     )
 }

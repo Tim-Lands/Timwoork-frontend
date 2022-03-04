@@ -10,7 +10,7 @@ function About() {
                 metaDescription={"تيم ورك هو سوق عربي لبيع وشراء الخدمات المصغرة، حيث انتشرت مؤخراً عمليات البيع"}
                 ogDescription={"تيم ورك هو سوق عربي لبيع وشراء الخدمات المصغرة، حيث انتشرت مؤخراً عمليات البيع"}
             />
-            <div className="container">
+            <div className="container my-3">
                 <div className="bg-white p-2 px-4">
                     <div className="page-header">
                         <h2 className="title">حول موقع تيم ورك</h2>

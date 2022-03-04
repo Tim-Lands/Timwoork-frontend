@@ -13,8 +13,13 @@ import router from "next/router";
 import { motion } from "framer-motion";
 import Link from 'next/link'
 import Image from 'next/image'
+import { Alert } from "@/components/Alert/Alert";
 const Order = ({ query }) => {
     const token = Cookies.get('token')
+
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+
     const { data: ShowItem, errorItem }: any = useSWR(`api/my_purchases/${query.id}`)
     const inputRefMsg: any = useRef();
     const myRef = useRef(null)
@@ -304,10 +309,17 @@ const Order = ({ query }) => {
                 title="حدث خطأ غير متوقع"
             />}
             {!ShowItem && <Loading />}
-            {ShowItem &&
+            {ShowItem && veriedEmail &&
                 <div className="row py-4 justify-content-center">
                     <div className="col-md-12">
                         <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
+                            <div className="py-2">
+                                {ShowItem && ShowItem.data.is_rating == 1 &&
+                                    <Alert type="success">
+                                        <p className="text">يمكنك إضافة تقييم لهذه الطلبية <button className="btn butt-sm butt-primary">تقييم الآن!</button></p>
+                                    </Alert>
+                                }
+                            </div>
                             <div className="row">
                                 <div className="col-md-3">
                                     <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>

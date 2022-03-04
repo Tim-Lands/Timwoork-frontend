@@ -27,6 +27,8 @@ function Single({ query, stars, errorFetch }) {
 
   const token = Cookies.get('token')
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
+  const { data: userInfo }: any = useSWR('api/me')
+
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -146,6 +148,10 @@ function Single({ query, stars, errorFetch }) {
 
   }
   const addToCart = async () => {
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    if (!veriedEmail) {
+      router.push('/email/verification')
+    }
     if (token) {
       setIsLoadingCart(true)
       try {
@@ -424,7 +430,7 @@ function Single({ query, stars, errorFetch }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
                                   </a>
                                 </Link>
-                                {!hasConversation && 
+                                {!hasConversation &&
                                   <button className="btn butt-green butt-sm flex-center" disabled={createConversationLoading} onClick={() => setIsModalVisible(true)}>
                                     <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع {createConversationLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
                                   </button>
@@ -442,7 +448,7 @@ function Single({ query, stars, errorFetch }) {
                             <div className="flex-center">
                               <h4 className="title">
                                 <span className="material-icons material-icons-outlined">question_answer</span>
-                                التعليقات
+                                آراء المشتريين
                               </h4>
                             </div>
                           </div>

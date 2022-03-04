@@ -25,6 +25,12 @@
 	font-weight: 300;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'kast';
+	src: url('/fonts/KacstBook.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
 // Create Circular Center
 .circular-center {
     display: flex;
@@ -258,7 +264,7 @@ h3 {
         clear: both;
     }
     .text-label {
-        font-size: 14px;
+        font-size: 19px;
         font-weight: bold;
         color: #222;
         margin: 0;
@@ -281,9 +287,10 @@ h3 {
             color: #555;
         }
         .text-note {
-            font-size: 12px;
+            font-size: 18px;
             font-weight: 200;
             color: #555;
+            font-family: 'kast';
             margin: 0;
         }
         @media (min-width: 760px) {
@@ -318,10 +325,11 @@ h3 {
 }
 .user-bro {
     margin: 0;
-    font-size: 14px;
+    font-size: 19px;
     line-height: 27px;
     color: #444;
     overflow: hidden;
+    font-family: 'kast';
 }
 .statistic-item {
     border-bottom: 1px dashed #ddd;
@@ -622,9 +630,10 @@ h3 {
                 }
             }
             .sub-title {
-                font-size: 25px;
+                font-size: 28px;
                 color: #444;
                 font-weight: 300;
+                font-family: 'kast';
                 @media (max-width: 580px) {
                     font-weight: 200;
                     font-size: 20px;
@@ -793,9 +802,10 @@ h3 {
             font-weight: bold;
         }
         .text {
-            font-size: 22px;
+            font-size: 26px;
             color: #444;
             font-weight: 200;
+            font-family: 'kast';
             line-height: 40px;
         }
         @media (max-width: 580px) {
@@ -974,18 +984,20 @@ h3 {
                 }
                 .timwoork-single-product-detailts {
                     padding: 20px 0;
+                    font-family: 'kast';
                     @media (max-width: 580px) {
                         padding: 15px 0;
                     }
                     .text {
-                        font-size: 18px;
+                        font-size: 26px;
                         color: #333;
                         margin: 14px 0;
+                        font-family: 'kast';
                         text-align: justify;
                         font-weight: 400;
                         line-height: 29px;
                         @media (max-width: 580px) {
-                            font-size: 16px;
+                            font-size: 25px;
                             margin: 13px 0;
                             line-height: 27px;
                         }
@@ -1858,6 +1870,8 @@ h3 {
     .product-devlopes-text {
         font-weight: 200;
         color: #444;
+        font-size: 18px;
+        font-family: 'kast';
     }
     .add-devs-btn {
         text-align: center;
@@ -1888,8 +1902,9 @@ h3 {
     }
     .advice-list {
         li {
-            font-size: 14px;
+            font-size: 19px;
             color: #333;
+            font-family: 'kast';
             font-weight: 200;
             margin: 10px 0;
         }
@@ -2544,12 +2559,12 @@ h3 {
                 }
                 .timwoork-single-product-detailts {
                     padding: 20px 0;
-                        font-size: 18px;
+                        font-size: 27px;
                         color: #333;
                         margin: 14px 0;
                         text-align: justify;
                         font-weight: 400;
-                        line-height: 31px;
+                        line-height: 38px;
                     h1, h2, h3 {
                         padding: 9px 0;
                         font-weight: 600;
@@ -3270,19 +3285,20 @@ h3 {
         margin-top: 0;
     }
     .text {
-        font-size: 20px;
-        font-weight: 200;
+        font-size: 25px;
         color: #444;
         line-height: 39px;
+        font-family: 'kast';
         margin: 0;
     }
     .list {
         li {
-            font-size: 20px;
+            font-size: 25px;
             font-weight: 200;
             color: #444;
             line-height: 39px;
             margin-right: 25px;
+            font-family: 'kast';
             margin-bottom: 15px;
         }
     }
@@ -3827,8 +3843,9 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         li {
             a {
                 color: #666;
-                font-size: 13px;
+                font-size: 18px;
                 font-weight: 200;
+                font-family: 'kast';
                 &:hover {
                     color: $primary;
                 }
@@ -4052,9 +4069,10 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         color: #444;
     }
     .text {
-        font-size: 14px;
+        font-size: 19px;
         list-style: 28px;
         margin: 0;
+        font-family: 'kast';
         color: #222;
     }
     .conversion-btn {

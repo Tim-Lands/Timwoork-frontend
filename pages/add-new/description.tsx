@@ -10,8 +10,25 @@ import Cookies from 'js-cookie'
 import API from "../../config";
 import { ReactElement, useEffect, useState } from 'react';
 import useSWR from 'swr';
+// import { useEditor, EditorContent } from '@tiptap/react'
+// import StarterKit from '@tiptap/starter-kit'
 
+// const Tiptap = (props: any) => {
+//     return (
+//         <EditorContent
+//             value={props.value}
+//             editor={props.editor}
+//             onChange={props.changeHandle}
+//         />
+//     )
+// }
 function Description({ query }) {
+    // const editor = useEditor({
+    //     extensions: [
+    //         StarterKit,
+    //     ],
+    //     content: '<p>Hello World! 🌎️</p>',
+    // })
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const token = Cookies.get('token')
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -44,6 +61,7 @@ function Description({ query }) {
         }
         getProductId()
     }, [])
+    //const contentHtml = editor && editor.commands.setContent('dhcdkhcdg')
     return (
         <>
             <MetaTags
@@ -58,12 +76,12 @@ function Description({ query }) {
                             <SidebarAdvices />
                         </div>
                         <div className="col-md-8 pt-3">
-                            {veriedEmail && 
+                            {veriedEmail &&
                                 <Formik
                                     isInitialValid={true}
                                     initialValues={{
                                         buyer_instruct: (getProduct && getProduct.data.buyer_instruct),
-                                        content: (getProduct && getProduct.data.content),
+                                        content: getProduct && getProduct.data.content,
                                     }}
                                     enableReinitialize={true}
                                     onSubmit={async (values) => {
@@ -139,6 +157,7 @@ function Description({ query }) {
                                                 </div>
 
                                                 <div className="timlands-content-form">
+                                                    {/* <Tiptap value={values.content} changeHandle={() => handleChange('content')} editor={editor} /> */}
                                                     <div className="row">
                                                         <div className="col-md-12">
                                                             <div className="timlands-form">

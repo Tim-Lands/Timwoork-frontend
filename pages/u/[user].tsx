@@ -66,11 +66,6 @@ const User = ({ query }) => {
                                         <p className="text">
                                             @{User.username} |
                                             <span className="app-label"> {User && User.profile && User.profile.level && User.profile.level.name_ar} </span>
-                                            <Badge
-                                                className="site-badge-count-109"
-                                                count={User && User.profile && User.profile.badge && User.profile.badge.name_ar}
-                                                style={{ backgroundColor: '#52c41a' }}
-                                            />
                                         </p>
                                     </div>
                                 </div>

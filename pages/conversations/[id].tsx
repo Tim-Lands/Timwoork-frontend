@@ -18,6 +18,8 @@ function Conversation({ query }) {
     const inputRefMsg: any = useRef();
     const { data: conversationsSingle }: any = useSWR(`api/conversations/${query.id}`)
     const { data: profileInfo }: any = useSWR(`api/me`)
+    
+    const veriedEmail = profileInfo && profileInfo.user_details.email_verified_at
     const [messageProgress, setMessageProgress] = useState(0);
     const [messageErrors, setMessageErrors]: any = useState({});
     const [sendMessageLoading, setSendMessageLoading] = useState(false)
@@ -144,6 +146,7 @@ function Conversation({ query }) {
                 ogDescription={'مبيعاتي - تيموورك'}
             />
             <div className="timwoork-single">
+                {veriedEmail && 
                 <div className="row py-4 justify-content-center">
                     <div className="col-lg-11">
                         <div className="row">
@@ -305,6 +308,7 @@ function Conversation({ query }) {
                         </div>
                     </div>
                 </div>
+                }
             </div>
         </>
     );

@@ -18,7 +18,8 @@
                     padding: 5px 0;
                     > a {
                         color: #555;
-                        font-size: 12px;
+                        font-size: 18px;
+                        font-family: 'kast';
                         &:hover {
                             color: darken($primary2, 9);
                         }

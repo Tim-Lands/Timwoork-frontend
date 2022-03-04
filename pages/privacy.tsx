@@ -10,7 +10,7 @@ function Privacy() {
                 metaDescription={"النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف"}
                 ogDescription={"النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف"}
             />
-            <div className="container">
+            <div className="container my-3">
                 <div className="bg-white p-2 px-4">
                     <div className="page-header">
                         <h2 className="title">سياسة الخصوصية</h2>

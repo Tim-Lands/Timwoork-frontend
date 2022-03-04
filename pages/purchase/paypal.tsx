@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Alert } from '@/components/Alert/Alert';
 import API from '../../config'
 import Loading from '@/components/Loading';
+import useSWR from 'swr';
 
 function Paypal({ query }) {
     const token = Cookies.get('token')
@@ -13,6 +14,8 @@ function Paypal({ query }) {
     const [isError, setIsError] = useState(false)
     const [getBills, setGetBills]: any = useState({})
 
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     async function getBill() {
         setIsLoading(true)
         try {
@@ -42,36 +45,38 @@ function Paypal({ query }) {
     }, [])
     return (
         <div className="row py-4 justify-content-center">
-            <div className="col-md-5">
-                <div className="app-bill">
-                    <div className="app-bill-header">
-                        <h3 className="title">نتيجة عملية الشراء</h3>
-                    </div>
-                    {isLoading && <Loading />}
-                    {query.return == 1 && !isError ?
-                        <Alert type='success'>لقد تمت عملية الشراء بجاح</Alert> :
-                        <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
-                    }
-                    <div className="app-bill-content">
-                        {!isError && getBills && 
-                            <ul className="list-group">
-                                <li className="list-group-item d-flex justify-content-between align-items-center">
-                                    السعر الكلي
-                                    <span className="">{getBills.total_price}$</span>
-                                </li>
-                                <li className="list-group-item d-flex justify-content-between align-items-center">
-                                    سعر التحويل
-                                    <span className="">{getBills.tax}$</span>
-                                </li>
-                                <li className="list-group-item total d-flex justify-content-between align-items-center">
-                                    المجموع الكلي
-                                    <span className="">{getBills.price_with_tax}$</span>
-                                </li>
-                            </ul>
+            {veriedEmail && 
+                <div className="col-md-5">
+                    <div className="app-bill">
+                        <div className="app-bill-header">
+                            <h3 className="title">نتيجة عملية الشراء</h3>
+                        </div>
+                        {isLoading && <Loading />}
+                        {query.return == 1 && !isError ?
+                            <Alert type='success'>لقد تمت عملية الشراء بجاح</Alert> :
+                            <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
                         }
+                        <div className="app-bill-content">
+                            {!isError && getBills && 
+                                <ul className="list-group">
+                                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                                        السعر الكلي
+                                        <span className="">{getBills.total_price}$</span>
+                                    </li>
+                                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                                        سعر التحويل
+                                        <span className="">{getBills.tax}$</span>
+                                    </li>
+                                    <li className="list-group-item total d-flex justify-content-between align-items-center">
+                                        المجموع الكلي
+                                        <span className="">{getBills.price_with_tax}$</span>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }

@@ -22,7 +22,12 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                         </p>
                     </Card>
                 </div>
-                <div className="p-4 bg-white">
+                <div className="p-4 bg-white" style={{
+                    borderWidth: 1,
+                    borderColor: '#f1f1f1',
+                    borderStyle: 'solid',
+                    marginBlock: 9
+                }}>
                     <p className="text">
                         <strong>شارة البائع: </strong> <span className='text-inop'>{profile_seller.badge.name_ar}</span>
                     </p>

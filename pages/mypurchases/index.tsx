@@ -15,6 +15,9 @@ function index() {
     const [pageIndex, setPageIndex] = useState(1);
     const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
 
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -67,66 +70,68 @@ function index() {
                 metaDescription={'مشترياتي'}
                 ogDescription={'مشترياتي'}
             />
-            <div className="timwoork-single">
-                <div className="row py-4 justify-content-center">
-                    <div className="col-lg-10">
-                        <div className="app-bill">
-                            <div className="app-bill-header">
-                                <h3 className="title">مشترياتي</h3>
-                            </div>
-                            <div className="timlands-table">
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>العنوان</th>
-                                            <th>السعر الكلي</th>
-                                            <th>البائع</th>
-                                            <th>التاريخ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {buysList && buysList.data.data.map((e: any) => (
-                                            <tr key={e.id}>
-                                                <td className='is-hover-primary'>
-                                                    <Link href={`/mypurchases/${e.id}`}>
-                                                        <a className='text-dark'>
-                                                            {statusLabel(e.status)} {e.title}
-                                                        </a>
-                                                    </Link>
-                                                </td>
-                                                <td>{e.price_product}$</td>
-                                                <td>
-                                                    <p className="m-0 is-hover-primary">
-                                                        <Link href={`/u/${e.profile_seller.profile.user.username}`}>
-                                                            <a className='flex-center' style={{ color: "gray" }}>
-                                                                <span className='mx-1'>{e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}</span>
+            {veriedEmail && 
+                <div className="timwoork-single">
+                    <div className="row py-4 justify-content-center">
+                        <div className="col-lg-10">
+                            <div className="app-bill">
+                                <div className="app-bill-header">
+                                    <h3 className="title">مشترياتي</h3>
+                                </div>
+                                <div className="timlands-table">
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>العنوان</th>
+                                                <th>السعر الكلي</th>
+                                                <th>البائع</th>
+                                                <th>التاريخ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {buysList && buysList.data.data.map((e: any) => (
+                                                <tr key={e.id}>
+                                                    <td className='is-hover-primary'>
+                                                        <Link href={`/mypurchases/${e.id}`}>
+                                                            <a className='text-dark'>
+                                                                {statusLabel(e.status)} {e.title}
                                                             </a>
                                                         </Link>
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <LastSeen date={e.created_at} />
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                                {buysList && buysList.data.data.length == 0 && <Result
-                                    status="404"
-                                    title="لا يوجد لديك مشتريات"
-                                    subTitle="ليس لديك مشريات لعرضها"
-                                />}
-                                {!buysList && <Loading />}
-                                {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
-                                {buysList && buysList.data.data.length !== 0 && buysList.data.total > buysList.data.per_page && <div className="p-2 d-flex">
-                                    <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
-                                    <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
-                                </div>}
+                                                    </td>
+                                                    <td>{e.price_product}$</td>
+                                                    <td>
+                                                        <p className="m-0 is-hover-primary">
+                                                            <Link href={`/u/${e.profile_seller.profile.user.username}`}>
+                                                                <a className='flex-center' style={{ color: "gray" }}>
+                                                                    <span className='mx-1'>{e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}</span>
+                                                                </a>
+                                                            </Link>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <LastSeen date={e.created_at} />
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                    {buysList && buysList.data.data.length == 0 && <Result
+                                        status="404"
+                                        title="لا يوجد لديك مشتريات"
+                                        subTitle="ليس لديك مشريات لعرضها"
+                                    />}
+                                    {!buysList && <Loading />}
+                                    {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
+                                    {buysList && buysList.data.data.length !== 0 && buysList.data.total > buysList.data.per_page && <div className="p-2 d-flex">
+                                        <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
+                                        <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
+                                    </div>}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </>
     );
 }

@@ -2,6 +2,7 @@
   padding: 15px;
   background-color: #fff;
   border: 1px solid #ddd;
+  font-family: 'kast';
 }
 
 .timlands-alert .text {
@@ -13,6 +14,7 @@
   display: flex;
   -ms-flex-line-pack: center;
       align-content: center;
+  font-family: 'kast';
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -281,9 +283,10 @@
 }
 
 .timlands-form-note .text {
-  font-size: 12px;
+  font-size: 18px;
   color: #666;
   margin: 0;
+  font-family: 'kast';
   font-weight: 300;
 }
 
@@ -1574,7 +1577,8 @@
 
 .app-footer .app-footer-aside .aside-body .aside-list-items > li > a {
   color: #555;
-  font-size: 12px;
+  font-size: 18px;
+  font-family: 'kast';
 }
 
 .app-footer .app-footer-aside .aside-body .aside-list-items > li > a:hover {
@@ -1658,6 +1662,13 @@
 @font-face {
   font-family: 'jf';
   src: url("/fonts/JF-Flat-medium.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'kast';
+  src: url("/fonts/KacstBook.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
@@ -1969,7 +1980,7 @@ h3 {
 }
 
 .content-text-item .text-label {
-  font-size: 14px;
+  font-size: 19px;
   font-weight: bold;
   color: #222;
   margin: 0;
@@ -1998,9 +2009,10 @@ h3 {
 }
 
 .content-text-item.wallet-info .text-note {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 200;
   color: #555;
+  font-family: 'kast';
   margin: 0;
 }
 
@@ -2036,10 +2048,11 @@ h3 {
 
 .user-bro {
   margin: 0;
-  font-size: 14px;
+  font-size: 19px;
   line-height: 27px;
   color: #444;
   overflow: hidden;
+  font-family: 'kast';
 }
 
 .statistic-item {
@@ -2441,9 +2454,10 @@ h3 {
 }
 
 .timlands-hero .timlands-hero-inner .timlands-hero-content .sub-title {
-  font-size: 25px;
+  font-size: 28px;
   color: #444;
   font-weight: 300;
+  font-family: 'kast';
 }
 
 @media (max-width: 580px) {
@@ -2660,9 +2674,10 @@ h3 {
 }
 
 .timwoork-nanny-home .nanny-home-content .text {
-  font-size: 22px;
+  font-size: 26px;
   color: #444;
   font-weight: 200;
+  font-family: 'kast';
   line-height: 40px;
 }
 
@@ -2890,6 +2905,7 @@ h3 {
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
+  font-family: 'kast';
 }
 
 @media (max-width: 580px) {
@@ -2899,9 +2915,10 @@ h3 {
 }
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .text {
-  font-size: 18px;
+  font-size: 26px;
   color: #333;
   margin: 14px 0;
+  font-family: 'kast';
   text-align: justify;
   font-weight: 400;
   line-height: 29px;
@@ -2909,7 +2926,7 @@ h3 {
 
 @media (max-width: 580px) {
   .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .text {
-    font-size: 16px;
+    font-size: 25px;
     margin: 13px 0;
     line-height: 27px;
   }
@@ -4060,6 +4077,8 @@ h3 {
 .product-devlopes-butt .product-devlopes-text {
   font-weight: 200;
   color: #444;
+  font-size: 18px;
+  font-family: 'kast';
 }
 
 .product-devlopes-butt .add-devs-btn {
@@ -4098,8 +4117,9 @@ h3 {
 }
 
 .add-product-advices .advice-list li {
-  font-size: 14px;
+  font-size: 19px;
   color: #333;
+  font-family: 'kast';
   font-weight: 200;
   margin: 10px 0;
 }
@@ -4921,12 +4941,12 @@ h3 {
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
-  font-size: 18px;
+  font-size: 27px;
   color: #333;
   margin: 14px 0;
   text-align: justify;
   font-weight: 400;
-  line-height: 31px;
+  line-height: 38px;
 }
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h1, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h2, .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts h3 {
@@ -5883,19 +5903,20 @@ h3 {
 }
 
 .page-content .text {
-  font-size: 20px;
-  font-weight: 200;
+  font-size: 25px;
   color: #444;
   line-height: 39px;
+  font-family: 'kast';
   margin: 0;
 }
 
 .page-content .list li {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 200;
   color: #444;
   line-height: 39px;
   margin-right: 25px;
+  font-family: 'kast';
   margin-bottom: 15px;
 }
 
@@ -6540,8 +6561,9 @@ h3 {
 
 .category-item .category-item-content li a {
   color: #666;
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 200;
+  font-family: 'kast';
 }
 
 .category-item .category-item-content li a:hover {
@@ -6836,9 +6858,10 @@ h3 {
 }
 
 .conversation-start .text {
-  font-size: 14px;
+  font-size: 19px;
   list-style: 28px;
   margin: 0;
+  font-family: 'kast';
   color: #222;
 }
 
