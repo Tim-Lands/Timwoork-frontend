@@ -18,7 +18,7 @@ function Conversation({ query }) {
     const inputRefMsg: any = useRef();
     const { data: conversationsSingle }: any = useSWR(`api/conversations/${query.id}`)
     const { data: profileInfo }: any = useSWR(`api/me`)
-    
+
     const veriedEmail = profileInfo && profileInfo.user_details.email_verified_at
     const [messageProgress, setMessageProgress] = useState(0);
     const [messageErrors, setMessageErrors]: any = useState({});
@@ -145,169 +145,169 @@ function Conversation({ query }) {
                 metaDescription={'مبيعاتي - تيموورك'}
                 ogDescription={'مبيعاتي - تيموورك'}
             />
-            <div className="timwoork-single">
-                {veriedEmail && 
-                <div className="row py-4 justify-content-center">
-                    <div className="col-lg-11">
-                        <div className="row">
-                            <div className="col-lg-4">
-                                <Sidebar RouterId={query.id} />
-                            </div>
-                            <div className="col-lg-8">
-                                <div className="app-bill">
-                                    {!conversationsSingle && <Loading />}
-                                    <div className="conversations-list">
-                                        <div className="conversations-title">
-                                            <h4 className="title">
-                                                {conversationsSingle && conversationsSingle.data.title}
-                                            </h4>
-                                        </div>
-                                        <ul
-                                            className="conversations-items"
-                                            style={{
-                                                margin: 0,
-                                                padding: 0,
-                                                listStyle: 'none',
-                                            }}
-                                        >
-                                            {conversationsSingle && conversationsSingle.data.messages.map((item: any) => (
-                                                <motion.li
-                                                    initial={{ y: -4, opacity: 0 }}
-                                                    animate={{ y: 0, opacity: 1 }}
-                                                    id={`msg-item-${item.id}`}
-                                                    key={1}
-                                                    className={(profileInfo && profileInfo.user_details.id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
-                                                    style={{ marginBlock: 9 }}>
-                                                    <div className="item-avatar" style={{ marginInline: 9 }}>
-                                                        <img src={item.user.profile.avatar_url} width={60} height={60} className="rounded-pill" alt="" />
-                                                    </div>
-
-                                                    <div className="item-content">
-                                                        {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمات</span>}
-                                                        {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
-                                                        <p className="text" style={{ margin: 0 }}>{item.message}</p>
-                                                        <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
-                                                        {item.attachments &&
-                                                            <div className="attach-items" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}>
-                                                                {item.attachments.map((att: any, i: number) => (
-                                                                    <div className="att-item" key={att.id}>
-                                                                        <a href={att.full_path} rel="noreferrer" target="_blank">
-                                                                            {switchFileTypes(att.mime_type)} تحميل الملف {i + 1}#
-                                                                        </a>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        }
-                                                        {(profileInfo && profileInfo.user_details.id == item.user.id) &&
-                                                            <>
-                                                                {item.read_at && <span className="readed is-readed">
-                                                                    <span className="material-icons material-icons-outlined">
-                                                                        done_all
-                                                                    </span>
-                                                                </span>}
-                                                                {!item.read_at && <span className="readed is-unreaded">
-                                                                    <span className="material-icons material-icons-outlined">
-                                                                        done
-                                                                    </span>
-                                                                </span>}
-                                                            </>
-                                                        }
-                                                    </div>
-                                                </motion.li>
-                                            ))}
-                                        </ul>
-                                    </div>
+            <div className="timwoork-single my-3">
+                {veriedEmail &&
+                    <div className="row py-4 justify-content-center">
+                        <div className="col-lg-11">
+                            <div className="row">
+                                <div className="col-lg-4">
+                                    <Sidebar RouterId={query.id} />
                                 </div>
-                                <div className="conversations-form-main">
-                                    <div className="conversations-form" style={{ padding: 9 }}>
-                                        <form onSubmit={sendMessageHandle}>
-                                            <div className="timlands-form">
-                                                <label htmlFor="message_type" className="form-text">اختر نوع الرسالة</label>
-                                                <div className="py-1 d-flex">
-                                                    <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
-                                                        <option value="0">نص عادي</option>
-                                                        <option value="1">تعليمة</option>
-                                                        <option value="2">سبب إلغاء</option>
-                                                    </select>
-                                                    <button
-                                                        type="button"
-                                                        style={{ width: '65%' }}
-                                                        disabled={sendMessageLoading}
-                                                        className="btn butt-sm butt-primary2-out mx-1 flex-center-just"
-                                                        onClick={() => inputRefMsg.current.click()}
-                                                    >
-                                                        <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
-                                                    </button>
-                                                </div>
-                                                <div className="send-attachments">
-                                                    {messageProgress !== 0 && <Progress percent={messageProgress} />}
-                                                    <div className="form-conainer">
-                                                        <ul
-                                                            className="attachment-list-items"
-                                                            style={{
-                                                                listStyle: 'none',
-                                                                paddingInline: 0,
-                                                                paddingTop: 6,
-                                                                overflow: 'hidden',
-                                                            }}>
-                                                            {fileNamesMsg.map((name) => (
-                                                                <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
-                                                                    <span className="name-file">{name}</span>
-                                                                    <span className="remove-icon d-flex" style={{ position: 'absolute', left: 10, fontSize: 13, top: 7, color: 'red', cursor: 'pointer' }} onClick={() => removeFileMsg(name)}>
-                                                                        <i className="fa fa-times"></i>
-                                                                    </span>
-                                                                </motion.li>
-                                                            ))}
-                                                        </ul>
-                                                        {filesMsg.length > 0 && (
-                                                            <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
-                                                                <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
-                                                            </ul>
-                                                        )}
-                                                    </div>
-                                                    <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
-                                                </div>
-                                                <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
-                                                    <input
-                                                        id="input-buyer_instruct"
-                                                        name="buyer_instruct"
-                                                        onKeyUp={() => { setMessageErrors({}) }}
-                                                        placeholder="نص الرسالة..."
-                                                        className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
-                                                        disabled={sendMessageLoading}
-                                                        autoComplete="off"
-                                                        value={message}
-                                                        ref={messageRef}
-                                                        onChange={(e: any) => setMessage(e.target.value)}
-                                                        style={{ height: 60, width: 'calc(100% - 110px)', borderRadius: '0 5px 5px 0' }}
-                                                    />
-                                                    <button
-                                                        style={{
-                                                            width: 110,
-                                                            height: 60,
-                                                            borderRadius: '5px 0 0 5px'
-                                                        }}
-                                                        disabled={sendMessageLoading}
-                                                        className="btn butt-sm butt-primary flex-center-just"
-                                                        type="submit"
-                                                    >
-                                                        <span className="material-icons material-icons-outlined">send</span>
-                                                        إرسال
-                                                    </button>
-                                                </div>
-                                                {messageErrors && messageErrors.message &&
-                                                    <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                        <p className="text">{messageErrors.message[0]}</p>
-                                                    </motion.div>
-                                                }
+                                <div className="col-lg-8">
+                                    <div className="app-bill">
+                                        {!conversationsSingle && <Loading />}
+                                        <div className="conversations-list">
+                                            <div className="conversations-title">
+                                                <h4 className="title">
+                                                    {conversationsSingle && conversationsSingle.data.title}
+                                                </h4>
                                             </div>
-                                        </form>
+                                            <ul
+                                                className="conversations-items"
+                                                style={{
+                                                    margin: 0,
+                                                    padding: 0,
+                                                    listStyle: 'none',
+                                                }}
+                                            >
+                                                {conversationsSingle && conversationsSingle.data.messages.map((item: any) => (
+                                                    <motion.li
+                                                        initial={{ y: -4, opacity: 0 }}
+                                                        animate={{ y: 0, opacity: 1 }}
+                                                        id={`msg-item-${item.id}`}
+                                                        key={1}
+                                                        className={(profileInfo && profileInfo.user_details.id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
+                                                        style={{ marginBlock: 9 }}>
+                                                        <div className="item-avatar" style={{ marginInline: 9 }}>
+                                                            <img src={item.user.profile.avatar_url} width={60} height={60} className="rounded-pill" alt="" />
+                                                        </div>
+
+                                                        <div className="item-content">
+                                                            {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمات</span>}
+                                                            {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
+                                                            <p className="text" style={{ margin: 0 }}>{item.message}</p>
+                                                            <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
+                                                            {item.attachments &&
+                                                                <div className="attach-items" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}>
+                                                                    {item.attachments.map((att: any, i: number) => (
+                                                                        <div className="att-item" key={att.id}>
+                                                                            <a href={att.full_path} rel="noreferrer" target="_blank">
+                                                                                {switchFileTypes(att.mime_type)} تحميل الملف {i + 1}#
+                                                                            </a>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            }
+                                                            {(profileInfo && profileInfo.user_details.id == item.user.id) &&
+                                                                <>
+                                                                    {item.read_at && <span className="readed is-readed">
+                                                                        <span className="material-icons material-icons-outlined">
+                                                                            done_all
+                                                                        </span>
+                                                                    </span>}
+                                                                    {!item.read_at && <span className="readed is-unreaded">
+                                                                        <span className="material-icons material-icons-outlined">
+                                                                            done
+                                                                        </span>
+                                                                    </span>}
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    </motion.li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="conversations-form-main">
+                                        <div className="conversations-form" style={{ padding: 9 }}>
+                                            <form onSubmit={sendMessageHandle}>
+                                                <div className="timlands-form">
+                                                    <label htmlFor="message_type" className="form-text">اختر نوع الرسالة</label>
+                                                    <div className="py-1 d-flex">
+                                                        <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
+                                                            <option value="0">نص عادي</option>
+                                                            <option value="1">تعليمة</option>
+                                                            <option value="2">سبب إلغاء</option>
+                                                        </select>
+                                                        <button
+                                                            type="button"
+                                                            style={{ width: '65%' }}
+                                                            disabled={sendMessageLoading}
+                                                            className="btn butt-sm butt-primary2-out mx-1 flex-center-just"
+                                                            onClick={() => inputRefMsg.current.click()}
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">attach_file</span> إرفاق ملفات
+                                                        </button>
+                                                    </div>
+                                                    <div className="send-attachments">
+                                                        {messageProgress !== 0 && <Progress percent={messageProgress} />}
+                                                        <div className="form-conainer">
+                                                            <ul
+                                                                className="attachment-list-items"
+                                                                style={{
+                                                                    listStyle: 'none',
+                                                                    paddingInline: 0,
+                                                                    paddingTop: 6,
+                                                                    overflow: 'hidden',
+                                                                }}>
+                                                                {fileNamesMsg.map((name) => (
+                                                                    <motion.li style={{ overflow: 'hidden', position: 'relative', paddingBlock: 3, paddingInline: 9, fontSize: 13 }} initial={{ y: -5, opacity: 0 }} animate={{ y: 0, opacity: 1 }} key={name}>
+                                                                        <span className="name-file">{name}</span>
+                                                                        <span className="remove-icon d-flex" style={{ position: 'absolute', left: 10, fontSize: 13, top: 7, color: 'red', cursor: 'pointer' }} onClick={() => removeFileMsg(name)}>
+                                                                            <i className="fa fa-times"></i>
+                                                                        </span>
+                                                                    </motion.li>
+                                                                ))}
+                                                            </ul>
+                                                            {filesMsg.length > 0 && (
+                                                                <ul className="files-proprieties" style={{ listStyle: 'none', padding: 0, overflow: 'hidden', }}>
+                                                                    <li><strong>الحجم الكلي: </strong>{totalSizeMsg}</li>
+                                                                </ul>
+                                                            )}
+                                                        </div>
+                                                        <input ref={inputRefMsg} type="file" multiple style={{ display: 'none' }} onChange={(e: any) => setFilesMsg(e)} />
+                                                    </div>
+                                                    <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                                        <input
+                                                            id="input-buyer_instruct"
+                                                            name="buyer_instruct"
+                                                            onKeyUp={() => { setMessageErrors({}) }}
+                                                            placeholder="نص الرسالة..."
+                                                            className={"timlands-inputs " + (messageErrors && messageErrors.message && ' has-error')}
+                                                            disabled={sendMessageLoading}
+                                                            autoComplete="off"
+                                                            value={message}
+                                                            ref={messageRef}
+                                                            onChange={(e: any) => setMessage(e.target.value)}
+                                                            style={{ height: 60, width: 'calc(100% - 110px)', borderRadius: '0 5px 5px 0' }}
+                                                        />
+                                                        <button
+                                                            style={{
+                                                                width: 110,
+                                                                height: 60,
+                                                                borderRadius: '5px 0 0 5px'
+                                                            }}
+                                                            disabled={sendMessageLoading}
+                                                            className="btn butt-sm butt-primary flex-center-just"
+                                                            type="submit"
+                                                        >
+                                                            <span className="material-icons material-icons-outlined">send</span>
+                                                            إرسال
+                                                        </button>
+                                                    </div>
+                                                    {messageErrors && messageErrors.message &&
+                                                        <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                            <p className="text">{messageErrors.message[0]}</p>
+                                                        </motion.div>
+                                                    }
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </>

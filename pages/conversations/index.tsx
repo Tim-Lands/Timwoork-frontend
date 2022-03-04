@@ -22,8 +22,8 @@ function index() {
                 metaDescription={'مبيعاتي - تيموورك'}
                 ogDescription={'مبيعاتي - تيموورك'}
             />
-            {veriedEmail && 
-                <div className="timwoork-single">
+            {veriedEmail &&
+                <div className="timwoork-single my-3">
                     <div className="row py-4 justify-content-center">
                         <div className="col-lg-11">
                             <div className="row">
