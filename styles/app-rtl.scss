@@ -4398,4 +4398,11 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 .css-b62m3t-container {
     width: 100%;
 }
+.seller-info {
+    .text {
+        font-family: 'kast';
+        font-size: 20px;
+        line-height: 35px;
+    }
+}
 @import 'is-dark';

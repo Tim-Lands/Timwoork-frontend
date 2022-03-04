@@ -7244,6 +7244,12 @@ h3 {
   width: 100%;
 }
 
+.seller-info .text {
+  font-family: 'kast';
+  font-size: 20px;
+  line-height: 35px;
+}
+
 .is-dark {
   background-color: #323232;
   /*

@@ -8,7 +8,7 @@ import Loading from "@/components/Loading";
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Progress, Result, Timeline } from "antd";
+import { Modal, Progress, Result, Spin, Timeline } from "antd";
 import router from "next/router";
 import { motion } from "framer-motion";
 import Link from 'next/link'
@@ -26,6 +26,43 @@ const Order = ({ query }) => {
 
     const [messageProgress, setMessageProgress] = useState(0);
     const [messageErrors, setMessageErrors]: any = useState({});
+
+    const [isRattingLoading, setIsRattingLoading] = useState(false)
+    const [rattingState, setRattingState] = useState('')
+    const [rattingCount, setRattingCount] = useState(0)
+    const [isModalVisibleRatting, setModalVisibleRatting] = useState(false)
+    const [rattingValidationsErrors, setRattingValidationsErrors]: any = useState({})
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
+    
+    async function rattingHandle(id: any) {
+        setIsRattingLoading(true)
+        setRattingValidationsErrors({})
+        setValidationsGeneral({})
+        try {
+            const res = await API.post(`api/order/items/${id}/rating`, {
+                comment: rattingState,
+                rating: rattingCount,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                setIsRattingLoading(false)
+                setValidationsGeneral({})
+                console.log('Success');
+
+            }
+        } catch (error) {
+            setIsRattingLoading(false)
+            if (error.response && error.response.data && error.response.data.errors) {
+                setRattingValidationsErrors(error.response.data.errors);
+            }
+            if (error.response && error.response.data) {
+                setValidationsGeneral(error.response.data);
+            }
+        }
+    }
 
     const [cancelledBuyerLoading, setCancelledBuyerLoading] = useState(false)
     const [requestCancelItemBuyerLoading, setRequestCancelItemBuyerLoading] = useState(false)
@@ -313,13 +350,6 @@ const Order = ({ query }) => {
                 <div className="row py-4 justify-content-center">
                     <div className="col-md-12">
                         <div className="app-bill" style={{ backgroundColor: '#f6f6f6' }}>
-                            <div className="py-2">
-                                {ShowItem && ShowItem.data.is_rating == 1 &&
-                                    <Alert type="success">
-                                        <p className="text">يمكنك إضافة تقييم لهذه الطلبية <button className="btn butt-sm butt-primary">تقييم الآن!</button></p>
-                                    </Alert>
-                                }
-                            </div>
                             <div className="row">
                                 <div className="col-md-3">
                                     <div style={{ backgroundColor: '#fff', padding: 9, marginBottom: 7 }}>
@@ -389,6 +419,116 @@ const Order = ({ query }) => {
                                     </>}
                                 </div>
                                 <div className="col-md-6">
+                                    <div className="py-2">
+                                        {ShowItem && ShowItem.data.is_rating == 1 &&
+                                            <>
+                                                <Modal
+                                                    title="التعليق على الخدمة "
+                                                    visible={isModalVisibleRatting}
+                                                    okText='التعليق الآن'
+                                                    onOk={() => rattingHandle(ShowItem && ShowItem.data.id)}
+                                                    onCancel={() => setModalVisibleRatting(false)}
+                                                >
+                                                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
+                                                    <Spin spinning={isRattingLoading}>
+
+                                                        <div className="timlands-form">
+                                                            <div className="radio-input">
+                                                                <div className="relative-form d-flex" style={{ position: 'relative' }}>
+                                                                    <label htmlFor="rating-1">1</label>
+                                                                    <input
+                                                                        type="radio"
+                                                                        id="rating-1"
+                                                                        name="rating"
+                                                                        value={1}
+                                                                        onChange={(e: any) => setRattingCount(e.target.value)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="radio-input">
+                                                                <div className="relative-form d-flex" style={{ position: 'relative' }}>
+                                                                    <label htmlFor="rating-2">2</label>
+                                                                    <input
+                                                                        type="radio"
+                                                                        id="rating-2"
+                                                                        name="rating"
+                                                                        value={2}
+                                                                        onChange={(e: any) => setRattingCount(e.target.value)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="radio-input">
+                                                                <div className="relative-form d-flex" style={{ position: 'relative' }}>
+                                                                    <label htmlFor="rating-3">3</label>
+                                                                    <input
+                                                                        type="radio"
+                                                                        id="rating-3"
+                                                                        name="rating"
+                                                                        value={3}
+                                                                        onChange={(e: any) => setRattingCount(e.target.value)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="radio-input">
+                                                                <div className="relative-form d-flex" style={{ position: 'relative' }}>
+                                                                    <label htmlFor="rating-4">4</label>
+                                                                    <input
+                                                                        type="radio"
+                                                                        id="rating-4"
+                                                                        name="rating"
+                                                                        value={4}
+                                                                        onChange={(e: any) => setRattingCount(e.target.value)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="radio-input">
+                                                                <div className="relative-form d-flex" style={{ position: 'relative' }}>
+                                                                    <label htmlFor="rating-5">5</label>
+                                                                    <input
+                                                                        type="radio"
+                                                                        id="rating-5"
+                                                                        name="rating"
+                                                                        value={5}
+                                                                        onChange={(e: any) => setRattingCount(e.target.value)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            {rattingValidationsErrors && rattingValidationsErrors.rating &&
+                                                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                    <p className="text">{rattingValidationsErrors.rating[0]}</p>
+                                                                </motion.div>
+                                                            }
+                                                        </div>
+                                                        <div className="timlands-form">
+                                                            <label htmlFor="message_type" className="form-text">أكتب سبب الرفض</label>
+                                                            <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                                                <textarea
+                                                                    id="input-buyer_instruct"
+                                                                    name="buyer_instruct"
+                                                                    placeholder="أكتب نص التعليق..."
+                                                                    className={"timlands-inputs"}
+                                                                    autoComplete="off"
+                                                                    value={rattingState}
+                                                                    onChange={(e: any) => setRattingState(e.target.value)}
+                                                                />
+                                                            </div>
+                                                            {rattingValidationsErrors && rattingValidationsErrors.comment &&
+                                                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                    <p className="text">{rattingValidationsErrors.comment[0]}</p>
+                                                                </motion.div>
+                                                            }
+                                                        </div>
+                                                    </Spin>
+                                                </Modal>
+                                                <Alert type="success">
+                                                    <div className="d-flex" style={{ width: '100%' }}>
+                                                        <div className="text me-auto" style={{ fontSize: 20 }}>يمكنك إضافة تقييم لهذه الطلبية </div>
+                                                        <div className="ml-auto"><button className="btn butt-sm butt-green" onClick={() => setModalVisibleRatting(true)}>تقييم الآن!</button></div>
+                                                    </div>
+                                                </Alert>
+                                            </>
+                                        }
+                                    </div>
                                     <div className="aside-header">
                                         <h3 className="title">{ShowItem.data.title}</h3>
                                     </div>
