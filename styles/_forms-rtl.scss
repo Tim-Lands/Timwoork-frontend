@@ -10,6 +10,9 @@
     &:hover {
         border: 1px solid #ccc;
     }
+    &:disabled {
+        opacity: 0.3;
+    }
     &:focus {
         border: 1px solid $primary;
     }
@@ -78,6 +81,9 @@
         
         &::placeholder {
             color: #ddd;
+        }
+        &:disabled {
+            opacity: 0.3;
         }
         &:hover {
             border: 1px solid #ccc;

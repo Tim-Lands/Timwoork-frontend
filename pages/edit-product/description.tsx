@@ -14,6 +14,8 @@ import Link from 'next/link'
 function Description({ query }) {
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const token = Cookies.get('token')
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const id = query.id
     async function stepFive() {
         try {
@@ -63,7 +65,7 @@ function Description({ query }) {
                 metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
                 ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
             />
-            {token &&
+            {token && veriedEmail &&
                 <div className="container-fluid">
                     <div className="row justify-content-md-center my-3">
                         <div className="col-md-7 pt-3">

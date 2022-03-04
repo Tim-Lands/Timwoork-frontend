@@ -14,6 +14,7 @@ function Layout(props: any) {
   const token = Cookies.get('token')
 
   useEffect(() => {
+
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };
@@ -30,6 +31,7 @@ function Layout(props: any) {
       }).then((r: any) => r.data)
     }}>
       <div className="pt-5">
+        
         <Navbar />
         <Spin tip="يرجى الإنتظار..." spinning={loading}>
           {props.children}

@@ -14,12 +14,12 @@ function EmailConfig() {
     const token = Cookies.get('token')
     const { data: userInfo } = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
-
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     useEffect(() => {
         if (!token) {
             router.push('/login')
         }
-        if (userInfo && userInfo.user_details.email_verified_at !== null) {
+        if (veriedEmail) {
             router.push('/')
         }
     }, [])

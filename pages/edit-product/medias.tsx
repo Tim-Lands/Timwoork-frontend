@@ -11,11 +11,14 @@ import cookies from 'next-cookies'
 import { MetaTags } from '@/components/SEO/MetaTags';
 import Link from 'next/link'
 import Image from 'next/image'
+import useSWR from 'swr';
 
 function Medias({ query, stars }) {
     const id = query.id
     const token = Cookies.get('token')
-    
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -190,7 +193,7 @@ function Medias({ query, stars }) {
                 metaDescription="تعديل الخدمة - الوسائط"
                 ogDescription="تعديل الخدمة - الوسائط"
             />
-            {token &&
+            {token && veriedEmail &&
                 <div className="row justify-content-md-center my-3">
                     <div className="col-md-7 pt-3">
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
@@ -256,6 +259,8 @@ function Medias({ query, stars }) {
                                                     <div className="page-header">
                                                         <h4 className="title">الصورة البارزة</h4>
                                                     </div>
+                                                    <p className="text-note mt-3" style={{ color: '#555', margin: 0, fontSize: 13 }}>يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة</p>
+                                                    <p className="text-resolotion" style={{ color: '#222', margin: 0, fontSize: 13, fontWeight: 'bold' }}>من الأفضل أن تكون الأبعاد: 755X418</p>
                                                     <ImageUploading
                                                         value={featuredImages}
                                                         onChange={onChangeFeatured}
@@ -278,10 +283,9 @@ function Medias({ query, stars }) {
                                                                             يجب أن تختار الصورة البارزة للخدمة ويجب ان تكون الصورة متناسقة مع محتوى الخدمة
                                                                         </p>
                                                                     </div>}
-                                                                    <div className="row">
-                                                                        {imageList && imageList.map((image, index) => (
-                                                                            <div className="col-md p-0" key={index}>
-                                                                                <div className="image-item featured-wrapper">
+                                                                    {imageList && imageList.map((image, index) => (
+                                                                        <div className="p-0" key={index}>
+                                                                            <div className="image-item featured-wrapper">
                                                                                 <Image
                                                                                     src={image['data_url']}
                                                                                     alt="الصورة البارزة"
@@ -289,20 +293,20 @@ function Medias({ query, stars }) {
                                                                                     height={418}
                                                                                     quality={85}
                                                                                     placeholder='blur'
-                                                                                    //blurDataURL={image['data_url']}
+                                                                                    blurDataURL={image['data_url']}
                                                                                 />
-                                                                                    <div className="image-item__btn-wrapper">
-                                                                                        <button
-                                                                                            disabled={featuredLoading}
-                                                                                            type='button'
-                                                                                            onClick={() => onImageUpdate(index)}>
-                                                                                            <span className="material-icons-outlined">edit</span>
-                                                                                        </button>
-                                                                                    </div>
+
+                                                                                <div className="image-item__btn-wrapper">
+                                                                                    <button
+                                                                                        disabled={featuredLoading}
+                                                                                        type='button'
+                                                                                        onClick={() => onImageUpdate(index)}>
+                                                                                        <span className="material-icons-outlined">edit</span>
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                        ))}
-                                                                    </div>
+                                                                        </div>
+                                                                    ))}
                                                                     <hr />
                                                                     <button type='button' disabled={featuredLoading} className='btn butt-lg butt-primary' onClick={uploadFeaturedHandle}>رفع الصورة الآن</button>
                                                                 </div>
@@ -368,9 +372,18 @@ function Medias({ query, stars }) {
                                                                     </div>}
                                                                     <div className="row">
                                                                         {imageList && imageList.map((image, index) => (
-                                                                            <div className="col-md p-0" key={index}>
+                                                                            <div className="col-md-12" key={index}>
                                                                                 <div className="image-item">
-                                                                                    <img src={image['data_url']} alt="" width="100" />
+                                                                                    <Image
+                                                                                        src={image['data_url']}
+                                                                                        alt="الصورة البارزة"
+                                                                                        width={755}
+                                                                                        height={418}
+                                                                                        quality={85}
+                                                                                        placeholder='blur'
+                                                                                        blurDataURL={image['data_url']}
+
+                                                                                    />
                                                                                     <div className="image-item__btn-wrapper">
                                                                                         <button
                                                                                             disabled={galariesLoading}
@@ -383,7 +396,6 @@ function Medias({ query, stars }) {
                                                                                             type='button'
                                                                                             onClick={() => onImageRemove(index)}>
                                                                                             <span className="material-icons-outlined">clear</span>
-
                                                                                         </button>
                                                                                     </div>
                                                                                 </div>

@@ -17,6 +17,8 @@ function Prices({ query }) {
     const { id } = query
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const clearValidationHandle = () => {
         setValidationsErrors({})
     }
@@ -63,7 +65,7 @@ function Prices({ query }) {
                 metaDescription="إضافة خدمة جديدة - السعر والمدة "
                 ogDescription="إضافة خدمة جديدة - السعر والمدة"
             />
-            {token &&
+            {token && veriedEmail &&
                 <div className="container-fluid">
                     <div className="row my-3">
                         <div className="col-md-4">

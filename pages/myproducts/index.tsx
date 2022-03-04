@@ -21,7 +21,7 @@ function index() {
 
     const { data: userInfo }: any = useSWR('api/me')
     const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
-
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
             <div className="col-md-5">
@@ -81,10 +81,11 @@ function index() {
                                     </p>
                                 </div>
                             </div>
-                            <MyProducts
+                            {veriedEmail && <MyProducts
                                 setStatusType={setStatusType}
                                 postsList={postsList}
-                            />
+                            />}
+
                         </div>
                     </div>
                 </>

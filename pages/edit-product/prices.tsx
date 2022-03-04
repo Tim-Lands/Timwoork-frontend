@@ -17,6 +17,8 @@ function Prices({ query }) {
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const [validationsErrors, setValidationsErrors]: any = useState({})
 
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${id}`, {
@@ -65,7 +67,7 @@ function Prices({ query }) {
                 metaDescription="تعديل الخدمة - السعر والمدة"
                 ogDescription="تعديل الخدمة - السعر والمدة"
             />
-            {token &&
+            {token && veriedEmail &&
                 <div className="container-fluid">
                     <div className="row justify-content-md-center my-3">
                         <div className="col-md-7 pt-3">

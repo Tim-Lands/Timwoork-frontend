@@ -11,10 +11,13 @@ import ImageUploading from 'react-images-uploading';
 import cookies from 'next-cookies'
 import { MetaTags } from '@/components/SEO/MetaTags';
 import Image from 'next/image'
+import useSWR from 'swr';
 
 function Medias({ query, stars }) {
     const token = Cookies.get('token')
     const id = query.id
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -179,7 +182,7 @@ function Medias({ query, stars }) {
                 metaDescription="اتصل بنا - تيموورك"
                 ogDescription="اتصل بنا - تيموورك"
             />
-            {token &&
+            {token && veriedEmail &&
                 <div className="row my-3">
                     <div className="col-md-4">
                         <SidebarAdvices />

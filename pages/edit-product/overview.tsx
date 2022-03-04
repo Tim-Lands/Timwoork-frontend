@@ -58,6 +58,9 @@ function Overview({ query }) {
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const { data: categories, categoriesError }: any = useSWR('api/get_categories')
+    
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const clearValidationHandle = () => {
         setValidationsErrors({})
@@ -128,7 +131,7 @@ function Overview({ query }) {
                 metaDescription="تعديل الخدمة - معلومات عامة "
                 ogDescription="تعديل الخدمة - معلومات عامة"
             />
-            {token &&
+            {token && veriedEmail &&
                 <div className="container-fluid">
                     {(!getProduct) && <div>يرجى الانتظار...</div>}
                     <div className="row justify-content-md-center my-3">

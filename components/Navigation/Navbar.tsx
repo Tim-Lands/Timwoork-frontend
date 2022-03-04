@@ -22,6 +22,7 @@ function Navbar(): ReactElement {
 
     //const [msg, setMsg] = useState();
     const countMsg = userInfo && userInfo.unread_messages_count
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const pusher = new Pusher('510f53f8ccb3058a96fc', {
         cluster: 'eu',
         authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
@@ -258,11 +259,11 @@ function Navbar(): ReactElement {
                 <Link href="/user/profile">
                     <a>
                         <span className="material-icons material-icons-outlined">account_circle</span>
-                        {userData && userData.user_details.profile.full_name}
+                        {(userData && userData.user_details.profile.full_name == '') ? 'بدون اسم' : userData && userData.user_details.profile.full_name}
                     </a>
                 </Link>
             </Menu.Item>
-            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
+            {veriedEmail && userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="7">
                 <Link href="/add-new">
                     <a>
                         <span className="material-icons material-icons-outlined">add_circle_outline</span>
@@ -279,7 +280,7 @@ function Navbar(): ReactElement {
                 </Link>
             </Menu.Item>
 
-            {userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
+            {veriedEmail && userData && (userData.user_details.profile.is_seller == 1) && (<Menu.Item key="0">
                 <Link href="/myproducts">
                     <a>
                         <span className="material-icons material-icons-outlined">inventory_2</span>
@@ -429,6 +430,30 @@ function Navbar(): ReactElement {
                                                 </motion.a>
                                             </Tooltip>
                                         </li>*/}
+                                            {!veriedEmail &&
+                                                <li className="right-butts-icon">
+                                                    <Tooltip title='حسابك غير مفعل يرجى التحقق من بريدك الإلكتروني انها وصلك رمز تأكيد.'>
+                                                        <a href='/email/verification' style={{
+                                                            display: 'flex',
+                                                            alignContent: 'center',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            width: 30,
+                                                            height: 30,
+                                                            backgroundColor: 'orange',
+                                                            color: '#fff',
+                                                            borderRadius: '50%'
+                                                        }}>
+                                                            <i
+                                                                style={{
+                                                                    color: '#fff',
+                                                                    fontSize: 15,
+                                                                }}
+                                                                className="material-icons material-icons-outlined">warning_amber</i>
+                                                        </a>
+                                                    </Tooltip>
+                                                </li>
+                                            }
                                             <li className="right-butts-icon">
                                                 <Tooltip placement="bottom" title='سلة المشتريات'>
                                                     <Link href='/cart'>

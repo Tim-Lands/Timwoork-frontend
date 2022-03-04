@@ -1,52 +1,24 @@
 import Layout from '@/components/Layout/HomeLayout'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Button, Result, Tooltip } from 'antd';
+import { Result } from 'antd';
 import Link from 'next/link'
 import useSWR from 'swr'
 import Loading from '@/components/Loading';
 import { Alert } from '@/components/Alert/Alert';
 import LastSeen from '@/components/LastSeen';
-import API from '../../config'
 import Cookies from 'js-cookie'
 import router from 'next/router';
 function index() {
     const token = Cookies.get('token')
+    useEffect(() => {
+        if (!token) {
+            router.push('/login')
+        }
+    }, [])
     const [pageIndex, setPageIndex] = useState(1)
-    const [acceptedBySellerLoading, setAcceptedBySellerLoading] = useState(false)
-    const [rejectedBySellerLoading, setRejectedBySellerLoading] = useState(false)
-
     const { data: buysList, BuysError }: any = useSWR(`api/my_sales?page=${pageIndex}`)
-    const item_accepted_by_seller = async (id: any) => {
-        setAcceptedBySellerLoading(true)
-        try {
-            const res = await API.post(`api/order/items/${id}/item_accepted_by_seller`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                router.reload()
-            }
-        } catch (error) {
-            setAcceptedBySellerLoading(false)
-        }
-    }
-    const item_rejected_by_seller = async (id: any) => {
-        setRejectedBySellerLoading(true)
-        try {
-            const res = await API.post(`api/order/items/${id}/item_rejected_by_seller`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                router.reload()
-            }
-        } catch (error) {
-            setRejectedBySellerLoading(false)
-        }
-    }
+
     const statusLabel = (status: any) => {
         switch (status) {
             case 0:
@@ -108,7 +80,6 @@ function index() {
                                             <th>السعر الكلي</th>
                                             <th>المشتري</th>
                                             <th>التاريخ</th>
-                                            <th>الأدوات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -133,33 +104,6 @@ function index() {
                                                 </td>
                                                 <td>
                                                     <LastSeen date={e.created_at} />
-                                                </td>
-                                                <td>
-                                                    {e.status == 0 ?
-                                                        <>
-                                                            <Tooltip title="رفض الطلبية">
-                                                                <Button
-                                                                    disabled={rejectedBySellerLoading}
-                                                                    onClick={() => item_rejected_by_seller(e.id)}
-                                                                    danger
-                                                                    type="primary"
-                                                                    color='red'
-                                                                    size="small"
-                                                                >رفض</Button>
-                                                            </Tooltip>
-
-                                                            <Tooltip title="قبول الطلبية">
-                                                                <Button
-                                                                    disabled={acceptedBySellerLoading}
-                                                                    onClick={() => item_accepted_by_seller(e.id)}
-                                                                    type="primary"
-                                                                    color='green'
-                                                                    size="small"
-                                                                >قبول</Button>
-                                                            </Tooltip>
-                                                        </> : null
-                                                    }
-                                                    {e.status > 0 && statusLabel(e.status)}
                                                 </td>
                                             </tr>
                                         ))}

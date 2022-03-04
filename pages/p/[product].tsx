@@ -121,6 +121,7 @@ function Single({ query, stars, errorFetch }) {
     </Menu>
   );
   const [messageConv, setMessageConv] = useState('')
+  const [hasConversation, setHasConversation] = useState(false)
   // Start Conversation 
   async function startConversation(message: string) {
     setCreateConversationLoading(true)
@@ -135,7 +136,9 @@ function Single({ query, stars, errorFetch }) {
         }
       })
       if (res.status === 200) {
+        setIsModalVisible(false)
         router.push('/conversations');
+        setHasConversation(true)
       }
     } catch (error) {
       setCreateConversationLoading(false)
@@ -277,8 +280,24 @@ function Single({ query, stars, errorFetch }) {
 
       {ProductData &&
         <div className="timwoork-single">
-          <Modal title="Basic Modal" visible={isModalVisible} onOk={() => startConversation(messageConv)} okText="بدء المحادثة" onCancel={() => setIsModalVisible(false)}>
-            <textarea name="messageConv" value={messageConv} onChange={(e: any) => setMessageConv(e.target.value)}></textarea>
+          <Modal
+            title="إنشاء محادثة"
+            visible={isModalVisible}
+            confirmLoading={createConversationLoading}
+            onOk={() => startConversation(messageConv)}
+            cancelText="إلغاء الامر"
+            okText="بدء المحادثة"
+            onCancel={() => setIsModalVisible(false)}
+          >
+            <textarea
+              name="messageConv"
+              className="timlands-inputs"
+              placeholder="أكتب رسالة ابتدائية للبائع"
+              style={{ height: 180 }}
+              disabled={createConversationLoading}
+              value={messageConv}
+              onChange={(e: any) => setMessageConv(e.target.value)}
+            ></textarea>
           </Modal>
           <div className="row">
             <div className="col-lg-8">
@@ -405,9 +424,11 @@ function Single({ query, stars, errorFetch }) {
                                     <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
                                   </a>
                                 </Link>
-                                <button className="btn butt-green butt-sm flex-center" disabled={createConversationLoading} onClick={() => setIsModalVisible(true)}>
-                                  <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع {createConversationLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
-                                </button>
+                                {!hasConversation && 
+                                  <button className="btn butt-green butt-sm flex-center" disabled={createConversationLoading} onClick={() => setIsModalVisible(true)}>
+                                    <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع {createConversationLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                  </button>
+                                }
                               </div>
                             </div>
                           </div>

@@ -13,9 +13,11 @@ import API from '../../config'
 function Complete({ query }) {
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
 
+    if (!token && !veriedEmail) return <Unauthorized />
     if (!query) return message.error('حدث خطأ')
-    if (!token) return <Unauthorized />
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -36,6 +38,7 @@ function Complete({ query }) {
         }
     }
     useEffect(() => {
+
         if (!token) {
             router.push('/login')
             return

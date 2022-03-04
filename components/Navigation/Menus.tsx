@@ -45,7 +45,7 @@ function Menus({ darkMode }) {
                         alignItems: 'center',
                         alignContent: 'center'
                     }}>
-                    <i className="material-icons material-icons-outlined">chrome_reader_mode</i> التصنيفات <i className="fa fa-angle-down"></i>
+                    <i className="material-icons material-icons-outlined">chrome_reader_mode</i><span style={{ marginInline: 4 }}> التصنيفات </span><i className="fa fa-angle-down"></i>
                 </motion.button>
                 {showExplore && (
                     <motion.div ref={wrapperRef} initial={{ y: 90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-explores">

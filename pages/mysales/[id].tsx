@@ -15,7 +15,6 @@ import { motion } from "framer-motion";
 import router from "next/router";
 //import { pusher } from "../../config/pusher";
 
-
 const User = ({ query }) => {
     const token = Cookies.get('token')
     const { data: ShowItem, errorItem }: any = useSWR(`api/my_sales/${query.id}`)
@@ -28,7 +27,7 @@ const User = ({ query }) => {
     const [BySellerMSGLoading, setBySellerMSGLoading]: any = useState(false);
 
     const myRef: any = useRef()
-
+    // Send Message function
     const rejectMessageCause = async (messageText: any, typeCause = 2) => {
         setBySellerMSGLoading(true)
         try {

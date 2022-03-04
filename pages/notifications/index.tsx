@@ -58,7 +58,7 @@ function index() {
                                     <Notification
                                         key={e.id}
                                         title={e.data.title}
-                                        avatar={e.data.user_sender.avatar}
+                                        avatar={e.data.user_sender.avatar_url}
                                         created_at={e.created_at}
                                         product_title={e.data.content.title}
                                     />

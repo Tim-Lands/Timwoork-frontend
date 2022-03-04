@@ -25,6 +25,9 @@ const properties = {
 const token = Cookies.get('token')
 function Single({ query, stars }) {
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`)
+  
+  const { data: userInfo }: any = useSWR('api/me')
+  const veriedEmail = userInfo && userInfo.user_details.email_verified_at
   const disactiveProductHandle = async (id: any) => {
     const MySwal = withReactContent(Swal)
 
@@ -238,7 +241,7 @@ function Single({ query, stars }) {
         ogImage={stars.data.full_path_thumbnail}
         ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
       />
-      {ProductData &&
+      {ProductData && veriedEmail &&
         <div className="timwoork-single">
           {ProductData.data.is_active == null &&
             <div style={{ marginTop: 27 }}>

@@ -1,15 +1,12 @@
 import Layout from '@/components/Layout/HomeLayout'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Button, Modal, Result, Tooltip } from 'antd';
+import { Result } from 'antd';
 import Link from 'next/link'
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import Loading from '@/components/Loading';
 import { Alert } from '@/components/Alert/Alert';
 import LastSeen from '@/components/LastSeen';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-import API from '../../config'
 import Cookies from 'js-cookie'
 import router from 'next/router';
 
@@ -18,88 +15,11 @@ function index() {
     const [pageIndex, setPageIndex] = useState(1);
     const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
 
-    const [rejectLoading, setrejectLoading] = useState(false)
     useEffect(() => {
         if (!token) {
             router.push('/login')
         }
     }, [])
-    const rejectHandle = (id: any) => {
-        const MySwal = withReactContent(Swal)
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد إلغاء هذه الطلبية",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الإلغاء',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setrejectLoading(true)
-                try {
-                    const res = await API.post(`api/order/items/${id}/reject_item_buyer`, {}, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    if (res.status === 200) {
-                        mutate('api/my_purchases')
-                        setrejectLoading(false)
-                    }
-                } catch (error) {
-                    console.log(error);
-                    setrejectLoading(false)
-                }
-                swalWithBootstrapButtons.fire(
-                    'تم الإلغاء!',
-                    'لقد تم إلغاء هذه الطلبية بنجاح',
-                    'success'
-                )
-            }
-        })
-    }
-
-    async function cancelRequest(id: any) {
-        setrejectLoading(true)
-        try {
-            const res = await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
-                Modal.info({
-                    title: 'تم بنجاح',
-                    content: (
-                        <p>لقد تم طلب الإلغاء . سيتم ارسال اشعار في حالة قبول الطلب</p>
-                    ),
-                    onOk() { },
-                });
-                mutate('api/my_sales')
-                setrejectLoading(false)
-                router.reload()
-
-            }
-        } catch (error) {
-            setrejectLoading(false)
-            Modal.error({
-                title: 'حدث خطأ',
-                content: (
-                    <p>تعذر طلب الإلغاء يرجى المحاولة مرة أخرى</p>
-                ),
-                onOk() { },
-            });
-        }
-    }
     const statusLabel = (status: any) => {
         switch (status) {
             case 0:
@@ -155,7 +75,6 @@ function index() {
                                 <h3 className="title">مشترياتي</h3>
                             </div>
                             <div className="timlands-table">
-
                                 <table className="table">
                                     <thead>
                                         <tr>
@@ -163,7 +82,6 @@ function index() {
                                             <th>السعر الكلي</th>
                                             <th>البائع</th>
                                             <th>التاريخ</th>
-                                            <th>الأدوات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -188,27 +106,6 @@ function index() {
                                                 </td>
                                                 <td>
                                                     <LastSeen date={e.created_at} />
-                                                </td>
-                                                <td>
-                                                    {e.status == 0 &&
-                                                        <Tooltip title="إلغاء الشراء">
-                                                            <Button disabled={rejectLoading} onClick={() => rejectHandle(e.id)} danger type="primary" color='red' size="small" >إلغاء الشراء</Button>
-                                                        </Tooltip>
-                                                    }
-                                                    {e.status == 1 ?
-                                                        <>
-                                                            <Tooltip title="طلب إلغاء هذه الطلبية">
-                                                                <Button
-                                                                    disabled={rejectLoading}
-                                                                    onClick={() => cancelRequest(e.id)}
-                                                                    danger
-                                                                    type="primary"
-                                                                    color='red'
-                                                                    size="small"
-                                                                >طلب إلغاء</Button>
-                                                            </Tooltip>
-                                                        </> : null
-                                                    }
                                                 </td>
                                             </tr>
                                         ))}

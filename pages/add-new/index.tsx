@@ -14,11 +14,14 @@ import router from 'next/router';
 
 function index(props: any) {
     const token = Cookies.get('token')
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     useEffect(() => {
         if (!token) {
             router.push('/login')
             return
         }
+        
     }, [])
     if (!token) return <Unauthorized />
     const { data: userData }: any = useSWR(`api/me`)
@@ -31,7 +34,7 @@ function index(props: any) {
                 ogDescription="إضافة خدمة جديدة"
             />
             <div className="container">
-            {token &&
+            {token && veriedEmail &&
                 <div className="row justify-content-center my-3">
                     <div className="col-md-8">
                         <Spin spinning={props.addNewProductLoading}>
