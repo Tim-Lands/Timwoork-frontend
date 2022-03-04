@@ -29,7 +29,7 @@ const Order = ({ query }) => {
 
     const [isRattingLoading, setIsRattingLoading] = useState(false)
     const [rattingState, setRattingState] = useState('')
-    const [rattingCount, setRattingCount] = useState(0)
+    const [rattingCount, setRattingCount] = useState(1)
     const [isModalVisibleRatting, setModalVisibleRatting] = useState(false)
     const [rattingValidationsErrors, setRattingValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
