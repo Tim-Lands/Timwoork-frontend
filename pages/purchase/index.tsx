@@ -70,7 +70,7 @@ function Bill() {
     const { data: cartList, error }: any = useSWR('api/cart')
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
-    
+
     const mybalance = userInfo && userInfo.user_details.profile.withdrawable_amount
     async function getPaypal() {
         setIsLoading(true)
@@ -213,7 +213,7 @@ function Bill() {
                                             </motion.div>
                                             : null}
                                     </div>
-                                    {(mybalance > cartList && cartList.data.price_with_tax) ?? <>
+                                    {(Number(mybalance) >= Number(cartList && cartList.data.price_with_tax)) ?? <>
                                         <div className="form-check" style={{ marginBlock: 9 }}>
                                             <input
                                                 className="form-check-input"
