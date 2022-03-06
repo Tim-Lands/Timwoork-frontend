@@ -12,7 +12,7 @@ import router from 'next/router';
 
 function index() {
     const token = Cookies.get('token')
-    const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
+    const { data: popularProducts }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading]: any = useState(false)
     const { data: cartList }: any = useSWR('api/cart')
     //const { data: userInfo }: any = useSWR('api/me')
@@ -155,7 +155,7 @@ function index() {
                 </div>
             </div>
             <div className="container">
-                <PostsAside title="الأكثر شعبية" PostData={popularProducts && popularProducts.data.data} isLoading={!popularProducts} isError={popularError} />
+                <PostsAside title="الأكثر شعبية" PostData={popularProducts && popularProducts.data.data} />
             </div>
         </>
     );
