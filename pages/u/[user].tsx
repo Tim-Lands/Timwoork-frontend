@@ -18,7 +18,7 @@ const User = ({ query }) => {
         return `${APIURL}${User.profile.avatar_url}`;
     }
     return (
-        <div className="py-3">
+        <div className="py-3 mt-3">
             {!userInfo && <Loading />}
             {userInfo && User.profile && <>
                 <MetaTags

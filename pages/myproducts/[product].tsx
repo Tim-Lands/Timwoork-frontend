@@ -25,7 +25,7 @@ const properties = {
 const token = Cookies.get('token')
 function Single({ query, stars }) {
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`)
-  
+
   const { data: userInfo }: any = useSWR('api/me')
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at
   const disactiveProductHandle = async (id: any) => {
@@ -356,40 +356,21 @@ function Single({ query, stars }) {
                       </li>
                     </ul>
                   </div>
-                  <div className="row mx-auto py-2">
-                    <div className="col-7">
-                      <p className="text-quatity">عدد مرات الشراء: </p>
-                    </div>
-                    <div className="col-5">
-                      <input
-                        type="text"
-                        maxLength={9}
-                        onInput={handleChange}
-                        pattern="[0-9]*"
-                        value={quantutyCount}
-                        name="quantity_count"
-                        className="timlands-inputs sm"
-                        onChange={(e: any) => setQuantutyCount(e.target.value)}
-                      />
-                    </div>
-                  </div>
                   {ProductData.data.developments &&
                     <div className="panel-aside-body">
                       <div className="add-devloppers-header">
                         <h4 className="title">التطويرات المتوفرة</h4>
                       </div>
+                      {ProductData.data.developments.length == 0 &&
+                        <div className="nothing-note">
+                          <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
+                        </div>
+                      }
                       <ul className="add-devloppers-nav">
                         {ProductData.data.developments.map((e: any) => {
                           return (
                             <li key={e.id} className="devloppers-item">
                               <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id={"flexCheckDefault-id" + e.id}
-                                  value={e.id}
-                                  onChange={handleOnChangeAddID} {..._totalPrice()}
-                                />
                                 <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
                                   {e.title}
                                   <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
@@ -418,14 +399,12 @@ function Single({ query, stars }) {
                     <Spin spinning={isProductActive}>
 
                       {ProductData.data.is_active == 0 && ProductData.data.is_completed == 1 ?
-                        <Alert type="error">
-                          هذه الخدمة معطلة يمكنك تفعيلها
-                          <button
-                            disabled={isProductActive}
-                            onClick={() => activeProductHandle(ProductData.data.id)}
-                            className="btn butt-xs butt-primary"
-                          >تفعيل
-                          </button> </Alert> :
+                        <button
+                          disabled={isProductActive}
+                          onClick={() => activeProductHandle(ProductData.data.id)}
+                          className="btn butt-sm butt-green"
+                        >تفعيل
+                        </button> :
                         <button
                           disabled={isProductActive}
                           style={{ width: '100%', marginTop: 5 }}

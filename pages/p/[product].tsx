@@ -502,12 +502,12 @@ function Single({ query, stars, errorFetch }) {
                         <div className="add-devloppers-header">
                           <h4 className="title">التطويرات المتوفرة</h4>
                         </div>
+                        {ProductData.data.developments.length == 0 &&
+                          <div className="nothing-note">
+                            <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
+                          </div>
+                        }
                         <ul className="add-devloppers-nav">
-                          {ProductData.data.developments.length == 0 && 
-                            <div className="nothing-note">
-                              <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
-                            </div>
-                          }
                           {ProductData.data.developments.map((e: any) => {
                             return (
                               <li key={e.id} className="devloppers-item">

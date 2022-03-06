@@ -264,13 +264,13 @@ h3 {
         clear: both;
     }
     .text-label {
-        font-size: 19px;
+        font-size: 14px;
         font-weight: bold;
         color: #222;
         margin: 0;
     }
     .text-value {
-        font-size: 17px;
+        font-size: 13px;
         font-weight: 200;
         color: #555;
         margin: 0;
@@ -324,7 +324,7 @@ h3 {
 }
 .user-bro {
     margin: 0;
-    font-size: 19px;
+    font-size: 14px;
     line-height: 27px;
     color: #444;
     overflow: hidden;
@@ -4414,6 +4414,8 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         li {
             font-size: 13px;
             margin: 8px 0;
+            font-weight: 200;
+            line-height: 27px;
         }
     }
 }

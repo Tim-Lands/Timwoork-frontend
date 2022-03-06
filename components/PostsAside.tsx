@@ -68,7 +68,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                 <div className="posts-aside-header">
                     <h1 className="title me-auto">{title}</h1>
                     <Link href={linkURL}>
-                        <a className='btn flex-center butt-xs butt-light ml-auto'>
+                        <a className='btn flex-center butt-md butt-light ml-auto'>
                             المزيد...
                         </a>
                     </Link>
