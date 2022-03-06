@@ -33,7 +33,7 @@ const Order = ({ query }) => {
     const [isModalVisibleRatting, setModalVisibleRatting] = useState(false)
     const [rattingValidationsErrors, setRattingValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
-    
+
     async function rattingHandle(id: any) {
         setIsRattingLoading(true)
         setRattingValidationsErrors({})
@@ -543,11 +543,11 @@ const Order = ({ query }) => {
                                         </div>
                                         <div className="order-notes">
                                             <h3 className="title">
-                                            ملاحظات هامة لحماية حسابك
-                                                </h3>
+                                                ملاحظات هامة لحماية حسابك
+                                            </h3>
                                             <ul className="order-notes-list">
                                                 <li>لا تتواصل مع أي مستخدم آخر خارج الموقع. موقع تيموورك يحميك ببقاء تواصلك داخل الموقع فقط.</li>
-                                                <li>لا تزود أي مستخدم تحت أي ظرف بأي معلومات حساسة</li> 
+                                                <li>لا تزود أي مستخدم تحت أي ظرف بأي معلومات حساسة</li>
                                                 <li>لا تعطي معلومات الدخول الخاصة ببريدك الالكتروني أو حسابك في PayPal أو حساباتك على الشبكات الاجتماعية</li>
                                                 <li>تزويدك لأي مستخدم بمعلومات دخول لموقعك، جهازك الشخصي أو أي شيء آخر يتم على مسؤوليتك الشخصية</li>
                                                 <li>الرسائل مخصصة للاستفسار حول الخدمة فقط ولا يجب البدء في تنفيذ خدمة أو تسليمها عبر الرسائل قبل شرائها</li>

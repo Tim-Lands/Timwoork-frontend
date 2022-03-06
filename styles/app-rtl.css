@@ -7247,7 +7247,37 @@ h3 {
 }
 
 .seller-info .text {
-  font-size: 20px;
+  font-size: 15px;
   line-height: 35px;
+}
+
+.nothing-note {
+  padding: 10px;
+  text-align: center;
+}
+
+.nothing-note .text {
+  color: #e27318;
+  font-size: 14px;
+  font-weight: 200;
+  margin: 0;
+}
+
+.order-notes {
+  padding: 15px 20px;
+  border-top: 1px solid #f6f6f6;
+  margin-top: 15px;
+}
+
+.order-notes .title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 15px 0;
+}
+
+.order-notes .order-notes-list li {
+  font-size: 13px;
+  margin: 8px 0;
 }
 /*# sourceMappingURL=app-rtl.css.map */

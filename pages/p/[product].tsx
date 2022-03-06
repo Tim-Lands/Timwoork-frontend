@@ -503,6 +503,11 @@ function Single({ query, stars, errorFetch }) {
                           <h4 className="title">التطويرات المتوفرة</h4>
                         </div>
                         <ul className="add-devloppers-nav">
+                          {ProductData.data.developments.length == 0 && 
+                            <div className="nothing-note">
+                              <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
+                            </div>
+                          }
                           {ProductData.data.developments.map((e: any) => {
                             return (
                               <li key={e.id} className="devloppers-item">
@@ -538,11 +543,6 @@ function Single({ query, stars, errorFetch }) {
                         </div>
                       </div>
                       <div className="aside-footer-addtocart mt-3">
-                        {/*<button disabled={true} className="btn butt-white butt-lg">
-                            <span className="material-icons material-icons-outlined">remove_shopping_cart</span>
-                            تمت الإضافة
-                          </button>*/}
-
                         <button
                           onClick={addToCart}
                           className="btn butt-primary butt-lg">
