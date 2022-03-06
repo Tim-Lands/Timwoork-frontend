@@ -7,7 +7,7 @@
     margin: 5px 0;
     margin-bottom: 12px;
     overflow: hidden;
-    height: 400px;
+    height: 420px;
     .post-item-img {
         display: flex;
         cursor: pointer;
@@ -140,7 +140,7 @@
         border-radius: 5px;
         margin: 4px 0;
         margin-bottom: 10px;
-        height: 310px;
+        height: 350px;
         @media (max-width: 600px) {
             height: 400px;
         }

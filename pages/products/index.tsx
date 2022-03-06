@@ -185,6 +185,7 @@ function Category() {
               <FilterContent
                 products={products}
                 isLoading={isLoading}
+                size={4}
                 isError={isError}
               />
               {products &&

@@ -13,12 +13,12 @@ function index({ query }) {
     return (
         <div className="row py-4 justify-content-center">
             <MetaTags
-                title={subCategories.data.name_ar}
-                metaDescription={subCategories.data.name_ar}
-                ogDescription={subCategories.data.name_ar}
+                title={subCategories && subCategories.data.name_ar}
+                metaDescription={subCategories && subCategories.data.name_ar}
+                ogDescription={subCategories && subCategories.data.name_ar}
             />
             <div className="col-md-9">
-                <div className="app-bill">
+                <div className="app-bill mt-4">
                     {subCategories &&
                         <div className="app-bill-header">
                             <h3 className="title">
@@ -53,12 +53,12 @@ function index({ query }) {
                             ))}
                         </div>
                     </div>
-                    {popularProducts && popularProducts.data.length !== 0 &&
+                    {/*popularProducts && popularProducts.data.length !== 0 &&
                         <div className="load-more-div">
                             <button className='btn butt-lg butt-primary'>
                                 <span className="text">تحميل المزيد...</span>
                             </button>
-                        </div>}
+                        </div>*/}
 
                 </div>
             </div>

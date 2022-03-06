@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Post from '@/components/Post/Post';
 import { message, Result } from 'antd';
 
-function index({ products, isError, isLoading }): ReactElement {
+function index({ products, isError, isLoading, size }): ReactElement {
     if (isError) message.error('حدث خطأ أثناء جلب الخدمات')
     if (isLoading) return (
         <div className="posts-aside loading">
@@ -15,7 +15,7 @@ function index({ products, isError, isLoading }): ReactElement {
             <div className="posts-aside-body">
                 <div className="loading-container">
                     <div className="row">
-                        <div className={"col-md-4"}>
+                        <div className={"col-md-" + size}>
                             <div className="loading-container-item">
                                 <div className="container-item-img"></div>
                                 <div className="container-item-title"></div>
@@ -23,7 +23,7 @@ function index({ products, isError, isLoading }): ReactElement {
                                 <div className="container-item-meta"></div>
                             </div>
                         </div>
-                        <div className={"col-md-4"}>
+                        <div className={"col-md-" + size}>
                             <div className="loading-container-item">
                                 <div className="container-item-img"></div>
                                 <div className="container-item-title"></div>
@@ -31,7 +31,7 @@ function index({ products, isError, isLoading }): ReactElement {
                                 <div className="container-item-meta"></div>
                             </div>
                         </div>
-                        <div className={"col-md-4"}>
+                        <div className={"col-md-" + size}>
                             <div className="loading-container-item">
                                 <div className="container-item-img"></div>
                                 <div className="container-item-title"></div>
@@ -39,7 +39,7 @@ function index({ products, isError, isLoading }): ReactElement {
                                 <div className="container-item-meta"></div>
                             </div>
                         </div>
-                        <div className={"col-md-4"}>
+                        <div className={"col-md-" + size}>
                             <div className="loading-container-item">
                                 <div className="container-item-img"></div>
                                 <div className="container-item-title"></div>
@@ -56,7 +56,7 @@ function index({ products, isError, isLoading }): ReactElement {
         <>
             <div className="row">
                 {products && products.map((e: any) => (
-                    <div className="col-md-4" key={e.id}>
+                    <div className={"col-md-" + size} key={e.id}>
                         <Post
                             size="small"
                             title={e.title}
@@ -84,4 +84,5 @@ index.propTypes = {
     products: PropTypes.array,
     isLoading: PropTypes.any,
     isError: PropTypes.any,
+    size: PropTypes.any
 };
