@@ -12,7 +12,10 @@
         display: flex;
         cursor: pointer;
         height: 190px;
-        background-position: center;
+        @media (max-width: 600px) {
+            height: 250px;
+        }
+        background-size: cover;
         overflow: hidden;
         position: relative;
         transition: all 0.3s;
@@ -138,8 +141,15 @@
         margin: 4px 0;
         margin-bottom: 10px;
         height: 310px;
+        @media (max-width: 600px) {
+            height: 400px;
+        }
         .post-item-img {
-            height: 140px;
+            height: 160px;
+            
+            @media (max-width: 600px) {
+                height: 230px;
+            }
         }
         .post-item-content {
             padding: 8px;

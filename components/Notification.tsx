@@ -3,9 +3,24 @@ import Link from 'next/link'
 import PropTypes from "prop-types";
 import LastSeen from './LastSeen';
 
-function Notification({ title, avatar, created_at, product_title }): ReactElement {
+function Notification({ title, avatar, created_at, product_title, to, type, item_id }): ReactElement {
+    function switchNotifyType() {
+        switch (type) {
+            case 'order':
+                if (to == 'seller') {
+                    return `/mysales/${item_id}`
+                }
+                if (to == 'buyer') {
+                    return `/mypurchases/${item_id}`
+                }
+                break
+            default:
+                return `/mysales/${item_id}`
+
+        }
+    }
     return (
-        <Link href="#">
+        <Link href={switchNotifyType()}>
             <a className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                 <img src={avatar} alt="twbs" width="40" height="40" className="rounded-circle flex-shrink-0" />
                 <div className="d-flex gap-2 w-100 justify-content-between">
@@ -25,5 +40,8 @@ Notification.propTypes = {
     title: PropTypes.string,
     avatar: PropTypes.string,
     created_at: PropTypes.string,
-    product_title: PropTypes.string
+    product_title: PropTypes.string,
+    type: PropTypes.string,
+    to: PropTypes.string,
+    item_id: PropTypes.any
 };

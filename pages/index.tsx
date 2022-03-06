@@ -63,20 +63,20 @@ function Home() {
           <PostsAside
             title="الخدمات الأكثر شعبية "
             PostData={popularProducts && popularProducts.data.data}
-            isLoading={!popularProducts}
             isError={popularError}
+            linkURL="/products/popular"
           />
           <PostsAside
             title="الخدمات التي أضيفت حديثا"
             PostData={latestProducts && latestProducts.data.data}
-            isLoading={!latestProducts}
             isError={latestError}
+            linkURL="/products/latest"
           />
           <PostsAside
             title="الخدمات الأكثر مبيعا"
             PostData={products && products.data.data}
-            isLoading={!products}
             isError={error}
+            linkURL="/products/best-seller"
           />
         </div>
       }

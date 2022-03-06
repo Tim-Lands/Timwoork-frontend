@@ -287,10 +287,9 @@ h3 {
             color: #555;
         }
         .text-note {
-            font-size: 18px;
+            font-size: 13px;
             font-weight: 200;
             color: #555;
-            font-family: 'kast';
             margin: 0;
         }
         @media (min-width: 760px) {
@@ -329,7 +328,6 @@ h3 {
     line-height: 27px;
     color: #444;
     overflow: hidden;
-    font-family: 'kast';
 }
 .statistic-item {
     border-bottom: 1px dashed #ddd;
@@ -633,7 +631,6 @@ h3 {
                 font-size: 28px;
                 color: #444;
                 font-weight: 300;
-                font-family: 'kast';
                 @media (max-width: 580px) {
                     font-weight: 200;
                     font-size: 20px;
@@ -805,7 +802,6 @@ h3 {
             font-size: 26px;
             color: #444;
             font-weight: 200;
-            font-family: 'kast';
             line-height: 40px;
         }
         @media (max-width: 580px) {
@@ -984,7 +980,6 @@ h3 {
                 }
                 .timwoork-single-product-detailts {
                     padding: 20px 0;
-                    font-family: 'kast';
                     @media (max-width: 580px) {
                         padding: 15px 0;
                     }
@@ -992,7 +987,6 @@ h3 {
                         font-size: 26px;
                         color: #333;
                         margin: 14px 0;
-                        font-family: 'kast';
                         text-align: justify;
                         font-weight: 400;
                         line-height: 29px;
@@ -1428,7 +1422,7 @@ h3 {
         border-radius: 5px;
         box-shadow: 2px 3px 9px rgba(0, 0, 0, 0.055);
         .container-item-img {
-            height: 140px;
+            height: 190px;
             background-color: #f2f2f2;
             animation: animate_placeholder 1s;
             animation-iteration-count: infinite;
@@ -1468,13 +1462,11 @@ h3 {
 */
 .posts-aside {
     padding: 40px 0;
-    @media (max-width: 580px) {
-        padding: 40px 30px;
-    }
     .posts-aside-header {
         padding: 20px 0;
         margin-bottom: 8px;
         border-bottom: 1px solid #f1f1f1;
+        display: flex;
         .title {
             font-size: 19px;
             font-weight: bold;
@@ -1871,7 +1863,6 @@ h3 {
         font-weight: 200;
         color: #444;
         font-size: 18px;
-        font-family: 'kast';
     }
     .add-devs-btn {
         text-align: center;
@@ -1904,7 +1895,6 @@ h3 {
         li {
             font-size: 19px;
             color: #333;
-            font-family: 'kast';
             font-weight: 200;
             margin: 10px 0;
         }
@@ -3288,7 +3278,6 @@ h3 {
         font-size: 25px;
         color: #444;
         line-height: 39px;
-        font-family: 'kast';
         margin: 0;
     }
     .list {
@@ -3298,7 +3287,6 @@ h3 {
             color: #444;
             line-height: 39px;
             margin-right: 25px;
-            font-family: 'kast';
             margin-bottom: 15px;
         }
     }
@@ -3845,7 +3833,6 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
                 color: #666;
                 font-size: 18px;
                 font-weight: 200;
-                font-family: 'kast';
                 &:hover {
                     color: $primary;
                 }
@@ -4072,7 +4059,6 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         font-size: 19px;
         list-style: 28px;
         margin: 0;
-        font-family: 'kast';
         color: #222;
     }
     .conversion-btn {
@@ -4400,9 +4386,7 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 }
 .seller-info {
     .text {
-        font-family: 'kast';
         font-size: 20px;
         line-height: 35px;
     }
 }
-@import 'is-dark';

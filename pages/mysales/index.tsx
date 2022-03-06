@@ -84,6 +84,7 @@ function index() {
                                                 <th>العنوان</th>
                                                 <th>السعر الكلي</th>
                                                 <th>المشتري</th>
+                                                <th>الحالة</th>
                                                 <th>التاريخ</th>
                                             </tr>
                                         </thead>
@@ -93,7 +94,7 @@ function index() {
                                                     <td className='is-hover-primary'>
                                                         <Link href={`/mysales/${e.id}`}>
                                                             <a className='text-dark'>
-                                                                {statusLabel(e.status)} {e.title}
+                                                                {e.title}
                                                             </a>
                                                         </Link>
                                                     </td>
@@ -107,6 +108,7 @@ function index() {
                                                             </Link>
                                                         </p>
                                                     </td>
+                                                    <th>{statusLabel(e.status)}</th>
                                                     <td>
                                                         <LastSeen date={e.created_at} />
                                                     </td>

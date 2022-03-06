@@ -2,8 +2,9 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Post from './Post/Post';
 import { Alert } from './Alert/Alert';
+import Link from 'next/link';
 
-function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactElement {
+function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElement {
     if (isError) return (
         <div className="posts-aside error">
             <div className="posts-aside-header">
@@ -11,14 +12,14 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
             </div>
             <div className="posts-aside-body">
                 <Alert type="error">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
+                    لا توجد خدمات لعرضها 
                 </Alert>
             </div>
         </div>
     )
     return (
         <>
-            {isLoading && <div className="posts-aside loading">
+            {!PostData && <div className="posts-aside loading">
                 <div className="posts-aside-header">
                     <h1 className="title">
                         <div className="loading-title"></div>
@@ -65,7 +66,12 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
             </div>}
             {PostData && PostData.length !== 0 && <div className="posts-aside">
                 <div className="posts-aside-header">
-                    <h1 className="title">{title}</h1>
+                    <h1 className="title me-auto">{title}</h1>
+                    <Link href={linkURL}>
+                        <a className='btn flex-center butt-xs butt-light ml-auto'>
+                            المزيد...
+                        </a>
+                    </Link>
                 </div>
                 <div className="posts-aside-body">
                     <div className="row">
@@ -93,8 +99,8 @@ function PostsAside({ PostData, title, colNumber, isError, isLoading }): ReactEl
 export default PostsAside
 PostsAside.propTypes = {
     title: PropTypes.string,
+    linkURL: PropTypes.string,
     PostData: PropTypes.array,
     colNumber: PropTypes.number,
-    isLoading: PropTypes.any,
     isError: PropTypes.any,
 };

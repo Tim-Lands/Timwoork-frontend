@@ -5,13 +5,11 @@ import { ReactElement, useEffect } from "react";
 import useSWR from 'swr';
 import Cookies from 'js-cookie'
 import router from 'next/router';
-
 import API from '../../config'
 import { Result } from 'antd';
 import { MetaTags } from '@/components/SEO/MetaTags';
 function index() {
     const token = Cookies.get('token')
-
     const { data: notifications }: any = useSWR(`api/notifications`)
     //const notifications = userInfo && userInfo.user_details.unread_notifications
     async function markAllRead() {
@@ -58,6 +56,9 @@ function index() {
                                     <Notification
                                         key={e.id}
                                         title={e.data.title}
+                                        type={e.data.type}
+                                        item_id={e.data.content.item_id}
+                                        to={e.data.to}
                                         avatar={e.data.user_sender.avatar_url}
                                         created_at={e.created_at}
                                         product_title={e.data.content.title}
