@@ -15,6 +15,7 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 import NotFound from "@/components/NotFound";
 import Image from 'next/image'
+import { Alert } from '@/components/Alert/Alert'
 
 const properties = {
   duration: 5000,
@@ -441,23 +442,26 @@ function Single({ query, stars, errorFetch }) {
                         </div>
                       </div>
                     }
-                    {ProductData.data.ratings && ProductData.data.ratings.length !== 0 &&
-                      <div className="timwoork-single-comments">
-                        <div className="timwoork-single-comments-inner">
-                          <div className="single-comments-header">
-                            <div className="flex-center">
-                              <h4 className="title">
-                                <span className="material-icons material-icons-outlined">question_answer</span>
-                                آراء المشتريين
-                              </h4>
-                            </div>
-                          </div>
-                          <div className="single-comments-body">
-                            <Comments comments={ProductData.data.ratings} />
+                    <div className="timwoork-single-comments">
+                      <div className="timwoork-single-comments-inner">
+                        <div className="single-comments-header">
+                          <div className="flex-center">
+                            <h4 className="title">
+                              <span className="material-icons material-icons-outlined">question_answer</span>
+                              آراء المشتريين
+                            </h4>
                           </div>
                         </div>
+                        <div className="single-comments-body">
+                          <Comments comments={ProductData.data.ratings} />
+                          {ProductData.data.ratings.length == 0 &&
+                            <Alert type="primary">
+                              <p className="text">لاتوجد آراء المشتريين</p>
+                            </Alert>
+                          }
+                        </div>
                       </div>
-                    }
+                    </div>
                   </div>
                 </div>
               </div>

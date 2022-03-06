@@ -2,14 +2,12 @@
     padding: 15px;
     background-color: #fff;
     border: 1px solid #ddd;
-    font-family: 'kast';
     .text {
         margin: 0;
         font-size: 15px;
         font-weight: 300;
         display: flex;
         align-content: center;
-        font-family: 'kast';
         align-items: center;
         .material-icons {
             font-size: 18px;
@@ -38,10 +36,10 @@
         }
     }
     &.timlands-alert-primary {
-        background-color: $primary;
-        border: 1px solid $primary;
+        background-color: lighten($primary, 52);
+        border: 1px solid lighten($primary, 46);
         .text {
-            color: #fff;
+            color: #222;
         }
     }
     &.timlands-alert-primary2 {

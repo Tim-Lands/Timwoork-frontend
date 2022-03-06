@@ -2,7 +2,6 @@
   padding: 15px;
   background-color: #fff;
   border: 1px solid #ddd;
-  font-family: 'kast';
 }
 
 .timlands-alert .text {
@@ -14,7 +13,6 @@
   display: flex;
   -ms-flex-line-pack: center;
       align-content: center;
-  font-family: 'kast';
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -53,12 +51,12 @@
 }
 
 .timlands-alert.timlands-alert-primary {
-  background-color: #475C80;
-  border: 1px solid #475C80;
+  background-color: #e2e6ef;
+  border: 1px solid #ced6e4;
 }
 
 .timlands-alert.timlands-alert-primary .text {
-  color: #fff;
+  color: #222;
 }
 
 .timlands-alert.timlands-alert-primary2 {
@@ -4947,7 +4945,7 @@ h3 {
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
-  font-size: 27px;
+  font-size: 20px;
   color: #333;
   margin: 14px 0;
   text-align: justify;
