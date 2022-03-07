@@ -6,7 +6,7 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
     return (
         <div className="col-lg-4">
             {!profile_seller &&
-                <div className="be-seller-aside mt-2">
+                <div className="be-seller-aside mt-4">
                     <h3 className="title">كن بائعا</h3>
                     <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
                     <button onClick={beseller} disabled={isLoadingSeler} className='btn butt-green butt-md' style={{ width: '100%' }}>
