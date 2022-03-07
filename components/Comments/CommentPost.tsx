@@ -1,12 +1,9 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Image from 'next/image'
+import LastSeen from '../LastSeen';
 
 function CommentPost(props: any): ReactElement {
-    const APIURL = 'https://www.api.timwoork.com/avatars/'
-    const myLoader = () => {
-        return `${APIURL}${props.avatar}`;
-    }
     const showStars = () => {
         const xAr: any = [
             {
@@ -69,8 +66,7 @@ function CommentPost(props: any): ReactElement {
                 <div className="comment-item-avatar">
                     <Image
                         className="circular-img huge-size"
-                        loader={myLoader}
-                        src={APIURL + props.avatar}
+                        src={props.avatar}
                         quality={1}
                         width={45}
                         height={45}
@@ -81,7 +77,7 @@ function CommentPost(props: any): ReactElement {
                 <div className="comment-item-content">
                     <p className="meta-time">
                         <span className="material-icons material-icons-outlined">schedule</span>
-                        {props.time}
+                        <LastSeen date={props.time} />
                     </p>
                     <h4 className="user-title">{props.author}</h4>
                     <p className="user-ratting">

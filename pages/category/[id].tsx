@@ -17,7 +17,7 @@ function index({ query }) {
                 metaDescription={subCategories && subCategories.data.name_ar}
                 ogDescription={subCategories && subCategories.data.name_ar}
             />
-            <div className="col-md-9">
+            <div className="col-md-10">
                 <div className="app-bill mt-4">
                     {subCategories &&
                         <div className="app-bill-header">
@@ -37,7 +37,7 @@ function index({ query }) {
                             />}
                         <div className="row">
                             {popularProducts && popularProducts.data.length !== 0 && popularProducts.data.products.map((e: any) => (
-                                <div key={e.id} className={"col-md-4"}>
+                                <div key={e.id} className={"col-md-3"}>
                                     <Post
                                         size="small"
                                         title={e.title}

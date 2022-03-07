@@ -8,8 +8,14 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
 //import SupportEngine from '@/components/SupportChat/SupportEngine';
-import { Menu, Dropdown, Button } from 'antd';
-
+import { Menu, Dropdown, Button, Carousel } from 'antd';
+const contentStyle = {
+  height: '160px',
+  color: '#fff',
+  lineHeight: '160px',
+  textAlign: 'center',
+  background: '#364d79',
+};
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
@@ -18,14 +24,14 @@ function Home() {
     <Menu>
       <Menu.Item>
         <a target="_blank" rel="noopener noreferrer" href="https://wa.me/+905365435281">
-            <i className="fab fa-whatsapp fa-fw"></i>
-            واتساب
+          <i className="fab fa-whatsapp fa-fw"></i>
+          واتساب
         </a>
       </Menu.Item>
       <Menu.Item>
         <a target="_blank" rel="noopener noreferrer" href="https://t.me/TimWoork_customers_service">
-            <i className="fab fa-telegram fa-fw"></i>
-            تيليجرام
+          <i className="fab fa-telegram fa-fw"></i>
+          تيليجرام
         </a>
       </Menu.Item>
     </Menu>
@@ -37,6 +43,48 @@ function Home() {
         metaDescription={"الصفحة الرئيسية"}
         ogDescription={"الصفحة الرئيسية"}
       />
+      <Carousel autoplay style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: 1080,
+        margin: 'auto'
+      }}>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/1.png'} width={1080} height={500} placeholder="blur" blurDataURL='/1.png' />
+          </div>
+        </div>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/2.png'} width={1080} height={600} placeholder="blur" blurDataURL='/2.png' />
+          </div>
+        </div>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/3.png'} width={1080} height={600} placeholder="blur" blurDataURL='/3.png' />
+          </div>
+        </div>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/4.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
+          </div>
+        </div>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/5.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
+          </div>
+        </div>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/6.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
+          </div>
+        </div>
+        <div className="images-slider">
+          <div className="image-slider-item">
+            <Image src={'/7.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
+          </div>
+        </div>
+      </Carousel>
       <Hero />
       <div className="timwoork-nanny-home">
         <div className="d-flex">
@@ -80,18 +128,18 @@ function Home() {
           />
         </div>
       }
-          <div className='shadow' style={{ position: 'fixed', bottom: '3rem', left: '3rem', borderRadius: '50%', zIndex: 9999 }}>
-            <Dropdown overlay={menu} placement="topCenter" arrow>
-              <Button style={{
-                width: '75px',
-                height: '75px',
-                borderRadius: '50%',
-                padding: '0',
-                color: '#475c80',
-                borderColor: '#475c80',
-              }}><i className="fa fa-comments fa-3x"></i></Button>
-            </Dropdown>
-          </div>
+      <div className='shadow' style={{ position: 'fixed', bottom: '3rem', left: '3rem', borderRadius: '50%', zIndex: 9999 }}>
+        <Dropdown overlay={menu} placement="topCenter" arrow>
+          <Button style={{
+            width: '75px',
+            height: '75px',
+            borderRadius: '50%',
+            padding: '0',
+            color: '#475c80',
+            borderColor: '#475c80',
+          }}><i className="fa fa-comments fa-3x"></i></Button>
+        </Dropdown>
+      </div>
     </>
   );
 }

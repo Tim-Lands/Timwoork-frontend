@@ -33,7 +33,6 @@ function Id({ query }): ReactElement {
     useEffect(() => {
         refreshData()
         console.log(postsList);
-        
     }, [])
     // Return statement.
     return (
@@ -43,7 +42,6 @@ function Id({ query }): ReactElement {
                     <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إدارة الخدمات</h2>
                 </div>
                 <div className="timlands-table">
-
                     {isError &&
                         <Alert type="error">
                             <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>

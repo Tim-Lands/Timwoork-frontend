@@ -3,8 +3,6 @@ import React, { useRef, useState } from 'react'
 import API from '../config'
 import { motion, useAnimation } from 'framer-motion'
 import PostSearch from './Post/PostSearch';
-import heroIMG from '../public/hero.png'
-import Image from 'next/image'
 import { useOutsideAlerter } from './useOutsideAlerter'
 import { Result } from 'antd';
 //import Typical from 'react-typical';
@@ -109,9 +107,6 @@ function Hero() {
         paddingInline: 0,
         textAlign: 'center',
     }}>
-        <motion.div style={{ paddingBlock: 7, overflow: 'hidden' }} className="timlands-hero-image">
-            <Image src={heroIMG} placeholder="blur" />
-        </motion.div>
         <div style={{ overflow: 'hidden' }} className="timlands-hero-content">
             <motion.h1 transition={{ duration: 0.69 }} initial={{ y: -150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-title">
                 اشتري. دردش .بيع
