@@ -37,63 +37,69 @@ function Home() {
         metaDescription={"الصفحة الرئيسية"}
         ogDescription={"الصفحة الرئيسية"}
       />
-      <Carousel autoplay style={{
-        display: 'flex',
-        justifyContent: 'center',
-        width: 1080,
-        margin: 'auto'
-      }}>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/1.png'} width={1080} height={500} placeholder="blur" blurDataURL='/1.png' />
-          </div>
-        </div>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/2.png'} width={1080} height={600} placeholder="blur" blurDataURL='/2.png' />
-          </div>
-        </div>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/3.png'} width={1080} height={600} placeholder="blur" blurDataURL='/3.png' />
-          </div>
-        </div>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/4.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
-          </div>
-        </div>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/5.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
-          </div>
-        </div>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/6.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
-          </div>
-        </div>
-        <div className="images-slider">
-          <div className="image-slider-item">
-            <Image src={'/7.png'} width={1080} height={600} placeholder="blur" blurDataURL='/4.png' />
-          </div>
-        </div>
-      </Carousel>
       <Hero />
+
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
-            <Image src={nannyIMG} placeholder="blur" />
+            <Carousel autoplay style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+              margin: 'auto',
+              height: 400
+            }}>
+
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/15.png'} width={645} height={400} placeholder="blur" blurDataURL='/1.png' />
+                </div>
+              </div>
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/2.png'} width={645} height={400} placeholder="blur" blurDataURL='/2.png' />
+                </div>
+              </div>
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/3.png'} width={645} height={400} placeholder="blur" blurDataURL='/3.png' />
+                </div>
+              </div>
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/4.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
+                </div>
+              </div>
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/5.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
+                </div>
+              </div>
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/6.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
+                </div>
+              </div>
+              <div className="images-slidshow">
+                <div className="image-slider-item">
+                  <Image src={'/7.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
+                </div>
+              </div>
+            </Carousel>
           </div>
           <div className="nanny-home-content">
-            <p className="new-label">ألهم الناس من حولك! Timwoork</p>
             <h2 className="title">
               اعرض خدماتك واشتري أخرى, ماذا تنتظر !</h2>
             <p className="text">
               من شرفة منزلك لا تحتاج الخروج من بيتك للعمل, في تيموورك العمل يأتي أليك</p>
-            <div className="py-3">
-              <Link href="/add-new">
-                <a className="btn butt-green butt-md">أنشئ خدمتك الآن</a>
+            <div className="py-2">
+              <Image src={'/15.png'} width={550} height={160} placeholder="blur" blurDataURL='/4.png' />
+            </div>
+            <div className="pt-2">
+              <Link href={'/add-new'}>
+                <a className="btn butt-md butt-green">
+                  أنشئ خدمتك الآن
+                </a>
               </Link>
             </div>
           </div>
