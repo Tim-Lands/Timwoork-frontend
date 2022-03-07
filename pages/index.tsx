@@ -5,7 +5,6 @@ import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
 //import SupportEngine from '@/components/SupportChat/SupportEngine';
 import { Menu, Dropdown, Button, Carousel } from 'antd';
