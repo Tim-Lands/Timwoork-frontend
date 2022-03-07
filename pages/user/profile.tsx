@@ -113,11 +113,6 @@ function Profile() {
                                                         <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
                                                     </a>
                                                 </Link>
-                                                <Link href="/user/changePass">
-                                                    <a className="btn butt-primary2 flex-center butt-sm mt-1">
-                                                        <span className="material-icons material-icons-outlined">lock</span> تغيير كلمة المرور
-                                                    </a>
-                                                </Link>
                                             </div>
                                         </div>
                                     </div>
