@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, notification } from 'antd';
-import { isMobile } from 'react-device-detect';
 import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import API from '../../config'
