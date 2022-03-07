@@ -35,6 +35,16 @@ function index(): ReactElement {
     useEffect(() => {
         refreshData()
     }, [])
+    const catVariants = {
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: i * 0.072,
+            },
+        }),
+        hidden: { opacity: 0, y: 9 },
+    }
     // Return statement.
     return (
         <>
@@ -54,7 +64,7 @@ function index(): ReactElement {
                         </thead>
                         <tbody>
                             {postsList && postsList.map((e: any, i) => (
-                                <tr key={e.id}>
+                                <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>
                                         <Link href={`/tw-admin/contacts/${e.id}`}>
                                             <a>
@@ -65,7 +75,7 @@ function index(): ReactElement {
                                     <td>{e.email}</td>
                                     <td>{e.full_name}</td>
                                     <td title={e.created_at}><LastSeen date={e.created_at} /></td>
-                                </tr>
+                                </motion.tr>
                             ))}
                         </tbody>
                     </table>
