@@ -7294,7 +7294,7 @@ h3 {
   left: 0;
   right: 0;
   bottom: 0;
-  width: '100%';
+  width: 645;
   height: 170px;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.719)));
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.719));

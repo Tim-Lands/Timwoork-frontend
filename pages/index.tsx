@@ -37,14 +37,14 @@ function Home() {
         ogDescription={"الصفحة الرئيسية"}
       />
       <Hero />
-
+    
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
             <Carousel autoplay style={{
               display: 'flex',
               justifyContent: 'center',
-              width: '100%',
+              width: 645,
               margin: 'auto',
               height: 400
             }}>
