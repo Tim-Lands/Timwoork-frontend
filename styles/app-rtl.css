@@ -1575,15 +1575,6 @@
   padding: 80px 0;
 }
 
-@media (max-width: 600px) {
-  .app-footer.reverse {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: reverse;
-        -ms-flex-direction: column-reverse;
-            flex-direction: column-reverse;
-  }
-}
-
 .app-footer .app-footer-aside .aside-header {
   padding: 9px 0;
   border-bottom: 1px solid #f5f5f5;
@@ -1667,6 +1658,15 @@
 
 .bottom-footer .copy-text a:hover {
   color: #475C80;
+}
+
+@media (max-width: 600px) {
+  .reverse {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
 }
 
 @font-face {
