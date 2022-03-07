@@ -9,13 +9,7 @@ import nannyIMG from '../public/nanny2.jpg'
 import Image from 'next/image'
 //import SupportEngine from '@/components/SupportChat/SupportEngine';
 import { Menu, Dropdown, Button, Carousel } from 'antd';
-const contentStyle = {
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
+
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
