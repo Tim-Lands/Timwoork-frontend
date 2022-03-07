@@ -46,7 +46,7 @@ function index({ query }) {
                                         price={e.price}
                                         slug={e.slug}
                                         username={e.profile_seller.profile.user.username}
-                                        thumbnail={e.thumbnail}
+                                        thumbnail={e.full_path_thumbnail}
                                         buyers={e.count_buying}
                                     />
                                 </div>

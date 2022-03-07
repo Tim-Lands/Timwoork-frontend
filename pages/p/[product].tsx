@@ -42,7 +42,7 @@ function Single({ query, stars, errorFetch }) {
 
   }, [])
   const showStars = () => {
-    const rate = Number(ProductData.data.ratings_count) || 0
+    const rate = Number(ProductData.data.ratings_avg_rating) || 0
     const xAr: any = [
       {
         id: 1,
