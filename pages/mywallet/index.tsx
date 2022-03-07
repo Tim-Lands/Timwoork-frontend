@@ -7,6 +7,7 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
+import { Alert } from '@/components/Alert/Alert'
 
 function index() {
     const token = Cookies.get('token')
@@ -96,6 +97,11 @@ function index() {
                                             <div className="page-header xs">
                                                 <h3 className='title'>المعاملات المالية</h3>
                                             </div>
+                                            {userInfo && userInfo.user_details.profile.wallet.activities.length == 0 &&
+                                                <Alert type="primary">
+                                                    <p className="text">لاتوجد نشاطات لعرضها</p>
+                                                </Alert>
+                                            }
                                         </div>
                                     </div>
                                 </div>

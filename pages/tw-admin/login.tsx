@@ -45,8 +45,10 @@ const Login = (): ReactElement => {
                         const res = await API.post("dashboard/login", values)
                         // Authentication was successful.
                         if (res.status === 200) {
-                            Cookies.set('token', res.data.data.token);
+                            Cookies.set('token_dash', res.data.data);
                             router.push('/tw-admin')
+                            //console.log(res.data.data);
+                            
                         }
                     } catch (error: any) {
                         if (error.response && error.response.data && error.response.data.errors) {

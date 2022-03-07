@@ -4,12 +4,17 @@ import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
+import { Result } from "antd";
+import LastSeen from "@/components/LastSeen";
+import Link from "next/link";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    
+
     const token = Cookies.get('token_dash')
 
     const refreshData = async () => {
@@ -41,7 +46,7 @@ function index(): ReactElement {
         }
     }
 
-    /*const deleteHandle = (id) => {
+    const deleteHandle = (id) => {
         const MySwal = withReactContent(Swal)
 
         const swalWithBootstrapButtons = MySwal.mixin({
@@ -63,7 +68,7 @@ function index(): ReactElement {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    const res: any = axios.post(`https://api.wazzfny.com/dashboard/badges/${id}/delete`)
+                    const res: any = API.post(`dashboard/products/${id}/force_delete_product`)
                     if (res) {
                         refreshData()
                     }
@@ -71,14 +76,8 @@ function index(): ReactElement {
                     setIsError(true)
                     setIsLoading(false)
                 }
-                swalWithBootstrapButtons.fire(
-                    'تم الحذف!',
-                    'لقد تم حذف هذا العنصر بنجاح',
-                    'success'
-                )
                 refreshData()
             } else if (
-                
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
@@ -89,7 +88,7 @@ function index(): ReactElement {
             }
         })
 
-    }*/
+    }
     useEffect(() => {
         refreshData()
     }, [])
@@ -153,11 +152,17 @@ function index(): ReactElement {
                             </tr>
                         </thead>
                         <tbody>
-                            {postsList.map((e: any, i) => (
+                            {postsList && postsList.map((e: any, i) => (
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
-                                    <td>{e.title}</td>
+                                    <td>
+                                        <Link href={`/tw-admin/posts/${e.id}`}>
+                                            <a>
+                                                {e.title}
+                                            </a>
+                                        </Link>
+                                    </td>
                                     <td className="hidden-tem">{switchStatus(e.status)}</td>
-                                    <td className="hidden-tem" title={e.created_at}>.....</td>
+                                    <td className="hidden-tem" title={e.created_at}><LastSeen date={e.created_at} /></td>
                                     <td className="tools-col">
                                         {(e.status == 0 || e.status == null) ?
                                             <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(e.id)} className="table-del green">
@@ -173,8 +178,7 @@ function index(): ReactElement {
                                                 </span>
                                             </button> : ''
                                         }
-
-                                        <button title="حذف هذه الخدمة" className="table-del error">
+                                        <button title="حذف هذه الخدمة" className="table-del error" onClick={() => deleteHandle(e.id)}>
                                             <span className="material-icons material-icons-outlined">
                                                 delete
                                             </span>
@@ -184,6 +188,13 @@ function index(): ReactElement {
                             ))}
                         </tbody>
                     </table>
+                    {postsList && postsList.length == 0 &&
+                        <Result
+                            status="404"
+                            title="لا يوجد خدمات"
+                            subTitle="في هذه الحالة لاتوجد خدمات"
+                        />}
+
                     {isError &&
                         <Alert type="error">
                             <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>

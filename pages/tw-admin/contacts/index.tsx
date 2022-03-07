@@ -1,132 +1,113 @@
-import { ReactElement } from "react";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
+import API from '../../../config';
+import { motion } from "framer-motion";
+import { ReactElement, useEffect, useState } from "react";
+import DashboardLayout from "@/components/Layout/DashboardLayout";
+import Cookies from 'js-cookie'
+import { Result } from "antd";
+import LastSeen from "@/components/LastSeen";
+import Link from "next/link";
 
-const postsList = [
-    {
-        id: 1,
-        fullName: 'Tarek Aroui',
-        email: 'tarekaroui@gmail.com',
-        title: 'Lorem ipsum dolor sit amet consectetur adipisicing',
-        time: '7 days ago'
-    },
-    {
-        id: 2,
-        fullName: 'Tarek Aroui',
-        email: 'tarekaroui@gmail.com',
-        title: 'Lorem ipsum dolor sit amet consectetur adipisicing',
-        time: '7 days ago'
-    },
-    {
-        id: 3,
-        fullName: 'Tarek Aroui',
-        email: 'tarekaroui@gmail.com',
-        title: 'Lorem ipsum dolor sit amet consectetur adipisicing',
-        time: '7 days ago'
-    },
-]
+function index(): ReactElement {
+    const [postsList, setPostsList] = useState([])
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
-function index(props: any): ReactElement {
+    const token = Cookies.get('token_dash')
 
+    const refreshData = async () => {
+        setIsLoading(true)
+        try {
+            const res: any = await API.get('dashboard/contacts', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (res) {
+                setIsLoading(false)
+                setPostsList(res.data.data)
+
+                setIsError(false)
+            }
+        } catch (error) {
+            setIsError(true)
+            setIsLoading(false)
+        }
+    }
+    useEffect(() => {
+        refreshData()
+    }, [])
+    const catVariants = {
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: i * 0.072,
+            },
+        }),
+        hidden: { opacity: 0, y: 9 },
+    }
     // Return statement.
     return (
         <>
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">email</span>Contacts</h2>
-                </div>
-                <Alert type="warning">
-                    <p className="text"><span className="material-icons material-icons-outlined">report_problem</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, voluptas iure repellendus minima unde facere?</p>
-                </Alert>
-                <div className="timlands-table-filter">
-                    <div className="row">
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterUser">
-                                    <option value="">Filter by Users</option>
-                                    <option value="">Abdelhamid</option>
-                                    <option value="">Tarek Aroui</option>
-                                    <option value="">Diaa Abdellah</option>
-                                    <option value="">Ehadi Abdellah</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Status</option>
-                                    <option value="">All</option>
-                                    <option value="">Active</option>
-                                    <option value="">Disactive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <select className="timlands-inputs" name="filterStatus">
-                                    <option value="">Select Date</option>
-                                    <option value="">Today</option>
-                                    <option value="">Yesterday</option>
-                                    <option value="">This Week</option>
-                                    <option value="">This Mounth</option>
-                                    <option value="">This Year</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-sm-4 filter-form">
-                            <div className="form-container">
-                                <input className="timlands-inputs" placeholder="Search in Table List...." name="filterStatus" />
-                            </div>
-                        </div>
-                        <div className="col-sm-2 filter-form">
-                            <div className="form-container">
-                                <button className="btn butt-md butt-filter butt-primary">Filter</button>
-                            </div>
-                        </div>
-                    </div>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إدارة الخدمات</h2>
                 </div>
                 <div className="timlands-table">
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Title</th>
-                                <th>Created at</th>
-                                <th>Tools</th>
+                                <th>عنوان</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>الاسم الكامل</th>
+                                <th>التاريخ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {postsList.map(e => (
-                                <tr key={e.id}>
-                                    <td>{e.fullName}</td>
-                                    <td>{e.email}</td>
-                                    <td>{e.title}</td>
-                                    <td>{e.time}</td>
-                                    <td className="tools-col">
-                                        <button className="table-del error">
-                                            <span className="material-icons material-icons-outlined">
-                                                delete
-                                            </span>
-                                        </button>
+                            {postsList && postsList.map((e: any, i) => (
+                                <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
+                                    <td>
+                                        <Link href={`/tw-admin/posts/${e.id}`}>
+                                            <a>
+                                                {e.subject}
+                                            </a>
+                                        </Link>
                                     </td>
-                                </tr>
+                                    <td>{e.email}</td>
+                                    <td>{e.full_name}</td>
+                                    <td title={e.created_at}><LastSeen date={e.created_at} /></td>
+                                </motion.tr>
                             ))}
                         </tbody>
                     </table>
+                    {postsList && postsList.length == 0 &&
+                        <Result
+                            status="404"
+                            title="لا يوجد رسائل"
+                            subTitle="في هذه الحالة لاتوجد رسائل"
+                        />}
+
+                    {isError &&
+                        <Alert type="error">
+                            <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
+                        </Alert>}
+                    {isLoading &&
+                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </motion.div>
+                    }
                 </div>
             </div>
-            <button onClick={() => { props.logout(); }}>
-                Logout
-            </button>
         </>
     );
 }
-index.getLayout = function getLayout(page): ReactElement {
+index.getLayout = function getLayout(page: any): ReactElement {
     return (
         <DashboardLayout>
             {page}
         </DashboardLayout>
     )
 }
+
 export default index;

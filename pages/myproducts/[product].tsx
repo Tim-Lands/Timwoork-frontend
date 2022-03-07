@@ -102,8 +102,6 @@ function Single({ query, stars }) {
     //console.log(ProductData);
 
   }, [])
-  const [quantutyCount, setQuantutyCount] = useState(1)
-
   const showStars = () => {
     const rate = Number(ProductData.ratings_count) || 0
     const xAr: any = [
@@ -194,44 +192,7 @@ function Single({ query, stars }) {
     }
   }
   const APIURL2 = 'https://api.icoursat.com/products/galaries-images/'
-  const [theIDs, settheIDs] = useState([])
-  const [checkedDevelopments, setcheckedDevelopments] = useState([]);
 
-  const handleOnChangeAddID = event => {
-    let newArray = [...theIDs, event.target.value];
-    if (theIDs.includes(event.target.value)) {
-      newArray = newArray.filter(day => day !== event.target.value);
-    }
-    settheIDs(newArray);
-    setcheckedDevelopments(newArray);
-
-  };
-
-  /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
-  function _totalPrice() {
-    let __checkedDevelopments_sum = 0;
-    const b = [],
-      c = checkedDevelopments,
-      a = ProductData && ProductData.data.developments.map(e => e.id);
-
-    for (let i = 0; i < a.length; i++) {
-
-      for (let j = 0; j < c.length; j++) {
-        if (a[i] == c[j]) {
-          b.push(i);
-        }
-      }
-    }
-    for (let i = 0; i < b.length; i++) {
-      __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price);
-    }
-    const total_price = (parseInt(ProductData.data.price) + __checkedDevelopments_sum) * quantutyCount;
-    return Math.abs(total_price);
-  }
-  const handleChange = (evt) => {
-    const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-    setQuantutyCount(financialGoal);
-  }
   return (
     <>
       <MetaTags
@@ -385,7 +346,7 @@ function Single({ query, stars }) {
                   <div className="panel-aside-footer">
                     <div className="aside-footer-total-price">
                       <h4 className="price-total me-auto">
-                        <strong>المجموع </strong> {_totalPrice()}$
+                        <strong>سعر الخدمة </strong> {ProductData && ProductData.data.price}$
                       </h4>
                       <div className="bayers-count">
                         <p className="num">
