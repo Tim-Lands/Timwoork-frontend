@@ -1,6 +1,11 @@
 .app-footer {
     background-color: #fff;
     padding: 80px 0;
+    @media (max-width: 600px) {
+        &.reverse {
+            flex-direction: column-reverse;
+        }
+    }
     .app-footer-aside {
         .aside-header {
             padding: 9px 0;

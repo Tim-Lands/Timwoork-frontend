@@ -1575,6 +1575,15 @@
   padding: 80px 0;
 }
 
+@media (max-width: 600px) {
+  .app-footer.reverse {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+}
+
 .app-footer .app-footer-aside .aside-header {
   padding: 9px 0;
   border-bottom: 1px solid #f5f5f5;
@@ -7298,5 +7307,15 @@ h3 {
   height: 170px;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.719)));
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.719));
+}
+
+@media (max-width: 600px) {
+  .ant-btn.ant-btn-rtl.ant-dropdown-trigger {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .ant-btn.ant-btn-rtl.ant-dropdown-trigger .fa {
+    font-size: 26px;
+  }
 }
 /*# sourceMappingURL=app-rtl.css.map */

@@ -9,7 +9,7 @@ function index() {
         <>
             <footer className="app-footer" style={{position: 'relative'}}>
                 <div className="container">
-                    <div className="row">
+                    <div className="row reverse">
                         <div className="col-lg-4">
                             <WebsiteLinksFooter />
                         </div>

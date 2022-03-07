@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, notification } from 'antd';
-//import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { ReactElement, useEffect, useState } from "react";
 import Menus from "./Menus";
 import API from '../../config'
@@ -200,10 +200,9 @@ function Navbar(): ReactElement {
         Cookies.set('_userID', userID)
 
     }
-    const [isMenuShowen, setIsMenuShowen] = useState(true);
     const [isMenuShowenMob, setIsMenuShowenMob] = useState(false);
     const setIsMenuShowenHandle = () => {
-        setIsMenuShowen(!isMenuShowen)
+        //setIsMenuShowen(!isMenuShowen)
         setIsMenuShowenMob(!isMenuShowenMob)
     }
     /*const DarkIconvariants = {
@@ -375,8 +374,9 @@ function Navbar(): ReactElement {
                                         </a>
                                     </Link>
                                 </div>
-                                {isMenuShowen && <Menus darkMode={darkMode} />}
-                                {isMenuShowen && <MenusMobile darkMode={darkMode} />}
+                                <Menus darkMode={darkMode} />
+                                    {isMenuShowenMob && <MenusMobile darkMode={darkMode} />}
+                                
                             </div>
                         </div>
                         <ul className="nav nav-auth ml-auto" style={{

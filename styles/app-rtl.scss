@@ -4435,3 +4435,12 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.719));
     }
 }
+.ant-btn.ant-btn-rtl.ant-dropdown-trigger {
+    @media (max-width: 600px) {
+        width: 60px !important;
+        height: 60px !important;
+        .fa {
+            font-size: 26px;
+        }
+    }
+}
