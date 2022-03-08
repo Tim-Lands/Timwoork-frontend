@@ -425,9 +425,11 @@ const Order = ({ query }) => {
                                                 <Modal
                                                     title="التعليق على الخدمة "
                                                     visible={isModalVisibleRatting}
-                                                    okText='التعليق الآن'
+                                                    okText='تقييم الآن'
+                                                    okType='default'
                                                     onOk={() => rattingHandle(ShowItem && ShowItem.data.id)}
                                                     onCancel={() => setModalVisibleRatting(false)}
+                                                    cancelText='إلغاء'
                                                 >
                                                     {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                                                     <Spin spinning={isRattingLoading}>
@@ -730,7 +732,7 @@ const Order = ({ query }) => {
                                                     className="btn butt-md butt-primary2 mx-1 flex-center-just"
                                                 ><span className="material-icons material-icons-outlined">edit</span> طلب تعديل </button>
                                             </>}
-                                            {ShowItem && ShowItem.data.status == 7 && <span className='badge bg-dark text-light'>مكتملة</span>}
+                                            {ShowItem && ShowItem.data.status == 7 && <span className='badge bg-green text-light'>مكتملة</span>}
                                             {ShowItem && ShowItem.data.status == 8 && <>
                                                 <p className="note-text">
                                                     لقد تم رفض طلبك الإلغاء من طرف البائع
