@@ -289,6 +289,8 @@ function Description({ query }) {
                                                         disabled={(!getProduct ? true : false)}
                                                         name="buyer_instruct"
                                                         placeholder="تعليمات المشتري..."
+                                                        value={formik.values.buyer_instruct}
+                                                        onChange={formik.handleChange}
                                                         className="timlands-inputs"
                                                         autoComplete="off"
                                                         style={{ minHeight: 170 }}
