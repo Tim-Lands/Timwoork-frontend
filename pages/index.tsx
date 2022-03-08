@@ -7,8 +7,47 @@ import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Image from 'next/image'
 //import SupportEngine from '@/components/SupportChat/SupportEngine';
-import { Menu, Dropdown, Button, Carousel } from 'antd';
+import { Menu, Dropdown, Button } from 'antd';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
 
+const slideImages = [
+  {
+    id: 1,
+    path: '/1.png'
+  },
+  {
+    id: 2,
+    path: '/2.png'
+  },
+  {
+    id: 3,
+    path: '/3.png'
+  },
+  {
+    id: 4,
+    path: '/4.png'
+  },
+  {
+    id: 5,
+    path: '/5.png'
+  },
+  {
+    id: 6,
+    path: '/6.png'
+  },
+  {
+    id: 7,
+    path: '/7.png'
+  },
+];
+const properties = {
+  duration: 5000,
+  transitionDuration: 500,
+  infinite: true,
+  prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
+  nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
+}
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
@@ -37,54 +76,18 @@ function Home() {
         ogDescription={"الصفحة الرئيسية"}
       />
       <Hero />
-    
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
-            <Carousel autoplay style={{
-              display: 'flex',
-              justifyContent: 'center',
-              width: 645,
-              margin: 'auto',
-              height: 400
-            }}>
-
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/15.png'} width={645} height={400} placeholder="blur" blurDataURL='/1.png' />
-                </div>
-              </div>
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/2.png'} width={645} height={400} placeholder="blur" blurDataURL='/2.png' />
-                </div>
-              </div>
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/3.png'} width={645} height={400} placeholder="blur" blurDataURL='/3.png' />
-                </div>
-              </div>
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/4.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
-                </div>
-              </div>
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/5.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
-                </div>
-              </div>
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/6.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
-                </div>
-              </div>
-              <div className="images-slidshow">
-                <div className="image-slider-item">
-                  <Image src={'/7.png'} width={645} height={400} placeholder="blur" blurDataURL='/4.png' />
-                </div>
-              </div>
-            </Carousel>
+            <Slide {...properties}>
+              {slideImages.map((each: any, index) => (
+                <>
+                  {each.url_video == null ? <div key={index} className="each-slide">
+                    <div className="images-slider fix-height" style={{ backgroundImage: `url(${each.path})` }}></div>
+                  </div> : ''}
+                </>
+              ))}
+            </Slide>
           </div>
           <div className="nanny-home-content">
             <h2 className="title">
@@ -92,7 +95,7 @@ function Home() {
             <p className="text">
               من شرفة منزلك لا تحتاج الخروج من بيتك للعمل, في تيموورك العمل يأتي أليك</p>
             <div className="py-2">
-              <Image src={'/15.png'} width={550} height={160} placeholder="blur" blurDataURL='/4.png' />
+              <Image src={'/15.png'} width={550} height={160} placeholder="blur" blurDataURL='/15.png' />
             </div>
             <div className="pt-2">
               <Link href={'/add-new'}>

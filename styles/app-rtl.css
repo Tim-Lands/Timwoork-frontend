@@ -281,10 +281,9 @@
 }
 
 .timlands-form-note .text {
-  font-size: 18px;
+  font-size: 13px;
   color: #666;
   margin: 0;
-  font-family: 'kast';
   font-weight: 300;
 }
 
@@ -2883,66 +2882,6 @@ h3 {
   border-radius: 5px;
 }
 
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .react-slideshow-container {
-  margin-right: -80px;
-  width: 100%;
-  position: relative;
-  right: -79px;
-}
-
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide {
-  position: relative;
-  overflow: hidden;
-  border-radius: 6px;
-}
-
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  height: 450px;
-}
-
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider .caption-descriptions {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 22px;
-  height: 120px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(#000));
-  background-image: linear-gradient(rgba(0, 0, 0, 0), #000);
-}
-
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .each-slide .images-slider .caption-descriptions .text {
-  margin: 0;
-  font-size: 18px;
-  color: #fff;
-  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
-  font-weight: 700;
-}
-
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .arrow-navigations {
-  margin-left: -78px !important;
-  cursor: pointer;
-}
-
-.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .arrow-navigations .material-icons-outlined {
-  color: #fff;
-  font-size: 73px;
-  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
-  margin-right: -22px;
-}
-
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
 }
@@ -3204,6 +3143,70 @@ h3 {
     padding: 0;
     padding-right: 10px;
   }
+}
+
+.react-slideshow-container {
+  margin-right: -80px;
+  width: 100%;
+  position: relative;
+  right: -79px;
+}
+
+.each-slide {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.each-slide .images-slider {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  height: 450px;
+}
+
+.each-slide .images-slider.fix-height {
+  height: 400px;
+}
+
+.each-slide .images-slider .caption-descriptions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 22px;
+  height: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(#000));
+  background-image: linear-gradient(rgba(0, 0, 0, 0), #000);
+}
+
+.each-slide .images-slider .caption-descriptions .text {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+  font-weight: 700;
+}
+
+.arrow-navigations {
+  margin-left: -78px !important;
+  cursor: pointer;
+}
+
+.arrow-navigations .material-icons-outlined {
+  color: #fff;
+  font-size: 73px;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
+  margin-right: -22px;
 }
 
 .cart-nothing .cart-nothing-inner {

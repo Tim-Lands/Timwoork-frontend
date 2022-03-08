@@ -100,7 +100,7 @@ const Tiptap = (props: any) => {
         />
     )
 }
-function Description({ query }) {
+function Description({ query, stars }) {
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
@@ -111,9 +111,9 @@ function Description({ query }) {
         extensions: [
             StarterKit,
         ],
-        content: getProduct && getProduct.data.content,
-
+        content: stars && stars.data.content,
     })
+    const html = editor && editor.getHTML()
     async function stepFive() {
         try {
             const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
@@ -131,8 +131,8 @@ function Description({ query }) {
     }
     const formik = useFormik({
         initialValues: {
-            buyer_instruct: getProduct && getProduct.data.buyer_instruct,
-            content: getProduct && getProduct.data.content,
+            buyer_instruct: stars && stars.data.buyer_instruct,
+            content: html,
         },
         isInitialValid: true,
         enableReinitialize: true,
