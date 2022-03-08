@@ -406,7 +406,7 @@ const User = ({ query }) => {
                 return <span className='badge bg-primary'>قيد الإستلام</span>
 
             case 7:
-                return <span className='badge bg-dark text-light'>مكتملة</span>
+                return <span className='badge bg-success text-light'>مكتملة</span>
 
             case 8:
                 return <span className='badge bg-danger text-light'>معلقة</span>
