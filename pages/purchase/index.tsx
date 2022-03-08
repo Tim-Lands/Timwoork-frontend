@@ -15,6 +15,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { MetaTags } from '@/components/SEO/MetaTags'
+import { Alert } from '@/components/Alert/Alert'
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -65,6 +66,8 @@ function Bill() {
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isBuyer, setIsBuyer] = useState(false)
+    const [isWalletLoading, setIsWalletLoading] = useState(false)
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const [getLink, setGetLink] = useState('')
 
     const { data: cartList, error }: any = useSWR('api/cart')
@@ -105,6 +108,23 @@ function Bill() {
         }
         getPaypal()
     }, [])
+    async function chargeWallet() {
+        setIsWalletLoading(true)
+        try {
+            const res = await API.post(`api/purchase/wallet/charge`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                router.push('/mypurchases')
+            }
+        } catch (error) {
+            if (error.response && error.response.data) {
+                setValidationsGeneral(error.response.data);
+            }
+        }
+    }
     return (
         <>
             <MetaTags
@@ -230,10 +250,12 @@ function Bill() {
                                         <div style={{ overflow: 'hidden' }}>
                                             {billPayment == 2 ?
                                                 <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                                                     <div className="purchase-by-wallet">
                                                         <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
-                                                        <button className='btn butt-lg butt-green flex-center-just'>
-                                                            <img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)
+                                                        <button onClick={chargeWallet} disabled={isWalletLoading} className='btn butt-lg butt-green flex-center-just'>
+                                                            {isWalletLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
+                                                            {!isWalletLoading && <><img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)</>}
                                                         </button>
                                                     </div>
                                                 </motion.div>
