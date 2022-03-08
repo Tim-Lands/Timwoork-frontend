@@ -375,9 +375,7 @@ function Single({ query, stars, errorFetch }) {
                         </>
                       ))}
                     </Slide>
-                    <div className="timwoork-single-product-detailts">
-                      {ProductData.data.content}
-                    </div>
+                    <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ProductData.data.content }} />
                     {ProductData.data.product_tag &&
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">

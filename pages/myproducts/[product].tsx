@@ -59,6 +59,47 @@ function Single({ query, stars }) {
       });
     }
   }
+  const deleteHandle = (id: any) => {
+    const MySwal = withReactContent(Swal)
+
+    const swalWithBootstrapButtons = MySwal.mixin({
+        customClass: {
+            confirmButton: 'btn butt-red butt-sm me-1',
+            cancelButton: 'btn butt-green butt-sm'
+        },
+        buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+        title: 'هل أنت متأكد؟',
+        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'نعم, أريد الحذف',
+        cancelButtonText: 'لا',
+        reverseButtons: true
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const res = await API.post(`api/product/${id}/deleteProduct`, null, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                if (res.status === 200) {
+                    swalWithBootstrapButtons.fire(
+                        'تم الحذف!',
+                        'لقد تم حذف هذه الخدمة بنجاح',
+                        'success'
+                    )
+                    
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    })
+}
   const [isProductActive, setIsProductActive] = useState(false)
   const activeProductHandle = async (id: any) => {
     const MySwal = withReactContent(Swal)
@@ -266,9 +307,7 @@ function Single({ query, stars }) {
                         </>
                       ))}
                     </Slide>
-                    <div className="timwoork-single-product-detailts">
-                      {ProductData.data.content}
-                    </div>
+                    <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ProductData.data.content }} />
                     {ProductData.data.product_tag &&
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
@@ -295,7 +334,7 @@ function Single({ query, stars }) {
                       <span className="material-icons material-icons-outlined">create</span> تعديل الخدمة
                     </a>
                   </Link>
-                  <button className="btn butt-md butt-red flex-center-just mb-1 mx-1">
+                  <button onClick={() => deleteHandle(ProductData.data.id)} className="btn butt-md butt-red flex-center-just mb-1 mx-1">
                     <span className="material-icons material-icons-outlined">delete</span> حذف الخدمة
                   </button>
                 </div>
