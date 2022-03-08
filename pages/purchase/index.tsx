@@ -233,36 +233,39 @@ function Bill() {
                                             </motion.div>
                                             : null}
                                     </div>
-                                    {Number(mybalance) < Number(cartList && cartList.data.price_with_tax) && <><Alert type='primary'>لا يمكنك الشراء بواسطة المحفظة . المبلغ الإجمالي اكبر من رصيدك</Alert></>}
+                                    {(Number(mybalance) < Number(cartList && cartList.data.price_with_tax)) ?
 
-                                    <div className="form-check" style={{ marginBlock: 9 }}>
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            value='2'
-                                            name="billPayment"
-                                            id="billPayment-wallet"
-                                            onChange={(e: any) => setBillPayment(e.target.value)}
-                                        />
-                                        <label className="form-check-label" htmlFor="billPayment-wallet">
-                                            الدفع عن طريق المحفظة
-                                        </label>
-                                    </div>
-                                    <div style={{ overflow: 'hidden' }}>
-                                        {billPayment == 2 ?
-                                            <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                                {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
-                                                <div className="purchase-by-wallet">
-                                                    <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
-                                                    <button onClick={chargeWallet} disabled={isWalletLoading} className='btn butt-lg butt-green flex-center-just'>
-                                                        {isWalletLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
-                                                        {!isWalletLoading && <><img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)</>}
-                                                    </button>
-                                                </div>
-                                            </motion.div>
-                                            : null}
-                                    </div>
-
+                                        <><Alert type='primary'>لا يمكنك الشراء بواسطة المحفظة . المبلغ الإجمالي اكبر من رصيدك</Alert></> :
+                                        <>
+                                            <div className="form-check" style={{ marginBlock: 9 }}>
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    value='2'
+                                                    name="billPayment"
+                                                    id="billPayment-wallet"
+                                                    onChange={(e: any) => setBillPayment(e.target.value)}
+                                                />
+                                                <label className="form-check-label" htmlFor="billPayment-wallet">
+                                                    الدفع عن طريق المحفظة
+                                                </label>
+                                            </div>
+                                            <div style={{ overflow: 'hidden' }}>
+                                                {billPayment == 2 ?
+                                                    <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                        {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
+                                                        <div className="purchase-by-wallet">
+                                                            <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
+                                                            <button onClick={chargeWallet} disabled={isWalletLoading} className='btn butt-lg butt-green flex-center-just'>
+                                                                {isWalletLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
+                                                                {!isWalletLoading && <><img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)</>}
+                                                            </button>
+                                                        </div>
+                                                    </motion.div>
+                                                    : null}
+                                            </div>
+                                        </>
+                                    }
 
                                 </div>
                             }
