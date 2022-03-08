@@ -113,7 +113,14 @@ function Description({ query, stars }) {
         ],
         content: stars && stars.data.content,
     })
+    const buyerInstruct = useEditor({
+        extensions: [
+            StarterKit,
+        ],
+        content: stars && stars.data.buyer_instruct,
+    })
     const html = editor && editor.getHTML()
+    const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML()
     async function stepFive() {
         try {
             const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
@@ -131,7 +138,7 @@ function Description({ query, stars }) {
     }
     const formik = useFormik({
         initialValues: {
-            buyer_instruct: stars && stars.data.buyer_instruct,
+            buyer_instruct: buyerInstructhtml,
             content: html,
         },
         isInitialValid: true,
@@ -284,17 +291,10 @@ function Description({ query, stars }) {
                                             <div className="col-md-12">
                                                 <div className="timlands-form">
                                                     <label className="label-block" htmlFor="input-buyer_instruct">تعليمات المشتري</label>
-                                                    <textarea
-                                                        id="input-buyer_instruct"
-                                                        disabled={(!getProduct ? true : false)}
-                                                        name="buyer_instruct"
-                                                        placeholder="تعليمات المشتري..."
-                                                        value={formik.values.buyer_instruct}
-                                                        onChange={formik.handleChange}
-                                                        className="timlands-inputs"
-                                                        autoComplete="off"
-                                                        style={{ minHeight: 170 }}
-                                                    ></textarea>
+                                                    <div className="app-content-editor">
+                                                        <MenuBar editor={buyerInstruct} />
+                                                        <Tiptap value={formik.values.buyer_instruct} changeHandle={formik.handleChange} editor={buyerInstruct} />
+                                                    </div>
                                                     <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                         <p className="text">المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة. تظهر هذه المعلومات بعد شراء الخدمة فقط</p>
                                                     </motion.div>
@@ -348,7 +348,7 @@ export async function getServerSideProps(ctx) {
 }
 Description.propTypes = {
     query: PropTypes.any,
-    stars: PropTypes.any, 
+    stars: PropTypes.any,
 };
 MenuBar.propTypes = {
     editor: PropTypes.any,

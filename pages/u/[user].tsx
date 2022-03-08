@@ -95,7 +95,7 @@ const User = ({ query }) => {
                                             <div className="col-sm-4">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">البلد</h3>
-                                                    <p className="text-value">dfrgth</p>
+                                                    <p className="text-value">{User.profile.country.name_ar}</p>
                                                 </div>
                                             </div>
                                         }
