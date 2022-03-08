@@ -146,6 +146,7 @@ function index() {
                                                         <tr>
                                                             <th>عنوان العملية</th>
                                                             <th>المبلغ</th>
+                                                            <th>المبلغ</th>
                                                             <th>التاريخ</th>
                                                         </tr>
                                                     </thead>
@@ -156,6 +157,7 @@ function index() {
                                                                     {switchTitle(e.status)}
                                                                 </td>
                                                                 <td>{switchType(e.status, e.amount)}</td>
+                                                                <td>{e.payload['title']}</td>
                                                                 <td>
                                                                     <LastSeen date={e.created_at} />
                                                                 </td>

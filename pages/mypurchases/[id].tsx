@@ -480,9 +480,7 @@ const Order = ({ query }) => {
                                             <h3 className="title">تعليمات للمشتري</h3>
                                         </div>
                                         <div className="seller-info">
-                                            <p className="text">
-                                                {ShowItem && ShowItem.data.profile_seller.products[0].buyer_instruct}
-                                            </p>
+                                        <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ShowItem && ShowItem.data.profile_seller.products[0].buyer_instruct }} />
                                         </div>
                                         <div className="order-notes">
                                             <h3 className="title">
