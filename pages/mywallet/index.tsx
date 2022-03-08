@@ -8,6 +8,7 @@ import Loading from '@/components/Loading'
 import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
 import { Alert } from '@/components/Alert/Alert'
+import LastSeen from '@/components/LastSeen'
 
 function index() {
     const token = Cookies.get('token')
@@ -22,6 +23,42 @@ function index() {
             router.push('/login')
         }
     }, [])
+    function switchTitle(type: any) {
+        switch (type) {
+            case 0:
+                return 'عملية شراء'
+
+            case 1:
+                return 'عملية ربح'
+
+            case 2:
+                return 'عملية سحب'
+
+            case 3:
+                return 'عملية استعادة مال'
+
+            default:
+                return 'عملية شراء'
+        }
+    }
+    function switchType(type: any, amount: number) {
+        switch (type) {
+            case 0:
+                return <span className='app-badge app-badge-primary'>${amount}</span>
+
+            case 1:
+                return <span className='app-badge app-badge-success'>${amount}</span>
+
+            case 2:
+                return <span className='app-badge app-badge-info'>${amount}</span>
+
+            case 3:
+                return <span className='app-badge app-badge-danger'>${amount}</span>
+
+            default:
+                return <span className='app-badge app-badge-primary'>${amount}</span>
+        }
+    }
     return (
         <div className="py-3">
             {!userInfo && <Loading />}
@@ -102,6 +139,31 @@ function index() {
                                                     <p className="text">لاتوجد نشاطات لعرضها</p>
                                                 </Alert>
                                             }
+
+                                            <div className="timlands-table">
+                                                <table className="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>عنوان العملية</th>
+                                                            <th>المبلغ</th>
+                                                            <th>التاريخ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {userInfo && userInfo.user_details.profile.wallet.activities.map((e: any) => (
+                                                            <tr>
+                                                                <td className='is-hover-primary'>
+                                                                    {switchTitle(e.status)}
+                                                                </td>
+                                                                <td>{switchType(e.status, e.amount)}</td>
+                                                                <td>
+                                                                    <LastSeen date={e.created_at} />
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

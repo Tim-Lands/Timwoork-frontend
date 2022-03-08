@@ -7404,4 +7404,36 @@ h3 {
     left: 200px;
   }
 }
+
+.app-badge {
+  display: inline-block;
+  padding: 3px 6px;
+  font-size: 12px;
+  color: #555;
+  font-weight: 200;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.app-badge.app-badge-primary {
+  background-color: #475C80;
+  color: #fff;
+}
+
+.app-badge.app-badge-success {
+  background-color: #2ac559;
+  color: #fff;
+}
+
+.app-badge.app-badge-danger {
+  background-color: #c52a2a;
+  color: #fff;
+}
+
+.app-badge.app-badge-info {
+  background-color: #0f81a3;
+  color: #fff;
+}
 /*# sourceMappingURL=app-rtl.css.map */
