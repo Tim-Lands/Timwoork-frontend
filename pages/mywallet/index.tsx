@@ -44,19 +44,19 @@ function index() {
     function switchType(type: any, amount: number) {
         switch (type) {
             case 0:
-                return <span className='app-badge app-badge-primary'>${amount}</span>
+                return <span className='app-badge app-badge-danger'>-${amount}</span>
 
             case 1:
-                return <span className='app-badge app-badge-success'>${amount}</span>
+                return <span className='app-badge app-badge-success'>+${amount}</span>
 
             case 2:
-                return <span className='app-badge app-badge-info'>${amount}</span>
+                return <span className='app-badge app-badge-danger'>-${amount}</span>
 
             case 3:
-                return <span className='app-badge app-badge-danger'>${amount}</span>
+                return <span className='app-badge app-badge-success'>+${amount}</span>
 
             default:
-                return <span className='app-badge app-badge-primary'>${amount}</span>
+                return <span className='app-badge app-badge-danger'>-${amount}</span>
         }
     }
     return (
@@ -152,12 +152,12 @@ function index() {
                                                     </thead>
                                                     <tbody>
                                                         {userInfo && userInfo.user_details.profile.wallet.activities.map((e: any) => (
-                                                            <tr>
+                                                            <tr key={e.id}>
                                                                 <td className='is-hover-primary'>
                                                                     {switchTitle(e.status)}
                                                                 </td>
                                                                 <td>{switchType(e.status, e.amount)}</td>
-                                                                <td>{e.payload['title']}</td>
+                                                                <td>{e.payload.title}</td>
                                                                 <td>
                                                                     <LastSeen date={e.created_at} />
                                                                 </td>

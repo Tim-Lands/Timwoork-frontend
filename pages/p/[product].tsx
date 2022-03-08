@@ -8,7 +8,7 @@ import 'react-slideshow-image/dist/styles.css'
 //import { useTranslation } from "react-i18next";
 import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
-import { Dropdown, message, Spin, Menu, notification, Modal } from 'antd'
+import { Dropdown, message, Spin, Menu, notification, Modal, Badge, Typography, Popover } from 'antd'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
 import Cookies from 'js-cookie'
@@ -16,6 +16,7 @@ import router from "next/router";
 import NotFound from "@/components/NotFound";
 import Image from 'next/image'
 import { Alert } from '@/components/Alert/Alert'
+const { Text } = Typography;
 
 const properties = {
   duration: 5000,
@@ -101,10 +102,10 @@ function Single({ query, stars, errorFetch }) {
       return yut.concat(yut2)
     }
   }
-  const allowOnlyNumericsOrDigits = (evt) => {
-    const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-    setQuantutyCount(financialGoal);
-  }
+  // const allowOnlyNumericsOrDigits = (evt) => {
+  //   const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
+  //   setQuantutyCount(financialGoal);
+  // }
   const menu = (
     <Menu>
       {ProductData &&
@@ -273,6 +274,16 @@ function Single({ query, stars, errorFetch }) {
     const total_price = (parseInt(ProductData.data.price) + __checkedDevelopments_sum) * quantutyCount;
     return Math.abs(total_price);
   }
+  const noteContent = (
+    <div>
+      <ul>
+        <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
+        <li>من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة </li>
+        <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
+      </ul>
+      <Text type="danger">لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام الخدمة</Text>
+    </div>
+  );
   return (
     <>
       {!ProductData && <Loading />}
@@ -484,10 +495,16 @@ function Single({ query, stars, errorFetch }) {
                     </div>
                     <div className="row mx-auto py-2">
                       <div className="col-7">
-                        <p className="text-quatity">عدد مرات الشراء: </p>
+                        <p className="text-quatity"> عدد مرات الشراء:
+                          <span className='me-auto'>
+                            <Popover content={noteContent} trigger="hover">
+                              <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                            </Popover>
+                          </span>
+                        </p>
                       </div>
                       <div className="col-5">
-                        <input
+                        {/* <input
                           type="text"
                           maxLength={2}
                           onInput={allowOnlyNumericsOrDigits}
@@ -496,7 +513,25 @@ function Single({ query, stars, errorFetch }) {
                           name="quantity_count"
                           className="timlands-inputs sm"
                         //onChange={(e: any) => setQuantutyCount(e.target.value)}
-                        />
+                        /> */}
+                        <select
+                          name="quantity_count"
+                          id="quantity_count"
+                          value={quantutyCount}
+                          className="timlands-inputs sm"
+                          onChange={(e: any) => setQuantutyCount(e.target.value)}
+                        >
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                          <option value={4}>4</option>
+                          <option value={5}>5</option>
+                          <option value={6}>6</option>
+                          <option value={7}>7</option>
+                          <option value={8}>8</option>
+                          <option value={9}>9</option>
+                          <option value={10}>10</option>
+                        </select>
                       </div>
                     </div>
                     {ProductData.data.developments &&
