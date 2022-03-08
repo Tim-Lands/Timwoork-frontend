@@ -12,27 +12,116 @@ import useSWR from 'swr';
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useFormik } from 'formik';
+import cookies from 'next-cookies'
 
+export const MenuBar = ({ editor }) => {
+    if (!editor) {
+        return null
+    }
+
+    return (
+        <div className='menubar'>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                className={editor.isActive('bold') ? 'is-active' : ''}
+            >
+                <span className="material-icons material-icons-outlined">format_bold</span>
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+                className={editor.isActive('italic') ? 'is-active' : ''}
+            >
+                <span className="material-icons material-icons-outlined">format_italic</span>
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleStrike().run()}
+                className={editor.isActive('strike') ? 'is-active' : ''}
+            >
+                <span className="material-icons material-icons-outlined">strikethrough_s</span>
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+            >
+                h1
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+            >
+                h2
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+            >
+                h3
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+                className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
+            >
+                h4
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                className={editor.isActive('bulletList') ? 'is-active' : ''}
+            >
+                <span className="material-icons material-icons-outlined">format_list_bulleted</span>
+            </button>
+            <button
+                type='button'
+                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                className={editor.isActive('orderedList') ? 'is-active' : ''}
+            >
+                <span className="material-icons material-icons-outlined">format_list_numbered</span>
+            </button>
+            <button type='button' onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+                <span className="material-icons material-icons-outlined">horizontal_rule</span>
+            </button>
+        </div>
+    )
+}
 const Tiptap = (props: any) => {
     return (
         <EditorContent
-            value={props.value}
+            content={props.value}
             editor={props.editor}
             onChange={props.changeHandle}
+            style={{ minHeight: 170 }}
         />
     )
 }
-function Description({ query }) {
+function Description({ query, stars }) {
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-
-    const formik = useFormik({
+    const token = Cookies.get('token')
+    const [validationsErrors, setValidationsErrors]: any = useState({})
+    const { data: userInfo }: any = useSWR('api/me')
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    const editor = useEditor({
+        extensions: [
+            StarterKit,
+        ],
+        content: stars && stars.data.content,
+    })
+    const html = editor && editor.getHTML()
+    const formik = useFormik({  
         initialValues: {
-            buyer_instruct: getProduct && getProduct.data.buyer_instruct,
-            content: getProduct && getProduct.data.content,
+            buyer_instruct: stars.data.buyer_instruct,
+            content: html,
         },
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async values => {
+            setValidationsErrors({})
             try {
                 const id = query.id
                 const res = await API.post(`api/product/${id}/product-step-three`, values, {
@@ -58,18 +147,6 @@ function Description({ query }) {
 
         }
     });
-    const editor = useEditor({
-        extensions: [
-            StarterKit,
-        ],
-        content: getProduct && getProduct.data.content,
-        
-    })
-    const html = editor && editor.getHTML()
-    const token = Cookies.get('token')
-    const [validationsErrors, setValidationsErrors]: any = useState({})
-    const { data: userInfo }: any = useSWR('api/me')
-    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
 
     async function getProductId() {
         try {
@@ -159,23 +236,15 @@ function Description({ query }) {
                                         </div>
 
                                         <div className="timlands-content-form">
-                                            {html}
-                                            <Tiptap value={formik.values.content} changeHandle={formik.handleChange} editor={editor} />
+
                                             <div className="row">
                                                 <div className="col-md-12">
                                                     <div className="timlands-form">
                                                         <label className="label-block" htmlFor="input-content">وصف الخدمة</label>
-                                                        <textarea
-                                                            onChange={formik.handleChange}
-                                                            value={formik.values.content}
-                                                            id="input-content"
-                                                            disabled={(!getProduct ? true : false)}
-                                                            name="content"
-                                                            placeholder="وصف الخدمة..."
-                                                            className={"timlands-inputs " + (validationsErrors && validationsErrors.content && ' has-error')}
-                                                            autoComplete="off"
-                                                            style={{ minHeight: 170 }}
-                                                        ></textarea>
+                                                        <div className="app-content-editor">
+                                                            <MenuBar editor={editor} />
+                                                            <Tiptap value={formik.values.content} changeHandle={formik.handleChange} editor={editor} />
+                                                        </div>
                                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note">
                                                             <p className="text">أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط . يمنع وضع البريد الالكتروني، رقم الهاتف أو أي معلومات اتصال أخرى.</p>
                                                         </motion.div>
@@ -246,9 +315,22 @@ Description.getLayout = function getLayout(page): ReactElement {
         </Layout>
     )
 }
-Description.getInitialProps = ({ query }) => {
-    return { query }
+export async function getServerSideProps(ctx) {
+    const token = cookies(ctx).token || ''
+    const uriString = `api/my_products/product/${ctx.query.id}`
+    // Fetch data from external API
+    const res = await API.get(uriString, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
+    return { props: { query: ctx.query, stars: res.data } }
 }
 Description.propTypes = {
     query: PropTypes.any,
+    stars: PropTypes.any,
+};
+MenuBar.propTypes = {
+    editor: PropTypes.any,
 };

@@ -759,16 +759,25 @@ h3 {
     background-color: #fff;
     padding: 120px 30px;
     overflow: hidden;
+    @media (max-width: 580px) {
+        overflow: visible;
+        padding: 120px 10px;
+    }
     .d-flex {
         align-items: center;
         align-content: center;
         @media (max-width: 580px) {
             flex-direction: column;
+            justify-content: center;
         }
     }
     .nanny-home-image {
         width: 50%;
         overflow: hidden;
+        @media (max-width: 600px) {
+            margin-left: -50px;
+            margin-right: -50px;
+        }
         img {
             border-radius: 11px 0 0 11px;
             margin-top: 8px;
@@ -4431,8 +4440,18 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         right: 0;
         bottom: 0;
         width: 645;
+        @media (max-width: 600px) {
+            width: 100%;
+        }
         height: 170px;
         background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.719));
+    }
+    .image-slider-item {
+        div {
+            @media (max-width: 600px) {
+                width: 100% !important;
+            }
+        }
     }
 }
 .ant-btn.ant-btn-rtl.ant-dropdown-trigger {
@@ -4442,5 +4461,47 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         .fa {
             font-size: 26px;
         }
+    }
+}
+.ProseMirror {
+    padding: 20px;
+    min-height: 190px;
+    outline: none;
+    border: 1px solid #f3f3f3;
+    border-radius: 7px;
+    transition: all 0.3s;
+    &:focus {
+        overflow: none;
+        transition: all 0.3s;
+        border: 1px solid #ddd;
+    }
+}
+.menubar {
+    display: flex;
+    button {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        background-color: #f6f6f6;
+        border: 1px solid #f1f1f1;
+        align-items: center;
+        justify-content: center;
+        color: #444;
+        .material-icons {
+            font-size: 17px;
+        }
+        &:hover {
+            color: #000;
+            background-color: #f1f1f1;
+        }
+        &.is-active {
+            color: rgb(255, 255, 255);
+            background-color: $primary;
+        }
+    }
+}
+.slick-dots {
+    @media (max-width: 600px) {
+        left: 200px;
     }
 }

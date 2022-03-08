@@ -2636,6 +2636,13 @@ h3 {
   overflow: hidden;
 }
 
+@media (max-width: 580px) {
+  .timwoork-nanny-home {
+    overflow: visible;
+    padding: 120px 10px;
+  }
+}
+
 .timwoork-nanny-home .d-flex {
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -2650,12 +2657,22 @@ h3 {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 
 .timwoork-nanny-home .nanny-home-image {
   width: 50%;
   overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .timwoork-nanny-home .nanny-home-image {
+    margin-left: -50px;
+    margin-right: -50px;
+  }
 }
 
 .timwoork-nanny-home .nanny-home-image img {
@@ -7310,12 +7327,84 @@ h3 {
 }
 
 @media (max-width: 600px) {
+  .images-slidshow::after {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .images-slidshow .image-slider-item div {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 600px) {
   .ant-btn.ant-btn-rtl.ant-dropdown-trigger {
     width: 60px !important;
     height: 60px !important;
   }
   .ant-btn.ant-btn-rtl.ant-dropdown-trigger .fa {
     font-size: 26px;
+  }
+}
+
+.ProseMirror {
+  padding: 20px;
+  min-height: 190px;
+  outline: none;
+  border: 1px solid #f3f3f3;
+  border-radius: 7px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.ProseMirror:focus {
+  overflow: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 1px solid #ddd;
+}
+
+.menubar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.menubar button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  background-color: #f6f6f6;
+  border: 1px solid #f1f1f1;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #444;
+}
+
+.menubar button .material-icons {
+  font-size: 17px;
+}
+
+.menubar button:hover {
+  color: #000;
+  background-color: #f1f1f1;
+}
+
+.menubar button.is-active {
+  color: white;
+  background-color: #475C80;
+}
+
+@media (max-width: 600px) {
+  .slick-dots {
+    left: 200px;
   }
 }
 /*# sourceMappingURL=app-rtl.css.map */
