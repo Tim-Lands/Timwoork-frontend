@@ -7488,13 +7488,14 @@ h3 {
 }
 
 .main-category-item:hover {
-  border: 1px dashed #888;
+  border: 1px dashed #475C80;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+  padding: 10px;
 }
 
 .main-category-item:hover .main-category-item-icon .material-icons {
-  color: #222;
+  color: #475C80;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
@@ -7533,5 +7534,30 @@ h3 {
   background-color: #fff;
   border-radius: 7px;
   height: 18px;
+}
+
+.withdrawal-select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 15px;
+}
+
+.withdrawal-select .title {
+  margin: 0;
+  font-weight: bold;
+  color: #555;
+  font-size: 16px;
+  width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.withdrawal-select .select {
+  width: calc(100% - 200px);
 }
 /*# sourceMappingURL=app-rtl.css.map */
