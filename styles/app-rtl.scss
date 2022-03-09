@@ -3949,6 +3949,13 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             color: lighten($primary, 5);
         }
     }
+    &.green-fill {
+        border-color: lighten(#0d8832, 42);
+        background-color: lighten(#0d8832, 60);
+        .text {
+            color: lighten(#0d8832, 5);
+        }
+    }
 }
 
 .order-uploader-files {
@@ -4545,6 +4552,7 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             font-size: 50px;
             transition: all 0.3s;
             color: #999;
+            cursor: default;
         }
     }
     .main-category-item-title {
@@ -4554,6 +4562,7 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             margin: 0;
             transition: all 0.3s;
             color: #555;
+            cursor: default;
         }
     }
     &:hover {

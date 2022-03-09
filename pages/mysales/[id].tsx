@@ -922,7 +922,7 @@ const User = ({ query }) => {
                                                     {ShowItem && ShowItem.data.status == 6 && <div className="box-note primary">
                                                         <p className="text">هذه العملية قيد الإستلام</p>
                                                     </div>}
-                                                    {ShowItem && ShowItem.data.status == 7 && <div className="box-note primary-fill">
+                                                    {ShowItem && ShowItem.data.status == 7 && <div className="box-note green-fill">
                                                         <p className="text"><strong>هذه العملية مكتملة</strong></p>
                                                     </div>}
                                                     {ShowItem && ShowItem.data.status == 8 &&

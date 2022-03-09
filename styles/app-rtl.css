@@ -6739,6 +6739,15 @@ h3 {
   color: #506890;
 }
 
+.box-note.green-fill {
+  border-color: #79f29d;
+  background-color: #cdfada;
+}
+
+.box-note.green-fill .text {
+  color: #0f9f3b;
+}
+
 .order-uploader-files {
   overflow: hidden;
   padding: 10px;
@@ -7465,6 +7474,7 @@ h3 {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   color: #999;
+  cursor: default;
 }
 
 .main-category-item .main-category-item-title .title {
@@ -7474,6 +7484,7 @@ h3 {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   color: #555;
+  cursor: default;
 }
 
 .main-category-item:hover {

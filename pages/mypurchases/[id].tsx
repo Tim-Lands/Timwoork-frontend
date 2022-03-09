@@ -732,7 +732,7 @@ const Order = ({ query }) => {
                                                     className="btn butt-md butt-primary2 mx-1 flex-center-just"
                                                 ><span className="material-icons material-icons-outlined">edit</span> طلب تعديل </button>
                                             </>}
-                                            {ShowItem && ShowItem.data.status == 7 && <span className='badge bg-green text-light'>مكتملة</span>}
+                                            {ShowItem && ShowItem.data.status == 7 && <span className='badge bg-success text-light'>مكتملة</span>}
                                             {ShowItem && ShowItem.data.status == 8 && <>
                                                 <p className="note-text">
                                                     لقد تم رفض طلبك الإلغاء من طرف البائع

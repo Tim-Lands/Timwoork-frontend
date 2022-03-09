@@ -144,20 +144,20 @@ function index() {
                                                 <table className="table">
                                                     <thead>
                                                         <tr>
+                                                            <th>المبلغ</th>
                                                             <th>عنوان العملية</th>
                                                             <th>نوع العملية</th>
-                                                            <th>المبلغ</th>
                                                             <th>التاريخ</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         {userInfo && userInfo.user_details.profile.wallet.activities.map((e: any) => (
                                                             <tr key={e.id}>
+                                                                <td>{switchType(e.status, e.amount)}</td>
                                                                 <td className='is-hover-primary'>
                                                                     {switchTitle(e.status)}
                                                                 </td>
                                                                 <td>{e.payload.payment_method}</td>
-                                                                <td>{switchType(e.status, e.amount)}</td>
                                                                 <td>
                                                                     <LastSeen date={e.created_at} />
                                                                 </td>
