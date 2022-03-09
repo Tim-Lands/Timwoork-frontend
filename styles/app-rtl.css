@@ -7476,7 +7476,7 @@ h3 {
 }
 
 .main-category-item:hover {
-  border: 1px dashed #ccc;
+  border: 1px dashed #888;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
