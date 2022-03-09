@@ -1,14 +1,10 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import { useFormik } from 'formik';
-import { message } from 'antd';
-import { motion } from 'framer-motion';
 import router from 'next/router';
 import Cookies from 'js-cookie'
-import API from "../../config";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import Link from 'next/link'
 import BankAccount from '@/components/Withdrawal/BankAccount';
 import MoneyAccount from '@/components/Withdrawal/MoneyAccount';
 import Paypal from '@/components/Withdrawal/Paypal';

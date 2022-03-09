@@ -91,5 +91,5 @@ Wise.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Wise
 Wise.propTypes = {
-    query: PropTypes.any,
+    token: PropTypes.any,
 };

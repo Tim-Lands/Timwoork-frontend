@@ -14,7 +14,7 @@ function Thumb(props: any) {
         if (!props.file) { return; }
 
         setLoading(true);
-        let reader = new FileReader();
+        const reader = new FileReader();
 
         reader.onloadend = () => {
             setThumb(reader.result);
@@ -381,5 +381,5 @@ MoneyAccount.getLayout = function getLayout(page: any): ReactElement {
 }
 export default MoneyAccount
 MoneyAccount.propTypes = {
-    query: PropTypes.any,
+    token: PropTypes.any,
 };

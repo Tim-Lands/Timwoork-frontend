@@ -91,5 +91,5 @@ Paypal.getLayout = function getLayout(page: any): ReactElement {
 }
 export default Paypal
 Paypal.propTypes = {
-    query: PropTypes.any,
+    token: PropTypes.any,
 };
