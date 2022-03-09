@@ -60,13 +60,6 @@ function Navbar(): ReactElement {
                                 </small>
                                 <Link href={`/u/${data.message.user.username}`}>
                                     <a style={{ color: '#666', fontWeight: 300, }}>
-                                        <ImageLogo
-                                            width={20}
-                                            height={20}
-                                            className="rounded-circle mx-1"
-                                            src={data.message.user.profile.avatar_url}
-                                            alt={data.message.user.profile.full_name}
-                                        />
                                         {/*<span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
                                         </span>*/}
@@ -90,13 +83,6 @@ function Navbar(): ReactElement {
                                 </small>
                                 <Link href={`/u/${data.message.user.username}`}>
                                     <a style={{ color: '#666', fontWeight: 300, }}>
-                                        <ImageLogo
-                                            width={20}
-                                            height={20}
-                                            className="rounded-circle mx-1"
-                                            src={data.message.user.profile.avatar_url}
-                                            alt={data.message.user.profile.full_name}
-                                        />
                                         <span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
                                         </span>
@@ -120,13 +106,6 @@ function Navbar(): ReactElement {
                                 </small>
                                 <Link href={`/u/${data.message.user.username}`}>
                                     <a style={{ color: '#666', fontWeight: 300, }}>
-                                        <ImageLogo
-                                            width={20}
-                                            height={20}
-                                            className="rounded-circle mx-1"
-                                            src={data.message.user.profile.avatar_url}
-                                            alt={data.message.user.profile.full_name}
-                                        />
                                         <span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
                                         </span>
@@ -163,13 +142,6 @@ function Navbar(): ReactElement {
                             </small>
                             <Link href={`/u/${data.user_sender.username}`}>
                                 <a style={{ color: '#666', fontWeight: 300, }}>
-                                    <ImageLogo
-                                        width={20}
-                                        height={20}
-                                        className="rounded-circle mx-1"
-                                        src={data.user_sender.avatar_url}
-                                        alt={data.user_sender.full_name}
-                                    />
                                     <span style={{ color: '#666', fontWeight: 300, }}>
                                         {data.user_sender.full_name}
                                     </span>
@@ -374,8 +346,8 @@ function Navbar(): ReactElement {
                                     </Link>
                                 </div>
                                 <Menus darkMode={darkMode} />
-                                    {isMenuShowenMob && <MenusMobile darkMode={darkMode} />}
-                                
+                                {isMenuShowenMob && <MenusMobile darkMode={darkMode} />}
+
                             </div>
                         </div>
                         <ul className="nav nav-auth ml-auto" style={{

@@ -58,6 +58,9 @@ function Medias({ query, stars }) {
     const [galariesLoading, seGalariesLoading] = useState(false);
     const [featuredLoading, seFeaturedLoading] = useState(false);
 
+    const [galariesSuccess, seGalariesSuccess] = useState(false);
+    const [featuredSuccess, seFeaturedSuccess] = useState(false);
+
     const maxNumber = 5;
 
     const onChange = (imageList) => {
@@ -72,6 +75,7 @@ function Medias({ query, stars }) {
     const uploadGalleryHandle = async (e) => {
         e.preventDefault();
         seGalariesLoading(true)
+        seGalariesSuccess(false)
         const galleries = new FormData();
         images.map((e: any) => (
             galleries.append('images[]', e.file)
@@ -93,14 +97,17 @@ function Medias({ query, stars }) {
                         'لقد تم رفع الصور بنجاح',
                 });
                 seGalariesLoading(false)
+                seGalariesSuccess(true)
             }
         } catch (error) {
             seGalariesLoading(false)
+            seGalariesSuccess(false)
         }
     };
     const uploadFeaturedHandle = async (e) => {
         e.preventDefault();
         seFeaturedLoading(true)
+        seFeaturedSuccess(false)
         const imageFeature = new FormData();
         featuredImages.map((e: any) => (
             imageFeature.append('thumbnail', e.file)
@@ -122,9 +129,11 @@ function Medias({ query, stars }) {
                         'لقد تم رفع الصور بنجاح',
                 });
                 seFeaturedLoading(false)
+                seFeaturedSuccess(true)
             }
         } catch (error) {
             seFeaturedLoading(false)
+            seFeaturedSuccess(false)
         }
     };
     const [url_video, setVideourl] = useState('')
@@ -293,9 +302,13 @@ function Medias({ query, stars }) {
                                                                             </div>
                                                                         </div>
                                                                     ))}
-
                                                                     <hr />
-                                                                    <button type='button' disabled={featuredLoading} className='btn butt-lg butt-primary' onClick={uploadFeaturedHandle}>رفع الصورة الآن</button>
+                                                                    <button
+                                                                        type='button'
+                                                                        disabled={featuredLoading || (galariesSuccess && featuredSuccess)}
+                                                                        className='btn butt-lg butt-primary'
+                                                                        onClick={uploadFeaturedHandle}
+                                                                    >رفع الصورة الآن</button>
                                                                 </div>
                                                             </Spin>
                                                         )}

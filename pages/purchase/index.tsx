@@ -258,7 +258,7 @@ function Bill() {
                                                             <p className='purchase-text'>أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك</p>
                                                             <button onClick={chargeWallet} disabled={isWalletLoading} className='btn butt-lg butt-green flex-center-just'>
                                                                 {isWalletLoading && <span className="spinner-border spinner-border-md" role="status"></span>}
-                                                                {!isWalletLoading && <><img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.price_with_tax}</span>)</>}
+                                                                {!isWalletLoading && <><img src={'/logo2.png'} width={15} height={17} /> شراء الآن (<span className="">${cartList && cartList.data.total_price}</span>)</>}
                                                             </button>
                                                         </div>
                                                     </motion.div>
