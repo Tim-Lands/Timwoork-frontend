@@ -7451,6 +7451,7 @@ h3 {
           flex-direction: column;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+  cursor: default;
 }
 
 @media (max-width: 600px) {

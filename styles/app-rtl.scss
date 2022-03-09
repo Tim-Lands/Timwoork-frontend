@@ -4536,6 +4536,7 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     align-items: center;
     flex-direction: column;
     transition: all 0.3s;
+    cursor: default;
     @media (max-width: 600px) {
         margin: 7px 0;
     }
