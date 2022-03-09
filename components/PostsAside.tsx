@@ -28,7 +28,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                 <div className="posts-aside-body">
                     <div className="loading-container">
                         <div className="row">
-                            <div className={"col-md-" + (colNumber || 3)}>
+                            <div className={"col-sm-6 col-lg-" + (colNumber || 3)}>
                                 <div className="loading-container-item">
                                     <div className="container-item-img"></div>
                                     <div className="container-item-title"></div>
@@ -36,7 +36,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                                     <div className="container-item-meta"></div>
                                 </div>
                             </div>
-                            <div className={"col-md-" + (colNumber || 3)}>
+                            <div className={"col-sm-6 col-lg-" + (colNumber || 3)}>
                                 <div className="loading-container-item">
                                     <div className="container-item-img"></div>
                                     <div className="container-item-title"></div>
@@ -44,7 +44,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                                     <div className="container-item-meta"></div>
                                 </div>
                             </div>
-                            <div className={"col-md-" + (colNumber || 3)}>
+                            <div className={"col-sm-6 col-lg-" + (colNumber || 3)}>
                                 <div className="loading-container-item">
                                     <div className="container-item-img"></div>
                                     <div className="container-item-title"></div>
@@ -52,7 +52,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                                     <div className="container-item-meta"></div>
                                 </div>
                             </div>
-                            <div className={"col-md-" + (colNumber || 3)}>
+                            <div className={"col-sm-6 col-lg-" + (colNumber || 3)}>
                                 <div className="loading-container-item">
                                     <div className="container-item-img"></div>
                                     <div className="container-item-title"></div>
@@ -76,7 +76,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                 <div className="posts-aside-body">
                     <div className="row">
                         {PostData.map((e: any) => (
-                            <div key={e.id} className={"col-md-" + (colNumber || 3)}>
+                            <div key={e.id} className={"col-sm-6 col-lg-" + (colNumber || 3)}>
                                 <Post
                                     size="small"
                                     title={e.title}

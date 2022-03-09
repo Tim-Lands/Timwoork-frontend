@@ -2437,6 +2437,7 @@ h3 {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  padding: 43px 0;
 }
 
 @media (max-width: 580px) {

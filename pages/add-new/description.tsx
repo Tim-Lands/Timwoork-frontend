@@ -244,7 +244,6 @@ function Description({ query, stars }) {
                                         </div>
 
                                         <div className="timlands-content-form">
-
                                             <div className="row">
                                                 <div className="col-md-12">
                                                     <div className="timlands-form">

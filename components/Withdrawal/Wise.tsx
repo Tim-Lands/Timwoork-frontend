@@ -18,11 +18,9 @@ function Wise({ token }) {
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async values => {
-            console.log(values);
-            return
+            setValidationsErrors({})
             try {
-                setValidationsErrors({})
-                const res = await API.post(`api/product/product-step-one`, values, {
+                const res = await API.post(`api/withdrawals/wise`, values, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -49,10 +47,10 @@ function Wise({ token }) {
                     <div className="row">
                         <div className="col-md-7">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-title">البريد الإلكتروني</label>
+                                <label className="label-block" htmlFor="input-email">البريد الإلكتروني</label>
                                 <input
-                                    id="input-title"
-                                    name="title"
+                                    id="input-email"
+                                    name="email"
                                     placeholder="البريد الإلكتروني..."
                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.email && ' has-error')}
                                     autoComplete="off"

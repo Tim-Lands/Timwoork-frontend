@@ -90,10 +90,10 @@ function BankAccount({ token }) {
                     <div className="row">
                         <div className="col-md-7">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-title">الاسم الكامل</label>
+                                <label className="label-block" htmlFor="input-full_name">الاسم الكامل</label>
                                 <input
-                                    id="input-title"
-                                    name="title"
+                                    id="input-full_name"
+                                    name="full_name"
                                     placeholder="الاسم الكامل..."
                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.full_name && ' has-error')}
                                     autoComplete="off"
@@ -111,10 +111,10 @@ function BankAccount({ token }) {
                         </div>
                         <div className="col-md-5">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-catetory">اختر البلد</label>
+                                <label className="label-block" htmlFor="input-country_id">اختر البلد</label>
                                 <select
-                                    id="input-catetory"
-                                    name="catetory"
+                                    id="input-country_id"
+                                    name="country_id"
                                     className={"timlands-inputs select " + (validationsErrors && validationsErrors.country_id && ' has-error')}
                                     autoComplete="off"
                                     onChange={formik.handleChange}

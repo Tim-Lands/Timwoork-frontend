@@ -153,6 +153,7 @@ function Single({ query, stars, errorFetch }) {
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     if (!veriedEmail) {
       router.push('/email/verification')
+      return
     }
     if (token) {
       setIsLoadingCart(true)
@@ -289,7 +290,7 @@ function Single({ query, stars, errorFetch }) {
       {!ProductData && <Loading />}
       {errorLoad && <NotFound />}
       {!errorFetch && <MetaTags
-        title={stars.data.title + ' - تيموورك'}
+        title={stars.data.title}
         metaDescription={stars.data.content}
         ogDescription={stars.data.content}
         ogImage={stars.data.full_path_thumbnail}
