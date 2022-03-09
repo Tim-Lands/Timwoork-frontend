@@ -10,6 +10,7 @@ import Image from 'next/image'
 import { Menu, Dropdown, Button } from 'antd';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
+import Categories from "@/components/Categories";
 
 const slideImages = [
   {
@@ -76,6 +77,7 @@ function Home() {
         ogDescription={"الصفحة الرئيسية"}
       />
       <Hero />
+      <Categories />
       <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">

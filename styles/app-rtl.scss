@@ -4525,3 +4525,51 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         color: #fff;
     }
 }
+.main-category-item {
+    border: 1px dashed #ddd;
+    padding: 20px;
+    padding-top: 35px;
+    text-align: center;
+    border-radius: 7px;
+    margin: 7px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.3s;
+    @media (max-width: 600px) {
+        margin: 7px 0;
+    }
+    .main-category-item-icon {
+        .material-icons {
+            font-size: 50px;
+            transition: all 0.3s;
+            color: #999;
+        }
+    }
+    .main-category-item-title {
+        .title {
+            font-size: 18px;
+            font-weight: 200;
+            margin: 0;
+            transition: all 0.3s;
+            color: #555;
+        }
+    }
+    &:hover {
+        border: 1px dashed #ccc;
+        transition: all 0.3s;
+        .main-category-item-icon {
+            .material-icons {
+                color: #222;
+                transition: all 0.3s;
+            }
+        }
+        .main-category-item-title {
+            .title {
+                color: #000;
+                transition: all 0.3s;
+            }
+        }
+    }
+}
