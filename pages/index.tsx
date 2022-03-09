@@ -1,54 +1,54 @@
-import Link from "next/link";
+//import Link from "next/link";
 import Layout from '../components/Layout/HomeLayout'
 import { ReactElement } from "react";
 import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import Image from 'next/image'
+//import Image from 'next/image'
 //import SupportEngine from '@/components/SupportChat/SupportEngine';
 import { Menu, Dropdown, Button } from 'antd';
-import { Slide } from 'react-slideshow-image';
+//import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import Categories from "@/components/Categories";
 
-const slideImages = [
-  {
-    id: 1,
-    path: '/1.png'
-  },
-  {
-    id: 2,
-    path: '/2.png'
-  },
-  {
-    id: 3,
-    path: '/3.png'
-  },
-  {
-    id: 4,
-    path: '/4.png'
-  },
-  {
-    id: 5,
-    path: '/5.png'
-  },
-  {
-    id: 6,
-    path: '/6.png'
-  },
-  {
-    id: 7,
-    path: '/7.png'
-  },
-];
-const properties = {
-  duration: 5000,
-  transitionDuration: 500,
-  infinite: true,
-  prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
-  nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
-}
+// const slideImages = [
+//   {
+//     id: 1,
+//     path: '/1.png'
+//   },
+//   {
+//     id: 2,
+//     path: '/2.png'
+//   },
+//   {
+//     id: 3,
+//     path: '/3.png'
+//   },
+//   {
+//     id: 4,
+//     path: '/4.png'
+//   },
+//   {
+//     id: 5,
+//     path: '/5.png'
+//   },
+//   {
+//     id: 6,
+//     path: '/6.png'
+//   },
+//   {
+//     id: 7,
+//     path: '/7.png'
+//   },
+// ];
+// const properties = {
+//   duration: 5000,
+//   transitionDuration: 500,
+//   infinite: true,
+//   prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
+//   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
+// }
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
@@ -78,7 +78,7 @@ function Home() {
       />
       <Hero />
       <Categories />
-      <div className="timwoork-nanny-home">
+      {/* <div className="timwoork-nanny-home">
         <div className="d-flex">
           <div className="nanny-home-image">
             <Slide {...properties}>
@@ -108,7 +108,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {products && popularProducts && latestProducts && products.data.length !== 0 && popularProducts.data.length !== 0 && latestProducts.data.length !== 0 &&
         <div className="container">
