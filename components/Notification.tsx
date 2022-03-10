@@ -14,9 +14,14 @@ function Notification({ title, avatar, created_at, product_title, to, type, item
                     return `/mypurchases/${item_id}`
                 }
                 break
+            case 'rating':
+                return `/p/${item_id}`
+
+            case 'system':
+                return ``
+
             default:
                 return `/mysales/${item_id}`
-
         }
     }
     return (
