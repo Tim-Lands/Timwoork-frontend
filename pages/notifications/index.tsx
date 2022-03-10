@@ -12,6 +12,7 @@ function index() {
     const token = Cookies.get('token')
     const { data: notifications }: any = useSWR(`api/notifications`)
     //const notifications = userInfo && userInfo.user_details.unread_notifications
+
     async function markAllRead() {
         try {
             await API.post(`api/notifications/markAllAsRead`, {}, {
