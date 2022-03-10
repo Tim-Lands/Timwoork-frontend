@@ -62,6 +62,7 @@ function index() {
                                         avatar={e.data.user_sender.avatar_url}
                                         created_at={e.created_at}
                                         product_title={e.data.content.title}
+                                        slug={e.data.content.slug}
                                     />
                                 ))}
                             </div>

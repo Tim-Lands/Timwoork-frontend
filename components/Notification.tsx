@@ -3,7 +3,7 @@ import Link from 'next/link'
 import PropTypes from "prop-types";
 import LastSeen from './LastSeen';
 
-function Notification({ title, avatar, created_at, product_title, to, type, item_id }): ReactElement {
+function Notification({ title, avatar, created_at, product_title, to, type, item_id, slug }): ReactElement {
     function switchNotifyType() {
         switch (type) {
             case 'order':
@@ -15,7 +15,7 @@ function Notification({ title, avatar, created_at, product_title, to, type, item
                 }
                 break
             case 'rating':
-                return `/p/${item_id}`
+                return `/p/${slug}`
 
             case 'system':
                 return ``
@@ -48,5 +48,6 @@ Notification.propTypes = {
     product_title: PropTypes.string,
     type: PropTypes.string,
     to: PropTypes.string,
+    slug: PropTypes.string,
     item_id: PropTypes.any
 };
