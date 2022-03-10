@@ -16,9 +16,8 @@ function MoneyAccount({ token }) {
     }
     const formik = useFormik({
         initialValues: {
-            first_name: '',
+            full_name: '',
             amount: '',
-            last_name: '',
             wise_country_id: '',
             bank_swift: '',
             bank_iban: '',
@@ -98,45 +97,23 @@ function MoneyAccount({ token }) {
                             </div>
                             <hr />
                         </div>
-
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-first_name">الاسم الأول</label>
+                                <label className="label-block" htmlFor="input-full_name">الاسم الكامل</label>
                                 <input
-                                    id="input-first_name"
-                                    name="first_name"
-                                    placeholder="الاسم الأول..."
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.first_name && ' has-error')}
+                                    id="input-full_name"
+                                    name="full_name"
+                                    placeholder="الاسم الكامل..."
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.full_name && ' has-error')}
                                     autoComplete="off"
                                     onKeyUp={clearValidationHandle}
                                     onChange={formik.handleChange}
-                                    value={formik.values.first_name}
+                                    value={formik.values.full_name}
                                 />
-                                {validationsErrors && validationsErrors.first_name &&
+                                {validationsErrors && validationsErrors.full_name &&
                                     <div style={{ overflow: 'hidden' }}>
                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.first_name[0]}</p>
-                                        </motion.div>
-                                    </div>}
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-last_name">الاسم الأخير</label>
-                                <input
-                                    id="input-last_name"
-                                    name="last_name"
-                                    placeholder="الاسم الأخير..."
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.last_name && ' has-error')}
-                                    autoComplete="off"
-                                    onKeyUp={clearValidationHandle}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.last_name}
-                                />
-                                {validationsErrors && validationsErrors.last_name &&
-                                    <div style={{ overflow: 'hidden' }}>
-                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.last_name[0]}</p>
+                                            <p className="text">{validationsErrors.full_name[0]}</p>
                                         </motion.div>
                                     </div>}
                             </div>
