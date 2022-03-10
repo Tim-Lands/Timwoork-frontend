@@ -52,24 +52,21 @@ function MoneyAccount({ token }) {
 
         }
     });
-    const noteContent = (
-        <div>
-            <ul>
-                <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
-                <li>من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة </li>
-                <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
-            </ul>
-        </div>
-    );
+    // const noteContent = (
+    //     <div>
+    //         <ul>
+    //             <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
+    //             <li>من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة </li>
+    //             <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
+    //         </ul>
+    //     </div>
+    // );
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
                 <div className="page-header">
                     <h4 className="title">
                         الحساب البنكي
-                        <Popover content={noteContent} trigger="hover">
-                            <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 29 }} className='material-icons'>info</span>} />
-                        </Popover>
                     </h4>
                 </div>
                 <div className="timlands-content-form">
@@ -248,7 +245,7 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-state">المحافظة/الولاية</label>
                                 <input
@@ -269,7 +266,7 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-city">المدينة/البلدية</label>
                                 <input
@@ -290,7 +287,7 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-8">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-bank_adress_line_one">العنوان الشخصي</label>
                                 <input
@@ -311,7 +308,7 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-4">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-code_postal">الرمز البريدي</label>
                                 <input
