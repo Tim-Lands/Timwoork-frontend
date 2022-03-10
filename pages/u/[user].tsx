@@ -21,11 +21,11 @@ const User = ({ query, stars }) => {
     return (
         <div className="py-3 mt-3">
             <MetaTags
-                title={stars.profile.full_name}
-                metaDescription={stars.profile.profile_seller.bio}
-                ogDescription={stars.profile.profile_seller.bio}
-                ogImage={stars.profile.avatar_url}
-                ogUrl={`https://timwoork.com/u/${stars.username}`}
+                title={stars.data.profile.full_name}
+                metaDescription={stars.data.profile.profile_seller && stars.data.profile.profile_seller.bio}
+                ogDescription={stars.data.profile.profile_seller && stars.data.profile.profile_seller.bio}
+                ogImage={stars.data.profile.avatar_url}
+                ogUrl={`https://timwoork.com/u/${stars.data.username}`}
             />
             {!userInfo && <Loading />}
             {userInfo && User.profile && <>
@@ -142,7 +142,7 @@ User.getLayout = function getLayout(page: any): ReactElement {
 }
 export async function getServerSideProps({ query }) {
     try {
-        const uriString = encodeURI(`api/product/${query.product}`)
+        const uriString = encodeURI(`api/profiles/${query.user}`)
         // Fetch data from external API
         const res = await API.get(uriString)
 
