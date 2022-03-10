@@ -5,7 +5,7 @@ import { ReactElement, useEffect } from "react";
 import useSWR from 'swr';
 import Cookies from 'js-cookie'
 import router from 'next/router';
-import API from '../../config'
+//import API from '../../config'
 import { Result } from 'antd';
 import { MetaTags } from '@/components/SEO/MetaTags';
 function index() {
@@ -13,23 +13,23 @@ function index() {
     const { data: notifications }: any = useSWR(`api/notifications`)
     //const notifications = userInfo && userInfo.user_details.unread_notifications
 
-    async function markAllRead() {
-        try {
-            await API.post(`api/notifications/markAllAsRead`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-        } catch (error) {
-            console.log('error');
-        }
-    }
+    // async function markAllRead() {
+    //     try {
+    //         await API.post(`api/notifications/markAllAsRead`, {}, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`
+    //             }
+    //         })
+    //     } catch (error) {
+    //         console.log('error');
+    //     }
+    // }
     useEffect(() => {
         if (!token) {
             router.push('/login')
             return
         }
-        markAllRead()
+        //markAllRead()
     }, [])
     
     return (
