@@ -149,7 +149,6 @@ function index() {
                                                         <tr>
                                                             <th>المبلغ</th>
                                                             <th>عنوان العملية</th>
-                                                            <th>نوع العملية</th>
                                                             <th>التاريخ</th>
                                                         </tr>
                                                     </thead>
@@ -160,7 +159,6 @@ function index() {
                                                                 <td className='is-hover-primary'>
                                                                     {switchTitle(e.status)}
                                                                 </td>
-                                                                <td>{e.payload.payment_method}</td>
                                                                 <td>
                                                                     <LastSeen date={e.created_at} />
                                                                 </td>

@@ -70,6 +70,7 @@ function Post({
 
         const x: number = 5
         const y: number = x - Number(rate)
+        
         const yut: any = xAr.slice(y)
         if (y == 0) {
             return yut
@@ -121,7 +122,7 @@ Post.propTypes = {
     slug: PropTypes.string,
     size: PropTypes.string,
     username: PropTypes.string,
-    rate: PropTypes.number,
+    rate: PropTypes.any,
     buyers: PropTypes.number,
     price: PropTypes.number,
     product: PropTypes.any

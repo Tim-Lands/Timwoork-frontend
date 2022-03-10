@@ -5,7 +5,6 @@ import { ReactElement, useEffect, useState } from "react";
 import API from '../../config'
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
-//import { useTranslation } from "react-i18next";
 import useSWR, { mutate } from "swr";
 import Loading from '@/components/Loading'
 import { Dropdown, message, Spin, Menu, notification, Modal, Badge, Typography, Popover } from 'antd'
