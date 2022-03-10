@@ -144,6 +144,13 @@
   border-radius: 4px;
 }
 
+.timlands-inputs.lg {
+  padding: 12px 18px !important;
+  font-size: 15px !important;
+  margin-top: 3px;
+  border-radius: 6px;
+}
+
 .timlands-inputs.has-error {
   border: 1px solid #fd9797;
 }
@@ -162,6 +169,10 @@
 
 .label-block.sm {
   font-size: 12px !important;
+}
+
+.label-block.lg {
+  font-size: 17px !important;
 }
 
 .timlands-form {

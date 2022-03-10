@@ -3,7 +3,7 @@ import { ReactElement, useEffect } from "react";
 import { useFormik } from 'formik';
 import router from 'next/router';
 import Cookies from 'js-cookie'
-import useSWR from 'swr'
+//import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 //import BankAccount from '@/components/Withdrawal/BankAccount';
 import MoneyAccount from '@/components/Withdrawal/MoneyAccount';
@@ -13,11 +13,11 @@ import Wise from '@/components/Withdrawal/Wise';
 function index() {
     const token = Cookies.get('token')
 
-    const { data: userInfo }: any = useSWR('api/me')
-    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    //const { data: userInfo }: any = useSWR('api/me')
+    //const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const formik = useFormik({
         initialValues: {
-            withdrawal_type: 0,
+            withdrawal_type: 1,
         },
         onSubmit: async values => {
             console.log(values);
@@ -25,10 +25,6 @@ function index() {
         }
     });
     useEffect(() => {
-        if (!veriedEmail) {
-            router.push('/email/verification')
-            return
-        }
         if (!token) {
             router.push('/login')
             return

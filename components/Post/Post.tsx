@@ -69,7 +69,7 @@ function Post({
         ]
 
         const x: number = 5
-        const y: number = x - Number(rate)
+        const y: any = Number(x - Number(rate)).toPrecision(1)
         
         const yut: any = xAr.slice(y)
         if (y == 0) {
