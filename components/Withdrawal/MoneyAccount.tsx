@@ -1,6 +1,7 @@
 import Layout from '../../components/Layout/HomeLayout'
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { useFormik } from 'formik';
+
 import { message } from 'antd';
 import { motion } from 'framer-motion';
 import API from "../../config";
