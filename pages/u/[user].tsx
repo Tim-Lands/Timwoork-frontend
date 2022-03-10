@@ -23,11 +23,11 @@ const User = ({ query, stars }) => {
             {!userInfo && <Loading />}
             {userInfo && User.profile && <>
                 <MetaTags
-                    title={stars.profile.full_name}
-                    metaDescription={stars.profile.profile_seller.bio}
-                    ogDescription={stars.profile.profile_seller.bio}
-                    ogImage={stars.profile.avatar_url}
-                    ogUrl={`https://timwoork.com/u/${stars.username}`}
+                    title={stars && stars.profile.full_name}
+                    metaDescription={stars && stars.profile.profile_seller.bio}
+                    ogDescription={stars && stars.profile.profile_seller.bio}
+                    ogImage={stars && stars.profile.avatar_url}
+                    ogUrl={`https://timwoork.com/u/${stars && stars.username}`}
                 />
                 <div className="container">
                     <div className={'row justify-content-md-center'}>
