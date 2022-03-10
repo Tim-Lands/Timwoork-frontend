@@ -7,36 +7,6 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
 
-function Thumb(props: any) {
-    const [loading, setLoading] = useState(false)
-    const [thumb, setThumb] = useState(undefined)
-    useEffect(() => {
-        if (!props.file) { return; }
-
-        setLoading(true);
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setThumb(reader.result);
-            setLoading(false);
-        };
-
-        reader.readAsDataURL(props.file);
-
-    }, [props.file])
-
-    if (!props.file) { return null; }
-
-    if (loading) { return <p>loading...</p>; }
-    return (
-        <img src={thumb}
-            alt={props.file.name}
-            className="img-thumbnail mt-2"
-            height={200}
-            width={200} />
-    )
-}
-
 function MoneyAccount({ token }) {
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -53,21 +23,18 @@ function MoneyAccount({ token }) {
             city: '',
             state: '',
             bank_name: '',
-            country_code_phone: '',
             phone_number_without_code: '',
-            address_line_one: '',
+            bank_adress_line_one: '',
             code_postal: '',
-            id_type: '',
-            attachments: '',
+            bank_number_account: '',
+            bank_branch: '',
         },
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async values => {
-            console.log(values);
-            return
             try {
                 setValidationsErrors({})
-                const res = await API.post(`api/product/product-step-one`, values, {
+                const res = await API.post(`api/withdrawals/bank`, values, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -197,7 +164,49 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
+                            <div className="timlands-form">
+                                <label className="label-block" htmlFor="input-bank_number_account">الحساب البنكي</label>
+                                <input
+                                    id="input-bank_number_account"
+                                    name="bank_number_account"
+                                    placeholder="الحساب البنكي..."
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.bank_number_account && ' has-error')}
+                                    autoComplete="off"
+                                    onKeyUp={clearValidationHandle}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.bank_number_account}
+                                />
+                                {validationsErrors && validationsErrors.bank_number_account &&
+                                    <div style={{ overflow: 'hidden' }}>
+                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                            <p className="text">{validationsErrors.bank_number_account[0]}</p>
+                                        </motion.div>
+                                    </div>}
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="timlands-form">
+                                <label className="label-block" htmlFor="input-bank_branch">الفرع البنكي</label>
+                                <input
+                                    id="input-bank_branch"
+                                    name="bank_branch"
+                                    placeholder="الفرع البنكي..."
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.bank_branch && ' has-error')}
+                                    autoComplete="off"
+                                    onKeyUp={clearValidationHandle}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.bank_branch}
+                                />
+                                {validationsErrors && validationsErrors.bank_branch &&
+                                    <div style={{ overflow: 'hidden' }}>
+                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                            <p className="text">{validationsErrors.bank_branch[0]}</p>
+                                        </motion.div>
+                                    </div>}
+                            </div>
+                        </div>
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-wise_country_id">اختر البلد</label>
                                 <select
@@ -245,21 +254,21 @@ function MoneyAccount({ token }) {
                         </div>
                         <div className="col-md-7">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-vile">المدينة/البلدية</label>
+                                <label className="label-block" htmlFor="input-city">المدينة/البلدية</label>
                                 <input
-                                    id="input-vile"
-                                    name="vile"
+                                    id="input-city"
+                                    name="city"
                                     placeholder="المدينة/البلدية"
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.state && ' has-error')}
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.city && ' has-error')}
                                     autoComplete="off"
                                     onKeyUp={clearValidationHandle}
                                     onChange={formik.handleChange}
-                                    value={formik.values.state}
+                                    value={formik.values.city}
                                 />
-                                {validationsErrors && validationsErrors.state &&
+                                {validationsErrors && validationsErrors.city &&
                                     <div style={{ overflow: 'hidden' }}>
                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.state[0]}</p>
+                                            <p className="text">{validationsErrors.city[0]}</p>
                                         </motion.div>
                                     </div>}
                             </div>
@@ -285,44 +294,23 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-6">
-                            <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-country_code_phone">رمز البلد</label>
-                                <input
-                                    id="input-country_code_phone"
-                                    name="country_code_phone"
-                                    placeholder="رمز البلد"
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.country_code_phone && ' has-error')}
-                                    autoComplete="off"
-                                    onKeyUp={clearValidationHandle}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.country_code_phone}
-                                />
-                                {validationsErrors && validationsErrors.country_code_phone &&
-                                    <div style={{ overflow: 'hidden' }}>
-                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.country_code_phone[0]}</p>
-                                        </motion.div>
-                                    </div>}
-                            </div>
-                        </div>
                         <div className="col-md-7">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-address_line_one">العنوان الشخصي</label>
+                                <label className="label-block" htmlFor="input-bank_adress_line_one">العنوان الشخصي</label>
                                 <input
-                                    id="input-address_line_one"
-                                    name="address_line_one"
+                                    id="input-bank_adress_line_one"
+                                    name="bank_adress_line_one"
                                     placeholder="العنوان الشخصي"
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.address_line_one && ' has-error')}
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.bank_adress_line_one && ' has-error')}
                                     autoComplete="off"
                                     onKeyUp={clearValidationHandle}
                                     onChange={formik.handleChange}
-                                    value={formik.values.address_line_one}
+                                    value={formik.values.bank_adress_line_one}
                                 />
-                                {validationsErrors && validationsErrors.address_line_one &&
+                                {validationsErrors && validationsErrors.bank_adress_line_one &&
                                     <div style={{ overflow: 'hidden' }}>
                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.address_line_one[0]}</p>
+                                            <p className="text">{validationsErrors.bank_adress_line_one[0]}</p>
                                         </motion.div>
                                     </div>}
                             </div>
@@ -346,15 +334,6 @@ function MoneyAccount({ token }) {
                                             <p className="text">{validationsErrors.code_postal[0]}</p>
                                         </motion.div>
                                     </div>}
-                            </div>
-                        </div>
-                        <div className="col-md-12">
-                            <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-code_postal">المرفقات</label>
-                                <input id="file" name="file" type="file" onChange={(event) => {
-                                    formik.setFieldValue("file", event.currentTarget.files[0]);
-                                }} className="form-control" />
-                                <Thumb file={formik.values.attachments} />
                             </div>
                         </div>
 

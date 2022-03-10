@@ -12,15 +12,12 @@ function Thumb(props: any) {
     const [thumb, setThumb] = useState(undefined)
     useEffect(() => {
         if (!props.file) { return; }
-
         setLoading(true);
         const reader = new FileReader();
-
         reader.onloadend = () => {
             setThumb(reader.result);
             setLoading(false);
         };
-
         reader.readAsDataURL(props.file);
 
     }, [props.file])
@@ -48,22 +45,20 @@ function BankAccount({ token }) {
             full_name: '',
             country_id: '',
             city: '',
+            id_type: 0,
             state: '',
             country_code_phone: '',
             phone_number_without_code: '',
             address_line_one: '',
             code_postal: '',
-            id_type: '',
-            attachments: '',
+            attachments: null,
         },
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async values => {
-            console.log(values);
-            return
             try {
                 setValidationsErrors({})
-                const res = await API.post(`api/product/product-step-one`, values, {
+                const res = await API.post(`api/withdrawals/bank_transfer`, values, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -157,26 +152,26 @@ function BankAccount({ token }) {
                         </div>
                         <div className="col-md-7">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-vile">المدينة/البلدية</label>
+                                <label className="label-block" htmlFor="input-city">المدينة/البلدية</label>
                                 <input
-                                    id="input-vile"
-                                    name="vile"
+                                    id="input-city"
+                                    name="city"
                                     placeholder="المدينة/البلدية"
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.state && ' has-error')}
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.city && ' has-error')}
                                     autoComplete="off"
                                     onKeyUp={clearValidationHandle}
                                     onChange={formik.handleChange}
-                                    value={formik.values.state}
+                                    value={formik.values.city}
                                 />
-                                {validationsErrors && validationsErrors.state &&
+                                {validationsErrors && validationsErrors.city &&
                                     <div style={{ overflow: 'hidden' }}>
                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.state[0]}</p>
+                                            <p className="text">{validationsErrors.city[0]}</p>
                                         </motion.div>
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-phone_number_without_code">رقم هاتف المستلم</label>
                                 <input
@@ -193,27 +188,6 @@ function BankAccount({ token }) {
                                     <div style={{ overflow: 'hidden' }}>
                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                             <p className="text">{validationsErrors.phone_number_without_code[0]}</p>
-                                        </motion.div>
-                                    </div>}
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-country_code_phone">رمز البلد</label>
-                                <input
-                                    id="input-country_code_phone"
-                                    name="country_code_phone"
-                                    placeholder="رمز البلد"
-                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.country_code_phone && ' has-error')}
-                                    autoComplete="off"
-                                    onKeyUp={clearValidationHandle}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.country_code_phone}
-                                />
-                                {validationsErrors && validationsErrors.country_code_phone &&
-                                    <div style={{ overflow: 'hidden' }}>
-                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.country_code_phone[0]}</p>
                                         </motion.div>
                                     </div>}
                             </div>
@@ -262,9 +236,10 @@ function BankAccount({ token }) {
                         </div>
                         <div className="col-md-12">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-code_postal">المرفقات</label>
-                                <input id="file" name="file" type="file" onChange={(event) => {
-                                    formik.setFieldValue("file", event.currentTarget.files[0]);
+                                <label className="label-block" htmlFor="input-attachments">المرفقات</label>
+                                <input id="input-attachments" name="attachments" type="file" onChange={(event: any) => {
+                                    formik.setFieldValue("attachments", event.currentTarget.files[0]);
+                                    
                                 }} className="form-control" />
                                 <Thumb file={formik.values.attachments} />
                             </div>

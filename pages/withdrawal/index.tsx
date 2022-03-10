@@ -5,7 +5,7 @@ import router from 'next/router';
 import Cookies from 'js-cookie'
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import BankAccount from '@/components/Withdrawal/BankAccount';
+//import BankAccount from '@/components/Withdrawal/BankAccount';
 import MoneyAccount from '@/components/Withdrawal/MoneyAccount';
 import Paypal from '@/components/Withdrawal/Paypal';
 import Wise from '@/components/Withdrawal/Wise';
@@ -25,6 +25,10 @@ function index() {
         }
     });
     useEffect(() => {
+        if (!veriedEmail) {
+            router.push('/email/verification')
+            return
+        }
         if (!token) {
             router.push('/login')
             return
@@ -38,7 +42,6 @@ function index() {
                 metaDescription="طلب السحب"
                 ogDescription="طلب السحب"
             />
-            {token && veriedEmail &&
                 <>
                     <div className="row my-5 justify-content-md-center">
                         <div className="col-md-7">
@@ -51,13 +54,13 @@ function index() {
                                     className='timlands-inputs select'
                                     id="withdrawal_type"
                                 >
-                                    <option value="0">الحوالات المالية</option>
+                                    {/* <option value="0">الحوالات المالية</option> */}
                                     <option value="1">الحساب البنكي</option>
                                     <option value="2">حساب البايبال Paypal</option>
                                     <option value="3">حساب الوايز Wise</option>
                                 </select>
                             </div>
-                            {formik.values.withdrawal_type == 0 && <BankAccount token={token} />}
+                            {/* {formik.values.withdrawal_type == 0 && <BankAccount token={token} />} */}
                             {formik.values.withdrawal_type == 1 && <MoneyAccount token={token} />}
                             {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
                             {formik.values.withdrawal_type == 3 && <Wise token={token} />}
@@ -65,7 +68,7 @@ function index() {
                         </div>
                     </div>
                 </>
-            }
+            
         </>
     )
 }

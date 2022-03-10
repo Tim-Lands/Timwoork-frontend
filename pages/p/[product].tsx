@@ -43,7 +43,7 @@ function Single({ query, stars, errorFetch }) {
 
   }, [])
   const showStars = () => {
-    const rate = Number(ProductData.data.ratings_avg_rating) || 0
+    const rate = Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0
     const xAr: any = [
       {
         id: 1,
@@ -323,6 +323,7 @@ function Single({ query, stars, errorFetch }) {
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">
                   <h1 className="title">{ProductData.data.title}</h1>
+                  
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
@@ -360,6 +361,7 @@ function Single({ query, stars, errorFetch }) {
                       <li className="rate-stars">
                         <span className="stars-icons">
                           {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
+                          
                         </span>
                         <span className="stars-count">
                           ({ProductData.data.ratings_count})
