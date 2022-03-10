@@ -20,15 +20,15 @@ const User = ({ query, stars }) => {
     }
     return (
         <div className="py-3 mt-3">
+            <MetaTags
+                title={stars.profile.full_name}
+                metaDescription={stars.profile.profile_seller.bio}
+                ogDescription={stars.profile.profile_seller.bio}
+                ogImage={stars.profile.avatar_url}
+                ogUrl={`https://timwoork.com/u/${stars.username}`}
+            />
             {!userInfo && <Loading />}
             {userInfo && User.profile && <>
-                <MetaTags
-                    title={stars && stars.profile.full_name}
-                    metaDescription={stars && stars.profile.profile_seller.bio}
-                    ogDescription={stars && stars.profile.profile_seller.bio}
-                    ogImage={stars && stars.profile.avatar_url}
-                    ogUrl={`https://timwoork.com/u/${stars && stars.username}`}
-                />
                 <div className="container">
                     <div className={'row justify-content-md-center'}>
                         {User.profile.profile_seller &&
@@ -106,8 +106,8 @@ const User = ({ query, stars }) => {
                                                 <h3 className="text-label">الجنس</h3>
                                                 <p className="text-value">
                                                     {
-                                                    User.profile && User.profile.gender == null ? '' : 
-                                                    User.profile && (User.profile.gender == 0 ? 'أنثى' : 'ذكر')
+                                                        User.profile && User.profile.gender == null ? '' :
+                                                            User.profile && (User.profile.gender == 0 ? 'أنثى' : 'ذكر')
                                                     }
                                                 </p>
                                             </div>
@@ -142,17 +142,17 @@ User.getLayout = function getLayout(page: any): ReactElement {
 }
 export async function getServerSideProps({ query }) {
     try {
-      const uriString = encodeURI(`api/product/${query.product}`)
-      // Fetch data from external API
-      const res = await API.get(uriString)
-  
-      // Pass data to the page via props
-      return { props: { stars: res.data, query, errorFetch: false } }
-  
+        const uriString = encodeURI(`api/product/${query.product}`)
+        // Fetch data from external API
+        const res = await API.get(uriString)
+
+        // Pass data to the page via props
+        return { props: { stars: res.data, query, errorFetch: false } }
+
     } catch (error) {
-      return { props: { stars: null, query, errorFetch: true } }
+        return { props: { stars: null, query, errorFetch: true } }
     }
-  }
+}
 User.propTypes = {
     query: PropTypes.any,
     stars: PropTypes.any,
