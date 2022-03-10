@@ -2,7 +2,7 @@ import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useState } from "react";
 import { useFormik } from 'formik';
 
-import { Badge, message, Popover } from 'antd';
+import { message } from 'antd';
 import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
