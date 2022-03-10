@@ -8,8 +8,9 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
 import PropTypes from "prop-types";
 import Loading from '@/components/Loading'
+import API from '../../config'
 
-const User = ({ query }) => {
+const User = ({ query, stars }) => {
     // Return statement.
     const { data: userInfo }: any = useSWR(`api/profiles/${query.user}`)
     const User = userInfo && userInfo.data
@@ -22,9 +23,11 @@ const User = ({ query }) => {
             {!userInfo && <Loading />}
             {userInfo && User.profile && <>
                 <MetaTags
-                    title={User.profile && User.profile.first_name + ' ' + User.profile && User.profile.last_name}
-                    metaDescription={User.profile.profile_seller && User.profile.profile_seller.bio}
-                    ogDescription={User.profile.profile_seller && User.profile.profile_seller.bio}
+                    title={stars.profile.full_name}
+                    metaDescription={stars.profile.profile_seller.bio}
+                    ogDescription={stars.profile.profile_seller.bio}
+                    ogImage={stars.profile.avatar_url}
+                    ogUrl={`https://timwoork.com/u/${stars.username}`}
                 />
                 <div className="container">
                     <div className={'row justify-content-md-center'}>
@@ -60,8 +63,7 @@ const User = ({ query }) => {
                                     </Badge>
                                     <div className="profile-content-head">
                                         <h4 className="title">
-                                            {User.profile && User.profile.first_name + ' ' +
-                                                User.profile && User.profile.last_name}
+                                            {User.profile && User.profile.full_name}
                                         </h4>
                                         <p className="text">
                                             @{User.username} |
@@ -138,9 +140,19 @@ User.getLayout = function getLayout(page: any): ReactElement {
         </Layout>
     )
 }
-User.getInitialProps = async ({ query }) => {
-    return { query }
-}
+export async function getServerSideProps({ query }) {
+    try {
+      const uriString = encodeURI(`api/product/${query.product}`)
+      // Fetch data from external API
+      const res = await API.get(uriString)
+  
+      // Pass data to the page via props
+      return { props: { stars: res.data, query, errorFetch: false } }
+  
+    } catch (error) {
+      return { props: { stars: null, query, errorFetch: true } }
+    }
+  }
 User.propTypes = {
     query: PropTypes.any,
 };
