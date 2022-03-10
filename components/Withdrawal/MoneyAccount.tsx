@@ -2,7 +2,7 @@ import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useState } from "react";
 import { useFormik } from 'formik';
 
-import { message } from 'antd';
+import { Badge, message, Popover } from 'antd';
 import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
@@ -53,17 +53,32 @@ function MoneyAccount({ token }) {
 
         }
     });
+    const noteContent = (
+        <div>
+            <ul>
+                <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
+                <li>من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة </li>
+                <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
+            </ul>
+        </div>
+    );
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
                 <div className="page-header">
-                    <h4 className="title">الحساب البنكي</h4>
+                    <h4 className="title">
+                        الحساب البنكي
+                        <Popover content={noteContent} trigger="hover">
+                            <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 29 }} className='material-icons'>info</span>} />
+                        </Popover>
+                    </h4>
                 </div>
                 <div className="timlands-content-form">
                     <div className="row">
                         <div className="col-md-12">
                             <div className="timlands-form">
                                 <label className="label-block lg" htmlFor="input-amount">المبلغ الذي تريد تحويله ($)</label>
+                                <p className="label-note">يجب ان يكون المبلغ الذي تريد تحويل على الأقل 10$</p>
                                 <input
                                     id="input-amount"
                                     name="amount"

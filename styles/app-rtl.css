@@ -175,6 +175,14 @@
   font-size: 17px !important;
 }
 
+.label-note {
+  font-size: 12px;
+  color: #777;
+  font-weight: 200;
+  display: block;
+  margin: 6px 0;
+}
+
 .timlands-form {
   padding: 12px 0;
   position: relative;
