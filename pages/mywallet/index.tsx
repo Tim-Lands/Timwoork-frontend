@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
 import { Alert } from '@/components/Alert/Alert'
 import LastSeen from '@/components/LastSeen'
+import Link from 'next/link'
 
 function index() {
     const token = Cookies.get('token')
@@ -127,9 +128,11 @@ function index() {
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-center py-4">
-                                                <button type='button' className='btn butt-green butt-md px-5'>
-                                                    طلب سحب الأموال
-                                                </button>
+                                                <Link href={'/withdrawal'}>
+                                                    <a className='btn butt-green butt-md px-5'>
+                                                        طلب سحب الأموال
+                                                    </a>
+                                                </Link>
                                             </div>
                                             <div className="page-header xs">
                                                 <h3 className='title'>المعاملات المالية</h3>

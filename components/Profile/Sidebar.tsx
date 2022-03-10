@@ -57,7 +57,7 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             suffix="$"
                         />
                         <div className="d-flex justify-content-center pt-1">
-                            <Link href={'/'}>
+                            <Link href={'/withdrawal'}>
                                 <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
                                     طلب سحب الأموال
                                 </a>
