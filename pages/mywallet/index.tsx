@@ -149,6 +149,7 @@ function index() {
                                                         <tr>
                                                             <th>المبلغ</th>
                                                             <th>عنوان العملية</th>
+                                                            <th>طريقة العملية</th>
                                                             <th>التاريخ</th>
                                                         </tr>
                                                     </thead>
@@ -156,9 +157,8 @@ function index() {
                                                         {userInfo && userInfo.user_details.profile.wallet.activities.map((e: any) => (
                                                             <tr key={e.id}>
                                                                 <td>{switchType(e.status, e.amount)}</td>
-                                                                <td className='is-hover-primary'>
-                                                                    {switchTitle(e.status)}
-                                                                </td>
+                                                                <td className='is-hover-primary'>{e.payload.title}</td>
+                                                                <td className='is-hover-primary'>{e.payload.payment_method}</td>
                                                                 <td>
                                                                     <LastSeen date={e.created_at} />
                                                                 </td>
