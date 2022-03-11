@@ -3617,6 +3617,12 @@ h3 {
   padding: 40px 0;
 }
 
+@media (max-width: 600px) {
+  .posts-aside {
+    padding: 50px;
+  }
+}
+
 .posts-aside .posts-aside-header {
   padding: 20px 0;
   margin-bottom: 8px;
