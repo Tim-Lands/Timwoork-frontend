@@ -5,15 +5,17 @@ import { message } from 'antd';
 import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
+import useSWR from 'swr';
 
 function Wise({ token }) {
+    const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const clearValidationHandle = () => {
         setValidationsErrors({})
     }
     const formik = useFormik({
         initialValues: {
-            email: '',
+            email: userInfo && userInfo.user_details.profile.wise_account.email,
             amount: '',
         },
         isInitialValid: true,
@@ -28,7 +30,7 @@ function Wise({ token }) {
                 })
                 // Authentication was successful.
                 if (res.status === 200) {
-                    message.success('لقد تم التحديث بنجاح')
+                    message.success('لقد تم ارسال طلب السحب إلى الإدارة')
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -95,7 +97,10 @@ function Wise({ token }) {
                             <div className="py-4 d-flex">
                                 <span className="me-auto"></span>
                                 <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
-                                    <span className="text">إرسال المعلومات</span>
+                                    <span className="text">حفظ التغييرات</span>
+                                </button>
+                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
+                                    <span className="text">طلب سحب</span>
                                 </button>
                             </div>
                         </div>

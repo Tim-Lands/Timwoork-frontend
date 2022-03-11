@@ -42,7 +42,7 @@ function MoneyAccount({ token }) {
                 })
                 // Authentication was successful.
                 if (res.status === 200) {
-                    message.success('لقد تم التحديث بنجاح')
+                    message.success('لقد تم ارسال طلب السحب إلى الإدارة')
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -355,7 +355,10 @@ function MoneyAccount({ token }) {
                             <div className="py-4 d-flex">
                                 <span className="me-auto"></span>
                                 <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
-                                    <span className="text">إرسال المعلومات</span>
+                                    <span className="text">حفظ التغييرات</span>
+                                </button>
+                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
+                                    <span className="text">طلب سحب</span>
                                 </button>
                             </div>
                         </div>

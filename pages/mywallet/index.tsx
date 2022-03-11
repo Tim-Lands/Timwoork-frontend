@@ -24,24 +24,6 @@ function index() {
             router.push('/login')
         }
     }, [])
-    function switchTitle(type: any) {
-        switch (type) {
-            case 0:
-                return 'عملية شراء'
-
-            case 1:
-                return 'عملية ربح'
-
-            case 2:
-                return 'عملية سحب'
-
-            case 3:
-                return 'عملية استعادة مال'
-
-            default:
-                return 'عملية شراء'
-        }
-    }
     function switchType(type: any, amount: number) {
         switch (type) {
             case 0:

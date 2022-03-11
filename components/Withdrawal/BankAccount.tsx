@@ -65,7 +65,7 @@ function BankAccount({ token }) {
                 })
                 // Authentication was successful.
                 if (res.status === 200) {
-                    message.success('لقد تم التحديث بنجاح')
+                    message.success('لقد تم ارسال طلب السحب إلى الإدارة')
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -239,7 +239,7 @@ function BankAccount({ token }) {
                                 <label className="label-block" htmlFor="input-attachments">المرفقات</label>
                                 <input id="input-attachments" name="attachments" type="file" onChange={(event: any) => {
                                     formik.setFieldValue("attachments", event.currentTarget.files[0]);
-                                    
+
                                 }} className="form-control" />
                                 <Thumb file={formik.values.attachments} />
                             </div>
@@ -248,8 +248,11 @@ function BankAccount({ token }) {
                         <div className="col-md-12">
                             <div className="py-4 d-flex">
                                 <span className="me-auto"></span>
-                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
                                     <span className="text">حفظ التغييرات</span>
+                                </button>
+                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
+                                    <span className="text">طلب سحب</span>
                                 </button>
                             </div>
                         </div>
