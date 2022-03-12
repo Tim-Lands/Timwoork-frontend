@@ -148,6 +148,7 @@ function index(): ReactElement {
                                 <th>العنوان</th>
                                 <th className="hidden-tem">الحالة</th>
                                 <th className="hidden-tem">التاريخ</th>
+                                <th>صاحب الخدمة</th>
                                 <th>الأدوات</th>
                             </tr>
                         </thead>
@@ -163,6 +164,13 @@ function index(): ReactElement {
                                     </td>
                                     <td className="hidden-tem">{switchStatus(e.status)}</td>
                                     <td className="hidden-tem" title={e.created_at}><LastSeen date={e.created_at} /></td>
+                                    <td title={e.profile_seller.profile.full_name}>
+                                        <Link href={`/u/${e.profile_seller.profile.user.username}`}>
+                                            <a>
+                                                {e.profile_seller.profile.full_name}
+                                            </a>
+                                        </Link>
+                                    </td>
                                     <td className="tools-col">
                                         {(e.status == 0 || e.status == null) ?
                                             <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(e.id)} className="table-del green">
