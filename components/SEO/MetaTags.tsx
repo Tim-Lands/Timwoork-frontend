@@ -15,7 +15,7 @@ import { ReactElement } from "react";
 export function MetaTags({
     title,
     metaDescription,
-    //canonical,
+    keywords,
     ogDescription,
     ogImage,
     ogUrl,
@@ -27,6 +27,9 @@ export function MetaTags({
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content={title} key="title" />
                 <meta property="og:description" content={ogDescription} />
+                <meta name="keywords" content={keywords.map((keyword: any) => (
+                    keyword.name + ', '
+                ))} />
                 <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <title>تيموورك | {title}</title>
@@ -39,7 +42,7 @@ export function MetaTags({
 MetaTags.propTypes = {
     title: PropTypes.string.isRequired,
     metaDescription: PropTypes.string.isRequired,
-    //canonical: PropTypes.string,
+    keywords: PropTypes.array,
     ogDescription: PropTypes.string.isRequired,
     ogImage: PropTypes.string,
     ogUrl: PropTypes.string,

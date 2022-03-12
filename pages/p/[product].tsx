@@ -189,6 +189,13 @@ function Single({ query, stars, errorFetch }) {
         }
       } catch (error: any) {
         setIsLoadingCart(false)
+        if (error.response && error.response.data && error.response.data.msg) {
+          notification.warning({
+            message: `تحذير`,
+            description: error.response.data.msg,
+            placement: 'topLeft'
+          });
+        }
         if (error.response && error.response.status === 400) {
           notification.warning({
             message: `تحذير`,
@@ -290,6 +297,7 @@ function Single({ query, stars, errorFetch }) {
       {errorLoad && <NotFound />}
       {!errorFetch && <MetaTags
         title={stars.data.title}
+        keywords={stars.data.product_tag}
         metaDescription={stars.data.content}
         ogDescription={stars.data.content}
         ogImage={stars.data.full_path_thumbnail}
@@ -322,7 +330,7 @@ function Single({ query, stars, errorFetch }) {
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">
                   <h1 className="title">{ProductData.data.title}</h1>
-                  
+
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
@@ -360,7 +368,7 @@ function Single({ query, stars, errorFetch }) {
                       <li className="rate-stars">
                         <span className="stars-icons">
                           {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
-                          
+
                         </span>
                         <span className="stars-count">
                           ({ProductData.data.ratings_count})
