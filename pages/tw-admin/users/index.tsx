@@ -33,16 +33,6 @@ function index() {
         }
     }
 
-    const switchStatus = (status) => {
-        switch (status) {
-            case null:
-                return (<span className="badge bg-warning text-dark">قيد الإنتظار</span>)
-            case 0:
-                return (<span className="badge bg-danger text-light">مرفوضة</span>)
-            case 1:
-                return (<span className="badge bg-success text-light">نشطة</span>)
-        }
-    }
     useEffect(() => {
         refreshData()
     }, [])
