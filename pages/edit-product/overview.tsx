@@ -106,7 +106,6 @@ function Overview({ query }) {
             })
             if (res.status === 200) {
                 console.log('');
-
             }
         } catch (error) {
             if (error.response && error.response.status === 422) {

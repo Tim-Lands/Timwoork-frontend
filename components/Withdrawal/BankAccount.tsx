@@ -129,7 +129,7 @@ function BankAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-state">المحافظة/الولاية</label>
                                 <input
@@ -150,7 +150,7 @@ function BankAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-city">المدينة/البلدية</label>
                                 <input
@@ -247,10 +247,11 @@ function BankAccount({ token }) {
 
                         <div className="col-md-12">
                             <div className="py-4 d-flex">
-                                <span className="me-auto"></span>
-                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
-                                    <span className="text">حفظ التغييرات</span>
-                                </button>
+                                <span className="me-auto">
+                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-primary ml-auto butt-lg">
+                                        <span className="text">حفظ التغييرات</span>
+                                    </button>
+                                </span>
                                 <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
                                     <span className="text">طلب سحب</span>
                                 </button>

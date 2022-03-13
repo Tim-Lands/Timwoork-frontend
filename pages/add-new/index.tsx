@@ -48,7 +48,7 @@ function index(props: any) {
                                 <div className="timlands-add-new-body">
                                     <h3 className="title">إضافة خدمة جديدة</h3>
                                     <p className="text">
-                                   رائع ! وصلت الى خطوتك الأخيرة لتنظم الى قافلة بائعي تيموورك  
+                                   رائع ! وصلت الى خطوتك الأخيرة لتنظم الى فريق بائعي تيموورك  
                                     </p>
                                     {!userData && 
                                         <div className="add-butts">

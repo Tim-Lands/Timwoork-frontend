@@ -59,7 +59,7 @@ const CheckoutForm = () => {
         </>
     );
 };
-const stripePromise = loadStripe('pk_test_51H7n51E0GSoKvEJxgMpwOphCTCYZ4U1fW7ucqwCwURKvNfrIR846Agf5LU4Gu7xzwJugv5weRpz9E8wT5qewQlCy00eou8x5VM');
+const stripePromise = loadStripe('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');
 function Bill() {
     const token = Cookies.get('token')
     const [billPayment, setBillPayment] = useState(0)

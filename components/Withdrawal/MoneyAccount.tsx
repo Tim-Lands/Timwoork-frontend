@@ -353,10 +353,11 @@ function MoneyAccount({ token }) {
                         </div>
                         <div className="col-md-12">
                             <div className="py-4 d-flex">
-                                <span className="me-auto"></span>
-                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
-                                    <span className="text">حفظ التغييرات</span>
-                                </button>
+                                <span className="me-auto">
+                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-primary ml-auto butt-lg">
+                                        <span className="text">حفظ التغييرات</span>
+                                    </button>
+                                </span>
                                 <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
                                     <span className="text">طلب سحب</span>
                                 </button>
