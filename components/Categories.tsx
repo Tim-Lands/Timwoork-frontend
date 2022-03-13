@@ -52,6 +52,7 @@ const placeholders = [
 ]
 function Categories() {
     const { data: categories }: any = useSWR(`api/get_categories`)
+    const { data: test }: any = useSWR(`api/get_categories_for_add_product`)
     return (
         <div className='container'>
             <div className="app-bill my-5" style={{ borderRadius: 7 }}>

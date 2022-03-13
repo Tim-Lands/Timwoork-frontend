@@ -57,7 +57,7 @@ function Overview({ query }) {
     const id = query.id
     const token = Cookies.get('token')
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-    const { data: categories, categoriesError }: any = useSWR('api/get_categories')
+    const { data: categories, categoriesError }: any = useSWR('api/get_categories_for_add_product')
     
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
@@ -94,7 +94,7 @@ function Overview({ query }) {
 
         }
     });
-    const { data: subCategories, subCategoriesError }: any = useSWR(`dashboard/categories/${formik.values.catetory}`)
+    const { data: subCategories, subCategoriesError }: any = useSWR(`api/get_categories_for_add_product/${formik.values.catetory}`)
 
     if (!query) return message.error('حدث خطأ')
     async function getProductId() {
