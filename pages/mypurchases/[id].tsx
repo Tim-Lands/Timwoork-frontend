@@ -50,8 +50,7 @@ const Order = ({ query }) => {
             if (res.status === 200) {
                 setIsRattingLoading(false)
                 setValidationsGeneral({})
-                console.log('Success');
-
+                
             }
         } catch (error) {
             setIsRattingLoading(false)

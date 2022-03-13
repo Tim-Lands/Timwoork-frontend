@@ -297,7 +297,7 @@ function Single({ query, stars, errorFetch }) {
       {errorLoad && <NotFound />}
       {!errorFetch && <MetaTags
         title={stars.data.title}
-        keywords={stars.data.product_tag}
+        //keywords={stars.data.product_tag}
         metaDescription={stars.data.content}
         ogDescription={stars.data.content}
         ogImage={stars.data.full_path_thumbnail}
