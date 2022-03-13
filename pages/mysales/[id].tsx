@@ -457,6 +457,7 @@ const User = ({ query }) => {
                         okText='أنا متأكد'
                         onOk={() => item_rejected_by_seller(ShowItem.data.id)}
                         onCancel={() => setModalVisibleReject(false)}
+                        cancelText='إلغاء'
                     >
                         <Spin spinning={BySellerMSGLoading}>
                             <div className="timlands-form">
@@ -486,6 +487,7 @@ const User = ({ query }) => {
                         okText='أنا متأكد'
                         onOk={() => reject_cancel_request_by_seller(ShowItem.data.id)}
                         onCancel={() => setIsModalVisible(false)}
+                        cancelText='إلغاء'
                     >
                         <Spin spinning={BySellerMSGLoading}>
                             <div className="timlands-form">
@@ -515,6 +517,7 @@ const User = ({ query }) => {
                         okText='أنا متأكد'
                         onOk={() => reject_modified_by_seller(ShowItem.data.id)}
                         onCancel={() => setModalVisibleRejectModified(false)}
+                        cancelText='إلغاء'
                     >
                         <Spin spinning={BySellerMSGLoading}>
                             <div className="timlands-form">
@@ -545,9 +548,10 @@ const User = ({ query }) => {
                         okText='أنا متأكد'
                         onOk={() => dilevered_by_seller(ShowItem.data.id)}
                         onCancel={() => setModalVisibleDilevered(false)}
+                        cancelText='إلغاء'
                     >
                         <Alert type="error">
-                            هل أنت متأكد من انك تريد تسليم المشروع ؟ بمجرد ضغطك على الزر <strong>أنا متأكد</strong> فأنت راض على ذلك
+                            هل أنت متأكد من انك تريد تسليم المشروع ؟
                         </Alert>
                     </Modal>
                     {ShowItem &&

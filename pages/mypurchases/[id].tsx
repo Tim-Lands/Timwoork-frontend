@@ -50,7 +50,7 @@ const Order = ({ query }) => {
             if (res.status === 200) {
                 setIsRattingLoading(false)
                 setValidationsGeneral({})
-                
+                router.reload()
             }
         } catch (error) {
             setIsRattingLoading(false)
