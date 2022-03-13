@@ -51,7 +51,7 @@ const placeholders = [
     },
 ]
 function Categories() {
-    const { data: categories }: any = useSWR(`api/categories`)
+    const { data: categories }: any = useSWR(`api/get_categories`)
     return (
         <div className='container'>
             <div className="app-bill my-5" style={{ borderRadius: 7 }}>
