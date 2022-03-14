@@ -217,16 +217,13 @@ const personalInformations = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </Form>
                                 )}
                             </Formik>
                             <ChangePass />
                         </div>
                     </div>
-
                 </>
-
                 }
             </div>
         </>

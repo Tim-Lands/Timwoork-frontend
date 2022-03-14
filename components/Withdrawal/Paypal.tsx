@@ -5,10 +5,14 @@ import { message } from 'antd';
 import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
+import { Alert } from '../Alert/Alert';
 
 function Paypal({ token }) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
+
     const clearValidationHandle = () => {
+        setValidationsGeneral({})
         setValidationsErrors({})
     }
     const formik = useFormik({
@@ -34,6 +38,9 @@ function Paypal({ token }) {
                 if (error.response && error.response.data && error.response.data.errors) {
                     setValidationsErrors(error.response.data.errors);
                 }
+                if (error.response && error.response.data) {
+                    setValidationsGeneral(error.response.data);
+                }
             }
 
         }
@@ -45,6 +52,8 @@ function Paypal({ token }) {
                     <h4 className="title">حساب الباييال Paypal</h4>
                 </div>
                 <div className="timlands-content-form">
+                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
+
                     <div className="row">
                         <div className="col-md-12">
                             <div className="timlands-form">

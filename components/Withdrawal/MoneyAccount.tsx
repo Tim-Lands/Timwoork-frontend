@@ -7,11 +7,15 @@ import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
+import { Alert } from '../Alert/Alert';
 
 function MoneyAccount({ token }) {
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
+
     const clearValidationHandle = () => {
+        setValidationsGeneral({})
         setValidationsErrors({})
     }
     const formik = useFormik({
@@ -21,11 +25,12 @@ function MoneyAccount({ token }) {
             wise_country_id: '',
             bank_swift: '',
             bank_iban: '',
+            bank_adress_line_one: '',
             city: '',
             state: '',
             bank_name: '',
             phone_number_without_code: '',
-            bank_adress_line_one: '',
+            address_line_one: '',
             code_postal: '',
             bank_number_account: '',
             bank_branch: '',
@@ -47,6 +52,9 @@ function MoneyAccount({ token }) {
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
                     setValidationsErrors(error.response.data.errors);
+                }
+                if (error.response && error.response.data) {
+                    setValidationsGeneral(error.response.data);
                 }
             }
 
@@ -70,6 +78,7 @@ function MoneyAccount({ token }) {
                     </h4>
                 </div>
                 <div className="timlands-content-form">
+                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                     <div className="row">
                         <div className="col-md-12">
                             <div className="timlands-form">
@@ -287,13 +296,13 @@ function MoneyAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-md-12">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-bank_adress_line_one">العنوان الشخصي</label>
+                                <label className="label-block" htmlFor="input-bank_adress_line_one">العنوان البنكي</label>
                                 <input
                                     id="input-bank_adress_line_one"
                                     name="bank_adress_line_one"
-                                    placeholder="العنوان الشخصي"
+                                    placeholder="العنوان البنكي"
                                     className={"timlands-inputs " + (validationsErrors && validationsErrors.bank_adress_line_one && ' has-error')}
                                     autoComplete="off"
                                     onKeyUp={clearValidationHandle}
@@ -304,6 +313,27 @@ function MoneyAccount({ token }) {
                                     <div style={{ overflow: 'hidden' }}>
                                         <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                             <p className="text">{validationsErrors.bank_adress_line_one[0]}</p>
+                                        </motion.div>
+                                    </div>}
+                            </div>
+                        </div>
+                        <div className="col-md-8">
+                            <div className="timlands-form">
+                                <label className="label-block" htmlFor="input-address_line_one">العنوان الشخصي</label>
+                                <input
+                                    id="input-address_line_one"
+                                    name="address_line_one"
+                                    placeholder="العنوان الشخصي"
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.address_line_one && ' has-error')}
+                                    autoComplete="off"
+                                    onKeyUp={clearValidationHandle}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.address_line_one}
+                                />
+                                {validationsErrors && validationsErrors.address_line_one &&
+                                    <div style={{ overflow: 'hidden' }}>
+                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                            <p className="text">{validationsErrors.address_line_one[0]}</p>
                                         </motion.div>
                                     </div>}
                             </div>

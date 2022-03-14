@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Result, message, Spin } from 'antd'
+import { message, Spin } from 'antd'
 import React, { ReactElement, useState } from 'react'
-import Link from 'next/link'
 import API from '../config'
 import useSWR from 'swr'
 import Loading from '@/components/Loading'
@@ -12,23 +11,6 @@ import { motion } from 'framer-motion'
 function ChangePass() {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
-    if (userInfo && userInfo.user_details.profile.steps < 1)
-        return (<div className="row justify-content-md-center">
-            <div className="col-md-5">
-                <Result
-                    status="warning"
-                    title="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
-                    subTitle="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
-                    extra={
-                        <Link href="/user/personalInformations">
-                            <a className="btn butt-primary butt-md">
-                                الذهاب إلى التعديل
-                            </a>
-                        </Link>
-                    }
-                />
-            </div>
-        </div>)
     const [validationsErrors, setValidationsErrors]: any = useState({})
 
     function setValidationsErrorsHandle() {

@@ -6,16 +6,20 @@ import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
+import { Alert } from '../Alert/Alert';
 
 function Wise({ token }) {
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
+
     const clearValidationHandle = () => {
+        setValidationsGeneral({})
         setValidationsErrors({})
     }
     const formik = useFormik({
         initialValues: {
-            email: userInfo && userInfo.user_details.profile.wise_account.email,
+            email: userInfo && userInfo.user_details.profile.wise_account && userInfo.user_details.profile.wise_account.email,
             amount: '',
         },
         isInitialValid: true,
@@ -36,6 +40,9 @@ function Wise({ token }) {
                 if (error.response && error.response.data && error.response.data.errors) {
                     setValidationsErrors(error.response.data.errors);
                 }
+                if (error.response && error.response.data) {
+                    setValidationsGeneral(error.response.data);
+                }
             }
 
         }
@@ -47,6 +54,8 @@ function Wise({ token }) {
                     <h4 className="title">حساب الوايز Wise</h4>
                 </div>
                 <div className="timlands-content-form">
+                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
+
                     <div className="row">
                         <div className="col-md-12">
                             <div className="timlands-form">

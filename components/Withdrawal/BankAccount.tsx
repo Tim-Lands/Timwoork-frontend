@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
+import { Alert } from '../Alert/Alert';
 
 function Thumb(props: any) {
     const [loading, setLoading] = useState(false)
@@ -37,7 +38,10 @@ function Thumb(props: any) {
 function BankAccount({ token }) {
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
+
     const clearValidationHandle = () => {
+        setValidationsGeneral({})
         setValidationsErrors({})
     }
     const formik = useFormik({
@@ -51,7 +55,7 @@ function BankAccount({ token }) {
             phone_number_without_code: '',
             address_line_one: '',
             code_postal: '',
-            attachments: null,
+            attachments: '',
         },
         isInitialValid: true,
         enableReinitialize: true,
@@ -71,6 +75,9 @@ function BankAccount({ token }) {
                 if (error.response && error.response.data && error.response.data.errors) {
                     setValidationsErrors(error.response.data.errors);
                 }
+                if (error.response && error.response.data) {
+                    setValidationsGeneral(error.response.data);
+                }
             }
 
         }
@@ -81,9 +88,12 @@ function BankAccount({ token }) {
                 <div className="page-header">
                     <h4 className="title">الحوالات المالية</h4>
                 </div>
+
                 <div className="timlands-content-form">
+                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
+
                     <div className="row">
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-full_name">الاسم الكامل</label>
                                 <input
@@ -104,7 +114,7 @@ function BankAccount({ token }) {
                                     </div>}
                             </div>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-country_id">اختر البلد</label>
                                 <select
@@ -237,10 +247,23 @@ function BankAccount({ token }) {
                         <div className="col-md-12">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-attachments">المرفقات</label>
-                                <input id="input-attachments" name="attachments" type="file" onChange={(event: any) => {
-                                    formik.setFieldValue("attachments", event.currentTarget.files[0]);
-
-                                }} className="form-control" />
+                                <input
+                                    id="input-attachments"
+                                    name="attachments"
+                                    type="file"
+                                    onChange={(event: any) => {
+                                        formik.setFieldValue("attachments", event.currentTarget.files[0]);
+                                        console.log(event.currentTarget.files[0]);
+                            
+                                    }}
+                                    className={"timlands-inputs " + (validationsErrors && validationsErrors.attachments && ' has-error')}
+                                />
+                                {validationsErrors && validationsErrors.attachments &&
+                                    <div style={{ overflow: 'hidden' }}>
+                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                            <p className="text">{validationsErrors.attachments[0]}</p>
+                                        </motion.div>
+                                    </div>}
                                 <Thumb file={formik.values.attachments} />
                             </div>
                         </div>
