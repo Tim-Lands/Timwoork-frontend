@@ -49,6 +49,7 @@ const User = ({ query }) => {
                 setIsModalVisible(false)
                 setModalVisibleRejectModified(false)
                 setModalVisibleReject(false)
+                router.reload()
             }
         } catch (error) {
             if (error && error.response) {

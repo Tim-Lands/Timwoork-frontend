@@ -11,29 +11,30 @@ import { Alert } from '../Alert/Alert';
 
 function MoneyAccount({ token }) {
     const { data: Countries }: any = useSWR('dashboard/countries')
+    const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
-
+    
     const clearValidationHandle = () => {
         setValidationsGeneral({})
         setValidationsErrors({})
     }
     const formik = useFormik({
         initialValues: {
-            full_name: '',
+            full_name: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.full_name,
             amount: '',
-            wise_country_id: '',
-            bank_swift: '',
-            bank_iban: '',
-            bank_adress_line_one: '',
-            city: '',
-            state: '',
-            bank_name: '',
-            phone_number_without_code: '',
-            address_line_one: '',
-            code_postal: '',
-            bank_number_account: '',
-            bank_branch: '',
+            wise_country_id: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.wise_country_id,
+            bank_swift: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.bank_swift,
+            bank_iban: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.wise_country_id,
+            bank_adress_line_one: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.bank_adress_line_one,
+            city: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.city,
+            state: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.state,
+            bank_name: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.bank_name,
+            phone_number_without_code: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.wise_country_id,
+            address_line_one: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.address_line_one,
+            code_postal: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.code_postal,
+            bank_number_account: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.bank_number_account,
+            bank_branch: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.bank_branch,
         },
         isInitialValid: true,
         enableReinitialize: true,
