@@ -59,7 +59,11 @@ const CheckoutForm = () => {
         </>
     );
 };
-const stripePromise = loadStripe('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');
+const stripePromise = loadStripe('pk_live_51KVxMmKZiLP53MTnsIhnnYjdjWwCynAoNT2IJS0D0TllKvdK07C0XO3nFAPe2kjOOAVXd3WSSebR71Qd0KSb8SIF00TQc1n8ca');
+const options = {
+    // passing the client secret obtained from the server
+    clientSecret: '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',
+  };
 function Bill() {
     const token = Cookies.get('token')
     const [billPayment, setBillPayment] = useState(0)
@@ -204,7 +208,7 @@ function Bill() {
                                     <div style={{ overflow: 'hidden' }}>
                                         {billPayment == 0 ?
                                             <motion.div dir='ltr' initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                                                <Elements stripe={stripePromise}>
+                                                <Elements stripe={stripePromise} options={options}>
                                                     <CheckoutForm />
                                                 </Elements>
                                             </motion.div>
