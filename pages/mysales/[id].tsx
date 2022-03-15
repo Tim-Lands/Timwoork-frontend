@@ -137,6 +137,7 @@ const User = ({ query }) => {
             })
             if (res.status === 200) {
                 rejectMessageCause(message)
+                setModalVisibleReject(false)
             }
         } catch (error) {
             setRejectedBySellerLoading(false)
