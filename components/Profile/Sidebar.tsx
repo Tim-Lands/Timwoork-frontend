@@ -1,8 +1,11 @@
 import { Statistic, Card } from 'antd'
 import PropTypes from "prop-types";
 import Link from 'next/link'
+import useSWR from 'swr';
+import { Alert } from '../Alert/Alert';
 
 export default function UploadPicture({ profile_seller, beseller, isLoadingSeler, pending_amount, withdrawable_amount, darkMode }) {
+    const { data: userInfo }: any = useSWR('api/me')
     return (
         <div className="col-lg-4">
             {!profile_seller &&
@@ -56,13 +59,19 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             valueStyle={{ color: darkMode ? '#8ac557' : '#3f8600' }}
                             suffix="$"
                         />
-                        <div className="d-flex justify-content-center pt-1">
-                            <Link href={'/withdrawal'}>
-                                <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
-                                    طلب سحب الأموال
-                                </a>
-                            </Link>
-                        </div>
+                        {userInfo && userInfo.user_details.profile.wallet.is_withdrawable ?
+                            <div className="d-flex justify-content-center pt-1">
+                                <Link href={'/withdrawal'}>
+                                    <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
+                                        طلب سحب الأموال
+                                    </a>
+                                </Link>
+                            </div> :
+                            <Alert type='error'>
+                                <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                            </Alert>
+                        }
+
                     </div>
                     <div className="statistic-item">
                         <Statistic

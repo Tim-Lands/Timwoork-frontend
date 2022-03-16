@@ -110,11 +110,17 @@ function index() {
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-center py-4">
-                                                <Link href={'/withdrawal'}>
-                                                    <a className='btn butt-green butt-md px-5'>
-                                                        طلب سحب الأموال
-                                                    </a>
-                                                </Link>
+                                                {userInfo && userInfo.user_details.profile.wallet.is_withdrawable ?
+                                                    <Link href={'/withdrawal'}>
+                                                        <a className='btn butt-green butt-md px-5'>
+                                                            طلب سحب الأموال
+                                                        </a>
+                                                    </Link> :
+                                                    <Alert type='error'>
+                                                        <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                                                    </Alert>
+                                                }
+
                                             </div>
                                             <div className="page-header xs">
                                                 <h3 className='title'>المعاملات المالية</h3>
