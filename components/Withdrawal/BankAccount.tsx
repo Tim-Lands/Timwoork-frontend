@@ -7,6 +7,7 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
+import router from 'next/router';
 
 function Thumb(props: any) {
     const [loading, setLoading] = useState(false)
@@ -70,6 +71,7 @@ function BankAccount({ token }) {
                 // Authentication was successful.
                 if (res.status === 200) {
                     message.success('لقد تم ارسال طلب السحب إلى الإدارة')
+                    router.reload()
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {

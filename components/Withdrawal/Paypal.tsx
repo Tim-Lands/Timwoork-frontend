@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import API from "../../config";
 import PropTypes from "prop-types";
 import { Alert } from '../Alert/Alert';
+import router from 'next/router';
 
 function Paypal({ token }) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -33,6 +34,7 @@ function Paypal({ token }) {
                 // Authentication was successful.
                 if (res.status === 200) {
                     message.success('لقد تم ارسال طلب السحب إلى الإدارة')
+                    router.reload()
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
