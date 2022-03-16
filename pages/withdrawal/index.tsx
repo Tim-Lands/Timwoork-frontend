@@ -42,7 +42,9 @@ function index() {
                 metaDescription="طلب السحب"
                 ogDescription="طلب السحب"
             />
-                {!is_withdrawable ? 
+            {userInfo && <>
+
+                {!is_withdrawable ?
                     <>
                         <div className="row my-5 justify-content-md-center">
                             <div className="col-md-7">
@@ -65,17 +67,21 @@ function index() {
                                 {formik.values.withdrawal_type == 1 && <MoneyAccount token={token} />}
                                 {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
                                 {formik.values.withdrawal_type == 3 && <Wise token={token} />}
-                                
+
                             </div>
                         </div>
-                    </> : 
-                    <>
-                        <Alert type='error'>
-                            <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
-                        </Alert>
-                    </>
+                    </> :
+                    <div className='row my-5 justify-content-md-center'>
+                        <div className="col-md-6">
+                            <Alert type='error'>
+                                <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                            </Alert>
+                        </div>
+                    </div>
                 }
-            
+            </>
+            }
+
         </>
     )
 }
