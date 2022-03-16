@@ -11,7 +11,7 @@ import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
 function MoneyAccount({ token }) {
-    const { data: Countries }: any = useSWR('dashboard/countries')
+    const { data: Countries }: any = useSWR('api/withdrawals/countries')
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
@@ -247,7 +247,7 @@ function MoneyAccount({ token }) {
                                     <option value="">اختر البلد</option>
                                     {!Countries && <option value="">يرجى الانتظار...</option>}
                                     {Countries && Countries.data.map((e: any) => (
-                                        <option value={e.id} key={e.id}>{e.name_ar}</option>
+                                        <option value={e.id} key={e.id}>{e.ar_name}</option>
                                     ))}
                                 </select>
                                 {validationsErrors && validationsErrors.wise_country_id &&

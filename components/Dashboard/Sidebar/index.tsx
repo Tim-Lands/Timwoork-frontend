@@ -27,6 +27,12 @@ const sidebarLinks = [
         href: '/tw-admin/posts',
     },
     {
+        id: 166,
+        name: 'طلبات السحب',
+        icon: 'assignment',
+        href: '/tw-admin/withdrawables',
+    },
+    {
         id: 6,
         name: 'إدارة المحتوى',
         icon: 'event_note',

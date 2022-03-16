@@ -82,30 +82,6 @@ function Paypal({ token }) {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="timlands-form">
-                                <label className="label-block lg" htmlFor="input-amount">المبلغ الذي تريد تحويله ($)</label>
-                                <p className="label-note">يجب ان يكون المبلغ الذي تريد تحويل على الأقل 10$</p>
-                                <input
-                                    id="input-amount"
-                                    name="amount"
-                                    onInput={allowOnlyNumericsOrDigits}
-                                    placeholder="المبلغ الذي تريد تحويله ($)"
-                                    className={"timlands-inputs lg " + (validationsErrors && validationsErrors.amount && ' has-error')}
-                                    autoComplete="off"
-                                    onKeyUp={clearValidationHandle}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.amount}
-                                />
-                                {validationsErrors && validationsErrors.amount &&
-                                    <div style={{ overflow: 'hidden' }}>
-                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.amount[0]}</p>
-                                        </motion.div>
-                                    </div>}
-                            </div>
-                            <hr />
-                        </div>
-                        <div className="col-md-12">
-                            <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-email">البريد الإلكتروني</label>
                                 <input
                                     id="input-email"
