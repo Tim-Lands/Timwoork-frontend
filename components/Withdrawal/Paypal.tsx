@@ -34,7 +34,7 @@ function Paypal({ token }) {
                 // Authentication was successful.
                 if (res.status === 200) {
                     message.success('لقد تم ارسال طلب السحب إلى الإدارة')
-                    router.reload()
+                    router.push('/mywallet')
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -47,6 +47,11 @@ function Paypal({ token }) {
 
         }
     });
+    const [quantutyCount, setQuantutyCount] = useState(null)
+    const allowOnlyNumericsOrDigits = (evt) => {
+        const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
+        setQuantutyCount(financialGoal);
+    }
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
@@ -64,6 +69,7 @@ function Paypal({ token }) {
                                 <input
                                     id="input-amount"
                                     name="amount"
+                                    onInput={allowOnlyNumericsOrDigits}
                                     placeholder="المبلغ الذي تريد تحويله ($)"
                                     className={"timlands-inputs lg " + (validationsErrors && validationsErrors.amount && ' has-error')}
                                     autoComplete="off"
