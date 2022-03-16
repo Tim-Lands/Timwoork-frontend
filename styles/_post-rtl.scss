@@ -19,6 +19,9 @@
         overflow: hidden;
         position: relative;
         transition: all 0.3s;
+        @media (max-width: 450px) {
+            background-position: center;
+        }
         &::after {
             content: '';
             left: 0;

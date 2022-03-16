@@ -1186,6 +1186,12 @@
   }
 }
 
+@media (max-width: 450px) {
+  .timlands-post-item .post-item-img {
+    background-position: center;
+  }
+}
+
 .timlands-post-item .post-item-img::after {
   content: '';
   left: 0;

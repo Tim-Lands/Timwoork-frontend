@@ -12,7 +12,7 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
             </div>
             <div className="posts-aside-body">
                 <Alert type="error">
-                    لا توجد خدمات لعرضها 
+                    لا توجد خدمات لعرضها
                 </Alert>
             </div>
         </div>
