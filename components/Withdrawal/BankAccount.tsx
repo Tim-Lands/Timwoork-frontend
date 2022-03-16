@@ -38,9 +38,29 @@ function Thumb(props: any) {
 
 function BankAccount({ token }) {
     const { data: Countries }: any = useSWR('dashboard/countries')
+    const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
-
+    const UpdateMoney = async (values) => {
+        try {
+            const res = await API.post(`api/withdrawals/update/bank_transfer`, values, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                message.success('لقد تم حفظ البيانات بنجاح')
+            }
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.errors) {
+                setValidationsErrors(error.response.data.errors);
+            }
+            if (error.response && error.response.data) {
+                setValidationsGeneral(error.response.data);
+            }
+        }
+    }
     const clearValidationHandle = () => {
         setValidationsGeneral({})
         setValidationsErrors({})
@@ -48,15 +68,15 @@ function BankAccount({ token }) {
     const formik = useFormik({
         initialValues: {
             amount: '',
-            full_name: '',
-            country_id: '',
-            city: '',
-            id_type: 0,
-            state: '',
-            country_code_phone: '',
-            phone_number_without_code: '',
-            address_line_one: '',
-            code_postal: '',
+            full_name: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.full_name,
+            country_id: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.full_name,
+            city: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.city,
+            id_type: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.id_type,
+            state: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.state,
+            country_code_phone: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.country_code_phone,
+            phone_number_without_code: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.phone_number_without_code,
+            address_line_one: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.address_line_one,
+            code_postal: userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.code_postal,
             attachments: '',
         },
         isInitialValid: true,
@@ -304,7 +324,7 @@ function BankAccount({ token }) {
                         <div className="col-md-12">
                             <div className="py-4 d-flex">
                                 <span className="me-auto">
-                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-primary ml-auto butt-lg">
+                                    <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-primary ml-auto butt-lg">
                                         <span className="text">حفظ التغييرات</span>
                                     </button>
                                 </span>

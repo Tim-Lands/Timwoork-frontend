@@ -15,7 +15,26 @@ function MoneyAccount({ token }) {
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
-
+    const UpdateMoney = async (values) => {
+        try {
+            const res = await API.post(`api/withdrawals/update/bank`, values, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            // Authentication was successful.
+            if (res.status === 200) {
+                message.success('لقد تم حفظ البيانات بنجاح')
+            }
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.errors) {
+                setValidationsErrors(error.response.data.errors);
+            }
+            if (error.response && error.response.data) {
+                setValidationsGeneral(error.response.data);
+            }
+        }
+    }
     const clearValidationHandle = () => {
         setValidationsGeneral({})
         setValidationsErrors({})
@@ -394,7 +413,7 @@ function MoneyAccount({ token }) {
                         <div className="col-md-12">
                             <div className="py-4 d-flex">
                                 <span className="me-auto">
-                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-primary ml-auto butt-lg">
+                                    <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-primary ml-auto butt-lg">
                                         <span className="text">حفظ التغييرات</span>
                                     </button>
                                 </span>
