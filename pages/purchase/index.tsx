@@ -21,6 +21,7 @@ const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const token = Cookies.get('token')
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -44,12 +45,17 @@ const CheckoutForm = () => {
             }
         } catch (error) {
             setIsLoading(false)
+            
+            if (error.response && error.response.data) {
+                setValidationsGeneral(error.response.data);
+            }
         }
     };
 
     return (
         <>
             <form onSubmit={handleSubmit}>
+                {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                 <CardElement />
                 <button type="submit" onClick={() => setIsLoading(true)} className='btn butt-md purchace-by-stripe-btn butt-primary mt-2' disabled={!stripe || !elements}>
                     <span>شراء الآن</span>
