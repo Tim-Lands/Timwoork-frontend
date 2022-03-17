@@ -16,9 +16,6 @@ import Loading from '@/components/Loading';
 function index() {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
-    //const is_withdrawable = userInfo && userInfo.user_details.profile.wallet.is_withdrawable
-
-    //const { data: userInfo }: any = useSWR('api/me')
     //const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const formik = useFormik({
         initialValues: {
