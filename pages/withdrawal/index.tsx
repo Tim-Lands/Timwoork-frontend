@@ -43,7 +43,7 @@ function index() {
                 ogDescription="طلب السحب"
             />
 
-                {userInfo && !userInfo.user_details.profile.wallet.is_withdrawable ?
+                {userInfo && userInfo.user_details.profile.wallet.is_withdrawable ?
                 <>
                     <div className="row my-5 justify-content-md-center">
                         <div className="col-md-7">
