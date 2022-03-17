@@ -11,6 +11,7 @@ import Paypal from '@/components/Withdrawal/Paypal';
 import Wise from '@/components/Withdrawal/Wise';
 import useSWR from 'swr';
 import { Alert } from '@/components/Alert/Alert';
+import Loading from '@/components/Loading';
 
 function index() {
     const token = Cookies.get('token')
@@ -42,42 +43,44 @@ function index() {
                 metaDescription="طلب السحب"
                 ogDescription="طلب السحب"
             />
+                {!userInfo && <Loading />}
+                {userInfo && <>
+                    {userInfo.user_details.profile.wallet.is_withdrawable ?
+                    <>
+                        <div className="row my-5 justify-content-md-center">
+                            <div className="col-md-7">
+                                <div className="withdrawal-select">
+                                    <h3 className="title">اختر طريقة السحب: </h3>
+                                    <select
+                                        onChange={formik.handleChange}
+                                        value={formik.values.withdrawal_type}
+                                        name="withdrawal_type"
+                                        className='timlands-inputs select'
+                                        id="withdrawal_type"
+                                    >
+                                        <option value="0">الحوالات المالية</option>
+                                        <option value="1">الحساب البنكي</option>
+                                        <option value="2">حساب البايبال Paypal</option>
+                                        <option value="3">حساب الوايز Wise</option>
+                                    </select>
+                                </div>
+                                {formik.values.withdrawal_type == 0 && <BankAccount token={token} />}
+                                {formik.values.withdrawal_type == 1 && <MoneyAccount token={token} />}
+                                {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
+                                {formik.values.withdrawal_type == 3 && <Wise token={token} />}
 
-                {userInfo && userInfo.user_details.profile.wallet.is_withdrawable ?
-                <>
-                    <div className="row my-5 justify-content-md-center">
-                        <div className="col-md-7">
-                            <div className="withdrawal-select">
-                                <h3 className="title">اختر طريقة السحب: </h3>
-                                <select
-                                    onChange={formik.handleChange}
-                                    value={formik.values.withdrawal_type}
-                                    name="withdrawal_type"
-                                    className='timlands-inputs select'
-                                    id="withdrawal_type"
-                                >
-                                    <option value="0">الحوالات المالية</option>
-                                    <option value="1">الحساب البنكي</option>
-                                    <option value="2">حساب البايبال Paypal</option>
-                                    <option value="3">حساب الوايز Wise</option>
-                                </select>
                             </div>
-                            {formik.values.withdrawal_type == 0 && <BankAccount token={token} />}
-                            {formik.values.withdrawal_type == 1 && <MoneyAccount token={token} />}
-                            {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
-                            {formik.values.withdrawal_type == 3 && <Wise token={token} />}
-
+                        </div>
+                    </> :
+                    <div className='row my-5 justify-content-md-center'>
+                        <div className="col-md-6">
+                            <Alert type='error'>
+                                <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                            </Alert>
                         </div>
                     </div>
-                </> :
-                <div className='row my-5 justify-content-md-center'>
-                    <div className="col-md-6">
-                        <Alert type='error'>
-                            <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
-                        </Alert>
-                    </div>
-                </div>
-            }
+                }
+                </>}
         </>
     )
 }
