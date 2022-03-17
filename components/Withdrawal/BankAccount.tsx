@@ -302,6 +302,7 @@ function BankAccount({ token }) {
                                 <input
                                     id="input-amount"
                                     name="amount"
+                                    type='number'
                                     onInput={allowOnlyNumericsOrDigits}
                                     placeholder="المبلغ الذي تريد تحويله ($)"
                                     className={"timlands-inputs lg " + (validationsErrors && validationsErrors.amount && ' has-error')}
