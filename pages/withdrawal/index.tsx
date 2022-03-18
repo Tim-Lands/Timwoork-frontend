@@ -40,9 +40,9 @@ function index() {
                 metaDescription="طلب السحب"
                 ogDescription="طلب السحب"
             />
-                {!userInfo && <Loading />}
-                {userInfo && <>
-                    {(userInfo && userInfo.user_details.profile.wallet.is_withdrawable == true) ?
+            {!userInfo && <Loading />}
+            {userInfo && <>
+                {(userInfo.user_details.profile.wallet.is_withdrawable == true) ?
                     <>
                         <div className="row my-5 justify-content-md-center">
                             <div className="col-md-7">
@@ -77,7 +77,17 @@ function index() {
                         </div>
                     </div>
                 }
-                </>}
+                {
+                    (userInfo && userInfo.user_details.profile.withdrawable_amount < 9 ) &&
+                    <div className='row my-5 justify-content-md-center'>
+                        <div className="col-md-6">
+                            <Alert type='error'>
+                                <strong>للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار</strong>
+                            </Alert>
+                        </div>
+                    </div>
+                }
+            </>}
         </>
     )
 }

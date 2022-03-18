@@ -110,17 +110,28 @@ function index() {
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-center py-4">
-                                            {(userInfo && userInfo.user_details.profile.wallet.is_withdrawable == true) ?
-                                                    <Link href={'/withdrawal'}>
-                                                        <a className='btn butt-green butt-md px-5'>
-                                                            طلب سحب الأموال
-                                                        </a>
-                                                    </Link> :
-                                                    <Alert type='error'>
-                                                        <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
-                                                    </Alert>
-                                                }
-
+                                                {userInfo && <>
+                                                    {(userInfo.user_details.profile.wallet.is_withdrawable == true) ?
+                                                        <Link href={'/withdrawal'}>
+                                                            <a className='btn butt-green butt-md px-5'>
+                                                                طلب سحب الأموال
+                                                            </a>
+                                                        </Link> :
+                                                        <Alert type='error'>
+                                                            <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                                                        </Alert>
+                                                    }
+                                                    {
+                                                        (userInfo && userInfo.user_details.profile.withdrawable_amount < 9) &&
+                                                        <div className='row my-5 justify-content-md-center'>
+                                                            <div className="col-md-6">
+                                                                <Alert type='error'>
+                                                                    <strong>للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار</strong>
+                                                                </Alert>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </>}
                                             </div>
                                             <div className="page-header xs">
                                                 <h3 className='title'>المعاملات المالية</h3>
