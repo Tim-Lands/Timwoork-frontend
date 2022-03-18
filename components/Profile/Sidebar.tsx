@@ -59,26 +59,22 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
                             valueStyle={{ color: darkMode ? '#8ac557' : '#3f8600' }}
                             suffix="$"
                         />
-                        {(userInfo && userInfo.user_details.profile.wallet.is_withdrawable == true) ?
-                            <div className="d-flex justify-content-center pt-1">
-                                <Link href={'/withdrawal'}>
-                                    <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
-                                        طلب سحب الأموال
-                                    </a>
-                                </Link>
-                            </div> :
-                            <Alert type='error'>
-                                <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
-                            </Alert>
-                        }
                         {(userInfo && userInfo.user_details.profile.withdrawable_amount > 9) ?
-                            <div className="d-flex justify-content-center pt-1">
-                                <Link href={'/withdrawal'}>
-                                    <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
-                                        طلب سحب الأموال
-                                    </a>
-                                </Link>
-                            </div> :
+                            <>
+                                {(userInfo && userInfo.user_details.profile.wallet.is_withdrawable == true) ?
+                                    <div className="d-flex justify-content-center pt-1">
+                                        <Link href={'/withdrawal'}>
+                                            <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
+                                                طلب سحب الأموال
+                                            </a>
+                                        </Link>
+                                    </div> :
+                                    <Alert type='error'>
+                                        <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                                    </Alert>
+                                }
+                            </>
+                            :
                             <Alert type='error'>
                                 <strong>للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار</strong>
                             </Alert>
