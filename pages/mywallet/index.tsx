@@ -110,7 +110,7 @@ function index() {
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-center py-4">
-                                                {userInfo && userInfo.user_details.profile.wallet.is_withdrawable ?
+                                            {(userInfo && userInfo.user_details.profile.wallet.is_withdrawable == true) ?
                                                     <Link href={'/withdrawal'}>
                                                         <a className='btn butt-green butt-md px-5'>
                                                             طلب سحب الأموال
