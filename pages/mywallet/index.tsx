@@ -126,7 +126,7 @@ function index() {
                                                             }
                                                         </> :
                                                             <div className='row my-5 justify-content-md-center'>
-                                                                <div className="col-md-6">
+                                                                <div className="col-md-9">
                                                                     <Alert type='error'>
                                                                         <strong>للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار</strong>
                                                                     </Alert>
