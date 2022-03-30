@@ -12,6 +12,7 @@ import cookies from 'next-cookies'
 import { MetaTags } from '@/components/SEO/MetaTags';
 import Image from 'next/image'
 import useSWR from 'swr';
+import { Alert } from '@/components/Alert/Alert';
 
 function Medias({ query, stars }) {
     const token = Cookies.get('token')
@@ -60,6 +61,7 @@ function Medias({ query, stars }) {
 
     const [galariesSuccess, seGalariesSuccess] = useState(false);
     const [featuredSuccess, seFeaturedSuccess] = useState(false);
+    const [validationsGeneral, setValidationsGeneral]: any = useState({})
 
     const maxNumber = 5;
 
@@ -164,22 +166,9 @@ function Medias({ query, stars }) {
             }
         } catch (error: any) {
             setLoading(false)
-            if (error.response && error.response.status === 200) {
-                message.success('لقد تم التحديث بنجاح')
-            }
-            if (error.response && error.response.status === 422) {
-                message.error("يرجى تعبئة البيانات")
-            }
-            if (error.response && error.response.status === 403) {
-                message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك")
-            }
-            if (error.response && error.response.status === 419) {
-                message.error("العملية غير ناجحة")
-            }
-            if (error.response && error.response.status === 400) {
-                message.error("حدث خطأ.. يرجى التأكد من البيانات")
-            } else {
-                message.error("حدث خطأ غير متوقع")
+            message.error('حدث خطأ.. تأكد من رفع الصور')
+            if (error.response && error.response.data) {
+                setValidationsGeneral(error.response.data);
             }
         }
     }
@@ -201,6 +190,7 @@ function Medias({ query, stars }) {
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
                         <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
+                            
                             <div className="timlands-steps">
                                 <div className="timlands-step-item">
                                     <h3 className="text">
@@ -244,6 +234,8 @@ function Medias({ query, stars }) {
                                     </h3>
                                 </div>
                             </div>
+                            
+                            {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                             <div className="choose-images-file">
                                 <div className="choose-images-list">
                                     <div className={"panel-modal-body login-panel-body auto-height"}>
