@@ -13,8 +13,9 @@ import { MetaTags } from '@/components/SEO/MetaTags';
 import Image from 'next/image'
 import useSWR from 'swr';
 import { Alert } from '@/components/Alert/Alert';
-
+import { CloseCircleOutlined } from '@ant-design/icons'
 function Medias({ query, stars }) {
+    const [validationsErrors, setValidationsErrors]: any = useState({})
     const token = Cookies.get('token')
     const id = query.id
     const { data: userInfo }: any = useSWR('api/me')
@@ -143,8 +144,13 @@ function Medias({ query, stars }) {
         setVideourl(e.target.value)
     }
     const [loading, setLoading] = useState(false);
+    function setValidationsErrorsHandle() {
+        setValidationsErrors({})
+        setValidationsGeneral({})
+    }
     const loadImagesHandle = async () => {
         setLoading(true)
+        setValidationsErrorsHandle()
         try {
             const res = await API.post(`api/product/${id}/product-step-four`, { url_video: url_video },
                 {
@@ -166,9 +172,18 @@ function Medias({ query, stars }) {
             }
         } catch (error: any) {
             setLoading(false)
-            message.error('حدث خطأ.. تأكد من رفع الصور')
+            if (error.response && error.response.data && error.response.data.errors) {
+                setValidationsErrors(error.response.data.errors);
+            }
             if (error.response && error.response.data) {
                 setValidationsGeneral(error.response.data);
+            }
+            if (validationsErrors && validationsErrors.thumbnail) {
+                notification.open({
+                    message: 'حدث خطأ',
+                    description: validationsErrors.thumbnail[0],
+                    icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
+                });
             }
         }
     }
@@ -190,7 +205,7 @@ function Medias({ query, stars }) {
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
                         <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
-                            
+
                             <div className="timlands-steps">
                                 <div className="timlands-step-item">
                                     <h3 className="text">
@@ -234,7 +249,7 @@ function Medias({ query, stars }) {
                                     </h3>
                                 </div>
                             </div>
-                            
+
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                             <div className="choose-images-file">
                                 <div className="choose-images-list">
