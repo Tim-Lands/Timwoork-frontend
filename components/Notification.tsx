@@ -27,7 +27,7 @@ function Notification({ title, avatar, created_at, product_title, to, type, item
     return (
         <Link href={switchNotifyType()}>
             <a className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                <img src={avatar} alt="twbs" width="40" height="40" className="rounded-circle flex-shrink-0" />
+                <img src={type == 'system' ? '/logo.png' : avatar} alt="twbs" width="40" height="40" className="rounded-circle flex-shrink-0" />
                 <div className="d-flex gap-2 w-100 justify-content-between">
                     <div>
                         <h6 className="mb-2" >{title}</h6>
