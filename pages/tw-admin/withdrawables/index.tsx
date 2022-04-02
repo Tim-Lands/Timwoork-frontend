@@ -6,6 +6,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
 import { Result } from "antd";
 import LastSeen from "@/components/LastSeen";
+import Link from "next/link";
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
@@ -77,11 +78,20 @@ function index(): ReactElement {
                                     <td><LastSeen date={e.created_at} /></td>
                                     <td>
                                         <button
-                                            className="btn butt-sm butt-primary"
+                                            className="btn butt-xs butt-green mx-1"
                                             onClick={() => AcceptAmount(e.id)}
                                         >
-                                            قبول الطلب
+قبول                                            
                                         </button>
+                                        <button
+                                            className="btn butt-xs butt-red mx-1"
+                                            onClick={() => AcceptAmount(e.id)}
+                                        >
+رفض
+                                        </button>
+                                        <Link href={`/tw-admin/withdrawables/${e.id}`}>
+                                            <a> تفاصيل</a>
+                                        </Link>
                                     </td>
                                 </motion.tr>
                             ))}
