@@ -1,12 +1,13 @@
-import { Alert } from "@/components/Alert/Alert";
 import API from '../../../config';
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
 import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
 import { message } from "antd";
+import PropTypes from "prop-types";
+
 function Id({ query }) {
     const token = Cookies.get('token_dash')
     const { data: getData }: any = useSWR(`dashboard/withdrawals/${query.id}`)
@@ -168,3 +169,6 @@ export default Id;
 export async function getServerSideProps({ query }) {
     return { props: { query } }
 }
+Id.propTypes = {
+    query: PropTypes.any,
+  };
