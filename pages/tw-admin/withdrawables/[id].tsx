@@ -5,23 +5,22 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
 import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
+import router from "next/router";
+import { message } from "antd";
 function Id({ query }) {
-    const [isAccept, setIsAccept] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
     const token = Cookies.get('token_dash')
     const { data: getData }: any = useSWR(`dashboard/withdrawals/${query.id}`)
 
     const AcceptAmount = async (id: any) => {
-        setIsAccept(false)
         try {
             const res: any = await API.post(`dashboard/withdrawals/${id}/accept`, null, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res.status === 200) {
-                setIsAccept(true)
+                router.push('/tw-admin/withdrawables')
             }
         } catch (error) {
-            setIsAccept(false)
+            message.error('للأسف لم يتم القبول')
         }
     }
     return (
