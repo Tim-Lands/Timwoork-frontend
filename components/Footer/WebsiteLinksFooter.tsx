@@ -43,7 +43,7 @@ function WebsiteLinksFooter() {
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.facebook.com/timwoorkDotCom" rel="noreferrer" target="_blank" className="social-link bt-facebook">
+                    <a href="https://www.facebook.com/timWorkDotCom" rel="noreferrer" target="_blank" className="social-link bt-facebook">
                         <i className="fab fa-facebook"></i>
                     </a>
                 </li>

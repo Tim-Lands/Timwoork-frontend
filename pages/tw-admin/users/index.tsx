@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
-import { Result } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Image from "next/image";
+import { Table } from 'antd';
 
 function index() {
     const [postsList, setPostsList] = useState([])
@@ -15,7 +15,51 @@ function index() {
     const [isLoading, setIsLoading] = useState(false)
 
     const token = Cookies.get('token_dash')
+    const columns: any = [
+        {
+            title: 'الاسم الكامل',
+            dataIndex: ["profile"],
+            render: (profile: any) => (
+                <Link href={`/u/${profile.id}`}>
+                    <a className="flex-center">
+                        <Image src={`${profile.avatar_url}`} width={20} height={20} />
+                        <span className="me-1">{(!profile.full_name || profile.full_name == '') ? 'بدون اسم' : profile.full_name}</span>
+                    </a>
+                </Link>
+            ),
+            sorter: {
+                compare: (a, b) => a.profile.full_name - b.profile.full_name,
+                multiple: 3,
+            },
+            ellipsis: true,
+        },
+        {
+            title: 'البريد الإلكتروني',
+            //className: 'column-money',
+            dataIndex: "email",
+            key: 'email',
+            sorter: {
+                compare: (a, b) => a.email - b.email,
+                multiple: 2,
+            },
+            onFilter: (value, record) => record.name.includes(value),
+            ellipsis: true,
+        },
+        {
+            title: 'تاريخ التسجيل',
+            //className: 'column-money',
+            dataIndex: "created_at",
+            key: 'created_at',
+            render: date => <LastSeen date={date} />,
+            sorter: {
+                compare: (a, b) => a.created_at - b.created_at,
+                multiple: 1,
+            },
+            ellipsis: true,
+        },
+    ];
 
+    const data = postsList && postsList;
     const refreshData = async () => {
         setIsLoading(true)
         try {
@@ -25,7 +69,7 @@ function index() {
             if (res) {
                 setIsLoading(false)
                 setPostsList(res.data.data)
-                setIsError(false)                
+                setIsError(false)
             }
         } catch (error) {
             setIsError(true)
@@ -36,16 +80,6 @@ function index() {
     useEffect(() => {
         refreshData()
     }, [])
-    const catVariants = {
-        visible: (i: number) => ({
-            opacity: 1,
-            y: 0,
-            transition: {
-                delay: i * 0.072,
-            },
-        }),
-        hidden: { opacity: 0, y: 9 },
-    }
     // Return statement.
     return (
         <>
@@ -53,53 +87,22 @@ function index() {
                 <div className="timlands-panel-header d-flex align-items-center">
                     <h2 className="title"><span className="material-icons material-icons-outlined">people</span>إدارة الأعضاء</h2>
                 </div>
-
-                <div className="timlands-table">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>العنوان</th>
-                                <th className="hidden-tem">البريد الإلكتروني</th>
-                                <th className="hidden-tem">تلريخ التسجيل</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {postsList && postsList.map((e: any, i) => (
-                                <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
-                                    <td>
-                                        <Link href={`/u/${e.username}`}>
-                                            <a className="flex-center">
-                                                <Image src={`${e.profile.avatar_url}`} width={20} height={20} />
-                                                <span className="me-1">{(!e.profile.full_name || e.profile.full_name == '') ? 'بدون اسم' : e.profile.full_name}</span>
-                                            </a>
-                                        </Link>
-                                    </td>
-                                    <td className="hidden-tem">{e.email}</td>
-                                    <td className="hidden-tem" title={e.created_at}><LastSeen date={e.created_at} /></td>
-                                    
-                                </motion.tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {postsList && postsList.length == 0 &&
-                        <Result
-                            status="404"
-                            title="لا يوجد خدمات"
-                            subTitle="في هذه الحالة لاتوجد خدمات"
-                        />}
-
-                    {isError &&
-                        <Alert type="error">
-                            <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
-                        </Alert>}
-                    {isLoading &&
-                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </motion.div>
-                    }
-                </div>
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    bordered
+                />
+                {isError &&
+                    <Alert type="error">
+                        <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
+                    </Alert>}
+                {isLoading &&
+                    <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </motion.div>
+                }
             </div>
         </>
     );

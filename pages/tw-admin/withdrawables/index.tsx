@@ -13,19 +13,6 @@ function index(): ReactElement {
     const [isLoading, setIsLoading] = useState(false)
 
     const token = Cookies.get('token_dash')
-
-    const AcceptAmount = async (id: any) => {
-        try {
-            const res: any = await API.post(`dashboard/withdrawals/${id}/accept`, null, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-            if (res.status === 200) {
-                refreshData()
-            }
-        } catch (error) {
-            setIsError(true)
-        }
-    }
     const refreshData = async () => {
         setIsLoading(true)
         try {
@@ -45,6 +32,7 @@ function index(): ReactElement {
     useEffect(() => {
         refreshData()
     }, [])
+
     const catVariants = {
         visible: (i: number) => ({
             opacity: 1,
@@ -68,6 +56,8 @@ function index(): ReactElement {
                             <tr>
                                 <th>المبلغ</th>
                                 <th>التاريخ</th>
+                                <th>صاحب السحب</th>
+                                <th>رصيده القابل للسحب</th>
                                 <th>الأدوات</th>
                             </tr>
                         </thead>
@@ -76,19 +66,9 @@ function index(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.amount}</td>
                                     <td><LastSeen date={e.created_at} /></td>
+                                    <td>{e.withdrawalable.profile.full_name}</td>
+                                    <td>{e.withdrawalable.profile.withdrawable_amount}</td>
                                     <td>
-                                        <button
-                                            className="btn butt-xs butt-green mx-1"
-                                            onClick={() => AcceptAmount(e.id)}
-                                        >
-قبول                                            
-                                        </button>
-                                        <button
-                                            className="btn butt-xs butt-red mx-1"
-                                            onClick={() => AcceptAmount(e.id)}
-                                        >
-رفض
-                                        </button>
                                         <Link href={`/tw-admin/withdrawables/${e.id}`}>
                                             <a> تفاصيل</a>
                                         </Link>
