@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Link from "next/link";
+const APIURL = 'https://api.icoursat.com/products/thumbnails/'
 
 function Post({
     title,
