@@ -13,7 +13,7 @@ function Post({
     slug,
     rate = 2,
 }): ReactElement {
-    const thumbnailUrl = `url(${thumbnail})`;
+    const thumbnailUrl = `url(${APIURL}${thumbnail})`;
     const sizeClass = () => {
         switch (size) {
             case 'small':
