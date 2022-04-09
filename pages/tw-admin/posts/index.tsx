@@ -16,7 +16,19 @@ function index(): ReactElement {
     const [isLoading, setIsLoading] = useState(false)
 
     const token = Cookies.get('token_dash')
+    const columns: any = [
+        {
+            title: 'العنوان',
+            dataIndex: ["profile"],
+            render: (profile: any) => {
+                console.log(profile);
+                
+            },
+            ellipsis: true,
+        },
+    ];
 
+    const data = postsList && postsList;
     const refreshData = async () => {
         setIsLoading(true)
         try {
