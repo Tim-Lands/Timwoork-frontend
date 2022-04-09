@@ -25,7 +25,7 @@ function Navbar(): ReactElement {
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const pusher = new Pusher('510f53f8ccb3058a96fc', {
         cluster: 'eu',
-        authEndpoint: 'https://api.icoursat.com/api/broadcasting/auth',
+        authEndpoint: 'https://api.timwoork.com/api/broadcasting/auth',
         forceTLS: true,
         auth: token ? {
             headers: {
