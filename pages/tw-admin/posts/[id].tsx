@@ -138,7 +138,7 @@ function Id({ query, stars, errorFetch }) {
             return duration + ' يوم '
         }
     }
-    const APIURL2 = 'https://api.timwoork.com/products/galaries-images/'
+    const APIURL2 = 'https://timwoork-space.ams3.digitaloceanspaces.com/products/galaries-images/'
     return (
         <>
             {!ProductData && <Loading />}
