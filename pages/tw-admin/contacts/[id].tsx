@@ -1,8 +1,5 @@
-import { Alert } from "@/components/Alert/Alert";
-import { motion } from "framer-motion";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import Cookies from 'js-cookie'
 import PropTypes from "prop-types";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
