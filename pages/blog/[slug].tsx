@@ -108,7 +108,7 @@ User.getLayout = function getLayout(page: any): ReactElement {
     )
 }
 export async function getServerSideProps({ query }) {
-    const uriString = encodeURI(`https://www.icoursat.com/blog-timwoork-com/wp-json/wp/v2/posts/?slug=${query.slug}`)
+    const uriString = encodeURI(`https://www.timwoork.com/blog-timwoork-com/wp-json/wp/v2/posts/?slug=${query.slug}`)
     // Fetch data from external API
     const res = await API.get(uriString)
   

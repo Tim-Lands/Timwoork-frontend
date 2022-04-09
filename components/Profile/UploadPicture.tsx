@@ -31,7 +31,7 @@ export default function UploadPicture({ token, avatarPicture }) {
         const fd: any = new FormData()
         fd.append('avatar', picture)
         fd.append('steps', 2)
-        API.post('https://api.icoursat.com/api/profiles/step_two', fd, config)
+        API.post('https://api.timwork.com/api/profiles/step_two', fd, config)
             .then(res => {
                 console.log(res);
 

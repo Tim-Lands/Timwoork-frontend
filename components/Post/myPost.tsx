@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 
-const APIURL = 'https://api.icoursat.com/products/thumbnails/'
+const APIURL = 'https://api.timwoork.com/products/thumbnails/'
 function Post({
     title,
     thumbnail,
