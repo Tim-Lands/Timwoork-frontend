@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion';
 import { Field, Form, Formik } from 'formik';
 import Loading from '@/components/Loading';
+import router from 'next/router';
 function Token({ query }) {
     const [isError, setIsError] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
@@ -29,6 +30,7 @@ function Token({ query }) {
                 setIsError(false)
                 setIsSuccess(true)
                 setIsLoading(false)
+                router.push('/login')
             }
         } catch (error) {
             setIsSuccess(false)
