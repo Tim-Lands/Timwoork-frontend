@@ -218,80 +218,13 @@ function index(): ReactElement {
                     dataSource={data}
                     bordered
                 />
-                <div className="timlands-table">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>العنوان</th>
-                                <th className="hidden-tem">الحالة</th>
-                                <th className="hidden-tem">التاريخ</th>
-                                <th>صاحب الخدمة</th>
-                                <th>الأدوات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {postsList && postsList.map((e: any, i) => (
-                                <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
-                                    <td>
-                                        <Link href={`/tw-admin/posts/${e.id}`}>
-                                            <a>
-                                                {e.title}
-                                            </a>
-                                        </Link>
-                                    </td>
-                                    <td className="hidden-tem">{switchStatus(e.status)}</td>
-                                    <td className="hidden-tem" title={e.created_at}><LastSeen date={e.created_at} /></td>
-                                    <td title={e.profile_seller.profile.full_name}>
-                                        <Link href={`/u/${e.profile_seller.profile.user.username}`}>
-                                            <a>
-                                                {e.profile_seller.profile.full_name}
-                                            </a>
-                                        </Link>
-                                    </td>
-                                    <td className="tools-col">
-                                        {(e.status == 0 || e.status == null) ?
-                                            <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(e.id)} className="table-del green">
-                                                <span className="material-icons material-icons-outlined">
-                                                    check
-                                                </span>
-                                            </button> : ''
-                                        }
-                                        {(e.status == 1) ?
-                                            <button title="تعطيل هذه الخدمة" onClick={() => rejectProduct(e.id)} className="table-del warning">
-                                                <span className="material-icons material-icons-outlined">
-                                                    cancel
-                                                </span>
-                                            </button> : ''
-                                        }
-                                        <button title="حذف هذه الخدمة" className="table-del error" onClick={() => deleteHandle(e.id)}>
-                                            <span className="material-icons material-icons-outlined">
-                                                delete
-                                            </span>
-                                        </button>
-                                    </td>
-                                </motion.tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {postsList && postsList.length == 0 &&
-                        <Result
-                            status="404"
-                            title="لا يوجد خدمات"
-                            subTitle="في هذه الحالة لاتوجد خدمات"
-                        />}
-
-                    {isError &&
-                        <Alert type="error">
-                            <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
-                        </Alert>}
-                    {isLoading &&
-                        <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </motion.div>
-                    }
-                </div>
+                {isLoading &&
+                    <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </motion.div>
+                }
             </div>
         </>
     );
