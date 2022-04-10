@@ -17,7 +17,7 @@ function index() {
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
 
     const myLoader = () => {
-        return `${userInfo.user_details.profile.avatar_url}`;
+        return `${userInfo.user_details.profile.avatar_path}`;
     }
     useEffect(() => {
         if (!token) {
@@ -62,7 +62,7 @@ function index() {
                                             <div className="profile-content-avatar">
                                                 <Image
                                                     loader={myLoader}
-                                                    src={userInfo && userInfo.user_details.profile.avatar_url}
+                                                    src={userInfo && userInfo.user_details.profile.avatar_path}
                                                     quality={1}
                                                     width={120}
                                                     height={120}

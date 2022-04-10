@@ -22,7 +22,7 @@ function index() {
             render: (profile: any) => (
                 <Link href={`/u/${profile.id}`}>
                     <a className="flex-center">
-                        <Image src={`${profile.avatar_url}`} width={20} height={20} />
+                        <Image src={`${profile.avatar_path}`} width={20} height={20} />
                         <span className="me-1">{(!profile.full_name || profile.full_name == '') ? 'بدون اسم' : profile.full_name}</span>
                     </a>
                 </Link>

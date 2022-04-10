@@ -16,7 +16,7 @@ const User = ({ query, stars }) => {
     const User = userInfo && userInfo.data
     const APIURL = ''
     const myLoader = () => {
-        return `${APIURL}${User.profile.avatar_url}`;
+        return `${APIURL}${User.profile.avatar_path}`;
     }
     return (
         <div className="py-3 mt-3">
@@ -24,7 +24,7 @@ const User = ({ query, stars }) => {
                 title={stars.data.profile.full_name}
                 metaDescription={stars.data.profile.profile_seller && stars.data.profile.profile_seller.bio}
                 ogDescription={stars.data.profile.profile_seller && stars.data.profile.profile_seller.bio}
-                ogImage={stars.data.profile.avatar_url}
+                ogImage={stars.data.profile.avatar_path}
                 ogUrl={`https://timwoork.com/u/${stars.data.username}`}
             />
             {!userInfo && <Loading />}
@@ -47,11 +47,11 @@ const User = ({ query, stars }) => {
                                 <div className="profile-content-header">
                                     <Badge color={User.status == 0 ? '#ccc' : 'green'} count={User.status == 0 ? "غير متصل" : "متصل"} offset={[10, 10]} >
                                         <div className="profile-content-avatar">
-                                            {User.profile.avatar_url == 'avatar.png' ?
+                                            {User.profile.avatar_path == 'avatar.png' ?
                                                 <Image src="/avatar2.jpg" width={120} height={120} /> :
                                                 <Image
                                                     loader={myLoader}
-                                                    src={APIURL + User.profile.avatar_url}
+                                                    src={APIURL + User.profile.avatar_path}
                                                     quality={1}
                                                     width={120}
                                                     height={120}

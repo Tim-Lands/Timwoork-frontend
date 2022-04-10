@@ -298,7 +298,7 @@ function Navbar(): ReactElement {
         </Menu>
     )
     const myLoader = () => {
-        return `${userData && userData.user_details.profile.avatar_url}`;
+        return `${userData && userData.user_details.profile.avatar_path}`;
     }
     const darkMode = userData && userData.user_details.profile.dark_mode
     return (
@@ -479,7 +479,7 @@ function Navbar(): ReactElement {
                                                         }}>
                                                         <ImageLogo
                                                             loader={myLoader}
-                                                            src={userData.user_details.profile.avatar_url}
+                                                            src={userData.user_details.profile.avatar_path}
                                                             quality={60}
                                                             width={32}
                                                             height={32}

@@ -40,7 +40,7 @@ const personalInformations = () => {
                     <div className="row justify-content-md-center">
                         <div className="col-lg-9">
                             <div className="my-3">
-                                <UploadPicture token={token} avatarPicture={userInfo.user_details.profile.avatar_url} />
+                                <UploadPicture token={token} avatarPicture={userInfo.user_details.profile.avatar_path} />
                             </div>
                             <Formik
                                 isInitialValid={true}

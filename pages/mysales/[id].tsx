@@ -570,7 +570,7 @@ const User = ({ query }) => {
                                                     <a className="order-user-info d-flex flex-center">
                                                         <div className="order-user-avatar">
                                                             <img
-                                                                src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
+                                                                src={ShowItem && ShowItem.data.profile_seller.profile.avatar_path}
                                                                 width={50}
                                                                 height={50}
                                                             />
@@ -593,7 +593,7 @@ const User = ({ query }) => {
                                                     <a className="order-user-info d-flex flex-center">
                                                         <div className="order-user-avatar">
                                                             <img
-                                                                src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
+                                                                src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_path}
                                                                 width={50}
                                                                 height={50}
                                                             />
@@ -681,7 +681,7 @@ const User = ({ query }) => {
                                                                 className={(ShowItem && ShowItem.data.profile_seller.id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
                                                                 style={{ marginBlock: 6, borderRadius: 6 }}>
                                                                 <div className="item-avatar" style={{ marginInline: 6 }}>
-                                                                    <img src={item.user.profile.avatar_url} width={45} height={45} className="rounded-pill" alt="" />
+                                                                    <img src={item.user.profile.avatar_path} width={45} height={45} className="rounded-pill" alt="" />
                                                                 </div>
 
                                                                 <div className="item-content">

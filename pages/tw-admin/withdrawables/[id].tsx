@@ -226,7 +226,7 @@ function Id({ query }) {
                                     <td>
                                         <Link href={`/u/${getData && getData.data.withdrawalable.profile.user_id}`}>
                                             <a>
-                                                <img width={20} height={20} style={{ marginInline: 4, borderRadius: '50%' }} src={getData && getData.data.withdrawalable.profile.avatar_url} alt={getData && getData.data.withdrawalable.profile.full_name} />
+                                                <img width={20} height={20} style={{ marginInline: 4, borderRadius: '50%' }} src={getData && getData.data.withdrawalable.profile.avatar_path} alt={getData && getData.data.withdrawalable.profile.full_name} />
                                                 {getData && getData.data.withdrawalable.profile.full_name}
                                             </a>
                                         </Link>

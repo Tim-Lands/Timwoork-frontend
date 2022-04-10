@@ -35,7 +35,7 @@ function Profile() {
             </div>
         </div>)
     const myLoader = () => {
-        return `${userInfo.user_details.profile.avatar_url}`;
+        return `${userInfo.user_details.profile.avatar_path}`;
     }
     const [statusType, setStatusType] = useState('')
     const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
@@ -91,7 +91,7 @@ function Profile() {
                                         <div className="profile-content-avatar">
                                             <Image
                                                 loader={myLoader}
-                                                src={userInfo && userInfo.user_details.profile.avatar_url}
+                                                src={userInfo && userInfo.user_details.profile.avatar_path}
                                                 quality={1}
                                                 width={120}
                                                 height={120}

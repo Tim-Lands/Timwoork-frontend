@@ -60,7 +60,7 @@ function index() {
                                         type={e.data.type}
                                         item_id={e.data.content.item_id}
                                         to={e.data.to}
-                                        avatar={e.data.user_sender.avatar_url}
+                                        avatar={e.data.user_sender.avatar_path}
                                         created_at={e.created_at}
                                         product_title={e.data.content.title}
                                         slug={e.data.content.slug}

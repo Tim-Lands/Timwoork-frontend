@@ -179,7 +179,7 @@ function Conversation({ query }) {
                                                         className={(profileInfo && profileInfo.user_details.id == item.user.id ? '' : 'recieved ') + "d-flex message-item " + switchTypeMessage(item.type)}
                                                         style={{ marginBlock: 9 }}>
                                                         <div className="item-avatar" style={{ marginInline: 9 }}>
-                                                            <img src={item.user.profile.avatar_url} width={60} height={60} className="rounded-pill" alt="" />
+                                                            <img src={item.user.profile.avatar_path} width={60} height={60} className="rounded-pill" alt="" />
                                                         </div>
 
                                                         <div className="item-content">

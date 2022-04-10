@@ -10,7 +10,7 @@ function index({ comments }) {
                             {comments.map((e: any) => (
                                 <CommentPost
                                     key={e.id}
-                                    avatar={e.user.profile.avatar_url}
+                                    avatar={e.user.profile.avatar_path}
                                     rating={e.rating}
                                     replies={e.reply}
                                     time={e.created_at}

@@ -165,13 +165,13 @@ function Id({ query, stars, errorFetch }) {
                                                     <a className="user-link">
                                                         <Image
                                                             className="circular-center tiny-size"
-                                                            src={ProductData.data.profile_seller.profile.avatar_url}
+                                                            src={ProductData.data.profile_seller.profile.avatar_path}
                                                             quality={80}
                                                             width={32}
                                                             height={32}
                                                             alt={ProductData.data.profile_seller.profile.full_name}
                                                             placeholder='blur'
-                                                            blurDataURL={ProductData.data.profile_seller.profile.avatar_url}
+                                                            blurDataURL={ProductData.data.profile_seller.profile.avatar_path}
                                                         />
                                                         <span className="pe-2">
                                                             {ProductData.data.profile_seller.profile.full_name}
@@ -249,12 +249,12 @@ function Id({ query, stars, errorFetch }) {
                                                         <div className="seller-info-avatar">
                                                             <Image
                                                                 className="circular-img huge-size"
-                                                                src={ProductData && ProductData.data.profile_seller.profile.avatar_url}
+                                                                src={ProductData && ProductData.data.profile_seller.profile.avatar_path}
                                                                 quality={80}
                                                                 width={100}
                                                                 alt={ProductData.data.profile_seller.profile.full_name}
                                                                 placeholder='blur'
-                                                                blurDataURL={ProductData.data.profile_seller.profile.avatar_url}
+                                                                blurDataURL={ProductData.data.profile_seller.profile.avatar_path}
                                                                 height={100}
                                                             />
                                                         </div>

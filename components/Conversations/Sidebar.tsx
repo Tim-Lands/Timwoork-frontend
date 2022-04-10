@@ -46,7 +46,7 @@ function Sidebar({ RouterId }) {
                                 <a>
                                     <div className="conv-item-inner">
                                         <div className="conv-item-head">
-                                            <img width={50} height={50} src={item.members[0].profile.avatar_url} alt="Abdelhamid Boumegouas" />
+                                            <img width={50} height={50} src={item.members[0].profile.avatar_path} alt="Abdelhamid Boumegouas" />
                                         </div>
                                         <div className="conv-item-body">
                                             <h3 className="user-title">

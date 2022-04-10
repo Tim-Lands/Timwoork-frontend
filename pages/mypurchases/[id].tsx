@@ -359,7 +359,7 @@ const Order = ({ query }) => {
                                             <a className="order-user-info d-flex flex-center">
                                                 <div className="order-user-avatar">
                                                     <Image
-                                                        src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_url}
+                                                        src={ShowItem && ShowItem.data.order.cart.user.profile.avatar_path}
                                                         width={50}
                                                         height={50}
                                                         quality={80}
@@ -382,7 +382,7 @@ const Order = ({ query }) => {
                                             <a className="order-user-info d-flex flex-center">
                                                 <div className="order-user-avatar">
                                                     <Image
-                                                        src={ShowItem && ShowItem.data.profile_seller.profile.avatar_url}
+                                                        src={ShowItem && ShowItem.data.profile_seller.profile.avatar_path}
                                                         width={50}
                                                         height={50}
                                                         quality={80}
@@ -523,7 +523,7 @@ const Order = ({ query }) => {
                                                         style={{ marginBlock: 6, borderRadius: 6 }}>
                                                         <div className="item-avatar" style={{ marginInline: 6 }}>
                                                             <Image
-                                                                src={item.user.profile.avatar_url}
+                                                                src={item.user.profile.avatar_path}
                                                                 width={45}
                                                                 height={45}
                                                                 quality={80}

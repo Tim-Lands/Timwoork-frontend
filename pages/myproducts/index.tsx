@@ -40,7 +40,7 @@ function index() {
             </div>
         </div>)
     const myLoader = () => {
-        return `${userInfo.user_details.profile.avatar_url}`;
+        return `${userInfo.user_details.profile.avatar_path}`;
     }
     return (
         <div className="py-3">
@@ -57,11 +57,11 @@ function index() {
                             <div className="profile-content-header">
                                 <Badge color={'green'} count="متصل" offset={[10, 10]} >
                                     <div className="profile-content-avatar">
-                                        {userInfo.user_details.profile.avatar_url == 'avatar.png' ?
+                                        {userInfo.user_details.profile.avatar_path == 'avatar.png' ?
                                             <Image src="/avatar2.jpg" width={120} height={120} /> :
                                             <Image
                                                 loader={myLoader}
-                                                src={userInfo.user_details.profile.avatar_url}
+                                                src={userInfo.user_details.profile.avatar_path}
                                                 quality={1}
                                                 width={120}
                                                 height={120}
