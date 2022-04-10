@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
-import { Result } from "antd";
+import { Result, Table } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Swal from 'sweetalert2'
@@ -16,7 +16,78 @@ function index(): ReactElement {
     const [isLoading, setIsLoading] = useState(false)
 
     const token = Cookies.get('token_dash')
+    const columns: any = [
+        {
+            title: 'العنوان',
+            dataIndex: "",
+            render: (profile: any) => (
+                <Link href={`/tw-admin/posts/${profile.id}`}>
+                    <a>
+                        {profile.title}
+                    </a>
+                </Link>
+            ),
+            ellipsis: true,
+        },
+        {
+            title: 'الحالة',
+            dataIndex: ["status"],
+            render: (status: any) => (
+                switchStatus(status)
+            ),
+            ellipsis: true,
+        },
+        {
+            title: 'التاريخ',
+            dataIndex: ["created_at"],
+            render: (created_at: any) => (
+                <LastSeen date={created_at} />
+            ),
+            ellipsis: true,
+        },
+        {
+            title: 'صاحب الخدمة',
+            dataIndex: ["profile_seller"],
+            render: (seller: any) => (
+                <Link href={`/u/${seller.profile.user.username}`}>
+                    <a>
+                        {seller.profile.full_name}
+                    </a>
+                </Link>
+            ),
+            ellipsis: true,
+        },
+        {
+            title: 'صاحب الخدمة',
+            dataIndex: "",
+            render: (tes: any) => (
+                <>
+                    {(tes.status == 0 || tes.status == null) ?
+                        <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(tes.id)} className="table-del green">
+                            <span className="material-icons material-icons-outlined">
+                                check
+                            </span>
+                        </button> : ''
+                    }
+                    {(tes.status == 1) ?
+                        <button title="تعطيل هذه الخدمة" onClick={() => rejectProduct(tes.id)} className="table-del warning">
+                            <span className="material-icons material-icons-outlined">
+                                cancel
+                            </span>
+                        </button> : ''
+                    }
+                    <button title="حذف هذه الخدمة" className="table-del error" onClick={() => deleteHandle(tes.id)}>
+                        <span className="material-icons material-icons-outlined">
+                            delete
+                        </span>
+                    </button>
+                </>
+            ),
+            ellipsis: true,
+        },
+    ];
 
+    const data = postsList && postsList;
     //const data = postsList && postsList;
     const refreshData = async () => {
         setIsLoading(true)
@@ -142,6 +213,11 @@ function index(): ReactElement {
                 <div className="timlands-panel-header">
                     <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إدارة الخدمات</h2>
                 </div>
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    bordered
+                />
                 <div className="timlands-table">
                     <table className="table">
                         <thead>

@@ -3,20 +3,60 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PropTypes from "prop-types";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
+import LastSeen from "@/components/LastSeen";
 
 function Id({ query }): ReactElement {
-    //const [postsList, setPostsList] = useState([])
     const { data: postsList }: any = useSWR(`dashboard/contacts/${query.id}`)
-    // Return statement.
     return (
         <>
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إدارة الخدمات</h2>
+                    <h2 className="title">{postsList && postsList.data.subject}</h2>
                 </div>
                 <div className="timlands-table">
 
                     {!postsList && <Loading />}
+                    <table className="table">
+                        <tbody>
+                            <tr>
+                                <th>وقت الرسالة</th>
+                                <td><LastSeen date={postsList && postsList.data.created_at} /></td>
+                            </tr>
+                            <tr>
+                                <th>صاحب الرسالة</th>
+                                <td>{postsList && postsList.data.full_name}</td>
+                            </tr>
+                            <tr>
+                                <th>البريد الإلكتروني</th>
+                                <td>{postsList && postsList.data.email}</td>
+                            </tr>
+                            <tr>
+                                <th>موقع الأيبي</th>
+                                <td>{postsList && postsList.data.ip_client}</td>
+                            </tr>
+                            <tr>
+                                <th>عنوان الرسالة</th>
+                                <td>{postsList && postsList.data.subject}</td>
+                            </tr>
+                            <tr>
+                                <th>وقت الرسالة</th>
+                                <td>{postsList && postsList.data.email}</td>
+                            </tr>
+                            <tr>
+                                <th>نوع الرسالة</th>
+                                <td>{(postsList && postsList.data.type_message == 0) ? 'استفسار' : 'شكوى' }</td>
+                            </tr>
+                            <tr>
+                                <th>رابط الرسالة</th>
+                                <td>{postsList && postsList.data.url}</td>
+                            </tr>
+                            <tr>
+                                <th>نص الرسالة</th>
+                                <td>{postsList && postsList.data.message}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </>
