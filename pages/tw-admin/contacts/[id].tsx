@@ -3,7 +3,6 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PropTypes from "prop-types";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
-import LastSeen from "@/components/LastSeen";
 
 function Id({ query }): ReactElement {
     const { data: postsList }: any = useSWR(`dashboard/contacts/${query.id}`)
