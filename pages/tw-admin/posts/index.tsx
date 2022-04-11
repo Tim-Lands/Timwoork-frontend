@@ -1,10 +1,9 @@
-import { Alert } from "@/components/Alert/Alert";
 import API from '../../../config';
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
-import { Result, Table } from "antd";
+import {  Table } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Swal from 'sweetalert2'
@@ -12,7 +11,6 @@ import withReactContent from 'sweetalert2-react-content'
 
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
-    const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const token = Cookies.get('token_dash')
@@ -99,10 +97,8 @@ function index(): ReactElement {
                 setIsLoading(false)
                 setPostsList(res.data.data)
 
-                setIsError(false)
             }
         } catch (error) {
-            setIsError(true)
             setIsLoading(false)
         }
     }
@@ -145,7 +141,6 @@ function index(): ReactElement {
                         refreshData()
                     }
                 } catch (error) {
-                    setIsError(true)
                     setIsLoading(false)
                 }
                 refreshData()
@@ -164,16 +159,6 @@ function index(): ReactElement {
     useEffect(() => {
         refreshData()
     }, [])
-    const catVariants = {
-        visible: (i: number) => ({
-            opacity: 1,
-            y: 0,
-            transition: {
-                delay: i * 0.072,
-            },
-        }),
-        hidden: { opacity: 0, y: 9 },
-    }
     const activateProduct = async (id: any) => {
         setIsLoading(true)
         try {
@@ -182,11 +167,9 @@ function index(): ReactElement {
             })
             if (res) {
                 setIsLoading(false)
-                setIsError(false)
                 refreshData()
             }
         } catch (error) {
-            setIsError(true)
             setIsLoading(false)
         }
     }
@@ -198,11 +181,9 @@ function index(): ReactElement {
             })
             if (res) {
                 setIsLoading(false)
-                setIsError(false)
                 refreshData()
             }
         } catch (error) {
-            setIsError(true)
             setIsLoading(false)
         }
     }

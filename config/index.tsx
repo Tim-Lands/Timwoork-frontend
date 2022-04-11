@@ -1,5 +1,5 @@
 import axios from "axios";
 export default axios.create({
-    baseURL: 'https://api.timwoork.com', //api.timwoork.com
+    baseURL: 'https://api.timwoork.com/', //api.timwoork.com
     withCredentials: true,
 });
