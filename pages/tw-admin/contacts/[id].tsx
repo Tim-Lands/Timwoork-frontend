@@ -7,20 +7,20 @@ import LastSeen from "@/components/LastSeen";
 
 function Id({ query }): ReactElement {
     const { data: postsList }: any = useSWR(`dashboard/contacts/${query.id}`)
+
     return (
         <>
             <div className="timlands-panel">
+                {!postsList && <Loading />}
                 <div className="timlands-panel-header">
                     <h2 className="title">{postsList && postsList.data.subject}</h2>
                 </div>
                 <div className="timlands-table">
-
-                    {!postsList && <Loading />}
                     <table className="table">
                         <tbody>
-                            <tr>
-                                <th>وقت الرسالة</th>
-                                <td><LastSeen date={postsList && postsList.data.created_at} /></td>
+                             <tr>
+                                <th>تاريخ الرسالة</th>
+                                <td>{postsList && postsList.data.created_at}</td>
                             </tr>
                             <tr>
                                 <th>صاحب الرسالة</th>
@@ -44,7 +44,7 @@ function Id({ query }): ReactElement {
                             </tr>
                             <tr>
                                 <th>نوع الرسالة</th>
-                                <td>{(postsList && postsList.data.type_message == 0) ? 'استفسار' : 'شكوى' }</td>
+                                <td>{(postsList && postsList.data.type_message == 0) ? 'استفسار' : 'شكوى'}</td>
                             </tr>
                             <tr>
                                 <th>رابط الرسالة</th>
