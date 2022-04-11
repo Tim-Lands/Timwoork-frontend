@@ -40,38 +40,6 @@
                 &.tools-col {
                     display: flex;
                     padding-block: 4px;
-                    .table-del {
-                        display: flex;
-                        background-color: #fff;
-                        width: 30px;
-                        height: 30px;
-                        color: #555;
-                        border-radius: 50%;
-                        margin-left: 4px;
-                        align-items: center;
-                        align-content: center;
-                        border: 1px solid #f6f6f6;
-                        &:hover {
-                            background-color: #f6f6f6;
-                            color: #000;
-                            transition: all 0.3s;
-                        }
-                        .material-icons {
-                            font-size: 15px;
-                        }
-                        &.error {
-                            color: rgb(216, 44, 44);
-                            border: 1px solid #fdb1b1;
-                        }
-                        &.warning {
-                            color: rgb(189, 170, 0);
-                            border: 1px solid #fdfcb1;
-                        }
-                        &.green {
-                            color: rgb(16, 153, 46);
-                            border: 1px solid #b1fdca;
-                        }
-                    }
                 }
             }
         }
@@ -104,7 +72,38 @@
         top: 0;
     }
 }
-
+.table-del {
+    display: flex;
+    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    color: #555;
+    border-radius: 50%;
+    margin-left: 4px;
+    align-items: center;
+    align-content: center;
+    border: 1px solid #f6f6f6;
+    &:hover {
+        background-color: #f6f6f6;
+        color: #000;
+        transition: all 0.3s;
+    }
+    .material-icons {
+        font-size: 15px;
+    }
+    &.error {
+        color: rgb(216, 44, 44);
+        border: 1px solid #fdb1b1;
+    }
+    &.warning {
+        color: rgb(189, 170, 0);
+        border: 1px solid #fdfcb1;
+    }
+    &.green {
+        color: rgb(16, 153, 46);
+        border: 1px solid #b1fdca;
+    }
+}
 /*
 ------------------------------------------------------------------------------------------------------
     Filter content
