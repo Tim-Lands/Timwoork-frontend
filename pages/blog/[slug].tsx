@@ -4,7 +4,6 @@ import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
 import API from '../../config'
-
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Post from '@/components/Post/blogPost';

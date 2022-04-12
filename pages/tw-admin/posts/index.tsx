@@ -208,9 +208,10 @@ function index(): ReactElement {
             const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, {cause}, {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            if (res) {
+            if (res.status === 200) {
                 setIsLoading(false)
                 refreshData()
+                setIsModalVisible(false)
             }
         } catch (error) {
             setIsLoading(false)

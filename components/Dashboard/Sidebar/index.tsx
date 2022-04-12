@@ -33,6 +33,12 @@ const sidebarLinks = [
         href: '/tw-admin/withdrawables',
     },
     {
+        id: 12,
+        name: 'بوابات الدفع',
+        icon: 'payments',
+        href: '/tw-admin/payments',
+    },
+    {
         id: 6,
         name: 'إدارة المحتوى',
         icon: 'event_note',
