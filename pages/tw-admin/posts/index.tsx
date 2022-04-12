@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
-import {  Space, Table } from "antd";
+import { Modal, Space, Table } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Swal from 'sweetalert2'
@@ -11,42 +11,43 @@ import withReactContent from 'sweetalert2-react-content'
 
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
+    const [cause, setCause] = useState('')
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const rejectHandle = (id) => {
-        const MySwal = withReactContent(Swal)
-
-        const swalWithBootstrapButtons = MySwal.mixin({
-            customClass: {
-                confirmButton: 'btn butt-red butt-sm me-1',
-                cancelButton: 'btn butt-green butt-sm'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد رفض هذه الخدمة ",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'نعم, أريد رفض الخدمة',
-            cancelButtonText: 'لا',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res: any = API.post(`dashboard/products/${id}/rejectProduct`)
-                    if (res) {
-                        refreshData()
-                    }
-                } catch (error) {
-                    setIsLoading(false)
-                }
-                refreshData()
-            }
-        })
-
-    }
     const token = Cookies.get('token_dash')
+
+    const [validationsErrors, setValidationsErrors]: any = useState({})
+
+    const data = postsList && postsList;
+    //const data = postsList && postsList;
+    const refreshData = async () => {
+        setIsLoading(true)
+        try {
+            const res: any = await API.get('dashboard/products', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (res.status === 200) {
+                setIsLoading(false)
+                setPostsList(res.data.data)
+            }
+        } catch (error) {
+            setIsLoading(false)
+            if (error.response && error.response.data && error.response.data.errors) {
+                setValidationsErrors(error.response.data.errors);
+            }
+        }
+    }
+
+    const switchStatus = (status) => {
+        switch (status) {
+            case null:
+                return (<span className="badge bg-warning text-dark">قيد الإنتظار</span>)
+            case 0:
+                return (<span className="badge bg-danger text-light">مرفوضة</span>)
+            case 1:
+                return (<span className="badge bg-success text-light">نشطة</span>)
+        }
+    }
     const columns: any = [
         {
             title: 'العنوان',
@@ -112,46 +113,36 @@ function index(): ReactElement {
                             delete
                         </span>
                     </button>
-                    <button title="رفض الخدمة" className="table-del error" onClick={() => rejectHandle(tes.id)}>
+                    <button title="رفض الخدمة" className="table-del warning" onClick={() => setIsModalVisible(true)}>
                         <span className="material-icons material-icons-outlined">
                             delete
                         </span>
                     </button>
+                    <Modal title="Basic Modal" visible={isModalVisible} onOk={() => rejectProduct(tes.id)} onCancel={() => setIsModalVisible(false)}>
+                        <div className="timlands-form">
+                            <label className="label-block" htmlFor="cause">أكتب سبب رفض الخدمة</label>
+                            <textarea
+                                id="cause"
+                                name="cause"
+                                value={cause}
+                                onChange={(e) => setCause(e.target.value)}
+                                placeholder="أكتب سبب رفض الخدمة"
+                                className="timlands-inputs"
+                                autoComplete="off"
+                            />
+                            {validationsErrors && validationsErrors.cause &&
+                                <div style={{ overflow: 'hidden' }}>
+                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                        <p className="text">{validationsErrors.cause[0]}</p>
+                                    </motion.div>
+                                </div>}
+                        </div>
+                    </Modal>
                 </Space>
             ),
             ellipsis: true,
         },
     ];
-
-    const data = postsList && postsList;
-    //const data = postsList && postsList;
-    const refreshData = async () => {
-        setIsLoading(true)
-        try {
-            const res: any = await API.get('dashboard/products', {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-            if (res) {
-                setIsLoading(false)
-                setPostsList(res.data.data)
-
-            }
-        } catch (error) {
-            setIsLoading(false)
-        }
-    }
-
-    const switchStatus = (status) => {
-        switch (status) {
-            case null:
-                return (<span className="badge bg-warning text-dark">قيد الإنتظار</span>)
-            case 0:
-                return (<span className="badge bg-danger text-light">مرفوضة</span>)
-            case 1:
-                return (<span className="badge bg-success text-light">نشطة</span>)
-        }
-    }
-
     const deleteHandle = (id) => {
         const MySwal = withReactContent(Swal)
 
@@ -214,7 +205,7 @@ function index(): ReactElement {
     const rejectProduct = async (id: any) => {
         setIsLoading(true)
         try {
-            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, {}, {
+            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, {cause}, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res) {
