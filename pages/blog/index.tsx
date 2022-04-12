@@ -8,8 +8,8 @@ import { MetaTags } from '@/components/SEO/MetaTags';
 
 function Category(): JSX.Element {
     const [categories, setCategories] = useState('')
-    const { data: getCategories }: any = useSWR('https://www.timwoork.com/blog-timwoork-com/wp-json/wp/v2/categories')
-    const { data: getPosts }: any = useSWR(`https://www.timwoork.com/blog-timwoork-com/wp-json/wp/v2/posts${categories}`)
+    const { data: getCategories }: any = useSWR('https://timwoork.net/wp-json/wp/v2/categories')
+    const { data: getPosts }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/posts${categories}`)
     return (
         <div>
             <MetaTags

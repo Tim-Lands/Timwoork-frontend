@@ -6,7 +6,7 @@ import Loading from "@/components/Loading";
 
 function Id({ query }): ReactElement {
     const { data: postsList }: any = useSWR(`dashboard/contacts/${query.id}`)
-
+    
     return (
         <>
             <div className="timlands-panel">

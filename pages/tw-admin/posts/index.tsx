@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from 'js-cookie'
-import {  Table } from "antd";
+import {  Space, Table } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Swal from 'sweetalert2'
@@ -12,7 +12,40 @@ import withReactContent from 'sweetalert2-react-content'
 function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const rejectHandle = (id) => {
+        const MySwal = withReactContent(Swal)
 
+        const swalWithBootstrapButtons = MySwal.mixin({
+            customClass: {
+                confirmButton: 'btn butt-red butt-sm me-1',
+                cancelButton: 'btn butt-green butt-sm'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل انت متأكد أنك تريد رفض هذه الخدمة ",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'نعم, أريد رفض الخدمة',
+            cancelButtonText: 'لا',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res: any = API.post(`dashboard/products/${id}/rejectProduct`)
+                    if (res) {
+                        refreshData()
+                    }
+                } catch (error) {
+                    setIsLoading(false)
+                }
+                refreshData()
+            }
+        })
+
+    }
     const token = Cookies.get('token_dash')
     const columns: any = [
         {
@@ -56,10 +89,10 @@ function index(): ReactElement {
             ellipsis: true,
         },
         {
-            title: 'صاحب الخدمة',
+            title: 'الأدوات',
             dataIndex: "",
             render: (tes: any) => (
-                <>
+                <Space>
                     {(tes.status == 0 || tes.status == null) ?
                         <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(tes.id)} className="table-del green">
                             <span className="material-icons material-icons-outlined">
@@ -79,7 +112,12 @@ function index(): ReactElement {
                             delete
                         </span>
                     </button>
-                </>
+                    <button title="رفض الخدمة" className="table-del error" onClick={() => rejectHandle(tes.id)}>
+                        <span className="material-icons material-icons-outlined">
+                            delete
+                        </span>
+                    </button>
+                </Space>
             ),
             ellipsis: true,
         },
