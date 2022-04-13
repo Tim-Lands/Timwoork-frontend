@@ -113,7 +113,13 @@ function index(): ReactElement {
                     <button title="رفض الخدمة" className="btn butt-xs2 butt-orange" onClick={() => setIsModalVisible(true)}>
                         رفض
                     </button>
-                    <Modal title="Basic Modal" visible={isModalVisible} onOk={() => rejectProduct(tes.id)} onCancel={() => setIsModalVisible(false)}>
+                    <Modal 
+                    title="Basic Modal" 
+                    visible={isModalVisible} 
+                    onOk={() => rejectProduct(tes.id)} 
+                    onCancel={() => setIsModalVisible(false)}
+                    okText={''}
+                    >
                         <div className="timlands-form">
                             <label className="label-block" htmlFor="cause">أكتب سبب رفض الخدمة</label>
                             <textarea

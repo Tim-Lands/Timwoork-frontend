@@ -64,7 +64,7 @@ function Countries(): ReactElement {
             }
         } catch (error) {
             console.log(error);
-            message.success('للأسف لم يتم تنشيط البوابة')
+            message.success('للأسف لم يتم تنشيط   البوابة')
         }
     }
     const disactivateHandle = async (id: any) => {
@@ -128,18 +128,18 @@ function Countries(): ReactElement {
                                     <td>{(e.status == 0) ? 'معطلة' : 'نشطة'}</td>
                                     <td className="tools-col">
                                         <Link href={`/tw-admin/payments/edit/${e.id}`}>
-                                            <button className="table-del success">
-                                                <span className="material-icons material-icons-outlined">edit</span>
+                                            <button className="btn butt-xs2 mx-1 butt-green">
+                                                تعديل
                                             </button>
                                         </Link>
                                         <button onClick={() => deleteHandle(e.id)} className="btn butt-xs2 butt-red">
                                             حذف
                                         </button>
                                         {(e.status == 1) ?
-                                            <button onClick={() => disactivateHandle(e.id)} className="btn butt-xs2 butt-orange">
+                                            <button onClick={() => disactivateHandle(e.id)} className="btn butt-xs2 mx-1 butt-orange">
                                                 تعطيل
                                             </button> :
-                                            <button onClick={() => activateHandle(e.id)} className="btn butt-xs2 butt-green">
+                                            <button onClick={() => activateHandle(e.id)} className="btn butt-xs2 mx-1 butt-green">
                                                 تنشيط
                                             </button>
                                         }
