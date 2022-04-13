@@ -9,6 +9,8 @@ import Link from "next/link";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import Cookies from 'js-cookie'
+import { message } from "antd";
+import router from "next/router";
 
 function Countries(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/types_payments`)
@@ -50,6 +52,34 @@ function Countries(): ReactElement {
             }
         })
 
+    }
+    const activateHandle = async (id: any) => {
+        try {
+            const res = await API.post(`dashboard/types_payments/${id}/active_payment`, null, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (res.status === 200) {
+                message.success('تم تنشيط البوابة بنجاح')
+                router.reload()
+            }
+        } catch (error) {
+            console.log(error);
+            message.success('للأسف لم يتم تنشيط البوابة')
+        }
+    }
+    const disactivateHandle = async (id: any) => {
+        try {
+            const res = await API.post(`dashboard/types_payments/${id}/disactive_payment`, null, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (res.status === 200) {
+                message.success('تم تعطيل البوابة بنجاح')
+                router.reload()
+            }
+        } catch (error) {
+            console.log(error);
+            message.success('للأسف لم يتم تعطيل البوابة')
+        }
     }
     const catVariants = {
         visible: (i: number) => ({
@@ -95,16 +125,24 @@ function Countries(): ReactElement {
                                 <motion.tr initial="hidden" variants={catVariants} animate="visible" custom={i} key={e.id}>
                                     <td>{e.name_ar}</td>
                                     <td>{e.precent_of_payment}</td>
-                                    <td>{(e.status == 0) ? 'معطلة' : 'نشطة' }</td>
+                                    <td>{(e.status == 0) ? 'معطلة' : 'نشطة'}</td>
                                     <td className="tools-col">
                                         <Link href={`/tw-admin/payments/edit/${e.id}`}>
                                             <button className="table-del success">
                                                 <span className="material-icons material-icons-outlined">edit</span>
                                             </button>
                                         </Link>
-                                        <button onClick={() => deleteHandle(e.id)} className="table-del error">
-                                            <span className="material-icons material-icons-outlined">delete</span>
+                                        <button onClick={() => deleteHandle(e.id)} className="btn butt-xs2 butt-red">
+                                            حذف
                                         </button>
+                                        {(e.status == 1) ?
+                                            <button onClick={() => disactivateHandle(e.id)} className="btn butt-xs2 butt-orange">
+                                                تعطيل
+                                            </button> :
+                                            <button onClick={() => activateHandle(e.id)} className="btn butt-xs2 butt-green">
+                                                تنشيط
+                                            </button>
+                                        }
                                     </td>
                                 </motion.tr>
                             ))}

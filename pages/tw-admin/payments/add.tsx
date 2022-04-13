@@ -56,105 +56,105 @@ function Countries(): ReactElement {
                     <h2 className="title">إضافة بوابة دفع جديدة</h2>
                 </div>
                 <form onSubmit={formik.handleSubmit}>
-                                <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
-                                    <div className="timlands-content-form">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-name_ar">اسم البوابة بالعربي</label>
-                                                    <input
-                                                        id="input-name_ar"
-                                                        name="name_ar"
-                                                        placeholder="اسم البوابة بالعربي..."
-                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.name_ar && ' has-error')}
-                                                        autoComplete="off"
-                                                        onKeyUp={clearValidationHandle}
-                                                        onChange={formik.handleChange}
-                                                        value={formik.values.name_ar}
-                                                    />
-                                                    {validationsErrors && validationsErrors.name_ar &&
-                                                        <div style={{ overflow: 'hidden' }}>
-                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{validationsErrors.name_ar[0]}</p>
-                                                            </motion.div>
-                                                        </div>}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-name_en">اسم البوابة بالإنجليزي</label>
-                                                    <input
-                                                        id="input-name_en"
-                                                        name="name_en"
-                                                        placeholder="اسم البوابة بالإنجليزي..."
-                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.name_en && ' has-error')}
-                                                        autoComplete="off"
-                                                        onKeyUp={clearValidationHandle}
-                                                        onChange={formik.handleChange}
-                                                        value={formik.values.name_en}
-                                                    />
-                                                    {validationsErrors && validationsErrors.name_en &&
-                                                        <div style={{ overflow: 'hidden' }}>
-                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{validationsErrors.name_en[0]}</p>
-                                                            </motion.div>
-                                                        </div>}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-precent_of_payment">نسبة الإقتطاع</label>
-                                                    <input
-                                                        id="input-precent_of_payment"
-                                                        name="precent_of_payment"
-                                                        placeholder="نسبة الإقتطاع"
-                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.precent_of_payment && ' has-error')}
-                                                        autoComplete="off"
-                                                        onKeyUp={clearValidationHandle}
-                                                        onChange={formik.handleChange}
-                                                        value={formik.values.precent_of_payment}
-                                                    />
-                                                    {validationsErrors && validationsErrors.precent_of_payment &&
-                                                        <div style={{ overflow: 'hidden' }}>
-                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{validationsErrors.precent_of_payment[0]}</p>
-                                                            </motion.div>
-                                                        </div>}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="timlands-form">
-                                                    <label className="label-block" htmlFor="input-value_of_cent">قيمة السنت</label>
-                                                    <input
-                                                        id="input-value_of_cent"
-                                                        name="value_of_cent"
-                                                        placeholder="قيمة السنت"
-                                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.value_of_cent && ' has-error')}
-                                                        autoComplete="off"
-                                                        onKeyUp={clearValidationHandle}
-                                                        onChange={formik.handleChange}
-                                                        value={formik.values.value_of_cent}
-                                                    />
-                                                    {validationsErrors && validationsErrors.value_of_cent &&
-                                                        <div style={{ overflow: 'hidden' }}>
-                                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                <p className="text">{validationsErrors.value_of_cent[0]}</p>
-                                                            </motion.div>
-                                                        </div>}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="py-4 d-flex">
-                                                    <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
-                                                        <span className="text">حفظ التغييرات</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                    <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
+                        <div className="timlands-content-form">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="timlands-form">
+                                        <label className="label-block" htmlFor="input-name_ar">اسم البوابة بالعربي</label>
+                                        <input
+                                            id="input-name_ar"
+                                            name="name_ar"
+                                            placeholder="اسم البوابة بالعربي..."
+                                            className={"timlands-inputs " + (validationsErrors && validationsErrors.name_ar && ' has-error')}
+                                            autoComplete="off"
+                                            onKeyUp={clearValidationHandle}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.name_ar}
+                                        />
+                                        {validationsErrors && validationsErrors.name_ar &&
+                                            <div style={{ overflow: 'hidden' }}>
+                                                <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                    <p className="text">{validationsErrors.name_ar[0]}</p>
+                                                </motion.div>
+                                            </div>}
                                     </div>
                                 </div>
-                            </form>
+                                <div className="col-md-6">
+                                    <div className="timlands-form">
+                                        <label className="label-block" htmlFor="input-name_en">اسم البوابة بالإنجليزي</label>
+                                        <input
+                                            id="input-name_en"
+                                            name="name_en"
+                                            placeholder="اسم البوابة بالإنجليزي..."
+                                            className={"timlands-inputs " + (validationsErrors && validationsErrors.name_en && ' has-error')}
+                                            autoComplete="off"
+                                            onKeyUp={clearValidationHandle}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.name_en}
+                                        />
+                                        {validationsErrors && validationsErrors.name_en &&
+                                            <div style={{ overflow: 'hidden' }}>
+                                                <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                    <p className="text">{validationsErrors.name_en[0]}</p>
+                                                </motion.div>
+                                            </div>}
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="timlands-form">
+                                        <label className="label-block" htmlFor="input-precent_of_payment">نسبة الإقتطاع</label>
+                                        <input
+                                            id="input-precent_of_payment"
+                                            name="precent_of_payment"
+                                            placeholder="نسبة الإقتطاع"
+                                            className={"timlands-inputs " + (validationsErrors && validationsErrors.precent_of_payment && ' has-error')}
+                                            autoComplete="off"
+                                            onKeyUp={clearValidationHandle}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.precent_of_payment}
+                                        />
+                                        {validationsErrors && validationsErrors.precent_of_payment &&
+                                            <div style={{ overflow: 'hidden' }}>
+                                                <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                    <p className="text">{validationsErrors.precent_of_payment[0]}</p>
+                                                </motion.div>
+                                            </div>}
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="timlands-form">
+                                        <label className="label-block" htmlFor="input-value_of_cent">قيمة السنت</label>
+                                        <input
+                                            id="input-value_of_cent"
+                                            name="value_of_cent"
+                                            placeholder="قيمة السنت"
+                                            className={"timlands-inputs " + (validationsErrors && validationsErrors.value_of_cent && ' has-error')}
+                                            autoComplete="off"
+                                            onKeyUp={clearValidationHandle}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.value_of_cent}
+                                        />
+                                        {validationsErrors && validationsErrors.value_of_cent &&
+                                            <div style={{ overflow: 'hidden' }}>
+                                                <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                    <p className="text">{validationsErrors.value_of_cent[0]}</p>
+                                                </motion.div>
+                                            </div>}
+                                    </div>
+                                </div>
+                                <div className="col-md-12">
+                                    <div className="py-4 d-flex">
+                                        <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-sm">
+                                            <span className="text">حفظ التغييرات</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </>
     );

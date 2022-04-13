@@ -59,7 +59,7 @@ function index(): ReactElement {
                     </a>
                 </Link>
             ),
-            ellipsis: true,
+            width: 390
         },
         {
             title: 'الحالة',
@@ -68,6 +68,7 @@ function index(): ReactElement {
                 switchStatus(status)
             ),
             ellipsis: true,
+            width: 90
         },
         {
             title: 'التاريخ',
@@ -76,6 +77,7 @@ function index(): ReactElement {
                 <LastSeen date={created_at} />
             ),
             ellipsis: true,
+            width: 150
         },
         {
             title: 'صاحب الخدمة',
@@ -88,6 +90,7 @@ function index(): ReactElement {
                 </Link>
             ),
             ellipsis: true,
+
         },
         {
             title: 'الأدوات',
@@ -95,28 +98,20 @@ function index(): ReactElement {
             render: (tes: any) => (
                 <Space>
                     {(tes.status == 0 || tes.status == null) ?
-                        <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(tes.id)} className="table-del green">
-                            <span className="material-icons material-icons-outlined">
-                                check
-                            </span>
+                        <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(tes.id)} className="btn butt-xs2 butt-green">
+                            تنشيط
                         </button> : ''
                     }
                     {(tes.status == 1) ?
-                        <button title="تعطيل هذه الخدمة" onClick={() => rejectProduct(tes.id)} className="table-del warning">
-                            <span className="material-icons material-icons-outlined">
-                                cancel
-                            </span>
+                        <button title="تعطيل هذه الخدمة" onClick={() => rejectProduct(tes.id)} className="btn butt-xs2 butt-orange">
+                            تعطيل
                         </button> : ''
                     }
-                    <button title="حذف هذه الخدمة" className="table-del error" onClick={() => deleteHandle(tes.id)}>
-                        <span className="material-icons material-icons-outlined">
-                            delete
-                        </span>
+                    <button title="حذف هذه الخدمة" className="btn butt-xs2 butt-red" onClick={() => deleteHandle(tes.id)}>
+                        حذف
                     </button>
-                    <button title="رفض الخدمة" className="table-del warning" onClick={() => setIsModalVisible(true)}>
-                        <span className="material-icons material-icons-outlined">
-                            delete
-                        </span>
+                    <button title="رفض الخدمة" className="btn butt-xs2 butt-orange" onClick={() => setIsModalVisible(true)}>
+                        رفض
                     </button>
                     <Modal title="Basic Modal" visible={isModalVisible} onOk={() => rejectProduct(tes.id)} onCancel={() => setIsModalVisible(false)}>
                         <div className="timlands-form">
@@ -228,6 +223,7 @@ function index(): ReactElement {
                     columns={columns}
                     dataSource={data}
                     bordered
+                    size='small'
                 />
                 {isLoading &&
                     <motion.div initial={{ opacity: 0, y: 29 }} animate={{ opacity: 1, y: 0 }} className="d-flex py-5 spinner-loader justify-content-center">

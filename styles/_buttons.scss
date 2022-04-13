@@ -9,6 +9,16 @@
         outline: none;
         box-shadow: none;
     }
+    &.butt-xs2 {
+        border-width: 1px;
+        font-size: 10px;
+        border-radius: 4px;
+        padding: 3px 7px;
+        .material-icons {
+            font-size: 15px;
+            margin-right: 3px;
+        }
+    }
     &.butt-xs {
         border-width: 1px;
         font-size: 11px;
@@ -86,6 +96,32 @@
         &:focus {
             background-color: darken(#188539, 13);
             border-color: darken(#188539, 13);
+        }
+    }
+    &.butt-orange {
+        background-color: #e26b0a;
+        border-color: #e26b0a;
+        color: #fff;
+        &:hover {
+            background-color: darken(#e26b0a, 5);
+            border-color: darken(#e26b0a, 5);
+        }
+        &:focus {
+            background-color: darken(#e26b0a, 13);
+            border-color: darken(#e26b0a, 13);
+        }
+    }
+    &.butt-red {
+        background-color: #e20a0a;
+        border-color: #e20a0a;
+        color: #fff;
+        &:hover {
+            background-color: darken(#e20a0a, 5);
+            border-color: darken(#e20a0a, 5);
+        }
+        &:focus {
+            background-color: darken(#e20a0a, 13);
+            border-color: darken(#e20a0a, 13);
         }
     }
 }
