@@ -8,10 +8,12 @@ import withReactContent from 'sweetalert2-react-content'
 import Link from "next/link";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
+import Cookies from 'js-cookie'
 
 function Countries(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/types_payments`)
 
+    const token = Cookies.get('token_dash')
     const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
@@ -33,7 +35,9 @@ function Countries(): ReactElement {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await API.post(`dashboard/types_payments/${id}/delete`)
+                    await API.post(`dashboard/types_payments/${id}/delete`, null, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
                 } catch (error) {
                     console.log(error);
 
