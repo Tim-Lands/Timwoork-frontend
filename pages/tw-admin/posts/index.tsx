@@ -48,6 +48,9 @@ function index(): ReactElement {
                 return (<span className="badge bg-success text-light">نشطة</span>)
         }
     }
+    function onChange(pagination, filters, sorter, extra) {
+        console.log('params', pagination, filters, sorter, extra);
+    }
     const columns: any = [
         {
             title: 'العنوان',
@@ -72,11 +75,14 @@ function index(): ReactElement {
         },
         {
             title: 'التاريخ',
-            dataIndex: ["created_at"],
+            dataIndex: "created_at",
+            
             render: (created_at: any) => (
                 <LastSeen date={created_at} />
             ),
-            ellipsis: true,
+            filterMode: 'tree',
+            filterSearch: true,
+            onFilter: (value, record) => record.created_at.startsWith(value),
             width: 150
         },
         {
@@ -113,12 +119,12 @@ function index(): ReactElement {
                     <button title="رفض الخدمة" className="btn butt-xs2 butt-orange" onClick={() => setIsModalVisible(true)}>
                         رفض
                     </button>
-                    <Modal 
-                    title="Basic Modal" 
-                    visible={isModalVisible} 
-                    onOk={() => rejectProduct(tes.id)} 
-                    onCancel={() => setIsModalVisible(false)}
-                    okText={''}
+                    <Modal
+                        title="Basic Modal"
+                        visible={isModalVisible}
+                        onOk={() => rejectProduct(tes.id)}
+                        onCancel={() => setIsModalVisible(false)}
+                        okText={''}
                     >
                         <div className="timlands-form">
                             <label className="label-block" htmlFor="cause">أكتب سبب رفض الخدمة</label>
@@ -206,7 +212,7 @@ function index(): ReactElement {
     const rejectProduct = async (id: any) => {
         setIsLoading(true)
         try {
-            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, {cause}, {
+            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, { cause }, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res.status === 200) {
@@ -227,6 +233,7 @@ function index(): ReactElement {
                 </div>
                 <Table
                     columns={columns}
+                    onChange={onChange}
                     dataSource={data}
                     bordered
                     size='small'

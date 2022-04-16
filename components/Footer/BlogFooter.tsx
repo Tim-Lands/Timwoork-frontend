@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import Link from 'next/link'
 
 function BlogFooter() {
-    const { data: getPosts }: any = useSWR('https://www.timwoork.com/blog-timwoork-com/wp-json/wp/v2/posts?per_page=5')
+    const { data: getPosts }: any = useSWR('https://timwoork.net/wp-json/wp/v2/posts?per_page=5')
     return (
         <div className="app-footer-aside">
         <div className="aside-header">
