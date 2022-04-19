@@ -45,7 +45,7 @@ const CheckoutForm = () => {
             }
         } catch (error) {
             setIsLoading(false)
-            
+
             if (error.response && error.response.data) {
                 setValidationsGeneral(error.response.data);
             }
@@ -69,10 +69,9 @@ const stripePromise = loadStripe('pk_live_51KVxMmKZiLP53MTnsIhnnYjdjWwCynAoNT2IJ
 
 function Bill() {
     const token = Cookies.get('token')
-    const [billPayment, setBillPayment] = useState(0)
+    const [billPayment, setBillPayment] = useState(2)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isBuyer, setIsBuyer] = useState(false)
     const [isWalletLoading, setIsWalletLoading] = useState(false)
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const [getLink, setGetLink] = useState('')
@@ -84,7 +83,6 @@ function Bill() {
     const mybalance = userInfo && userInfo.user_details.profile.withdrawable_amount
     async function getPaypal() {
         setIsLoading(true)
-        setIsBuyer(false)
         setIsError(false)
         try {
             const res: any = await API.post(`api/purchase/paypal/approve`, {}, {
@@ -93,14 +91,12 @@ function Bill() {
                 }
             })
             if (res.status === 200) {
-                setIsBuyer(true)
                 setIsLoading(false)
                 setIsError(false)
                 setGetLink(res.data)
             }
         } catch (error) {
             setIsError(true)
-            setIsBuyer(false)
             setIsLoading(false)
         }
     }
@@ -156,36 +152,43 @@ function Bill() {
                                 <h3 className="title">الفاتورة النهائية</h3>
                             </div>
                             {!cartList && <Loading />}
-                            {cartList && cartList.data !== null && isBuyer &&
-                                <div className="app-bill-content">
-                                    <ul className="list-group">
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            عدد الخدمات
-                                            <span className="">{cartList && cartList.data.cart_items_count}</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            السعر الكلي
-                                            <span className="">{cartList && cartList.data.total_price}$</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            الرسوم
-
-                                            <span className='me-auto'>
-                                                <Tooltip
-                                                    title="هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك."
-                                                >
-                                                    <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
-                                                </Tooltip>
-                                            </span>
-                                            <span className="">{cartList && cartList.data.tax}$</span>
-                                        </li>
-                                        <li className="list-group-item total d-flex justify-content-between align-items-center">
-                                            المجموع الكلي
-                                            <span className="">{cartList && cartList.data.price_with_tax}$</span>
-                                        </li>
-                                    </ul>
+                            {console.log(cartList && cartList.data)}
+                            {cartList && cartList.data.cart_payments.map((e, i) => (
+                                <div key={i} className="app-bill-content" style={{ marginBottom: 9 }}>
+                                    {(e.pivot.type_payment_id == billPayment) && 
+                                        <ul className="list-group">
+                                            <li className="list-group-item d-flex justify-content-between align-items-center">
+                                                عدد الخدمات
+                                                <span className="">{cartList && cartList.data.cart_items_count}</span>
+                                            </li>
+                                            <li
+                                                style={{ fontSize: 12, fontWeight: 300 }}
+                                                className="list-group-item total d-flex justify-content-between align-items-center">
+                                                رسوم التحويل لـ {e.name_ar} <span className='me-auto'>
+                                                    <Tooltip
+                                                        title="هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك."
+                                                    >
+                                                        <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                                    </Tooltip>
+                                                </span>
+                                                <span className="">{e.pivot.tax}</span>
+                                            </li>
+                                            <li
+                                                style={{ fontSize: 12, fontWeight: 300 }}
+                                                className="list-group-item total d-flex justify-content-between align-items-center">
+                                                المجموع بدون رسوم
+                                                <span className="">{e.pivot.total}</span>
+                                            </li>
+                                            <li
+                                                style={{ fontSize: 12, fontWeight: 300 }}
+                                                className="list-group-item total d-flex justify-content-between align-items-center">
+                                                المجموع مع رسوم
+                                                <span className="">{e.pivot.total_with_tax}</span>
+                                            </li>
+                                        </ul>
+                                    }
                                 </div>
-                            }
+                            ))}
                         </div>
                     </div>
                     <div className="col-md-5">
@@ -199,7 +202,7 @@ function Bill() {
                                         <input
                                             className="form-check-input"
                                             type="radio"
-                                            value='0'
+                                            value='2'
                                             name="billPayment"
                                             id="billPayment-strap"
                                             onChange={(e: any) => setBillPayment(e.target.value)}
@@ -209,7 +212,7 @@ function Bill() {
                                         </label>
                                     </div>
                                     <div style={{ overflow: 'hidden' }}>
-                                        {billPayment == 0 ?
+                                        {billPayment == 2 ?
                                             <motion.div dir='ltr' initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                                                 <Elements stripe={stripePromise}>
                                                     <CheckoutForm />
@@ -248,7 +251,7 @@ function Bill() {
                                                 <input
                                                     className="form-check-input"
                                                     type="radio"
-                                                    value='2'
+                                                    value='3'
                                                     name="billPayment"
                                                     id="billPayment-wallet"
                                                     onChange={(e: any) => setBillPayment(e.target.value)}
@@ -258,7 +261,7 @@ function Bill() {
                                                 </label>
                                             </div>
                                             <div style={{ overflow: 'hidden' }}>
-                                                {billPayment == 2 ?
+                                                {billPayment == 3 ?
                                                     <motion.div initial={{ y: -49, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                                                         {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                                                         <div className="purchase-by-wallet">

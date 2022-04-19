@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
- 
+
 function CartPost({ id, quantity, title, price, itemTotal, developments, deleteItem }): ReactElement {
     function DevdurationFunc(duration) {
         if (duration == 1) {
@@ -20,8 +20,22 @@ function CartPost({ id, quantity, title, price, itemTotal, developments, deleteI
     return (
         <motion.li initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="cart-item">
             <div className="row">
-                <div className="col-md-7">
+                <div className="col-md-10">
                     <div className="cart-item-content me-auto" style={{ padding: 15 }}>
+                        <ul
+                            className="prices-list"
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                margin: 0,
+                                padding: 0,
+                                listStyle: 'none',
+                            }}
+                        >
+                            <li style={{ fontSize: 13, color: '#777', }}><span>عدد المرات: </span>{quantity}</li>
+                            <li style={{ fontSize: 13, color: '#777', }}><span>السعر: </span>{price}$</li>
+                            <li style={{ fontSize: 13, color: '#777', }}><strong>الإجمالي: </strong>{itemTotal}$</li>
+                        </ul>
                         <h4
                             className="title"
                             style={{
@@ -32,6 +46,7 @@ function CartPost({ id, quantity, title, price, itemTotal, developments, deleteI
                                 marginBottom: 13,
                             }}>{title}</h4>
                         <div className="panel-aside-body">
+
                             <ul className="add-devloppers-nav">
                                 {developments.map((e: any) => {
                                     return (
@@ -49,23 +64,7 @@ function CartPost({ id, quantity, title, price, itemTotal, developments, deleteI
                         </div>
                     </div>
                 </div>
-                <div className="col-6 col-md-2">
-                    <div className="cart-item-header me-auto" style={{ padding: 12 }}>
-                        <ul
-                            className="prices-list"
-                            style={{
-                                margin: 0,
-                                padding: 0,
-                                listStyle: 'none',
-                            }}
-                        >
-                            <li style={{ fontSize: 13, color: '#777', }}><span>عدد المرات: </span>{quantity}</li>
-                            <li style={{ fontSize: 13, color: '#777', }}><span>السعر: </span>{price}$</li>
-                            <li style={{ fontSize: 13, color: '#777', }}><strong>الإجمالي: </strong>{itemTotal}$</li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="col-6 col-md-3">
+                <div className="col-2 col-md-2">
                     <div className="cart-item-price ml-auto">
                         <ul
                             className="price-nav"
@@ -76,7 +75,7 @@ function CartPost({ id, quantity, title, price, itemTotal, developments, deleteI
                             }}
                         >
                             <li>
-                                
+
                             </li>
                             <li>
                                 <motion.button

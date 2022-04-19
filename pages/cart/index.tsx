@@ -78,7 +78,7 @@ function index() {
             />
             <div className="timwoork-single mt-4">
                 <div className="row justify-content-md-center">
-                    <div className="col-lg-9">
+                    <div className="col-lg-7">
                         {!cartList && <Loading />}
                         {cartList && cartList.data && cartList.data.cart_items.length == 0 &&
                             <div className="cart-nothing my-5 py-5">
@@ -126,14 +126,12 @@ function index() {
                                                                 listStyle: 'none',
                                                             }}
                                                         >
-                                                            <li style={{ fontSize: 13, color: '#777', }}><span>سعر التحويل: </span>{cartList && cartList.data !== null && cartList.data.tax}$</li>
-                                                            <li style={{ fontSize: 13, color: '#777', }}><span>اجمالي السعر: </span>{cartList && cartList.data !== null && cartList.data.total_price}$</li>
-                                                            <li style={{ fontSize: 13, color: '#777', }}><strong>المجموع: </strong>{cartList && cartList.data !== null && cartList.data.price_with_tax}$</li>
+                                                            <li style={{ fontSize: 13, color: '#777', }}><strong>المجموع: </strong>{cartList && cartList.data !== null && cartList.data.total_price}$</li>
                                                         </ul>
                                                     </div>
                                                     <div className="cart-item-price ml-auto">
                                                         <h4 className="price-title-total">
-                                                            ${cartList && cartList.data !== null && cartList.data.price_with_tax}
+                                                            ${cartList && cartList.data !== null && cartList.data.total_price}
                                                         </h4>
                                                     </div>
                                                 </div>

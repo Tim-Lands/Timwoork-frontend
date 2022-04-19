@@ -426,7 +426,7 @@ function Medias({ query, stars }) {
                             <div className="timlands-content-form">
                                 <div className="choose-images-file">
                                     <h4 className="timlands-content-form-subtitle">
-                                        فيديو تعريفي للخدمة
+                                        فيديو تعريفي للخدمة (اختياري)
                                     </h4>
                                     <div className="timlands-form">
                                         <label className="label-block" htmlFor="input-videourl">رابط الفيديو</label>
