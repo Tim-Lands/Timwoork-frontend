@@ -15,8 +15,9 @@ import router from "next/router";
 import NotFound from "@/components/NotFound";
 import Image from 'next/image'
 import { Alert } from '@/components/Alert/Alert'
-const { Text } = Typography;
+import ReactPlayer from "react-player"
 
+const { Text } = Typography;
 const properties = {
   duration: 5000,
   transitionDuration: 500,
@@ -303,7 +304,7 @@ function Single({ query, stars, errorFetch }) {
         ogImage={stars.data.full_path_thumbnail}
         ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
       />}
-
+      {console.log(ProductData && ProductData.data)}
       {ProductData &&
         <div className="timwoork-single">
           <Modal
@@ -409,6 +410,15 @@ function Single({ query, stars, errorFetch }) {
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    }
+                    {ProductData.data.video &&
+                      <div className="py-3">
+                          <ReactPlayer
+                            style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
+                            width="100%"
+                            url={ProductData.data.video.url_video}
+                          />
                       </div>
                     }
                     {ProductData.data.profile_seller &&

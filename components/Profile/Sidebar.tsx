@@ -4,43 +4,11 @@ import Link from 'next/link'
 import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
 
-export default function UploadPicture({ profile_seller, beseller, isLoadingSeler, pending_amount, withdrawable_amount, darkMode }) {
+export default function UploadPicture({ pending_amount, withdrawable_amount, darkMode }) {
     const { data: userInfo }: any = useSWR('api/me')
     return (
         <div className="col-lg-4">
-            {!profile_seller &&
-                <div className="be-seller-aside mt-4">
-                    <h3 className="title">كن بائعا</h3>
-                    <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
-                    <button onClick={beseller} disabled={isLoadingSeler} className='btn butt-green butt-md' style={{ width: '100%' }}>
-                        إنشاء بروفايل بائع
-                    </button>
-                </div>
-            }
-            {profile_seller && <>
-                <div className="py-1 mt-2">
-                    <Card title="نبذة عني" extra={<Link href="/user/editSeller"><a className='edit-button flex-center'><span className="material-icons material-icons-outlined">edit</span></a></Link>}>
-                        <p className="user-bro">
-                            {profile_seller.bio}
-                        </p>
-                    </Card>
-                </div>
-                <div className="p-4 bg-white" style={{
-                    borderWidth: 1,
-                    borderColor: '#f1f1f1',
-                    borderStyle: 'solid',
-                    marginBlock: 9
-                }}>
-                    <p className="text">
-                        <strong>شارة البائع: </strong> <span className='text-inop'>{profile_seller.badge.name_ar}</span>
-                    </p>
-                    <p className="text m-0">
-                        <strong>مستوى البائع: </strong> <span className='text-inop'>{profile_seller.level.name_ar}</span>
-                    </p>
-                </div>
-            </>
-            }
-            <div className="py-1">
+            <div className="pb-1">
                 <Card title="الرصيد">
                     <div className="statistic-item">
                         <Statistic
@@ -96,10 +64,6 @@ export default function UploadPicture({ profile_seller, beseller, isLoadingSeler
     );
 }
 UploadPicture.propTypes = {
-    profile_seller: PropTypes.object,
-    profileUser: PropTypes.object,
-    beseller: PropTypes.func,
-    isLoadingSeler: PropTypes.bool,
     pending_amount: PropTypes.number,
     darkMode: PropTypes.any,
     withdrawable_amount: PropTypes.number,

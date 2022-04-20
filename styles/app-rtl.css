@@ -2059,7 +2059,6 @@ h3 {
 
 .user-bro {
   margin: 0;
-  font-size: 14px;
   line-height: 27px;
   color: #444;
   overflow: hidden;
@@ -5598,6 +5597,54 @@ h3 {
   background-color: #ef7171;
   border: 1px solid #f39191;
   color: #fff;
+}
+
+.read-more-btn {
+  border: 0;
+  background-color: transparent;
+  color: #777;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-top: 7px;
+  padding: 10px;
+  font-weight: bold;
+  position: relative;
+}
+
+.read-more-btn.is-less::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3000;
+  top: -50px;
+  height: 40px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.459)), to(#fff));
+  background-image: linear-gradient(rgba(255, 255, 255, 0.459), #fff);
+}
+
+.read-more-btn:hover {
+  color: #000;
+}
+
+.user-bro {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  height: 230px;
+}
+
+.user-bro.is-less {
+  height: auto;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .prices-list {

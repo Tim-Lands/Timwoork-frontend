@@ -152,6 +152,7 @@ function Bill() {
                                 <h3 className="title">الفاتورة النهائية</h3>
                             </div>
                             {!cartList && <Loading />}
+                            {console.log(cartList && cartList.data)}
                             {cartList && cartList.data.cart_payments.map((e, i) => (
                                 <div key={i} className="app-bill-content" style={{ marginBottom: 9 }}>
                                     {(e.pivot.type_payment_id == billPayment) && 

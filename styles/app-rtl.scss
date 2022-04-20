@@ -403,7 +403,6 @@ h3 {
 
 .user-bro {
     margin: 0;
-    font-size: 14px;
     line-height: 27px;
     color: #444;
     overflow: hidden;
@@ -3645,6 +3644,42 @@ h3 {
                 }
             }
         }
+    }
+}
+.read-more-btn {
+    border: 0;
+    background-color: transparent;
+    color: #777;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 7px;
+    padding: 10px;
+    font-weight: bold;
+    position: relative;
+    &.is-less {
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 3000;
+            top: -50px;
+            height: 40px;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.459), #fff);
+        }
+    }
+    &:hover {
+        color: #000;
+    }
+}
+.user-bro {
+    transition: all 0.3s;
+    height: 230px;
+    &.is-less {
+        height: auto;
+        transition: all 0.3s;
     }
 }
 .prices-list {

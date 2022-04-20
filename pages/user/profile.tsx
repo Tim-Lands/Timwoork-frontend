@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Result, message } from 'antd'
-import React, { ReactElement, useEffect, useState } from 'react'
+import { Result, message, Card } from 'antd'
+import React, { createRef, ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import router from 'next/router'
@@ -59,6 +59,9 @@ function Profile() {
             setIsLoadingSeler(false)
         }
     }
+    const [isLess, setIsLess] = useState(true)
+    const detectHeight: any = createRef()
+
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -76,46 +79,67 @@ function Profile() {
                         ogDescription={'الملف الشخصي لـ ' + userInfo.user_details.profile.first_name + " " + userInfo.user_details.profile.last_name}
                     />
                     <div className="container">
+                        <div className="timlands-profile-content">
+                            <div className="profile-content-header">
+                                <div className="profile-content-avatar">
+                                    <Image
+                                        loader={myLoader}
+                                        src={userInfo && userInfo.user_details.profile.avatar_path}
+                                        quality={1}
+                                        width={120}
+                                        height={120}
+                                        placeholder='blur'
+                                        blurDataURL='/avatar2.jpg'
+                                    />
+                                </div>
+                                <div className="profile-content-head">
+                                    <h4 className="title">
+                                        {userInfo.user_details.profile.full_name}
+                                    </h4>
+                                    <p className="text">
+                                        @{userInfo.user_details.username} |
+                                        <span className="app-label"> {userInfo.user_details.profile.level.name_ar} </span>
+                                    </p>
+                                    <div className="button-edit">
+                                        <Link href="/user/personalInformations">
+                                            <a className="btn butt-primary flex-center butt-sm">
+                                                <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
+                                            </a>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="row">
                             <Sidebar
-                                beseller={beseller}
-                                isLoadingSeler={isLoadingSeler}
-                                profile_seller={userInfo.user_details.profile.profile_seller}
                                 withdrawable_amount={userInfo && userInfo.user_details.profile.withdrawable_amount}
                                 pending_amount={userInfo && userInfo.user_details.profile.pending_amount}
                                 darkMode={darkMode}
                             />
                             <div className="col-lg-8">
+
                                 <div className="timlands-profile-content">
-                                    <div className="profile-content-header">
-                                        <div className="profile-content-avatar">
-                                            <Image
-                                                loader={myLoader}
-                                                src={userInfo && userInfo.user_details.profile.avatar_path}
-                                                quality={1}
-                                                width={120}
-                                                height={120}
-                                                placeholder='blur'
-                                                blurDataURL='/avatar2.jpg'
-                                            />
+
+                                    {!userInfo.user_details.profile.profile_seller &&
+                                        <div className="be-seller-aside mb-2">
+                                            <h3 className="title">كن بائعا</h3>
+                                            <p className="text">هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!</p>
+                                            <button onClick={beseller} disabled={isLoadingSeler} className='btn butt-green butt-md' style={{ width: '100%' }}>
+                                                إنشاء بروفايل بائع
+                                            </button>
                                         </div>
-                                        <div className="profile-content-head">
-                                            <h4 className="title">
-                                                {userInfo.user_details.profile.full_name}
-                                            </h4>
-                                            <p className="text">
-                                                @{userInfo.user_details.username} |
-                                                <span className="app-label"> {userInfo.user_details.profile.level.name_ar} </span>
-                                            </p>
-                                            <div className="button-edit">
-                                                <Link href="/user/personalInformations">
-                                                    <a className="btn butt-primary flex-center butt-sm">
-                                                        <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
-                                                    </a>
-                                                </Link>
-                                            </div>
+                                    }
+                                    {userInfo.user_details.profile.profile_seller && <>
+                                        <div className="pb-1 mb-2">
+                                            <Card title="نبذة عني" extra={<Link href="/user/editSeller"><a className='edit-button flex-center'><span className="material-icons material-icons-outlined">edit</span></a></Link>}>
+                                                <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: userInfo.user_details.profile.profile_seller.bio }} />
+                                                <button onClick={() => setIsLess(!isLess)} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                                    {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
+                                                </button>
+                                            </Card>
                                         </div>
-                                    </div>
+                                    </>
+                                    }
                                     <div className="profile-content-body">
                                         <div className="content-title">
                                             <div className="d-flex">
