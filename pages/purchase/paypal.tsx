@@ -52,6 +52,7 @@ function Paypal({ query }) {
                             <h3 className="title">نتيجة عملية الشراء</h3>
                         </div>
                         {isLoading && <Loading />}
+                        {console.log(getBills)}
                         {query.return == 1 && !isError ?
                             <Alert type='success'>لقد تمت عملية الشراء بجاح</Alert> :
                             <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
