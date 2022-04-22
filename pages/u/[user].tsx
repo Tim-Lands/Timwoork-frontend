@@ -10,6 +10,8 @@ import PropTypes from "prop-types";
 import Loading from '@/components/Loading'
 import API from '../../config'
 import Link from "next/link";
+import PostsAside from "@/components/PostsAside";
+import Post from "@/components/Post/Post";
 
 const User = ({ query, stars }) => {
     // Return statement.
@@ -63,9 +65,7 @@ const User = ({ query, stars }) => {
                             </div>
                             {User.profile.profile_seller.portfolio &&
                                 <p className="py-3">
-                                    <Link href={`${User.profile.profile_seller.portfolio}`}>
-                                        <a className="btn butt-sm butt-primary2">مشاهدة رابط الأعمال</a>
-                                    </Link>
+                                    <a rel="noreferrer" target="_blank" className="btn butt-sm butt-primary2" href={`${User.profile.profile_seller.portfolio}`}>مشاهدة رابط الأعمال</a>
                                 </p>
                             }
                         </div>
@@ -133,6 +133,31 @@ const User = ({ query, stars }) => {
 
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div className="posts-aside-header" style={{
+                        textAlign: 'center',
+                        paddingBlock: 10
+                    }}>
+                        <h1 className="title me-auto" style={{ fontWeight: 'bold', fontSize: 26 }}>الخدمات</h1>
+                    </div>
+                    <div className="posts-aside-body">
+                        <div className="row">
+                            {User && User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
+                                <div key={e.id} className={"col-sm-6 col-lg-3"}>
+                                    <Post
+                                        size="small2"
+                                        title={e.title}
+                                        author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                                        rate={e.ratings_avg_rating}
+                                        username={e.profile_seller && e.profile_seller.profile.user.username}
+                                        price={e.price}
+                                        slug={e.slug}
+                                        thumbnail={e.full_path_thumbnail}
+                                        buyers={e.count_buying}
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

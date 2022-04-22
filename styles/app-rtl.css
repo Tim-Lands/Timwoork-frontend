@@ -1374,6 +1374,83 @@
   width: calc(100% - 190px);
 }
 
+.timlands-post-item.small2 {
+  border-radius: 4px;
+  margin: 4px 0;
+  margin-bottom: 10px;
+  height: 330px;
+}
+
+@media (max-width: 600px) {
+  .timlands-post-item.small2 {
+    height: 400px;
+  }
+}
+
+.timlands-post-item.small2 .post-item-img {
+  height: 130px;
+}
+
+@media (max-width: 600px) {
+  .timlands-post-item.small2 .post-item-img {
+    height: 220px;
+  }
+}
+
+.timlands-post-item.small2 .post-item-content {
+  padding: 6px;
+}
+
+.timlands-post-item.small2 .post-item-content .post-meta li {
+  font-size: 9px;
+  padding: 2px 6px;
+}
+
+.timlands-post-item.small2 .post-item-content .post-meta li .material-icons {
+  font-size: 14px;
+  margin-left: 2px;
+}
+
+.timlands-post-item.small2 .post-item-content .post-meta li span .material-icons {
+  font-size: 14px;
+  margin-left: 3px;
+}
+
+.timlands-post-item.small2 .post-item-content .title {
+  font-size: 15px;
+}
+
+.timlands-post-item.small2 .post-item-footer {
+  padding: 14px;
+}
+
+.timlands-post-item.small2 .post-item-footer .post-meta-price {
+  font-size: 11px;
+}
+
+.timlands-post-item.small2 .post-item-footer .post-meta-bayer {
+  font-size: 10px;
+}
+
+.timlands-post-item.small2:hover {
+  -webkit-box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.089);
+          box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.089);
+}
+
+.timlands-post-item.small2.post-item-search {
+  padding: 8px;
+}
+
+.timlands-post-item.small2.post-item-search .post-item-img {
+  width: 190px;
+  border-radius: 5px;
+  height: 120px;
+}
+
+.timlands-post-item.small2.post-item-search .post-item-content {
+  width: calc(100% - 190px);
+}
+
 @media (max-width: 768px) {
   .hidden-tem {
     display: none !important;

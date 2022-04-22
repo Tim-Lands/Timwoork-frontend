@@ -18,6 +18,8 @@ function Post({
         switch (size) {
             case 'small':
                 return ' small'
+            case 'small2':
+                return ' small2'
             default:
                 return ''
         }
@@ -70,7 +72,7 @@ function Post({
 
         const x: number = 5
         const y: any = Number(x - Number(rate)).toPrecision(1)
-        
+
         const yut: any = xAr.slice(y)
         if (y == 0) {
             return yut
