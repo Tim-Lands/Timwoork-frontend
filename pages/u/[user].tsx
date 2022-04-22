@@ -1,5 +1,5 @@
 
-import React, { ReactElement } from "react";
+import React, { createRef, ReactElement, useState } from "react";
 import Image from 'next/image'
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Card } from "antd";
@@ -9,6 +9,7 @@ import useSWR from 'swr'
 import PropTypes from "prop-types";
 import Loading from '@/components/Loading'
 import API from '../../config'
+import Link from "next/link";
 
 const User = ({ query, stars }) => {
     // Return statement.
@@ -18,6 +19,9 @@ const User = ({ query, stars }) => {
     const myLoader = () => {
         return `${APIURL}${User.profile.avatar_path}`;
     }
+
+    const [isLess, setIsLess] = useState(true)
+    const detectHeight: any = createRef()
     return (
         <div className="py-3 mt-3">
             <MetaTags
@@ -30,46 +34,53 @@ const User = ({ query, stars }) => {
             {!userInfo && <Loading />}
             {userInfo && User.profile && <>
                 <div className="container">
-                    <div className={'row justify-content-md-center'}>
-                        {User.profile.profile_seller &&
-                            <div className="col-lg-4">
-                                <div className="py-1 mt-2">
-                                    <Card title="نبذة عن البائع">
-                                        <p className="user-bro">
-                                            {User.profile.profile_seller.bio}
-                                        </p>
-                                    </Card>
+                    <div className="timlands-profile-content py-3">
+                        <div className="profile-content-header py-4">
+                            <Badge color={User.status == 0 ? '#ccc' : 'green'} count={User.status == 0 ? "غير متصل" : "متصل"} offset={[10, 10]} >
+                                <div className="profile-content-avatar">
+                                    {User.profile.avatar_path == 'avatar.png' ?
+                                        <Image src="/avatar2.jpg" width={120} height={120} /> :
+                                        <Image
+                                            loader={myLoader}
+                                            src={APIURL + User.profile.avatar_path}
+                                            quality={1}
+                                            width={120}
+                                            height={120}
+                                            placeholder='blur'
+                                            blurDataURL='/avatar2.jpg'
+                                        />
+                                    }
                                 </div>
+                            </Badge>
+                            <div className="profile-content-head">
+                                <h4 className="title">
+                                    {User.profile && User.profile.full_name}
+                                </h4>
+                                <p className="text">
+                                    @{User.username} |
+                                    <span className="app-label"> {User && User.profile && User.profile.level && User.profile.level.name_ar} </span>
+                                </p>
                             </div>
-                        }
+                            {User.profile.profile_seller.portfolio &&
+                                <p className="py-3">
+                                    <Link href={`${User.profile.profile_seller.portfolio}`}>
+                                        <a className="btn butt-sm butt-primary2">مشاهدة رابط الأعمال</a>
+                                    </Link>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                    <div className={'row justify-content-md-center'}>
                         <div className="col-lg-8">
                             <div className="timlands-profile-content">
-                                <div className="profile-content-header">
-                                    <Badge color={User.status == 0 ? '#ccc' : 'green'} count={User.status == 0 ? "غير متصل" : "متصل"} offset={[10, 10]} >
-                                        <div className="profile-content-avatar">
-                                            {User.profile.avatar_path == 'avatar.png' ?
-                                                <Image src="/avatar2.jpg" width={120} height={120} /> :
-                                                <Image
-                                                    loader={myLoader}
-                                                    src={APIURL + User.profile.avatar_path}
-                                                    quality={1}
-                                                    width={120}
-                                                    height={120}
-                                                    placeholder='blur'
-                                                    blurDataURL='/avatar2.jpg'
-                                                />
-                                            }
-                                        </div>
-                                    </Badge>
-                                    <div className="profile-content-head">
-                                        <h4 className="title">
-                                            {User.profile && User.profile.full_name}
-                                        </h4>
-                                        <p className="text">
-                                            @{User.username} |
-                                            <span className="app-label"> {User && User.profile && User.profile.level && User.profile.level.name_ar} </span>
-                                        </p>
-                                    </div>
+
+                                <div className="pb-1 mb-2">
+                                    <Card title="نبذة عني">
+                                        <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: User && User.profile.profile_seller.bio }} />
+                                        <button onClick={() => setIsLess(!isLess)} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                            {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
+                                        </button>
+                                    </Card>
                                 </div>
                                 <div className="profile-content-body">
                                     <div className="content-title">
@@ -81,27 +92,27 @@ const User = ({ query, stars }) => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-sm-4">
+                                        <div className="col-sm-6">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الاسم الأول</h3>
                                                 <p className="text-value">{User.profile && User.profile.first_name}</p>
                                             </div>
                                         </div>
-                                        <div className="col-sm-4">
+                                        <div className="col-sm-6">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الاسم الأخير</h3>
                                                 <p className="text-value">{User.profile && User.profile.last_name}</p>
                                             </div>
                                         </div>
                                         {User && User.profile.country !== null &&
-                                            <div className="col-sm-4">
+                                            <div className="col-sm-6">
                                                 <div className="content-text-item">
                                                     <h3 className="text-label">البلد</h3>
                                                     <p className="text-value">{User.profile.country.name_ar}</p>
                                                 </div>
                                             </div>
                                         }
-                                        <div className="col-sm-4">
+                                        <div className="col-sm-6">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">الجنس</h3>
                                                 <p className="text-value">
@@ -112,13 +123,12 @@ const User = ({ query, stars }) => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="col-sm-4">
+                                        {/* <div className="col-sm-4">
                                             <div className="content-text-item">
                                                 <h3 className="text-label">تاريخ الميلاد</h3>
                                                 <p className="text-value">{User.profile && User.profile.date_of_birth == null ? '' : userInfo.data.profile && userInfo.data.profile.date_of_birth}</p>
-
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                 </div>

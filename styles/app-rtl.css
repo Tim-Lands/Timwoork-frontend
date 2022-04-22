@@ -6023,17 +6023,18 @@ h3 {
 }
 
 .page-content .text {
-  font-size: 25px;
+  font-size: 20px;
   color: #444;
-  line-height: 39px;
+  font-weight: 200;
+  line-height: 41px;
   margin: 0;
 }
 
 .page-content .list li {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 200;
   color: #444;
-  line-height: 39px;
+  line-height: 41px;
   margin-right: 25px;
   margin-bottom: 15px;
 }

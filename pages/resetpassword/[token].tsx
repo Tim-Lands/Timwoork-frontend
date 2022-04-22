@@ -22,15 +22,14 @@ function ResetPassword({ query }) {
             setdataInfo(res.data.data)
             if (res.data.success) {
                 setIsToken(true)
-
             } else {
                 setIsToken(false)
             }
-
         } catch (error: any) {
             setIsToken(false)
         }
     }
+    
     useEffect(() => {
         verifyToken()
     }, [])

@@ -12,6 +12,7 @@ import Wise from '@/components/Withdrawal/Wise';
 import useSWR from 'swr';
 import { Alert } from '@/components/Alert/Alert';
 import Loading from '@/components/Loading';
+import { Result } from 'antd';
 
 function index() {
     const token = Cookies.get('token')
@@ -63,8 +64,25 @@ function index() {
                                                 <option value="3">حساب الوايز Wise</option>
                                             </select>
                                         </div>
-                                        {formik.values.withdrawal_type == 0 && <BankAccount token={token} />}
-                                        {formik.values.withdrawal_type == 1 && <MoneyAccount token={token} />}
+                                        {formik.values.withdrawal_type == 0 && <>
+                                            {(userInfo && userInfo.user_details.profile.withdrawable_amount > 49) ?
+                                                <BankAccount token={token} /> :
+                                                <Result
+                                                    status="warning"
+                                                    title="للأسف رصيدك القابل للسحب أقل من 50$"
+                                                />
+                                            }
+                                        </>
+                                        }
+                                        {formik.values.withdrawal_type == 1 && <>
+                                            {(userInfo && userInfo.user_details.profile.withdrawable_amount > 49) ?
+                                                <MoneyAccount token={token} /> :
+                                                <Result
+                                                    status="warning"
+                                                    title="للأسف رصيدك القابل للسحب أقل من 50$"
+                                                />
+                                            }
+                                        </>}
                                         {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
                                         {formik.values.withdrawal_type == 3 && <Wise token={token} />}
 

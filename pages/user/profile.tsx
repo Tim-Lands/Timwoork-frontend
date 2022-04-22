@@ -117,9 +117,7 @@ function Profile() {
                                 darkMode={darkMode}
                             />
                             <div className="col-lg-8">
-
                                 <div className="timlands-profile-content">
-
                                     {!userInfo.user_details.profile.profile_seller &&
                                         <div className="be-seller-aside mb-2">
                                             <h3 className="title">كن بائعا</h3>

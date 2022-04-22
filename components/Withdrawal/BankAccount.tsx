@@ -298,7 +298,7 @@ function BankAccount({ token }) {
                         <div className="col-md-12">
                             <div className="timlands-form">
                                 <label className="label-block lg" htmlFor="input-amount">المبلغ الذي تريد تحويله ($)</label>
-                                <p className="label-note">يجب ان يكون المبلغ الذي تريد تحويل على الأقل 10$</p>
+                                <p className="label-note">يجب ان يكون المبلغ الذي تريد تحويل على الأقل 50$</p>
                                 <input
                                     id="input-amount"
                                     name="amount"
