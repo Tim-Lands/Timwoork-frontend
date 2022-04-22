@@ -31,7 +31,7 @@ export default function UploadPicture({ token, avatarPicture }) {
         const fd: any = new FormData()
         fd.append('avatar', picture)
         fd.append('steps', 2)
-        API.post('https://api.timwork.com/api/profiles/step_two', fd, config)
+        API.post('https://api.timwoork.com/api/profiles/step_two', fd, config)
             .then(res => {
                 console.log(res);
 
@@ -54,6 +54,7 @@ export default function UploadPicture({ token, avatarPicture }) {
                 <div className="flex-center-just mt-2">
                     <button className="btn butt-md butt-primary" onClick={onUploadPicture}>رفع الآن</button>
                 </div>
+                <p className="note" style={{ color: 'red' }}>يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2 ميجابايت</p>
             </div>
         </div>
     );
