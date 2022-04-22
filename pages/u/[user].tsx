@@ -9,8 +9,6 @@ import useSWR from 'swr'
 import PropTypes from "prop-types";
 import Loading from '@/components/Loading'
 import API from '../../config'
-import Link from "next/link";
-import PostsAside from "@/components/PostsAside";
 import Post from "@/components/Post/Post";
 
 const User = ({ query, stars }) => {
