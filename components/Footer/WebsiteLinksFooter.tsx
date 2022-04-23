@@ -47,6 +47,16 @@ function WebsiteLinksFooter() {
                         <i className="fab fa-facebook"></i>
                     </a>
                 </li>
+                <li>
+                    <a href="https://t.me/timwoork" rel="noreferrer" target="_blank" className="social-link bt-facebook">
+                        <i className="fab fa-telegram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.tiktok.com/@timwoorkdotcom" rel="noreferrer" target="_blank" className="social-link bt-tiktok">
+                        <img src="/37.png" width={20} height={20} alt="" />
+                    </a>
+                </li>
             </ul>
         </div>
     )

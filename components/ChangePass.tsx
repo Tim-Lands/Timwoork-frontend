@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { message, Spin } from 'antd'
+import { Badge, message, Spin, Tooltip } from 'antd'
 import React, { ReactElement, useState } from 'react'
 import API from '../config'
 import useSWR from 'swr'
@@ -57,7 +57,7 @@ function ChangePass() {
                                             <div className="d-flex">
                                                 <h3 className="title flex-center">
                                                     <span className="material-icons material-icons-outlined">lock</span>
-                                                    تغيير كلمة المرور
+                                                    تغيير كلمة المرور  
                                                 </h3>
                                             </div>
                                         </div>
@@ -81,7 +81,11 @@ function ChangePass() {
                                                 </div>}
                                         </div>
                                         <div className="timlands-form">
-                                            <label className="label-block" htmlFor="password">كلمة المرور الجديدة</label>
+                                            <label className="label-block" htmlFor="password">كلمة المرور الجديدة  <Tooltip
+                                                title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام."
+                                            >
+                                                <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                            </Tooltip></label>
                                             <Field
                                                 type="password"
                                                 id="password"
@@ -100,7 +104,11 @@ function ChangePass() {
                                                 </div>}
                                         </div>
                                         <div className="timlands-form">
-                                            <label className="label-block" htmlFor="password_confirmation">إعادة كلمة المرور الجديدة</label>
+                                            <label className="label-block" htmlFor="password_confirmation">إعادة كلمة المرور الجديدة <Tooltip
+                                                        title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام."
+                                                    >
+                                                        <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                                    </Tooltip></label>
                                             <Field
                                                 type="password"
                                                 disabled={isSubmitting}

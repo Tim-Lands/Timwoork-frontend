@@ -203,6 +203,7 @@ function Bill() {
                                             type="radio"
                                             value='2'
                                             name="billPayment"
+                                            checked={true}
                                             id="billPayment-strap"
                                             onChange={(e: any) => setBillPayment(e.target.value)}
                                         />

@@ -1,7 +1,9 @@
 import API from "../../config";
 import { useState } from "react";
-import { Progress } from "antd";
+import { message, Progress } from "antd";
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
+import router from "next/router";
 
 export default function UploadPicture({ token, avatarPicture }) {
     const [picture, setPicture] = useState(null);
@@ -34,7 +36,8 @@ export default function UploadPicture({ token, avatarPicture }) {
         API.post('https://api.timwoork.com/api/profiles/step_two', fd, config)
             .then(res => {
                 console.log(res);
-
+                message.success('لقد تم تحديث صورة البروفايل بنجاح')
+                router.reload()
             }).catch(err => {
                 console.log(err);
             })
@@ -51,9 +54,11 @@ export default function UploadPicture({ token, avatarPicture }) {
                         <span className="material-icons material-icons-outlined">file_upload</span>
                     </button>
                 </div>
-                <div className="flex-center-just mt-2">
-                    <button className="btn butt-md butt-primary" onClick={onUploadPicture}>رفع الآن</button>
-                </div>
+                {(picture !== null || undefined) &&
+                    <motion.div initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex-center-just mt-2">
+                        <button className="btn butt-md butt-primary" onClick={onUploadPicture}>رفع الآن</button>
+                    </motion.div>
+                }
                 <p className="note" style={{ color: 'red', textAlign: 'center', fontWeight: 'bold' }}>يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2 ميجابايت</p>
             </div>
         </div>

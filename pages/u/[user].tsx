@@ -3,7 +3,6 @@ import React, { createRef, ReactElement, useState } from "react";
 import Image from 'next/image'
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Card } from "antd";
-import "antd/dist/antd.min.css";
 import { MetaTags } from '@/components/SEO/MetaTags'
 import useSWR from 'swr'
 import PropTypes from "prop-types";
@@ -61,7 +60,7 @@ const User = ({ query, stars }) => {
                                     <span className="app-label"> {User && User.profile && User.profile.level && User.profile.level.name_ar} </span>
                                 </p>
                             </div>
-                            {User.profile.profile_seller.portfolio &&
+                            {User && User.profile.profile_seller && User.profile.profile_seller.portfolio &&
                                 <p className="py-3">
                                     <a rel="noreferrer" target="_blank" className="btn butt-sm butt-primary2" href={`${User.profile.profile_seller.portfolio}`}>مشاهدة رابط الأعمال</a>
                                 </p>
@@ -71,15 +70,16 @@ const User = ({ query, stars }) => {
                     <div className={'row justify-content-md-center'}>
                         <div className="col-lg-8">
                             <div className="timlands-profile-content">
-
-                                <div className="pb-1 mb-2">
-                                    <Card title="نبذة عني">
-                                        <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: User && User.profile.profile_seller.bio }} />
-                                        <button onClick={() => setIsLess(!isLess)} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
-                                            {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
-                                        </button>
-                                    </Card>
-                                </div>
+                                {User && User.profile.profile_seller && User.profile.profile_seller.bio &&
+                                    <div className="pb-1 mb-2">
+                                        <Card title="نبذة عني">
+                                            <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: User && User.profile.profile_seller.bio }} />
+                                            <button onClick={() => setIsLess(!isLess)} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                                {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
+                                            </button>
+                                        </Card>
+                                    </div>
+                                }
                                 <div className="profile-content-body">
                                     <div className="content-title">
                                         <div className="d-flex">

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { GoogleLogin } from 'react-google-login';
 import Cookies from 'js-cookie'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import { message } from "antd";
+import { Badge, message, Tooltip } from "antd";
 
 const clientId = "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (): ReactElement => {
@@ -181,7 +181,11 @@ const Register = (): ReactElement => {
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="timlands-form">
-                                                <label className="label-block" htmlFor="password">كلمة المرور</label>
+                                                <label className="label-block" htmlFor="password">  كلمة المرور  <Tooltip
+                                                    title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام."
+                                                >
+                                                    <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                                </Tooltip></label>
                                                 <Field
                                                     type={passVisibled ? "text" : 'password'}
                                                     id="password"
@@ -207,7 +211,12 @@ const Register = (): ReactElement => {
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="timlands-form">
-                                                <label className="label-block" htmlFor="password_confirmation">إعادة كلمة المرور</label>
+                                                <label className="label-block" htmlFor="password_confirmation">إعادة كلمة المرور  
+                                                <Tooltip
+                                                    title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام."
+                                                >
+                                                    <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                                </Tooltip></label>
                                                 <Field
                                                     type={passVisibled ? "text" : 'password'}
                                                     id="password_confirmation"
@@ -235,7 +244,7 @@ const Register = (): ReactElement => {
                                     <div className="timlands-form">
                                         <div style={{ overflow: 'hidden' }}>
                                             <div className="timlands-form-note">
-                                                <p className="text">بمجرد قمت بالضغط على زر التسجيل فأنت توافق على <Link href="/terms"><a>شروط الاستخدام</a></Link> و <Link href="/privacy"><a>سياسة الخصوصية</a></Link></p>
+                                                <p className="text">بمجرد قمت بالضغط على  <strong>إنشاء حساب</strong> فأنت توافق على <Link href="/terms"><a>شروط الاستخدام</a></Link> و <Link href="/privacy"><a>سياسة الخصوصية</a></Link></p>
                                             </div>
                                         </div>
                                     </div>

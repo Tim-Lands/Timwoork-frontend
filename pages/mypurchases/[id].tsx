@@ -416,6 +416,21 @@ const Order = ({ query }) => {
                                             </div>
                                         </div>
                                     </>}
+
+                                    <div style={{ backgroundColor: '#fff', marginTop: 10 }}>
+                                        <div className="order-notes p-1">
+                                            <h3 className="title">
+                                                ملاحظات هامة لحماية حسابك
+                                            </h3>
+                                            <ul className="order-notes-list">
+                                                <li>لا تتواصل مع أي مستخدم آخر خارج الموقع. موقع تيموورك يحميك ببقاء تواصلك داخل الموقع فقط.</li>
+                                                <li>لا تزود أي مستخدم تحت أي ظرف بأي معلومات حساسة</li>
+                                                <li>لا تعطي معلومات الدخول الخاصة ببريدك الالكتروني أو حسابك في PayPal أو حساباتك على الشبكات الاجتماعية</li>
+                                                <li>تزويدك لأي مستخدم بمعلومات دخول لموقعك، جهازك الشخصي أو أي شيء آخر يتم على مسؤوليتك الشخصية</li>
+                                                <li>الرسائل مخصصة للاستفسار حول الخدمة فقط ولا يجب البدء في تنفيذ خدمة أو تسليمها عبر الرسائل قبل شرائها</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="py-2">
@@ -481,19 +496,7 @@ const Order = ({ query }) => {
                                             <h3 className="title">تعليمات للمشتري</h3>
                                         </div>
                                         <div className="seller-info">
-                                        <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ShowItem && ShowItem.data.profile_seller.products[0].buyer_instruct }} />
-                                        </div>
-                                        <div className="order-notes">
-                                            <h3 className="title">
-                                                ملاحظات هامة لحماية حسابك
-                                            </h3>
-                                            <ul className="order-notes-list">
-                                                <li>لا تتواصل مع أي مستخدم آخر خارج الموقع. موقع تيموورك يحميك ببقاء تواصلك داخل الموقع فقط.</li>
-                                                <li>لا تزود أي مستخدم تحت أي ظرف بأي معلومات حساسة</li>
-                                                <li>لا تعطي معلومات الدخول الخاصة ببريدك الالكتروني أو حسابك في PayPal أو حساباتك على الشبكات الاجتماعية</li>
-                                                <li>تزويدك لأي مستخدم بمعلومات دخول لموقعك، جهازك الشخصي أو أي شيء آخر يتم على مسؤوليتك الشخصية</li>
-                                                <li>الرسائل مخصصة للاستفسار حول الخدمة فقط ولا يجب البدء في تنفيذ خدمة أو تسليمها عبر الرسائل قبل شرائها</li>
-                                            </ul>
+                                            <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ShowItem && ShowItem.data.profile_seller.products[0].buyer_instruct }} />
                                         </div>
                                     </div>
                                     {ShowItem && ShowItem.data.conversation && <>
@@ -797,7 +800,7 @@ const Order = ({ query }) => {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th>السعر الطلبية</th>
+                                                    <th>سعر الطلبية</th>
                                                 </tr>
                                                 <tr>
                                                     <td>

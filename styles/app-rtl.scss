@@ -120,6 +120,7 @@ body {
     direction: rtl;
     font-family: 'jf' !important;
     background-color: #f7f7f7;
+    padding-top: 28px;
 }
 
 .is-home {
@@ -3676,9 +3677,9 @@ h3 {
 }
 .user-bro {
     transition: all 0.3s;
-    height: 230px;
+    height: auto;
     &.is-less {
-        height: auto;
+        height: 230px;
         transition: all 0.3s;
     }
 }
@@ -4530,6 +4531,12 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
             background-color: rgb(16, 76, 165) !important;
         }
     }
+    &.bt-tiktok {
+        &:hover {
+            color: #fff !important;
+            background-image: linear-gradient(rgb(0, 0, 0), rgb(72, 16, 99)) !important;
+        }
+    }
 
     &.bt-linkedin {
         &:hover {
@@ -4974,10 +4981,10 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     }
 
     .text {
-        padding: 4px 13px;
-        background-color: lighten($primary, 47);
+        //background-color: lighten($primary, 47);
         color: #000;
-        font-size: 13px;
+        font-size: 14px;
+        font-weight: bold;
         border-radius: 4px 0 4px 4px;
     }
 

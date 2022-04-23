@@ -185,8 +185,8 @@ function Conversation({ query }) {
                                                         <div className="item-content">
                                                             {item.type == 1 && <span className="bg-success text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>تعليمات</span>}
                                                             {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
-                                                            <p className="text" style={{ margin: 0 }}>{item.message}</p>
-                                                            <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
+                                                            <p className="text" style={{ margin: 0 }}>{item.user.profile.full_name}</p>
+                                                            <p className="meta" style={{ marginBlock: 4, fontSize: 11, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
                                                             {item.attachments &&
                                                                 <div className="attach-items" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}>
                                                                     {item.attachments.map((att: any, i: number) => (
@@ -198,6 +198,8 @@ function Conversation({ query }) {
                                                                     ))}
                                                                 </div>
                                                             }
+                                                            <p className="text2" style={{ margin: 0 }}>{item.message}</p>
+
                                                             {(profileInfo && profileInfo.user_details.id == item.user.id) &&
                                                                 <>
                                                                     {item.read_at && <span className="readed is-readed">
@@ -226,8 +228,8 @@ function Conversation({ query }) {
                                                     <div className="py-1 d-flex">
                                                         <select className={"timlands-inputs me-auto"} disabled={sendMessageLoading} name="message_type" id="message_type" onChange={(e: any) => setMessageType(e.target.value)}>
                                                             <option value="0">نص عادي</option>
-                                                            <option value="1">تعليمة</option>
-                                                            <option value="2">سبب إلغاء</option>
+                                                            <option value="1">تعليمات</option>
+                                                            <option value="2">سبب الإلغاء</option>
                                                         </select>
                                                         <button
                                                             type="button"

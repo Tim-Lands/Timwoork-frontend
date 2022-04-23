@@ -12,7 +12,6 @@ import Wise from '@/components/Withdrawal/Wise';
 import useSWR from 'swr';
 import { Alert } from '@/components/Alert/Alert';
 import Loading from '@/components/Loading';
-import { Result } from 'antd';
 
 function index() {
     const token = Cookies.get('token')
@@ -48,7 +47,7 @@ function index() {
                         {(userInfo.user_details.profile.wallet.is_withdrawable == true) ?
                             <>
                                 <div className="row my-5 justify-content-md-center">
-                                    <div className="col-md-7">
+                                    <div className="col-md-10">
                                         <div className="withdrawal-select">
                                             <h3 className="title">اختر طريقة السحب: </h3>
                                             <select
@@ -65,6 +64,10 @@ function index() {
                                             </select>
                                         </div>
                                         {formik.values.withdrawal_type == 0 && <>
+                                            <BankAccount token={token} />
+                                        </>}
+
+                                        {/* {formik.values.withdrawal_type == 0 && <>
                                             {(userInfo && userInfo.user_details.profile.withdrawable_amount > 49) ?
                                                 <BankAccount token={token} /> :
                                                 <Result
@@ -73,16 +76,21 @@ function index() {
                                                 />
                                             }
                                         </>
-                                        }
+                                        } */}
                                         {formik.values.withdrawal_type == 1 && <>
+                                            <MoneyAccount token={token} />
+                                        </>
+                                        }
+                                        {/* {formik.values.withdrawal_type == 0 && <>
                                             {(userInfo && userInfo.user_details.profile.withdrawable_amount > 49) ?
-                                                <MoneyAccount token={token} /> :
+                                                <BankAccount token={token} /> :
                                                 <Result
                                                     status="warning"
                                                     title="للأسف رصيدك القابل للسحب أقل من 50$"
                                                 />
                                             }
-                                        </>}
+                                        </>
+                                        } */}
                                         {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
                                         {formik.values.withdrawal_type == 3 && <Wise token={token} />}
 

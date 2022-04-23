@@ -1849,6 +1849,7 @@ body {
   direction: rtl;
   font-family: 'jf' !important;
   background-color: #f7f7f7;
+  padding-top: 28px;
 }
 
 .is-home {
@@ -5715,11 +5716,11 @@ h3 {
 .user-bro {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-  height: 230px;
+  height: auto;
 }
 
 .user-bro.is-less {
-  height: auto;
+  height: 230px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
@@ -6589,6 +6590,12 @@ h3 {
   background-color: #104ca5 !important;
 }
 
+.social-link.bt-tiktok:hover {
+  color: #fff !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(black), to(#481063)) !important;
+  background-image: linear-gradient(black, #481063) !important;
+}
+
 .social-link.bt-linkedin:hover {
   color: #fff !important;
   background-color: #2b3557 !important;
@@ -7090,10 +7097,9 @@ h3 {
 }
 
 .message-item .text {
-  padding: 4px 13px;
-  background-color: #d1d9e6;
   color: #000;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: bold;
   border-radius: 4px 0 4px 4px;
 }
 
