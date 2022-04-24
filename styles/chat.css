@@ -1,0 +1,143 @@
+.ce-chat-form-container,
+.ql-snow .ql-toolbar button,
+.ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar:after,
+.ce-delete-chat-button,
+#ce-options-drop-down,
+.ql-snow.ql-toolbar:after {
+  display: none !important;
+}
+.ce-chat-list {
+  overflow: hidden auto !important;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+.ce-chat-card {
+  border-radius: 0 !important;
+  text-align: start;
+  padding: 0.5rem !important;
+}
+.ce-active-chat-card {
+  background-color: #f5f5f5 !important;
+}
+.ce-chats-container > div:not(:first-of-type) {
+  border-bottom: 1px solid #ccc;
+}
+.ce-chat-title-text {
+  position: relative;
+  overflow: visible !important;
+  color: #475c80;
+  font-weight: bold !important;
+  padding-bottom: 0 !important;
+}
+.ce-chat-title-text div {
+  display: block !important;
+  width: 265px;
+  margin-inline-start: auto;
+}
+.ce-chat-title-text::before {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  font-family: "Material Icons Outlined";
+  font-size: 40px;
+  font-weight: normal;
+}
+.ce-chat-subtitle {
+  display: flex;
+  flex-flow: column;
+  align-items: start;
+  width: 265px !important;
+  margin-inline-start: auto;
+}
+.ce-chat-subtitle-message {
+  width: auto !important;
+}
+
+.ce-chat-feed-container {
+  background-image: url("https://i.pinimg.com/236x/c9/1f/cd/c91fcd147661c60204bd6b8ae9c0a8fd.jpg");
+}
+.ce-chat-feed-column {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+.ce-chat-feed .ce-chat-title {
+  background-color: rgba(207, 225, 209, 0.6) !important;
+}
+.ce-chat-title-container {
+  overflow: hidden !important;
+  padding: 0.5rem !important;
+  text-align: start !important;
+}
+.ce-feed-container-top {
+  height: 70px !important;
+}
+.ce-chat-title-container .ce-chat-title-text,
+.ce-chat-title-container .ce-chat-subtitle-text {
+  font-size: 14px !important;
+  width: calc(100% - 50px);
+  margin-inline-start: auto;
+}
+.ce-chat-title-container .ce-chat-subtitle-text {
+  font-size: 10px !important;
+  color: #999;
+}
+.ce-chat-title-container .ce-chat-title-text::before {
+  right: -50px;
+}
+
+.ce-send-button-container {
+  left: 15px;
+  top: 5px;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+.ql-container.ql-snow,
+.ql-toolbar.ql-snow {
+  border: 0 !important;
+  padding: 0 !important;
+}
+.ql-editor {
+  text-align: start !important;
+  background-color: #e7e7e7;
+  border-radius: 5rem;
+  padding: 0.5rem 1rem !important;
+  margin: 0.4rem 3rem 0.4rem 3.5rem;
+}
+.anticon-arrow-up {
+  position: relative;
+}
+.anticon-arrow-up::after {
+  content: "\e163";
+  position: absolute;
+  top: 1px;
+  left: 6px;
+  font-family: "Material Icons Outlined";
+  font-size: 20px;
+  transform: rotateY(180deg);
+}
+.anticon-arrow-up svg {
+  display: none !important;
+}
+#ce-send-message-button {
+  width: 35px;
+  height: 35px;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+#upload-document-button {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background-color: #e7e7e7;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+}
+.ce-attachment-icon {
+  vertical-align: baseline !important;
+  float: none !important;
+}

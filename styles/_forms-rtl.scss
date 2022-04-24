@@ -1,0 +1,159 @@
+.timlands-inputs {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 10px 20px;
+    font-size: 13px;
+    display: block;
+    border-radius: 6px;
+    outline: none;
+    width: 100%;
+    &:hover {
+        border: 1px solid #ccc;
+    }
+    &:disabled {
+        opacity: 0.3;
+    }
+    &:focus {
+        border: 1px solid $primary;
+    }
+    &.select {
+        padding: 7px 20px;
+    }
+    &.code {
+        padding: 17px 24px !important;
+        font-size: 27px !important;
+        text-align: center;
+        margin-top: 8px;
+        direction: ltr;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        &:hover {
+            border: 2px solid #ccc;
+        }
+        &:focus {
+            border: 2px solid $primary;
+        }
+    }
+    &.sm {
+        padding: 8px 15px !important;
+        font-size: 12px !important;
+        margin-top: 4px;
+        border-radius: 4px;
+    }
+    &.xs {
+        padding: 6px 12px !important;
+        font-size: 11px !important;
+        margin-top: 1px;
+        border-radius: 4px;
+    }
+    &.lg {
+        padding: 12px 18px !important;
+        font-size: 15px !important;
+        margin-top: 3px;
+        border-radius: 6px;
+    }
+    &.has-error {
+        border: 1px solid rgb(253, 151, 151);
+        &:hover {
+            border: 1px solid rgb(223, 87, 87);
+        }
+    }
+}
+
+.label-block {
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    &.sm {
+        font-size: 12px !important;
+    }
+    &.lg {
+        font-size: 17px !important;
+    }
+}
+.label-note {
+    font-size: 12px;
+    color: #777;
+    font-weight: 200;
+    display: block;
+    margin: 6px 0;
+}
+.timlands-form {
+    padding: 12px 0;
+    position: relative;
+    .timlands-input {
+        display: block;
+        width: 100%;
+        background-color: #fff;
+        padding: 10px 19px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-weight: 500;
+        outline: none;
+        transition: all 0.3s;
+        
+        &::placeholder {
+            color: #ddd;
+        }
+        &:disabled {
+            opacity: 0.3;
+        }
+        &:hover {
+            border: 1px solid #ccc;
+        }
+        &:focus {
+            transition: all 0.3s;
+            outline: none;
+            border: 1px solid $primary;
+            &::placeholder {
+                color: #ccc;
+            }
+        }
+
+        @keyframes formscale {
+            0% {
+                transform: scale(1.08);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        &.has-error {
+            animation: formscale 0.4s;
+            border: 1px solid rgb(240, 53, 53);
+        }
+    }
+
+    @media (max-width: 500px) {
+        margin: 20px 0;
+    }
+    .icon-preview {
+        position: absolute;
+        left: 19px;
+        color: #999;
+        top: 60px;
+        .material-icons {
+            font-size: 32px;
+        }
+    }
+
+}
+.timlands-form-note {
+    margin-top: 5px;
+    padding: 8px 0;
+    .text {
+        font-size: 13px;
+        color: #666;
+        margin: 0;
+        font-weight: 300;
+    }
+    &.form-note-error {
+        .text {
+            color: rgb(196, 61, 61);
+            font-weight: 700;
+        }
+    }
+}
