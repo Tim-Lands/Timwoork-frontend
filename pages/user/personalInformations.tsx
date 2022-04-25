@@ -64,6 +64,7 @@ const personalInformations = () => {
                                         // Authentication was successful.
                                         if (res.status === 200) {
                                             message.success('لقد تم التحديث بنجاح')
+                                            router.reload();
                                         }
                                     } catch (error: any) {
                                         if (error.response && error.response.data && error.response.data.errors) {

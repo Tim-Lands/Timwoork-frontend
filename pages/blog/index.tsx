@@ -12,7 +12,7 @@ function Category(): JSX.Element {
     const { data: getPosts }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/posts${categories}`)
     const { data: getMedia }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media`)
     const postsMediaTable = {};
-    getMedia.forEach(media => postsMediaTable[media.id] = media.guid.rendered)
+    getMedia&&getMedia.forEach(media => postsMediaTable[media.id] = media.guid.rendered)
     return (
         <div>
             <MetaTags

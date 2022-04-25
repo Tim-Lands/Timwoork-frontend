@@ -1,5 +1,5 @@
 
-import React, { createRef, ReactElement, useState } from "react";
+import React, { createRef, ReactElement, useEffect, useState } from "react";
 import Image from 'next/image'
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Card } from "antd";
@@ -20,7 +20,11 @@ const User = ({ query, stars }) => {
     }
 
     const [isLess, setIsLess] = useState(true)
+    const [isOverflow, setIsOverflow] = useState(false);
     const detectHeight: any = createRef()
+
+    useEffect(()=>setIsOverflow(detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight.current])
+
     return (
         <div className="py-3 mt-3">
             <MetaTags
@@ -74,9 +78,9 @@ const User = ({ query, stars }) => {
                                     <div className="pb-1 mb-2">
                                         <Card title="نبذة عني">
                                             <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: User && User.profile.profile_seller.bio }} />
-                                            <button onClick={() => setIsLess(!isLess)} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                            {isOverflow&&<button onClick={() => {console.log(detectHeight.current.scrollHeight);setIsLess(!isLess)}} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
                                                 {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
-                                            </button>
+                                            </button>}
                                         </Card>
                                     </div>
                                 }
