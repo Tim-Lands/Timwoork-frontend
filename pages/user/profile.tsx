@@ -52,6 +52,8 @@ function Profile() {
             // Authentication was successful.
             if (res.status === 200) {
                 setIsLoadingSeler(false)
+                console.log(res)
+                console.log(res.data)
                 router.push('/user/editSeller')
             }
         } catch (error: any) {
