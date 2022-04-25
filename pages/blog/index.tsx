@@ -10,6 +10,9 @@ function Category(): JSX.Element {
     const [categories, setCategories] = useState('')
     const { data: getCategories }: any = useSWR('https://timwoork.net/wp-json/wp/v2/categories')
     const { data: getPosts }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/posts${categories}`)
+    const { data: getMedia }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media`)
+    const postsMediaTable = {};
+    getMedia&&getMedia.forEach(media => postsMediaTable[media.id] = media.guid.rendered)
     return (
         <div>
             <MetaTags
@@ -28,17 +31,19 @@ function Category(): JSX.Element {
 
             <div className="container py-4">
                 <div className="row">
-                    {getPosts && getPosts.map((item: any) => (
-                        <div className="col-md-4" key={item.id}>
-                            <Post
-                                title={item.title.rendered}
-                                thumbnail={item.jetpack_featured_media_url}
-                                size={''}
-                                slug={item.slug}
-                                excerpt={item.excerpt.rendered.substring(0, 200) + '...'}
-                            />
-                        </div>
-                    ))}
+                    {getPosts && getPosts.map((item: any) => {
+                        console.log(item); return (
+                            <div className="col-md-4" key={item.id}>
+                                <Post
+                                    title={item.title.rendered}
+                                    thumbnail={postsMediaTable[item.featured_media]}
+                                    size={''}
+                                    slug={item.slug}
+                                    excerpt={item.excerpt.rendered.substring(0, 200) + '...'}
+                                />
+                            </div>
+                        )
+                    })}
                 </div>
                 {getPosts && getPosts.length == 0 && <Result
                     status="404"
