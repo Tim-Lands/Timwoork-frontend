@@ -54,7 +54,7 @@ const User = ({ query, stars }) => {
                                     {!getSamePosts && <Loading />}
                                     <div className="row">
                                         {getSamePosts && getSamePosts.map((item: any) => (
-                                            <div className="col-md-4" key={item.id}>
+                                            <div className="col-md-4" key={item.id}> 
                                                 <Post
                                                     title={item.title.rendered.length > 22 ? item.title.rendered.substring(0, 22) + '...' : item.title.rendered}
                                                     thumbnail={postsMediaTable[item.featured_media]}
