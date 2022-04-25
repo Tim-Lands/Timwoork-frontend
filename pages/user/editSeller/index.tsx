@@ -107,18 +107,19 @@ const EditSeller = () => {
     const token = Cookies.get('token')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const { data: userInfo }: any = useSWR('api/me')
+    console.log(userInfo)
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     const editor = useEditor({
         extensions: [
             StarterKit,
         ],
-        content: userInfo && userInfo.user_details.profile.profile_seller.bio,
+        content: userInfo && userInfo.user_details.profile.profile_seller&&userInfo.user_details.profile.profile_seller.bio,
     })
     const html = editor && editor.getHTML()
     const formik = useFormik({
         initialValues: {
             bio: html,
-            portfolio: userInfo && userInfo.user_details.profile.profile_seller.portfolio,
+            portfolio: userInfo && userInfo.user_details.profile.profile_seller&&userInfo.user_details.profile.profile_seller.portfolio,
         },
         isInitialValid: true,
         enableReinitialize: true,

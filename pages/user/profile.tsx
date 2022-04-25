@@ -55,6 +55,7 @@ function Profile() {
                 router.push('/user/editSeller')
             }
         } catch (error: any) {
+            console.log(error)
             message.error('حدث خطأ غير متوقع')
             setIsLoadingSeler(false)
         }
