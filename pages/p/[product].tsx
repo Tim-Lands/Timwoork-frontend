@@ -197,7 +197,7 @@ function Single({ query, stars, errorFetch }) {
             placement: 'topLeft'
           });
         }
-        if (error.response && error.response.status === 400) {
+       /*  if (error.response && error.response.status === 400) {
           notification.warning({
             message: `تحذير`,
             description: 'لا يمكنك شراء خدمتك!',
@@ -209,7 +209,7 @@ function Single({ query, stars, errorFetch }) {
             description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
             placement: 'topLeft'
           });
-        }
+        } */
         else {
 
           message.error('حدث خطأ غير متوقع')
