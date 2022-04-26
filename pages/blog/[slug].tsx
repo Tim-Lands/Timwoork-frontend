@@ -16,7 +16,7 @@ const User = ({ query, stars }) => {
     const { data: getAds }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media?include=28,29`)
     const { data: getMedia }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media`)
     const postsMediaTable = {};
-    getMedia&&getMedia.forEach(media => postsMediaTable[media.id] = media.guid.rendered)
+    getMedia && getMedia.forEach(media => postsMediaTable[media.id] = media.guid.rendered)
     return (
         <>
             {!getPosts && <Loading />}
@@ -54,7 +54,7 @@ const User = ({ query, stars }) => {
                                     {!getSamePosts && <Loading />}
                                     <div className="row">
                                         {getSamePosts && getSamePosts.map((item: any) => (
-                                            <div className="col-md-4" key={item.id}> 
+                                            <div className="col-md-4" key={item.id}>
                                                 <Post
                                                     title={item.title.rendered.length > 22 ? item.title.rendered.substring(0, 22) + '...' : item.title.rendered}
                                                     thumbnail={postsMediaTable[item.featured_media]}
@@ -72,7 +72,7 @@ const User = ({ query, stars }) => {
 
                                 <div className="col-md-4">
                                     {!getAds && <Loading />}
-                                    {getAds && getAds.map((item: any) =>(
+                                    {getAds && getAds.map((item: any) => (
                                         <div key={item.id}>
                                             <Image
                                                 src={item.guid.rendered}
@@ -113,10 +113,10 @@ export async function getServerSideProps({ query }) {
     const uriString = encodeURI(`https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`)
     // Fetch data from external API
     const res = await API.get(uriString)
-  
+
     // Pass data to the page via props
     return { props: { stars: res.data, query } }
-  }
+}
 User.propTypes = {
     query: PropTypes.any,
     stars: PropTypes.any,
