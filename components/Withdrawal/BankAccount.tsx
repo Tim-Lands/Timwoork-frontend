@@ -72,6 +72,7 @@ function BankAccount({ token }) {
             formdata.append('address_line_one', address_line_one)
             formdata.append('code_postal', code_postal)
             formdata.append('attachments', attachments)
+            console.log(attachments)
 
             const res = await API.post(`api/withdrawals/update/bank_transfer`, formdata, {
                 headers: {
