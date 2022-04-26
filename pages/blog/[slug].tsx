@@ -14,9 +14,10 @@ const User = ({ query, stars }) => {
     const { data: getPosts }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`)
     const { data: getSamePosts }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/posts?categories=${getPosts && getPosts[0].categories[0]}&per_page=3`)
     const { data: getAds }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media?include=28,29`)
+    const { data: getMedia }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media`)
+    const postsMediaTable = {};
+    getMedia&&getMedia.forEach(media => postsMediaTable[media.id] = media.guid.rendered)
     return (
-
-        
         <>
             {!getPosts && <Loading />}
             <MetaTags
@@ -32,10 +33,10 @@ const User = ({ query, stars }) => {
                         <div className="container">
                             <header>
                                 <div className="row" style={{ alignItems: 'center' }}>
-                                    <div className="col-10">
+                                    <div className="col-lg-10 col-md-8">
                                         <h1 className="mb-0" style={{ fontSize: 30, fontWeight: 'bold' }}>{getPosts[0].title.rendered}</h1>
                                     </div>
-                                    <div className="col-2">
+                                    <div className="col-md-4 col-lg-2 col-sm-12 text-md-start text-sm-end">
                                         <span>نُشرت في</span>
                                         <span style={{ display: 'inline-block', marginInlineStart: '.5rem' }}>{rtlDateFormatted(getPosts[0].modified)}</span>
                                     </div>
@@ -45,7 +46,7 @@ const User = ({ query, stars }) => {
                             <div className="row">
                                 <div className="col-md-8">
                                     <Image
-                                        src={getPosts[0].jetpack_featured_media_url}
+                                        src={postsMediaTable[getPosts[0].featured_media]}
                                     />
                                     <div className="blog-single-content mt-3" style={{ lineHeight: 2, fontSize: 20, }} dangerouslySetInnerHTML={{ __html: getPosts[0].content.rendered }}></div>
                                     <Divider />
@@ -53,10 +54,10 @@ const User = ({ query, stars }) => {
                                     {!getSamePosts && <Loading />}
                                     <div className="row">
                                         {getSamePosts && getSamePosts.map((item: any) => (
-                                            <div className="col-md-4" key={item.id}>
+                                            <div className="col-md-4" key={item.id}> 
                                                 <Post
                                                     title={item.title.rendered.length > 22 ? item.title.rendered.substring(0, 22) + '...' : item.title.rendered}
-                                                    thumbnail={item.jetpack_featured_media_url}
+                                                    thumbnail={postsMediaTable[item.featured_media]}
                                                     size={'small'}
                                                     slug={item.slug}
                                                     excerpt={item.excerpt.rendered.substring(0, 100) + '...'}
@@ -71,13 +72,14 @@ const User = ({ query, stars }) => {
 
                                 <div className="col-md-4">
                                     {!getAds && <Loading />}
-                                    {getAds && getAds.map((item: any) => (
+                                    {getAds && getAds.map((item: any) =>(
                                         <div key={item.id}>
                                             <Image
-                                                src={item.link}
+                                                src={item.guid.rendered}
                                             />
                                         </div>
                                     ))}
+
                                 </div>
                             </div>
 
