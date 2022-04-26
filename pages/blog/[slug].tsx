@@ -76,7 +76,6 @@ const User = ({ query, stars }) => {
                                             />
                                         </div>
                                     ))}
-
                                 </div>
                             </div>
 

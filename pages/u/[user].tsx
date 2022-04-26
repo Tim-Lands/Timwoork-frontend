@@ -23,7 +23,9 @@ const User = ({ query, stars }) => {
     const [isOverflow, setIsOverflow] = useState(false);
     const detectHeight: any = createRef()
 
-    useEffect(() => setIsOverflow(detectHeight.current && detectHeight.current.scrollHeight > 230), [detectHeight.current])
+    useEffect(() => {
+        setIsOverflow(detectHeight && detectHeight.current && detectHeight.current.scrollHeight > 230)
+    }, [detectHeight.current])
 
     return (
         <div className="py-3 mt-3">
