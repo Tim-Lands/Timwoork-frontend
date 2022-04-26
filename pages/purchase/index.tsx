@@ -128,6 +128,7 @@ function Bill() {
             }
         }
     }
+    const onBillPaymentChange=e=>setBillPayment(e.target.value)
     return (
         <>
             <MetaTags
@@ -203,9 +204,9 @@ function Bill() {
                                             type="radio"
                                             value='2'
                                             name="billPayment"
-                                            checked={true}
                                             id="billPayment-strap"
-                                            onChange={(e: any) => setBillPayment(e.target.value)}
+                                            checked={billPayment==2}
+                                            onChange={onBillPaymentChange}
                                         />
                                         <label className="form-check-label" htmlFor="billPayment-strap">
                                             الدفع عن طريق البطاقات البنكية
@@ -227,7 +228,8 @@ function Bill() {
                                             value='1'
                                             name="billPayment"
                                             id="billPayment-paypal"
-                                            onChange={(e: any) => setBillPayment(e.target.value)}
+                                            checked={billPayment==1}
+                                            onChange={onBillPaymentChange}
                                         />
                                         <label className="form-check-label" htmlFor="billPayment-paypal">
                                             الدفع عن طريق البايبال Paypal
@@ -254,8 +256,9 @@ function Bill() {
                                                     value='3'
                                                     name="billPayment"
                                                     id="billPayment-wallet"
-                                                    onChange={(e: any) => setBillPayment(e.target.value)}
-                                                />
+                                                    checked={billPayment==3}
+                                                    onChange={onBillPaymentChange}
+                                                    />
                                                 <label className="form-check-label" htmlFor="billPayment-wallet">
                                                     الدفع عن طريق المحفظة
                                                 </label>
