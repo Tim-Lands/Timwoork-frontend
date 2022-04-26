@@ -10,7 +10,7 @@ function NotSeller() {
                     title="ليس لديك الصلاحية"
                     subTitle="يجب ان تكون بائعا حتى تضيف الخدمة"
                     extra={
-                        <Link href="/login">
+                        <Link href="/user/editSeller">
                             <a className="btn butt-primary butt-md">
                               كن بائعا
                             </a>
