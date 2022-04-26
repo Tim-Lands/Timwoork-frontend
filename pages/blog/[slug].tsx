@@ -33,10 +33,10 @@ const User = ({ query, stars }) => {
                         <div className="container">
                             <header>
                                 <div className="row" style={{ alignItems: 'center' }}>
-                                    <div className="col-10">
+                                    <div className="col-lg-10 col-md-8">
                                         <h1 className="mb-0" style={{ fontSize: 30, fontWeight: 'bold' }}>{getPosts[0].title.rendered}</h1>
                                     </div>
-                                    <div className="col-2">
+                                    <div className="col-md-4 col-lg-2 col-sm-12 text-md-start text-sm-end">
                                         <span>نُشرت في</span>
                                         <span style={{ display: 'inline-block', marginInlineStart: '.5rem' }}>{rtlDateFormatted(getPosts[0].modified)}</span>
                                     </div>
