@@ -15,6 +15,7 @@ const User = ({ query, stars }) => {
     const { data: getSamePosts }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/posts?categories=${getPosts && getPosts[0].categories[0]}&per_page=3`)
     const { data: getAds }: any = useSWR(`https://timwoork.net/wp-json/wp/v2/media?include=28,29`)
     return (
+
         
         <>
             {!getPosts && <Loading />}
