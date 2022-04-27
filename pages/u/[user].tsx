@@ -191,6 +191,6 @@ export async function getServerSideProps({ query }) {
     }
 }
 User.propTypes = {
-    query: PropTypes.any,
+    query: PropTypes.any, 
     stars: PropTypes.any,
 };
