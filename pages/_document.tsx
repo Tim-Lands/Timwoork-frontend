@@ -12,6 +12,8 @@ export default class CustomDocument extends Document {
                     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
                     <link rel="icon" href="/icon.png" />
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6371231196080126"
+                        crossOrigin="anonymous"></script>
                     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NR88QZ76Y"></script>
                     <script dangerouslySetInnerHTML={{
                         __html: `window.dataLayer = window.dataLayer || [];

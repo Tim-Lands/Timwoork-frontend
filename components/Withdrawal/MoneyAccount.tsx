@@ -1,7 +1,6 @@
 import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useState } from "react";
 import { useFormik } from 'formik';
-
 import { message } from 'antd';
 import { motion } from 'framer-motion';
 import API from "../../config";
@@ -91,11 +90,6 @@ function MoneyAccount({ token }) {
     //         </ul>
     //     </div>
     // );
-    const [quantutyCount, setQuantutyCount] = useState(null)
-    const allowOnlyNumericsOrDigits = (evt) => {
-        const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-        setQuantutyCount(financialGoal);
-    }
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
@@ -386,40 +380,12 @@ function MoneyAccount({ token }) {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <div className="timlands-form">
-                                <label className="label-block lg" htmlFor="input-amount">المبلغ الذي تريد تحويله ($)</label>
-                                <p className="label-note">يجب ان يكون المبلغ الذي تريد تحويل على الأقل 50$</p>
-                                <input
-                                    id="input-amount"
-                                    name="amount"
-                                    type='number'
-                                    onInput={allowOnlyNumericsOrDigits}
-                                    placeholder="المبلغ الذي تريد تحويله ($)"
-                                    className={"timlands-inputs lg " + (validationsErrors && validationsErrors.amount && ' has-error')}
-                                    autoComplete="off"
-                                    onKeyUp={clearValidationHandle}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.amount}
-                                />
-                                {validationsErrors && validationsErrors.amount &&
-                                    <div style={{ overflow: 'hidden' }}>
-                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.amount[0]}</p>
-                                        </motion.div>
-                                    </div>}
-                            </div>
-                            <hr />
-                        </div>
-                        <div className="col-md-12">
                             <div className="py-4 d-flex">
-                                <span className="me-auto">
-                                    <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-primary ml-auto butt-lg">
+                                <span className="me-auto save-changes">
+                                    <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-green ml-auto butt-lg">
                                         <span className="text">حفظ التغييرات</span>
                                     </button>
                                 </span>
-                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
-                                    <span className="text">طلب سحب</span>
-                                </button>
                             </div>
                         </div>
                     </div>
