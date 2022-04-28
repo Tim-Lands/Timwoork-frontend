@@ -1892,7 +1892,8 @@ h3 {
   font-weight: bold;
 }
 
-.ant-table-content table tr td, .ant-table-content table tr th {
+.ant-table-content table tr td,
+.ant-table-content table tr th {
   font-size: 12px;
 }
 
@@ -7737,5 +7738,99 @@ h3 {
 
 .withdrawal-select .select {
   width: calc(100% - 200px);
+}
+
+.opacity-50 {
+  opacity: .5;
+}
+
+.opacity-75 {
+  opacity: .75;
+}
+
+.form-check-input:checked + .form-checked-content {
+  opacity: .5;
+}
+
+.form-check-input-placeholder {
+  pointer-events: none;
+  border-style: dashed;
+}
+
+[contenteditable]:focus {
+  outline: 0;
+}
+
+.list-group-checkable .list-group-item {
+  cursor: pointer;
+  border-radius: .5rem;
+}
+
+.withdrawable-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 80px;
+}
+
+.list-group-item-check {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
+
+.list-group-item-check:hover + .list-group-item {
+  background-color: var(--bs-light);
+}
+
+.list-group-item-check:checked + .list-group-item {
+  color: #fff;
+  background-color: #475C80;
+}
+
+.list-group-item-check[disabled] + .list-group-item,
+.list-group-item-check:disabled + .list-group-item {
+  pointer-events: none;
+  -webkit-filter: none;
+          filter: none;
+  opacity: .5;
+}
+
+.transfert-box {
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.transfert-box .btn-edit {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  -webkit-box-shadow: -6px -8px 12px rgba(0, 0, 0, 0.041);
+          box-shadow: -6px -8px 12px rgba(0, 0, 0, 0.041);
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #fff;
+  position: absolute;
+  left: -4px;
+  top: 14px;
+}
+
+.transfert-box .btn-edit:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.save-changes {
+  position: absolute;
+  top: 25px;
+  left: 50px;
 }
 /*# sourceMappingURL=app-rtl.css.map */
