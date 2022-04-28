@@ -25,7 +25,9 @@ function Paypal({ query }) {
                 }
             })
             if (res.status === 200) {
+                console.log('///t////');
                 console.log(res);
+                console.log('////s////')
                 console.log(res.data);
                 setIsLoading(false)
                 setIsError(false)
