@@ -25,11 +25,14 @@ function Paypal({ query }) {
                 }
             })
             if (res.status === 200) {
+                console.log(res);
+                console.log(res.data);
                 setIsLoading(false)
                 setIsError(false)
                 setGetBills(res.data.data)
             }
         } catch (error) {
+            console.log(error.response)
             setIsLoading(false)
             setIsError(true)
         }
