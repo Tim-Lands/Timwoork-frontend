@@ -9,7 +9,7 @@ import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
-function Wise({ token }) {
+function Wise({ token, setIsShowBankTransfert }) {
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
@@ -68,11 +68,6 @@ function Wise({ token }) {
 
         }
     });
-    const [quantutyCount, setQuantutyCount] = useState(null)
-    const allowOnlyNumericsOrDigits = (evt) => {
-        const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-        setQuantutyCount(financialGoal);
-    }
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
@@ -105,39 +100,12 @@ function Wise({ token }) {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <div className="timlands-form">
-                                <label className="label-block lg" htmlFor="input-amount">المبلغ الذي تريد تحويله ($)</label>
-                                <p className="label-note">يجب ان يكون المبلغ الذي تريد تحويل على الأقل 10$</p>
-
-                                <input
-                                    id="input-amount"
-                                    name="amount"
-                                    onInput={allowOnlyNumericsOrDigits}
-                                    placeholder="المبلغ الذي تريد تحويله ($)"
-                                    className={"timlands-inputs lg " + (validationsErrors && validationsErrors.amount && ' has-error')}
-                                    autoComplete="off"
-                                    onKeyUp={clearValidationHandle}
-                                    onChange={formik.handleChange}
-                                    value={formik.values.amount}
-                                />
-                                {validationsErrors && validationsErrors.amount &&
-                                    <div style={{ overflow: 'hidden' }}>
-                                        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                            <p className="text">{validationsErrors.amount[0]}</p>
-                                        </motion.div>
-                                    </div>}
-                            </div>
-                            <hr />
-                        </div>
-                        <div className="col-md-12">
                             <div className="py-4 d-flex">
-                                <span className="me-auto">
-                                    <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-primary ml-auto butt-lg">
-                                        <span className="text">حفظ التغييرات</span>
-                                    </button>
-                                </span>
-                                <button type="submit" disabled={formik.isSubmitting} className="btn flex-center butt-green ml-auto butt-lg">
-                                    <span className="text">طلب سحب</span>
+                                <button type="submit" onClick={UpdateMoney} className="btn flex-center butt-green me-auto butt-lg">
+                                    <span className="text">حفظ التغييرات</span>
+                                </button>
+                                <button type="button" onClick={() => setIsShowBankTransfert(false)} className="btn flex-center butt-red ml-auto butt-lg">
+                                    <span className="text">إخفاء التعديل</span>
                                 </button>
                             </div>
                         </div>
@@ -157,4 +125,5 @@ Wise.getLayout = function getLayout(page: any): ReactElement {
 export default Wise
 Wise.propTypes = {
     token: PropTypes.any,
+    setIsShowBankTransfert: PropTypes.func,
 };

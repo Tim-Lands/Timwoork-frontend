@@ -9,7 +9,7 @@ import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
-function MoneyAccount({ token }) {
+function MoneyAccount({ token, setIsShowBankTransfert }) {
     const { data: Countries }: any = useSWR('api/withdrawals/countries')
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
@@ -93,10 +93,11 @@ function MoneyAccount({ token }) {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
-                <div className="page-header">
-                    <h4 className="title">
-                        الحساب البنكي
+                <div className="page-header d-flex">
+                    <h4 className="title me-auto">
+                        تحويل البنكي
                     </h4>
+                    <button type='button' onClick={() => setIsShowBankTransfert(false)} className='btn-close ml-auto'></button>
                 </div>
                 <div className="timlands-content-form">
                     {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
@@ -381,11 +382,12 @@ function MoneyAccount({ token }) {
                         </div>
                         <div className="col-md-12">
                             <div className="py-4 d-flex">
-                                <span className="me-auto save-changes">
-                                    <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-green ml-auto butt-lg">
-                                        <span className="text">حفظ التغييرات</span>
-                                    </button>
-                                </span>
+                                <button type="submit" disabled={formik.isSubmitting} onClick={() => UpdateMoney(formik.values)} className="btn flex-center butt-green me-auto butt-lg">
+                                    <span className="text">حفظ التغييرات</span>
+                                </button>
+                                <button type="button" onClick={() => setIsShowBankTransfert(false)} className="btn flex-center butt-red ml-auto butt-lg">
+                                    <span className="text">إخفاء التعديل</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -404,4 +406,5 @@ MoneyAccount.getLayout = function getLayout(page: any): ReactElement {
 export default MoneyAccount
 MoneyAccount.propTypes = {
     token: PropTypes.any,
+    setIsShowBankTransfert: PropTypes.func,
 };

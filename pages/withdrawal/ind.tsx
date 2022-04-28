@@ -13,11 +13,20 @@ import useSWR from 'swr';
 import { Alert } from '@/components/Alert/Alert';
 import Loading from '@/components/Loading';
 import { motion } from 'framer-motion';
+import BankAccountCart from '@/components/Withdrawal/BankAccountCart';
+import MoneyAccountCart from '@/components/Withdrawal/MoneyAccountCart';
+import PaypalCart from '@/components/Withdrawal/PaypalCart';
+import WiseCart from '@/components/Withdrawal/WiseCart';
 
 function Withdrawal() {
     const token = Cookies.get('token')
     const { data: userInfo }: any = useSWR('api/me')
     //const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    const [isShowBankTransfert, setIsShowBankTransfert]: any = useState(false)
+    const [isShowMoneyTransfert, setIsShowMoneyTransfert]: any = useState(false)
+    const [isShowWiseTransfert, setIsShowWiseTransfert]: any = useState(false)
+    const [isShowPaypalTransfert, setIsShowPaypalTransfert]: any = useState(false)
+
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const formik = useFormik({
@@ -88,31 +97,31 @@ function Withdrawal() {
                                     <div className="row transfert-box">
 
                                         <div className="col-12">
-                                            <input className="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="1" checked />
+                                            <input onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="listGroupCheckableRadios1" value="1" />
                                             <label className="list-group-item py-3" htmlFor="listGroupCheckableRadios1">
                                                 <img src="/banktransfert.png" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 تحويل بنكي
                                             </label>
                                         </div>
-                                        <button type='button' className='btn-edit'>
+                                        <button type='button' className='btn-edit' onClick={() => setIsShowBankTransfert(true)}>
                                             <span className="material-icons material-icons-outlined">edit</span>
                                         </button>
                                     </div>
                                     <div className="row transfert-box">
                                         <div className="col-12">
-                                            <input className="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="transfert-money" value="0" checked />
+                                            <input onChange={formik.handleChange} className="list-group-item-check" type="radio"  name="withdrawal_type" id="transfert-money" value="0" disabled={true} />
                                             <label className="list-group-item py-3" htmlFor="transfert-money">
                                                 <img src="/transfert1.jpg" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 الحوالة المالية
                                             </label>
                                         </div>
                                         <button type='button' className='btn-edit'>
-                                            <span className="material-icons material-icons-outlined">edit</span>
+                                            <span className="material-icons material-icons-outlined">add</span>
                                         </button>
                                     </div>
                                     <div className="row transfert-box">
                                         <div className="col-12">
-                                            <input className="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="transfert-wise" value="3" />
+                                            <input onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="transfert-wise" value="3" />
                                             <label className="list-group-item py-3" htmlFor="transfert-wise">
                                                 <img src="/wise1.png" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 تحويل وايز Wise
@@ -124,7 +133,7 @@ function Withdrawal() {
                                     </div>
                                     <div className="row transfert-box">
                                         <div className="col-12">
-                                            <input className="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="transfert-paypal" value="2" />
+                                            <input onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="transfert-paypal" value="2" />
                                             <label className="list-group-item py-3" htmlFor="transfert-paypal">
                                                 <img src="/paypal1.webp" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 تحويل وايز Paypal
@@ -146,13 +155,21 @@ function Withdrawal() {
                     </div>
                     <div className="col-lg-8">
                         {formik.values.withdrawal_type == 0 && <>
-                            <BankAccount token={token} />
+                            {!isShowMoneyTransfert && <BankAccountCart setIsShowBankTransfert={setIsShowMoneyTransfert} />}
+                            {isShowMoneyTransfert && <BankAccount token={token} setIsShowBankTransfert={setIsShowMoneyTransfert} />}
                         </>}
                         {formik.values.withdrawal_type == 1 && <>
-                            <MoneyAccount token={token} />
+                            {!isShowBankTransfert && <MoneyAccountCart setIsShowBankTransfert={setIsShowBankTransfert} />}
+                            {isShowBankTransfert && <MoneyAccount token={token} setIsShowBankTransfert={setIsShowBankTransfert} />}
                         </>}
-                        {formik.values.withdrawal_type == 2 && <Paypal token={token} />}
-                        {formik.values.withdrawal_type == 3 && <Wise token={token} />}
+                        {formik.values.withdrawal_type == 2 && <>
+                            {!isShowPaypalTransfert && <PaypalCart token={token} setIsShowBankTransfert={setIsShowPaypalTransfert} />}
+                            {isShowPaypalTransfert && <Paypal token={token} setIsShowBankTransfert={setIsShowPaypalTransfert} />}
+                        </>}
+                        {formik.values.withdrawal_type == 3 && <>
+                            {!isShowWiseTransfert && <WiseCart token={token} setIsShowBankTransfert={setIsShowWiseTransfert} />}
+                            {isShowWiseTransfert && <Wise token={token} setIsShowBankTransfert={setIsShowWiseTransfert} />}
+                        </>}
                     </div>
                 </div>
             </div>

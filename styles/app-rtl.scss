@@ -5702,8 +5702,46 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     }
 }
 
-.save-changes {
-    position: absolute;
-    top: 25px;
-    left: 50px;
+.timlands-panel-cart {
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 3px 4px 16px rgba(0, 0, 0, 0.089);
+    margin-top: 8px;
+    margin-bottom: 15px;
+    @media (min-width: 992px) {
+        width: 700px;
+        margin: auto ;
+    }
+    .timlands-panel-cart-header {
+        margin-bottom: 14px;
+        border-bottom: 1px dashed #f1f1f1;
+        padding: 14px;
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 0;
+        }
+    }
+    .timlands-panel-cart-body {
+        .cart-item {
+            padding-bottom: 8px;
+            .cart-title {
+                font-size: 17px;
+                font-weight: bold;
+                color: #333;
+                
+            }
+            .cart-text {
+                font-size: 17px;
+                font-weight: normal;
+                color: #555;
+            }
+        }
+    }
+    .timlands-panel-cart-footer {
+        margin-top: 14px;
+        border-top: 1px dashed #f1f1f1;
+        padding: 14px;
+        display: flex;
+    }
 }
