@@ -170,8 +170,11 @@ const Order = ({ query }) => {
 
     const createConversation = async (id: any) => {
         setCreateConversationLoading(true)
+        console.log('test');
         try {
-            const res = await API.post(`api/order/items/${id}/create/conversation`, {
+            console.log(ShowItem)
+            const conversation_id = ShowItem && ShowItem.data.conversation.id
+            const res = await API.post(`api/conversations/${conversation_id}/sendMessage`, {
                 initial_message: message,
                 receiver_id: ShowItem && ShowItem.data.user_id,
                 title: ShowItem && ShowItem.data.title,
@@ -184,6 +187,7 @@ const Order = ({ query }) => {
                 router.reload();
             }
         } catch (error) {
+            console.log(error)
             setCreateConversationLoading(false)
         }
     }
