@@ -23,7 +23,7 @@ const User = ({ query, stars }) => {
     const [isOverflow, setIsOverflow] = useState(false);
     const detectHeight: any = createRef()
 
-    useEffect(() => setIsOverflow(detectHeight && detectHeight.current && detectHeight.current.scrollHeight > 230), [detectHeight.current])
+    useEffect(()=>setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current])
 
     return (
         <div className="py-3 mt-3">
@@ -78,7 +78,7 @@ const User = ({ query, stars }) => {
                                     <div className="pb-1 mb-2">
                                         <Card title="نبذة عني">
                                             <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: User && User.profile.profile_seller.bio }} />
-                                            {isOverflow && <button onClick={() => { console.log(detectHeight.current.scrollHeight); setIsLess(!isLess) }} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                            {isOverflow&&<button onClick={() => {console.log(detectHeight.current.scrollHeight);setIsLess(!isLess)}} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
                                                 {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
                                             </button>}
                                         </Card>
@@ -145,7 +145,7 @@ const User = ({ query, stars }) => {
                     </div>
                     <div className="posts-aside-body">
                         <div className="row">
-                            {User && User.profile.profile_seller && User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
+                            {User && User.profile.profile_seller&&User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
                                 <div key={e.id} className={"col-sm-6 col-lg-3"}>
                                     <Post
                                         size="small2"

@@ -25,11 +25,16 @@ function Paypal({ query }) {
                 }
             })
             if (res.status === 200) {
+                console.log('///t////');
+                console.log(res);
+                console.log('////s////')
+                console.log(res.data);
                 setIsLoading(false)
                 setIsError(false)
                 setGetBills(res.data.data)
             }
         } catch (error) {
+            console.log(error.response)
             setIsLoading(false)
             setIsError(true)
         }
@@ -62,15 +67,15 @@ function Paypal({ query }) {
                                 <ul className="list-group">
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         السعر الكلي
-                                        <span className="">{getBills.total_price}$</span>
+                                        <span className="">{getBills&&getBills.cart&&getBills.cart.total_price}$</span>
                                     </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         سعر التحويل
-                                        <span className="">{getBills.tax}$</span>
+                                        <span className="">{getBills&&getBills.cart&&getBills.cart.tax}$</span>
                                     </li>
                                     <li className="list-group-item total d-flex justify-content-between align-items-center">
                                         المجموع الكلي
-                                        <span className="">{getBills.price_with_tax}$</span>
+                                        <span className="">{getBills&&getBills.cart&&getBills.cart.price_with_tax}$</span>
                                     </li>
                                 </ul>
                             }
