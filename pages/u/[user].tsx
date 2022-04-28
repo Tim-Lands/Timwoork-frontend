@@ -1,5 +1,6 @@
 
 import React, { createRef, ReactElement, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Image from 'next/image'
 import Layout from '@/components/Layout/HomeLayout'
 import { Badge, Card } from "antd";
@@ -13,7 +14,11 @@ import Post from "@/components/Post/Post";
 const User = ({ query, stars }) => {
     // Return statement.
     const { data: userInfo }: any = useSWR(`api/profiles/${query.user}`)
+    const {data: currentUserInfo}: any = useSWR('api/me');
+    const router = useRouter();
     const User = userInfo && userInfo.data
+    const userId = User&&User.id;
+    const currentUserId = currentUserInfo&&currentUserInfo.user_details.id;
     const APIURL = ''
     const myLoader = () => {
         return `${APIURL}${User.profile.avatar_path}`;
@@ -23,8 +28,11 @@ const User = ({ query, stars }) => {
     const [isOverflow, setIsOverflow] = useState(false);
     const detectHeight: any = createRef()
 
-    useEffect(()=>setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current])
-
+    useEffect(()=>{
+        setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current]
+        if(userId == currentUserId)
+            router.push('/user/profile')
+    })
     return (
         <div className="py-3 mt-3">
             <MetaTags

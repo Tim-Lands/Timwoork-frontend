@@ -211,7 +211,7 @@ function Navbar(): ReactElement {
     const { data: userData }: any = useSWR(`api/me`)
     const logout = async () => {
         try {
-            const res = await API.post("api/logout", {}, {
+            const res = await API.post("api/logout_user", {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

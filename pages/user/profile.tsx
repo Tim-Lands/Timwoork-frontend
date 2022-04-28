@@ -110,6 +110,7 @@ function Profile() {
                                             </a>
                                         </Link>
                                     </div>
+                                    <button className="btn btn-primary" onClick={()=>navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo.user_details.username}`)}>copy</button>
                                 </div>
                             </div>
                         </div>
