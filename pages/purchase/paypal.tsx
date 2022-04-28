@@ -67,15 +67,15 @@ function Paypal({ query }) {
                                 <ul className="list-group">
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         السعر الكلي
-                                        <span className="">{getBills.cart.total_price}$</span>
+                                        <span className="">{getBills&&getBills.cart&&getBills.cart.total_price}$</span>
                                     </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         سعر التحويل
-                                        <span className="">{getBills.cart.tax}$</span>
+                                        <span className="">{getBills&&getBills.cart&&getBills.cart.tax}$</span>
                                     </li>
                                     <li className="list-group-item total d-flex justify-content-between align-items-center">
                                         المجموع الكلي
-                                        <span className="">{getBills.cart.price_with_tax}$</span>
+                                        <span className="">{getBills&&getBills.cart&&getBills.cart.price_with_tax}$</span>
                                     </li>
                                 </ul>
                             }

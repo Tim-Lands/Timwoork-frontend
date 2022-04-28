@@ -41,6 +41,7 @@ const CheckoutForm = () => {
                 }
             })
             if (res.status === 200) {
+                
                 router.push('/mypurchases')
             }
         } catch (error) {
