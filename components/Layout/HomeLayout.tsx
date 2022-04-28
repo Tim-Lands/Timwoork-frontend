@@ -26,9 +26,14 @@ function Layout(props: any) {
   }, [router]);
   return (
     <SWRConfig value={{
-      fetcher: async (url: string) => await API.get(url, {
+      fetcher: async (url: string) =>  await API.get(url, {
         headers: { Authorization: `Bearer ${token}` }
-      }).then((r: any) => r.data)
+      }).then((r: any) => r.data).catch(()=>{
+        if(url=="api/me" && token){
+          Cookies.remove('token');
+          router.reload();
+        }
+        })
     }}>
       <div className="pt-5">
         
