@@ -67,9 +67,9 @@ function Profile() {
     const [isLess, setIsLess] = useState(true)
     const detectHeight: any = createRef()
     const [isOverflow, setIsOverflow] = useState(false);
-    useEffect(()=>{
-        setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current]
-    },[detectHeight])
+    useEffect(() => {
+        setIsOverflow(detectHeight && detectHeight.current && detectHeight.current.scrollHeight > 230), [detectHeight, detectHeight.current]
+    }, [detectHeight])
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -114,8 +114,13 @@ function Profile() {
                                                 <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
                                             </a>
                                         </Link>
+                                        <button
+                                            className="btn butt-primary2 flex-center butt-sm"
+                                            onClick={() => navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo && userInfo.user_details.username}`)}
+                                        >
+                                            <span className="material-icons material-icons-outlined">copy</span> نسخ رابط بروفايلي
+                                        </button>
                                     </div>
-                                    <button className="btn btn-primary" onClick={() => navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo.user_details.username}`)}>copy</button>
                                 </div>
                             </div>
                         </div>
@@ -140,9 +145,9 @@ function Profile() {
                                         <div className="pb-1 mb-2">
                                             <Card title="نبذة عني" extra={<Link href="/user/editSeller"><a className='edit-button flex-center'><span className="material-icons material-icons-outlined">edit</span></a></Link>}>
                                                 <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: userInfo.user_details.profile.profile_seller.bio }} />
-                                                {isOverflow&&<button onClick={() => {console.log(detectHeight.current.scrollHeight);setIsLess(!isLess)}} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
-                                                {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
-                                            </button>}
+                                                {isOverflow && <button onClick={() => { setIsLess(!isLess) }} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                                    {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
+                                                </button>}
                                             </Card>
                                         </div>
                                     </>

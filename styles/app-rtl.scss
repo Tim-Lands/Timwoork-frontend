@@ -275,7 +275,14 @@ h3 {
         }
 
     }
-
+    .profile-buttons {
+        width: 200px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin-top: 9px;
+    }
     .profile-content-header {
         border-bottom: 1px dashed #ddd;
         margin-bottom: 8px;
@@ -5562,7 +5569,7 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
 
         .main-category-item-icon {
             .material-icons {
-                color: $primary;
+                color: $primary2;
                 transition: all 0.3s;
             }
         }

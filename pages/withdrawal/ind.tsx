@@ -5,7 +5,6 @@ import router from 'next/router';
 import Cookies from 'js-cookie'
 //import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
-import BankAccount from '@/components/Withdrawal/BankAccount';
 import MoneyAccount from '@/components/Withdrawal/MoneyAccount';
 import Paypal from '@/components/Withdrawal/Paypal';
 import Wise from '@/components/Withdrawal/Wise';

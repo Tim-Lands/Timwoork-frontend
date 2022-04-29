@@ -40,4 +40,6 @@ PaypalCart.getLayout = function getLayout(page: any): ReactElement {
 export default PaypalCart
 PaypalCart.propTypes = {
     token: PropTypes.any,
+    setIsShowBankTransfert: PropTypes.func,
+    userInfo: PropTypes.object,
 };

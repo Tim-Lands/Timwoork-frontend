@@ -14,11 +14,11 @@ import Post from "@/components/Post/Post";
 const User = ({ query, stars }) => {
     // Return statement.
     const { data: userInfo }: any = useSWR(`api/profiles/${query.user}`)
-    const {data: currentUserInfo}: any = useSWR('api/me');
+    const { data: currentUserInfo }: any = useSWR('api/me');
     const router = useRouter();
     const User = userInfo && userInfo.data
-    const userId = User&&User.id;
-    const currentUserId = currentUserInfo&&currentUserInfo.user_details.id;
+    const userId = User && User.id;
+    const currentUserId = currentUserInfo && currentUserInfo.user_details.id;
     const APIURL = ''
     const myLoader = () => {
         return `${APIURL}${User.profile.avatar_path}`;
@@ -28,11 +28,11 @@ const User = ({ query, stars }) => {
     const [isOverflow, setIsOverflow] = useState(false);
     const detectHeight: any = createRef()
 
-    useEffect(()=>{
-        setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current]
-        if(userId&& userId == currentUserId)
+    useEffect(() => {
+        setIsOverflow(detectHeight && detectHeight.current && detectHeight.current.scrollHeight > 230), [detectHeight, detectHeight.current]
+        if (userId && userId == currentUserId)
             router.push('/user/profile')
-    },[detectHeight])
+    }, [detectHeight])
     return (
         <div className="py-3 mt-3">
             <MetaTags
@@ -72,21 +72,30 @@ const User = ({ query, stars }) => {
                                     <span className="app-label"> {User && User.profile && User.profile.level && User.profile.level.name_ar} </span>
                                 </p>
                             </div>
-                            {User && User.profile.profile_seller && User.profile.profile_seller.portfolio &&
+                            <p className="profile-buttons">
+                                <button
+                                    className="btn butt-primary2 flex-center butt-sm"
+                                    onClick={() => navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo.user_details.username}`)}
+                                >
+                                    <span className="material-icons material-icons-outlined">copy</span> نسخ رابط بروفايلي
+                                </button>
+                            </p>
+                            {/* {User && User.profile.profile_seller && User.profile.profile_seller.portfolio &&
                                 <p className="py-3">
                                     <a rel="noreferrer" target="_blank" className="btn butt-sm butt-primary2" href={`${User.profile.profile_seller.portfolio}`}>مشاهدة رابط الأعمال</a>
                                 </p>
-                            }
+                            } */}
+
                         </div>
                     </div>
-                    <div className={'row justify-content-md-center'}> 
+                    <div className={'row justify-content-md-center'}>
                         <div className="col-lg-8">
                             <div className="timlands-profile-content">
                                 {User && User.profile.profile_seller && User.profile.profile_seller.bio &&
                                     <div className="pb-1 mb-2">
                                         <Card title="نبذة عني">
                                             <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: User && User.profile.profile_seller.bio }} />
-                                            {isOverflow&&<button onClick={() => {console.log(detectHeight.current.scrollHeight);setIsLess(!isLess)}} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                            {isOverflow && <button onClick={() => { console.log(detectHeight.current.scrollHeight); setIsLess(!isLess) }} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
                                                 {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
                                             </button>}
                                         </Card>
@@ -143,9 +152,7 @@ const User = ({ query, stars }) => {
 
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="posts-aside-header" style={{
+                            <div className="posts-aside-header" style={{
                         textAlign: 'center',
                         paddingBlock: 10
                     }}>
@@ -153,8 +160,8 @@ const User = ({ query, stars }) => {
                     </div>
                     <div className="posts-aside-body">
                         <div className="row">
-                            {User && User.profile.profile_seller&&User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
-                                <div key={e.id} className={"col-sm-6 col-lg-3"}>
+                            {User && User.profile.profile_seller && User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
+                                <div key={e.id} className={"col-sm-6 col-lg-4"}>
                                     <Post
                                         size="small2"
                                         title={e.title}
@@ -168,6 +175,8 @@ const User = ({ query, stars }) => {
                                     />
                                 </div>
                             ))}
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
