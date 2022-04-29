@@ -119,7 +119,7 @@ function Hero() {
                 </div>
                 <div className="timlands-hero-search">
                     <div className="rel-search">
-                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيموورك..." className="timlands-inputs" style={{
+                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيم ورك..." className="timlands-inputs" style={{
                             border: '1px solid #ddd',
                             backgroundColor: '#fff',
                             paddingBlock: 10,
