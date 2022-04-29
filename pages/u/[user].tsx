@@ -153,30 +153,30 @@ const User = ({ query, stars }) => {
                                 </div>
                             </div>
                             <div className="posts-aside-header" style={{
-                        textAlign: 'center',
-                        paddingBlock: 10
-                    }}>
-                        <h1 className="title me-auto" style={{ fontWeight: 'bold', fontSize: 26 }}>الخدمات</h1>
-                    </div>
-                    <div className="posts-aside-body">
-                        <div className="row">
-                            {User && User.profile.profile_seller && User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
-                                <div key={e.id} className={"col-sm-6 col-lg-4"}>
-                                    <Post
-                                        size="small2"
-                                        title={e.title}
-                                        author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                                        rate={e.ratings_avg_rating}
-                                        username={e.profile_seller && e.profile_seller.profile.user.username}
-                                        price={e.price}
-                                        slug={e.slug}
-                                        thumbnail={e.full_path_thumbnail}
-                                        buyers={e.count_buying}
-                                    />
+                                textAlign: 'center',
+                                paddingBlock: 10
+                            }}>
+                                <h1 className="title me-auto" style={{ fontWeight: 'bold', fontSize: 26 }}>الخدمات</h1>
+                            </div>
+                            <div className="posts-aside-body">
+                                <div className="row">
+                                    {User && User.profile.profile_seller && User.profile.profile_seller.products && User.profile.profile_seller.products.map((e: any) => (
+                                        <div key={e.id} className={"col-sm-6 col-lg-4"}>
+                                            <Post
+                                                size="small2"
+                                                title={e.title}
+                                                author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                                                rate={e.ratings_avg_rating}
+                                                username={e.profile_seller && e.profile_seller.profile.user.username}
+                                                price={e.price}
+                                                slug={e.slug}
+                                                thumbnail={e.full_path_thumbnail}
+                                                buyers={e.count_buying}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>

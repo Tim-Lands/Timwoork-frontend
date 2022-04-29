@@ -114,14 +114,16 @@ function Profile() {
                                                 <span className="material-icons material-icons-outlined">edit</span> تعديل الملف الشخصي
                                             </a>
                                         </Link>
-                                        <button
-                                            className="btn butt-primary2 flex-center butt-sm"
-                                            onClick={() => navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo && userInfo.user_details.username}`)}
-                                        >
-                                            <span className="material-icons material-icons-outlined">copy</span> نسخ رابط بروفايلي
-                                        </button>
                                     </div>
                                 </div>
+                                <p className="profile-buttons">
+                                    <button
+                                        className="btn butt-primary2 flex-center butt-sm"
+                                        onClick={() => navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo.user_details.username}`)}
+                                    >
+                                        <span className="material-icons material-icons-outlined">copy</span> نسخ رابط بروفايلي
+                                    </button>
+                                </p>
                             </div>
                         </div>
                         <div className="row">
