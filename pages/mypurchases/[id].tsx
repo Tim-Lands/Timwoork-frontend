@@ -461,7 +461,7 @@ const Order = ({ query }) => {
                                                                     <p className="text">{rattingValidationsErrors.rating[0]}</p>
                                                                 </motion.div>
                                                             }
-                                                        </div>
+                                                        </div> 
                                                         <div className="timlands-form">
                                                             <label htmlFor="message_type" className="form-text">أكتب نص التعليق</label>
                                                             <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>

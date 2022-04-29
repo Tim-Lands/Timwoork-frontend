@@ -31,7 +31,7 @@ function Paypal({ query }) {
                 console.log(res.data);
                 setIsLoading(false)
                 setIsError(false)
-                setGetBills(res.data.data)
+                setGetBills(res.data.data) 
             }
         } catch (error) {
             console.log(error.response)
