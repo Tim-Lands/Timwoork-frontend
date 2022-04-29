@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Result, message, Card } from 'antd'
+import { Result, message, Card, Spin } from 'antd'
 import React, { createRef, ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -40,7 +40,7 @@ function Profile() {
         return `${userInfo.user_details.profile.avatar_path}`;
     }
     const [statusType, setStatusType] = useState('')
-    const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
+    const { data: postsList, isValidating, mutate }: any = useSWR(`api/my_products${statusType}`)
 
     const [isLoadingSeler, setIsLoadingSeler] = useState(false)
     const beseller = async () => {
@@ -207,11 +207,15 @@ function Profile() {
                             </div>
                         </div>
                         {userInfo.user_details.profile.profile_seller &&
-                            <MyProducts
-                                setStatusType={setStatusType}
-                                postsList={postsList}
-                            />
+                            <Spin spinning={isValidating}>
+                                <MyProducts
+                                    refresh={mutate}
+                                    setStatusType={setStatusType}
+                                    postsList={postsList}
+                                />
+                            </Spin>
                         }
+
                     </div>
                 </>
             }

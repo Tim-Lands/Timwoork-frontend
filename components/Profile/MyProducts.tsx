@@ -9,7 +9,7 @@ import router from "next/router";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-export default function MyProducts({ setStatusType, postsList }) {
+export default function MyProducts({ setStatusType, postsList, refresh }) {
     let token = Cookies.get('token')
     if(!token &&typeof window !== "undefined")
         token = localStorage.getItem('token');
@@ -46,7 +46,7 @@ export default function MyProducts({ setStatusType, postsList }) {
                             'لقد تم حذف هذه الخدمة بنجاح',
                             'success'
                         )
-                        
+                        refresh()
                     }
                 } catch (error) {
                     console.log(error);
@@ -77,7 +77,7 @@ export default function MyProducts({ setStatusType, postsList }) {
                     'لقد تم تعطيل هذه الخدمة بنجاح',
                     'success'
                 )
-                router.reload()
+                refresh()
             }
         } catch (error) {
             notification['error']({
@@ -108,7 +108,7 @@ export default function MyProducts({ setStatusType, postsList }) {
                     'لقد تم تنشسط هذه الخدمة بنجاح',
                     'success'
                 )
-                router.reload()
+                refresh()
             }
         } catch (error) {
             notification['error']({
@@ -235,4 +235,5 @@ export default function MyProducts({ setStatusType, postsList }) {
 MyProducts.propTypes = {
     setStatusType: PropTypes.func,
     postsList: PropTypes.any,
+    refresh: PropTypes.func,
 };
