@@ -16,11 +16,13 @@ import router from "next/router";
 //import { pusher } from "../../config/pusher";
 
 const User = ({ query }) => {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: ShowItem, errorItem }: any = useSWR(`api/my_sales/${query.id}`)
     const inputRef: any = useRef();
     const inputRefMsg: any = useRef();
-
+    console.log(ShowItem)
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
 

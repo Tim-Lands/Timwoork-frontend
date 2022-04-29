@@ -33,7 +33,8 @@ const Register = (): ReactElement => {
             if (response.status === 200) {
                 // Cookies.set('username', generateUsername(res.profileObj.email) );// just  for chat
                 Cookies.set('token', response.data.data.token)
-
+                if (!Cookies.get('token'))
+                    localStorage.setItem('token', response.data.data.token)
                 message.success('تم تسجيل الدخول بنجاح')
                 switch (response.data.data.step) {
                     case 0:
@@ -70,7 +71,9 @@ const Register = (): ReactElement => {
         console.log('Login Failed:', res);
     };
     // Redirect to user home route if user is authenticated.
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     useEffect(() => {
         if (token) {
             router.push('/');
@@ -211,12 +214,12 @@ const Register = (): ReactElement => {
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="timlands-form">
-                                                <label className="label-block" htmlFor="password_confirmation">إعادة كلمة المرور  
-                                                <Tooltip
-                                                    title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام."
-                                                >
-                                                    <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
-                                                </Tooltip></label>
+                                                <label className="label-block" htmlFor="password_confirmation">إعادة كلمة المرور
+                                                    <Tooltip
+                                                        title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام."
+                                                    >
+                                                        <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                                                    </Tooltip></label>
                                                 <Field
                                                     type={passVisibled ? "text" : 'password'}
                                                     id="password_confirmation"

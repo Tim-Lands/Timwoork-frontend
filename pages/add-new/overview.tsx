@@ -57,7 +57,9 @@ const MySelect = (props: any) => {
 function Overview({ query }) {
 
     const id = query.id
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const { data: categories, categoriesError }: any = useSWR('api/get_categories_for_add_product')
     const { data: userInfo }: any = useSWR('api/me')
@@ -130,8 +132,8 @@ function Overview({ query }) {
             return
         }
         getProductId()
-    }, [])  
-    
+    }, [])
+
     return (
         <>
             <MetaTags

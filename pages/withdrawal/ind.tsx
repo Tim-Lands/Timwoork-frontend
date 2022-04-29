@@ -19,9 +19,12 @@ import PaypalCart from '@/components/Withdrawal/PaypalCart';
 import WiseCart from '@/components/Withdrawal/WiseCart';
 
 function Withdrawal() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
     //const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    const [paymentInfo, setPaymentInfo] = useState({ bank_account: {}, bank_transfer_detail: {}, paypal_account: {}, wise_account: {} });
     const [isShowBankTransfert, setIsShowBankTransfert]: any = useState(false)
     const [isShowMoneyTransfert, setIsShowMoneyTransfert]: any = useState(false)
     const [isShowWiseTransfert, setIsShowWiseTransfert]: any = useState(false)
@@ -45,6 +48,13 @@ function Withdrawal() {
             return
         }
     }, [])
+    useEffect(() => {
+        console.log(userInfo)
+        if (userInfo && userInfo.user_details) {
+            const { bank_account, bank_transfer_detail, paypal_account, wise_account } = userInfo.user_details.profile
+            setPaymentInfo({ bank_account, bank_transfer_detail, paypal_account, wise_account })
+        }
+    }, [userInfo])
     const [AmountCount, setAmountCount] = useState(null)
     const allowOnlyNumericsOrDigits = (evt) => {
         const financialGoal = (evt.target.validity.valid) ? evt.target.value : AmountCount;
@@ -109,7 +119,7 @@ function Withdrawal() {
                                     </div>
                                     <div className="row transfert-box">
                                         <div className="col-12">
-                                            <input onChange={formik.handleChange} className="list-group-item-check" type="radio"  name="withdrawal_type" id="transfert-money" value="0" disabled={true} />
+                                            <input onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="transfert-money" value="0" disabled={true} />
                                             <label className="list-group-item py-3" htmlFor="transfert-money">
                                                 <img src="/transfert1.jpg" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 الحوالة المالية
@@ -155,8 +165,8 @@ function Withdrawal() {
                     </div>
                     <div className="col-lg-8">
                         {formik.values.withdrawal_type == 0 && <>
-                            {!isShowMoneyTransfert && <BankAccountCart setIsShowBankTransfert={setIsShowMoneyTransfert} />}
-                            {isShowMoneyTransfert && <BankAccount token={token} setIsShowBankTransfert={setIsShowMoneyTransfert} />}
+                            {!isShowMoneyTransfert && <BankAccountCart setIsShowBankTransfert={setIsShowMoneyTransfert} userInfo={paymentInfo.bank_account} />}
+                            {/*isShowMoneyTransfert && <BankAccount token={token} setIsShowBankTransfert={setIsShowMoneyTransfert} />*/}
                         </>}
                         {formik.values.withdrawal_type == 1 && <>
                             {!isShowBankTransfert && <MoneyAccountCart setIsShowBankTransfert={setIsShowBankTransfert} />}

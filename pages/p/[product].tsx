@@ -27,7 +27,9 @@ const properties = {
 }
 function Single({ query, stars, errorFetch }) {
 
-  const token = Cookies.get('token')
+  let token = Cookies.get('token')
+  if (!token && typeof window !== "undefined")
+    token = localStorage.getItem('token');
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   const { data: userInfo }: any = useSWR('api/me')
 
@@ -197,19 +199,19 @@ function Single({ query, stars, errorFetch }) {
             placement: 'topLeft'
           });
         }
-       /*  if (error.response && error.response.status === 400) {
-          notification.warning({
-            message: `تحذير`,
-            description: 'لا يمكنك شراء خدمتك!',
-            placement: 'topLeft'
-          });
-        } else if (error.response && error.response.status === 404) {
-          notification.warning({
-            message: `تحذير`,
-            description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
-            placement: 'topLeft'
-          });
-        } */
+        /*  if (error.response && error.response.status === 400) {
+           notification.warning({
+             message: `تحذير`,
+             description: 'لا يمكنك شراء خدمتك!',
+             placement: 'topLeft'
+           });
+         } else if (error.response && error.response.status === 404) {
+           notification.warning({
+             message: `تحذير`,
+             description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
+             placement: 'topLeft'
+           });
+         } */
         else {
 
           message.error('حدث خطأ غير متوقع')
@@ -414,11 +416,11 @@ function Single({ query, stars, errorFetch }) {
                     }
                     {ProductData.data.video &&
                       <div className="py-3">
-                          <ReactPlayer
-                            style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
-                            width="100%"
-                            url={ProductData.data.video.url_video}
-                          />
+                        <ReactPlayer
+                          style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
+                          width="100%"
+                          url={ProductData.data.video.url_video}
+                        />
                       </div>
                     }
                     {ProductData.data.profile_seller &&

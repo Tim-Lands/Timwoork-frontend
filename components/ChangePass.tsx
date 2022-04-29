@@ -9,8 +9,10 @@ import { Field, Form, Formik } from 'formik'
 import { motion } from 'framer-motion'
 
 function ChangePass() {
-    const token = Cookies.get('token')
-    const { data: userInfo }: any = useSWR('api/me')
+    let token = Cookies.get('token')
+    if(!token &&typeof window !== "undefined")
+      token=localStorage.getItem('token');
+          const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
 
     function setValidationsErrorsHandle() {

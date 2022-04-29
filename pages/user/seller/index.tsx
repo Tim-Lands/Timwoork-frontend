@@ -13,7 +13,9 @@ import Loading from "@/components/Loading";
 import Unauthorized from "@/components/Unauthorized";
 
 const sellerInformations = (): ReactElement => {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
     // Redirect to user home route if user is authenticated.
     const SignupSchema = Yup.object().shape({

@@ -20,7 +20,9 @@ import { Alert } from '@/components/Alert/Alert'
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const handleSubmit = async (event) => {
@@ -41,7 +43,7 @@ const CheckoutForm = () => {
                 }
             })
             if (res.status === 200) {
-                
+
                 router.push('/mypurchases')
             }
         } catch (error) {
@@ -69,7 +71,9 @@ const CheckoutForm = () => {
 const stripePromise = loadStripe('pk_live_51KVxMmKZiLP53MTnsIhnnYjdjWwCynAoNT2IJS0D0TllKvdK07C0XO3nFAPe2kjOOAVXd3WSSebR71Qd0KSb8SIF00TQc1n8ca')
 
 function Bill() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [billPayment, setBillPayment] = useState(2)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -129,7 +133,7 @@ function Bill() {
             }
         }
     }
-    const onBillPaymentChange=e=>setBillPayment(e.target.value)
+    const onBillPaymentChange = e => setBillPayment(e.target.value)
     return (
         <>
             <MetaTags
@@ -156,7 +160,7 @@ function Bill() {
                             {!cartList && <Loading />}
                             {cartList && cartList.data.cart_payments.map((e, i) => (
                                 <div key={i} className="app-bill-content" style={{ marginBottom: 9 }}>
-                                    {(e.pivot.type_payment_id == billPayment) && 
+                                    {(e.pivot.type_payment_id == billPayment) &&
                                         <ul className="list-group">
                                             <li className="list-group-item d-flex justify-content-between align-items-center">
                                                 عدد الخدمات
@@ -206,7 +210,7 @@ function Bill() {
                                             value='2'
                                             name="billPayment"
                                             id="billPayment-strap"
-                                            checked={billPayment==2}
+                                            checked={billPayment == 2}
                                             onChange={onBillPaymentChange}
                                         />
                                         <label className="form-check-label" htmlFor="billPayment-strap">
@@ -229,7 +233,7 @@ function Bill() {
                                             value='1'
                                             name="billPayment"
                                             id="billPayment-paypal"
-                                            checked={billPayment==1}
+                                            checked={billPayment == 1}
                                             onChange={onBillPaymentChange}
                                         />
                                         <label className="form-check-label" htmlFor="billPayment-paypal">
@@ -257,9 +261,9 @@ function Bill() {
                                                     value='3'
                                                     name="billPayment"
                                                     id="billPayment-wallet"
-                                                    checked={billPayment==3}
+                                                    checked={billPayment == 3}
                                                     onChange={onBillPaymentChange}
-                                                    />
+                                                />
                                                 <label className="form-check-label" htmlFor="billPayment-wallet">
                                                     الدفع عن طريق المحفظة
                                                 </label>

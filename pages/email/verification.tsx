@@ -11,7 +11,9 @@ import Layout from '@/components/Layout/HomeLayout'
 import { MetaTags } from '@/components/SEO/MetaTags';
 
 function EmailConfig() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo } = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
@@ -116,17 +118,17 @@ function EmailConfig() {
                                             disabled={isSubmitting}
                                             className="btn flex-center butt-md butt-primary me-auto"
                                         >
-                                          <span className="material-icons material-icons-outlined">
-                                          check_circle_outline
+                                            <span className="material-icons material-icons-outlined">
+                                                check_circle_outline
                                             </span>  تأكيد البريد الإلكتروني
                                         </button>
                                         <Link href="/">
                                             <a
                                                 className="btn flex-center butt-md ml-auto"
                                             >
-                                             <span className="material-icons material-icons-outlined">
-                                             home
-                                            </span> العودة للرئيسية
+                                                <span className="material-icons material-icons-outlined">
+                                                    home
+                                                </span> العودة للرئيسية
                                             </a>
                                         </Link>
                                     </div>

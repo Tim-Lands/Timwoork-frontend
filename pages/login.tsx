@@ -51,8 +51,12 @@ const Login = (): ReactElement => {
             })
             // Authentication was successful.
             if (response.status === 200) {
-                
-                Cookies.set('token', response.data.data.token, { expires: 365 } )
+
+                Cookies.set('token', response.data.data.token, { expires: 365 })
+                if (!Cookies.get('token') && typeof window !== "undefined") {
+                    console.log('local storage working')
+                    localStorage.setItem('token', response.data.data.token)
+                }
                 // Cookies.set('username', );
                 // Cookies.set('userID', )
                 message.success('تم تسجيل الدخول بنجاح')
@@ -82,7 +86,9 @@ const Login = (): ReactElement => {
     // The router object used for redirecting after login.
     const router = useRouter();
     // Redirect to user home route if user is authenticated.
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     useEffect(() => {
         if (token) {
             router.push('/');

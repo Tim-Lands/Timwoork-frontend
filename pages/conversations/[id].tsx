@@ -14,7 +14,9 @@ import router from 'next/router';
 import Loading from '@/components/Loading';
 
 function Conversation({ query }) {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const inputRefMsg: any = useRef();
     const { data: conversationsSingle }: any = useSWR(`api/conversations/${query.id}`)
     const { data: profileInfo }: any = useSWR(`api/me`)

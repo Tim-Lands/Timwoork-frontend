@@ -26,7 +26,9 @@ const NumberPhone = (): ReactElement => {
                     validationSchema={SignupSchema}
                     onSubmit={async values => {
                         try {
-                            const token = Cookies.get('token')
+                            let token = Cookies.get('token')
+                            if (!token && typeof window !== "undefined")
+                                token = localStorage.getItem('token');
                             const res = await API.post("api/profiles/step_three", values, {
                                 headers: {
                                     'Authorization': `Bearer ${token}`

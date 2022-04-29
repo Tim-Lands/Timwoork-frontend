@@ -104,7 +104,9 @@ const Tiptap = (props: any) => {
     )
 }
 const EditSeller = () => {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const { data: userInfo }: any = useSWR('api/me')
     console.log(userInfo)
@@ -113,13 +115,13 @@ const EditSeller = () => {
         extensions: [
             StarterKit,
         ],
-        content: userInfo && userInfo.user_details.profile.profile_seller&&userInfo.user_details.profile.profile_seller.bio,
+        content: userInfo && userInfo.user_details.profile.profile_seller && userInfo.user_details.profile.profile_seller.bio,
     })
     const html = editor && editor.getHTML()
     const formik = useFormik({
         initialValues: {
             bio: html,
-            portfolio: userInfo && userInfo.user_details.profile.profile_seller&&userInfo.user_details.profile.profile_seller.portfolio,
+            portfolio: userInfo && userInfo.user_details.profile.profile_seller && userInfo.user_details.profile.profile_seller.portfolio,
         },
         isInitialValid: true,
         enableReinitialize: true,

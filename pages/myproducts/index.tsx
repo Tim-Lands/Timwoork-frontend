@@ -11,7 +11,9 @@ import router from 'next/router'
 import MyProducts from '@/components/Profile/MyProducts'
 
 function index() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [statusType, setStatusType] = useState('')
     useEffect(() => {
         if (!token) {

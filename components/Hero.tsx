@@ -35,7 +35,7 @@ function Hero() {
     const [isSearch, setIsSearch] = useState(false)
     const [getSearchs, setGetSearchs] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-
+    console.log(getSearchs)
     async function getDataFilter(query: string) {
         setIsLoading(true)
         try {
@@ -152,6 +152,7 @@ function Hero() {
                                             thumbnail={e.full_path_thumbnail}
                                             buyers={e.count_buying}
                                             period={e.duration}
+                                            username={e.profile_seller && e.profile_seller.profile&&e.profile_seller.profile.user.username}
                                         />
                                     )}
                                 </div>

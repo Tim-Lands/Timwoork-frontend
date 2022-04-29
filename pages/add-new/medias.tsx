@@ -16,7 +16,9 @@ import { Alert } from '@/components/Alert/Alert';
 import { CloseCircleOutlined } from '@ant-design/icons'
 function Medias({ query, stars }) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const id = query.id
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at

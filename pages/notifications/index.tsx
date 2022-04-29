@@ -9,7 +9,9 @@ import API from '../../config'
 import { Result } from 'antd';
 import { MetaTags } from '@/components/SEO/MetaTags';
 function index() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: notifications }: any = useSWR(`api/notifications`)
     async function markAllRead() {
         try {

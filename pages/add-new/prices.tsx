@@ -13,7 +13,9 @@ import { MetaTags } from '@/components/SEO/MetaTags'
 import PropTypes from "prop-types";
 
 function Prices({ query }) {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { id } = query
     const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`)
     const [validationsErrors, setValidationsErrors]: any = useState({})

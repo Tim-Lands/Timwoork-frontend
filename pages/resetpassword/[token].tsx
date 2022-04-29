@@ -12,7 +12,9 @@ import router from 'next/router'
 import Loading from '@/components/Loading'
 
 function ResetPassword({ query }) {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [isToken, setIsToken] = useState(false)
     const [dataInfo, setdataInfo]: any = useState({})
     async function verifyToken() {
@@ -29,7 +31,7 @@ function ResetPassword({ query }) {
             setIsToken(false)
         }
     }
-    
+
     useEffect(() => {
         verifyToken()
     }, [])

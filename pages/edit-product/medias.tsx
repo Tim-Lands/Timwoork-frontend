@@ -15,7 +15,9 @@ import useSWR from 'swr';
 
 function Medias({ query, stars }) {
     const id = query.id
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
 

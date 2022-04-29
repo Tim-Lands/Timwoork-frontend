@@ -13,7 +13,9 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import ChangePass from "@/components/ChangePass";
 
 const personalInformations = () => {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})

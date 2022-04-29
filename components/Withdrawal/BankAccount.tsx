@@ -38,6 +38,7 @@ import UploadImageForm from '../UploadImageForm';
 // }
 
 function BankAccount({ token, setIsShowBankTransfert }) {
+
     const { data: Countries }: any = useSWR('dashboard/countries')
     const { data: userInfo }: any = useSWR('api/me')
 

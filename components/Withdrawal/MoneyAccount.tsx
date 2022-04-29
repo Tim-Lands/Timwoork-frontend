@@ -26,6 +26,7 @@ function MoneyAccount({ token, setIsShowBankTransfert }) {
                 message.success('لقد تم حفظ البيانات بنجاح')
             }
         } catch (error: any) {
+            console.log(error.response)
             if (error.response && error.response.data && error.response.data.errors) {
                 setValidationsErrors(error.response.data.errors);
             }

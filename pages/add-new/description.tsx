@@ -102,7 +102,9 @@ const Tiptap = (props: any) => {
 }
 function Description({ query, stars }) {
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if(!token &&typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at

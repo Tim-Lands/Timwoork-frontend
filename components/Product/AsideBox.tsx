@@ -15,8 +15,10 @@ export default function AsideBox({
   duration,
   developments,
 }) {
-  const token = Cookies.get('token')
-  const [theIDs, settheIDs] = useState([])
+  let token = Cookies.get('token')
+  if(!token &&typeof window !== "undefined")
+    token=localStorage.getItem('token');
+      const [theIDs, settheIDs] = useState([])
   const [checkedDevelopments, setcheckedDevelopments] = useState([]);
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)

@@ -9,8 +9,10 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 
 function DashboardLayout(props: any) {
-  const token = Cookies.get('token_dash')
-  useEffect(() => {
+  let token = Cookies.get('token')
+  if(!token &&typeof window !== "undefined")
+    token=localStorage.getItem('token');
+      useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login")
       return

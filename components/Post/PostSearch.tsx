@@ -10,7 +10,7 @@ function PostSearch({
     price,
     period,
     username,
-    slug,
+    slug, 
     rate = 2,
 }): ReactElement {
     const thumbnailUrl = `url(${thumbnail})`;

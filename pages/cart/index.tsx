@@ -11,7 +11,9 @@ import { MetaTags } from '@/components/SEO/MetaTags';
 import router from 'next/router';
 
 function index() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
     const [isLoading, setIsLoading]: any = useState(false)
     const { data: cartList }: any = useSWR('api/cart')

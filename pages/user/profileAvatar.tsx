@@ -33,8 +33,10 @@ const profileAvatar = (): ReactElement => {
                             const dataform = new FormData()
                             dataform.append('avatar', values.avatar)
                             console.log(dataform);
-                            
-                            const token = Cookies.get('token')
+
+                            let token = Cookies.get('token')
+                            if (!token && typeof window !== "undefined")
+                                token = localStorage.getItem('token');
                             const res = await API.post("api/profiles/step_two", dataform, {
                                 headers: {
                                     'Authorization': `Bearer ${token}`

@@ -9,7 +9,9 @@ import Loading from '@/components/Loading';
 import useSWR from 'swr';
 
 function Paypal({ query }) {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [getBills, setGetBills]: any = useState({})
@@ -31,7 +33,7 @@ function Paypal({ query }) {
                 console.log(res.data);
                 setIsLoading(false)
                 setIsError(false)
-                setGetBills(res.data.data) 
+                setGetBills(res.data.data)
             }
         } catch (error) {
             console.log(error.response)
@@ -50,7 +52,7 @@ function Paypal({ query }) {
     }, [])
     return (
         <div className="row py-4 justify-content-center">
-            {veriedEmail && 
+            {veriedEmail &&
                 <div className="col-md-5">
                     <div className="app-bill">
                         <div className="app-bill-header">
@@ -63,19 +65,19 @@ function Paypal({ query }) {
                             <Alert type='error'>للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى</Alert>
                         }
                         <div className="app-bill-content">
-                            {!isError && getBills && 
+                            {!isError && getBills &&
                                 <ul className="list-group">
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         السعر الكلي
-                                        <span className="">{getBills&&getBills.cart&&getBills.cart.total_price}$</span>
+                                        <span className="">{getBills && getBills.cart && getBills.cart.total_price}$</span>
                                     </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         سعر التحويل
-                                        <span className="">{getBills&&getBills.cart&&getBills.cart.tax}$</span>
+                                        <span className="">{getBills && getBills.cart && getBills.cart.tax}$</span>
                                     </li>
                                     <li className="list-group-item total d-flex justify-content-between align-items-center">
                                         المجموع الكلي
-                                        <span className="">{getBills&&getBills.cart&&getBills.cart.price_with_tax}$</span>
+                                        <span className="">{getBills && getBills.cart && getBills.cart.price_with_tax}$</span>
                                     </li>
                                 </ul>
                             }

@@ -10,8 +10,9 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 export default function MyProducts({ setStatusType, postsList }) {
-    const token = Cookies.get('token')
-
+    let token = Cookies.get('token')
+    if(!token &&typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
 

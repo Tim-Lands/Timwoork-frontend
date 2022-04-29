@@ -20,7 +20,9 @@ import { message } from "antd";
 export const addNewProduct = () => {
     return async (dispatch: CallableFunction) => {
         try {
-            const token = Cookies.get('token')
+            let token = Cookies.get('token')
+            if (!token && typeof window !== "undefined")
+                token = localStorage.getItem('token');
             dispatch({
                 type: types.ADD_PRODUCT_LOADING,
             });
@@ -101,7 +103,7 @@ export const loadUser = () => {
  * @param {string} password
  *   The password of the user.
  */
- export const dashLogin = (email: string, password: string): any => {
+export const dashLogin = (email: string, password: string): any => {
     return async (dispatch: CallableFunction) => {
         try {
             // Start loading.
@@ -115,10 +117,10 @@ export const loadUser = () => {
             if (res.status === 200) {
                 dispatch({
                     type: types.LOGIN_SUCCESS,
-                });                
+                });
                 Cookies.set('token_dash', res.data.data);
                 router.reload()
-                
+
             }
         } catch (error: any) {
             if (error.response && error.response.status === 422) {
@@ -171,7 +173,7 @@ export const login = (username: string, password: string): any => {
                     type: types.LOGIN_SUCCESS,
                 });
                 Cookies.set('token', res.data.data.token);
-                Cookies.set('username',username);
+                Cookies.set('username', username);
 
                 if (res.data.data.is_verified) {
                     switch (res.data.data.step) {
@@ -221,7 +223,7 @@ export const login = (username: string, password: string): any => {
  */
 export const logout = () => {
     return async (dispatch: CallableFunction) => {
-        
+
         try {
             const token = Cookies.get('token_dash')
             const res = await API.post("api/logout", {}, {

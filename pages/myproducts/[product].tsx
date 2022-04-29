@@ -22,7 +22,9 @@ const properties = {
   prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
   nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
 }
-const token = Cookies.get('token')
+let token = Cookies.get('token')
+if (!token && typeof window !== "undefined")
+  token = localStorage.getItem('token');
 function Single({ query, stars }) {
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`)
 
@@ -63,43 +65,43 @@ function Single({ query, stars }) {
     const MySwal = withReactContent(Swal)
 
     const swalWithBootstrapButtons = MySwal.mixin({
-        customClass: {
-            confirmButton: 'btn butt-red butt-sm me-1',
-            cancelButton: 'btn butt-green butt-sm'
-        },
-        buttonsStyling: false
+      customClass: {
+        confirmButton: 'btn butt-red butt-sm me-1',
+        cancelButton: 'btn butt-green butt-sm'
+      },
+      buttonsStyling: false
     })
 
     swalWithBootstrapButtons.fire({
-        title: 'هل أنت متأكد؟',
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'نعم, أريد الحذف',
-        cancelButtonText: 'لا',
-        reverseButtons: true
+      title: 'هل أنت متأكد؟',
+      text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'نعم, أريد الحذف',
+      cancelButtonText: 'لا',
+      reverseButtons: true
     }).then(async (result) => {
-        if (result.isConfirmed) {
-            try {
-                const res = await API.post(`api/product/${id}/deleteProduct`, null, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                if (res.status === 200) {
-                    swalWithBootstrapButtons.fire(
-                        'تم الحذف!',
-                        'لقد تم حذف هذه الخدمة بنجاح',
-                        'success'
-                    )
-                    
-                }
-            } catch (error) {
-                console.log(error);
+      if (result.isConfirmed) {
+        try {
+          const res = await API.post(`api/product/${id}/deleteProduct`, null, {
+            headers: {
+              'Authorization': `Bearer ${token}`
             }
+          })
+          if (res.status === 200) {
+            swalWithBootstrapButtons.fire(
+              'تم الحذف!',
+              'لقد تم حذف هذه الخدمة بنجاح',
+              'success'
+            )
+
+          }
+        } catch (error) {
+          console.log(error);
         }
+      }
     })
-}
+  }
   const [isProductActive, setIsProductActive] = useState(false)
   const activeProductHandle = async (id: any) => {
     const MySwal = withReactContent(Swal)

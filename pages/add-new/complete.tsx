@@ -11,7 +11,9 @@ import Unauthorized from '@/components/Unauthorized';
 import API from '../../config'
 
 function Complete({ query }) {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: getProduct }: any = useSWR(`api/my_products/product/${query.id}`)
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at

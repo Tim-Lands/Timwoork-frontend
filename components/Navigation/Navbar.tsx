@@ -17,9 +17,10 @@ import LastSeen from "../LastSeen";
 import { motion } from 'framer-motion'
 
 function Navbar(): ReactElement {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if(!token &&typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
-
     //const [msg, setMsg] = useState();
     const countMsg = userInfo && userInfo.unread_messages_count
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at

@@ -6,8 +6,10 @@ import useSWR from 'swr';
 
 function UserStatus(): any {
 
-  const token = Cookies.get('token')
-  const { data: broadcasting }: any = useSWR(`api/broadcasting/auth`)
+  let token = Cookies.get('token')
+  if(!token &&typeof window !== "undefined")
+    token=localStorage.getItem('token');
+      const { data: broadcasting }: any = useSWR(`api/broadcasting/auth`)
 
   const options = {
     broadcaster: "pusher",

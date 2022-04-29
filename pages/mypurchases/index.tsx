@@ -11,7 +11,9 @@ import Cookies from 'js-cookie'
 import router from 'next/router';
 
 function index() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [pageIndex, setPageIndex] = useState(1);
     const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
 
@@ -70,7 +72,7 @@ function index() {
                 metaDescription={'مشترياتي'}
                 ogDescription={'مشترياتي'}
             />
-            {veriedEmail && 
+            {veriedEmail &&
                 <div className="timwoork-single">
                     <div className="row py-4 justify-content-center">
                         <div className="col-lg-10">

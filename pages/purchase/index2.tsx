@@ -20,7 +20,9 @@ import { Alert } from '@/components/Alert/Alert'
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const handleSubmit = async (event) => {
@@ -68,7 +70,9 @@ const CheckoutForm = () => {
 const stripePromise = loadStripe('pk_live_51KVxMmKZiLP53MTnsIhnnYjdjWwCynAoNT2IJS0D0TllKvdK07C0XO3nFAPe2kjOOAVXd3WSSebR71Qd0KSb8SIF00TQc1n8ca')
 
 function Bill() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const [billPayment, setBillPayment] = useState(2)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -155,7 +159,7 @@ function Bill() {
                             {console.log(cartList && cartList.data)}
                             {cartList && cartList.data.cart_payments.map((e, i) => (
                                 <div key={i} className="app-bill-content" style={{ marginBottom: 9 }}>
-                                    {(e.pivot.type_payment_id == billPayment) && 
+                                    {(e.pivot.type_payment_id == billPayment) &&
                                         <ul className="list-group">
                                             <li className="list-group-item d-flex justify-content-between align-items-center">
                                                 عدد الخدمات

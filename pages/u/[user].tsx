@@ -30,9 +30,9 @@ const User = ({ query, stars }) => {
 
     useEffect(()=>{
         setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current]
-        if(userId == currentUserId)
+        if(userId&& userId == currentUserId)
             router.push('/user/profile')
-    })
+    },[detectHeight])
     return (
         <div className="py-3 mt-3">
             <MetaTags
@@ -79,7 +79,7 @@ const User = ({ query, stars }) => {
                             }
                         </div>
                     </div>
-                    <div className={'row justify-content-md-center'}>
+                    <div className={'row justify-content-md-center'}> 
                         <div className="col-lg-8">
                             <div className="timlands-profile-content">
                                 {User && User.profile.profile_seller && User.profile.profile_seller.bio &&

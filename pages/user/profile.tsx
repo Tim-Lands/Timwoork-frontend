@@ -14,7 +14,9 @@ import Cookies from 'js-cookie'
 import Unauthorized from '@/components/Unauthorized';
 
 function Profile() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
     const darkMode = userInfo && userInfo.user_details.profile.dark_mode
     if (userInfo && userInfo.user_details.profile.steps < 1)
@@ -64,7 +66,10 @@ function Profile() {
     }
     const [isLess, setIsLess] = useState(true)
     const detectHeight: any = createRef()
-
+    const [isOverflow, setIsOverflow] = useState(false);
+    useEffect(()=>{
+        setIsOverflow(detectHeight&&detectHeight.current&&detectHeight.current.scrollHeight>230),[detectHeight,detectHeight.current]
+    },[detectHeight])
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -110,7 +115,7 @@ function Profile() {
                                             </a>
                                         </Link>
                                     </div>
-                                    <button className="btn btn-primary" onClick={()=>navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo.user_details.username}`)}>copy</button>
+                                    <button className="btn btn-primary" onClick={() => navigator.clipboard.writeText(`https://timwoork.com/u/${userInfo.user_details.username}`)}>copy</button>
                                 </div>
                             </div>
                         </div>
@@ -135,9 +140,9 @@ function Profile() {
                                         <div className="pb-1 mb-2">
                                             <Card title="نبذة عني" extra={<Link href="/user/editSeller"><a className='edit-button flex-center'><span className="material-icons material-icons-outlined">edit</span></a></Link>}>
                                                 <div ref={detectHeight} className={'user-bro ' + (isLess ? 'is-less' : '')} dangerouslySetInnerHTML={{ __html: userInfo.user_details.profile.profile_seller.bio }} />
-                                                <button onClick={() => setIsLess(!isLess)} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
-                                                    {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
-                                                </button>
+                                                {isOverflow&&<button onClick={() => {console.log(detectHeight.current.scrollHeight);setIsLess(!isLess)}} type='button' className={'read-more-btn ' + (isLess ? 'is-less' : '')}>
+                                                {isLess ? 'قراءة المزيد...' : 'قراءة أقل...'}
+                                            </button>}
                                             </Card>
                                         </div>
                                     </>

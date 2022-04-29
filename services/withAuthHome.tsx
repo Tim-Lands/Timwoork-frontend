@@ -2,7 +2,9 @@ import { useRouter } from "next/router";
 import Cookies from 'js-cookie'
 
 const withAuth = (WrappedComponent: any) => {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     return (props: any) => {
         // checks whether we are on client / browser or server.
         if (typeof window !== "undefined") {
@@ -17,7 +19,7 @@ const withAuth = (WrappedComponent: any) => {
         }
         // If we are on server, return null
         return null;
-    }; 
+    };
 };
 
 export default withAuth;

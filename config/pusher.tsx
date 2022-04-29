@@ -1,7 +1,9 @@
 import Pusher from 'pusher-js'
 import Cookies from 'js-cookie'
 
-const token = Cookies.get('token')
+let token = Cookies.get('token')
+if (!token && typeof window !== "undefined")
+    token = localStorage.getItem('token');
 export const pusher = new Pusher('31365e7905d4a38d6318', {
     cluster: 'eu',
     authEndpoint: 'https://api.timwoork.com/api/broadcasting/auth',

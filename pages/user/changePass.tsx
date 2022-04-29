@@ -10,7 +10,9 @@ import { Field, Form, Formik } from 'formik'
 import { motion } from 'framer-motion'
 
 function ChangePass() {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
     const { data: userInfo }: any = useSWR('api/me')
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">

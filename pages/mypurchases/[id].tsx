@@ -15,12 +15,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Alert } from "@/components/Alert/Alert";
 const Order = ({ query }) => {
-    const token = Cookies.get('token')
+    let token = Cookies.get('token')
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem('token');
 
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
 
     const { data: ShowItem, errorItem }: any = useSWR(`api/my_purchases/${query.id}`)
+    console.log(ShowItem);
     const inputRefMsg: any = useRef();
     const myRef = useRef(null)
 
@@ -173,8 +176,7 @@ const Order = ({ query }) => {
         console.log('test');
         try {
             console.log(ShowItem)
-            const conversation_id = ShowItem && ShowItem.data.conversation.id
-            const res = await API.post(`api/conversations/${conversation_id}/sendMessage`, {
+            const res = await API.post(`api/order/items/${id}/conversations/create`, {
                 initial_message: message,
                 receiver_id: ShowItem && ShowItem.data.user_id,
                 title: ShowItem && ShowItem.data.title,
@@ -187,7 +189,7 @@ const Order = ({ query }) => {
                 router.reload();
             }
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
             setCreateConversationLoading(false)
         }
     }
@@ -461,7 +463,7 @@ const Order = ({ query }) => {
                                                                     <p className="text">{rattingValidationsErrors.rating[0]}</p>
                                                                 </motion.div>
                                                             }
-                                                        </div> 
+                                                        </div>
                                                         <div className="timlands-form">
                                                             <label htmlFor="message_type" className="form-text">أكتب نص التعليق</label>
                                                             <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
