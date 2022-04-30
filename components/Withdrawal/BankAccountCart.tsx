@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 
 function BankAccountCart({ setIsShowBankTransfert, userInfo={} }:any) {
+    console.log(userInfo)
     return (
         <div className={"timlands-panel-cart"}>
             <div className="py-4">
@@ -15,25 +16,25 @@ function BankAccountCart({ setIsShowBankTransfert, userInfo={} }:any) {
                         <div className="col-6">
                             <div className="cart-item">
                                 <h4 className="cart-title">الاسم الكامل</h4>
-                                <h4 className="cart-text">{userInfo.full_name}</h4>
+                                <h4 className="cart-text">{(userInfo&&userInfo.full_name)||''}</h4>
                             </div>
                         </div>
                         <div className="col-6">
                             <div className="cart-item">
                                 <h4 className="cart-title">المدينة</h4>
-                                <h4 className="cart-text">{userInfo.city}</h4>
+                                <h4 className="cart-text">{(userInfo&&userInfo.city)||''}</h4>
                             </div>
                         </div>
                         <div className="col-6">
                             <div className="cart-item">
                                 <h4 className="cart-title">عنوان الحوالة</h4>
-                                <h4 className="cart-text">{()=>userInfo?`${userInfo.adress_line_one}  ${userInfo.adress_line_two}`:''}</h4>
+                                <h4 className="cart-text">{userInfo?`${userInfo.address_line_one||""}  ${userInfo.adress_line_two||''}`:''}</h4>
                             </div>
                         </div>
                         <div className="col-6">
                             <div className="cart-item">
-                                <h4 className="cart-title">اسم البنك</h4>
-                                <h4 className="cart-text">{userInfo.bank_name}</h4>
+                                <h4 className="cart-title">رقم الهاتف</h4>
+                                <h4 className="cart-text">{(userInfo&&userInfo.phone_number_without_code)||''}</h4>
                             </div>
                         </div>
                     </div>
