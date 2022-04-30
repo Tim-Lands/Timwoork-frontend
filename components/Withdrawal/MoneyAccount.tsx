@@ -9,14 +9,16 @@ import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
-function MoneyAccount({ token, setIsShowBankTransfert }) {
+function MoneyAccount({ token, create, setIsShowBankTransfert }) {
+    console.log("moneeey")
     const { data: Countries }: any = useSWR('api/withdrawals/countries')
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const UpdateMoney = async (values) => {
         try {
-            const res = await API.post(`api/withdrawals/update/bank`, values, {
+            const url = create? 'api/withdrawal/update_bank' : 'api/withdrawal/store_bank'
+            const res = await API.post(url, values, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -42,7 +44,6 @@ function MoneyAccount({ token, setIsShowBankTransfert }) {
     const formik = useFormik({
         initialValues: {
             full_name: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.full_name,
-            amount: '',
             wise_country_id: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.wise_country_id,
             bank_swift: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.bank_swift,
             bank_iban: userInfo && userInfo.user_details.profile.bank_account && userInfo.user_details.profile.bank_account.wise_country_id,
@@ -61,7 +62,8 @@ function MoneyAccount({ token, setIsShowBankTransfert }) {
         onSubmit: async values => {
             try {
                 setValidationsErrors({})
-                const res = await API.post(`api/withdrawals/bank`, values, {
+                const url = create? 'api/withdrawals/update_bank' : 'api/withdrawals/store_bank'
+                const res = await API.post(url, values, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -72,6 +74,7 @@ function MoneyAccount({ token, setIsShowBankTransfert }) {
                     router.push('/mywallet')
                 }
             } catch (error: any) {
+                console.log(error.response)
                 if (error.response && error.response.data && error.response.data.errors) {
                     setValidationsErrors(error.response.data.errors);
                 }
@@ -408,4 +411,5 @@ export default MoneyAccount
 MoneyAccount.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any
 };

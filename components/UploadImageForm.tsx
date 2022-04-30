@@ -28,7 +28,7 @@ export default function UploadImageForm({validationsErrors, setPicture }: any) {
     return (
         <div className="login-panel update-form">
             <div className={"panel-modal-body login-panel-body auto-height"}>
-            <button onClick={clearImages}>clear</button>
+            <button type="button" onClick={clearImages}>clear</button>
                 <div className="avatar-uploader image-identifie">
                     <img width={110} height={110} src={imagesData[0]} />
                     <input id="profilePic" type="file" multiple onChange={onChangePicture} />

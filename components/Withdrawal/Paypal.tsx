@@ -8,12 +8,13 @@ import PropTypes from "prop-types";
 import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
-function Paypal({ token, setIsShowBankTransfert }) {
+function Paypal({ token, create , setIsShowBankTransfert, userInfo={} }:any) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const UpdateMoney = async (values) => {
         try {
-            const res = await API.post(`api/withdrawals/update/paypal`, values, {
+            const url = create?`api/withdrawal/store_paypal` :`api/withdrawal/update_paypal`
+            const res = await API.post(`${url}`, values, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -38,14 +39,16 @@ function Paypal({ token, setIsShowBankTransfert }) {
     const formik = useFormik({
         initialValues: {
             amount: '',
-            email: '',
+            email: userInfo&&userInfo.email||'',
         },
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async values => {
             setValidationsErrors({})
             try {
-                const res = await API.post(`api/withdrawals/paypal`, values, {
+                const url = create?`api/withdrawals/update_paypal`:`api/withdrawals/store_paypal`
+
+                const res = await API.post(`${url}`, values, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -124,4 +127,6 @@ export default Paypal
 Paypal.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any,
+    userInfo:PropTypes.any
 };

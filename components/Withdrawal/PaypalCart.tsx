@@ -15,7 +15,7 @@ function PaypalCart({ setIsShowBankTransfert, userInfo={} }:any) {
                         <div className="col-12">
                             <div className="cart-item">
                                 <h4 className="cart-title">عنوان البريد</h4>
-                                <h4 className="cart-text">{userInfo.email}</h4>
+                                <h4 className="cart-text">{(userInfo&&userInfo.email)||''}</h4>
                             </div>
                         </div>
                        
@@ -42,4 +42,5 @@ PaypalCart.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
     userInfo: PropTypes.object,
+    create:PropTypes.any
 };

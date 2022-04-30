@@ -9,13 +9,14 @@ import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
-function Wise({ token, setIsShowBankTransfert }) {
+function Wise({ token, create, setIsShowBankTransfert }) {
     const { data: userInfo }: any = useSWR('api/me')
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const UpdateMoney = async (values) => {
         try {
-            const res = await API.post(`api/withdrawals/update/wise`, values, {
+            const url = create ? 'api/withdrawal/update_wise' : 'api/withdrawal/store_wise'
+            const res = await API.post(url, values, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -47,7 +48,8 @@ function Wise({ token, setIsShowBankTransfert }) {
         onSubmit: async values => {
             setValidationsErrors({})
             try {
-                const res = await API.post(`api/withdrawals/wise`, values, {
+                const url = create ? 'api/withdrawals/update_wise' : 'api/withdrawals/store_wise'
+                const res = await API.post(url, values, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -55,7 +57,7 @@ function Wise({ token, setIsShowBankTransfert }) {
                 // Authentication was successful.
                 if (res.status === 200) {
                     message.success('لقد تم ارسال طلب السحب إلى الإدارة')
-                    router.push('/mywallet')
+                     router.push('/mywallet')
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -121,9 +123,10 @@ Wise.getLayout = function getLayout(page: any): ReactElement {
             {page}
         </Layout>
     )
-}
+} 
 export default Wise
 Wise.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any
 };

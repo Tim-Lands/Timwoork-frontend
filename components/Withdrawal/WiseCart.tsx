@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import PropTypes from "prop-types";
 
 function WiseCart({ setIsShowBankTransfert, userInfo={} }:any) {
+    console.log(userInfo)
     return (
         <div className={"timlands-panel-cart"}>
             <div className="py-4">
@@ -14,7 +15,7 @@ function WiseCart({ setIsShowBankTransfert, userInfo={} }:any) {
                         <div className="col-12">
                             <div className="cart-item">
                                 <h4 className="cart-title">عنوان البريد</h4>
-                                <h4 className="cart-text">{userInfo.email}</h4>
+                                <h4 className="cart-text">{(userInfo&&userInfo.email)||''}</h4>
                             </div>
                         </div>
                       

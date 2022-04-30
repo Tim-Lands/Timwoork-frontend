@@ -7,7 +7,6 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
-import router from 'next/router';
 import UploadImageForm from '../UploadImageForm';
 
 // function Thumb(props: any) {
@@ -37,8 +36,8 @@ import UploadImageForm from '../UploadImageForm';
 //     )
 // }
 
-function BankAccount({ token, setIsShowBankTransfert }) {
-
+function BankAccount({ token,create, setIsShowBankTransfert }:any) {
+    console.log("zpyy")
     const { data: Countries }: any = useSWR('dashboard/countries')
     const { data: userInfo }: any = useSWR('api/me')
 
@@ -57,7 +56,8 @@ function BankAccount({ token, setIsShowBankTransfert }) {
 
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
-    const UpdateMoney = async () => {
+    const UpdateMoney = async (e) => {
+        e.preventDefault()
         setisLoading(true)
         try {
             const formdata = new FormData()
@@ -66,14 +66,14 @@ function BankAccount({ token, setIsShowBankTransfert }) {
             formdata.append('city', city)
             formdata.append('id_type', id_type)
             formdata.append('state', state)
-            formdata.append('country_code_phone', country_code_phone)
+            formdata.append('country_code_phone',country_code_phone )
             formdata.append('phone_number_without_code', phone_number_without_code)
             formdata.append('address_line_one', address_line_one)
             formdata.append('code_postal', code_postal)
-            formdata.append('attachments', attachments)
+            attachments&&attachments.forEach(attach=>formdata.append('attachments[]',attach))
             console.log(attachments)
-
-            const res = await API.post(`api/withdrawals/update/bank_transfer`, formdata, {
+            const url =create?'api/withdrawals/update_bank_transfer':'api/withdrawals/store_bank_transfer'
+            const res = await API.post(url, formdata, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -84,6 +84,8 @@ function BankAccount({ token, setIsShowBankTransfert }) {
                 setisLoading(false)
             }
         } catch (error: any) {
+            console.log(error)
+            console.log(error.response)
             setisLoading(false)
             if (error.response && error.response.data && error.response.data.errors) {
                 setValidationsErrors(error.response.data.errors);
@@ -93,51 +95,14 @@ function BankAccount({ token, setIsShowBankTransfert }) {
             }
         }
     }
-    const SendMoney = async (e) => {
-        e.preventDefault()
-        setisLoading(true)
-        try {
-            const formdata = new FormData()
-            formdata.append('full_name', full_name)
-            formdata.append('country_id', country_id)
-            formdata.append('city', city)
-            formdata.append('id_type', id_type)
-            formdata.append('state', state)
-            formdata.append('country_code_phone', country_code_phone)
-            formdata.append('phone_number_without_code', phone_number_without_code)
-            formdata.append('address_line_one', address_line_one)
-            formdata.append('code_postal', code_postal)
-            formdata.append('attachments', attachments)
-
-            const res = await API.post(`api/withdrawals/bank_transfer`, formdata, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            // Authentication was successful.
-            if (res.status === 200) {
-                message.success('لقد تم ارسال طلب السحب إلى الإدارة')
-                router.push('/mywallet')
-                setisLoading(false)
-            }
-        } catch (error: any) {
-            setisLoading(false)
-            if (error.response && error.response.data && error.response.data.errors) {
-                setValidationsErrors(error.response.data.errors);
-            }
-            if (error.response && error.response.data) {
-                setValidationsGeneral(error.response.data);
-            }
-        }
-    }
+    
     const clearValidationHandle = () => {
         setValidationsGeneral({})
         setValidationsErrors({})
     }
     return (
-        <form onSubmit={SendMoney}>
+        <form onSubmit={UpdateMoney}>
             <div className={"timlands-panel" + (isLoading ? ' is-loader' : '')}>
-                <input type="hidden" name="" onChange={(e) => setcountry_code_phone(e.target.value)} />
                 <div className="col-lg-8">
                     <div className="page-header d-flex">
                         <h4 className="title">الحوالات المالية</h4>
@@ -236,7 +201,7 @@ function BankAccount({ token, setIsShowBankTransfert }) {
                                         </div>}
                                 </div>
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-md-6">
                                 <div className="timlands-form">
                                     <label className="label-block" htmlFor="input-phone_number_without_code">رقم هاتف المستلم</label>
                                     <input
@@ -253,6 +218,24 @@ function BankAccount({ token, setIsShowBankTransfert }) {
                                         <div style={{ overflow: 'hidden' }}>
                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                 <p className="text">{validationsErrors.phone_number_without_code[0]}</p>
+                                            </motion.div>
+                                        </div>}
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="timlands-form">
+                                    <label className="label-block" htmlFor="input-phone_number_without_code">كود الدولة</label>
+                                    <input placeholder="كود هاتف الدولة"
+                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.country_code_phone && ' has-error')}
+                                        autoComplete="off"
+                                        onKeyUp={clearValidationHandle}
+                                        value={country_code_phone} type="text" name="country_code_phone" onChange={(e) => setcountry_code_phone(e.target.value)} />
+
+                                   
+                                    {validationsErrors && validationsErrors.country_code_phone &&
+                                        <div style={{ overflow: 'hidden' }}>
+                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                <p className="text">{validationsErrors.country_code_phone[0]}</p>
                                             </motion.div>
                                         </div>}
                                 </div>
@@ -368,4 +351,5 @@ export default BankAccount
 BankAccount.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any
 };
