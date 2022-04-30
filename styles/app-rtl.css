@@ -7127,16 +7127,6 @@ h3 {
   border-radius: 4px 0 4px 4px;
 }
 
-.message-item.instruct {
-  background-color: #f1fcff;
-  border: 2px dashed #b4e4f1;
-}
-
-.message-item.cause {
-  background-color: #fffbf1;
-  border: 2px dashed #f1e1b4;
-}
-
 .message-item .readed {
   width: 30px;
   height: 30px;
