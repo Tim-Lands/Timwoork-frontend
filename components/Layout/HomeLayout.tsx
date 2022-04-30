@@ -31,7 +31,7 @@ function Layout(props: any) {
         headers: { Authorization: `Bearer ${token}` }
       }).then((r: any) => r.data).catch(()=>{
         if(url=="api/me" && token){
-          //Cookies.remove('token');
+          Cookies.remove('token');
           if(typeof window !== undefined){
             localStorage.removeItem('token')
             return;

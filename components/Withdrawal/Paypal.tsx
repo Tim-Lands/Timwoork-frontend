@@ -39,7 +39,7 @@ function Paypal({ token, create,userInfo={}, setIsShowBankTransfert }) {
     const formik = useFormik({
         initialValues: {
             amount: '',
-            email: userInfo.email||'',
+            email: userInfo&&userInfo.email||'',
         },
         isInitialValid: true,
         enableReinitialize: true,

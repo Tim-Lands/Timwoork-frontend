@@ -106,7 +106,7 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
             formdata.append('city', city)
             formdata.append('id_type', id_type)
             formdata.append('state', state)
-            formdata.append('country_code_phone', 20)
+            //formdata.append('country_code_phone', 20)
             formdata.append('phone_number_without_code', phone_number_without_code)
             formdata.append('address_line_one', address_line_one)
             formdata.append('code_postal', code_postal)
@@ -140,7 +140,6 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
     return (
         <form onSubmit={UpdateMoney}>
             <div className={"timlands-panel" + (isLoading ? ' is-loader' : '')}>
-                <input type="hidden" name="" onChange={(e) => setcountry_code_phone(e.target.value)} />
                 <div className="col-lg-8">
                     <div className="page-header d-flex">
                         <h4 className="title">الحوالات المالية</h4>
@@ -239,7 +238,7 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
                                         </div>}
                                 </div>
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-md-6">
                                 <div className="timlands-form">
                                     <label className="label-block" htmlFor="input-phone_number_without_code">رقم هاتف المستلم</label>
                                     <input
@@ -256,6 +255,24 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
                                         <div style={{ overflow: 'hidden' }}>
                                             <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
                                                 <p className="text">{validationsErrors.phone_number_without_code[0]}</p>
+                                            </motion.div>
+                                        </div>}
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="timlands-form">
+                                    <label className="label-block" htmlFor="input-phone_number_without_code">كود الدولة</label>
+                                    <input placeholder="رقم هاتف المستلم"
+                                        className={"timlands-inputs " + (validationsErrors && validationsErrors.country_code_phone && ' has-error')}
+                                        autoComplete="off"
+                                        onKeyUp={clearValidationHandle}
+                                        value={phone_number_without_code} type="text" name="country_code_phone" onChange={(e) => setcountry_code_phone(e.target.value)} />
+
+                                   
+                                    {validationsErrors && validationsErrors.country_code_phone &&
+                                        <div style={{ overflow: 'hidden' }}>
+                                            <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                <p className="text">{validationsErrors.country_code_phone[0]}</p>
                                             </motion.div>
                                         </div>}
                                 </div>
