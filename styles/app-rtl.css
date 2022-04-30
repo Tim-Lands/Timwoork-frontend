@@ -2014,6 +2014,19 @@ h3 {
   margin-left: 4px;
 }
 
+.timlands-profile-content .profile-buttons {
+  width: 200px;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  margin-top: 9px;
+}
+
 .timlands-profile-content .profile-content-header {
   border-bottom: 1px dashed #ddd;
   margin-bottom: 8px;
@@ -7674,7 +7687,7 @@ h3 {
 }
 
 .main-category-item:hover .main-category-item-icon .material-icons {
-  color: #475C80;
+  color: #ffd000;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }

@@ -30,10 +30,10 @@ export default function UploadPicture({ pending_amount, withdrawable_amount, dar
                         {(userInfo && userInfo.user_details.profile.withdrawable_amount > 9) ?
                             <>
                                 {(userInfo && userInfo.user_details.profile.wallet.is_withdrawable == true) ?
-                                    <div className="d-flex justify-content-center pt-1">
+                                    <div className="d-flex justify-content-end pt-1">
                                         <Link href={'/withdrawal'}>
-                                            <a className='btn butt-green butt-xs px-5' style={{ width: '100%' }}>
-                                                طلب سحب الأموال
+                                            <a className='btn butt-green butt-xs px-5' style={{ float: 'left' }}>
+                                                طلب سحب
                                             </a>
                                         </Link>
                                     </div> :

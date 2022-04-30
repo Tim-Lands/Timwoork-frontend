@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/HomeLayout'
-import { Badge, Result } from 'antd'
+import { Badge, Result, Spin } from 'antd'
 import React, { ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -22,7 +22,7 @@ function index() {
     }, [])
 
     const { data: userInfo }: any = useSWR('api/me')
-    const { data: postsList }: any = useSWR(`api/my_products${statusType}`)
+    const { data: postsList, isValidating, mutate }: any = useSWR(`api/my_products${statusType}`)
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
     if (userInfo && userInfo.user_details.profile.steps < 1)
         return (<div className="row justify-content-md-center">
@@ -83,10 +83,13 @@ function index() {
                                     </p>
                                 </div>
                             </div>
-                            {veriedEmail && <MyProducts
-                                setStatusType={setStatusType}
-                                postsList={postsList}
-                            />}
+                            <Spin spinning={isValidating}>
+                                {veriedEmail && <MyProducts
+                                    refresh={mutate}
+                                    setStatusType={setStatusType}
+                                    postsList={postsList}
+                                />}
+                            </Spin>
 
                         </div>
                     </div>

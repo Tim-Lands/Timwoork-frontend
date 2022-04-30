@@ -1,11 +1,9 @@
 import Layout from '@/components/Layout/HomeLayout'
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import { Result } from 'antd';
+import { Table } from 'antd';
 import Link from 'next/link'
 import useSWR from 'swr'
-import Loading from '@/components/Loading';
-import { Alert } from '@/components/Alert/Alert';
 import LastSeen from '@/components/LastSeen';
 import Cookies from 'js-cookie'
 import router from 'next/router';
@@ -14,8 +12,7 @@ function index() {
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem('token');
-    const [pageIndex, setPageIndex] = useState(1);
-    const { data: buysList, BuysError }: any = useSWR(`api/my_purchases?page=${pageIndex}`)
+    const { data: buysList }: any = useSWR(`api/my_purchases`)
 
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
@@ -64,7 +61,59 @@ function index() {
                 return <span className='badge bg-info text-dark'>قيد الانتظار...</span>
         }
     }
-
+    const columns: any = [
+        {
+            title: 'العنوان',
+            dataIndex: "",
+            render: (e: any) => (
+                <Link href={`/mypurchases/${e.id}`}>
+                    <a>
+                        {e.title}
+                    </a>
+                </Link>
+            ),
+        },
+        {
+            title: 'السعر الكلي',
+            dataIndex: "price_product",
+            render: (status: any) => (
+                <>
+                    {status}$
+                </>
+            ),
+        },
+        {
+            title: 'البائع',
+            dataIndex: "",
+            render: (e: any) => (
+                <p className="m-0 is-hover-primary">
+                    <Link href={`/u/${e.profile_seller.profile.user.username}`}>
+                        <a className='flex-center' style={{ color: "gray" }}>
+                            <span className='mx-1'>{e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}</span>
+                        </a>
+                    </Link>
+                </p>
+            ),
+        },
+        {
+            title: 'الحالة',
+            dataIndex: "status",
+            render: (e: any) => (
+                <>{statusLabel(e)}</>
+            ),
+        },
+        {
+            title: 'التاريخ',
+            dataIndex: "created_at",
+            render: (created_at: any) => (
+                <LastSeen date={created_at} />
+            ),
+        },
+    ];
+    const data = buysList && buysList.data.data;
+    function onChange(pagination, filters, sorter, extra) {
+        console.log('params', pagination, filters, sorter, extra);
+    }
     return (
         <>
             <MetaTags
@@ -80,57 +129,13 @@ function index() {
                                 <div className="app-bill-header">
                                     <h3 className="title">مشترياتي</h3>
                                 </div>
-                                <div className="timlands-table">
-                                    <table className="table">
-                                        <thead>
-                                            <tr>
-                                                <th>العنوان</th>
-                                                <th>السعر الكلي</th>
-                                                <th>البائع</th>
-                                                <th>الحالة</th>
-                                                <th>التاريخ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {buysList && buysList.data.data.map((e: any) => (
-                                                <tr key={e.id}>
-                                                    <td className='is-hover-primary'>
-                                                        <Link href={`/mypurchases/${e.id}`}>
-                                                            <a className='text-dark'>
-                                                                {e.title}
-                                                            </a>
-                                                        </Link>
-                                                    </td>
-                                                    <td>{e.price_product}$</td>
-                                                    <td>
-                                                        <p className="m-0 is-hover-primary">
-                                                            <Link href={`/u/${e.profile_seller.profile.user.username}`}>
-                                                                <a className='flex-center' style={{ color: "gray" }}>
-                                                                    <span className='mx-1'>{e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name}</span>
-                                                                </a>
-                                                            </Link>
-                                                        </p>
-                                                    </td>
-                                                    <th>{statusLabel(e.status)}</th>
-                                                    <td>
-                                                        <LastSeen date={e.created_at} />
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                    {buysList && buysList.data.data.length == 0 && <Result
-                                        status="404"
-                                        title="لا يوجد لديك مشتريات"
-                                        subTitle="ليس لديك مشريات لعرضها"
-                                    />}
-                                    {!buysList && <Loading />}
-                                    {BuysError && <Alert type='error'>للأسف لم يتم جلب البيانات</Alert>}
-                                    {buysList && buysList.data.data.length !== 0 && buysList.data.total > buysList.data.per_page && <div className="p-2 d-flex">
-                                        <button className='btn butt-sm butt-primary me-auto' onClick={() => setPageIndex(pageIndex + 1)}>الصفحة التالية</button>
-                                        <button className='btn butt-sm butt-primary' onClick={() => setPageIndex(pageIndex - 1)}>الصفحة السابقة</button>
-                                    </div>}
-                                </div>
+                                <Table
+                                    columns={columns}
+                                    onChange={onChange}
+                                    dataSource={data}
+                                    bordered
+                                    size='small'
+                                />
                             </div>
                         </div>
                     </div>

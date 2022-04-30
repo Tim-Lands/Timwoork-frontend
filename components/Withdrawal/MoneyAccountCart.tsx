@@ -57,4 +57,6 @@ MoneyAccountCart.getLayout = function getLayout(page: any): ReactElement {
 export default MoneyAccountCart
 MoneyAccountCart.propTypes = {
     token: PropTypes.any,
+    setIsShowBankTransfert: PropTypes.func,
+    userInfo: PropTypes.object,
 };

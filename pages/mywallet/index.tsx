@@ -10,6 +10,7 @@ import Unauthorized from '@/components/Unauthorized';
 import { Alert } from '@/components/Alert/Alert'
 import LastSeen from '@/components/LastSeen'
 import Link from 'next/link'
+import { Table } from 'antd'
 
 function index() {
     let token = Cookies.get('token')
@@ -43,6 +44,45 @@ function index() {
             default:
                 return <span className='app-badge app-badge-danger'>-${amount}</span>
         }
+    }
+    const columns: any = [
+        {
+            title: 'المبلغ',
+            dataIndex: "",
+            render: (e: any) => (
+                <>
+                    {switchType(e.status, e.amount)}
+                </>
+            ),
+        },
+        {
+            title: 'عنوان العملية',
+            dataIndex: "",
+            width: 230,
+            render: (e: any) => (
+                <>
+                    {e.payload.title}
+                </>
+            ),
+        },
+        {
+            title: 'طريقة العملية',
+            dataIndex: "",
+            render: (e: any) => (
+                <>{e.payload.payment_method}</>
+            ),
+        },
+        {
+            title: 'التاريخ',
+            dataIndex: "created_at",
+            render: (created_at: any) => (
+                <LastSeen date={created_at} />
+            ),
+        },
+    ];
+    const data = userInfo && userInfo.user_details.profile.wallet.activities
+    function onChange(pagination, filters, sorter, extra) {
+        console.log('params', pagination, filters, sorter, extra);
     }
     return (
         <div className="py-3">
@@ -140,36 +180,13 @@ function index() {
                                             <div className="page-header xs">
                                                 <h3 className='title'>المعاملات المالية</h3>
                                             </div>
-                                            {userInfo && userInfo.user_details.profile.wallet.activities.length == 0 &&
-                                                <Alert type="primary">
-                                                    <p className="text">لاتوجد نشاطات لعرضها</p>
-                                                </Alert>
-                                            }
-
-                                            <div className="timlands-table">
-                                                <table className="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>المبلغ</th>
-                                                            <th>عنوان العملية</th>
-                                                            <th>طريقة العملية</th>
-                                                            <th>التاريخ</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {userInfo && userInfo.user_details.profile.wallet.activities.map((e: any) => (
-                                                            <tr key={e.id}>
-                                                                <td>{switchType(e.status, e.amount)}</td>
-                                                                <td className='is-hover-primary'>{e.payload.title}</td>
-                                                                <td className='is-hover-primary'>{e.payload.payment_method}</td>
-                                                                <td>
-                                                                    <LastSeen date={e.created_at} />
-                                                                </td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                            <Table
+                                                columns={columns}
+                                                onChange={onChange}
+                                                dataSource={data}
+                                                bordered
+                                                size='small'
+                                            />
                                         </div>
                                     </div>
                                 </div>

@@ -7,7 +7,7 @@ import { useOutsideAlerter } from './useOutsideAlerter'
 import { Result } from 'antd';
 //import Typical from 'react-typical';
 import bgIMG from '../styles/5313770.jpg'
-import heroIMG from '../public/hero.png'
+import heroIMG from '../public/hero2.png'
 import Image from 'next/image'
 
 export function LoadingSearch() {
@@ -114,12 +114,12 @@ function Hero() {
                         اشتري. دردش .بيع
                     </motion.h1>
                     <motion.h1 transition={{ duration: 0.69 }} initial={{ y: 150, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="sub-title">
-                        اكتشف سوق تيموورك للخدمات الالكترونية الأكثر تطورا وراحة
+                        اكتشف سوق تيم ورك للخدمات الالكترونية الأكثر تطورا وراحة
                     </motion.h1>
                 </div>
                 <div className="timlands-hero-search">
                     <div className="rel-search">
-                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيموورك..." className="timlands-inputs" style={{
+                        <input type="text" onKeyUp={onKeyUpHandle} placeholder="البحث في تيم ورك..." className="timlands-inputs" style={{
                             border: '1px solid #ddd',
                             backgroundColor: '#fff',
                             paddingBlock: 10,

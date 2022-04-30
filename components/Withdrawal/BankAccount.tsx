@@ -44,7 +44,6 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
 
     const [isLoading, setisLoading]: any = useState(false)
 
-    const [amount, setamount]: any = useState('')
     const [full_name, setfull_name]: any = useState(userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.full_name)
     const [country_id, setcountry_id]: any = useState('')
     const [city, setcity]: any = useState(userInfo && userInfo.user_details.profile.bank_transfer_detail && userInfo.user_details.profile.bank_transfer_detail.city)
@@ -102,7 +101,6 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
         setisLoading(true)
         try {
             const formdata = new FormData()
-            formdata.append('amount', amount)
             formdata.append('full_name', full_name)
             formdata.append('country_id', country_id)
             formdata.append('city', city)
@@ -138,11 +136,6 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
     const clearValidationHandle = () => {
         setValidationsGeneral({})
         setValidationsErrors({})
-    }
-    const [quantutyCount, setQuantutyCount] = useState(null)
-    const allowOnlyNumericsOrDigits = (evt) => {
-        const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-        setQuantutyCount(financialGoal);
     }
     return (
         <form onSubmit={UpdateMoney}>
