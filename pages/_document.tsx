@@ -11,7 +11,7 @@ export default class CustomDocument extends Document {
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" />
                     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
-                    <link rel="icon" href="/icon.png" />
+                    <link rel="icon" href="/logo.png" />
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6371231196080126"
                         crossOrigin="anonymous"></script>
                     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NR88QZ76Y"></script>
