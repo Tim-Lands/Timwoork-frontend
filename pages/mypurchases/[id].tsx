@@ -551,11 +551,11 @@ const Order = ({ query }) => {
                                                                         borderRadius: '4px 4px 0 4px',
                                                                         fontSize: 12,
                                                                         marginBottom: 5
-                                                                    }}>تعليمات
+                                                                    }}>تعليمة
                                                                 </span>}
                                                             {item.type == 2 && <span className="bg-danger text-light d-inline-block" style={{ paddingInline: 9, paddingBlock: 3, borderRadius: '4px 4px 0 4px', fontSize: 12, marginBottom: 5 }}>سبب إلغاء</span>}
-                                                            <p className="text" style={{ margin: 0 }}>{item.message}</p>
-                                                            <p className="meta" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
+                                                            <p className="text" style={{ margin: 0 }}>{item.user.profile.full_name}</p>
+                                                            <p className="meta" style={{ marginBlock: 4, fontSize: 11, fontWeight: 200 }}><LastSeen date={item.created_at} /></p>
                                                             {item.attachments &&
                                                                 <div className="attach-items" style={{ marginBlock: 4, fontSize: 12, fontWeight: 200 }}>
                                                                     {item.attachments.map((att: any, i: number) => (
@@ -567,6 +567,7 @@ const Order = ({ query }) => {
                                                                     ))}
                                                                 </div>
                                                             }
+                                                            <p className="text2" style={{ margin: 0 }}>{item.message}</p>
                                                             {(ShowItem && ShowItem.data.order.cart.user_id == item.user.id) &&
                                                                 <>
                                                                     {item.read_at && <span className="readed is-readed">

@@ -110,7 +110,7 @@ function index() {
             ),
         },
     ];
-    const data = buysList && buysList.data.data;
+    const data = buysList && buysList.data;
     function onChange(pagination, filters, sorter, extra) {
         console.log('params', pagination, filters, sorter, extra);
     }

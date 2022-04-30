@@ -891,7 +891,6 @@ h3 {
         .title {
             margin-bottom: 5px;
         }
-
         .post-meta-rate {
             padding-top: 7px;
 
@@ -5004,7 +5003,12 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
     position: relative;
 
     .item-content {
-        width: 65%;
+        width: 65%;        
+        .bg-danger, .bg-success {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
     }
 
     .text {
@@ -5061,6 +5065,13 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         .readed {
             right: 12px;
         }
+        
+    .item-content {
+        .bg-danger, .bg-success {
+            right: 10px;
+            left: auto;
+        }
+    }
     }
 
     .attach-items {
