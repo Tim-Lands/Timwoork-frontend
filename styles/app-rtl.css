@@ -7114,6 +7114,12 @@ h3 {
   width: 65%;
 }
 
+.message-item .item-content .bg-danger, .message-item .item-content .bg-success {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
 .message-item .text {
   color: #000;
   font-size: 14px;
