@@ -66,7 +66,7 @@ function index() {
             title: 'العنوان',
             dataIndex: "",
             render: (e: any) => (
-                <Link href={`/mysales/${e.id}`}>
+                <Link href={`/mypurchases/${e.id}`}>
                     <a>
                         {e.title}
                     </a>
