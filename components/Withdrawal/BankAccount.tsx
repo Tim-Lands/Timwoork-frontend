@@ -37,7 +37,6 @@ import UploadImageForm from '../UploadImageForm';
 // }
 
 function BankAccount({ token,create, setIsShowBankTransfert }:any) {
-    console.log("zpyy")
     const { data: Countries }: any = useSWR('dashboard/countries')
     const { data: userInfo }: any = useSWR('api/me')
 
@@ -106,7 +105,7 @@ function BankAccount({ token,create, setIsShowBankTransfert }:any) {
                 <div className="col-lg-8">
                     <div className="page-header d-flex">
                         <h4 className="title">الحوالات المالية</h4>
-                        <button type='button' onClick={() => setIsShowBankTransfert(false)} className='btn-close ml-auto'></button>
+                        <button type='button' onClick={() => {console.log("closing modal");setIsShowBankTransfert(false)}} className='btn-close ml-auto'></button>
                     </div>
 
                     <div className="timlands-content-form">
