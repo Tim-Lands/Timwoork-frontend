@@ -181,25 +181,25 @@ function Withdrawal() {
                                     <div className="row transfert-box">
 
                                         <div className="col-12">
-                                            <input disabled={!isPaymentAvailable['bank_account']} onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="listGroupCheckableRadios1" value="1" />
+                                            <input disabled={!isPaymentAvailable['bank_account']} onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="listGroupCheckableRadios1" value="0" />
                                             <label className="list-group-item py-3" htmlFor="listGroupCheckableRadios1">
                                                 <img src="/banktransfert.png" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 تحويل بنكي
                                             </label>
                                         </div>
-                                        <button type='button' className='btn-edit' onClick={() => togglePaymentWindow(1)}>
+                                        <button type='button' className='btn-edit' onClick={() => togglePaymentWindow(0)}>
                                             <span className="material-icons material-icons-outlined">{isPaymentAvailable['bank_account'] ? 'edit' : 'add'}</span>
                                         </button>
                                     </div>
                                     <div className="row transfert-box">
                                         <div className="col-12">
-                                            <input disabled={!isPaymentAvailable['bank_transfer_detail']} onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="transfert-money" value="0" />
+                                            <input disabled={!isPaymentAvailable['bank_transfer_detail']} onChange={formik.handleChange} className="list-group-item-check" type="radio" name="withdrawal_type" id="transfert-money" value="1" />
                                             <label className="list-group-item py-3" htmlFor="transfert-money">
                                                 <img src="/transfert1.jpg" alt="" width={35} height={35} style={{ borderRadius: '50%', marginLeft: 6 }} />
                                                 الحوالة المالية
                                             </label>
                                         </div>
-                                        <button type='button' className='btn-edit' onClick={() => togglePaymentWindow(0)}>
+                                        <button type='button' className='btn-edit' onClick={() => togglePaymentWindow(1)}>
                                             <span className="material-icons material-icons-outlined">{isPaymentAvailable['bank_transfer_detail'] ? 'edit' : 'add'}</span>
                                         </button>
                                     </div>
@@ -238,13 +238,13 @@ function Withdrawal() {
                         </div>
                     </div>
                     <div className="col-lg-8">
-                        {formik.values.withdrawal_type == 0 && <>
-                            {!isShowMoneyTransfert && isPaymentAvailable['bank_account'] && <BankAccountCart setIsShowBankTransfert={setIsShowMoneyTransfert} userInfo={paymentInfo.bank_transfer_detail} />}
-                            {isShowMoneyTransfert && <BankAccount create={isPaymentAvailable['bank_transfer_detail']} token={token} setIsShowBankTransfert={setIsShowMoneyTransfert} />}
-                        </>}
                         {formik.values.withdrawal_type == 1 && <>
-                            {!isShowBankTransfert && <MoneyAccountCart setIsShowBankTransfert={setIsShowBankTransfert} userInfo={paymentInfo.bank_account} />}
-                            {isShowBankTransfert && <MoneyAccount create={isPaymentAvailable['bank_account']} token={token} setIsShowBankTransfert={setIsShowBankTransfert} />}
+                            {!isShowBankTransfert && <BankAccountCart setIsShowBankTransfert={setIsShowBankTransfert} userInfo={paymentInfo.bank_transfer_detail} />}
+                            {isShowBankTransfert && <BankAccount create={isPaymentAvailable['bank_transfer_detail']} token={token} setIsShowBankTransfert={setIsShowBankTransfert} />}
+                        </>}
+                        {formik.values.withdrawal_type == 0 && <>
+                            {!isShowMoneyTransfert && <MoneyAccountCart setIsShowBankTransfert={setIsShowMoneyTransfert} userInfo={paymentInfo.bank_account} />}
+                            {isShowMoneyTransfert && <MoneyAccount create={isPaymentAvailable['bank_account']} token={token} setIsShowBankTransfert={setIsShowMoneyTransfert} />}
                         </>}
                         {formik.values.withdrawal_type == 3 && <>
                             {!isShowWiseTransfert && <WiseCart token={token} setIsShowBankTransfert={setIsShowWiseTransfert} userInfo={paymentInfo.wise_account} />}
