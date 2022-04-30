@@ -123,7 +123,7 @@ Wise.getLayout = function getLayout(page: any): ReactElement {
             {page}
         </Layout>
     )
-}
+} 
 export default Wise
 Wise.propTypes = {
     token: PropTypes.any,
