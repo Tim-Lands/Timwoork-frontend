@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { Alert } from '../Alert/Alert';
 import router from 'next/router';
 
-function Paypal({ token, create,userInfo={}, setIsShowBankTransfert }) {
+function Paypal({ token, create , setIsShowBankTransfert, userInfo={} }:any) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const UpdateMoney = async (values) => {
@@ -127,4 +127,6 @@ export default Paypal
 Paypal.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any,
+    userInfo:PropTypes.any
 };

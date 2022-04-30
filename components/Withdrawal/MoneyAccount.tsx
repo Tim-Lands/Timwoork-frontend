@@ -411,4 +411,5 @@ export default MoneyAccount
 MoneyAccount.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any
 };

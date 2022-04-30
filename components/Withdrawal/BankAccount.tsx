@@ -7,7 +7,6 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import useSWR from 'swr';
 import { Alert } from '../Alert/Alert';
-import router from 'next/router';
 import UploadImageForm from '../UploadImageForm';
 
 // function Thumb(props: any) {
@@ -37,7 +36,7 @@ import UploadImageForm from '../UploadImageForm';
 //     )
 // }
 
-function BankAccount({ token,create, setIsShowBankTransfert }) {
+function BankAccount({ token,create, setIsShowBankTransfert }:any) {
     console.log("zpyy")
     const { data: Countries }: any = useSWR('dashboard/countries')
     const { data: userInfo }: any = useSWR('api/me')
@@ -67,7 +66,7 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
             formdata.append('city', city)
             formdata.append('id_type', id_type)
             formdata.append('state', state)
-            formdata.append('country_code_phone', 20)
+            formdata.append('country_code_phone',country_code_phone )
             formdata.append('phone_number_without_code', phone_number_without_code)
             formdata.append('address_line_one', address_line_one)
             formdata.append('code_postal', code_postal)
@@ -96,43 +95,7 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
             }
         }
     }
-    const SendMoney = async (e) => {
-        e.preventDefault()
-        setisLoading(true)
-        try {
-            const formdata = new FormData()
-            formdata.append('full_name', full_name)
-            formdata.append('country_id', country_id)
-            formdata.append('city', city)
-            formdata.append('id_type', id_type)
-            formdata.append('state', state)
-            //formdata.append('country_code_phone', 20)
-            formdata.append('phone_number_without_code', phone_number_without_code)
-            formdata.append('address_line_one', address_line_one)
-            formdata.append('code_postal', code_postal)
-            formdata.append('attachments', attachments)
-
-            const res = await API.post(`api/withdrawals/bank_transfer`, formdata, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            // Authentication was successful.
-            if (res.status === 200) {
-                message.success('لقد تم ارسال طلب السحب إلى الإدارة')
-                //router.push('/mywallet')
-                setisLoading(false)
-            }
-        } catch (error: any) {
-            setisLoading(false)
-            if (error.response && error.response.data && error.response.data.errors) {
-                setValidationsErrors(error.response.data.errors);
-            }
-            if (error.response && error.response.data) {
-                setValidationsGeneral(error.response.data);
-            }
-        }
-    }
+    
     const clearValidationHandle = () => {
         setValidationsGeneral({})
         setValidationsErrors({})
@@ -262,11 +225,11 @@ function BankAccount({ token,create, setIsShowBankTransfert }) {
                             <div className="col-md-6">
                                 <div className="timlands-form">
                                     <label className="label-block" htmlFor="input-phone_number_without_code">كود الدولة</label>
-                                    <input placeholder="رقم هاتف المستلم"
+                                    <input placeholder="كود هاتف الدولة"
                                         className={"timlands-inputs " + (validationsErrors && validationsErrors.country_code_phone && ' has-error')}
                                         autoComplete="off"
                                         onKeyUp={clearValidationHandle}
-                                        value={phone_number_without_code} type="text" name="country_code_phone" onChange={(e) => setcountry_code_phone(e.target.value)} />
+                                        value={country_code_phone} type="text" name="country_code_phone" onChange={(e) => setcountry_code_phone(e.target.value)} />
 
                                    
                                     {validationsErrors && validationsErrors.country_code_phone &&
@@ -388,4 +351,5 @@ export default BankAccount
 BankAccount.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any
 };

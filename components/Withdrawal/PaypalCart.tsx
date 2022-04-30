@@ -42,4 +42,5 @@ PaypalCart.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
     userInfo: PropTypes.object,
+    create:PropTypes.any
 };

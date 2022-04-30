@@ -37,18 +37,18 @@ function Withdrawal() {
     const sendMoney = async () => {
         let url = 'api/withdrawals/withdrawal_';
         console.log(formik.values.withdrawal_type)
-        switch (formik.values.withdrawal_type) {
-            case '1':
+        switch (Number(formik.values.withdrawal_type)) {
+            case (1):
                 url += 'bank';
                 break;
-            case '0':
+            case (0):
                 url += 'bank_transfer';
                 break;
-            case '2':
+            case (2):
                 url += 'paypal';
                 console.log(url)
                 break;
-            case '3':
+            case (3):
                 url += 'wise';
                 break;
         }
@@ -252,7 +252,7 @@ function Withdrawal() {
                         </>}
                         {formik.values.withdrawal_type == 2 && <>
                             {!isShowPaypalTransfert && <PaypalCart token={token} setIsShowBankTransfert={setIsShowPaypalTransfert} userInfo={paymentInfo.paypal_account} />}
-                            {isShowPaypalTransfert && <Paypal userInfo={paymentInfo.paypal_account} create={isPaymentAvailable['paypal_account']} token={token} setIsShowBankTransfert={setIsShowPaypalTransfert} />}
+                            {isShowPaypalTransfert && <Paypal   token={token} create={isPaymentAvailable['paypal_account']} setIsShowBankTransfert={setIsShowPaypalTransfert} userInfo={paymentInfo.paypal_account} />}
                         </>}
 
                     </div>

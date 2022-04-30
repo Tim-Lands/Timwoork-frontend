@@ -128,4 +128,5 @@ export default Wise
 Wise.propTypes = {
     token: PropTypes.any,
     setIsShowBankTransfert: PropTypes.func,
+    create:PropTypes.any
 };
