@@ -5065,6 +5065,13 @@ $activeShadow: 0 0 10px rgba($teal1, .5);
         .readed {
             right: 12px;
         }
+        
+    .item-content {
+        .bg-danger, .bg-success {
+            right: 10px;
+            left: auto;
+        }
+    }
     }
 
     .attach-items {

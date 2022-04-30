@@ -7183,6 +7183,11 @@ h3 {
   right: 12px;
 }
 
+.message-item.recieved .item-content .bg-danger, .message-item.recieved .item-content .bg-success {
+  right: 10px;
+  left: auto;
+}
+
 .message-item .attach-items .att-item a {
   color: #000;
   font-size: 12px;
