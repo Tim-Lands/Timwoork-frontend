@@ -6,11 +6,12 @@ import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'
 import { Menu, Dropdown, Button } from 'antd';
 import Categories from "@/components/Categories";
-
+import router from "next/router";
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
   const { data: products, error }: any = useSWR('api/filter?paginate=4&sort=count_buying,desc')
+  const { data: categories }: any = useSWR(`api/get_categories`)
   const menu = (
     <Menu>
       <Menu.Item>
@@ -35,7 +36,7 @@ function Home() {
         ogDescription={"الصفحة الرئيسية"}
       />
       <Hero />
-      <Categories />
+      <Categories onClickCategory={(id)=>router.push(`/sub-category/${id}`)} categories={categories}/>
       
       {products && popularProducts && latestProducts && products.data.length !== 0 && popularProducts.data.length !== 0 && latestProducts.data.length !== 0 &&
         <div className="container">

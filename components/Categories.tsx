@@ -1,5 +1,5 @@
 import React from 'react'
-import useSWR from 'swr'
+import PropTypes from "prop-types";
 const placeholders = [
     {
         id: 1,
@@ -50,8 +50,8 @@ const placeholders = [
         name_ar: ''
     },
 ]
-function Categories() {
-    const { data: categories }: any = useSWR(`api/get_categories`)
+function Categories({categories, onClickCategory}) {
+    //const { data: categories }: any = useSWR(`api/get_categories`)
     return (
         <div className='container'>
             <div className="app-bill my-5" style={{ borderRadius: 7 }}>
@@ -74,7 +74,7 @@ function Categories() {
                     }
                     <div className="row">
                         {categories && categories.data.map((e: any) => (
-                            <div className="col-md-3 col-6" key={e.id}>
+                            <div onClick={()=>onClickCategory(e.id)} className="col-md-3 col-6" key={e.id}>
                                 <div className="main-category-item">
                                     <div className="main-category-item-icon">
                                         <span className={"material-icons material-icons-outlined"}>{e.icon}</span>
@@ -91,5 +91,9 @@ function Categories() {
         </div>
     )
 }
-
 export default Categories
+Categories.propTypes = {
+    categories:PropTypes.any,
+    onClickCategory:PropTypes.func
+
+};
