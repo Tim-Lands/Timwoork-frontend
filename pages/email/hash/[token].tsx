@@ -30,7 +30,7 @@ function Token({ query }) {
                 setIsError(false)
                 setIsSuccess(true)
                 setIsLoading(false)
-                router.push('/login')
+                //router.push('/login')
             }
         } catch (error) {
             setIsSuccess(false)
@@ -79,6 +79,7 @@ function Token({ query }) {
                                     // Authentication was successful.
                                     if (res.status === 200) {
                                         message.success('لقد تم التحديث بنجاح')
+                                        router.push('/')
                                     }
                                 } catch (error: any) {
                                     if (error.response && error.response.data && error.response.data.errors) {

@@ -15,8 +15,11 @@ function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [products, setProducts]: any = useState([]);
+  const [totalPages, setTotalPages] = useState(0)
   const [pageIndex, setPageIndex] = useState(1);
-
+  console.log(pageIndex)
+  console.log(totalPages)
+  console.log(totalPages>pageIndex)
   const { data: getCategories, error }: any = useSWR("api/get_categories");
   const setValue = getCategories && getCategories.data.map((e) => e.id);
   const setLabel = getCategories && getCategories.data.map((e) => e.name_ar);
@@ -70,6 +73,7 @@ function Category() {
         if (res.status === 200) {
           setIsLoading(false);
           setProducts(res.data.data.data);
+          setTotalPages(res?.data?.data?.last_page)
           setIsError(false);
         }
       } catch (error) {
@@ -105,6 +109,7 @@ function Category() {
       if (res) {
         setIsLoading(false);
         setProducts(res.data.data.data);
+        setTotalPages(res?.data?.data?.last_page)
         setIsError(false);
       }
     } catch (error) {
@@ -114,7 +119,7 @@ function Category() {
   }
   useEffect(() => {
     getData();
-  }, []);
+  }, [pageIndex]);
   if (!getCategories) return <Loading />;
   if (error) return <div>Error</div>;
   return (
@@ -190,7 +195,7 @@ function Category() {
               />
               {products &&
                 products.length !== 0 &&
-                products.total > products.per_page && (
+                totalPages>pageIndex && (
                   <div className="p-2 d-flex">
                     <button
                       className="btn butt-sm butt-primary me-auto"

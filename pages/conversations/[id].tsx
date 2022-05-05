@@ -6,7 +6,7 @@ import LastSeen from '@/components/LastSeen';
 import API from '../../config'
 import Cookies from 'js-cookie'
 import useFileUpload from 'react-use-file-upload';
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 import Sidebar from '@/components/Conversations/Sidebar';
 import { Progress } from 'antd';
 import { motion } from 'framer-motion';
@@ -17,6 +17,7 @@ function Conversation({ query }) {
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem('token');
+    const { mutate } = useSWRConfig()
     const inputRefMsg: any = useRef();
     const { data: conversationsSingle }: any = useSWR(`api/conversations/${query.id}`)
     const { data: profileInfo }: any = useSWR(`api/me`)
@@ -32,6 +33,10 @@ function Conversation({ query }) {
             router.push('/login')
         }
     }, [])
+    useEffect(()=>{
+        mutate('api/me')
+
+    },[conversationsSingle])
     const {
         files: filesMsg,
         fileNames: fileNamesMsg,

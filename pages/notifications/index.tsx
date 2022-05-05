@@ -2,7 +2,7 @@ import Layout from '@/components/Layout/HomeLayout'
 import Loading from '@/components/Loading';
 import Notification from '@/components/Notification'
 import { ReactElement, useEffect } from "react";
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr'
 import Cookies from 'js-cookie'
 import router from 'next/router';
 import API from '../../config'
@@ -12,14 +12,18 @@ function index() {
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem('token');
+    const { mutate } = useSWRConfig()
     const { data: notifications }: any = useSWR(`api/notifications`)
     async function markAllRead() {
         try {
-            await API.post(`api/notifications/markAllAsRead`, {}, {
+            const res = await API.post(`api/notifications/markAllAsRead`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
+            console.log(res)
+            mutate('api/me')
+
         } catch (error) {
             console.log('error');
         }
@@ -27,11 +31,12 @@ function index() {
     useEffect(() => {
         if (!token) {
             router.push('/login')
+            console.log("token is not provided")
             return
         }
+        console.log("token is provided")
         markAllRead()
     }, [])
-
     return (
         <div className="my-2 py-4">
             <MetaTags

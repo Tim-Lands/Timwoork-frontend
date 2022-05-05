@@ -32,6 +32,7 @@ function index() {
                 setIsLoading(false)
                 //  message.success('لقد تم التحديث بنجاح')
                 mutate('api/cart')
+                mutate('api/me')
             }
         } catch (error: any) {
             setIsLoading(false)
