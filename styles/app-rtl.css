@@ -535,6 +535,24 @@
   border-color: #a30707;
 }
 
+.btn.butt-red-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: #e20a0a;
+}
+
+.btn.butt-red-text:hover {
+  background-color: transparent;
+  border-color: transparent;
+  color: #ca0909;
+}
+
+.btn.butt-red-text:focus {
+  background-color: transparent;
+  border-color: transparent;
+  color: #a30707;
+}
+
 .btn.butt-red-out {
   background-color: transparent;
   border-color: #da1616;
@@ -8300,6 +8318,58 @@ h3 {
   overflow: hidden;
   font-weight: 300;
   position: relative;
+}
+
+.overlay-fixed {
+  background-color: rgba(0, 0, 0, 0.336);
+  position: fixed;
+  z-index: 2000;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.overlay-fixed .modal-conferm {
+  background-color: #fff;
+  width: 400px;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.overlay-fixed .modal-conferm .modal-conferm-head {
+  border-bottom: 2px dashed #f6f6f6;
+  margin-bottom: 9px;
+}
+
+.overlay-fixed .modal-conferm .modal-conferm-head .title {
+  margin: 0;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.overlay-fixed .modal-conferm .modal-conferm-body .text {
+  margin: 0;
+}
+
+.overlay-fixed .modal-conferm .modal-conferm-footer {
+  border-top: 2px dashed #f6f6f6;
+  margin-top: 9px;
+}
+
+.overlay-fixed .modal-conferm .modal-conferm-head, .overlay-fixed .modal-conferm .modal-conferm-body, .overlay-fixed .modal-conferm .modal-conferm-footer {
+  padding: 15px;
 }
 
 .aside-attachments .ant-timeline-item-head {
