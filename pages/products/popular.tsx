@@ -29,7 +29,9 @@ function Popular() {
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
-    } catch (error) {}
+    } catch (error) {
+        console.log(error);
+    }
   };
 
   useEffect(() => {
