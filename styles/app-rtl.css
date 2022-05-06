@@ -7969,6 +7969,10 @@ h3 {
   display: flex;
 }
 
+.pagination {
+  padding-right: 0;
+}
+
 .pagination .page-item .page-link {
   font-size: 14px;
   color: #475C80;
