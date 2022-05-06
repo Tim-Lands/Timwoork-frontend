@@ -34,20 +34,22 @@ function Navbar(): ReactElement {
     forceTLS: true,
     auth: token
       ? {
-        headers: {
-          // pass the authorization token when using private channels
-          Authorization: `Bearer ${token}`,
-        },
-      }
+          headers: {
+            // pass the authorization token when using private channels
+            Authorization: `Bearer ${token}`,
+          },
+        }
       : undefined,
   });
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-  const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id
-    }`;
+  const channelChat = `presence-receiver.${
+    userInfo && userInfo.user_details.id
+  }`;
   const channel = pusher.subscribe(channelChat);
 
-  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id
-    }`;
+  const channelNotification = `presence-notify.${
+    userInfo && userInfo.user_details.id
+  }`;
   const channelNoty = pusher.subscribe(channelNotification);
   useEffect(() => {
     if (token) {
@@ -420,7 +422,7 @@ function Navbar(): ReactElement {
               </div>
             </div>
             <ul
-              className="nav nav-auth ml-auto"
+              className="nav-auth ml-auto"
               style={{
                 alignItems: "center",
                 alignContent: "center",

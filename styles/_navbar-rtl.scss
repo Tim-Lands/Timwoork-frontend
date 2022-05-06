@@ -37,7 +37,7 @@
   }
   .toggle-nav {
     display: none;
-    @media (max-width: 750px) {
+    @media (max-width: 780px) {
       display: block;
     }
     .toggle-nav-btn {
@@ -216,7 +216,7 @@
         }
       }
       display: flex;
-      @media (max-width: 750px) {
+      @media (max-width: 780px) {
         position: absolute;
         top: 60px;
         flex-direction: column;
@@ -233,6 +233,19 @@
     }
   }
   .nav-auth {
+    width: fit-content;
+
+    display: flex;
+    margin: 0;
+    padding: 0;
+    /* width: 40%; */
+    justify-content: end;
+    list-style-type: none;
+    -ms-flex-line-pack: center;
+    flex-direction: row;
+    flex-wrap: none !important;
+    -webkit-flex-wrap: none !important;
+    align-content: center;
     align-items: center;
     align-content: center;
     > li {
@@ -246,6 +259,7 @@
         }
       }
       &.login-user {
+        width: 33px !important;
         cursor: pointer;
         img {
           border-radius: 50%;
