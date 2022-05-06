@@ -5786,6 +5786,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         border-bottom-left-radius: 0;
       }
     }
+    &.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
     &:last-child {
       .page-link {
         border-top-left-radius: 0.25rem;

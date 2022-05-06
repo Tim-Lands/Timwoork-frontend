@@ -7985,6 +7985,11 @@ h3 {
   border-bottom-left-radius: 0;
 }
 
+.pagination .page-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .pagination .page-item:last-child .page-link {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
