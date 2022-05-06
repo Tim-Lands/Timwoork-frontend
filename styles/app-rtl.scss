@@ -5771,3 +5771,34 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     display: flex;
   }
 }
+.pagination {
+  .page-item {
+    .page-link {
+      font-size: 14px;
+      color: $primary;
+    }
+    &:first-child {
+      .page-link {
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+    &:last-child {
+      .page-link {
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+    &.active {
+      .page-link {
+        background-color: $primary;
+        border-color: $primary;
+        color: #fff;
+      }
+    }
+  }
+}
