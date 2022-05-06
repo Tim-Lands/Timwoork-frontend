@@ -1,10 +1,17 @@
 import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
+import { useRef } from "react";
+import { useOutsideAlerter } from "../useOutsideAlerter";
 
-function Menus({ darkMode }) {
+function Menus({ darkMode, setIsMenuShowenMob, button }) {
+  const wrapList = useRef();
+  const setHideMenuHandle = () => {
+    setIsMenuShowenMob(false);
+  };
+  useOutsideAlerter(wrapList, setHideMenuHandle, button);
   return (
-    <ul className="nav app-navbar is-mobile">
+    <ul className="nav app-navbar is-mobile" ref={wrapList}>
       <li>
         <Link href="/category">
           <a

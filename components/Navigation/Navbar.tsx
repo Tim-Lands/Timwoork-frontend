@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, notification } from "antd";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import API from "../../config";
 import MenusMobile from "./MenusMobile";
@@ -209,7 +209,6 @@ function Navbar(): ReactElement {
   }
   const [isMenuShowenMob, setIsMenuShowenMob] = useState(false);
   const setIsMenuShowenHandle = () => {
-    //setIsMenuShowen(!isMenuShowen)
     setIsMenuShowenMob(!isMenuShowenMob);
   };
   /*const DarkIconvariants = {
@@ -362,6 +361,8 @@ function Navbar(): ReactElement {
     return `${userData && userData.user_details.profile.avatar_path}`;
   };
   const darkMode = userData && userData.user_details.profile.dark_mode;
+  const button = useRef();
+
   return (
     <>
       <div
@@ -396,6 +397,7 @@ function Navbar(): ReactElement {
               >
                 <div className="toggle-nav me-auto">
                   <button
+                    ref={button}
                     className="toggle-nav-btn"
                     onClick={setIsMenuShowenHandle}
                     style={{
@@ -423,7 +425,13 @@ function Navbar(): ReactElement {
                   </Link>
                 </div>
                 <Menus darkMode={darkMode} />
-                {isMenuShowenMob && <MenusMobile darkMode={darkMode} />}
+                {isMenuShowenMob && (
+                  <MenusMobile
+                    darkMode={darkMode}
+                    button={button}
+                    setIsMenuShowenMob={setIsMenuShowenMob}
+                  />
+                )}
               </div>
             </div>
             <ul
