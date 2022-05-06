@@ -371,16 +371,17 @@ function Navbar(): ReactElement {
         }}
       >
         <nav
-          className="timlands-navbar"
+          className="timlands-navbar d-flex align-items-center justify-content-center"
           style={{
             backgroundColor: !darkMode ? "#fff" : "#212121",
-            paddingBlock: 7,
-            paddingInline: 19,
             position: "relative",
             zIndex: 600,
           }}
         >
-          <div className="d-flex justify-content-between">
+          <div
+            className="d-flex justify-content-between "
+            style={{ maxWidth: "1300px", width: "100%" }}
+          >
             <div className="nav-container">
               <div
                 className="d-flex"

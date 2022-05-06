@@ -644,6 +644,12 @@
   z-index: 600;
 }
 
+@media (max-width: 420px) {
+  .timlands-navbar {
+    padding: 5px 9px;
+  }
+}
+
 .timlands-navbar .d-flex {
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -662,6 +668,12 @@
 .timlands-navbar .logo-nav img {
   height: 40px;
   margin-top: 4px !important;
+}
+
+@media (max-width: 350px) {
+  .timlands-navbar .logo-nav {
+    width: 25px;
+  }
 }
 
 .timlands-navbar .toggle-nav {
@@ -710,9 +722,8 @@
 .timlands-navbar .nav-container .app-navbar {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  gap: 5%;
+  gap: 4%;
 }
 @media (max-width: 850px) {
   .timlands-navbar .nav-container .app-navbar {
@@ -722,6 +733,7 @@
 .nav-container {
   width: 100%;
 }
+
 .timlands-navbar .nav-container .app-navbar > li {
   position: relative;
 }
