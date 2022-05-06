@@ -19,8 +19,9 @@ function Menus({ darkMode }) {
   const setHideExploreHandle = () => {
     setShowExplore(false);
   };
+  const button = useRef();
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setHideExploreHandle);
+  useOutsideAlerter(wrapperRef, setHideExploreHandle, button);
   return (
     <ul
       className="nav app-navbar is-desktop d-flex "
@@ -34,6 +35,7 @@ function Menus({ darkMode }) {
     >
       <li>
         <motion.button
+          ref={button}
           whileHover={{
             color: !darkMode ? "#000" : "#fff",
             scale: 1.07,
@@ -47,7 +49,7 @@ function Menus({ darkMode }) {
             fontWeight: 600,
             color: !darkMode ? "#666" : "#f1f1f1",
             display: "flex",
-            paddingInline: 0,
+            paddingInline: 7,
             paddingBlock: 0,
             border: 0,
             backgroundColor: "transparent",
@@ -88,7 +90,7 @@ function Menus({ darkMode }) {
               fontWeight: 600,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
-              paddingInline: 0,
+              paddingInline: 7,
               paddingBlock: 0,
               fontSize: 14,
               height: 50,
@@ -115,7 +117,7 @@ function Menus({ darkMode }) {
               fontWeight: 600,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
-              paddingInline: 0,
+              paddingInline: 7,
               paddingBlock: 0,
               fontSize: 14,
               height: 50,
@@ -142,7 +144,7 @@ function Menus({ darkMode }) {
               fontWeight: 600,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
-              paddingInline: 0,
+              paddingInline: 7,
               paddingBlock: 0,
               fontSize: 14,
               height: 50,
