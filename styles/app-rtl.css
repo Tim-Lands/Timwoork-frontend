@@ -668,7 +668,7 @@
   display: none;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 780px) {
   .timlands-navbar .toggle-nav {
     display: block;
   }
@@ -1050,7 +1050,7 @@
   color: #fff;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 780px) {
   .timlands-navbar .nav-container .app-navbar {
     position: absolute;
     top: 60px;
@@ -1079,11 +1079,21 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  width: 39%;
+  width: fit-content;
+
+  display: flex;
+  margin: 0;
+  padding: 0;
+  /* width: 40%; */
   justify-content: end;
+  list-style-type: none;
   -ms-flex-line-pack: center;
+  flex-direction: row;
+  flex-wrap: none !important;
+  -webkit-flex-wrap: none !important;
   align-content: center;
 }
+
 @media (max-width: 590px) {
   .timlands-navbar .nav-auth {
     width: 100%;
@@ -1096,9 +1106,9 @@
   .timlands-navbar .nav-auth {
     transform: scale(0.9);
   }
-  .nav-container {
+  /* .nav-container {
     transform: scale(0.9);
-  }
+  } */
 }
 
 .timlands-navbar .nav-auth > li.login-nav-item > a {
@@ -1111,6 +1121,7 @@
 
 .timlands-navbar .nav-auth > li.login-user {
   cursor: pointer;
+  width: 33px !important;
 }
 
 .timlands-navbar .nav-auth > li.login-user img {
@@ -8079,7 +8090,7 @@ h3 {
   display: none !important;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 780px) {
   .is-mobile.nav {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
@@ -8093,7 +8104,7 @@ h3 {
   display: flex !important;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 780px) {
   .is-desktop.nav {
     display: none !important;
   }
@@ -8334,11 +8345,11 @@ h3 {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .overlay-fixed .modal-conferm {
@@ -8368,7 +8379,9 @@ h3 {
   margin-top: 9px;
 }
 
-.overlay-fixed .modal-conferm .modal-conferm-head, .overlay-fixed .modal-conferm .modal-conferm-body, .overlay-fixed .modal-conferm .modal-conferm-footer {
+.overlay-fixed .modal-conferm .modal-conferm-head,
+.overlay-fixed .modal-conferm .modal-conferm-body,
+.overlay-fixed .modal-conferm .modal-conferm-footer {
   padding: 15px;
 }
 
@@ -9324,7 +9337,7 @@ h3 {
 }
 /*# sourceMappingURL=app-rtl.css.map */
 
-@media (max-width: 750px) {
+@media (max-width: 780px) {
   .nav-container {
     width: fit-content;
   }

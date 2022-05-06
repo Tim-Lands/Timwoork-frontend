@@ -422,7 +422,7 @@ function Navbar(): ReactElement {
               </div>
             </div>
             <ul
-              className="nav nav-auth ml-auto"
+              className=" nav-auth ml-auto"
               style={{
                 alignItems: "center",
                 alignContent: "center",
@@ -622,7 +622,12 @@ function Navbar(): ReactElement {
                 <>
                   <li className="login-nav-item">
                     <Link href="/login">
-                      <a className="btn butt-xs flex-center">تسجيل الدخول</a>
+                      <a
+                        className="btn butt-xs flex-center"
+                        style={{ width: 120 }}
+                      >
+                        تسجيل الدخول
+                      </a>
                     </Link>
                   </li>
                   <li className="register-nav-item" style={{ padding: 7 }}>
