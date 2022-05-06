@@ -21,6 +21,7 @@ import LastSeen from "../LastSeen";
 import { motion } from "framer-motion";
 
 function Navbar(): ReactElement {
+  const [visible, setVisible] = useState(false);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -52,6 +53,9 @@ function Navbar(): ReactElement {
   }`;
   const channelNoty = pusher.subscribe(channelNotification);
   useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setVisible(false);
+    });
     if (token) {
       channel.bind("message.sent", (data) => {
         const effect = new Audio("/effect.mp3");
@@ -590,31 +594,42 @@ function Navbar(): ReactElement {
                         </Tooltip>
                       </li>
                       <li className="login-user" style={{ marginInline: 5 }}>
-                        <Dropdown overlay={AccountList} trigger={["click"]}>
-                          <motion.span
-                            style={{ display: "inline-block" }}
-                            whileHover={{
-                              scale: 1.07,
-                            }}
-                            whileTap={{
-                              scale: 1,
-                            }}
+                        <span
+                          onClick={() => {
+                            setVisible(() => !visible);
+                          }}
+                        >
+                          <Dropdown
+                            overlay={AccountList}
+                            // trigger={["click"]}
+
+                            visible={visible}
                           >
-                            <ImageLogo
-                              loader={myLoader}
-                              src={userData.user_details.profile.avatar_path}
-                              quality={60}
-                              width={32}
-                              height={32}
-                              alt={
-                                userData &&
-                                userData.user_details.profile.full_name
-                              }
-                              placeholder="blur"
-                              blurDataURL="/avatar2.jpg"
-                            />
-                          </motion.span>
-                        </Dropdown>
+                            <motion.span
+                              style={{ display: "inline-block" }}
+                              whileHover={{
+                                scale: 1.07,
+                              }}
+                              whileTap={{
+                                scale: 1,
+                              }}
+                            >
+                              <ImageLogo
+                                loader={myLoader}
+                                src={userData.user_details.profile.avatar_path}
+                                quality={60}
+                                width={32}
+                                height={32}
+                                alt={
+                                  userData &&
+                                  userData.user_details.profile.full_name
+                                }
+                                placeholder="blur"
+                                blurDataURL="/avatar2.jpg"
+                              />
+                            </motion.span>
+                          </Dropdown>
+                        </span>
                       </li>
                     </>
                   )}
