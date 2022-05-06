@@ -10,21 +10,40 @@ import Slider from "@mui/material/Slider";
 import { setTimeout } from "timers";
 import Tags from "@/components/Tags";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import Pagination from "react-js-pagination";
+import Cookies from "js-cookie";
 
 function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [products, setProducts]: any = useState([]);
-  const [totalPages, setTotalPages] = useState(0)
-  const [pageIndex, setPageIndex] = useState(1);
-  console.log(pageIndex)
-  console.log(totalPages)
-  console.log(totalPages>pageIndex)
+  let token = Cookies.get("token");
+  if (!token && typeof window !== "undefined")
+    token = localStorage.getItem("token");
+
   const { data: getCategories, error }: any = useSWR("api/get_categories");
   const setValue = getCategories && getCategories.data.map((e) => e.id);
   const setLabel = getCategories && getCategories.data.map((e) => e.name_ar);
   const [selectedTags, setSelectedTags]: any = useState([getCategories && getCategories.data]);
-
+  const [getProducts, setGetProducts]: any = useState();
+  //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
+  /**----------------------------------------------------------**/
+  const fetchData = async (pageNumber: number = 1) => {
+    try {
+      const res = await API.get(
+        `api/filter?paginate=12&page=${pageNumber}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        setGetProducts(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   /********************** price Slider **********************/
   function valuetext(value: number) {
     return `${value}$`;
@@ -72,8 +91,7 @@ function Category() {
         );
         if (res.status === 200) {
           setIsLoading(false);
-          setProducts(res.data.data.data);
-          setTotalPages(res?.data?.data?.last_page)
+          setGetProducts(res.data);
           setIsError(false);
         }
       } catch (error) {
@@ -92,24 +110,7 @@ function Category() {
       );
       if (res.status === 200) {
         setIsLoading(false);
-        setProducts(res.data.data.data);
-        setIsError(false);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      setIsError(true);
-    }
-  }
-
-  async function getData() {
-    setIsLoading(true);
-    setIsError(false);
-    try {
-      const res: any = await API.get(`api/filter?page=${pageIndex}`);
-      if (res) {
-        setIsLoading(false);
-        setProducts(res.data.data.data);
-        setTotalPages(res?.data?.data?.last_page)
+        setGetProducts(res.data);
         setIsError(false);
       }
     } catch (error) {
@@ -118,8 +119,8 @@ function Category() {
     }
   }
   useEffect(() => {
-    getData();
-  }, [pageIndex]);
+    fetchData();
+  }, []);
   if (!getCategories) return <Loading />;
   if (error) return <div>Error</div>;
   return (
@@ -188,29 +189,33 @@ function Category() {
                 <h4 className="title">جميع الخدمات</h4>
               </div>
               <FilterContent
-                products={products}
+                products={getProducts && getProducts.data}
                 isLoading={isLoading}
                 size={4}
                 isError={isError}
               />
-              {products &&
-                products.length !== 0 &&
-                totalPages>pageIndex && (
-                  <div className="p-2 d-flex">
-                    <button
-                      className="btn butt-sm butt-primary me-auto"
-                      onClick={() => setPageIndex(pageIndex + 1)}
-                    >
-                      الصفحة التالية
-                    </button>
-                    <button
-                      className="btn butt-sm butt-primary"
-                      onClick={() => setPageIndex(pageIndex - 1)}
-                    >
-                      الصفحة السابقة
-                    </button>
-                  </div>
-                )}
+              {getProducts && (
+                <div>
+                  <hr />
+                  <Pagination
+                    activePage={
+                      getProducts.current_page ? getProducts.current_page : 0
+                    }
+                    itemsCountPerPage={
+                      getProducts.per_page ? getProducts.per_page : 0
+                    }
+                    totalItemsCount={getProducts.total ? getProducts.total : 0}
+                    onChange={(pageNumber) => {
+                      fetchData(pageNumber);
+                    }}
+                    pageRangeDisplayed={8}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    firstPageText={"الصفحة الأولى"}
+                    lastPageText={"الصفحة الأخيرة"}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </Form>
