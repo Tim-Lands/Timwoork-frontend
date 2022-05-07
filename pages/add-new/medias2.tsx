@@ -4,16 +4,17 @@ import Cookies from 'js-cookie'
 import API from "../../config";
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
-import { message, notification, Spin } from 'antd';
+import { message, notification } from 'antd';
 import ReactPlayer from "react-player"
 import PropTypes from "prop-types";
-import ImageUploading from 'react-images-uploading';
 import cookies from 'next-cookies'
 import { MetaTags } from '@/components/SEO/MetaTags';
-import Image from 'next/image'
 import useSWR from 'swr';
 import { Alert } from '@/components/Alert/Alert';
 import { CloseCircleOutlined } from '@ant-design/icons'
+import ImagesUploadingGalleries from '@/components/ImagesUploadingGalleries';
+import FeaturedUploadingGalleries from '@/components/featuredUploadingGalleries';
+
 function Medias({ query, stars }) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
     let token = Cookies.get('token')
@@ -41,13 +42,6 @@ function Medias({ query, stars }) {
             }
         }
     }
-    const [images, setImages] = useState(stars.data.galaries);
-    const [featuredImages, setFeaturedImages]: any = useState([
-        {
-            data_url: stars.data.full_path_thumbnail
-        }
-    ]);
-
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -57,17 +51,6 @@ function Medias({ query, stars }) {
     }, [])
 
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
-
-    const maxNumber = 5;
-
-    const onChange = (imageList) => {
-        // data for submit
-        setImages(imageList);
-    }
-    const onChangeFeatured = (imageListc) => {
-        // data for submit
-        setFeaturedImages(imageListc);
-    };
 
     const [url_video, setVideourl] = useState('')
     const handleSetVideourl = (e: any) => {
@@ -155,7 +138,6 @@ function Medias({ query, stars }) {
                                 </div>
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-
                                         <span className="icon-circular">
                                             <span className="material-icons material-icons-outlined">description</span>
                                         </span>
@@ -182,197 +164,39 @@ function Medias({ query, stars }) {
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                             <div className="row">
                                 <div className="col-lg-6">
-                                    <div className="choose-images-file">
-                                        <div className="choose-images-list">
-                                            <div className={"panel-modal-body login-panel-body auto-height"}>
-                                                <div className="row">
-                                                    <div className="col-md-12 align-center">
-                                                        <div className="images-list-uploading">
-                                                            <div className="page-header">
-                                                                <h4 className="title" style={{ fontSize: 20 }}>الصورة البارزة</h4>
-                                                            </div>
-                                                            <p className="text-note mt-3" style={{ color: '#555', margin: 0, fontSize: 13 }}>يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة</p>
-                                                            <p className="text-resolotion" style={{ color: '#222', margin: 0, fontSize: 13, fontWeight: 'bold' }}>من الأفضل أن تكون الأبعاد: 755X418</p>
-                                                            <ImageUploading
-                                                                value={featuredImages}
-                                                                onChange={onChangeFeatured}
-                                                                maxNumber={1}
-                                                                dataURLKey="data_url"
+                                    <FeaturedUploadingGalleries full_path_thumbnail={stars.data.full_path_thumbnail || '/seo.png'} />
+                                    <div className="timlands-content-form mt-2">
+                                        <div className="choose-images-file">
+                                            <h4 className="timlands-content-form-subtitle">
+                                                فيديو تعريفي للخدمة (اختياري)
+                                            </h4>
+                                            <div className="timlands-form">
+                                                <label className="label-block" htmlFor="input-videourl">رابط الفيديو</label>
+                                                <input
+                                                    type="text"
+                                                    id="input-videourl"
+                                                    name="url_video"
+                                                    value={url_video}
+                                                    onChange={handleSetVideourl}
+                                                    dir="ltr"
+                                                    placeholder="https://"
+                                                    className="timlands-inputs"
+                                                    autoComplete="off"
+                                                />
+                                                {url_video &&
+                                                    <ReactPlayer
+                                                        style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
+                                                        width="100%"
+                                                        url={url_video}
+                                                    />
+                                                }
 
-                                                            >
-                                                                {({
-                                                                    imageList,
-                                                                    onImageUpdate,
-                                                                }) => (
-                                                                    // write your building UI
-                                                                    <Spin spinning={false}>
-                                                                        <div className="upload__image-wrapper">
-                                                                            {/* {featuredProgress !== 0 && <Progress percent={featuredProgress} />} */}
-                                                                            {imageList.length == 0 && <div className='nothing-images'>
-                                                                                <h4 className="nothing-title">
-                                                                                    اختر الصورة البارزة
-                                                                                </h4>
-                                                                                <p className="nothing-text">
-                                                                                    يجب أن تختار الصورة البارزة للخدمة ويجب ان تكون الصورة متناسقة مع محتوى الخدمة
-                                                                                </p>
-                                                                            </div>}
-                                                                            {imageList && imageList.map((image, index) => (
-                                                                                <div className="p-0" key={index}>
-                                                                                    <div className="image-item featured-wrapper" style={{ height: 140 }}>
-                                                                                        <Image
-                                                                                            src={image['data_url']}
-                                                                                            alt="الصورة البارزة"
-                                                                                            width={755}
-                                                                                            height={300}
-                                                                                            quality={85}
-                                                                                            placeholder='blur'
-                                                                                            blurDataURL={image['data_url']}
-                                                                                        />
-
-                                                                                        <div className="image-item__btn-wrapper">
-                                                                                            <button
-                                                                                                type='button'
-                                                                                                onClick={() => onImageUpdate(index)}>
-                                                                                                <span className="material-icons-outlined">edit</span>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            ))}
-                                                                        </div>
-                                                                    </Spin>
-                                                                )}
-                                                            </ImageUploading>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
-                                    <div className="choose-images-file">
-                                        <div className="choose-images-list">
-                                            <div className={"panel-modal-body login-panel-body auto-height"}>
-                                                <div className="row">
-                                                    <div className="col-md-12 align-center">
-                                                        <div className="images-list-uploading">
-                                                            <div className="page-header">
-                                                                <h4 className="title" style={{ fontSize: 20 }}>معرض الصور</h4>
-                                                            </div>
-                                                            <ImageUploading
-                                                                multiple
-                                                                value={images}
-                                                                onChange={onChange}
-                                                                maxNumber={maxNumber}
-                                                                dataURLKey="data_url"
-                                                            >
-                                                                {({
-                                                                    imageList,
-                                                                    onImageUpload,
-                                                                    onImageRemoveAll,
-                                                                    onImageUpdate,
-                                                                    onImageRemove,
-                                                                    isDragging,
-                                                                    dragProps,
-                                                                }) => (
-                                                                    // write your building UI
-                                                                    <Spin spinning={false}>
-                                                                        <div className="upload__image-wrapper">
-                                                                            {/* <Progress percent={imageProgress} /> */}
-                                                                            <div className="pb-2">
-
-                                                                                <button type='button' className='btn butt-primary2 butt-sm'
-                                                                                    style={isDragging ? { color: 'red' } : undefined}
-                                                                                    onClick={onImageUpload}
-                                                                                    {...dragProps}
-                                                                                >
-                                                                                    يمكنك الاختيار من جهازك
-                                                                                </button>
-                                                                                &nbsp;
-                                                                                <button type='button' className='btn butt-red-out butt-sm' onClick={onImageRemoveAll}>تفريغ الصور</button>
-
-                                                                            </div>
-                                                                            {imageList.length == 0 && <div className='nothing-images'>
-                                                                                <h4 className="nothing-title">
-                                                                                    اختر صور من جهازك
-                                                                                </h4>
-                                                                                <p className="nothing-text">
-                                                                                    يجب أن تختار على الأقل صورة في معرض الخدمة ويجب ان تكون الصور مناسبة من الخدمة
-                                                                                </p>
-                                                                            </div>}
-                                                                            <div className="row">
-                                                                                {imageList && imageList.map((image, index) => (
-                                                                                    <div className="col-md p-0" key={index}>
-                                                                                        <div className="image-item">
-                                                                                            <img src={image['data_url']} alt="" width="100" />
-                                                                                            <Image
-                                                                                                src={image['data_url']}
-                                                                                                alt="صورة "
-                                                                                                width={120}
-                                                                                                height={100}
-                                                                                                quality={85}
-                                                                                                placeholder='blur'
-                                                                                                blurDataURL={image['data_url']}
-                                                                                            />
-                                                                                            <div className="image-item__btn-wrapper">
-                                                                                                <button
-                                                                                                    type='button'
-                                                                                                    onClick={() => onImageUpdate(index)}>
-                                                                                                    <span className="material-icons-outlined">edit</span>
-                                                                                                </button>
-                                                                                                <button
-                                                                                                    type='button'
-                                                                                                    onClick={() => onImageRemove(index)}>
-                                                                                                    <span className="material-icons-outlined">clear</span>
-
-                                                                                                </button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                ))}
-                                                                            </div>
-                                                                        </div>
-                                                                    </Spin>
-                                                                )}
-                                                            </ImageUploading>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className="timlands-content-form">
-                                <div className="choose-images-file">
-                                    <h4 className="timlands-content-form-subtitle">
-                                        فيديو تعريفي للخدمة (اختياري)
-                                    </h4>
-                                    <div className="timlands-form">
-                                        <label className="label-block" htmlFor="input-videourl">رابط الفيديو</label>
-                                        <input
-                                            type="text"
-                                            id="input-videourl"
-                                            name="url_video"
-                                            value={url_video}
-                                            onChange={handleSetVideourl}
-                                            dir="ltr"
-                                            placeholder="https://"
-                                            className="timlands-inputs"
-                                            autoComplete="off"
-                                        />
-                                        {url_video &&
-                                            <ReactPlayer
-                                                style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
-                                                width="100%"
-                                                url={url_video}
-                                            />
-                                        }
-
-                                    </div>
+                                    <ImagesUploadingGalleries galaries={stars.data.galaries} />
                                 </div>
                             </div>
 
