@@ -35,7 +35,6 @@ function Hero() {
   const [isSearch, setIsSearch] = useState(false);
   const [getSearchs, setGetSearchs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(getSearchs);
   async function getDataFilter(query: string) {
     setIsLoading(true);
     try {
@@ -55,7 +54,8 @@ function Hero() {
     setIsSearch(false);
   };
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setHideExploreHandle, "");
+  const buttonRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setHideExploreHandle, buttonRef);
 
   const onKeyUpHandle = (event: any) => {
     const keyword = event.target.value;

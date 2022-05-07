@@ -13,7 +13,7 @@ export function useOutsideAlerter(
       if (
         ref.current &&
         !ref.current.contains(event.target) &&
-        !button?.current?.contains(event.target)
+        !button.current.contains(event.target)
       ) {
         setHideExploreHandle();
       }

@@ -102,4 +102,6 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
 export default Menus;
 Menus.propTypes = {
   darkMode: PropTypes.any,
+  setIsMenuShowenMob: PropTypes.func,
+  button: PropTypes.any,
 };
