@@ -19,7 +19,7 @@ function Menus({ darkMode }) {
   const setHideExploreHandle = () => {
     setShowExplore(false);
   };
-  const button = useRef();
+  const button = useRef(null);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setHideExploreHandle, button);
   return (
