@@ -3,10 +3,10 @@ import { ReactElement } from "react";
 import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from 'swr'
-import { MetaTags } from '@/components/SEO/MetaTags'
 import { Menu, Dropdown, Button } from 'antd';
 import Categories from "@/components/Categories";
 import router from "next/router";
+import Head from 'next/head';
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR('api/filter?paginate=4&popular')
   const { data: latestProducts, latestError }: any = useSWR('api/filter?paginate=4&sort[0]=created_at,desc')
@@ -30,16 +30,26 @@ function Home() {
   );
   return (
     <>
-      <MetaTags
-        title={"لبيع وشراء الخدمات المصغرة"}
-        ogImage={'/seo.png'}
-        ogUrl={'https://timwoork.com/'}
-        metaDescription={"بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. "}
-        ogDescription={"بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. "}
-      />
+      <Head>
+        <title>تيم ورك | لبيع وشراء الخدمات المصغرة</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@timwoorkDotCom" />
+        <meta name="twitter:creator" content="@timwoorkDotCom" />
+        <meta property="og:site_name" content="موقع تيم ورك" />
+        <meta property="og:locale" content="ar" />
+        <meta property="og:locale:alternate" content="ar" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content={"تيم ورك | لبيع وشراء الخدمات المصغرة"} />
+        <meta name="twitter:description" content={"بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. "} />
+        <meta property="og:title" content="تيم ورك | لبيع وشراء الخدمات المصغرة" />
+        <meta property="og:description" content="بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. " />
+        <meta property="og:url" content="https://timwoork.com/" />
+        <meta property="og:image" content="/seo.png" />
+        <meta name="twitter:image:src" content="/seo.png" />
+      </Head>
       <Hero />
-      <Categories onClickCategory={(id)=>router.push(`/sub-category/${id}`)} categories={categories}/>
-      
+      <Categories onClickCategory={(id) => router.push(`/sub-category/${id}`)} categories={categories} />
+
       {products && popularProducts && latestProducts && products.data.length !== 0 && popularProducts.data.length !== 0 && latestProducts.data.length !== 0 &&
         <div className="container">
           <PostsAside
