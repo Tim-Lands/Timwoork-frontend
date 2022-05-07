@@ -26,10 +26,19 @@ export function MetaTags({
                 <meta name="description" content={metaDescription} key="description" />
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content={title} key="title" />
+                <meta property="og:site_name" content="موقع تيم ورك" />
+                <meta property="og:locale" content="ar" />
+                <meta property="og:locale:alternate" content="ar" />
                 <meta property="og:description" content={ogDescription} />
                 {keywords && <meta name="keywords" content={keywords.map((keyword: any) => (
                     keyword.name + ', '
                 ))} />}
+                {/* Twitter cards */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="@timwoorkDotCom" />
+                <meta name="twitter:creator" content="@timwoorkDotCom" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={ogDescription} />
                 <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <title>تيموورك | {title}</title>
