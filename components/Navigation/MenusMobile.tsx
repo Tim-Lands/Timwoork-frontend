@@ -1,11 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useOutsideAlerter } from "../useOutsideAlerter";
 
 function Menus({ darkMode, setIsMenuShowenMob, button }) {
   const wrapList = useRef();
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setHideMenuHandle();
+    });
+    return () => {
+      window.removeEventListener("scroll", () => {
+        setHideMenuHandle();
+      });
+    };
+  });
   const setHideMenuHandle = () => {
     setIsMenuShowenMob(false);
   };

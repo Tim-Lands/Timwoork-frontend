@@ -609,8 +609,7 @@ function Navbar(): ReactElement {
                         >
                           <Dropdown
                             overlay={AccountList}
-                            // trigger={["click"]}
-
+                            placement="bottomLeft"
                             visible={visible}
                           >
                             <motion.span

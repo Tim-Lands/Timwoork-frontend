@@ -10,6 +10,8 @@ import API from "../../config";
 
 function Popular() {
   let token = Cookies.get("token");
+  const [size, setSize] = useState(3);
+  const [paginationSize, setPaginationSize] = useState(8);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
 
@@ -30,15 +32,57 @@ function Popular() {
         setGetProducts(res.data.data);
       }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
   useEffect(() => {
+    if (window.innerWidth > 950) {
+      setSize(3);
+    }
+    if (window.innerWidth < 950) {
+      setSize(4);
+    }
+    if (window.innerWidth < 550) {
+      setPaginationSize(2);
+    }
+    if (window.innerWidth > 550) {
+      setPaginationSize(8);
+    }
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 950) {
+        setSize(3);
+      }
+      if (window.innerWidth < 950) {
+        setSize(4);
+      }
+      if (window.innerWidth < 550) {
+        setPaginationSize(2);
+      }
+      if (window.innerWidth > 550) {
+        setPaginationSize(8);
+      }
+    });
     fetchData();
+    return () => {
+      window.removeEventListener("resize", () => {
+        if (window.innerWidth > 950) {
+          setSize(3);
+        }
+        if (window.innerWidth < 950) {
+          setSize(4);
+        }
+        if (window.innerWidth < 550) {
+          setPaginationSize(2);
+        }
+        if (window.innerWidth > 550) {
+          setPaginationSize(8);
+        }
+      });
+    };
   }, []);
   return (
-    <div className="container py-5">
+    <div className="containerProductsPagePopular py-5">
       <MetaTags
         title={"الخدمات الأكثر شعبية"}
         metaDescription={"الخدمات الأكثر شعبية"}
@@ -61,7 +105,7 @@ function Popular() {
               </div>
               {!getProducts && <Loading />}
               <FilterContent
-                size={3}
+                size={size}
                 products={getProducts && getProducts.data}
               />
               {getProducts && (
@@ -78,7 +122,7 @@ function Popular() {
                     onChange={(pageNumber) => {
                       fetchData(pageNumber);
                     }}
-                    pageRangeDisplayed={8}
+                    pageRangeDisplayed={paginationSize}
                     itemClass="page-item"
                     linkClass="page-link"
                     firstPageText={"الصفحة الأولى"}

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Explores from "../Explores";
 import { motion } from "framer-motion";
@@ -8,6 +8,16 @@ import router from "next/router";
 import PropTypes from "prop-types";
 
 function Menus({ darkMode }) {
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setHideExploreHandle();
+    });
+    return () => {
+      window.removeEventListener("scroll", () => {
+        setHideExploreHandle();
+      });
+    };
+  });
   const [showExplore, setShowExplore] = useState(false);
   const setShowExploreHandle = () => {
     if (isMobile) {
@@ -22,6 +32,7 @@ function Menus({ darkMode }) {
   const button = useRef(null);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setHideExploreHandle, button);
+
   return (
     <ul
       className="nav app-navbar is-desktop d-flex "
@@ -49,7 +60,7 @@ function Menus({ darkMode }) {
             fontWeight: 600,
             color: !darkMode ? "#666" : "#f1f1f1",
             display: "flex",
-            paddingInline: 7,
+            paddingInline: 0,
             paddingBlock: 0,
             border: 0,
             backgroundColor: "transparent",
@@ -90,7 +101,7 @@ function Menus({ darkMode }) {
               fontWeight: 600,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
-              paddingInline: 7,
+              paddingInline: 0,
               paddingBlock: 0,
               fontSize: 14,
               height: 50,
@@ -117,7 +128,7 @@ function Menus({ darkMode }) {
               fontWeight: 600,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
-              paddingInline: 7,
+              paddingInline: 0,
               paddingBlock: 0,
               fontSize: 14,
               height: 50,
@@ -144,7 +155,7 @@ function Menus({ darkMode }) {
               fontWeight: 600,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
-              paddingInline: 7,
+              paddingInline: 0,
               paddingBlock: 0,
               fontSize: 14,
               height: 50,

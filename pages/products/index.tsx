@@ -16,6 +16,8 @@ import Cookies from "js-cookie";
 function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [size, setSize] = useState(4);
+  const [paginationSize, setPaginationSize] = useState(8);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -23,20 +25,19 @@ function Category() {
   const { data: getCategories, error }: any = useSWR("api/get_categories");
   const setValue = getCategories && getCategories.data.map((e) => e.id);
   const setLabel = getCategories && getCategories.data.map((e) => e.name_ar);
-  const [selectedTags, setSelectedTags]: any = useState([getCategories && getCategories.data]);
+  const [selectedTags, setSelectedTags]: any = useState([
+    getCategories && getCategories.data,
+  ]);
   const [getProducts, setGetProducts]: any = useState();
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
   /**----------------------------------------------------------**/
   const fetchData = async (pageNumber: number = 1) => {
     try {
-      const res = await API.get(
-        `api/filter?paginate=12&page=${pageNumber}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
@@ -106,7 +107,9 @@ function Category() {
         setIsLoading(false);
       }, 1500);
       const res: any = await API.get(
-        `api/filter?paginate=12&between=price,${priceRange[0]},${priceRange[1]}&category=${getCategories && getCategories.data}`
+        `api/filter?paginate=12&between=price,${priceRange[0]},${
+          priceRange[1]
+        }&category=${getCategories && getCategories.data}`
       );
       if (res.status === 200) {
         setIsLoading(false);
@@ -119,16 +122,58 @@ function Category() {
     }
   }
   useEffect(() => {
+    if (window.innerWidth > 950) {
+      setSize(4);
+    }
+    if (window.innerWidth < 950) {
+      setSize(6);
+    }
+    if (window.innerWidth < 550) {
+      setPaginationSize(2);
+    }
+    if (window.innerWidth > 550) {
+      setPaginationSize(8);
+    }
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 950) {
+        setSize(4);
+      }
+      if (window.innerWidth < 950) {
+        setSize(6);
+      }
+      if (window.innerWidth < 550) {
+        setPaginationSize(2);
+      }
+      if (window.innerWidth > 550) {
+        setPaginationSize(8);
+      }
+    });
     fetchData();
+    return () => {
+      window.removeEventListener("resize", () => {
+        if (window.innerWidth > 950) {
+          setSize(4);
+        }
+        if (window.innerWidth < 950) {
+          setSize(6);
+        }
+        if (window.innerWidth < 550) {
+          setPaginationSize(2);
+        }
+        if (window.innerWidth > 550) {
+          setPaginationSize(8);
+        }
+      });
+    };
   }, []);
   if (!getCategories) return <Loading />;
   if (error) return <div>Error</div>;
   return (
-    <div className="container py-5">
+    <div className="containerProductsPage py-5">
       <MetaTags
-        title={'تصفح الخدمات'}
-        metaDescription={'تصفح الخدمات'}
-        ogDescription={'تصفح الخدمات'}
+        title={"تصفح الخدمات"}
+        metaDescription={"تصفح الخدمات"}
+        ogDescription={"تصفح الخدمات"}
       />
       <Formik
         isInitialValid={true}
@@ -191,7 +236,7 @@ function Category() {
               <FilterContent
                 products={getProducts && getProducts.data}
                 isLoading={isLoading}
-                size={4}
+                size={size}
                 isError={isError}
               />
               {getProducts && (
@@ -208,9 +253,10 @@ function Category() {
                     onChange={(pageNumber) => {
                       fetchData(pageNumber);
                     }}
-                    pageRangeDisplayed={8}
+                    pageRangeDisplayed={paginationSize}
                     itemClass="page-item"
                     linkClass="page-link"
+                    className="productPagination"
                     firstPageText={"الصفحة الأولى"}
                     lastPageText={"الصفحة الأخيرة"}
                   />
