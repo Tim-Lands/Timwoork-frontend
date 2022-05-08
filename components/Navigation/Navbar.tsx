@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, notification } from "antd";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
+import { useOutSide } from "../useOutSide";
 import API from "../../config";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
@@ -22,7 +23,16 @@ import { motion } from "framer-motion";
 
 function Navbar(): ReactElement {
   const [visible, setVisible] = useState(false);
+  const hideList = () => {
+    setTimeout(() => {
+      setVisible(false);
+    }, 200);
+  };
   let token = Cookies.get("token");
+  const userList = useRef();
+
+  useOutSide(userList, hideList);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -603,6 +613,7 @@ function Navbar(): ReactElement {
                       </li>
                       <li className="login-user" style={{ marginInline: 5 }}>
                         <span
+                          ref={userList}
                           onClick={() => {
                             setVisible(() => !visible);
                           }}
