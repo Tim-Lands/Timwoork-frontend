@@ -5556,8 +5556,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   align-items: center;
   flex-direction: column;
   transition: all 0.3s;
-  cursor: default;
-
+  cursor: pointer;
+  @media (max-width: 768px) {
+    height: 120px;
+  }  
+  @media (max-width: 580px) {
+    height: 110px;
+  } 
   @media (max-width: 600px) {
     margin: 7px 0;
   }
@@ -5566,8 +5571,14 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .material-icons {
       font-size: 50px;
       transition: all 0.3s;
-      color: #999;
-      cursor: default;
+      color: #999;    
+      cursor: pointer;
+      @media (max-width: 768px) {
+        font-size: 45px;
+      }  
+      @media (max-width: 580px) {
+        font-size: 38px;
+      }  
     }
   }
 
@@ -5579,6 +5590,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       transition: all 0.3s;
       color: #555;
       cursor: default;
+      @media (max-width: 768px) {
+        font-size: 17px;
+      }  
+      @media (max-width: 580px) {
+        font-size: 15px;
+      } 
     }
   }
 
@@ -5776,6 +5793,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .page-link {
       font-size: 14px;
       color: $primary;
+      @media (max-width: 700px) {
+        font-size: 13px;
+      }
+      @media (max-width: 580px) {
+        font-size: 12px;
+      }
     }
     &:first-child {
       .page-link {
