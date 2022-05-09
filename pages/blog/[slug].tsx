@@ -28,8 +28,8 @@ const User = ({ query }) => {
   const fetch = async () => {
     const promises = [];
     const tempPostsMediaTable = [];
-    getPosts.forEach(post => promises.push(fetchImage(post.featured_media)))
-    getSamePosts.forEach(post => promises.push(fetchImage(post.featured_media)))
+    getPosts?.forEach(post => promises.push(fetchImage(post.featured_media)))
+    getSamePosts?.forEach(post => promises.push(fetchImage(post.featured_media)))
     const media = await Promise.all(promises);
     media.forEach(
       (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
