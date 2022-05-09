@@ -8047,6 +8047,18 @@ h3 {
   color: #475C80;
 }
 
+@media (max-width: 700px) {
+  .pagination .page-item .page-link {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 580px) {
+  .pagination .page-item .page-link {
+    font-size: 12px;
+  }
+}
+
 .pagination .page-item:first-child .page-link {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;

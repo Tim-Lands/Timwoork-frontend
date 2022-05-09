@@ -5793,6 +5793,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .page-link {
       font-size: 14px;
       color: $primary;
+      @media (max-width: 700px) {
+        font-size: 13px;
+      }
+      @media (max-width: 580px) {
+        font-size: 12px;
+      }
     }
     &:first-child {
       .page-link {
