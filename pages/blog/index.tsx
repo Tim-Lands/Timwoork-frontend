@@ -1,28 +1,39 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Loading";
 import useSWR from "swr";
 import { Menu, Result } from "antd";
 import Post from "@/components/Post/blogPost";
 import { MetaTags } from "@/components/SEO/MetaTags";
-
+import API from '../../config'
 function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
+  const [postsMediaTable, setPostsMediaTable] = useState([])
   const { data: getCategories }: any = useSWR(
     "https://timwoork.net/wp-json/wp/v2/categories"
   );
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts${categories}`
   );
-  const { data: getMedia }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/media`
-  );
 
-  const postsMediaTable = {};
-  getMedia &&
-    getMedia.forEach(
-      (media) => (postsMediaTable[media.id] = media.guid.rendered)
+  const fetchImage = (img_id) => {
+    return API.get(`https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`)
+
+  }
+  const fetch = async () => {
+    const promises = [];
+    const tempPostsMediaTable = [];
+    getPosts.forEach(post => promises.push(fetchImage(post.featured_media)))
+    const media = await Promise.all(promises);
+    media.forEach(
+      (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
     );
+    setPostsMediaTable(tempPostsMediaTable)
+  }
+  useEffect(() => {
+    if (getPosts)
+      fetch()
+  }, [getPosts])
   return (
     <div>
       <MetaTags

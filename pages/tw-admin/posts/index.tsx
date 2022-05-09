@@ -17,7 +17,7 @@ function index(): ReactElement {
     const token = Cookies.get('token_dash')
 
     const [validationsErrors, setValidationsErrors]: any = useState({})
-
+    console.log(postsList);
     const data = postsList && postsList;
     //const data = postsList && postsList;
     const refreshData = async () => {

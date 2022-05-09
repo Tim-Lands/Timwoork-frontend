@@ -4,6 +4,7 @@ import Link from "next/link";
 
 function Post({ title, thumbnail, size, slug, excerpt }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
+  console.log(thumbnailUrl)
   const sizeClass = () => {
     switch (size) {
       case "small":

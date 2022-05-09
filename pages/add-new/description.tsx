@@ -143,7 +143,7 @@ function Description({ query, stars }) {
                 if (res.status === 200) {
                     message.success('لقد تم التحديث بنجاح')
                     router.push({
-                        pathname: '/add-new/medias',
+                        pathname: '/add-new/medias2',
                         query: {
                             id: id, // pass the id 
                         },

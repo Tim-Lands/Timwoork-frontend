@@ -117,6 +117,8 @@ function Medias({ query, stars }) {
         featuredImages.map((e: any) => (
             imageFeature.append('thumbnail', e.file)
         ))
+        console.log(e)
+        console.log(e.file)
         //galleries.append('images[]', images)
         try {
             const res: any = await API.post(`api/product/${id}/upload-thumbnail-step-four`, imageFeature, {
