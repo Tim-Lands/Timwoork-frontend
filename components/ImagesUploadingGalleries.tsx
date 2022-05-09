@@ -1,15 +1,23 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { Spin } from 'antd';
 import PropTypes from "prop-types";
 import ImageUploading from 'react-images-uploading';
 
-function ImagesUploadingGalleries({ galaries }): ReactElement {
+function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, callback }): ReactElement {
     const [images, setImages] = useState(galaries);
     const maxNumber = 5;
-
+    useEffect(()=>{
+        setImages(galaries);
+    },[galaries])
     const onChange = (imageList) => {
         // data for submit
         setImages(imageList);
+        setGalleryMedia(imageList)
+        setIsChanged(true)
+    }
+
+    const removeImage = async(image)=>{
+        await callback(image);
     }
     return (
         <div className="choose-images-file">
@@ -34,7 +42,6 @@ function ImagesUploadingGalleries({ galaries }): ReactElement {
                                         onImageUpload,
                                         onImageRemoveAll,
                                         onImageUpdate,
-                                        onImageRemove,
                                         isDragging,
                                         dragProps,
                                     }) => (
@@ -76,7 +83,7 @@ function ImagesUploadingGalleries({ galaries }): ReactElement {
                                                                     </button>
                                                                     <button
                                                                         type='button'
-                                                                        onClick={() => onImageRemove(index)}>
+                                                                        onClick={() => removeImage(image)}>
                                                                         <span className="material-icons-outlined">clear</span>
                                                                     </button>
                                                                 </div>
@@ -100,4 +107,7 @@ function ImagesUploadingGalleries({ galaries }): ReactElement {
 export default ImagesUploadingGalleries
 ImagesUploadingGalleries.propTypes = {
     galaries: PropTypes.any,
+    setGalleryMedia:PropTypes.func,
+    setIsChanged:PropTypes.func,
+    callback:PropTypes.func
 };

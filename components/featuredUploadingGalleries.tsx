@@ -3,16 +3,20 @@ import { Spin } from 'antd';
 import PropTypes from "prop-types";
 import ImageUploading from 'react-images-uploading';
 
-function FeaturedUploadingGalleries({ full_path_thumbnail }): ReactElement {
+function FeaturedUploadingGalleries({ full_path_thumbnail, setImage, setIsChanged }): ReactElement {
     const [featuredImages, setFeaturedImages]: any = useState([
         {
             data_url: full_path_thumbnail
         }
-    ]);
+    ]); 
 
     const onChangeFeatured = (imageListc) => {
         // data for submit
+        console.log(featuredImages)
         setFeaturedImages(imageListc);
+        setImage(imageListc)
+        setIsChanged(true)
+        console.log(featuredImages)
     };
     return (
         <div className="choose-images-file">
@@ -81,4 +85,6 @@ function FeaturedUploadingGalleries({ full_path_thumbnail }): ReactElement {
 export default FeaturedUploadingGalleries
 FeaturedUploadingGalleries.propTypes = {
     full_path_thumbnail: PropTypes.any,
+    setImage:PropTypes.func,
+    setIsChanged:PropTypes.func
 };

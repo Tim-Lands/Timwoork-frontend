@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import useSWR from "swr";
@@ -9,35 +9,46 @@ import Post from "@/components/Post/blogPost";
 import { Divider } from "antd";
 import { Image } from "antd";
 
-const User = ({ query, stars }) => {
+const User = ({ query }) => {
+  const [postsMediaTable, setPostsMediaTable] = useState([])
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`
   );
   const { data: getSamePosts }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/posts?categories=${
-      getPosts && getPosts[0].categories[0]
+    `https://timwoork.net/wp-json/wp/v2/posts?categories=${getPosts && getPosts[0].categories[0]
     }&per_page=3`
   );
   const { data: getAds }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/media?include=28,29`
   );
-  const { data: getMedia }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/media`
-  );
-  const postsMediaTable = {};
-  getMedia &&
-    getMedia.forEach(
-      (media) => (postsMediaTable[media.id] = media.guid.rendered)
+  const fetchImage = (img_id) => {
+    return API.get(`https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`)
+
+  }
+  const fetch = async () => {
+    const promises = [];
+    const tempPostsMediaTable = [];
+    getPosts?.forEach(post => promises.push(fetchImage(post.featured_media)))
+    getSamePosts?.forEach(post => promises.push(fetchImage(post.featured_media)))
+    const media = await Promise.all(promises);
+    media.forEach(
+      (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
     );
+    setPostsMediaTable(tempPostsMediaTable)
+  }
+  useEffect(() => {
+    if (getPosts)
+      fetch()
+  }, [getPosts])
   return (
     <>
       {!getPosts && <Loading />}
       <MetaTags
-        title={stars[0].title.rendered}
-        metaDescription={stars[0].excerpt.rendered}
-        ogDescription={stars[0].excerpt.rendered}
-        ogImage={stars[0].jetpack_featured_media_url}
-        ogUrl={`https://timwoork.com/blog/${stars[0].slug}`}
+        title={getPosts&&getPosts[0].title.rendered}
+        metaDescription={getPosts&&getPosts[0].excerpt.rendered}
+        ogDescription={getPosts&&getPosts[0].excerpt.rendered}
+        ogImage={getPosts&&getPosts[0].jetpack_featured_media_url}
+        ogUrl={`https://timwoork.com/blog/${getPosts&&getPosts[0].slug}`}
       />
       {getPosts && (
         <>
