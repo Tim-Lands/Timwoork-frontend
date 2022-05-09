@@ -5829,3 +5829,105 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+.containerProductsPage {
+  max-width: 1400px;
+  margin: auto;
+  padding-inline: 3%;
+}
+.containerProductsPagePopular {
+  max-width: 1400px;
+  margin: auto;
+  padding-inline: 6%;
+}
+@media (max-width: 1050px) {
+  .containerProductsPagePopular {
+    max-width: 1400px;
+    margin: auto;
+    padding-inline: 2%;
+  }
+}
+@media (max-width: 768px) {
+  .containerProductsPagePopular {
+    padding-inline: 13%;
+  }
+}
+@media (max-width: 550px) {
+  .containerProductsPagePopular {
+    padding-inline: 5%;
+  }
+}
+.productPagination {
+  width: 100%;
+}
+.login-middle-footer-cont {
+  display: flex;
+  align-items: center;
+  padding-bottom: 5px;
+  justify-content: space-between;
+}
+@media (max-width: 385px) {
+  .login-middle-footer-cont {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+  }
+}
+@media (max-width: 950px) {
+  .containerProductsPage {
+    margin-inline: 1.5%;
+  }
+}
+@media (max-width: 768px) {
+  .containerProductsPage {
+    margin-inline: 7%;
+  }
+}
+.timlands-navbar .nav-container .app-navbar {
+  display: flex;
+  width: 100%;
+  gap: 4%;
+}
+.nav-container {
+  width: 100%;
+}
+@media (max-width: 850px) {
+  .timlands-navbar .nav-container .app-navbar {
+    gap: 1%;
+  }
+}
+
+/*# sourceMappingURL=app-rtl.css.map */
+@media (max-width: 780px) {
+  .nav-container {
+    width: fit-content;
+  }
+}
+@media (max-width: 320px) {
+  .timlands-navbar .nav-auth {
+    transform: scale(0.9);
+  }
+}
+@media (max-width: 450px) {
+  .app-bill {
+    padding: 12px;
+  }
+  .row > * {
+    padding: 5px;
+  }
+}
+@media (max-width: 390px) {
+  .app-bill {
+    padding: 10px;
+  }
+}
+@media (max-width: 420px) {
+  .timlands-navbar {
+    padding: 5px 9px;
+  }
+}
+@media (max-width: 330px) {
+  .timlands-navbar .logo-nav {
+    width: 25px;
+  }
+}
