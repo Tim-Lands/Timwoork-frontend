@@ -14,6 +14,8 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import ImagesUploadingGalleries from '@/components/ImagesUploadingGalleries';
 import FeaturedUploadingGalleries from '@/components/featuredUploadingGalleries';
 import RemoveImageModal from '@/components/removeImageModal';
+import Link from 'next/link'
+
 function Medias({ query, stars }) {
     const [validationsErrors, setValidationsErrors]: any = useState({})
     const [featuredMedia, setFeaturedImages]: any = useState(stars.data.full_path_thumbnail);
@@ -282,48 +284,56 @@ console.log(query)
                         ))} */}
                         <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
 
-                            <div className="timlands-steps">
+                        <div className="timlands-steps">
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">collections_bookmark</span>
-                                        </span>
-                                        معلومات عامة
+                                        <Link href={`/edit-product/overview?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                                                </span>
+                                                معلومات عامة
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">payments</span>
-                                        </span>
-                                        السعر والتطويرات
+                                        <Link href={`/edit-product/prices?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">payments</span>
+                                                </span>
+                                                السعر والتطويرات
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                                 <div className="timlands-step-item">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">description</span>
-                                        </span>
-                                        الوصف وتعليمات المشتري
+                                        <Link href={`/edit-product/description?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">description</span>
+                                                </span>
+                                                الوصف وتعليمات المشتري
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
                                 <div className="timlands-step-item active">
                                     <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">mms</span>
-                                        </span>
-                                        مكتبة الصور والملفات
+                                        <Link href={`/edit-product/medias?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">mms</span>
+                                                </span>
+                                                مكتبة الصور والملفات
+                                            </a>
+                                        </Link>
                                     </h3>
                                 </div>
-                                <div className="timlands-step-item">
-                                    <h3 className="text">
-                                        <span className="icon-circular">
-                                            <span className="material-icons material-icons-outlined">publish</span>
-                                        </span>
-                                        نشر الخدمة
-                                    </h3>
-                                </div>
-                            </div>
+                        </div>
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                             <div className="row">
                                 <div className="col-lg-6">

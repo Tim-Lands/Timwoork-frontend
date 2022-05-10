@@ -14,17 +14,25 @@ import { Alert } from '@/components/Alert/Alert';
 import { CloseCircleOutlined } from '@ant-design/icons'
 import ImagesUploadingGalleries from '@/components/ImagesUploadingGalleries';
 import FeaturedUploadingGalleries from '@/components/featuredUploadingGalleries';
+import RemoveImageModal from '@/components/removeImageModal';
 
 function Medias({ query, stars }) {
+    console.log(stars)
     const [validationsErrors, setValidationsErrors]: any = useState({})
-    const [featuredMedia, setFeaturedImages]:any = useState(stars.data.full_path_thumbnail);
-    const [galleryMedia, setGalleryMedia]:any = useState(stars.data.galaries)
+    const [featuredMedia, setFeaturedImages]: any = useState(stars.data.full_path_thumbnail);
+    const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries)
+    const [isFeaturedChanged, setIsFeaturedChanged] = useState(false)
+    const [isGalleryChanged, setIsGalleryChanged] = useState(false)
+    const [isRemoveModal, setIsRemoveModal]:any = useState(false)
+    const [removedImageId, setRemovedImageId]:any = useState(-1);
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem('token');
     const id = query.id
     const { data: userInfo }: any = useSWR('api/me')
     const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    console.log(galleryMedia);
+    console.log(featuredMedia)
     async function getProductId() {
         try {
             const res: any = await API.get(`api/my_products/product/${query.id}`, {
@@ -63,48 +71,48 @@ function Medias({ query, stars }) {
         setValidationsErrors({})
         setValidationsGeneral({})
     }
-    const loadFeatureImage:any = async ()=>{
+    const loadFeatureImage: any = async () => {
         const imageFeature = new FormData();
-        imageFeature.append('thumbnail',featuredMedia[0].file)
-        imageFeature.append('url_video',url_video)
-        const res = await  API.post(`api/product/${id}/upload-thumbnail-step-four`, imageFeature,
-        {
-            headers: {
-                'content-type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`,
-            }
-        });
+        imageFeature.append('thumbnail', featuredMedia[0].file)
+        imageFeature.append('url_video', url_video)
+        const res = await API.post(`api/product/${id}/upload-thumbnail-step-four`, imageFeature,
+            {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
         return res;
     }
 
-    const loadGalleryImages:any = async()=>{
+    const loadGalleryImages: any = async () => {
         const galleries = new FormData();
         galleryMedia.map((e: any) => (
             galleries.append('images[]', e.file)
         ))
         //galleries.append('images[]', images)
-            const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            return res;
-    }
-
-    const loadVideoUrl:any = async()=>{
-        try{
-        const res = await API.post(`api/product/${id}/product-step-four`, { url_video: url_video },
-        {
+        const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
             headers: {
-                'content-type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`
             }
-        })
+        });
         return res;
     }
-    catch(e){
-        console.log('')
-    }
+
+    const loadVideoUrl: any = async () => {
+        try {
+            const res = await API.post(`api/product/${id}/product-step-four`, { url_video: url_video },
+                {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                })
+            return res;
+        }
+        catch (e) {
+            console.log('')
+        }
     }
     const loadImagesHandle = async () => {
         setLoading(true)
@@ -112,13 +120,13 @@ function Medias({ query, stars }) {
         console.log(validationsErrors)
         console.log(galleryMedia);
         console.log(featuredMedia)
-        const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-        '(\\#[-a-z\\d_]*)?$','i'); 
-        if(galleryMedia.size<=0){
+        const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i');
+        if (galleryMedia.size <= 0) {
             notification.open({
                 message: 'حدث خطأ',
                 description: 'برجاء وضع صورة على الأقل في المعرض',
@@ -126,8 +134,10 @@ function Medias({ query, stars }) {
             });
             setLoading(false)
 
-            return        }
-        if(!(featuredMedia instanceof Array)){
+            return
+        }
+
+        if (!(featuredMedia instanceof Array)&&featuredMedia.split('/')[5].length<=0) {
             notification.open({
                 message: 'حدث خطأ',
                 description: 'برجاء وضع صورة بارزة',
@@ -138,7 +148,7 @@ function Medias({ query, stars }) {
             return
         }
 
-        if(url_video.length>0&&!pattern.test(url_video)){
+        if (url_video.length > 0 && !pattern.test(url_video)) {
             notification.open({
                 message: 'حدث خطأ',
                 description: 'برجاء وضع عنوان صالح',
@@ -151,17 +161,57 @@ function Medias({ query, stars }) {
         }
 
         try {
-            const [res1, res2] = await Promise.all([loadFeatureImage(),loadGalleryImages(), loadVideoUrl()])
-            // Authentication was successful.
-            if (res1.status === 200&&res2.status===200 ) {
+            if (isGalleryChanged&&isFeaturedChanged) {
+                const [res1, res2] = await Promise.all([loadFeatureImage(), loadGalleryImages(), loadVideoUrl()])
+                // Authentication was successful.
+                if (res1.status === 200 && res2.status === 200) {
+                    setLoading(false)
+                    message.success('لقد تم تحديث بنجاح')
+                    router.push({
+                        pathname: '/add-new/complete',
+                        query: {
+                            id: id, // pass the id 
+                        },
+                    })
+                }
+            }
+            else if(isFeaturedChanged){
+                const [res] = await Promise.all([loadFeatureImage(), loadVideoUrl()])
+                // Authentication was successful.
+                if (res.status === 200 ) {
+                    setLoading(false)
+                    message.success('لقد تم تحديث بنجاح')
+                    router.push({
+                        pathname: '/add-new/complete',
+                        query: {
+                            id: id, // pass the id 
+                        },
+                    })
+                }
+            }
+            else if(isGalleryChanged){
+                const [res] = await Promise.all([loadGalleryImages(), loadVideoUrl()])
+                // Authentication was successful.
+                if (res.status === 200 ) {
+                    setLoading(false)
+                    message.success('لقد تم تحديث بنجاح')
+                    router.push({
+                        pathname: '/add-new/complete',
+                        query: {
+                            id: id, // pass the id 
+                        },
+                    })
+                }
+            }
+            else{
                 setLoading(false)
-                message.success('لقد تم تحديث بنجاح')
-                router.push({
-                    pathname: '/add-new/complete',
-                    query: {
-                        id: id, // pass the id 
-                    },
-                })
+                    message.success('لقد تم تحديث بنجاح')
+                    router.push({
+                        pathname: '/add-new/complete',
+                        query: {
+                            id: id, // pass the id 
+                        },
+                    })
             }
         } catch (error: any) {
             setLoading(false)
@@ -181,7 +231,44 @@ function Medias({ query, stars }) {
             }
         }
     }
-
+    const removeImage = async(image)=>{
+        setIsRemoveModal(true);
+        setRemovedImageId(image.id);
+    
+    }
+    const onRemoveSubmit = async(image_id)=>{
+            try{
+            const res = await API.post(
+                `api/product/${query.id}/delete_galary`,
+                {id:image_id},
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              if(res.status==200){
+                notification.open({
+                    message: 'تم حذف الصوة بنجاح',
+                    icon: <CloseCircleOutlined style={{ color: '#666' }} />,
+                });
+                console.log(galleryMedia);
+                console.log(image_id)
+                setIsRemoveModal(false)
+                setGalleryMedia(galleryMedia.filter(media=>media.id!==image_id))
+              }
+            }
+            catch(error){
+                
+                    notification.open({
+                        message: 'حدث خطأ',
+                        icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
+                    });
+                
+            }
+     
+        
+    }
     return (
         <div className="container-fluid">
             <MetaTags
@@ -191,6 +278,9 @@ function Medias({ query, stars }) {
             />
             {token && veriedEmail &&
                 <div className="row my-3">
+                    {isRemoveModal && <div className="overlay-fixed">
+                    <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImageId} setIsRemoveModal={setIsRemoveModal} />
+                </div>}
                     <div className="col-md-4">
                         <SidebarAdvices />
                     </div>
@@ -245,7 +335,7 @@ function Medias({ query, stars }) {
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                             <div className="row">
                                 <div className="col-lg-6">
-                                    <FeaturedUploadingGalleries setImage={setFeaturedImages} full_path_thumbnail={featuredMedia || '/seo.png'} />
+                                    <FeaturedUploadingGalleries setIsChanged={setIsFeaturedChanged} setImage={setFeaturedImages} full_path_thumbnail={featuredMedia || '/seo.png'} />
                                     <div className="timlands-content-form mt-2">
                                         <div className="choose-images-file">
                                             <h4 className="timlands-content-form-subtitle">
@@ -277,7 +367,7 @@ function Medias({ query, stars }) {
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
-                                    <ImagesUploadingGalleries setGalleryMedia={setGalleryMedia} galaries={galleryMedia} />
+                                    <ImagesUploadingGalleries callback={removeImage} setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} />
                                 </div>
                             </div>
 
