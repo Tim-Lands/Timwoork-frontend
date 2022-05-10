@@ -6,6 +6,7 @@ import API from "../config";
 import {  notification } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons'
 import Cookies from "js-cookie";
+import { message } from "antd";
 
 function LogoutModal({ setIsLogoutModal }): ReactElement {
     const token = Cookies.get("token");
@@ -21,10 +22,7 @@ function LogoutModal({ setIsLogoutModal }): ReactElement {
             }
           );
           if(res.status==200){
-            notification.open({
-                message: 'حدث خطأ',
-                icon: <CloseCircleOutlined style={{ color: '#666' }} />,
-            });
+            message.success('لقد تم تسجيل الخروج بنجاح')
               setIsLogoutModal(false)
           }
         }

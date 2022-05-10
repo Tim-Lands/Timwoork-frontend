@@ -95,7 +95,7 @@ console.log(query)
     const loadGalleryImages: any = async () => {
         const galleries = new FormData();
         galleryMedia.map((e: any) => (
-            galleries.append('images[]', e.file)
+           e.file&& galleries.append('images[]', e.file)
         ))
         //galleries.append('images[]', images)
         const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
@@ -323,7 +323,7 @@ console.log(query)
                                 </div>
                                 <div className="timlands-step-item active">
                                     <h3 className="text">
-                                        <Link href={`/edit-product/medias?id=${id}`}>
+                                        <Link href={`/edit-product/medias2?id=${id}`}>
                                             <a>
                                                 <span className="icon-circular">
                                                     <span className="material-icons material-icons-outlined">mms</span>

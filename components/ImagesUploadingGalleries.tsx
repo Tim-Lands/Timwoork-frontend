@@ -7,6 +7,7 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
     const [images, setImages] = useState(galaries);
     const maxNumber = 5;
     useEffect(()=>{
+        console.log(galaries)
         setImages(galaries);
     },[galaries])
     const onChange = (imageList) => {
@@ -40,8 +41,8 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
                                     {({
                                         imageList,
                                         onImageUpload,
-                                        onImageRemoveAll,
-                                        onImageUpdate,
+                                        //onImageRemoveAll,
+                                        //onImageUpdate,
                                         isDragging,
                                         dragProps,
                                     }) => (
@@ -59,7 +60,7 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
                                                         يمكنك الاختيار من جهازك
                                                     </button>}
                                                     &nbsp;
-                                                    {imageList.length !== 0 && <button type='button' className='btn butt-red-out butt-sm' onClick={onImageRemoveAll}>تفريغ الصور</button>}
+                                                    {/* {imageList.length !== 0 && <button type='button' className='btn butt-red-out butt-sm' onClick={onImageRemoveAll}>تفريغ الصور</button>} */}
 
                                                 </div>
                                                 {imageList.length == 0 && <div className='nothing-images'>
@@ -76,11 +77,11 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
                                                         <div className="col-sm-6" key={index}>
                                                             <div className="image-item" style={{ backgroundImage: `url(${image['data_url']})`, backgroundSize: 'cover' }}>
                                                                 <div className="image-item__btn-wrapper">
-                                                                    <button
+                                                                 {/*    <button
                                                                         type='button'
                                                                         onClick={() => onImageUpdate(index)}>
                                                                         <span className="material-icons-outlined">edit</span>
-                                                                    </button>
+                                                                    </button> */}
                                                                     <button
                                                                         type='button'
                                                                         onClick={() => removeImage(image)}>

@@ -32,7 +32,6 @@ function Single({ query, stars, errorFetch }) {
     token = localStorage.getItem('token');
   const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
   const { data: userInfo }: any = useSWR('api/me')
-
   const [quantutyCount, setQuantutyCount] = useState(1)
   const [isLoadingCart, setIsLoadingCart] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -44,6 +43,7 @@ function Single({ query, stars, errorFetch }) {
     }
 
   }, [])
+
   const showStars = () => {
     const rate = Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0
     const xAr: any = [
@@ -398,6 +398,9 @@ function Single({ query, stars, errorFetch }) {
                           </div> : ''}
                         </>
                       ))}
+                      <div key={ProductData?.data.galaries.length} className="each-slide">
+                            <div className="images-slider" style={{ backgroundImage: `url(${APIURL2}${ProductData.data.full_path_thumbnail})` }}></div>
+                          </div> 
                     </Slide>
                     <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ProductData.data.content }} />
                     {ProductData.data.product_tag &&

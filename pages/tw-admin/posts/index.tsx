@@ -14,10 +14,10 @@ function index(): ReactElement {
     const [cause, setCause] = useState('')
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+    const [selectedProductId, setSelectedProductId] = useState(null)
     const token = Cookies.get('token_dash')
 
     const [validationsErrors, setValidationsErrors]: any = useState({})
-    console.log(postsList);
     const data = postsList && postsList;
     //const data = postsList && postsList;
     const refreshData = async () => {
@@ -101,7 +101,7 @@ function index(): ReactElement {
         {
             title: 'الأدوات',
             dataIndex: "",
-            render: (tes: any) => (
+            render: (tes: any) => {return (
                 <Space>
                     {(tes.status == 0 || tes.status == null) ?
                         <button title="تنشيط هذه الخدمة" onClick={() => activateProduct(tes.id)} className="btn butt-xs2 butt-green">
@@ -109,44 +109,19 @@ function index(): ReactElement {
                         </button> : ''
                     }
                     {(tes.status == 1) ?
-                        <button title="تعطيل هذه الخدمة" onClick={() => rejectProduct(tes.id)} className="btn butt-xs2 butt-orange">
+                        <button title="تعطيل هذه الخدمة" onClick={() => onRejectClick(tes.id)} className="btn butt-xs2 butt-orange">
                             تعطيل
                         </button> : ''
                     }
                     <button title="حذف هذه الخدمة" className="btn butt-xs2 butt-red" onClick={() => deleteHandle(tes.id)}>
                         حذف
                     </button>
-                    <button title="رفض الخدمة" className="btn butt-xs2 butt-orange" onClick={() => setIsModalVisible(true)}>
+                    <button title="رفض الخدمة" className="btn butt-xs2 butt-orange" onClick={() => onRejectClick(tes.id)}>
                         رفض
                     </button>
-                    <Modal
-                        title="Basic Modal"
-                        visible={isModalVisible}
-                        onOk={() => rejectProduct(tes.id)}
-                        onCancel={() => setIsModalVisible(false)}
-                        okText={''}
-                    >
-                        <div className="timlands-form">
-                            <label className="label-block" htmlFor="cause">أكتب سبب رفض الخدمة</label>
-                            <textarea
-                                id="cause"
-                                name="cause"
-                                value={cause}
-                                onChange={(e) => setCause(e.target.value)}
-                                placeholder="أكتب سبب رفض الخدمة"
-                                className="timlands-inputs"
-                                autoComplete="off"
-                            />
-                            {validationsErrors && validationsErrors.cause &&
-                                <div style={{ overflow: 'hidden' }}>
-                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                        <p className="text">{validationsErrors.cause[0]}</p>
-                                    </motion.div>
-                                </div>}
-                        </div>
-                    </Modal>
+                    
                 </Space>
-            ),
+            )},
             ellipsis: true,
         },
     ];
@@ -209,10 +184,17 @@ function index(): ReactElement {
             setIsLoading(false)
         }
     }
-    const rejectProduct = async (id: any) => {
+    const onRejectClick = async(id:any)=>{
+        console.log('regejct click')
+        console.log(id)
+        setSelectedProductId(id);
+        setIsModalVisible(true)
+    }
+    const rejectProduct = async () => {
+        console.log(selectedProductId)
         setIsLoading(true)
         try {
-            const res: any = await API.post(`dashboard/products/${id}/rejectProduct`, { cause }, {
+            const res: any = await API.post(`dashboard/products/${selectedProductId}/rejectProduct`, { cause }, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res.status === 200) {
@@ -229,6 +211,32 @@ function index(): ReactElement {
         <>
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
+                <Modal
+                        title="Basic Modal"
+                        visible={isModalVisible}
+                        onOk={() => rejectProduct()}
+                        onCancel={() => setIsModalVisible(false)}
+                        okText={''}
+                    >
+                        <div className="timlands-form">
+                            <label className="label-block" htmlFor="cause">أكتب سبب رفض الخدمة</label>
+                            <textarea
+                                id="cause"
+                                name="cause"
+                                value={cause}
+                                onChange={(e) => setCause(e.target.value)}
+                                placeholder="أكتب سبب رفض الخدمة"
+                                className="timlands-inputs"
+                                autoComplete="off"
+                            />
+                            {validationsErrors && validationsErrors.cause &&
+                                <div style={{ overflow: 'hidden' }}>
+                                    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                        <p className="text">{validationsErrors.cause[0]}</p>
+                                    </motion.div>
+                                </div>}
+                        </div>
+                    </Modal>
                     <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>إدارة الخدمات</h2>
                 </div>
                 <Table

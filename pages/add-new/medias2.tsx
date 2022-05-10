@@ -88,7 +88,7 @@ function Medias({ query, stars }) {
     const loadGalleryImages: any = async () => {
         const galleries = new FormData();
         galleryMedia.map((e: any) => (
-            galleries.append('images[]', e.file)
+            e.file&&galleries.append('images[]', e.file)
         ))
         //galleries.append('images[]', images)
         const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
@@ -126,7 +126,7 @@ function Medias({ query, stars }) {
             '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i');
-        if (galleryMedia.size <= 0) {
+        if (galleryMedia.length <= 0) {
             notification.open({
                 message: 'حدث خطأ',
                 description: 'برجاء وضع صورة على الأقل في المعرض',
