@@ -437,12 +437,21 @@
   padding-right: 7px;
 }
 
+.timlands-navbar .nav-container {
+  width: 100%;
+}
+
 .timlands-navbar .nav-container .d-flex {
   -ms-flex-line-pack: center;
       align-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.timlands-navbar .nav-container .app-navbar {
+  width: 100%;
+  gap: 4%;
 }
 
 .timlands-navbar .nav-container .app-navbar > li {

@@ -716,6 +716,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
 }
 
 .timlands-navbar .nav-container .app-navbar {
@@ -8082,5 +8083,141 @@ h3 {
   background-color: #475C80;
   border-color: #475C80;
   color: #fff;
+}
+
+.containerProductsPage {
+  max-width: 1400px;
+  margin: auto;
+  padding-inline: 3%;
+}
+
+.containerProductsPagePopular {
+  max-width: 1400px;
+  margin: auto;
+  padding-inline: 6%;
+}
+
+@media (max-width: 1050px) {
+  .containerProductsPagePopular {
+    max-width: 1400px;
+    margin: auto;
+    padding-inline: 2%;
+  }
+}
+
+@media (max-width: 768px) {
+  .containerProductsPagePopular {
+    padding-inline: 13%;
+  }
+}
+
+@media (max-width: 550px) {
+  .containerProductsPagePopular {
+    padding-inline: 5%;
+  }
+}
+
+.productPagination {
+  width: 100%;
+}
+
+.login-middle-footer-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 5px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 385px) {
+  .login-middle-footer-cont {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 15px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+@media (max-width: 950px) {
+  .containerProductsPage {
+    margin-inline: 1.5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .containerProductsPage {
+    margin-inline: 7%;
+  }
+}
+
+.timlands-navbar .nav-container .app-navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  gap: 4%;
+}
+
+.nav-container {
+  width: 100%;
+}
+
+@media (max-width: 850px) {
+  .timlands-navbar .nav-container .app-navbar {
+    gap: 1%;
+  }
+}
+@media (max-width: 780px) {
+  .nav-container {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 320px) {
+  .timlands-navbar .nav-auth {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+}
+
+@media (max-width: 450px) {
+  .app-bill {
+    padding: 12px;
+  }
+  .row > * {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 390px) {
+  .app-bill {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .timlands-navbar {
+    padding: 5px 9px;
+  }
+}
+
+@media (max-width: 330px) {
+  .timlands-navbar .logo-nav {
+    width: 25px;
+  }
 }
 /*# sourceMappingURL=app-rtl.css.map */
