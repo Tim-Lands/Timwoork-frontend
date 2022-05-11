@@ -1160,7 +1160,11 @@ h3 {
 
         .timwoork-single-product-detailts {
           padding: 20px 0;
-
+          p {
+            @media (max-width: 580px) {
+              font-size: 14px;
+            }
+          }
           @media (max-width: 580px) {
             padding: 15px 0;
           }
@@ -6049,6 +6053,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 .blog-single-content {
+  figure {
+    img {
+      width: 100%;
+    }
+  }
   p {
     @media (max-width: 580px) {
       font-size: 15px;

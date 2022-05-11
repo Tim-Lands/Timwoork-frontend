@@ -401,7 +401,7 @@ function Single({ query, stars, errorFetch }) {
               onChange={(e: any) => setMessageConv(e.target.value)}
             ></textarea>
           </Modal>
-          <div className="row">
+          <div className="row" style={{ maxWidth: 1300, marginInline: "auto" }}>
             <div className="col-lg-8">
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">

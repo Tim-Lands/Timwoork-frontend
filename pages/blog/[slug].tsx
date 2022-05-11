@@ -11,6 +11,7 @@ import { Image } from "antd";
 
 const User = ({ query }) => {
   const [postsMediaTable, setPostsMediaTable] = useState([]);
+  console.log(query.slug);
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`
   );

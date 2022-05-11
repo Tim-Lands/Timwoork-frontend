@@ -1175,6 +1175,12 @@
   height: 420px;
 }
 
+@media (max-width: 600px) {
+  .timlands-post-item {
+    height: 450px;
+  }
+}
+
 .timlands-post-item .post-item-img {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1201,7 +1207,7 @@
 }
 
 .timlands-post-item .post-item-img::after {
-  content: '';
+  content: "";
   left: 0;
   right: 0;
   top: 0;
@@ -3040,6 +3046,12 @@ h3 {
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
+}
+
+@media (max-width: 580px) {
+  .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts p {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 580px) {
@@ -8323,6 +8335,10 @@ h3 {
   .blogHeaderTitle {
     font-size: 20px;
   }
+}
+
+.blog-single-content figure img {
+  width: 100%;
 }
 
 @media (max-width: 580px) {

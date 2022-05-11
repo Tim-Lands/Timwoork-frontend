@@ -6,7 +6,14 @@ import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index() {
-  const { data: categories }: any = useSWR(`api/categories`);
+  var { data: categories }: any = useSWR(`api/categories`);
+
+  categories &&
+    categories.data.sort((a, b) => {
+      if (a.subcategories.length < b.subcategories.length) {
+        return -1;
+      }
+    });
   return (
     <div className="row py-4 d-flex justify-content-center align-items-center">
       <MetaTags
