@@ -274,6 +274,7 @@ h3 {
       }
     }
   }
+
   .profile-buttons {
     width: 200px;
     margin: auto;
@@ -282,6 +283,7 @@ h3 {
     text-align: center;
     margin-top: 9px;
   }
+
   .profile-content-header {
     border-bottom: 1px dashed #ddd;
     margin-bottom: 8px;
@@ -888,6 +890,7 @@ h3 {
     .title {
       margin-bottom: 5px;
     }
+
     .post-meta-rate {
       padding-top: 7px;
 
@@ -1179,13 +1182,13 @@ h3 {
               line-height: 27px;
             }
 
-            > li {
+            >li {
               margin: 6px 0;
 
-              > ul {
+              >ul {
                 margin: 15px 0;
 
-                > li {
+                >li {
                   margin: 6px 0;
                 }
               }
@@ -1308,7 +1311,7 @@ h3 {
                 padding: 0;
                 margin: 0;
 
-                > .comment-item {
+                >.comment-item {
                   padding: 12px;
                   padding-right: 25px;
 
@@ -1916,10 +1919,10 @@ h3 {
       padding: 0;
       margin: 0;
 
-      > .dash-item {
+      >.dash-item {
         padding: 3px;
 
-        > .dash-link {
+        >.dash-link {
           padding: 10px 19px;
           padding-right: 26px;
           border-right-width: 4px;
@@ -1950,8 +1953,8 @@ h3 {
           padding-right: 50px;
           transition: all 0.3s;
 
-          > .subdash-item {
-            > .subdash-link {
+          >.subdash-item {
+            >.subdash-link {
               display: flex;
               font-size: 13px;
               color: #333;
@@ -1963,7 +1966,7 @@ h3 {
             }
 
             &.active {
-              > .subdash-link {
+              >.subdash-link {
                 font-weight: bold;
                 color: $primary;
               }
@@ -1972,7 +1975,7 @@ h3 {
         }
 
         &.active {
-          > .dash-link {
+          >.dash-link {
             color: $primary;
             background-color: #f2f2f2;
             border-right-color: $primary;
@@ -2132,6 +2135,7 @@ h3 {
       }
 
       &.active {
+
         .title,
         .text {
           opacity: 1;
@@ -2202,6 +2206,7 @@ h3 {
 
       &.is-loader {
         .butt-sm {
+
           .text,
           .material-icons-outlined {
             display: none;
@@ -2213,6 +2218,7 @@ h3 {
         }
 
         .butt-xs {
+
           .text,
           .material-icons-outlined {
             display: none;
@@ -2352,7 +2358,7 @@ h3 {
       margin: 0;
       margin-top: 12px;
 
-      > li {
+      >li {
         font-size: 13px;
         padding: 8px 0;
         border-bottom: 1px solid #f6f6f6;
@@ -2477,7 +2483,7 @@ h3 {
   }
 
   &.primary {
-    background-color: $primary !important;
+    background-color: $primary  !important;
 
     .panel-item-header {
       border-bottom: 1px solid darken($primary, 3);
@@ -2497,7 +2503,7 @@ h3 {
       }
 
       .details-items {
-        > li {
+        >li {
           border-bottom: 1px solid darken($primary, 3);
 
           p {
@@ -2537,7 +2543,7 @@ h3 {
       }
 
       .details-items {
-        > li {
+        >li {
           border-bottom: 1px solid darken(#222, 3);
 
           p {
@@ -2577,7 +2583,7 @@ h3 {
       }
 
       .details-items {
-        > li {
+        >li {
           border-bottom: 1px solid darken(#e48f20, 3);
 
           p {
@@ -2617,7 +2623,7 @@ h3 {
       }
 
       .details-items {
-        > li {
+        >li {
           border-bottom: 1px solid darken(#209ce4, 3);
 
           p {
@@ -2657,7 +2663,7 @@ h3 {
       }
 
       .details-items {
-        > li {
+        >li {
           border-bottom: 1px solid darken(#2ac559, 3);
 
           p {
@@ -2677,7 +2683,7 @@ h3 {
   }
 
   &.primary2 {
-    background-color: $primary2 !important;
+    background-color: $primary2  !important;
 
     .panel-item-header {
       border-bottom: 1px solid darken($primary2, 3);
@@ -2697,7 +2703,7 @@ h3 {
       }
 
       .details-items {
-        > li {
+        >li {
           border-bottom: 1px solid darken($primary2, 3);
 
           p {
@@ -3107,13 +3113,13 @@ h3 {
               font-size: 17px;
             }
 
-            > li {
+            >li {
               margin: 6px 0;
 
-              > ul {
+              >ul {
                 margin: 15px 0;
 
-                > li {
+                >li {
                   margin: 6px 0;
                 }
               }
@@ -3373,17 +3379,12 @@ h3 {
       width: 100%;
       height: 100px;
       margin: 4px 0;
-      border: 1px dashed #ddd;
+      //border: 1px dashed #ddd;
       border-radius: 5px;
       overflow: hidden;
       position: relative;
 
-      &.featured-wrapper {
-        height: 420px;
-      }
-
       .image-item__btn-wrapper {
-        background-color: rgba(0, 0, 0, 0.671);
         position: absolute;
         left: 0;
         right: 0;
@@ -3420,9 +3421,60 @@ h3 {
           .material-icons-outlined {
             font-size: 20px;
           }
+
+          button {
+            border: 0;
+            display: flex;
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 50%;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            color: #555;
+            margin: 0 3px;
+
+            &:hover {
+              color: #000;
+            }
+
+            &:focus {
+              color: #000;
+              background-color: #f7f7f7;
+            }
+
+            .material-icons-outlined {
+              font-size: 20px;
+            }
+          }
+        }
+
+        &:hover {
+          transition: all 0.3s;
+          background-color: rgba(0, 0, 0, 0.671);
         }
       }
 
+      margin-inline: auto;
+      margin-top: 18px;
+      background-size: cover;
+      @media (min-width: 1920px) {
+        width: 488.343px;
+        height: 293.006px;
+      }
+      @media (max-width: 1366px) {
+        width: 452.487px;
+        height: 271.492px;
+      }
+      @media (max-width: 768px) {
+        width: 100%;
+        height: 271.492px;
+      }
+      @media (max-width: 570px) {
+        width: 100%;
+        height: 210px;
+      }
       &.featured-wrapper {
         .image-item__btn-wrapper {
           button {
@@ -4143,7 +4195,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     @media (max-width: 1100px) {
       @content;
     }
-  } @else if $point==800 {
+  }
+
+  @else if $point==800 {
     @media (max-width: 800px) {
       @content;
     }
@@ -4158,7 +4212,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     @include hideInput;
   }
 
-  input + label {
+  input+label {
     cursor: pointer;
     margin: 0;
     padding: 0.75rem 2rem;
@@ -4193,13 +4247,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 
-  input:hover + label {
+  input:hover+label {
     border-color: #ccc;
     color: #000;
     background-color: #f5f5f5;
   }
 
-  input:checked + label {
+  input:checked+label {
     background-color: $primary;
     color: #fff;
     box-shadow: $activeShadow;
@@ -4212,12 +4266,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 
-  input:focus + label {
+  input:focus+label {
     @include focusOutline;
   }
 
   @include breakpoint(800) {
-    input + label {
+    input+label {
       padding: 0.75rem 0.25rem;
       flex: 0 0 50%;
       display: flex;
@@ -4260,6 +4314,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .ReactTags :global {
+
   /* Example Styles for React Tags*/
   .app {
     padding: 40px;
@@ -4386,7 +4441,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 
-.stars input[type="radio"]:checked ~ label {
+.stars input[type="radio"]:checked~label {
   color: rgb(255, 145, 0);
 
   .material-icons {
@@ -4398,7 +4453,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   display: none;
 }
 
-.stars input[type="radio"]:first-child + label {
+.stars input[type="radio"]:first-child+label {
   padding-right: 0;
 
   .material-icons {
@@ -4406,7 +4461,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 
-.stars:hover input[type="radio"]:checked ~ label,
+.stars:hover input[type="radio"]:checked~label,
 .stars label {
   font-size: 24px;
   color: rgb(255, 145, 0);
@@ -4431,7 +4486,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .stars label:hover,
-.stars label:hover ~ label {
+.stars label:hover~label {
   color: rgb(223, 131, 12) !important;
 }
 
@@ -4533,10 +4588,8 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.bt-tiktok {
     &:hover {
       color: #fff !important;
-      background-image: linear-gradient(
-        rgb(0, 0, 0),
-        rgb(72, 16, 99)
-      ) !important;
+      background-image: linear-gradient(rgb(0, 0, 0),
+          rgb(72, 16, 99)) !important;
     }
   }
 
@@ -4742,7 +4795,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     z-index: 44;
     cursor: pointer;
 
-    &:hover ~ .upload-btn {
+    &:hover~.upload-btn {
       background-color: rgba(0, 0, 0, 0.281);
     }
   }
@@ -4908,6 +4961,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+
 // Modal Confirm
 .overlay-fixed {
   background-color: rgba(0, 0, 0, 0.336);
@@ -4928,24 +4982,29 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     width: 400px;
     overflow: hidden;
     border-radius: 7px;
+
     .modal-conferm-head {
       border-bottom: 2px dashed #f6f6f6;
       margin-bottom: 9px;
+
       .title {
         margin: 0;
         font-size: 21px;
         font-weight: bold;
       }
     }
+
     .modal-conferm-body {
       .text {
         margin: 0;
       }
     }
+
     .modal-conferm-footer {
       border-top: 2px dashed #f6f6f6;
       margin-top: 9px;
     }
+
     .modal-conferm-head,
     .modal-conferm-body,
     .modal-conferm-footer {
@@ -4953,6 +5012,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+
 // ------------------------------------------------------------------------------------------- //
 .aside-attachments {
   .ant-timeline-item-head {
@@ -5024,6 +5084,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 
   .item-content {
     width: 65%;
+
     .bg-danger,
     .bg-success {
       position: absolute;
@@ -5039,6 +5100,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     font-weight: bold;
     border-radius: 4px 0 4px 4px;
   }
+
   .readed {
     width: 30px;
     height: 30px;
@@ -5075,6 +5137,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
 
     .item-content {
+
       .bg-danger,
       .bg-success {
         right: 10px;
@@ -5287,7 +5350,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 .is-hover-primary {
   a {
     &:hover {
-      color: $primary !important;
+      color: $primary  !important;
       text-decoration: underline;
     }
   }
@@ -5557,12 +5620,15 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   flex-direction: column;
   transition: all 0.3s;
   cursor: pointer;
+
   @media (max-width: 768px) {
     height: 120px;
   }
+
   @media (max-width: 580px) {
     height: 110px;
   }
+
   @media (max-width: 600px) {
     margin: 7px 0;
   }
@@ -5573,9 +5639,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       transition: all 0.3s;
       color: #999;
       cursor: pointer;
+
       @media (max-width: 768px) {
         font-size: 45px;
       }
+
       @media (max-width: 580px) {
         font-size: 38px;
       }
@@ -5590,9 +5658,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       transition: all 0.3s;
       color: #555;
       cursor: default;
+
       @media (max-width: 768px) {
         font-size: 17px;
       }
+
       @media (max-width: 580px) {
         font-size: 15px;
       }
@@ -5674,7 +5744,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   opacity: 0.75;
 }
 
-.form-check-input:checked + .form-checked-content {
+.form-check-input:checked+.form-checked-content {
   opacity: 0.5;
 }
 
@@ -5693,6 +5763,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     border-radius: 0.5rem;
   }
 }
+
 .withdrawable-sidebar {
   position: sticky;
   top: 80px;
@@ -5704,17 +5775,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   pointer-events: none;
 }
 
-.list-group-item-check:hover + .list-group-item {
+.list-group-item-check:hover+.list-group-item {
   background-color: var(--bs-light);
 }
 
-.list-group-item-check:checked + .list-group-item {
+.list-group-item-check:checked+.list-group-item {
   color: #fff;
   background-color: $primary;
 }
 
-.list-group-item-check[disabled] + .list-group-item,
-.list-group-item-check:disabled + .list-group-item {
+.list-group-item-check[disabled]+.list-group-item,
+.list-group-item-check:disabled+.list-group-item {
   pointer-events: none;
   filter: none;
   opacity: 0.5;
@@ -5751,28 +5822,34 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   box-shadow: 3px 4px 16px rgba(0, 0, 0, 0.089);
   margin-top: 8px;
   margin-bottom: 15px;
+
   @media (min-width: 992px) {
     width: 700px;
     margin: auto;
   }
+
   .timlands-panel-cart-header {
     margin-bottom: 14px;
     border-bottom: 1px dashed #f1f1f1;
     padding: 14px;
+
     .title {
       font-size: 25px;
       font-weight: bold;
       margin: 0;
     }
   }
+
   .timlands-panel-cart-body {
     .cart-item {
       padding-bottom: 8px;
+
       .cart-title {
         font-size: 17px;
         font-weight: bold;
         color: #333;
       }
+
       .cart-text {
         font-size: 17px;
         font-weight: normal;
@@ -5780,6 +5857,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       }
     }
   }
+
   .timlands-panel-cart-footer {
     margin-top: 14px;
     border-top: 1px dashed #f1f1f1;
@@ -5787,19 +5865,24 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     display: flex;
   }
 }
+
 .pagination {
   padding-right: 0;
+
   .page-item {
     .page-link {
       font-size: 14px;
       color: $primary;
+
       @media (max-width: 700px) {
         font-size: 13px;
       }
+
       @media (max-width: 580px) {
         font-size: 12px;
       }
     }
+
     &:first-child {
       .page-link {
         border-top-right-radius: 0.25rem;
@@ -5808,10 +5891,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         border-bottom-left-radius: 0;
       }
     }
+
     &.disabled {
       opacity: 0.4;
       cursor: not-allowed;
     }
+
     &:last-child {
       .page-link {
         border-top-left-radius: 0.25rem;
@@ -5820,6 +5905,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         border-bottom-right-radius: 0;
       }
     }
+
     &.active {
       .page-link {
         background-color: $primary;
@@ -5829,16 +5915,19 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+
 .containerProductsPage {
   max-width: 1400px;
   margin: auto;
   padding-inline: 3%;
 }
+
 .containerProductsPagePopular {
   max-width: 1400px;
   margin: auto;
   padding-inline: 6%;
 }
+
 @media (max-width: 1050px) {
   .containerProductsPagePopular {
     max-width: 1400px;
@@ -5846,25 +5935,30 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     padding-inline: 2%;
   }
 }
+
 @media (max-width: 768px) {
   .containerProductsPagePopular {
     padding-inline: 13%;
   }
 }
+
 @media (max-width: 550px) {
   .containerProductsPagePopular {
     padding-inline: 5%;
   }
 }
+
 .productPagination {
   width: 100%;
 }
+
 .login-middle-footer-cont {
   display: flex;
   align-items: center;
   padding-bottom: 5px;
   justify-content: space-between;
 }
+
 @media (max-width: 385px) {
   .login-middle-footer-cont {
     flex-direction: column;
@@ -5873,24 +5967,29 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     justify-content: center;
   }
 }
+
 @media (max-width: 950px) {
   .containerProductsPage {
     margin-inline: 1.5%;
   }
 }
+
 @media (max-width: 768px) {
   .containerProductsPage {
     margin-inline: 7%;
   }
 }
+
 .timlands-navbar .nav-container .app-navbar {
   display: flex;
   width: 100%;
   gap: 4%;
 }
+
 .nav-container {
   width: 100%;
 }
+
 @media (max-width: 850px) {
   .timlands-navbar .nav-container .app-navbar {
     gap: 1%;
@@ -5903,29 +6002,35 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     width: fit-content;
   }
 }
+
 @media (max-width: 320px) {
   .timlands-navbar .nav-auth {
     transform: scale(0.9);
   }
 }
+
 @media (max-width: 450px) {
   .app-bill {
     padding: 12px;
   }
-  .row > * {
+
+  .row>* {
     padding: 5px;
   }
 }
+
 @media (max-width: 390px) {
   .app-bill {
     padding: 10px;
   }
 }
+
 @media (max-width: 420px) {
   .timlands-navbar {
     padding: 5px 9px;
   }
 }
+
 @media (max-width: 330px) {
   .timlands-navbar .logo-nav {
     width: 25px;

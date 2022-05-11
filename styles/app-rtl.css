@@ -5441,18 +5441,15 @@ h3 {
   width: 100%;
   height: 100px;
   margin: 4px 0;
-  border: 1px dashed #ddd;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
-}
-
-.choose-images-file .choose-images-list .image-item.featured-wrapper {
-  height: 420px;
+  margin-inline: auto;
+  margin-top: 18px;
+  background-size: cover;
 }
 
 .choose-images-file .choose-images-list .image-item .image-item__btn-wrapper {
-  background-color: rgba(0, 0, 0, 0.671);
   position: absolute;
   left: 0;
   right: 0;
@@ -5505,6 +5502,74 @@ h3 {
 
 .choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button .material-icons-outlined {
   font-size: 20px;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button button {
+  border: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #555;
+  margin: 0 3px;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button button:hover {
+  color: #000;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button button:focus {
+  color: #000;
+  background-color: #f7f7f7;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper button button .material-icons-outlined {
+  font-size: 20px;
+}
+
+.choose-images-file .choose-images-list .image-item .image-item__btn-wrapper:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: rgba(0, 0, 0, 0.671);
+}
+
+@media (min-width: 1920px) {
+  .choose-images-file .choose-images-list .image-item {
+    width: 488.343px;
+    height: 293.006px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .choose-images-file .choose-images-list .image-item {
+    width: 452.487px;
+    height: 271.492px;
+  }
+}
+
+@media (max-width: 768px) {
+  .choose-images-file .choose-images-list .image-item {
+    width: 100%;
+    height: 271.492px;
+  }
+}
+
+@media (max-width: 570px) {
+  .choose-images-file .choose-images-list .image-item {
+    width: 100%;
+    height: 210px;
+  }
 }
 
 .choose-images-file .choose-images-list .image-item.featured-wrapper .image-item__btn-wrapper button {
