@@ -57,7 +57,6 @@ function Single({ query, stars, errorFetch }) {
     `api/product/${query.product}`
   );
   const { data: userInfo }: any = useSWR("api/me");
-
   const [quantutyCount, setQuantutyCount] = useState(1);
   const [isLoadingCart, setIsLoadingCart] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -69,6 +68,7 @@ function Single({ query, stars, errorFetch }) {
       router.push("/404");
     }
   }, []);
+
   const showStars = () => {
     const rate =
       Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0;
@@ -265,7 +265,7 @@ function Single({ query, stars, errorFetch }) {
             placement: "topLeft",
           });
         } else {
-        /*  if (error.response && error.response.status === 400) {
+          /*  if (error.response && error.response.status === 400) {
            notification.warning({
              message: `تحذير`,
              description: 'لا يمكنك شراء خدمتك!',
@@ -508,6 +508,17 @@ function Single({ query, stars, errorFetch }) {
                             )}
                           </>
                         ))}
+                      <div
+                        key={ProductData?.data.galaries.length}
+                        className="each-slide"
+                      >
+                        <div
+                          className="images-slider"
+                          style={{
+                            backgroundImage: `url(${APIURL2}${ProductData.data.full_path_thumbnail})`,
+                          }}
+                        ></div>
+                      </div>
                     </Slide>
                     <div
                       className="timwoork-single-product-detailts"
