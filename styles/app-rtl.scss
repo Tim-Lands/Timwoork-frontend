@@ -4026,6 +4026,9 @@ h3 {
   border-bottom: 1px dashed #f1f1f1;
   margin-bottom: 15px;
   display: flex;
+  @media (max-width: 580px) {
+    margin-bottom: 7px;
+  }
 
   .add-new-product {
     display: flex;
@@ -4052,6 +4055,9 @@ h3 {
     font-weight: bold;
     color: #333;
     margin: 0;
+    @media (max-width: 580px) {
+      font-size: 20px;
+    }
   }
 
   &.sm {
@@ -4075,12 +4081,17 @@ h3 {
 
 .page-content {
   padding: 12px 28px;
-
+  @media (max-width: 580px) {
+    padding: 12px 12px;
+  }
   .sub-title {
     font-size: 25px;
     font-weight: bold;
     margin: 20px 0;
     margin-top: 0;
+    @media (max-width: 580px) {
+      font-size: 20px;
+    }
   }
 
   .text {
@@ -4089,9 +4100,16 @@ h3 {
     font-weight: 200;
     line-height: 41px;
     margin: 0;
+    @media (max-width: 580px) {
+      font-size: 16px;
+      line-height: 31px;
+    }
   }
 
   .list {
+    @media (max-width: 580px) {
+      padding-inline: 10px 0px;
+    }
     li {
       font-size: 20px;
       font-weight: 200;
@@ -4099,6 +4117,11 @@ h3 {
       line-height: 41px;
       margin-right: 25px;
       margin-bottom: 15px;
+      @media (max-width: 580px) {
+        font-size: 16px;
+        line-height: 31px;
+        margin-right: 5px;
+      }
     }
   }
 }

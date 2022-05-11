@@ -770,7 +770,7 @@
 }
 
 .timlands-post-item .post-item-img::after {
-  content: '';
+  content: "";
   left: 0;
   right: 0;
   top: 0;

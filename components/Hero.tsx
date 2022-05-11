@@ -138,8 +138,8 @@ function Hero() {
             اكتشف سوق تيم ورك للخدمات الالكترونية الأكثر تطورا وراحة
           </motion.h1>
         </div>
-        <div className="timlands-hero-search">
-          <div className="rel-search">
+        <div className="timlands-hero-search" ref={buttonRef}>
+          <div className="rel-search mx-2">
             <input
               type="text"
               onKeyUp={onKeyUpHandle}
@@ -158,7 +158,7 @@ function Hero() {
               }}
             />
             {!isLoading && (
-              <button ref={buttonRef} className="search-btn">
+              <button className="search-btn">
                 <span className="material-icons material-icons-outlined">
                   search
                 </span>

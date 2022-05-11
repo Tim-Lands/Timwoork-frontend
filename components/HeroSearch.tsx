@@ -3,7 +3,7 @@ import Link from "next/link";
 function HeroSearch() {
   return (
     <div className="timlands-hero-search">
-      <div className="rel-search">
+      <div className="rel-search" style={{ marginInline: 10 }}>
         <input
           type="text"
           placeholder="Search in Wazzfny..."
