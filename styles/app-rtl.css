@@ -2881,7 +2881,7 @@ h3 {
 
 @media (max-width: 580px) {
   .timwoork-single .timwoork-single-post {
-    padding: 20px 0 !important;
+    padding: 0px 0 !important;
   }
 }
 
@@ -2900,7 +2900,29 @@ h3 {
 
 @media (max-width: 580px) {
   .timwoork-single .timwoork-single-post .timwoork-single-header .title {
-    font-size: 27px;
+    font-size: 20px;
+  }
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-header .timwoork-single-header-meta {
+  margin-top: 10px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 630px) {
+  .timwoork-single .timwoork-single-post .timwoork-single-header .timwoork-single-header-meta {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
 }
 
@@ -5123,7 +5145,7 @@ h3 {
   font-size: 20px;
   color: #333;
   margin: 14px 0;
-  text-align: justify;
+  text-align: start;
   font-weight: 400;
   line-height: 38px;
 }
@@ -5134,6 +5156,12 @@ h3 {
   padding: 9px 0;
   font-weight: 600;
   color: #222;
+}
+
+@media (max-width: 580px) {
+  .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
+    font-size: 17px;
+  }
 }
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts .single-list {
@@ -8218,6 +8246,29 @@ h3 {
 @media (max-width: 330px) {
   .timlands-navbar .logo-nav {
     width: 25px;
+  }
+}
+
+.blogHeaderTitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+@media (max-width: 580px) {
+  .blogHeaderTitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 580px) {
+  .blog-single-content p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 580px) {
+  .blog-single-content ul li {
+    font-size: 15px;
   }
 }
 /*# sourceMappingURL=app-rtl.css.map */

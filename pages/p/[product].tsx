@@ -1,204 +1,270 @@
 import Link from "next/link";
-import Layout from '@/components/Layout/HomeLayout'
-import Comments from '../../components/Comments'
+import Layout from "@/components/Layout/HomeLayout";
+import Comments from "../../components/Comments";
 import { ReactElement, useEffect, useState } from "react";
-import API from '../../config'
-import { Slide } from 'react-slideshow-image';
-import 'react-slideshow-image/dist/styles.css'
+import API from "../../config";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 import useSWR, { mutate } from "swr";
-import Loading from '@/components/Loading'
-import { Dropdown, message, Spin, Menu, notification, Modal, Badge, Typography, Popover } from 'antd'
-import { MetaTags } from '@/components/SEO/MetaTags'
+import Loading from "@/components/Loading";
+import {
+  Dropdown,
+  message,
+  Spin,
+  Menu,
+  notification,
+  Modal,
+  Badge,
+  Typography,
+  Popover,
+} from "antd";
+import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 import router from "next/router";
 import NotFound from "@/components/NotFound";
-import Image from 'next/image'
-import { Alert } from '@/components/Alert/Alert'
-import ReactPlayer from "react-player"
+import Image from "next/image";
+import { Alert } from "@/components/Alert/Alert";
+import ReactPlayer from "react-player";
 
 const { Text } = Typography;
 const properties = {
   duration: 5000,
   transitionDuration: 500,
   infinite: true,
-  prevArrow: <div className="arrow-navigations" style={{ width: "30px", marginRight: "-30px" }}><span className="material-icons-outlined">chevron_left</span></div>,
-  nextArrow: <div className="arrow-navigations" style={{ width: "30px", marginLeft: "-30px" }}><span className="material-icons-outlined">chevron_right</span></div>
-}
+  prevArrow: (
+    <div
+      className="arrow-navigations"
+      style={{ width: "30px", marginRight: "-30px" }}
+    >
+      <span className="material-icons-outlined">chevron_left</span>
+    </div>
+  ),
+  nextArrow: (
+    <div
+      className="arrow-navigations"
+      style={{ width: "30px", marginLeft: "-30px" }}
+    >
+      <span className="material-icons-outlined">chevron_right</span>
+    </div>
+  ),
+};
 function Single({ query, stars, errorFetch }) {
-
-  let token = Cookies.get('token')
+  let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
-    token = localStorage.getItem('token');
-  const { data: ProductData, errorLoad }: any = useSWR(`api/product/${query.product}`)
-  const { data: userInfo }: any = useSWR('api/me')
+    token = localStorage.getItem("token");
+  const { data: ProductData, errorLoad }: any = useSWR(
+    `api/product/${query.product}`
+  );
+  const { data: userInfo }: any = useSWR("api/me");
 
-  const [quantutyCount, setQuantutyCount] = useState(1)
-  const [isLoadingCart, setIsLoadingCart] = useState(false)
+  const [quantutyCount, setQuantutyCount] = useState(1);
+  const [isLoadingCart, setIsLoadingCart] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [createConversationLoading, setCreateConversationLoading] = useState(false)
+  const [createConversationLoading, setCreateConversationLoading] =
+    useState(false);
 
   useEffect(() => {
     if (errorFetch) {
-      router.push('/404')
+      router.push("/404");
     }
-
-  }, [])
+  }, []);
   const showStars = () => {
-    const rate = Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0
+    const rate =
+      Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0;
     const xAr: any = [
       {
         id: 1,
-        name: <span className="material-icons-outlined">star</span>
+        name: <span className="material-icons-outlined">star</span>,
       },
       {
         id: 2,
-        name: <span className="material-icons-outlined">star</span>
+        name: <span className="material-icons-outlined">star</span>,
       },
       {
         id: 3,
-        name: <span className="material-icons-outlined">star</span>
+        name: <span className="material-icons-outlined">star</span>,
       },
       {
         id: 4,
-        name: <span className="material-icons-outlined">star</span>
+        name: <span className="material-icons-outlined">star</span>,
       },
       {
         id: 5,
-        name: <span className="material-icons-outlined">star</span>
+        name: <span className="material-icons-outlined">star</span>,
       },
-    ]
+    ];
     const yAr: any = [
       {
         id: 6,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
+        name: (
+          <span className="material-icons-outlined outline-star">
+            star_border
+          </span>
+        ),
       },
       {
         id: 7,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
+        name: (
+          <span className="material-icons-outlined outline-star">
+            star_border
+          </span>
+        ),
       },
       {
         id: 8,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
+        name: (
+          <span className="material-icons-outlined outline-star">
+            star_border
+          </span>
+        ),
       },
       {
         id: 9,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
+        name: (
+          <span className="material-icons-outlined outline-star">
+            star_border
+          </span>
+        ),
       },
       {
         id: 10,
-        name: <span className="material-icons-outlined outline-star">star_border</span>
+        name: (
+          <span className="material-icons-outlined outline-star">
+            star_border
+          </span>
+        ),
       },
-    ]
+    ];
 
-    const x: number = 5
-    const y: number = x - Number(rate)
-    const yut: any = xAr.slice(y)
+    const x: number = 5;
+    const y: number = x - Number(rate);
+    const yut: any = xAr.slice(y);
     if (rate == null) {
-      return 0
+      return 0;
     }
     if (y == 0) {
-      return yut
+      return yut;
     } else {
-      const yut2: any = yAr.slice(-y, x)
-      return yut.concat(yut2)
+      const yut2: any = yAr.slice(-y, x);
+      return yut.concat(yut2);
     }
-  }
+  };
   // const allowOnlyNumericsOrDigits = (evt) => {
   //   const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
   //   setQuantutyCount(financialGoal);
   // }
   const menu = (
     <Menu>
-      {ProductData &&
+      {ProductData && (
         <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
-          <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.data.slug}&display=popup&ref=plugin&src=share_button`}>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.data.slug}&display=popup&ref=plugin&src=share_button`}
+          >
             المشاركة على الفيسبووك
           </a>
         </Menu.Item>
-      }
-      {ProductData &&
+      )}
+      {ProductData && (
         <Menu.Item key="2" icon={<i className="fa fa-facebook"></i>}>
-          <a target="_blank" rel="noreferrer" href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.data.slug}&text=`}>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.data.slug}&text=`}
+          >
             المشاركة على التويتر
           </a>
         </Menu.Item>
-      }
+      )}
     </Menu>
   );
-  const [messageConv, setMessageConv] = useState('')
-  const [hasConversation, setHasConversation] = useState(false)
-  // Start Conversation 
+  const [messageConv, setMessageConv] = useState("");
+  const [hasConversation, setHasConversation] = useState(false);
+  // Start Conversation
   async function startConversation(message: string) {
-    setCreateConversationLoading(true)
+    setCreateConversationLoading(true);
     try {
-      const res = await API.post(`api/product/${ProductData && ProductData.data.id}/conversations/create`, {
-        initial_message: message,
-        receiver_id: ProductData && ProductData.data.profile_seller.profile.user_id,
-        title: ProductData && ProductData.data.title,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const res = await API.post(
+        `api/product/${
+          ProductData && ProductData.data.id
+        }/conversations/create`,
+        {
+          initial_message: message,
+          receiver_id:
+            ProductData && ProductData.data.profile_seller.profile.user_id,
+          title: ProductData && ProductData.data.title,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
+      );
       if (res.status === 200) {
-        setIsModalVisible(false)
-        router.push('/conversations');
-        setHasConversation(true)
+        setIsModalVisible(false);
+        router.push("/conversations");
+        setHasConversation(true);
       }
     } catch (error) {
-      setCreateConversationLoading(false)
+      setCreateConversationLoading(false);
     }
-
   }
   const addToCart = async () => {
-    const veriedEmail = userInfo && userInfo.user_details.email_verified_at
+    const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
     if (!veriedEmail) {
-      router.push('/email/verification')
-      return
+      router.push("/email/verification");
+      return;
     }
     if (token) {
-      setIsLoadingCart(true)
+      setIsLoadingCart(true);
       try {
-        const res = await API.post("api/cart/store", {
-          quantity: Number(quantutyCount),
-          product_id: ProductData.data.id,
-          developments: theIDs,
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}`
+        const res = await API.post(
+          "api/cart/store",
+          {
+            quantity: Number(quantutyCount),
+            product_id: ProductData.data.id,
+            developments: theIDs,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        })
+        );
         // Authentication was successful.
         if (res.status === 200) {
-          mutate('api/me')
+          mutate("api/me");
           const key = `open${Date.now()}`;
           const btn = (
-            <button onClick={() => router.push("/cart")} className="btn butt-sm butt-primary">
+            <button
+              onClick={() => router.push("/cart")}
+              className="btn butt-sm butt-primary"
+            >
               الذهاب إلى السلة
             </button>
           );
 
           notification.open({
-            message: 'إشعار',
-            description:
-              'لقد تم إضافة هذه الخدمة إلى السلة',
-            placement: 'topLeft',
+            message: "إشعار",
+            description: "لقد تم إضافة هذه الخدمة إلى السلة",
+            placement: "topLeft",
             btn,
             key,
             onClose: close,
           });
-          setIsLoadingCart(false)
+          setIsLoadingCart(false);
         }
       } catch (error: any) {
-        setIsLoadingCart(false)
+        setIsLoadingCart(false);
         if (error.response && error.response.data && error.response.data.msg) {
           notification.warning({
             message: `تحذير`,
             description: error.response.data.msg,
-            placement: 'topLeft'
+            placement: "topLeft",
           });
-        }
+        } else {
         /*  if (error.response && error.response.status === 400) {
            notification.warning({
              message: `تحذير`,
@@ -212,66 +278,62 @@ function Single({ query, stars, errorFetch }) {
              placement: 'topLeft'
            });
          } */
-        else {
-
-          message.error('حدث خطأ غير متوقع')
+          message.error("حدث خطأ غير متوقع");
         }
       }
     } else {
-      router.push('/login')
+      router.push("/login");
     }
-  }
+  };
   function durationFunc() {
     if (ProductData.data.duration == 1) {
-      return 'يوم واحد'
+      return "يوم واحد";
     }
     if (ProductData.data.duration == 2) {
-      return 'يومين'
+      return "يومين";
     }
     if (ProductData.data.duration > 2 && ProductData.data.duration < 11) {
-      return ProductData.data.duration + ' أيام '
+      return ProductData.data.duration + " أيام ";
     }
     if (ProductData.data.duration >= 11) {
-      return ProductData.data.duration + ' يوم '
+      return ProductData.data.duration + " يوم ";
     }
   }
   function DevdurationFunc(duration) {
     if (duration == 1) {
-      return 'يوم واحد'
+      return "يوم واحد";
     }
     if (duration == 2) {
-      return 'يومين'
+      return "يومين";
     }
     if (duration > 2 && duration < 11) {
-      return duration + ' أيام '
+      return duration + " أيام ";
     }
     if (duration >= 11) {
-      return duration + ' يوم '
+      return duration + " يوم ";
     }
   }
-  const APIURL2 = 'https://timwoork-space.ams3.digitaloceanspaces.com/products/galaries-images/'
-  const [theIDs, settheIDs] = useState([])
+  const APIURL2 =
+    "https://timwoork-space.ams3.digitaloceanspaces.com/products/galaries-images/";
+  const [theIDs, settheIDs] = useState([]);
   const [checkedDevelopments, setcheckedDevelopments] = useState([]);
 
-  const handleOnChangeAddID = event => {
+  const handleOnChangeAddID = (event) => {
     let newArray = [...theIDs, event.target.value];
     if (theIDs.includes(event.target.value)) {
-      newArray = newArray.filter(day => day !== event.target.value);
+      newArray = newArray.filter((day) => day !== event.target.value);
     }
     settheIDs(newArray);
     setcheckedDevelopments(newArray);
-
   };
   /***** get the total price when any of  developments checkboxes or quantutyCount changed *****/
   function _totalPrice() {
-
     let __checkedDevelopments_sum = 0;
     const b = [],
       c = checkedDevelopments,
-      a = ProductData && ProductData.data.developments.map(e => e.id);
+      a = ProductData && ProductData.data.developments.map((e) => e.id);
 
     for (let i = 0; i < a.length; i++) {
-
       for (let j = 0; j < c.length; j++) {
         if (a[i] == c[j]) {
           b.push(i);
@@ -279,35 +341,46 @@ function Single({ query, stars, errorFetch }) {
       }
     }
     for (let i = 0; i < b.length; i++) {
-      __checkedDevelopments_sum = __checkedDevelopments_sum + parseInt(ProductData && ProductData.data.developments[b[i]].price);
+      __checkedDevelopments_sum =
+        __checkedDevelopments_sum +
+        parseInt(ProductData && ProductData.data.developments[b[i]].price);
     }
-    const total_price = (parseInt(ProductData.data.price) + __checkedDevelopments_sum) * quantutyCount;
+    const total_price =
+      (parseInt(ProductData.data.price) + __checkedDevelopments_sum) *
+      quantutyCount;
     return Math.abs(total_price);
   }
   const noteContent = (
     <div>
       <ul>
         <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
-        <li>من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة </li>
+        <li>
+          من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة{" "}
+        </li>
         <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
       </ul>
-      <Text type="danger">لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام الخدمة</Text>
+      <Text type="danger">
+        لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام
+        الخدمة
+      </Text>
     </div>
   );
   return (
     <>
       {!ProductData && <Loading />}
       {errorLoad && <NotFound />}
-      {!errorFetch && <MetaTags
-        title={stars.data.title}
-        keywords={stars.data.product_tag}
-        metaDescription={stars.data.content}
-        ogDescription={stars.data.content}
-        ogImage={stars.data.full_path_thumbnail}
-        ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
-      />}
+      {!errorFetch && (
+        <MetaTags
+          title={stars.data.title}
+          keywords={stars.data.product_tag}
+          metaDescription={stars.data.content}
+          ogDescription={stars.data.content}
+          ogImage={stars.data.full_path_thumbnail}
+          ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
+        />
+      )}
       {console.log(ProductData && ProductData.data)}
-      {ProductData &&
+      {ProductData && (
         <div className="timwoork-single">
           <Modal
             title="إنشاء محادثة"
@@ -335,33 +408,59 @@ function Single({ query, stars, errorFetch }) {
                   <h1 className="title">{ProductData.data.title}</h1>
 
                   <div className="timwoork-single-header-meta d-flex">
-                    <ul className="single-header-meta nav me-auto">
+                    <ul className="single-header-meta nav ">
                       <li className="user-item">
-                        <Link href={`/u/${ProductData.data.profile_seller.profile.user.username}`}>
+                        <Link
+                          href={`/u/${ProductData.data.profile_seller.profile.user.username}`}
+                        >
                           <a className="user-link">
                             <Image
                               className="circular-center tiny-size"
-                              src={ProductData.data.profile_seller.profile.avatar_path}
+                              src={
+                                ProductData.data.profile_seller.profile
+                                  .avatar_path
+                              }
                               quality={80}
                               width={32}
                               height={32}
-                              alt={ProductData.data.profile_seller.profile.full_name}
-                              placeholder='blur'
-                              blurDataURL={ProductData.data.profile_seller.profile.avatar_path}
+                              alt={
+                                ProductData.data.profile_seller.profile
+                                  .full_name
+                              }
+                              placeholder="blur"
+                              blurDataURL={
+                                ProductData.data.profile_seller.profile
+                                  .avatar_path
+                              }
                             />
                             <span className="pe-2">
-                              {ProductData.data.profile_seller.profile.full_name}
+                              {
+                                ProductData.data.profile_seller.profile
+                                  .full_name
+                              }
                             </span>
                           </a>
                         </Link>
                       </li>
                       <li className="category-item">
-                        <span className="material-icons material-icons-outlined">label</span>{ProductData && ProductData.data.subcategory.category.name_ar}
+                        <span className="material-icons material-icons-outlined">
+                          label
+                        </span>
+                        {ProductData &&
+                          ProductData.data.subcategory.category.name_ar}
                         <span style={{ marginInline: 5 }}>||</span>
                         <small>
-                          <Link href={`/category/${ProductData && ProductData.data.subcategory.id}`}>
-                            <a style={{ marginInline: 5 }} className="category-link">
-                              {ProductData && ProductData.data.subcategory.name_ar}
+                          <Link
+                            href={`/category/${
+                              ProductData && ProductData.data.subcategory.id
+                            }`}
+                          >
+                            <a
+                              style={{ marginInline: 5 }}
+                              className="category-link"
+                            >
+                              {ProductData &&
+                                ProductData.data.subcategory.name_ar}
                             </a>
                           </Link>
                         </small>
@@ -370,19 +469,20 @@ function Single({ query, stars, errorFetch }) {
                     <ul className="single-header-meta nav ml-auto">
                       <li className="rate-stars">
                         <span className="stars-icons">
-                          {showStars().map((e: any) => <span key={e.id}>{e.name}</span>)}
-
+                          {showStars().map((e: any) => (
+                            <span key={e.id}>{e.name}</span>
+                          ))}
                         </span>
                         <span className="stars-count">
                           ({ProductData.data.ratings_count})
                         </span>
                       </li>
                       <li className="level-item">
-                        <span className="text-level">
-                          المستوى:
-                        </span>
+                        <span className="text-level">المستوى:</span>
                         <span className="value-level">
-                          {ProductData && ProductData.data.profile_seller.level !== null && ProductData.data.profile_seller.level.name_ar}
+                          {ProductData &&
+                            ProductData.data.profile_seller.level !== null &&
+                            ProductData.data.profile_seller.level.name_ar}
                         </span>
                       </li>
                     </ul>
@@ -391,21 +491,34 @@ function Single({ query, stars, errorFetch }) {
                 <div className="timwoork-single-content">
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
-                      {ProductData && ProductData.data.galaries.map((each: any, index) => (
-                        <>
-                          {each.url_video == null ? <div key={index} className="each-slide">
-                            <div className="images-slider" style={{ backgroundImage: `url(${APIURL2}${each.path})` }}></div>
-                          </div> : ''}
-                        </>
-                      ))}
+                      {ProductData &&
+                        ProductData.data.galaries.map((each: any, index) => (
+                          <>
+                            {each.url_video == null ? (
+                              <div key={index} className="each-slide">
+                                <div
+                                  className="images-slider"
+                                  style={{
+                                    backgroundImage: `url(${APIURL2}${each.path})`,
+                                  }}
+                                ></div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </>
+                        ))}
                     </Slide>
-                    <div className="timwoork-single-product-detailts" dangerouslySetInnerHTML={{ __html: ProductData.data.content }} />
-                    {ProductData.data.product_tag &&
+                    <div
+                      className="timwoork-single-product-detailts"
+                      dangerouslySetInnerHTML={{
+                        __html: ProductData.data.content,
+                      }}
+                    />
+                    {ProductData.data.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
-                          <li className="title">
-                            الوسوم:
-                          </li>
+                          <li className="title">الوسوم:</li>
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -413,17 +526,21 @@ function Single({ query, stars, errorFetch }) {
                           ))}
                         </ul>
                       </div>
-                    }
-                    {ProductData.data.video &&
+                    )}
+                    {ProductData.data.video && (
                       <div className="py-3">
                         <ReactPlayer
-                          style={{ borderRadius: 6, overflow: 'hidden', marginTop: 6 }}
+                          style={{
+                            borderRadius: 6,
+                            overflow: "hidden",
+                            marginTop: 6,
+                          }}
                           width="100%"
                           url={ProductData.data.video.url_video}
                         />
                       </div>
-                    }
-                    {ProductData.data.profile_seller &&
+                    )}
+                    {ProductData.data.profile_seller && (
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
                           <h4 className="title">حول البائع</h4>
@@ -433,63 +550,113 @@ function Single({ query, stars, errorFetch }) {
                             <div className="seller-info-avatar">
                               <Image
                                 className="circular-img huge-size"
-                                src={ProductData && ProductData.data.profile_seller.profile.avatar_path}
+                                src={
+                                  ProductData &&
+                                  ProductData.data.profile_seller.profile
+                                    .avatar_path
+                                }
                                 quality={80}
                                 width={100}
-                                alt={ProductData.data.profile_seller.profile.full_name}
-                                placeholder='blur'
-                                blurDataURL={ProductData.data.profile_seller.profile.avatar_path}
+                                alt={
+                                  ProductData.data.profile_seller.profile
+                                    .full_name
+                                }
+                                placeholder="blur"
+                                blurDataURL={
+                                  ProductData.data.profile_seller.profile
+                                    .avatar_path
+                                }
                                 height={100}
                               />
                             </div>
                             <div className="seller-info-content">
                               <h4 className="user-title">
-                                {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
+                                {ProductData.data.profile_seller.profile
+                                  .first_name +
+                                  " " +
+                                  ProductData.data.profile_seller.profile
+                                    .last_name}
                               </h4>
                               <ul className="user-meta nav">
                                 <li>
-                                  <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.level !== null && ProductData.data.profile_seller.level.name_ar}
+                                  <span className="material-icons material-icons-outlined">
+                                    badge
+                                  </span>{" "}
+                                  {ProductData &&
+                                    ProductData.data.profile_seller.level !==
+                                      null &&
+                                    ProductData.data.profile_seller.level
+                                      .name_ar}
                                 </li>
-                                {ProductData.data.profile_seller.profile.country !== null &&
+                                {ProductData.data.profile_seller.profile
+                                  .country !== null && (
                                   <li>
-                                    <span className="material-icons material-icons-outlined">place</span> الجزائر
+                                    <span className="material-icons material-icons-outlined">
+                                      place
+                                    </span>{" "}
+                                    الجزائر
                                   </li>
-                                }
+                                )}
                               </ul>
                               <div className="seller-info-butts d-flex">
-                                <Link href={"/u/" + ProductData.data.profile_seller.profile.user.username}>
+                                <Link
+                                  href={
+                                    "/u/" +
+                                    ProductData.data.profile_seller.profile.user
+                                      .username
+                                  }
+                                >
                                   <a className="btn butt-primary butt-sm flex-center">
-                                    <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
+                                    <i className="material-icons material-icons-outlined">
+                                      account_circle
+                                    </i>{" "}
+                                    الملف الشخصي
                                   </a>
                                 </Link>
-                                {!hasConversation &&
-                                  <button className="btn butt-green butt-sm flex-center" disabled={createConversationLoading} onClick={() => setIsModalVisible(true)}>
-                                    <i className="material-icons material-icons-outlined" >email</i> مراسلة البائع {createConversationLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                                {!hasConversation && (
+                                  <button
+                                    className="btn butt-green butt-sm flex-center"
+                                    disabled={createConversationLoading}
+                                    onClick={() => setIsModalVisible(true)}
+                                  >
+                                    <i className="material-icons material-icons-outlined">
+                                      email
+                                    </i>{" "}
+                                    مراسلة البائع{" "}
+                                    {createConversationLoading && (
+                                      <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                      ></span>
+                                    )}
                                   </button>
-                                }
+                                )}
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    }
+                    )}
                     <div className="timwoork-single-comments">
                       <div className="timwoork-single-comments-inner">
                         <div className="single-comments-header">
                           <div className="flex-center">
                             <h4 className="title">
-                              <span className="material-icons material-icons-outlined">question_answer</span>
+                              <span className="material-icons material-icons-outlined">
+                                question_answer
+                              </span>
                               آراء المشتريين
                             </h4>
                           </div>
                         </div>
                         <div className="single-comments-body">
                           <Comments comments={ProductData.data.ratings} />
-                          {ProductData.data.ratings.length == 0 &&
+                          {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">لاتوجد آراء المشتريين</p>
                             </Alert>
-                          }
+                          )}
                         </div>
                       </div>
                     </div>
@@ -504,12 +671,18 @@ function Single({ query, stars, errorFetch }) {
                     <div className="panel-aside-header">
                       <ul className="nav top-aside-nav">
                         <li className="delevr-time me-auto">
-                          <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
+                          <span className="material-icons material-icons-outlined">
+                            timer
+                          </span>{" "}
+                          مدة التسليم: {durationFunc()}
                         </li>
                         <li className="cat-post ml-auto">
                           <Dropdown overlay={menu}>
                             <span>
-                              <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
+                              <span className="material-icons material-icons-outlined">
+                                share
+                              </span>{" "}
+                              مشاركة الخدمة
                             </span>
                           </Dropdown>
                         </li>
@@ -517,10 +690,22 @@ function Single({ query, stars, errorFetch }) {
                     </div>
                     <div className="row mx-auto py-2">
                       <div className="col-7">
-                        <p className="text-quatity"> عدد مرات الشراء:
-                          <span className='me-auto'>
+                        <p className="text-quatity">
+                          {" "}
+                          عدد مرات الشراء:
+                          <span className="me-auto">
                             <Popover content={noteContent} trigger="hover">
-                              <Badge style={{ color: '#52c41a ' }} count={<span style={{ color: '#52c41a', fontSize: 16 }} className='material-icons'>info</span>} />
+                              <Badge
+                                style={{ color: "#52c41a " }}
+                                count={
+                                  <span
+                                    style={{ color: "#52c41a", fontSize: 16 }}
+                                    className="material-icons"
+                                  >
+                                    info
+                                  </span>
+                                }
+                              />
                             </Popover>
                           </span>
                         </p>
@@ -541,7 +726,9 @@ function Single({ query, stars, errorFetch }) {
                           id="quantity_count"
                           value={quantutyCount}
                           className="timlands-inputs sm"
-                          onChange={(e: any) => setQuantutyCount(e.target.value)}
+                          onChange={(e: any) =>
+                            setQuantutyCount(e.target.value)
+                          }
                         >
                           <option value={1}>1</option>
                           <option value={2}>2</option>
@@ -556,16 +743,18 @@ function Single({ query, stars, errorFetch }) {
                         </select>
                       </div>
                     </div>
-                    {ProductData.data.developments &&
+                    {ProductData.data.developments && (
                       <div className="panel-aside-body">
                         <div className="add-devloppers-header">
                           <h4 className="title">التطويرات المتوفرة</h4>
                         </div>
-                        {ProductData.data.developments.length == 0 &&
+                        {ProductData.data.developments.length == 0 && (
                           <div className="nothing-note">
-                            <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
+                            <p className="text">
+                              هذه الخدمة لاتوجد فيها تطويرات
+                            </p>
                           </div>
-                        }
+                        )}
                         <ul className="add-devloppers-nav">
                           {ProductData.data.developments.map((e: any) => {
                             return (
@@ -576,19 +765,26 @@ function Single({ query, stars, errorFetch }) {
                                     type="checkbox"
                                     id={"flexCheckDefault-id" + e.id}
                                     value={e.id}
-                                    onChange={handleOnChangeAddID} {..._totalPrice()}
+                                    onChange={handleOnChangeAddID}
+                                    {..._totalPrice()}
                                   />
-                                  <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor={"flexCheckDefault-id" + e.id}
+                                  >
                                     {e.title}
-                                    <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
+                                    <p className="price-duration">
+                                      ستكون المدة {DevdurationFunc(e.duration)}{" "}
+                                      بمبلغ {e.price}$
+                                    </p>
                                   </label>
                                 </div>
                               </li>
-                            )
+                            );
                           })}
                         </ul>
                       </div>
-                    }
+                    )}
                     <div className="panel-aside-footer">
                       <div className="aside-footer-total-price">
                         <h4 className="price-total me-auto">
@@ -596,7 +792,9 @@ function Single({ query, stars, errorFetch }) {
                         </h4>
                         <div className="bayers-count">
                           <p className="num">
-                            <span className="count">{ProductData && ProductData.data.count_buying} </span>
+                            <span className="count">
+                              {ProductData && ProductData.data.count_buying}{" "}
+                            </span>
                             <span className="text"> اشتروا هذا</span>
                           </p>
                         </div>
@@ -604,8 +802,11 @@ function Single({ query, stars, errorFetch }) {
                       <div className="aside-footer-addtocart mt-3">
                         <button
                           onClick={addToCart}
-                          className="btn butt-primary butt-lg">
-                          <span className="material-icons material-icons-outlined">add_shopping_cart</span>
+                          className="btn butt-primary butt-lg"
+                        >
+                          <span className="material-icons material-icons-outlined">
+                            add_shopping_cart
+                          </span>
                           إضافة إلى السلة
                         </button>
                       </div>
@@ -616,7 +817,7 @@ function Single({ query, stars, errorFetch }) {
             </div>
           </div>
         </div>
-      }
+      )}
       {/*<div className="container">
         <PostsAside title="خدمات ذات صلة" PostData={testServices} />
     </div>*/}
@@ -624,24 +825,19 @@ function Single({ query, stars, errorFetch }) {
   );
 }
 Single.getLayout = function getLayout(page: any): ReactElement {
-  return (
-    <Layout>
-      {page}
-    </Layout>
-  )
-}
+  return <Layout>{page}</Layout>;
+};
 export default Single;
 export async function getServerSideProps({ query }) {
   try {
-    const uriString = encodeURI(`api/product/${query.product}`)
+    const uriString = encodeURI(`api/product/${query.product}`);
     // Fetch data from external API
-    const res = await API.get(uriString)
+    const res = await API.get(uriString);
 
     // Pass data to the page via props
-    return { props: { stars: res.data, query, errorFetch: false } }
-
+    return { props: { stars: res.data, query, errorFetch: false } };
   } catch (error) {
-    return { props: { stars: null, query, errorFetch: true } }
+    return { props: { stars: null, query, errorFetch: true } };
   }
 }
 Single.propTypes = {

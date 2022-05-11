@@ -158,7 +158,7 @@ function Hero() {
               }}
             />
             {!isLoading && (
-              <button className="search-btn">
+              <button ref={buttonRef} className="search-btn">
                 <span className="material-icons material-icons-outlined">
                   search
                 </span>
