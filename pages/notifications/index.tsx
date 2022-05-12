@@ -109,7 +109,7 @@ function index() {
             <MetaTags
                 title="الإشعارات"
                 metaDescription="الإشعارات"
-                ogDescription="الإشعارات"
+                ogDescription={"الإشعارات" + size}
             />
             <div className="row justify-content-center">
                 <div className="col-md-6">
