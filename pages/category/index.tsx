@@ -6,7 +6,7 @@ import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index() {
-  var { data: categories }: any = useSWR(`api/categories`);
+  const { data: categories }: any = useSWR(`api/categories`);
 
   categories &&
     categories.data.sort((a, b) => {

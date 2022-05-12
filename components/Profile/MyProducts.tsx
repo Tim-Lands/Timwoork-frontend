@@ -157,26 +157,26 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
           </a>
         </Link>
       </div>
-      {/* <Menu mode="horizontal">
-                <Menu.Item key="all" onClick={() => setStatusType('')}>
-                    الكل
-                </Menu.Item>
-                <Menu.Item key="mail" onClick={() => setStatusType('/published')}>
-                    النشطة
-                </Menu.Item>
-                <Menu.Item key="app" onClick={() => setStatusType('/rejected')}>
-                    المرفوضة
-                </Menu.Item>
-                <Menu.Item key="waiting" onClick={() => setStatusType('/pending')}>
-                    قيد الإنتظار
-                </Menu.Item>
-                <Menu.Item key="drafts" onClick={() => setStatusType('/drafts')}>
-                    المسودات
-                </Menu.Item>
-                <Menu.Item key="alipay" onClick={() => setStatusType('/paused')}>
-                    المعطلة
-                </Menu.Item>
-            </Menu> */}
+      <Menu mode="horizontal">
+        <Menu.Item key="all" onClick={() => setStatusType("")}>
+          الكل
+        </Menu.Item>
+        <Menu.Item key="mail" onClick={() => setStatusType("/published")}>
+          النشطة
+        </Menu.Item>
+        <Menu.Item key="app" onClick={() => setStatusType("/rejected")}>
+          المرفوضة
+        </Menu.Item>
+        <Menu.Item key="waiting" onClick={() => setStatusType("/pending")}>
+          قيد الإنتظار
+        </Menu.Item>
+        <Menu.Item key="drafts" onClick={() => setStatusType("/drafts")}>
+          المسودات
+        </Menu.Item>
+        <Menu.Item key="alipay" onClick={() => setStatusType("/paused")}>
+          المعطلة
+        </Menu.Item>
+      </Menu>
       {postsList && postsList.data.length == 0 ? (
         <Result
           status="404"
