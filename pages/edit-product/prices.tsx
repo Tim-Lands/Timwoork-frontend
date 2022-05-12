@@ -143,7 +143,7 @@ function Prices({ query }) {
                                                 </div>
                                                 <div className="timlands-step-item">
                                                     <h3 className="text">
-                                                        <Link href={`/edit-product/medias2?id=${id}`}>
+                                                        <Link href={`/edit-product/medias?id=${id}`}>
                                                             <a>
                                                                 <span className="icon-circular">
                                                                     <span className="material-icons material-icons-outlined">mms</span>
