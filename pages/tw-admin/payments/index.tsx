@@ -16,7 +16,7 @@ function Countries(): ReactElement {
     const { data: GetData, error }: any = useSWR(`dashboard/types_payments`)
 
     const token = Cookies.get('token_dash')
-    const deleteHandle = (id: any) => {
+/*     const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
             customClass: {
@@ -52,7 +52,7 @@ function Countries(): ReactElement {
             }
         })
 
-    }
+    } */
     const activateHandle = async (id: any) => {
         try {
             const res = await API.post(`dashboard/types_payments/${id}/active_payment`, null, {
@@ -132,9 +132,7 @@ function Countries(): ReactElement {
                                                 تعديل
                                             </button>
                                         </Link>
-                                        <button onClick={() => deleteHandle(e.id)} className="btn butt-xs2 butt-red">
-                                            حذف
-                                        </button>
+                       
                                         {(e.status == 1) ?
                                             <button onClick={() => disactivateHandle(e.id)} className="btn butt-xs2 mx-1 butt-orange">
                                                 تعطيل

@@ -7,6 +7,7 @@ import { Menu, Dropdown, Button } from "antd";
 import Categories from "@/components/Categories";
 import router from "next/router";
 import Head from "next/head";
+
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=4&popular"
