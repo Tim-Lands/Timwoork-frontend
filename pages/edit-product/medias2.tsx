@@ -22,8 +22,9 @@ function Medias({ query, stars }) {
     const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries)
     const [isGalleryChanged, setIsGalleryChanged]: any = useState(false)
     const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false)
-    const [isRemoveModal, setIsRemoveModal]:any = useState(false)
-    const [removedImageId, setRemovedImageId]:any = useState(-1);
+    const [isRemoveModal, setIsRemoveModal]: any = useState(false)
+    const [removedImage, setRemovedImage]: any = useState({id:-1,index:-1});
+    const [removedImages, setRemovedImages] = useState([]);
     console.log(galleryMedia);
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
@@ -57,7 +58,7 @@ function Medias({ query, stars }) {
         }
         getProductId()
     }, [])
-console.log(query)
+    console.log(query)
     const [validationsGeneral, setValidationsGeneral]: any = useState({})
     const [url_video, setVideourl] = useState('')
     const [temp_url_video, setTempUrlVideo] = useState('')
@@ -95,7 +96,7 @@ console.log(query)
     const loadGalleryImages: any = async () => {
         const galleries = new FormData();
         galleryMedia.map((e: any) => (
-           e.file&& galleries.append('images[]', e.file)
+            e.file && galleries.append('images[]', e.file)
         ))
         //galleries.append('images[]', images)
         const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
@@ -173,8 +174,9 @@ console.log(query)
                 await uploadFeatured()
             else if (isGalleryChanged)
                 await uploadGallery()
-            else 
+            else
                 await uploadVideoUrl()
+            await sendRemoveRequest()
 
         } catch (error: any) {
             setLoading(false)
@@ -226,44 +228,49 @@ console.log(query)
             message.success('لقد تم تحديث بنجاح')
         }
     }
-    
-    const removeImage = async(image)=>{
+
+    const removeImage = async (image, index) => {
+        console.log(image)
         setIsRemoveModal(true);
-        setRemovedImageId(image.id);
-    
+        setRemovedImage({id:image.id, index});
+
     }
-    const onRemoveSubmit = async(image_id)=>{
-            try{
-            const res = await API.post(
-                `api/product/${query.id}/delete_galary`,
-                {id:image_id},
+    const onRemoveSubmit = async (image_id, index) => {
+        if (image_id) {
+            setRemovedImages([...removedImages, image_id])
+            setGalleryMedia(galleryMedia.filter(media => media.id !== image_id))
+
+        }
+        else {
+            console.log(index)
+            const temp_arr = galleryMedia;
+            temp_arr.splice(index, 1);
+            setGalleryMedia(temp_arr)
+        }
+        setIsRemoveModal(false)
+
+
+    }
+
+    const sendRemoveRequest = async () => {
+        try {
+            const promises = removedImages.map(img => API.post(`api/product/${query.id}/delete_galary`,
+                { id: img },
                 {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-              if(res.status==200){
-                notification.open({
-                    message: 'تم حذف الصوة بنجاح',
-                    icon: <CloseCircleOutlined style={{ color: '#666' }} />,
-                });
-                console.log(galleryMedia);
-                console.log(image_id)
-                setIsRemoveModal(false)
-                setGalleryMedia(galleryMedia.filter(media=>media.id!==image_id))
-              }
-            }
-            catch(error){
-                
-                    notification.open({
-                        message: 'حدث خطأ',
-                        icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
-                    });
-                
-            }
-     
-        
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }))
+            await Promise.all(promises)
+        }
+        catch (error) {
+            console.log(error.response)
+            notification.open({
+                message: 'حدث خطأ',
+                icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
+            });
+
+        }
     }
     return (
         <div className="container-fluid">
@@ -275,16 +282,16 @@ console.log(query)
 
             {token && veriedEmail &&
                 <div className="row my-3">
-                {isRemoveModal && <div className="overlay-fixed">
-                    <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImageId} setIsRemoveModal={setIsRemoveModal} />
-                </div>}
+                    {isRemoveModal && <div className="overlay-fixed">
+                        <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImage.id} index = {removedImage.index} setIsRemoveModal={setIsRemoveModal} />
+                    </div>}
                     <div className="col-md-12 pt-3">
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
                         <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
 
-                        <div className="timlands-steps">
+                            <div className="timlands-steps">
                                 <div className="timlands-step-item">
                                     <h3 className="text">
                                         <Link href={`/edit-product/overview?id=${id}`}>
@@ -333,7 +340,7 @@ console.log(query)
                                         </Link>
                                     </h3>
                                 </div>
-                        </div>
+                            </div>
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                             <div className="row">
                                 <div className="col-lg-6">
@@ -368,7 +375,7 @@ console.log(query)
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
-                                    <ImagesUploadingGalleries setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} callback={removeImage}/>
+                                    <ImagesUploadingGalleries setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} callback={removeImage} />
                                 </div>
                             </div>
 

@@ -203,6 +203,7 @@ function index(): ReactElement {
                 setIsModalVisible(false)
             }
         } catch (error) {
+            console.log(error.response)
             setIsLoading(false)
         }
     }

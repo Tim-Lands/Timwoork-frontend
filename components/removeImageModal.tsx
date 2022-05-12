@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
-function RemoveImageModal({ setIsRemoveModal,onSubmit, image_id }): ReactElement {
+function RemoveImageModal({ setIsRemoveModal,onSubmit, image_id, index }): ReactElement {
     
     return (
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm'>
@@ -19,7 +19,7 @@ function RemoveImageModal({ setIsRemoveModal,onSubmit, image_id }): ReactElement
             </div>
             <div className="modal-conferm-footer">
                 <Space>
-                    <button className='btn butt-sm butt-green' onClick={()=>onSubmit(image_id)}>نعم</button>
+                    <button className='btn butt-sm butt-green' onClick={()=>onSubmit(image_id, index)}>نعم</button>
                     <button className='btn butt-sm butt-red-text' onClick={() => setIsRemoveModal(false)}>لا</button>
                 </Space>
             </div>
@@ -32,5 +32,6 @@ RemoveImageModal.propTypes = {
     setIsRemoveModal: PropTypes.func,
     product_id:PropTypes.number,
     image_id:PropTypes.number,
-    onSubmit:PropTypes.func
+    onSubmit:PropTypes.func,
+    index:PropTypes.number
 };

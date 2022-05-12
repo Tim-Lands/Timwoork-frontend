@@ -23,8 +23,10 @@ function Medias({ query, stars }) {
     const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries)
     const [isFeaturedChanged, setIsFeaturedChanged] = useState(false)
     const [isGalleryChanged, setIsGalleryChanged] = useState(false)
-    const [isRemoveModal, setIsRemoveModal]:any = useState(false)
-    const [removedImageId, setRemovedImageId]:any = useState(-1);
+    const [isRemoveModal, setIsRemoveModal]: any = useState(false)
+    const [removedImage, setRemovedImage]: any = useState({id:-1,index:-1 });
+    const [removedImages, setRemovedImages] = useState([]);
+
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem('token');
@@ -88,7 +90,7 @@ function Medias({ query, stars }) {
     const loadGalleryImages: any = async () => {
         const galleries = new FormData();
         galleryMedia.map((e: any) => (
-            e.file&&galleries.append('images[]', e.file)
+            e.file && galleries.append('images[]', e.file)
         ))
         //galleries.append('images[]', images)
         const res: any = await API.post(`api/product/${id}/upload-galaries-step-four`, galleries, {
@@ -137,7 +139,7 @@ function Medias({ query, stars }) {
             return
         }
 
-        if (!(featuredMedia instanceof Array)&&featuredMedia.split('/')[5].length<=0) {
+        if (!(featuredMedia instanceof Array) && featuredMedia.split('/')[5].length <= 0) {
             notification.open({
                 message: 'حدث خطأ',
                 description: 'برجاء وضع صورة بارزة',
@@ -161,7 +163,7 @@ function Medias({ query, stars }) {
         }
 
         try {
-            if (isGalleryChanged&&isFeaturedChanged) {
+            if (isGalleryChanged && isFeaturedChanged) {
                 const [res1, res2] = await Promise.all([loadFeatureImage(), loadGalleryImages(), loadVideoUrl()])
                 // Authentication was successful.
                 if (res1.status === 200 && res2.status === 200) {
@@ -175,10 +177,10 @@ function Medias({ query, stars }) {
                     })
                 }
             }
-            else if(isFeaturedChanged){
+            else if (isFeaturedChanged) {
                 const [res] = await Promise.all([loadFeatureImage(), loadVideoUrl()])
                 // Authentication was successful.
-                if (res.status === 200 ) {
+                if (res.status === 200) {
                     setLoading(false)
                     message.success('لقد تم تحديث بنجاح')
                     router.push({
@@ -189,10 +191,10 @@ function Medias({ query, stars }) {
                     })
                 }
             }
-            else if(isGalleryChanged){
+            else if (isGalleryChanged) {
                 const [res] = await Promise.all([loadGalleryImages(), loadVideoUrl()])
                 // Authentication was successful.
-                if (res.status === 200 ) {
+                if (res.status === 200) {
                     setLoading(false)
                     message.success('لقد تم تحديث بنجاح')
                     router.push({
@@ -203,16 +205,17 @@ function Medias({ query, stars }) {
                     })
                 }
             }
-            else{
+            else {
                 setLoading(false)
-                    message.success('لقد تم تحديث بنجاح')
-                    router.push({
-                        pathname: '/add-new/complete',
-                        query: {
-                            id: id, // pass the id 
-                        },
-                    })
+                message.success('لقد تم تحديث بنجاح')
+                router.push({
+                    pathname: '/add-new/complete',
+                    query: {
+                        id: id, // pass the id 
+                    },
+                })
             }
+            await sendRemoveRequest()
         } catch (error: any) {
             setLoading(false)
             console.log(error.response)
@@ -231,43 +234,47 @@ function Medias({ query, stars }) {
             }
         }
     }
-    const removeImage = async(image)=>{
+    const removeImage = async (image,index) => {
         setIsRemoveModal(true);
-        setRemovedImageId(image.id);
-    
+        setRemovedImage({id:image.id,index});
+
     }
-    const onRemoveSubmit = async(image_id)=>{
-            try{
-            const res = await API.post(
-                `api/product/${query.id}/delete_galary`,
-                {id:image_id},
+    const onRemoveSubmit = async (image_id, index) => {
+        if (image_id) {
+            setRemovedImages([...removedImages, image_id])
+            setGalleryMedia(galleryMedia.filter(media => media.id !== image_id))
+
+        }
+        else {
+            console.log(index)
+            const temp_arr = galleryMedia;
+            temp_arr.splice(index, 1);
+            setGalleryMedia(temp_arr)
+        }
+        setIsRemoveModal(false)
+
+
+    }
+
+    const sendRemoveRequest = async () => {
+        try {
+            const promises = removedImages.map(img => API.post(`api/product/${query.id}/delete_galary`,
+                { id: img },
                 {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-              if(res.status==200){
-                notification.open({
-                    message: 'تم حذف الصوة بنجاح',
-                    icon: <CloseCircleOutlined style={{ color: '#666' }} />,
-                });
-                console.log(galleryMedia);
-                console.log(image_id)
-                setIsRemoveModal(false)
-                setGalleryMedia(galleryMedia.filter(media=>media.id!==image_id))
-              }
-            }
-            catch(error){
-                
-                    notification.open({
-                        message: 'حدث خطأ',
-                        icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
-                    });
-                
-            }
-     
-        
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }))
+            await Promise.all(promises)
+        }
+        catch (error) {
+            console.log(error.response)
+            notification.open({
+                message: 'حدث خطأ',
+                icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
+            });
+
+        }
     }
     return (
         <div className="container-fluid">
@@ -279,8 +286,8 @@ function Medias({ query, stars }) {
             {token && veriedEmail &&
                 <div className="row my-3">
                     {isRemoveModal && <div className="overlay-fixed">
-                    <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImageId} setIsRemoveModal={setIsRemoveModal} />
-                </div>}
+                        <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImage.id} index = {removedImage.index} setIsRemoveModal={setIsRemoveModal} />
+                    </div>}
                     <div className="col-md-4">
                         <SidebarAdvices />
                     </div>
