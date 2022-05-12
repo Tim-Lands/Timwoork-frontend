@@ -23,7 +23,8 @@ function Medias({ query, stars }) {
     const [isGalleryChanged, setIsGalleryChanged]: any = useState(false)
     const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false)
     const [isRemoveModal, setIsRemoveModal]: any = useState(false)
-    const [removedImageId, setRemovedImageId]: any = useState(-1);
+    const [removedImage, setRemovedImage]: any = useState({id:-1,index:-1});
+    const [removedImages, setRemovedImages] = useState([]);
     console.log(galleryMedia);
     let token = Cookies.get('token')
     if (!token && typeof window !== "undefined")
@@ -175,6 +176,7 @@ function Medias({ query, stars }) {
                 await uploadGallery()
             else
                 await uploadVideoUrl()
+            await sendRemoveRequest()
 
         } catch (error: any) {
             setLoading(false)
@@ -227,43 +229,48 @@ function Medias({ query, stars }) {
         }
     }
 
-    const removeImage = async (image) => {
+    const removeImage = async (image, index) => {
+        console.log(image)
         setIsRemoveModal(true);
-        setRemovedImageId(image.id);
+        setRemovedImage({id:image.id, index});
 
     }
-    const onRemoveSubmit = async (image_id) => {
+    const onRemoveSubmit = async (image_id, index) => {
+        if (image_id) {
+            setRemovedImages([...removedImages, image_id])
+            setGalleryMedia(galleryMedia.filter(media => media.id !== image_id))
+
+        }
+        else {
+            console.log(index)
+            const temp_arr = galleryMedia;
+            temp_arr.splice(index, 1);
+            setGalleryMedia(temp_arr)
+        }
+        setIsRemoveModal(false)
+
+
+    }
+
+    const sendRemoveRequest = async () => {
         try {
-            const res = await API.post(
-                `api/product/${query.id}/delete_galary`,
-                { id: image_id },
+            const promises = removedImages.map(img => API.post(`api/product/${query.id}/delete_galary`,
+                { id: img },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            if (res.status == 200) {
-                notification.open({
-                    message: 'تم حذف الصوة بنجاح',
-                    icon: <CloseCircleOutlined style={{ color: '#666' }} />,
-                });
-                console.log(galleryMedia);
-                console.log(image_id)
-                setIsRemoveModal(false)
-                setGalleryMedia(galleryMedia.filter(media => media.id !== image_id))
-            }
+                        Authorization: `Bearer ${token}`
+                    }
+                }))
+            await Promise.all(promises)
         }
         catch (error) {
-
+            console.log(error.response)
             notification.open({
                 message: 'حدث خطأ',
                 icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
             });
 
         }
-
-
     }
     return (
         <div className="container-fluid">
@@ -274,11 +281,11 @@ function Medias({ query, stars }) {
             />
 
             {token && veriedEmail &&
-                <div className="row justify-content-md-center my-3">
+                <div className="row my-3">
                     {isRemoveModal && <div className="overlay-fixed">
-                        <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImageId} setIsRemoveModal={setIsRemoveModal} />
+                        <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImage.id} index = {removedImage.index} setIsRemoveModal={setIsRemoveModal} />
                     </div>}
-                    <div className="col-md-7 pt-3">
+                    <div className="col-md-12 pt-3">
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
@@ -323,7 +330,7 @@ function Medias({ query, stars }) {
                                 </div>
                                 <div className="timlands-step-item active">
                                     <h3 className="text">
-                                        <Link href={`/edit-product/medias2?id=${id}`}>
+                                        <Link href={`/edit-product/medias?id=${id}`}>
                                             <a>
                                                 <span className="icon-circular">
                                                     <span className="material-icons material-icons-outlined">mms</span>
@@ -335,10 +342,9 @@ function Medias({ query, stars }) {
                                 </div>
                             </div>
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
-                            <div className="row justify-content-md-center">
-                                <div className="col-xl-8">
+                            <div className="row">
+                                <div className="col-lg-6">
                                     <FeaturedUploadingGalleries setIsChanged={setIsFeaturedChanged} setImage={setFeaturedImages} full_path_thumbnail={featuredMedia || '/seo.png'} />
-                                    <ImagesUploadingGalleries setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} callback={removeImage} />
                                     <div className="timlands-content-form mt-2">
                                         <div className="choose-images-file">
                                             <h4 className="timlands-content-form-subtitle">
@@ -368,12 +374,19 @@ function Medias({ query, stars }) {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="col-lg-6">
+                                    <ImagesUploadingGalleries setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} callback={removeImage} />
+                                </div>
                             </div>
 
                             <div className="col-md-12">
                                 <div className="py-4 d-flex">
+                                    <button onClick={() => router.back()} type="button" className="btn flex-center butt-green-out me-auto butt-xs">
+                                        <span className="material-icons-outlined">chevron_right</span><span className="text">المرحلة السابقة</span>
+                                        <div className="spinner-border spinner-border-sm text-white" role="status"></div>
+                                    </button>
                                     <button type="submit" disabled={loading} onClick={loadImagesHandle} className="btn flex-center butt-green ml-auto butt-sm">
-                                        حفظ التغييرات
+                                        <span className="text">المرحلة التالية</span><span className="material-icons-outlined">chevron_left</span>
                                     </button>
                                 </div>
                             </div>
