@@ -47,7 +47,9 @@ function index() {
         } catch (error) {
             console.log('error');
         }
-    }
+      
+      mutate("api/me");
+  }
     useEffect(() => {
         if (!token) {
             router.push('/login')
@@ -162,14 +164,12 @@ function index() {
                 </div>
                 
             </div>
-        </div>
-    )
+           
+          </div>
+      
+  );
 }
 index.getLayout = function getLayout(page): ReactElement {
-    return (
-        <Layout>
-            {page}
-        </Layout>
-    )
-}
-export default index
+  return <Layout>{page}</Layout>;
+};
+export default index;

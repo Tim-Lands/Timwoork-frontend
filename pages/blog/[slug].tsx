@@ -10,45 +10,49 @@ import { Divider } from "antd";
 import { Image } from "antd";
 
 const User = ({ query }) => {
-  const [postsMediaTable, setPostsMediaTable] = useState([])
+  const [postsMediaTable, setPostsMediaTable] = useState([]);
+  console.log(query.slug);
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`
   );
   const { data: getSamePosts }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/posts?categories=${getPosts && getPosts[0].categories[0]
+    `https://timwoork.net/wp-json/wp/v2/posts?categories=${
+      getPosts && getPosts[0].categories[0]
     }&per_page=3`
   );
   const { data: getAds }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/media?include=28,29`
   );
   const fetchImage = (img_id) => {
-    return API.get(`https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`)
-
-  }
+    return API.get(
+      `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
+    );
+  };
   const fetch = async () => {
     const promises = [];
     const tempPostsMediaTable = [];
-    getPosts?.forEach(post => promises.push(fetchImage(post.featured_media)))
-    getSamePosts?.forEach(post => promises.push(fetchImage(post.featured_media)))
+    getPosts?.forEach((post) => promises.push(fetchImage(post.featured_media)));
+    getSamePosts?.forEach((post) =>
+      promises.push(fetchImage(post.featured_media))
+    );
     const media = await Promise.all(promises);
     media.forEach(
       (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
     );
-    setPostsMediaTable(tempPostsMediaTable)
-  }
+    setPostsMediaTable(tempPostsMediaTable);
+  };
   useEffect(() => {
-    if (getPosts)
-      fetch()
-  }, [getPosts])
+    if (getPosts) fetch();
+  }, [getPosts]);
   return (
     <>
       {!getPosts && <Loading />}
       <MetaTags
-        title={getPosts&&getPosts[0].title.rendered}
-        metaDescription={getPosts&&getPosts[0].excerpt.rendered}
-        ogDescription={getPosts&&getPosts[0].excerpt.rendered}
-        ogImage={getPosts&&getPosts[0].jetpack_featured_media_url}
-        ogUrl={`https://timwoork.com/blog/${getPosts&&getPosts[0].slug}`}
+        title={getPosts && getPosts[0].title.rendered}
+        metaDescription={getPosts && getPosts[0].excerpt.rendered}
+        ogDescription={getPosts && getPosts[0].excerpt.rendered}
+        ogImage={getPosts && getPosts[0].jetpack_featured_media_url}
+        ogUrl={`https://timwoork.com/blog/${getPosts && getPosts[0].slug}`}
       />
       {getPosts && (
         <>
@@ -57,10 +61,7 @@ const User = ({ query }) => {
               <header>
                 <div className="row" style={{ alignItems: "center" }}>
                   <div className="col-lg-10 col-md-8">
-                    <h1
-                      className="mb-0"
-                      style={{ fontSize: 30, fontWeight: "bold" }}
-                    >
+                    <h1 className="mb-0 blogHeaderTitle">
                       {getPosts[0].title.rendered}
                     </h1>
                   </div>

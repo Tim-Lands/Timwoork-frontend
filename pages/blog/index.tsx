@@ -5,10 +5,10 @@ import useSWR from "swr";
 import { Menu, Result } from "antd";
 import Post from "@/components/Post/blogPost";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import API from '../../config'
+import API from "../../config";
 function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
-  const [postsMediaTable, setPostsMediaTable] = useState([])
+  const [postsMediaTable, setPostsMediaTable] = useState([]);
   const { data: getCategories }: any = useSWR(
     "https://timwoork.net/wp-json/wp/v2/categories"
   );
@@ -17,23 +17,23 @@ function Category(): JSX.Element {
   );
 
   const fetchImage = (img_id) => {
-    return API.get(`https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`)
-
-  }
+    return API.get(
+      `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
+    );
+  };
   const fetch = async () => {
     const promises = [];
     const tempPostsMediaTable = [];
-    getPosts.forEach(post => promises.push(fetchImage(post.featured_media)))
+    getPosts.forEach((post) => promises.push(fetchImage(post.featured_media)));
     const media = await Promise.all(promises);
     media.forEach(
       (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
     );
-    setPostsMediaTable(tempPostsMediaTable)
-  }
+    setPostsMediaTable(tempPostsMediaTable);
+  };
   useEffect(() => {
-    if (getPosts)
-      fetch()
-  }, [getPosts])
+    if (getPosts) fetch();
+  }, [getPosts]);
   return (
     <div>
       <MetaTags
@@ -65,13 +65,23 @@ function Category(): JSX.Element {
             getPosts.map((item: any) => {
               console.log(item);
               return (
-                <div className="col-md-4" key={item.id}>
+                <div
+                  className={innerWidth < 992 ? `col-md-6` : `col-md-4`}
+                  key={item.id}
+                >
                   <Post
                     title={item.title.rendered}
                     thumbnail={postsMediaTable[item.featured_media]}
                     size={""}
                     slug={item.slug}
-                    excerpt={item.excerpt.rendered.substring(0, 200) + "..."}
+                    excerpt={
+                      item.excerpt.rendered.substring(
+                        0,
+                        innerWidth < 1500
+                          ? Math.floor(innerWidth / 5.5)
+                          : Math.floor(innerWidth / 12)
+                      ) + "..."
+                    }
                   />
                 </div>
               );
