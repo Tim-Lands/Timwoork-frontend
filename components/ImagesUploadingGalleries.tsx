@@ -79,7 +79,7 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
                                                                     </button> */}
                                                     <button
                                                         type='button'
-                                                        onClick={() => removeImage(image,index)}>
+                                                        onClick={() => removeImage(image)}>
                                                         <span className="material-icons-outlined">clear</span>
                                                     </button>
                                                 </div>
