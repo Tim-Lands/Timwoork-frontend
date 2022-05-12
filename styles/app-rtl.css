@@ -1539,7 +1539,10 @@
 }
 
 .timlands-table {
+  -ms-overflow-style: scroll;
   margin: 9px 0;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
   overflow: hidden;
   background-color: #fff;
   border-radius: 5px;
@@ -1549,26 +1552,28 @@
   position: relative;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   .timlands-table {
     width: 100%;
-  }
-}
-
-@media (max-width: 600px) {
-  .timlands-table .table {
-    width: 900px;
     overflow-x: scroll;
   }
 }
 
-.timlands-table .table tr td, .timlands-table .table tr th {
+@media (max-width: 780px) {
+  .timlands-table .table {
+    width: 900px;
+  }
+}
+
+.timlands-table .table tr td,
+.timlands-table .table tr th {
   font-size: 13px;
   padding: 10px 15px;
   position: relative;
 }
 
-.timlands-table .table tr td .material-icons, .timlands-table .table tr th .material-icons {
+.timlands-table .table tr td .material-icons,
+.timlands-table .table tr th .material-icons {
   font-size: 17px;
   margin-left: 4px;
 }
@@ -1615,6 +1620,28 @@
   right: 0;
   bottom: 0;
   top: 0;
+}
+
+.timlands-table::-webkit-scrollbar {
+  height: 6px;
+}
+
+.timlands-table:hover {
+  scrollbar-color: #cbd1d8 transparent;
+}
+
+.timlands-table::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  background-color: transparent;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.timlands-table:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  background-color: #cbd1d8;
 }
 
 .table-del {
@@ -8418,5 +8445,12 @@ h3 {
   .blog-single-content ul li {
     font-size: 15px;
   }
+}
+
+.userProfileCont {
+  width: 100%;
+  margin-inline: auto;
+  padding: 0px 20px;
+  max-width: 1150px;
 }
 /*# sourceMappingURL=app-rtl.css.map */

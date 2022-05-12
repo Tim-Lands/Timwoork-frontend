@@ -110,7 +110,7 @@ function Profile() {
               userInfo.user_details.profile.last_name
             }
           />
-          <div className="container">
+          <div className="userProfileCont">
             <div className="timlands-profile-content">
               <div className="profile-content-header">
                 <div className="profile-content-avatar">
