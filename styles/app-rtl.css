@@ -5569,6 +5569,7 @@ h3 {
   border-radius: 5px;
   overflow: hidden;
   position: relative;
+  margin: auto;
   margin-inline: auto;
   margin-top: 18px;
   background-size: cover;
