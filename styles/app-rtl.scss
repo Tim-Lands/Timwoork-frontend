@@ -627,28 +627,22 @@ h3 {
       align-content: center;
       justify-content: center;
 
-      &::after,
       &::before {
         content: "";
         position: absolute;
         height: 2px;
         top: 50%;
+        width: 100%;
         background-color: #ddd;
-      }
-
-      &::before {
-        left: 0;
-        right: 68%;
-      }
-
-      &::after {
-        right: 0;
-        left: 68%;
+        z-index: 1;
       }
 
       .title {
+        z-index: 2;
+        background-color: white;
         font-size: 14px;
         font-weight: bold;
+        padding: 0px 1.6vw;
         color: #333;
         margin: 0;
       }
@@ -1161,6 +1155,7 @@ h3 {
         .timwoork-single-product-detailts {
           padding: 20px 0;
           p {
+            font-size: 16px;
             @media (max-width: 580px) {
               font-size: 14px;
             }
@@ -2070,7 +2065,32 @@ h3 {
 .timlands-panel {
   background-color: #fff;
   padding: 20px;
+  .timlands-steps-cont {
+    @media (max-width: 1235px) {
+      overflow-x: scroll;
+      scrollbar-color: transparent transparent;
+      scrollbar-width: thin;
+      -ms-overflow-style: scroll;
+    }
 
+    &::-webkit-scrollbar {
+      height: 13px;
+    }
+    &:hover {
+      scrollbar-color: #cbd1d8 transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 5px;
+      height: 13px;
+      background-color: transparent;
+      transition: all 0.1s linear;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 5px;
+      transition: all 0.1s linear;
+      background-color: #cbd1d8;
+    }
+  }
   .timlands-steps {
     border-bottom: 1px solid lighten($primary, 54);
     border-radius: 6px;
@@ -2078,7 +2098,9 @@ h3 {
     display: flex;
     justify-content: space-between;
     margin: 12px 0;
-
+    @media (max-width: 1235px) {
+      width: 800px;
+    }
     .timlands-step-item {
       padding: 10px 11px;
       position: relative;
@@ -5259,8 +5281,8 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   top: 70px;
   background-color: #fff;
   padding: 10px;
-
-  @media (min-width: 580px) {
+  height: fit-content;
+  @media (min-width: 992px) {
     min-height: 600px;
   }
 
@@ -5912,6 +5934,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 
       @media (max-width: 580px) {
         font-size: 12px;
+      }
+      @media (max-width: 420px) {
+        font-size: 10px;
+        padding: 10px 8px !important;
       }
     }
 
