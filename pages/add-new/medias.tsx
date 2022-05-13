@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useRef } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
 import router from 'next/router';
@@ -328,7 +328,7 @@ function Medias({ query, stars }) {
                       الوصف وتعليمات المشتري
                     </h3>
                   </div>
-                  <div className="timlands-step-item active" ref={stepsView}>
+                  <div className="timlands-step-item active" >
                     <h3 className="text">
                       <span className="icon-circular">
                         <span className="material-icons material-icons-outlined">
