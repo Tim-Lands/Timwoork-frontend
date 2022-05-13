@@ -252,8 +252,6 @@ function Medias({ query, stars }) {
             setGalleryMedia(temp_arr)
         }
         setIsRemoveModal(false)
-
-
     }
 
     const sendRemoveRequest = async () => {
@@ -273,7 +271,6 @@ function Medias({ query, stars }) {
                 message: 'حدث خطأ',
                 icon: <CloseCircleOutlined style={{ color: '#c21c1c' }} />,
             });
-
         }
     }
     return (
@@ -288,10 +285,10 @@ function Medias({ query, stars }) {
                     {isRemoveModal && <div className="overlay-fixed">
                         <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImage.id} index = {removedImage.index} setIsRemoveModal={setIsRemoveModal} />
                     </div>}
-                    <div className="col-md-4">
+                    <div className="col-xl-4">
                         <SidebarAdvices />
                     </div>
-                    <div className="col-md-8 pt-3">
+                    <div className="col-xl-8 pt-3">
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
@@ -340,9 +337,10 @@ function Medias({ query, stars }) {
                                 </div>
                             </div>
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
-                            <div className="row">
-                                <div className="col-lg-6">
+                            <div className="row justify-content-md-center">
+                                <div className="col-xl-10">
                                     <FeaturedUploadingGalleries setIsChanged={setIsFeaturedChanged} setImage={setFeaturedImages} full_path_thumbnail={featuredMedia || '/seo.png'} />
+                                    <ImagesUploadingGalleries callback={removeImage} setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} />
                                     <div className="timlands-content-form mt-2">
                                         <div className="choose-images-file">
                                             <h4 className="timlands-content-form-subtitle">
@@ -372,9 +370,6 @@ function Medias({ query, stars }) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <ImagesUploadingGalleries callback={removeImage} setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} />
                                 </div>
                             </div>
 

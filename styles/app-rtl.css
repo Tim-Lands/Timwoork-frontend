@@ -5574,6 +5574,13 @@ h3 {
   background-size: cover;
 }
 
+@media (max-width: 2688px) {
+  .choose-images-file .choose-images-list .image-item {
+    width: 565px;
+    height: 341px;
+  }
+}
+
 .choose-images-file .choose-images-list .image-item .image-item__btn-wrapper {
   position: absolute;
   left: 0;
@@ -5727,7 +5734,6 @@ h3 {
   width: 430px;
   height: 150px;
   margin-left: 0;
-  border: 1px dashed #ddd;
   border-radius: 5px;
 }
 

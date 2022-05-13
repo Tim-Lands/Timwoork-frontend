@@ -23,7 +23,7 @@ function Medias({ query, stars }) {
     const [isGalleryChanged, setIsGalleryChanged]: any = useState(false)
     const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false)
     const [isRemoveModal, setIsRemoveModal]: any = useState(false)
-    const [removedImage, setRemovedImage]: any = useState({id:-1,index:-1});
+    const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
     const [removedImages, setRemovedImages] = useState([]);
     console.log(galleryMedia);
     let token = Cookies.get('token')
@@ -232,7 +232,7 @@ function Medias({ query, stars }) {
     const removeImage = async (image, index) => {
         console.log(image)
         setIsRemoveModal(true);
-        setRemovedImage({id:image.id, index});
+        setRemovedImage({ id: image.id, index });
 
     }
     const onRemoveSubmit = async (image_id, index) => {
@@ -281,11 +281,11 @@ function Medias({ query, stars }) {
             />
 
             {token && veriedEmail &&
-                <div className="row my-3">
-                    {isRemoveModal && <div className="overlay-fixed">
-                        <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImage.id} index = {removedImage.index} setIsRemoveModal={setIsRemoveModal} />
-                    </div>}
-                    <div className="col-md-12 pt-3">
+                <div className="row justify-content-md-center my-3">
+                    <div className="col-md-7 pt-3">
+                        {isRemoveModal && <div className="overlay-fixed">
+                            <RemoveImageModal onSubmit={onRemoveSubmit} product_id={query.id} image_id={removedImage.id} index={removedImage.index} setIsRemoveModal={setIsRemoveModal} />
+                        </div>}
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
@@ -342,9 +342,10 @@ function Medias({ query, stars }) {
                                 </div>
                             </div>
                             {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
-                            <div className="row">
-                                <div className="col-lg-6">
+                            <div className="row justify-content-md-center">
+                                <div className="col-xl-10">
                                     <FeaturedUploadingGalleries setIsChanged={setIsFeaturedChanged} setImage={setFeaturedImages} full_path_thumbnail={featuredMedia || '/seo.png'} />
+                                    <ImagesUploadingGalleries setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} callback={removeImage} />
                                     <div className="timlands-content-form mt-2">
                                         <div className="choose-images-file">
                                             <h4 className="timlands-content-form-subtitle">
@@ -373,9 +374,6 @@ function Medias({ query, stars }) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <ImagesUploadingGalleries setIsChanged={setIsGalleryChanged} setGalleryMedia={setGalleryMedia} galaries={galleryMedia} callback={removeImage} />
                                 </div>
                             </div>
 

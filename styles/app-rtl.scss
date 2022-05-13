@@ -3416,7 +3416,10 @@ h3 {
       border-radius: 5px;
       overflow: hidden;
       position: relative;
-
+      @media (max-width: 2688px) {
+        width: 565px;
+        height: 341px;
+      }
       .image-item__btn-wrapper {
         position: absolute;
         left: 0;
@@ -3543,7 +3546,6 @@ h3 {
         width: 430px;
         height: 150px;
         margin-left: 0;
-        border: 1px dashed #ddd;
         border-radius: 5px;
 
         .image-item__btn-wrapper {
