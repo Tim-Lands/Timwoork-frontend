@@ -3,8 +3,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import API from 'config';
 import { motion } from "framer-motion";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+
 import Link from "next/link";
 import useSWR from 'swr'
 import { MetaTags } from '@/components/SEO/MetaTags'

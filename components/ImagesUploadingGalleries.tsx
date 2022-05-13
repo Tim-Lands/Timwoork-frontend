@@ -17,8 +17,8 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
         setIsChanged(true)
     }
 
-    const removeImage = async (image) => {
-        await callback(image);
+    const removeImage = async (image,index) => {
+        await callback(image,index);
     }
     return (
         <div className="choose-images-file">
@@ -79,7 +79,7 @@ function ImagesUploadingGalleries({ galaries, setGalleryMedia, setIsChanged, cal
                                                                     </button> */}
                                                     <button
                                                         type='button'
-                                                        onClick={() => removeImage(image)}>
+                                                        onClick={() => removeImage(image, index)}>
                                                         <span className="material-icons-outlined">clear</span>
                                                     </button>
                                                 </div>

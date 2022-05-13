@@ -1,6 +1,6 @@
-import Layout from "../../components/Layout/HomeLayout";
+import Layout from '../../components/Layout/HomeLayout'
 import { ReactElement, useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 import API from "../../config";
 import router from 'next/router';
 import SidebarAdvices from './SidebarAdvices';
@@ -295,113 +295,7 @@ function Medias({ query, stars }) {
                         {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
-            <div className={"timlands-panel" + (loading ? " is-loader" : "")}>
-              <div className="timlands-steps-cont">
-                <div className="timlands-steps">
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          collections_bookmark
-                        </span>
-                      </span>
-                      معلومات عامة
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          payments
-                        </span>
-                      </span>
-                      السعر والتطويرات
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          description
-                        </span>
-                      </span>
-                      الوصف وتعليمات المشتري
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item active" >
-                    <h3 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          mms
-                        </span>
-                      </span>
-                      مكتبة الصور والملفات
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          publish
-                        </span>
-                      </span>
-                      نشر الخدمة
-                    </h3>
-                  </div>
-                </div>
-              </div>
-              {validationsGeneral.msg && (
-                <Alert type="error">{validationsGeneral.msg}</Alert>
-              )}
-              <div className="row justify-content-md-center">
-                <div className="col-xl-8">
-                  <FeaturedUploadingGalleries
-                    setIsChanged={setIsFeaturedChanged}
-                    setImage={setFeaturedImages}
-                    full_path_thumbnail={featuredMedia || "/seo.png"}
-                  />
-                  <ImagesUploadingGalleries
-                    callback={removeImage}
-                    setIsChanged={setIsGalleryChanged}
-                    setGalleryMedia={setGalleryMedia}
-                    galaries={galleryMedia}
-                  />
-                  <div className="timlands-content-form mt-2">
-                    <div className="choose-images-file">
-                      <h4 className="timlands-content-form-subtitle">
-                        فيديو تعريفي للخدمة (اختياري)
-                      </h4>
-                      <div className="timlands-form">
-                        <label className="label-block" htmlFor="input-videourl">
-                          رابط الفيديو
-                        </label>
-                        <input
-                          type="text"
-                          id="input-videourl"
-                          name="url_video"
-                          value={url_video}
-                          onChange={handleSetVideourl}
-                          dir="ltr"
-                          placeholder="https://"
-                          className="timlands-inputs"
-                          autoComplete="off"
-                        />
-                        {url_video && (
-                          <ReactPlayer
-                            style={{
-                              borderRadius: 6,
-                              overflow: "hidden",
-                              marginTop: 6,
-                            }}
-                            width="100%"
-                            url={url_video}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                        <div className={"timlands-panel" + (loading ? ' is-loader' : '')}>
 
                             <div className="timlands-steps">
                                 <div className="timlands-step-item">
