@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
@@ -13,6 +13,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 
 function Prices({ query }) {
+  const stepsView = useRef(null);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -62,6 +64,8 @@ function Prices({ query }) {
     setDurationCount(financialGoal);
   };
   useEffect(() => {
+    stepsView.current && stepsView.current.scrollIntoView();
+
     if (!token) {
       router.push("/login");
       return;
@@ -134,58 +138,64 @@ function Prices({ query }) {
                         "timlands-panel " + (isSubmitting ? " is-loader" : "")
                       }
                     >
-                      <div className="timlands-steps">
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                collections_bookmark
+                      <div className="timlands-steps-cont">
+                        <div className="timlands-steps">
+                          <div className="timlands-step-item">
+                            <h3 className="text">
+                              <span className="icon-circular">
+                                <span className="material-icons material-icons-outlined">
+                                  collections_bookmark
+                                </span>
                               </span>
-                            </span>
-                            معلومات عامة
-                          </h3>
-                        </div>
-                        <div className="timlands-step-item active">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                payments
+                              معلومات عامة
+                            </h3>
+                          </div>
+                          <div
+                            className="timlands-step-item active"
+                            ref={stepsView}
+                          >
+                            <h3 className="text">
+                              <span className="icon-circular">
+                                <span className="material-icons material-icons-outlined">
+                                  payments
+                                </span>
                               </span>
-                            </span>
-                            السعر والتطويرات
-                          </h3>
-                        </div>
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                description
+                              السعر والتطويرات
+                            </h3>
+                          </div>
+                          <div className="timlands-step-item">
+                            <h3 className="text">
+                              <span className="icon-circular">
+                                <span className="material-icons material-icons-outlined">
+                                  description
+                                </span>
                               </span>
-                            </span>
-                            الوصف وتعليمات المشتري
-                          </h3>
-                        </div>
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                mms
+                              الوصف وتعليمات المشتري
+                            </h3>
+                          </div>
+                          <div className="timlands-step-item">
+                            <h3 className="text">
+                              <span className="icon-circular">
+                                <span className="material-icons material-icons-outlined">
+                                  mms
+                                </span>
                               </span>
-                            </span>
-                            مكتبة الصور والملفات
-                          </h3>
-                        </div>
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                publish
+                              مكتبة الصور والملفات
+                            </h3>
+                          </div>
+                          <div className="timlands-step-item">
+                            <h3 className="text">
+                              <span className="icon-circular">
+                                <span className="material-icons material-icons-outlined">
+                                  publish
+                                </span>
                               </span>
-                            </span>
-                            نشر الخدمة
-                          </h3>
+                              نشر الخدمة
+                            </h3>
+                          </div>
                         </div>
                       </div>
+
                       <div className="timlands-content-form ">
                         <div className="row">
                           <div className="col-md-6">

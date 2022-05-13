@@ -7,7 +7,7 @@ import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import useSWR from "swr";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -197,7 +197,11 @@ function Description({ query, stars }) {
       }
     }
   }
+  const stepsView = useRef(null);
+
   useEffect(() => {
+    stepsView.current && stepsView.current.scrollIntoView();
+
     if (!token) {
       router.push("/login");
       return;
@@ -229,56 +233,61 @@ function Description({ query, stars }) {
                       (formik.isSubmitting ? " is-loader" : "")
                     }
                   >
-                    <div className="timlands-steps">
-                      <div className="timlands-step-item">
-                        <h4 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              collections_bookmark
+                    <div className="timlands-steps-cont">
+                      <div className="timlands-steps">
+                        <div className="timlands-step-item">
+                          <h4 className="text">
+                            <span className="icon-circular">
+                              <span className="material-icons material-icons-outlined">
+                                collections_bookmark
+                              </span>
                             </span>
-                          </span>
-                          معلومات عامة
-                        </h4>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h4 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              payments
+                            معلومات عامة
+                          </h4>
+                        </div>
+                        <div className="timlands-step-item">
+                          <h4 className="text">
+                            <span className="icon-circular">
+                              <span className="material-icons material-icons-outlined">
+                                payments
+                              </span>
                             </span>
-                          </span>
-                          السعر والتطويرات
-                        </h4>
-                      </div>
-                      <div className="timlands-step-item active">
-                        <h4 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              description
+                            السعر والتطويرات
+                          </h4>
+                        </div>
+                        <div
+                          className="timlands-step-item active"
+                          ref={stepsView}
+                        >
+                          <h4 className="text">
+                            <span className="icon-circular">
+                              <span className="material-icons material-icons-outlined">
+                                description
+                              </span>
                             </span>
-                          </span>
-                          الوصف وتعليمات المشتري
-                        </h4>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              mms
+                            الوصف وتعليمات المشتري
+                          </h4>
+                        </div>
+                        <div className="timlands-step-item">
+                          <h3 className="text">
+                            <span className="icon-circular">
+                              <span className="material-icons material-icons-outlined">
+                                mms
+                              </span>
                             </span>
-                          </span>
-                          مكتبة الصور والملفات
-                        </h3>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              publish
+                            مكتبة الصور والملفات
+                          </h3>
+                        </div>
+                        <div className="timlands-step-item">
+                          <h3 className="text">
+                            <span className="icon-circular">
+                              <span className="material-icons material-icons-outlined">
+                                publish
+                              </span>
                             </span>
-                          </span>
-                          نشر الخدمة
-                        </h3>
+                            نشر الخدمة
+                          </h3>
+                        </div>
                       </div>
                     </div>
 

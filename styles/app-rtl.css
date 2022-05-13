@@ -1539,11 +1539,7 @@
 }
 
 .timlands-table {
-  -ms-overflow-style: scroll;
   margin: 9px 0;
-  scrollbar-color: transparent transparent;
-  scrollbar-width: thin;
-  overflow: hidden;
   background-color: #fff;
   border-radius: 5px;
   -webkit-box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.055);
@@ -1555,6 +1551,9 @@
 @media (max-width: 780px) {
   .timlands-table {
     width: 100%;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    -ms-overflow-style: scroll;
     overflow-x: scroll;
   }
 }
@@ -2498,27 +2497,22 @@ h3 {
           justify-content: center;
 }
 
-.login-panel .panel-login-external .login-external-header::after, .login-panel .panel-login-external .login-external-header::before {
+.login-panel .panel-login-external .login-external-header::before {
   content: "";
   position: absolute;
   height: 2px;
   top: 50%;
+  width: 100%;
   background-color: #ddd;
-}
-
-.login-panel .panel-login-external .login-external-header::before {
-  left: 0;
-  right: 68%;
-}
-
-.login-panel .panel-login-external .login-external-header::after {
-  right: 0;
-  left: 68%;
+  z-index: 1;
 }
 
 .login-panel .panel-login-external .login-external-header .title {
+  z-index: 2;
+  background-color: white;
   font-size: 14px;
   font-weight: bold;
+  padding: 0px 1.6vw;
   color: #333;
   margin: 0;
 }
@@ -3095,6 +3089,10 @@ h3 {
 
 .timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts {
   padding: 20px 0;
+}
+
+.timwoork-single .timwoork-single-post .timwoork-single-content .timwoork-single-content-body .timwoork-single-product-detailts p {
+  font-size: 16px;
 }
 
 @media (max-width: 580px) {
@@ -4115,6 +4113,38 @@ h3 {
   padding: 20px;
 }
 
+@media (max-width: 1235px) {
+  .timlands-panel .timlands-steps-cont {
+    overflow-x: scroll;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    -ms-overflow-style: scroll;
+  }
+}
+
+.timlands-panel .timlands-steps-cont::-webkit-scrollbar {
+  height: 13px;
+}
+
+.timlands-panel .timlands-steps-cont:hover {
+  scrollbar-color: #cbd1d8 transparent;
+}
+
+.timlands-panel .timlands-steps-cont::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  height: 13px;
+  background-color: transparent;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.timlands-panel .timlands-steps-cont:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  background-color: #cbd1d8;
+}
+
 .timlands-panel .timlands-steps {
   border-bottom: 1px solid #e8ecf2;
   border-radius: 6px;
@@ -4126,6 +4156,12 @@ h3 {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin: 12px 0;
+}
+
+@media (max-width: 1235px) {
+  .timlands-panel .timlands-steps {
+    width: 800px;
+  }
 }
 
 .timlands-panel .timlands-steps .timlands-step-item {
@@ -7564,9 +7600,12 @@ h3 {
   top: 70px;
   background-color: #fff;
   padding: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
-@media (min-width: 580px) {
+@media (min-width: 992px) {
   .conversations-sidebar {
     min-height: 600px;
   }
@@ -8256,6 +8295,13 @@ h3 {
 @media (max-width: 580px) {
   .pagination .page-item .page-link {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pagination .page-item .page-link {
+    font-size: 10px;
+    padding: 10px 8px !important;
   }
 }
 

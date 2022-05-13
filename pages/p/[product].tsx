@@ -521,7 +521,7 @@ function Single({ query, stars, errorFetch }) {
                       </div>
                     </Slide>
                     <div
-                      className="timwoork-single-product-detailts"
+                      className="timwoork-single-product-detailts p"
                       dangerouslySetInnerHTML={{
                         __html: ProductData.data.content,
                       }}
