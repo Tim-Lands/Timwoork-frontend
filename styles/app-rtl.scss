@@ -5973,7 +5973,30 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
-
+.search-results-items {
+  height: 500px;
+  overflow-x: scroll;
+  -ms-overflow-style: scroll;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &:hover {
+    scrollbar-color: #cbd1d8 transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    width: 6px;
+    background-color: transparent;
+    transition: all 0.1s linear;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    transition: all 0.1s linear;
+    background-color: #cbd1d8;
+  }
+}
 .containerProductsPage {
   max-width: 1400px;
   margin: auto;

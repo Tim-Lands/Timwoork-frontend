@@ -8330,6 +8330,37 @@ h3 {
   color: #fff;
 }
 
+.search-results-items {
+  height: 500px;
+  overflow-x: scroll;
+  -ms-overflow-style: scroll;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+}
+
+.search-results-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-results-items:hover {
+  scrollbar-color: #cbd1d8 transparent;
+}
+
+.search-results-items::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  width: 6px;
+  background-color: transparent;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.search-results-items:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  background-color: #cbd1d8;
+}
+
 .containerProductsPage {
   max-width: 1400px;
   margin: auto;

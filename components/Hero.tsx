@@ -9,7 +9,7 @@ import { Result } from "antd";
 import bgIMG from "../styles/5313770.jpg";
 import heroIMG from "../public/hero2.png";
 import Image from "next/image";
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export function LoadingSearch() {
   return (
@@ -37,16 +37,17 @@ function Hero() {
   const [getSearchs, setGetSearchs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1);
 
-
-  async function fetch(){
+  async function fetch() {
     const res: any = await API.get(
-      `api/filter?paginate=4&page=${pageNumber+1}&like=title,${query}`
+      `api/filter?paginate=4&page=${pageNumber + 1}&like=title,${query}`
     );
-    setGetSearchs(getSearchs.concat(res.data.data.data?res.data.data.data:[]))
-    setPageNumber(pageNumber+1);
+    setGetSearchs(
+      getSearchs.concat(res.data.data.data ? res.data.data.data : [])
+    );
+    setPageNumber(pageNumber + 1);
   }
 
   async function getDataFilter() {
@@ -55,11 +56,10 @@ function Hero() {
       const res: any = await API.get(
         `api/filter?paginate=4&like=title,${query}`
       );
-        if (res) {
+      if (res) {
         setIsLoading(false);
         setGetSearchs(res.data.data.data);
         setTotalPages(res.data.last_page);
-
       }
     } catch (error) {
       setIsLoading(false);
@@ -158,7 +158,6 @@ function Hero() {
         </div>
         <div className="timlands-hero-search" ref={buttonRef}>
           <div className="rel-search mx-2">
-
             <input
               type="text"
               onKeyUp={onKeyUpHandle}
@@ -200,48 +199,50 @@ function Hero() {
                 transition={{ duration: 0.57, delay: 0.74 }}
                 className="res-search-container"
               >
-                <div className="search-results-items" id="scrollableTest" style={{height:'500px', overflow:'auto'}}>
+                <div className="search-results-items" id="scrollableTest">
                   {!getSearchs && <NotFountSearch />}
                   {isLoading && <LoadingSearch />}
                   <div className="list-results-items">
-                   {getSearchs && <InfiniteScroll
-                      dataLength={getSearchs.length} //This is important field to render the next data
-                      next={fetch}
-                      hasMore={pageNumber<totalPages}
-                      loader={<h4>جاري التحميل</h4>}
-                      endMessage={
-                        <p style={{ textAlign: 'center' }}>
-                          <b>لا يوجد المزيد من النتائج</b>
-                        </p>
-                      }
-                      scrollableTarget='scrollableTest'
-
-                    >
-                      {
-                        getSearchs.map((e: any) =>{return (
-                          <PostSearch
-                            key={e.id}
-                            title={e.title}
-                            author={
-                              e.profile_seller &&
-                              e.profile_seller.profile.first_name +
-                              " " +
-                              e.profile_seller.profile.last_name
-                            }
-                            rate={e.ratings_avg_rating}
-                            price={e.price}
-                            slug={e.slug}
-                            thumbnail={e.full_path_thumbnail}
-                            buyers={e.count_buying}
-                            period={e.duration}
-                            username={
-                              e.profile_seller &&
-                              e.profile_seller.profile &&
-                              e.profile_seller.profile.user.username
-                            }
-                          />
-                        )})}
-                    </InfiniteScroll>}
+                    {getSearchs && (
+                      <InfiniteScroll
+                        dataLength={getSearchs.length} //This is important field to render the next data
+                        next={fetch}
+                        hasMore={pageNumber < totalPages}
+                        loader={<h4>جاري التحميل</h4>}
+                        endMessage={
+                          <p style={{ textAlign: "center" }}>
+                            <b>لا يوجد المزيد من النتائج</b>
+                          </p>
+                        }
+                        scrollableTarget="scrollableTest"
+                      >
+                        {getSearchs.map((e: any) => {
+                          return (
+                            <PostSearch
+                              key={e.id}
+                              title={e.title}
+                              author={
+                                e.profile_seller &&
+                                e.profile_seller.profile.first_name +
+                                  " " +
+                                  e.profile_seller.profile.last_name
+                              }
+                              rate={e.ratings_avg_rating}
+                              price={e.price}
+                              slug={e.slug}
+                              thumbnail={e.full_path_thumbnail}
+                              buyers={e.count_buying}
+                              period={e.duration}
+                              username={
+                                e.profile_seller &&
+                                e.profile_seller.profile &&
+                                e.profile_seller.profile.user.username
+                              }
+                            />
+                          );
+                        })}
+                      </InfiniteScroll>
+                    )}
                   </div>
                 </div>
               </motion.div>
