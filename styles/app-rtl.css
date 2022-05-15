@@ -8602,7 +8602,7 @@ h3 {
 
 .rate-filters .rate-stars .material-icons-outlined {
   font-size: 16px;
-  color: orangered;
+  color: #ec7f02;
 }
 
 .rate-filters .rate-stars .material-icons-outlined.outline-star {
@@ -8743,5 +8743,34 @@ h3 {
 
 .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
   padding-right: 16px;
+}
+
+.ant-collapse {
+  position: relative;
+}
+
+.clear-icon .button-clear {
+  background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #777;
+  width: 30px;
+  height: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 0;
+}
+
+.clear-icon .button-clear:hover {
+  color: #000;
+}
+
+.clear-icon .button-clear .material-icons {
+  font-size: 17px;
 }
 /*# sourceMappingURL=app-rtl.css.map */

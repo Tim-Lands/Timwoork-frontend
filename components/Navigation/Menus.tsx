@@ -232,7 +232,7 @@ function Menus({ darkMode }) {
             >
               forum
             </i>{" "}
-            المنتدي
+            المنتدى
           </motion.a>
         </Link>
       </li>

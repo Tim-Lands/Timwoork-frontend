@@ -171,6 +171,7 @@ function Category() {
             maxprice: 0,
             tags: [],
             minprice: 0,
+            query: ''
         },
         isInitialValid: true,
         enableReinitialize: true,
@@ -290,8 +291,25 @@ function Category() {
                             {validationsGeneral.msg && (
                                 <Alert type="error">{validationsGeneral.msg}</Alert>
                             )}
+
+                            <div className="timlands-form">
+                                <input
+                                    id="input-query"
+                                    name="query"
+                                    placeholder="أكتب كلمة البحث..."
+                                    className={"timlands-inputs"}
+                                    autoComplete="off"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.query}
+                                />
+                            </div>
                             <Collapse ghost expandIconPosition='right'>
-                                <Panel header="الفلترة حسب السعر" key="1" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
+                                <Panel header="السعر" key="1" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }}>
+                                    <div className="clear-icon">
+                                        <button className="button-clear" type="button">
+                                            <span className="material-icons material-icons-outlined">close</span>
+                                        </button>
+                                    </div>
                                     <div className="filter-sidebar">
                                         <div className="timlands-form">
                                             <div className="row">
@@ -334,7 +352,12 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب التصنيفات" key="2" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
+                                <Panel header="التصنيفات" key="2" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }}>
+                                    <div className="clear-icon">
+                                        <button className="button-clear" type="button">
+                                            <span className="material-icons material-icons-outlined">close</span>
+                                        </button>
+                                    </div>
                                     <div className="filter-categories-list">
                                         <div className="categories-list-inner">
                                             {/* يمكن تحتاجها <Loading size="sm"/> */}
@@ -367,7 +390,12 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب المهارات" key="6" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
+                                <Panel header="المهارات" key="6" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }}>
+                                    <div className="clear-icon">
+                                        <button className="button-clear" type="button">
+                                            <span className="material-icons material-icons-outlined">close</span>
+                                        </button>
+                                    </div>
                                     <div className="tags-list">
                                         <div className="categories-list-inner">
                                             <MySelect
@@ -378,7 +406,12 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب التقييم" key="3" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
+                                <Panel header="التقييم" key="3" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }}>
+                                    <div className="clear-icon">
+                                        <button className="button-clear" type="button">
+                                            <span className="material-icons material-icons-outlined">close</span>
+                                        </button>
+                                    </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="ratting" value="1" id="ratting-1" />
@@ -457,7 +490,12 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب مدة التسليم" key="4" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
+                                <Panel header="مدة التسليم" key="4" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }}>
+                                    <div className="clear-icon">
+                                        <button className="button-clear" type="button">
+                                            <span className="material-icons material-icons-outlined">close</span>
+                                        </button>
+                                    </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="delevring" value="1" id="delevring-1" />
@@ -477,7 +515,12 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب البائع" key="5" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
+                                <Panel header="البائع" key="5" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }}>
+                                    <div className="clear-icon">
+                                        <button className="button-clear" type="button">
+                                            <span className="material-icons material-icons-outlined">close</span>
+                                        </button>
+                                    </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="sellerBadge" value="1" id="sellerBadge-1" />
@@ -494,20 +537,10 @@ function Category() {
                                     </div>
                                 </Panel>
                             </Collapse>
-
-                            <div className="py-3">
-                                <button
-                                    style={{ width: "100%" }}
-                                    type="submit"
-                                    className="btn butt-primary butt-md"
-                                >
-                                    فلترة النتائج
-                                </button>
-                            </div>
                         </div>
                     </div>
                     <div className="col-md-9">
-                        <div className="page-header flex-center">
+                        <div className="page-header flex-center" style={{ paddingTop: 0 }}>
                             <h4 className="title me-auto">جميع الخدمات</h4>
                             <div className="tool-right ml-auto">
                                 <button type="button" className={"btn-tool flex-center " + (isSettings ? 'is-active' : '')} onClick={() => setIsSettings(!isSettings)}>
