@@ -681,7 +681,7 @@
   display: none;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1160px) {
   .timlands-navbar .toggle-nav {
     display: block;
   }
@@ -913,7 +913,7 @@
   color: #fff;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1160px) {
   .timlands-navbar .nav-container .app-navbar {
     position: absolute;
     top: 60px;
@@ -7271,7 +7271,7 @@ h3 {
   display: none !important;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1160px) {
   .is-mobile.nav {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
@@ -7285,7 +7285,7 @@ h3 {
   display: flex !important;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1160px) {
   .is-desktop.nav {
     display: none !important;
   }
@@ -8485,19 +8485,19 @@ h3 {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  gap: 4%;
+  gap: 3%;
 }
 
 .nav-container {
   width: 100%;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1180px) {
   .timlands-navbar .nav-container .app-navbar {
     gap: 1%;
   }
 }
-@media (max-width: 780px) {
+@media (max-width: 1160px) {
   .nav-container {
     width: -webkit-fit-content;
     width: -moz-fit-content;

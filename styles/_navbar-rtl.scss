@@ -44,7 +44,7 @@
   }
   .toggle-nav {
     display: none;
-    @media (max-width: 780px) {
+    @media (max-width: 1160px) {
       display: block;
     }
     .toggle-nav-btn {
@@ -224,7 +224,7 @@
         }
       }
       display: flex;
-      @media (max-width: 780px) {
+      @media (max-width: 1160px) {
         position: absolute;
         top: 60px;
         flex-direction: column;

@@ -395,7 +395,7 @@ function Navbar(): ReactElement {
         >
           <div
             className="d-flex justify-content-between "
-            style={{ maxWidth: "1300px", width: "100%" }}
+            style={{ maxWidth: 1300, width: "100%" }}
           >
             <div className="nav-container">
               <div
