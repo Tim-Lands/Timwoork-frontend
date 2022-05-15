@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Explores from "../Explores";
-import { Badge, Popover } from "antd";
+import { Badge } from "antd";
 import { motion } from "framer-motion";
 import { AiOutlineShoppingCart } from "@react-icons/all-files/ai/AiOutlineShoppingCart";
 import { TiGroupOutline } from "@react-icons/all-files/ti/TiGroupOutline";
@@ -271,7 +271,6 @@ function Menus({ darkMode }) {
     </ul>
   );
 }
-const content = <div>قريبا</div>;
 export default Menus;
 Menus.propTypes = {
   darkMode: PropTypes.any,
