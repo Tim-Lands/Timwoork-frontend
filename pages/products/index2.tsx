@@ -7,7 +7,6 @@ import API from "../../config";
 import Loading from "@/components/Loading";
 import PropTypes from "prop-types";
 import Slider from "@mui/material/Slider";
-import { setTimeout } from "timers";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Pagination from "react-js-pagination";
 import Cookies from "js-cookie";
