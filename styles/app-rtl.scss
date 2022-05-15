@@ -6159,3 +6159,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  right: auto;
+  left: 16px;
+}
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+  padding-right: 16px;
+}

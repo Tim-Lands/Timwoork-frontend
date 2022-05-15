@@ -753,7 +753,7 @@
 }
 
 .timlands-navbar .nav-container .app-navbar > li > a .material-icons {
-  font-size: 19px;
+  font-size: 17px;
   margin-left: 6px;
 }
 
@@ -8734,5 +8734,14 @@ h3 {
 
 .filter-categories-list .filter-subcategories-list .list-subcat-item:hover {
   color: #475C80;
+}
+
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  right: auto;
+  left: 16px;
+}
+
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+  padding-right: 16px;
 }
 /*# sourceMappingURL=app-rtl.css.map */
