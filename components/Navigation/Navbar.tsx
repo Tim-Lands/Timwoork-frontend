@@ -30,7 +30,6 @@ function Navbar(): ReactElement {
   };
   let token = Cookies.get("token");
   const userList = useRef();
-  const LangsList = useRef();
 
   useOutSide(userList, hideList);
 
