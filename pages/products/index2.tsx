@@ -58,7 +58,6 @@ const MySelect = (props: any) => {
 }
 function Category() {
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
     const [isSettings, setIsSettings] = useState(false);
 
     const [size, setSize] = useState(4);
@@ -75,6 +74,7 @@ function Category() {
     //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
     /**----------------------------------------------------------**/
     const fetchData = async (pageNumber: number = 1) => {
+        setIsLoading(true)
         try {
             const res = await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
                 headers: {
@@ -83,8 +83,10 @@ function Category() {
             });
             if (res.status === 200) {
                 setGetProducts(res.data.data);
+                setIsLoading(false)
             }
         } catch (error) {
+            setIsLoading(false)
             console.log(error);
         }
     };
@@ -180,6 +182,9 @@ function Category() {
                         'Authorization': `Bearer ${token}`
                     }
                 })
+                if (res.status === 200) {
+                    console.log('success');
+                }
             } catch (error: any) {
                 if (error.response && error.response.data) {
                     setValidationsGeneral(error.response.data);
@@ -539,7 +544,6 @@ function Category() {
                             products={getProducts && getProducts.data}
                             isLoading={isLoading}
                             size={size}
-                            isError={isError}
                         />
                         {getProducts && (
                             <div>

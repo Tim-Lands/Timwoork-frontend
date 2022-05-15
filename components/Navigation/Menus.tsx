@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Explores from "../Explores";
-import { Popover } from "antd";
+import { Badge, Popover } from "antd";
 import { motion } from "framer-motion";
 import { AiOutlineShoppingCart } from "@react-icons/all-files/ai/AiOutlineShoppingCart";
 import { TiGroupOutline } from "@react-icons/all-files/ti/TiGroupOutline";
@@ -124,17 +124,11 @@ function Menus({ darkMode }) {
       </li>
       <Popover content={content} trigger="hover">
         <li>
+          <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
-            whileHover={{
-              color: !darkMode ? "red" : "red",
-              scale: 1.07,
-            }}
-            whileTap={{
-              scale: 1.02,
-            }}
             style={{
               fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
+              color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
               paddingBlock: 0,
@@ -145,23 +139,19 @@ function Menus({ darkMode }) {
             }}
           >
             <BiTrophy style={{ marginLeft: 3, fontSize: 22 }} />
+
             المسابقات
           </motion.a>
+            </Badge>
         </li>
       </Popover>
       <Popover content={content} trigger="hover">
         <li>
+        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
-            whileHover={{
-              color: !darkMode ? "red" : "red",
-              scale: 1.07,
-            }}
-            whileTap={{
-              scale: 1.02,
-            }}
             style={{
               fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
+              color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
               paddingBlock: 0,
@@ -174,22 +164,17 @@ function Menus({ darkMode }) {
             <BiBriefcase style={{ marginLeft: 3, fontSize: 22 }} />
             المشاريع
           </motion.a>
+          </Badge>
         </li>
       </Popover>
 
       <Popover content={content} trigger="hover">
         <li>
+        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
-            whileHover={{
-              color: !darkMode ? "red" : "red",
-              scale: 1.07,
-            }}
-            whileTap={{
-              scale: 1.02,
-            }}
             style={{
               fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
+              color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
               paddingBlock: 0,
@@ -202,6 +187,7 @@ function Menus({ darkMode }) {
             <BiImage style={{ marginLeft: 3, fontSize: 27 }} />
             الاعمال
           </motion.a>
+          </Badge>
         </li>
       </Popover>
 
@@ -239,17 +225,11 @@ function Menus({ darkMode }) {
       </li>
       <Popover content={content} trigger="hover">
         <li>
+        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
-            whileHover={{
-              color: !darkMode ? "red" : "red",
-              scale: 1.07,
-            }}
-            whileTap={{
-              scale: 1.02,
-            }}
             style={{
               fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
+              color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
               paddingBlock: 0,
@@ -262,6 +242,7 @@ function Menus({ darkMode }) {
             <TiGroupOutline style={{ marginLeft: 3, fontSize: 22 }} />
             المستقلين
           </motion.a>
+          </Badge>
         </li>
       </Popover>
       <li>
