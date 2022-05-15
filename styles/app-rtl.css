@@ -6283,10 +6283,22 @@ h3 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  height: 300px;
 }
 
 .page-loading-spinner .spinner-border {
   border: 0.25em solid #475C80;
+  border-right-color: transparent;
+}
+
+.page-loading-spinner.sm {
+  padding: 16px 0;
+  margin-top: 25px;
+  height: 100px;
+}
+
+.page-loading-spinner.sm .spinner-border {
+  border: 0.15em solid #475C80;
   border-right-color: transparent;
 }
 
@@ -8536,5 +8548,156 @@ h3 {
   margin-inline: auto;
   padding: 0px 20px;
   max-width: 1150px;
+}
+
+.rate-filters .rate-stars {
+  font-size: 13px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.rate-filters .rate-stars .stars-icons {
+  padding-top: 3px;
+  padding-left: 3px;
+}
+
+.rate-filters .rate-stars .material-icons-outlined {
+  font-size: 16px;
+  color: orangered;
+}
+
+.rate-filters .rate-stars .material-icons-outlined.outline-star {
+  color: #777;
+}
+
+.tool-right {
+  position: relative;
+}
+
+.tool-right .btn-tool {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  color: #777;
+  border-radius: 50%;
+  border: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.tool-right .btn-tool:hover, .tool-right .btn-tool.is-active {
+  color: #000;
+  background-color: #fff;
+}
+
+.tool-right .tool-menus {
+  position: absolute;
+  background-color: #fff;
+  -webkit-box-shadow: 3px 3px 19px rgba(0, 0, 0, 0.062);
+          box-shadow: 3px 3px 19px rgba(0, 0, 0, 0.062);
+  left: 0;
+  width: 150px;
+  z-index: 200;
+}
+
+.tool-right .tool-menus .listmenu-sort {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tool-right .tool-menus .listmenu-sort .btn-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 0;
+  background-color: #fff;
+  padding: 10px;
+  font-size: 13px;
+  width: 100%;
+}
+
+.tool-right .tool-menus .listmenu-sort .btn-item:hover {
+  background-color: #f4f4f4;
+  color: #000;
+}
+
+.form-with-span {
+  position: relative;
+}
+
+.form-with-span .label-form {
+  background-color: #f1f1f1;
+  border-right: 1px solid #ddd;
+  color: #555;
+  font-size: 13px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  position: absolute;
+  left: 1px;
+  top: 1px;
+}
+
+.filter-categories-list .list-cat-item {
+  background-color: #fff;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f8f8f8;
+  color: #333;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.filter-categories-list .list-cat-item:hover {
+  background-color: #475C80;
+  color: #fff;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.filter-categories-list .list-cat-item:first-of-type {
+  border-radius: 9px 9px 0 0;
+}
+
+.filter-categories-list .list-cat-item:last-of-type {
+  border-radius: 0 0 9px 9px;
+  border-bottom: 0;
+}
+
+.filter-categories-list .list-cat-item .item-cat-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filter-categories-list .list-cat-item .item-cat-label .material-icons {
+  font-size: 17px;
+  margin-left: 4px;
+}
+
+.filter-categories-list .filter-subcategories-list {
+  background-color: #fff;
+  padding-block: 7px;
+  padding-right: 25px;
+}
+
+.filter-categories-list .filter-subcategories-list .list-subcat-item {
+  padding: 7px 15px;
+  color: #333;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 200;
+}
+
+.filter-categories-list .filter-subcategories-list .list-subcat-item:hover {
+  color: #475C80;
 }
 /*# sourceMappingURL=app-rtl.css.map */
