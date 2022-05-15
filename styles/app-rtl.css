@@ -8695,15 +8695,6 @@ h3 {
   transition: all 0.3s;
 }
 
-.filter-categories-list .list-cat-item:first-of-type {
-  border-radius: 9px 9px 0 0;
-}
-
-.filter-categories-list .list-cat-item:last-of-type {
-  border-radius: 0 0 9px 9px;
-  border-bottom: 0;
-}
-
 .filter-categories-list .list-cat-item .item-cat-label {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8716,6 +8707,15 @@ h3 {
 .filter-categories-list .list-cat-item .item-cat-label .material-icons {
   font-size: 17px;
   margin-left: 4px;
+}
+
+.filter-categories-list .list-inner:first-of-type .list-cat-item {
+  border-radius: 9px 9px 0 0;
+}
+
+.filter-categories-list .list-inner:last-of-type .list-cat-item {
+  border-radius: 0 0 9px 9px;
+  border-bottom: 0;
 }
 
 .filter-categories-list .filter-subcategories-list {
