@@ -30,6 +30,7 @@ function Navbar(): ReactElement {
   };
   let token = Cookies.get("token");
   const userList = useRef();
+  const LangsList = useRef();
 
   useOutSide(userList, hideList);
 
@@ -45,22 +46,20 @@ function Navbar(): ReactElement {
     forceTLS: true,
     auth: token
       ? {
-          headers: {
-            // pass the authorization token when using private channels
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        headers: {
+          // pass the authorization token when using private channels
+          Authorization: `Bearer ${token}`,
+        },
+      }
       : undefined,
   });
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-  const channelChat = `presence-receiver.${
-    userInfo && userInfo.user_details.id
-  }`;
+  const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id
+    }`;
   const channel = pusher.subscribe(channelChat);
 
-  const channelNotification = `presence-notify.${
-    userInfo && userInfo.user_details.id
-  }`;
+  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id
+    }`;
   const channelNoty = pusher.subscribe(channelNotification);
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -676,6 +675,14 @@ function Navbar(): ReactElement {
                   </li>
                 </>
               )}
+              <li className="register-nav-item" style={{ padding: 7, display: 'flex', alignItems: 'center' }}>
+                <span style={{ fontSize: 16 }} className="material-icons material-icons-outlined">public</span>
+                <select style={{ border: 0, paddingBlock: 4, paddingInline: 8, backgroundColor: '#fff', fontSize: 13, color: '#555' }}>
+                  <option value="">العربية</option>
+                  <option value="" disabled>الإنجليزية</option>
+                </select>
+              </li>
+
             </ul>
           </div>
         </nav>
