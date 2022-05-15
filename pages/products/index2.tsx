@@ -291,7 +291,7 @@ function Category() {
                                 <Alert type="error">{validationsGeneral.msg}</Alert>
                             )}
                             <Collapse ghost expandIconPosition='right'>
-                                <Panel header="الفلترة حسب السعر" key="1">
+                                <Panel header="الفلترة حسب السعر" key="1" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
                                     <div className="filter-sidebar">
                                         <div className="timlands-form">
                                             <div className="row">
@@ -334,7 +334,7 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel style={{ padding: 0 }} header="الفلترة حسب التصنيفات" key="2">
+                                <Panel header="الفلترة حسب التصنيفات" key="2" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
                                     <div className="filter-categories-list">
                                         <div className="categories-list-inner">
                                             {/* يمكن تحتاجها <Loading size="sm"/> */}
@@ -367,7 +367,7 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel style={{ padding: 0 }} header="الفلترة حسب المهارات" key="6">
+                                <Panel header="الفلترة حسب المهارات" key="6" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
                                     <div className="tags-list">
                                         <div className="categories-list-inner">
                                             <MySelect
@@ -378,7 +378,7 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب التقييم" key="3">
+                                <Panel header="الفلترة حسب التقييم" key="3" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
                                     <div className="rate-filters">
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="ratting" value="1" id="ratting-1" />
@@ -457,7 +457,7 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب مدة التسليم" key="4">
+                                <Panel header="الفلترة حسب مدة التسليم" key="4" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
                                     <div className="rate-filters">
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="delevring" value="1" id="delevring-1" />
@@ -477,7 +477,7 @@ function Category() {
                                         </div>
                                     </div>
                                 </Panel>
-                                <Panel header="الفلترة حسب البائع" key="5">
+                                <Panel header="الفلترة حسب البائع" key="5" style={{ backgroundColor:'#fff', borderRadius: 7, marginBottom: 6 }}>
                                     <div className="rate-filters">
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="sellerBadge" value="1" id="sellerBadge-1" />
@@ -497,8 +497,9 @@ function Category() {
 
                             <div className="py-3">
                                 <button
+                                    style={{ width: "100%" }}
                                     type="submit"
-                                    className="btn butt-primary butt-sm"
+                                    className="btn butt-primary butt-md"
                                 >
                                     فلترة النتائج
                                 </button>

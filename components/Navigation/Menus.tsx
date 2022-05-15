@@ -122,9 +122,8 @@ function Menus({ darkMode }) {
           </motion.a>
         </Link>
       </li>
-      <Popover content={content} trigger="hover">
-        <li>
-          <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
+      <li>
+        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
             style={{
               fontWeight: 600,
@@ -142,11 +141,9 @@ function Menus({ darkMode }) {
 
             المسابقات
           </motion.a>
-            </Badge>
-        </li>
-      </Popover>
-      <Popover content={content} trigger="hover">
-        <li>
+        </Badge>
+      </li>
+      <li>
         <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
             style={{
@@ -164,12 +161,10 @@ function Menus({ darkMode }) {
             <BiBriefcase style={{ marginLeft: 3, fontSize: 22 }} />
             المشاريع
           </motion.a>
-          </Badge>
-        </li>
-      </Popover>
+        </Badge>
+      </li>
 
-      <Popover content={content} trigger="hover">
-        <li>
+      <li>
         <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
             style={{
@@ -187,44 +182,9 @@ function Menus({ darkMode }) {
             <BiImage style={{ marginLeft: 3, fontSize: 27 }} />
             الاعمال
           </motion.a>
-          </Badge>
-        </li>
-      </Popover>
-
-      <li>
-        <Link href="/blog">
-          <motion.a
-            whileHover={{
-              color: !darkMode ? "#000" : "#fff",
-              scale: 1.07,
-            }}
-            whileTap={{
-              scale: 1.02,
-            }}
-            style={{
-              fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
-              display: "flex",
-              paddingInline: 0,
-              paddingBlock: 0,
-              fontSize: 14,
-              height: 50,
-              alignItems: "center",
-              alignContent: "center",
-            }}
-          >
-            <i
-              className="material-icons material-icons-outlined"
-              style={{ fontSize: 25 }}
-            >
-              article
-            </i>{" "}
-            المدونة
-          </motion.a>
-        </Link>
+        </Badge>
       </li>
-      <Popover content={content} trigger="hover">
-        <li>
+      <li>
         <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
           <motion.a
             style={{
@@ -242,9 +202,8 @@ function Menus({ darkMode }) {
             <TiGroupOutline style={{ marginLeft: 3, fontSize: 22 }} />
             المستقلين
           </motion.a>
-          </Badge>
-        </li>
-      </Popover>
+        </Badge>
+      </li>
       <li>
         <Link href="/club">
           <motion.a
@@ -274,6 +233,38 @@ function Menus({ darkMode }) {
               forum
             </i>{" "}
             المنتدي
+          </motion.a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/blog">
+          <motion.a
+            whileHover={{
+              color: !darkMode ? "#000" : "#fff",
+              scale: 1.07,
+            }}
+            whileTap={{
+              scale: 1.02,
+            }}
+            style={{
+              fontWeight: 600,
+              color: !darkMode ? "#666" : "#f1f1f1",
+              display: "flex",
+              paddingInline: 0,
+              paddingBlock: 0,
+              fontSize: 14,
+              height: 50,
+              alignItems: "center",
+              alignContent: "center",
+            }}
+          >
+            <i
+              className="material-icons material-icons-outlined"
+              style={{ fontSize: 25 }}
+            >
+              article
+            </i>{" "}
+            المدونة
           </motion.a>
         </Link>
       </li>
