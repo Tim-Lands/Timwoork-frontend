@@ -67,15 +67,34 @@ function Category() {
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem("token");
 
-    const { data: getCategories, error }: any = useSWR("api/get_categories");
+    const { data: categories, error }: any = useSWR("api/get_categories");
     const [validationsGeneral, setValidationsGeneral]: any = useState({});
     const [getProducts, setGetProducts]: any = useState();
+    const [sentinel, setSentinel]: any = useState({ mount: true })
+    const [subcategories, setSubCategories]: any = useState({})
+    const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({})
     //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
     /**----------------------------------------------------------**/
+    useEffect(() => {
+        fetchData()
+    }, [sentinel])
     const fetchData = async (pageNumber: number = 1) => {
+        console.log(formik.values)
         setIsLoading(true)
+        const { minprice, maxprice, categoryID, tags, ratting, seller_level } = formik.values
+        const tags_filtered = tags.filter(tag => tag.id).map(tag => tag.id)
         try {
-            const res = await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
+            const params = {
+                paginate: 12,
+                page: pageNumber,
+                between: `price,${minprice},${maxprice}`,
+                category: categoryID.length == 0 ? null : categoryID.join(','),
+                tags: tags_filtered.length == 0 ? null : tags_filtered.join(','),
+                ratings_avg: ratting,
+                seller_level 
+            }
+            const res = await API.get(`api/filter`, {
+                params,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -89,13 +108,32 @@ function Category() {
             console.log(error);
         }
     };
+    const fetchSubCategories = async () => {
+        const promises = []
+        const temp_subCategories = {}
+        const temp_subCategoriesDisplay = {}
+        categories?.data.forEach(category => promises.push(API.get(`api/get_categories/${category.id}`)))
+        const sub_categories = await Promise.all(promises)
+        sub_categories.forEach(sub_category => {
+            temp_subCategories[sub_category.data.data.id] = sub_category.data.data.sub_categories
+            temp_subCategoriesDisplay[sub_category.data.data.id] = 'none'
+        })
+        setSubCategories(temp_subCategories)
+        setSubCategoryDisplay(temp_subCategoriesDisplay)
+    }
+
+    const toggleCateogryDisplay = (id) => {
+        setSubCategoryDisplay({
+            ...subCategoryDisplay,
+            [id]: subCategoryDisplay[id] == 'none' ? 'display' : 'none'
+        })
+    }
     /********************** price Slider **********************/
     function valuetext(value: number) {
         return `${value}$`;
     }
     // Pricing range from 0 to 1000
-    const [priceRange, setpriceRange] = React.useState<number[]>([5, 1000]);
-    const minDistance = 50; // minimum distance between any two values of price
+    //const minDistance = 50; // minimum distance between any two values of price
 
     const handleChangeSlider = (
         event: Event,
@@ -105,19 +143,28 @@ function Category() {
         if (!Array.isArray(newValue)) {
             return;
         }
-
+        console.log(newValue)
         if (activeThumb === 0) {
-            setpriceRange([
+            /*setpriceRange([
                 Math.min(newValue[0], priceRange[1] - minDistance),
                 priceRange[1],
-            ]);
+            ]);*/
         } else {
-            setpriceRange([
+            /*setpriceRange([
                 priceRange[0],
                 Math.max(newValue[1], priceRange[0] + minDistance),
-            ]);
+            ]);*/
+
         }
+        formik.setFieldValue('minprice', newValue[0])
+        formik.setFieldValue('maxprice', newValue[1])
+
+        console.log(formik.values)
     }
+    useEffect(() => {
+        if (categories?.data)
+            fetchSubCategories()
+    }, [categories])
     useEffect(() => {
         if (window.innerWidth > 950) {
             setSize(4);
@@ -145,7 +192,6 @@ function Category() {
                 setPaginationSize(8);
             }
         });
-        fetchData();
         return () => {
             window.removeEventListener("resize", () => {
                 if (window.innerWidth > 950) {
@@ -163,15 +209,17 @@ function Category() {
             });
         };
     }, [])
-    const { data: categories }: any = useSWR('api/get_categories')
+    //const { data: categories }: any = useSWR('api/get_categories')
     const formik = useFormik({
         initialValues: {
             categoryID: [],
             manCat: [],
-            maxprice: 0,
+            maxprice: 1000,
             tags: [],
-            minprice: 0,
-            query: ''
+            minprice: 5,
+            query: '',
+            ratting:'1',
+            seller_level:'1'
         },
         isInitialValid: true,
         enableReinitialize: true,
@@ -320,6 +368,7 @@ function Category() {
                                                             name="maxprice"
                                                             type="number"
                                                             value={formik.values.maxprice}
+                                                            onBlur={() => setSentinel({ ...sentinel, mount: true })}
                                                             onChange={formik.handleChange}
                                                         />
                                                         <span className="label-form">$</span>
@@ -331,7 +380,9 @@ function Category() {
                                                             className="timlands-inputs"
                                                             name="minprice"
                                                             type="number"
+
                                                             value={formik.values.minprice}
+                                                            onBlur={() => setSentinel({ ...sentinel, mount: true })}
                                                             onChange={formik.handleChange}
                                                         />
                                                         <span className="label-form">$</span>
@@ -340,12 +391,13 @@ function Category() {
                                             </div>
                                             <Slider
                                                 getAriaLabel={() => "Minimum distance shift"}
-                                                value={priceRange}
+                                                value={[formik.values.minprice, formik.values.maxprice]}
                                                 valueLabelDisplay="auto"
                                                 onChange={handleChangeSlider}
                                                 getAriaValueText={valuetext}
-                                                max={formik.values.maxprice}
-                                                min={formik.values.minprice}
+                                                min={5}
+                                                max={1000}
+                                                onChangeCommitted={() => setSentinel({ ...sentinel, mount: true })}
                                                 step={10}
                                                 disableSwap
                                             />
@@ -360,31 +412,46 @@ function Category() {
                                     </div>
                                     <div className="filter-categories-list">
                                         <div className="categories-list-inner">
-                                            {/* يمكن تحتاجها <Loading size="sm"/> */}
-                                            {categories && categories.data.map((e: any) => (
-                                                <div className="list-inner" key={e.id}>
-
-                                                    <div className="list-cat-item">
-                                                        <span className="item-cat-label">
-                                                            <span className="material-icons material-icons-outlined">{e.icon}</span>{e.name_ar}
-                                                        </span>
-                                                    </div>
-
-                                                    <div className="filter-subcategories-list">
-                                                        <div className="list-subcat-item">
-                                                            التصنيف الفرعي
-                                                        </div>
-                                                        <div className="list-subcat-item">
-                                                            التصنيف الفرعي
-                                                        </div>
-                                                        <div className="list-subcat-item">
-                                                            التصنيف الفرعي
-                                                        </div>
-                                                        <div className="list-subcat-item">
-                                                            التصنيف الفرعي
-                                                        </div>
-                                                    </div>
+                                            <div className="list-inner">
+                                                <div className="list-cat-item" onClick={() => {
+                                                    formik.setFieldValue('categoryID', [])
+                                                    setSentinel({ ...sentinel, mount: true })
+                                                }}>
+                                                    <span className="item-cat-label">
+                                                        <span className="material-icons material-icons-outlined"></span>جميع التصنيفات
+                                                    </span>
                                                 </div>
+                                            </div>
+                                            {/* يمكن تحتاجها <Loading size="sm"/> */}
+
+                                            {categories && categories.data.map((e: any) => (
+                                                <>
+
+                                                    <div className="list-inner" key={e.id}>
+
+                                                        <div className="list-cat-item" onClick={() => toggleCateogryDisplay(e.id)}>
+                                                            <span className="item-cat-label">
+                                                                <span className="material-icons material-icons-outlined">{e.icon}</span>{e.name_ar}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className={`filter-subcategories-list d-${subCategoryDisplay[e.id]}`}>
+                                                            <div className="list-subcat-item" onClick={() => {
+                                                                console.log('clicked')
+                                                                formik.setFieldValue('categoryID', [e.id])
+                                                                setSentinel({ ...sentinel, mount: true })
+                                                            }}>
+                                                                الجميع
+                                                            </div>
+                                                            {subcategories[e.id]?.map(sub_category => (
+                                                                <div key={sub_category.id} className="list-subcat-item">
+                                                                    {sub_category.name_ar}
+                                                                </div>
+                                                            ))}
+
+                                                        </div>
+                                                    </div>
+                                                </>
                                             ))}
 
                                         </div>
@@ -401,7 +468,7 @@ function Category() {
                                             <MySelect
                                                 value={formik.values.tags}
                                                 onChange={formik.setFieldValue}
-                                                onBlur={formik.setFieldTouched}
+                                                onBlur={() => setSentinel({ ...sentinel, mount: true })}
                                             />
                                         </div>
                                     </div>
@@ -414,7 +481,10 @@ function Category() {
                                     </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" value="1" id="ratting-1" />
+                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="1" id="ratting-1" />
                                             <label className="form-check-label" htmlFor="ratting-1">
                                                 <span className="rate-stars">
                                                     <span className="stars-icons">
@@ -429,7 +499,10 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" value="2" id="ratting-2" />
+                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="2" id="ratting-2" />
                                             <label className="form-check-label" htmlFor="ratting-2">
                                                 <span className="rate-stars">
                                                     <span className="stars-icons">
@@ -444,7 +517,10 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" value="3" id="ratting-3" />
+                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="3" id="ratting-3" />
                                             <label className="form-check-label" htmlFor="ratting-3">
                                                 <span className="rate-stars">
                                                     <span className="stars-icons">
@@ -459,7 +535,10 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" value="4" id="ratting-4" />
+                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="4" id="ratting-4" />
                                             <label className="form-check-label" htmlFor="ratting-4">
                                                 <span className="rate-stars">
                                                     <span className="stars-icons">
@@ -474,7 +553,10 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" value="5" id="ratting-5" />
+                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="5" id="ratting-5" />
                                             <label className="form-check-label" htmlFor="ratting-5">
                                                 <span className="rate-stars">
                                                     <span className="stars-icons">
@@ -498,7 +580,7 @@ function Category() {
                                     </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="delevring" value="1" id="delevring-1" />
+                                            <input className="form-check-input" type="radio" name="delevring"  value="1" id="delevring-1" />
                                             <label className="form-check-label" htmlFor="delevring-1">أقل من أسبوع</label>
                                         </div>
                                         <div className="form-check">
@@ -523,15 +605,24 @@ function Category() {
                                     </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="sellerBadge" value="1" id="sellerBadge-1" />
+                                            <input className="form-check-input" type="radio" name="seller_level" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }}  value="1" id="sellerBadge-1" />
                                             <label className="form-check-label" htmlFor="sellerBadge-1">بائع مميز</label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="sellerBadge" value="2" id="sellerBadge-2" />
+                                            <input className="form-check-input" type="radio" name="seller_level" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }}  value="2" id="sellerBadge-2" />
                                             <label className="form-check-label" htmlFor="sellerBadge-2">بائع VIP</label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="sellerBadge" value="3" id="sellerBadge-3" />
+                                            <input className="form-check-input" type="radio" name="seller_level" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }}  value="3" id="sellerBadge-3" />
                                             <label className="form-check-label" htmlFor="sellerBadge-3">بائع جديد</label>
                                         </div>
                                     </div>
@@ -571,7 +662,7 @@ function Category() {
                                 }
                             </div>
                         </div>
-                        {!getCategories && <Loading />}
+                        {!categories && <Loading />}
                         {error && <div>Error</div>}
                         <FilterContent
                             products={getProducts && getProducts.data}
