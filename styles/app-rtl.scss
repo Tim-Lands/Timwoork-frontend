@@ -176,6 +176,7 @@ h3 {
 ---------------------------------------------------------------------------------------------
 */
 .filter-search-sidebar {
+  padding-top: 16px;
   .filter-sidebar-title {
     padding: 14px 0;
     margin-bottom: 9px;
@@ -6257,6 +6258,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .clear-icon {
+  float: left;
   .button-clear {
     background-color: #fff;
     display: flex;
@@ -6266,7 +6268,8 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     align-items: center;
     justify-content: center;
     border: 0;
-
+    border-radius: 50%;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.062);
     &:hover {
       color: #000;
     }

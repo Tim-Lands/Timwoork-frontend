@@ -123,7 +123,7 @@ function Menus({ darkMode }) {
         </Link>
       </li>
       <li>
-        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
+        <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
               fontWeight: 600,
@@ -144,7 +144,7 @@ function Menus({ darkMode }) {
         </Badge>
       </li>
       <li>
-        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
+        <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
               fontWeight: 600,
@@ -165,7 +165,7 @@ function Menus({ darkMode }) {
       </li>
 
       <li>
-        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
+        <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
               fontWeight: 600,
@@ -185,7 +185,7 @@ function Menus({ darkMode }) {
         </Badge>
       </li>
       <li>
-        <Badge count={'قريبا'} offset={[10, 10]} status='warning'>
+        <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
               fontWeight: 600,
