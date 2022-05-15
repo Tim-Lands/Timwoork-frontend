@@ -6,6 +6,7 @@
 @import "post-rtl";
 @import "table-rtl";
 @import "footer-rtl";
+@import "conversations-rtl";
 
 @font-face {
   font-family: "jf";
@@ -442,6 +443,37 @@ h3 {
       font-size: 19px;
       font-weight: bold;
       color: #333;
+    }
+  }
+  .saleTable {
+    @media (max-width: 800px) {
+      overflow-x: scroll;
+      scrollbar-color: transparent transparent;
+      scrollbar-width: thin;
+      -ms-overflow-style: scroll;
+      &::-webkit-scrollbar {
+        height: 11px;
+      }
+      &:hover {
+        scrollbar-color: #cbd1d8 #cbd1d8;
+      }
+      &::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        height: 11px;
+        background-color: #cbd1d8;
+        transition: all 0.1s linear;
+      }
+      &:hover::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        transition: all 0.1s linear;
+        background-color: #cbd1d8;
+      }
+    }
+
+    .innerTable {
+      @media (max-width: 800px) {
+        min-width: 720px;
+      }
     }
   }
 
@@ -5258,171 +5290,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   border: 1px solid rgb(219, 140, 140);
 }
 
-.conversations-form-main {
-  position: sticky;
-  bottom: 0;
-  background-color: #f8f8f8;
-}
-
-.conversations-list {
-  .conversations-title {
-    border-bottom: 2px dashed #f6f6f6;
-    margin-bottom: 8px;
-    padding: 8px;
-
-    .title {
-      margin: 0;
-      color: #333;
-      font-size: 19px;
-      font-weight: bold;
-    }
-  }
-}
-
-.conversations-sidebar {
-  position: sticky;
-  top: 70px;
-  background-color: #fff;
-  padding: 10px;
-  height: fit-content;
-  @media (min-width: 992px) {
-    min-height: 600px;
-  }
-
-  .conversations-items {
-    .conversations-items-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      li {
-        a {
-          position: relative;
-          display: flex;
-          padding: 13px;
-          border-bottom: 1px solid #f6f6f6;
-          margin-bottom: 3px;
-          transition: all 0.3s;
-          overflow: hidden;
-
-          .conv-item-inner {
-            display: flex;
-            align-items: center;
-            align-content: center;
-
-            .conv-item-head {
-              img {
-                border-radius: 50%;
-                margin-left: 6px;
-              }
-            }
-
-            .conv-item-body {
-              .user-title {
-                margin: 0;
-                font-size: 15px;
-                font-weight: 300;
-                color: #444;
-              }
-
-              .conv-text {
-                color: #333;
-                margin: 0;
-                font-weight: 200;
-                font-size: 13px;
-              }
-            }
-          }
-
-          &:hover {
-            background-color: #f8f8f8;
-          }
-        }
-
-        &:last-child {
-          a {
-            border-bottom: 0;
-            margin-bottom: 0;
-          }
-        }
-
-        &.is-readed {
-          a {
-            background-color: #f9f9f9;
-
-            .msg-count {
-              position: absolute;
-              left: 15px;
-              top: 10px;
-            }
-
-            .conv-item-body {
-              .user-title {
-                font-weight: bold;
-                color: #111;
-              }
-
-              .conv-text {
-                color: #000;
-                font-weight: bold;
-              }
-            }
-          }
-        }
-
-        &.active {
-          a {
-            background-color: $primary;
-
-            .conv-item-body {
-              .user-title {
-                color: rgba(255, 255, 255, 0.89);
-              }
-
-              .conv-text {
-                color: #fff;
-              }
-            }
-          }
-
-          &.is-readed {
-            a {
-              .conv-item-body {
-                .user-title {
-                  color: #fff;
-                }
-
-                .conv-text {
-                  color: #fff;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.is-hover-primary {
+ذ .is-hover-primary {
   a {
     &:hover {
       color: $primary !important;
       text-decoration: underline;
     }
-  }
-}
-
-.conversations-item-head {
-  padding: 23px 9px;
-  border-bottom: 2px dashed #f1f1f1;
-  margin-bottom: 8px;
-
-  .title {
-    margin: 0;
-    color: #555;
-    font-size: 17px;
-    font-weight: bold;
   }
 }
 

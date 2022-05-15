@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .timlands-alert {
   padding: 15px;
   background-color: #fff;
@@ -1823,13 +1824,161 @@
   color: #475C80;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 992px) {
   .reverse {
     -webkit-box-orient: vertical;
     -webkit-box-direction: reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
   }
+}
+
+.conversations-form-main {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  background-color: #f8f8f8;
+}
+
+.conversations-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+  background-color: #fff;
+  padding: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+@media (min-width: 992px) {
+  .conversations-sidebar {
+    min-height: 600px;
+  }
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li a {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 13px;
+  border-bottom: 1px solid #f6f6f6;
+  margin-bottom: 3px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner .conv-item-head img {
+  border-radius: 50%;
+  margin-left: 6px;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner .conv-item-body .user-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 300;
+  color: #444;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner .conv-item-body .conv-text {
+  color: #333;
+  margin: 0;
+  font-weight: 200;
+  font-size: 13px;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li a:hover {
+  background-color: #f8f8f8;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li:last-child a {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a {
+  background-color: #f9f9f9;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a .msg-count {
+  position: absolute;
+  left: 15px;
+  top: 10px;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a .conv-item-body .user-title {
+  font-weight: bold;
+  color: #111;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a .conv-item-body .conv-text {
+  color: #000;
+  font-weight: bold;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.active a {
+  background-color: #475C80;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.active a .conv-item-body .user-title {
+  color: rgba(255, 255, 255, 0.89);
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.active a .conv-item-body .conv-text {
+  color: #fff;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.active.is-readed a .conv-item-body .user-title {
+  color: #fff;
+}
+
+.conversations-sidebar .conversations-items .conversations-items-list li.active.is-readed a .conv-item-body .conv-text {
+  color: #fff;
+}
+
+.conversations-item-head {
+  padding: 23px 9px;
+  border-bottom: 2px dashed #f1f1f1;
+  margin-bottom: 8px;
+}
+
+.conversations-item-head .title {
+  margin: 0;
+  color: #555;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.conversations-list .conversations-title {
+  border-bottom: 2px dashed #f6f6f6;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.conversations-list .conversations-title .title {
+  margin: 0;
+  color: #333;
+  font-size: 19px;
+  font-weight: bold;
 }
 
 @font-face {
@@ -2289,6 +2438,40 @@ h3 {
   font-size: 19px;
   font-weight: bold;
   color: #333;
+}
+
+@media (max-width: 800px) {
+  .app-bill .saleTable {
+    overflow-x: scroll;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    -ms-overflow-style: scroll;
+  }
+  .app-bill .saleTable::-webkit-scrollbar {
+    height: 11px;
+  }
+  .app-bill .saleTable:hover {
+    scrollbar-color: #cbd1d8 #cbd1d8;
+  }
+  .app-bill .saleTable::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    height: 11px;
+    background-color: #cbd1d8;
+    -webkit-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+  }
+  .app-bill .saleTable:hover::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    -webkit-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+    background-color: #cbd1d8;
+  }
+}
+
+@media (max-width: 800px) {
+  .app-bill .saleTable .innerTable {
+    min-width: 720px;
+  }
 }
 
 .app-bill .app-bill-footer {
@@ -7581,157 +7764,9 @@ h3 {
   border: 1px solid #db8c8c;
 }
 
-.conversations-form-main {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  background-color: #f8f8f8;
-}
-
-.conversations-list .conversations-title {
-  border-bottom: 2px dashed #f6f6f6;
-  margin-bottom: 8px;
-  padding: 8px;
-}
-
-.conversations-list .conversations-title .title {
-  margin: 0;
-  color: #333;
-  font-size: 19px;
-  font-weight: bold;
-}
-
-.conversations-sidebar {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 70px;
-  background-color: #fff;
-  padding: 10px;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
-@media (min-width: 992px) {
-  .conversations-sidebar {
-    min-height: 600px;
-  }
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li a {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 13px;
-  border-bottom: 1px solid #f6f6f6;
-  margin-bottom: 3px;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  overflow: hidden;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner .conv-item-head img {
-  border-radius: 50%;
-  margin-left: 6px;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner .conv-item-body .user-title {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 300;
-  color: #444;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li a .conv-item-inner .conv-item-body .conv-text {
-  color: #333;
-  margin: 0;
-  font-weight: 200;
-  font-size: 13px;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li a:hover {
-  background-color: #f8f8f8;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li:last-child a {
-  border-bottom: 0;
-  margin-bottom: 0;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a {
-  background-color: #f9f9f9;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a .msg-count {
-  position: absolute;
-  left: 15px;
-  top: 10px;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a .conv-item-body .user-title {
-  font-weight: bold;
-  color: #111;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.is-readed a .conv-item-body .conv-text {
-  color: #000;
-  font-weight: bold;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.active a {
-  background-color: #475C80;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.active a .conv-item-body .user-title {
-  color: rgba(255, 255, 255, 0.89);
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.active a .conv-item-body .conv-text {
-  color: #fff;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.active.is-readed a .conv-item-body .user-title {
-  color: #fff;
-}
-
-.conversations-sidebar .conversations-items .conversations-items-list li.active.is-readed a .conv-item-body .conv-text {
-  color: #fff;
-}
-
-.is-hover-primary a:hover {
+ذ .is-hover-primary a:hover {
   color: #475C80 !important;
   text-decoration: underline;
-}
-
-.conversations-item-head {
-  padding: 23px 9px;
-  border-bottom: 2px dashed #f1f1f1;
-  margin-bottom: 8px;
-}
-
-.conversations-item-head .title {
-  margin: 0;
-  color: #555;
-  font-size: 17px;
-  font-weight: bold;
 }
 
 .ant-dropdown-menu-title-content a {

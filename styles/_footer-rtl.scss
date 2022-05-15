@@ -1,85 +1,85 @@
 .app-footer {
-    background-color: #fff;
-    padding: 80px 0;
+  background-color: #fff;
+  padding: 80px 0;
 
-    .app-footer-aside {
-        .aside-header {
-            padding: 9px 0;
-            border-bottom: 1px solid #f5f5f5;
-            margin-bottom: 7px;
-            .title {
-                font-weight: 700;
-                font-size: 18px;
-                color: #444;
-            }
-        }
-        .aside-body {
-            .aside-list-items {
-                > li {
-                    padding: 5px 0;
-                    > a {
-                        color: #555;
-                        font-size: 13px;
-                        &:hover {
-                            color: darken($primary2, 9);
-                        }
-                    }
-                }
-            }
-        }
-        .social-icons {
-            margin-top: 9px;
-            padding-top: 14px;
-            border-top: 1px solid #f5f5f5;
-            li {
-                padding-left: 7px;
-                a {
-                    width: 40px;
-                    height: 40px;
-                    display: flex;
-                    border-radius: 50%;
-                    background-color: #f3f3f3;
-                    color: #777;
-                    align-content: center;
-                    align-items: center;
-                    justify-content: center;
-                    &:hover {
-                        transition: all 0.3s;
-                        color: #000;
-                        background-color: #ddd;
-                    }
-                }
-            }
-        }
+  .app-footer-aside {
+    .aside-header {
+      padding: 9px 0;
+      border-bottom: 1px solid #f5f5f5;
+      margin-bottom: 7px;
+      .title {
+        font-weight: 700;
+        font-size: 18px;
+        color: #444;
+      }
     }
+    .aside-body {
+      .aside-list-items {
+        > li {
+          padding: 5px 0;
+          > a {
+            color: #555;
+            font-size: 13px;
+            &:hover {
+              color: darken($primary2, 9);
+            }
+          }
+        }
+      }
+    }
+    .social-icons {
+      margin-top: 9px;
+      padding-top: 14px;
+      border-top: 1px solid #f5f5f5;
+      li {
+        padding-left: 7px;
+        a {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          border-radius: 50%;
+          background-color: #f3f3f3;
+          color: #777;
+          align-content: center;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            transition: all 0.3s;
+            color: #000;
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
 }
 .bottom-footer {
-    .payments-logo {
-        img {
-            height: 15px;
-        }
+  .payments-logo {
+    img {
+      height: 15px;
     }
-    .center-nav-footer {
-        li {
-            font-size: 13px;
-            font-weight: 600;
-        }
+  }
+  .center-nav-footer {
+    li {
+      font-size: 13px;
+      font-weight: 600;
     }
-    .copy-text {
-        font-size: 13px;
-        margin: 0;
-        color: #333;
-        a {
-            color: #000;
-            font-weight: 700;
-            &:hover {
-                color: $primary;
-            }
-        }
+  }
+  .copy-text {
+    font-size: 13px;
+    margin: 0;
+    color: #333;
+    a {
+      color: #000;
+      font-weight: 700;
+      &:hover {
+        color: $primary;
+      }
     }
+  }
 }
-@media (max-width: 600px) {
-    &.reverse {
-        flex-direction: column-reverse;
-    }
+@media (max-width: 992px) {
+  &.reverse {
+    flex-direction: column-reverse;
+  }
 }

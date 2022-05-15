@@ -25,10 +25,7 @@ function index() {
         ogDescription={"مبيعاتي - تيموورك"}
       />
       {veriedEmail && (
-        <div
-          className="timwoork-single my-3"
-          style={{ maxWidth: 1300, marginInline: "auto" }}
-        >
+        <div className=" my-3" style={{ maxWidth: 1300, marginInline: "auto" }}>
           <div className="row py-4 justify-content-center">
             <div className="col-lg-11">
               <div className="row">
