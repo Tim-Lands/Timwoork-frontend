@@ -59,7 +59,7 @@ export default function UploadPicture({ token, avatarPicture }) {
                         <button className="btn butt-md butt-primary" onClick={onUploadPicture}>رفع الآن</button>
                     </motion.div>
                 }
-                <p className="note" style={{ color: 'red', textAlign: 'center', fontWeight: 'bold' }}>يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2 ميجابايت</p>
+                <p className="note" style={{ color: 'red', textAlign: 'center', fontWeight: '#475C80' }}>يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2 ميجابايت</p>
             </div>
         </div>
     );

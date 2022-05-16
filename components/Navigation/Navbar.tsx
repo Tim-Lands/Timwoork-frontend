@@ -21,6 +21,7 @@ import {
 import Pusher from "pusher-js";
 import LastSeen from "../LastSeen";
 import { motion } from "framer-motion";
+import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
   const [visible, setVisible] = useState(false)
@@ -280,7 +281,8 @@ function Navbar(): ReactElement {
     } catch (error) {
       //console.log(error);
     }
-  };
+  }
+  const [isLogoutModal, setIsLogoutModal]: any = useState(false)
   const AccountList = (
     <Menu>
       <Menu.Item key="0">
@@ -373,8 +375,15 @@ function Navbar(): ReactElement {
           تسجيل الخروج
         </a>
       </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3">
+        <a onClick={() => setIsLogoutModal(true)}>
+          <span className="material-icons material-icons-outlined">logout</span>
+          الخروج من جميع الأجهزة
+        </a>
+      </Menu.Item>
     </Menu>
-  );
+  )
   const myLoader = () => {
     return `${userData && userData.user_details.profile.avatar_path}`;
   };
@@ -383,6 +392,9 @@ function Navbar(): ReactElement {
 
   return (
     <>
+      {isLogoutModal && <div className="overlay-fixed">
+        <LogoutModal setIsLogoutModal={setIsLogoutModal} />
+      </div>}
       <div
         className={"timlands-navbar-container"}
         style={{
