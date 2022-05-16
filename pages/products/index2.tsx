@@ -81,12 +81,13 @@ function Category() {
     const fetchData = async (pageNumber: number = 1) => {
         console.log(formik.values)
         setIsLoading(true)
-        const { minprice, maxprice, categoryID, tags, ratting, seller_level, delevring } = formik.values
+        const { minprice,query, maxprice, categoryID, tags, ratting, seller_level, delevring } = formik.values
         const tags_filtered = tags.filter(tag => tag.id).map(tag => tag.id)
         try {
             const params = {
                 paginate: 12,
                 page: pageNumber,
+                like:`title,${query}`,
                 between: delevring?`duration,${delevring}`:null,
                 category: categoryID.length == 0 ? null : categoryID.join(','),
                 tags: tags_filtered.length == 0 ? null : tags_filtered.join(','),
@@ -348,6 +349,7 @@ function Category() {
                                     placeholder="أكتب كلمة البحث..."
                                     className={"timlands-inputs"}
                                     autoComplete="off"
+                                    onBlur={()=>setSentinel({...sentinel,mount:true})}
                                     onChange={formik.handleChange}
                                     value={formik.values.query}
                                 />
