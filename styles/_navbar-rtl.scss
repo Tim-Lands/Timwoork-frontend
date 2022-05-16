@@ -268,6 +268,9 @@
       }
       &.login-user {
         width: 33px !important;
+        @media (max-width: 450px) {
+          width: 25px !important;
+        }
         cursor: pointer;
         img {
           border-radius: 50%;
@@ -308,6 +311,10 @@
         align-items: center;
         align-content: center;
         margin-top: 4px;
+        @media (max-width: 450px) {
+          margin-inline: 0px;
+          width: 30px;
+        }
         a {
           display: flex;
           align-content: center;

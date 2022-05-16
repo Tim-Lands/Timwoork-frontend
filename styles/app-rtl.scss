@@ -115,6 +115,9 @@ a:hover {
 
 .material-icons {
   line-height: 0;
+  @media (max-width: 450px) {
+    font-size: 18px;
+  }
 }
 
 body {
@@ -1233,13 +1236,13 @@ h3 {
               line-height: 27px;
             }
 
-            >li {
+            > li {
               margin: 6px 0;
 
-              >ul {
+              > ul {
                 margin: 15px 0;
 
-                >li {
+                > li {
                   margin: 6px 0;
                 }
               }
@@ -1362,7 +1365,7 @@ h3 {
                 padding: 0;
                 margin: 0;
 
-                >.comment-item {
+                > .comment-item {
                   padding: 12px;
                   padding-right: 25px;
 
@@ -1970,10 +1973,10 @@ h3 {
       padding: 0;
       margin: 0;
 
-      >.dash-item {
+      > .dash-item {
         padding: 3px;
 
-        >.dash-link {
+        > .dash-link {
           padding: 10px 19px;
           padding-right: 26px;
           border-right-width: 4px;
@@ -2004,8 +2007,8 @@ h3 {
           padding-right: 50px;
           transition: all 0.3s;
 
-          >.subdash-item {
-            >.subdash-link {
+          > .subdash-item {
+            > .subdash-link {
               display: flex;
               font-size: 13px;
               color: #333;
@@ -2017,7 +2020,7 @@ h3 {
             }
 
             &.active {
-              >.subdash-link {
+              > .subdash-link {
                 font-weight: bold;
                 color: $primary;
               }
@@ -2026,7 +2029,7 @@ h3 {
         }
 
         &.active {
-          >.dash-link {
+          > .dash-link {
             color: $primary;
             background-color: #f2f2f2;
             border-right-color: $primary;
@@ -2220,7 +2223,6 @@ h3 {
       }
 
       &.active {
-
         .title,
         .text {
           opacity: 1;
@@ -2291,7 +2293,6 @@ h3 {
 
       &.is-loader {
         .butt-sm {
-
           .text,
           .material-icons-outlined {
             display: none;
@@ -2303,7 +2304,6 @@ h3 {
         }
 
         .butt-xs {
-
           .text,
           .material-icons-outlined {
             display: none;
@@ -2443,7 +2443,7 @@ h3 {
       margin: 0;
       margin-top: 12px;
 
-      >li {
+      > li {
         font-size: 13px;
         padding: 8px 0;
         border-bottom: 1px solid #f6f6f6;
@@ -2568,7 +2568,7 @@ h3 {
   }
 
   &.primary {
-    background-color: $primary  !important;
+    background-color: $primary !important;
 
     .panel-item-header {
       border-bottom: 1px solid darken($primary, 3);
@@ -2588,7 +2588,7 @@ h3 {
       }
 
       .details-items {
-        >li {
+        > li {
           border-bottom: 1px solid darken($primary, 3);
 
           p {
@@ -2628,7 +2628,7 @@ h3 {
       }
 
       .details-items {
-        >li {
+        > li {
           border-bottom: 1px solid darken(#222, 3);
 
           p {
@@ -2668,7 +2668,7 @@ h3 {
       }
 
       .details-items {
-        >li {
+        > li {
           border-bottom: 1px solid darken(#e48f20, 3);
 
           p {
@@ -2708,7 +2708,7 @@ h3 {
       }
 
       .details-items {
-        >li {
+        > li {
           border-bottom: 1px solid darken(#209ce4, 3);
 
           p {
@@ -2748,7 +2748,7 @@ h3 {
       }
 
       .details-items {
-        >li {
+        > li {
           border-bottom: 1px solid darken(#2ac559, 3);
 
           p {
@@ -2768,7 +2768,7 @@ h3 {
   }
 
   &.primary2 {
-    background-color: $primary2  !important;
+    background-color: $primary2 !important;
 
     .panel-item-header {
       border-bottom: 1px solid darken($primary2, 3);
@@ -2788,7 +2788,7 @@ h3 {
       }
 
       .details-items {
-        >li {
+        > li {
           border-bottom: 1px solid darken($primary2, 3);
 
           p {
@@ -3202,13 +3202,13 @@ h3 {
               font-size: 17px;
             }
 
-            >li {
+            > li {
               margin: 6px 0;
 
-              >ul {
+              > ul {
                 margin: 15px 0;
 
-                >li {
+                > li {
                   margin: 6px 0;
                 }
               }
@@ -4337,9 +4337,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     @media (max-width: 1100px) {
       @content;
     }
-  }
-
-  @else if $point==800 {
+  } @else if $point==800 {
     @media (max-width: 800px) {
       @content;
     }
@@ -4354,7 +4352,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     @include hideInput;
   }
 
-  input+label {
+  input + label {
     cursor: pointer;
     margin: 0;
     padding: 0.75rem 2rem;
@@ -4389,13 +4387,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 
-  input:hover+label {
+  input:hover + label {
     border-color: #ccc;
     color: #000;
     background-color: #f5f5f5;
   }
 
-  input:checked+label {
+  input:checked + label {
     background-color: $primary;
     color: #fff;
     box-shadow: $activeShadow;
@@ -4408,12 +4406,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 
-  input:focus+label {
+  input:focus + label {
     @include focusOutline;
   }
 
   @include breakpoint(800) {
-    input+label {
+    input + label {
       padding: 0.75rem 0.25rem;
       flex: 0 0 50%;
       display: flex;
@@ -4456,7 +4454,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .ReactTags :global {
-
   /* Example Styles for React Tags*/
   .app {
     padding: 40px;
@@ -4583,7 +4580,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 
-.stars input[type="radio"]:checked~label {
+.stars input[type="radio"]:checked ~ label {
   color: rgb(255, 145, 0);
 
   .material-icons {
@@ -4595,7 +4592,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   display: none;
 }
 
-.stars input[type="radio"]:first-child+label {
+.stars input[type="radio"]:first-child + label {
   padding-right: 0;
 
   .material-icons {
@@ -4603,7 +4600,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 
-.stars:hover input[type="radio"]:checked~label,
+.stars:hover input[type="radio"]:checked ~ label,
 .stars label {
   font-size: 24px;
   color: rgb(255, 145, 0);
@@ -4628,7 +4625,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .stars label:hover,
-.stars label:hover~label {
+.stars label:hover ~ label {
   color: rgb(223, 131, 12) !important;
 }
 
@@ -4730,8 +4727,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.bt-tiktok {
     &:hover {
       color: #fff !important;
-      background-image: linear-gradient(rgb(0, 0, 0),
-          rgb(72, 16, 99)) !important;
+      background-image: linear-gradient(
+        rgb(0, 0, 0),
+        rgb(72, 16, 99)
+      ) !important;
     }
   }
 
@@ -4937,7 +4936,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     z-index: 44;
     cursor: pointer;
 
-    &:hover~.upload-btn {
+    &:hover ~ .upload-btn {
       background-color: rgba(0, 0, 0, 0.281);
     }
   }
@@ -5279,7 +5278,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
 
     .item-content {
-
       .bg-danger,
       .bg-success {
         right: 10px;
@@ -5346,7 +5344,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 ذ .is-hover-primary {
   a {
     &:hover {
-      color: $primary  !important;
+      color: $primary !important;
       text-decoration: underline;
     }
   }
@@ -5727,7 +5725,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   opacity: 0.75;
 }
 
-.form-check-input:checked+.form-checked-content {
+.form-check-input:checked + .form-checked-content {
   opacity: 0.5;
 }
 
@@ -5758,17 +5756,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   pointer-events: none;
 }
 
-.list-group-item-check:hover+.list-group-item {
+.list-group-item-check:hover + .list-group-item {
   background-color: var(--bs-light);
 }
 
-.list-group-item-check:checked+.list-group-item {
+.list-group-item-check:checked + .list-group-item {
   color: #fff;
   background-color: $primary;
 }
 
-.list-group-item-check[disabled]+.list-group-item,
-.list-group-item-check:disabled+.list-group-item {
+.list-group-item-check[disabled] + .list-group-item,
+.list-group-item-check:disabled + .list-group-item {
   pointer-events: none;
   filter: none;
   opacity: 0.5;
@@ -6031,7 +6029,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     padding: 12px;
   }
 
-  .row>* {
+  .row > * {
     padding: 5px;
   }
 }
@@ -6136,7 +6134,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       color: #000;
       background-color: #fff;
     }
-
   }
 
   .tool-menus {
@@ -6244,12 +6241,15 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 
-.ant-collapse-icon-position-right>.ant-collapse-item>.ant-collapse-header .ant-collapse-arrow {
+.ant-collapse-icon-position-right
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-arrow {
   right: auto;
   left: 16px;
 }
 
-.ant-collapse-icon-position-right>.ant-collapse-item>.ant-collapse-header {
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
   padding-right: 16px;
 }
 

@@ -4,6 +4,7 @@ import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { useOutSide } from "../useOutSide";
 import API from "../../config";
+import { MdPublic } from "@react-icons/all-files/md/MdPublic";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
@@ -57,12 +58,13 @@ function Navbar(): ReactElement {
     userInfo && userInfo.user_details.id
   }`;
   const channel = pusher.subscribe(channelChat);
-
+  const [size, setSize] = useState(0);
   const channelNotification = `presence-notify.${
     userInfo && userInfo.user_details.id
   }`;
   const channelNoty = pusher.subscribe(channelNotification);
   useEffect(() => {
+    setSize(window.innerWidth);
     window.addEventListener("scroll", () => {
       setVisible(false);
     });
@@ -515,10 +517,7 @@ function Navbar(): ReactElement {
                                             </Tooltip>
                                         </li>*/}
                       {!veriedEmail && (
-                        <li
-                          className="right-butts-icon"
-                          style={{ marginInline: 5 }}
-                        >
+                        <li className="right-butts-icon">
                           <Tooltip
                             placement="bottom"
                             title="حسابك غير مفعل يرجى التحقق من بريدك الإلكتروني انها وصلك رمز تأكيد."
@@ -551,10 +550,7 @@ function Navbar(): ReactElement {
                         </li>
                       )}
                       {veriedEmail && (
-                        <li
-                          className="right-butts-icon"
-                          style={{ marginInline: 5 }}
-                        >
+                        <li className="right-butts-icon">
                           <Tooltip placement="bottom" title="سلة المشتريات">
                             <Link href="/cart">
                               <a>
@@ -572,10 +568,7 @@ function Navbar(): ReactElement {
                         </li>
                       )}
                       {veriedEmail && (
-                        <li
-                          className="right-butts-icon"
-                          style={{ marginInline: 5 }}
-                        >
+                        <li className="right-butts-icon">
                           <Tooltip placement="bottom" title="صندوق الرسائل">
                             <Link href="/conversations">
                               <a>
@@ -589,10 +582,7 @@ function Navbar(): ReactElement {
                           </Tooltip>
                         </li>
                       )}
-                      <li
-                        className="right-butts-icon"
-                        style={{ marginInline: 5 }}
-                      >
+                      <li className="right-butts-icon">
                         <Tooltip placement="bottom" title="الإشعارات">
                           <Link href="/notifications">
                             <a>
@@ -611,7 +601,7 @@ function Navbar(): ReactElement {
                           </Link>
                         </Tooltip>
                       </li>
-                      <li className="login-user" style={{ marginInline: 5 }}>
+                      <li className="login-user">
                         <span
                           ref={userList}
                           onClick={() => {
@@ -664,7 +654,7 @@ function Navbar(): ReactElement {
                       </a>
                     </Link>
                   </li>
-                  <li className="register-nav-item" style={{ padding: 7 }}>
+                  <li className="register-nav-item d-flex align-items-center">
                     <Link href="/register">
                       <a className="btn butt-sm butt-primary flex-center">
                         <i className="material-icons material-icons-outlined">
@@ -676,6 +666,23 @@ function Navbar(): ReactElement {
                   </li>
                 </>
               )}
+              <li className="register-nav-item d-flex align-items-center justify-content-center">
+                <MdPublic />
+                <select
+                  style={{
+                    border: 0,
+                    display: "inline",
+                    backgroundColor: "#fff",
+                    fontSize: 13,
+                    color: "#555",
+                  }}
+                >
+                  <option value="">{size > 900 ? "العربية" : "ar"}</option>
+                  <option value="" disabled>
+                    {size > 900 ? "الانجليزية" : "en"}
+                  </option>
+                </select>
+              </li>
             </ul>
           </div>
         </nav>

@@ -980,6 +980,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 450px) {
+  .timlands-navbar .nav-auth > li.login-user {
+    width: 25px !important;
+  }
+}
+
 .timlands-navbar .nav-auth > li.login-user img {
   border-radius: 50%;
   display: inline-block;
@@ -1033,6 +1039,13 @@
   -ms-flex-line-pack: center;
       align-content: center;
   margin-top: 4px;
+}
+
+@media (max-width: 450px) {
+  .timlands-navbar .nav-auth > li.right-butts-icon {
+    margin-inline: 0px;
+    width: 30px;
+  }
 }
 
 .timlands-navbar .nav-auth > li.right-butts-icon a {
@@ -2099,6 +2112,12 @@ a:hover {
 
 .material-icons {
   line-height: 0;
+}
+
+@media (max-width: 450px) {
+  .material-icons {
+    font-size: 18px;
+  }
 }
 
 body {
@@ -8740,7 +8759,10 @@ h3 {
   color: #475C80;
 }
 
-.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+.ant-collapse-icon-position-right
+> .ant-collapse-item
+> .ant-collapse-header
+.ant-collapse-arrow {
   right: auto;
   left: 16px;
 }
