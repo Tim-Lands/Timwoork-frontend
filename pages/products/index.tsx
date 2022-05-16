@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useRef } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { useFormik } from "formik";
@@ -75,26 +75,36 @@ function Category() {
     const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({})
     const [isSubCategoryFetched, setIsSubCategoryFetched]: any = useState(false)
     const [activeKeys, setActiveKeys]: any = useState([])
+    const [filterBased, setFilterBased]:any = useState('')
+    const products_type = useRef({
+        'most_recent':'الخدمات الأحدث',
+        'most_selling':'الخدمات الأكثر مبيعًا',
+        'popular':'الخدمات الأكثر شعبية'
+    })
     //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
     /**----------------------------------------------------------**/
     useEffect(() => {
         if (isSubCategoryFetched) {
-            const { categoryID } = getQueryParams(window.location.search);
+            const { categoryID,type } = getQueryParams(window.location.search);
             if (categoryID) {
                 setActiveKeys(activeKeys.concat([2]))
                 setSubCategoryDisplay({ ...subCategoryDisplay, [categoryID]: 'block' })
+            }
+            if(type){
+                setFilterBased(type)
             }
         }
     }, [isSubCategoryFetched]);
     useEffect(() => {
         fetchData()
-    }, [sentinel])
+    }, [sentinel, filterBased])
 
     useEffect(() => {
         if (categories?.data)
             fetchSubCategories()
     }, [categories])
     useEffect(() => {
+        window.addEventListener('scroll',()=>setIsSettings(false))
         if (window.innerWidth > 950) {
             setSize(4);
         }
@@ -151,10 +161,10 @@ function Category() {
                 between: delevring ? `duration,${delevring}` : null,
                 category: categoryID.length == 0 ? null : categoryID.join(','),
                 tags: tags_filtered.length == 0 ? null : tags_filtered.join(','),
-                greater_or_equal: ratting,
+                ratings_avg: ratting,
                 seller_level,
             }
-            const res = await API.get(`api/filter?between=price,${minprice},${maxprice}`, {
+            const res = await API.get(`api/filter?${filterBased}&between=price,${minprice},${maxprice}`, {
                 params,
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -354,7 +364,12 @@ function Category() {
         }
     };
     return (
-        <div className="containerProductsPage py-5">
+        <div className="containerProductsPage py-5" onClick={e=>{
+            const target = e.target as HTMLElement
+            if(!target.closest('#setting-toggler'))
+            setIsSettings(false)
+            
+            }}>
             <MetaTags
                 title={"تصفح الخدمات"}
                 metaDescription={"تصفح الخدمات"}
@@ -683,29 +698,46 @@ function Category() {
                     </div>
                     <div className="col-md-9">
                         <div className="page-header flex-center" style={{ paddingTop: 0 }}>
-                            <h4 className="title me-auto">جميع الخدمات</h4>
+                            <h4 className="title me-auto">{products_type.current[filterBased]||'جميع الخدمات'}</h4>
                             <div className="tool-right ml-auto">
-                                <button type="button" className={"btn-tool flex-center " + (isSettings ? 'is-active' : '')} onClick={() => setIsSettings(!isSettings)}>
+                                <button type="button" id="setting-toggler" className={"btn-tool flex-center " + (isSettings ? 'is-active' : '')} onClick={() => setIsSettings(!isSettings)}>
                                     <span className="material-icons material-icons-outlined">
                                         settings
                                     </span>
                                 </button>
                                 {isSettings &&
                                     <div className="tool-menus">
-                                        <ul className="listmenu-sort">
+                                        <ul className="listmenu-sort " >
                                             <li>
-                                                <button type="button" className="btn-item">
+                                                <button type="button" className="btn-item" onClick={()=>{
+                                                    setFilterBased('popular')
+                                                    }}>
                                                     الأكثر شعبية
                                                 </button>
                                             </li>
                                             <li>
-                                                <button type="button" className="btn-item">
+                                                <button type="button" className="btn-item" onClick={()=>{
+                                                    setFilterBased('most_selling')
+
+                                                }}>
                                                     الأكثر مبيعا
                                                 </button>
                                             </li>
                                             <li>
-                                                <button type="button" className="btn-item">
+                                                <button type="button" className="btn-item" onClick={()=>{
+                                                    setFilterBased('most_recent')
+
+                                                    }}>
                                                     المضافة حديثا
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button type="button" className="btn-item" onClick={()=>{
+                                                    setFilterBased('')
+                                                    setSentinel({...sentinel,mount:true})
+
+                                                }}>
+                                                 بدون ترتيب
                                                 </button>
                                             </li>
                                         </ul>

@@ -93,19 +93,19 @@ function Home() {
               title="الخدمات الأكثر شعبية "
               PostData={popularProducts && popularProducts.data.data}
               isError={popularError}
-              linkURL="/products/popular"
+              linkURL="/products?type=popular"
             />
             <PostsAside
               title="الخدمات التي أضيفت حديثا"
               PostData={latestProducts && latestProducts.data.data}
               isError={latestError}
-              linkURL="/products/latest"
+              linkURL="/products?type=most_recent"
             />
             <PostsAside
               title="الخدمات الأكثر مبيعا"
               PostData={products && products.data.data}
               isError={error}
-              linkURL="/products/best-seller"
+              linkURL="/products?type=most_selling"
             />
           </div>
         )}
