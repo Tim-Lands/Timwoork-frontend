@@ -20,7 +20,6 @@ const personalInformations = () => {
     const { data: userInfo }: any = useSWR('api/me')
     const { data: Countries }: any = useSWR('dashboard/countries')
     const [validationsErrors, setValidationsErrors]: any = useState({})
-    const [isLogoutModal, setIsLogoutModal]: any = useState(false)
 
     function setValidationsErrorsHandle() {
         setValidationsErrors({})
@@ -41,14 +40,6 @@ const personalInformations = () => {
             />
             {!userInfo && <Loading />}
             <div className="container py-4">
-                <div className="d-flex justify-content-center py-2">
-                    <button className="btn butt-red butt-sm" onClick={() => setIsLogoutModal(true)}>
-                        تسجيل الخروج من جميع الأجهزة
-                    </button>
-                </div>
-                {isLogoutModal && <div className="overlay-fixed">
-                    <LogoutModal setIsLogoutModal={setIsLogoutModal} />
-                </div>}
                 {userInfo && userInfo.user_details.profile && <>
                     <div className="row justify-content-md-center">
                         <div className="col-lg-9">

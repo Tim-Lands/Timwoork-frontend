@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { useOutSide } from "../useOutSide";
 import API from "../../config";
-import { MdPublic } from "@react-icons/all-files/md/MdPublic";
+import { FaGlobe } from "@react-icons/all-files/fa/FaGlobe";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
@@ -21,6 +21,7 @@ import {
 import Pusher from "pusher-js";
 import LastSeen from "../LastSeen";
 import { motion } from "framer-motion";
+import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
   const [visible, setVisible] = useState(false)
@@ -62,7 +63,7 @@ function Navbar(): ReactElement {
 
   const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id}`;
   const channelNoty = pusher.subscribe(channelNotification);
-  const langsList = <div className="menu-langs bg-white">
+  const langsList = <div className="menu-langs bg-white" style={{ top: 65, }}>
     <button className="langs-item" type="button">
       <ImageLogo width={25} height={16} src='/sa.webp' /><span> العربية</span>
     </button>
@@ -280,7 +281,8 @@ function Navbar(): ReactElement {
     } catch (error) {
       //console.log(error);
     }
-  };
+  }
+  const [isLogoutModal, setIsLogoutModal]: any = useState(false)
   const AccountList = (
     <Menu>
       <Menu.Item key="0">
@@ -373,8 +375,15 @@ function Navbar(): ReactElement {
           تسجيل الخروج
         </a>
       </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3">
+        <a onClick={() => setIsLogoutModal(true)}>
+          <span className="material-icons material-icons-outlined">logout</span>
+          الخروج من جميع الأجهزة
+        </a>
+      </Menu.Item>
     </Menu>
-  );
+  )
   const myLoader = () => {
     return `${userData && userData.user_details.profile.avatar_path}`;
   };
@@ -383,6 +392,9 @@ function Navbar(): ReactElement {
 
   return (
     <>
+      {isLogoutModal && <div className="overlay-fixed">
+        <LogoutModal setIsLogoutModal={setIsLogoutModal} />
+      </div>}
       <div
         className={"timlands-navbar-container"}
         style={{
@@ -647,8 +659,17 @@ function Navbar(): ReactElement {
               )}
               <li className="hr-divider" ></li>
               <li className="register-nav-item select-langs-inner d-flex align-items-center justify-content-center" >
-                <button className="select-langs" onClick={() => setIsShowenLangs(!isShowenLangs)}>
-                  <MdPublic /> العربية <i className="material-icons material-icons-outlined">
+                <button
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#555',
+                    borderWidth: 0,
+                    outline: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  className="select-langs" onClick={() => setIsShowenLangs(!isShowenLangs)}>
+                  <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} /> العربية <i className="material-icons material-icons-outlined">
                     expand_more
                   </i>
                 </button>

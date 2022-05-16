@@ -163,14 +163,14 @@ function index() {
                                                                     </a>
                                                                 </Link> :
                                                                 <Alert type='error'>
-                                                                    <strong>للأسف لديك طلب سحب أموال في المعالجة</strong>
+                                                                    <strong> لديك طلب سحب أموال في المعالجة</strong>
                                                                 </Alert>
                                                             }
                                                         </> :
                                                             <div className='row my-5 justify-content-md-center'>
                                                                 <div className="col-md-9">
                                                                     <Alert type='error'>
-                                                                        <strong>للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار</strong>
+                                                                        <strong> لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار</strong>
                                                                     </Alert>
                                                                 </div>
                                                             </div>
