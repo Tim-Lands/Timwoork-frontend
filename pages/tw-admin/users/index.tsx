@@ -27,6 +27,7 @@ function index() {
                     </a>
                 </Link>
             ),
+            
             sorter: {
                 compare: (a, b) => a.profile.full_name - b.profile.full_name,
                 multiple: 3,
