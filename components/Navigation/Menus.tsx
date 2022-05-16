@@ -63,7 +63,7 @@ function Menus({ darkMode }) {
           className={"explore-butt " + (showExplore && "is-open")}
           onClick={setShowExploreHandle}
           style={{
-            fontWeight: 600,
+            fontWeight: 300,
             color: !darkMode ? "#666" : "#f1f1f1",
             display: "flex",
             paddingInline: 0,
@@ -76,7 +76,7 @@ function Menus({ darkMode }) {
             alignContent: "center",
           }}
         >
-          <i className="material-icons material-icons-outlined">
+          <i style={{ fontSize: 18 }} className="material-icons material-icons-outlined">
             chrome_reader_mode
           </i>
           <span style={{ marginInline: 4 }}> التصنيفات </span>
@@ -104,7 +104,7 @@ function Menus({ darkMode }) {
               scale: 1.02,
             }}
             style={{
-              fontWeight: 600,
+              fontWeight: 300,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -116,7 +116,7 @@ function Menus({ darkMode }) {
             }}
           >
             <AiOutlineShoppingCart
-              style={{ marginLeft: 3, fontSize: 22, fontWeight: "bold" }}
+              style={{ marginLeft: 3, fontSize: 19, fontWeight: "bold" }}
             />
             الخدمات
           </motion.a>
@@ -126,7 +126,7 @@ function Menus({ darkMode }) {
         <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
-              fontWeight: 600,
+              fontWeight: 200,
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -137,7 +137,7 @@ function Menus({ darkMode }) {
               alignContent: "center",
             }}
           >
-            <BiTrophy style={{ marginLeft: 3, fontSize: 22 }} />
+            <BiTrophy style={{ marginLeft: 3, fontSize: 19 }} />
 
             المسابقات
           </motion.a>
@@ -147,7 +147,7 @@ function Menus({ darkMode }) {
         <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
-              fontWeight: 600,
+              fontWeight: 200,
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -158,7 +158,7 @@ function Menus({ darkMode }) {
               alignContent: "center",
             }}
           >
-            <BiBriefcase style={{ marginLeft: 3, fontSize: 22 }} />
+            <BiBriefcase style={{ marginLeft: 3, fontSize: 19 }} />
             المشاريع
           </motion.a>
         </Badge>
@@ -168,7 +168,7 @@ function Menus({ darkMode }) {
         <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
-              fontWeight: 600,
+              fontWeight: 200,
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -179,7 +179,7 @@ function Menus({ darkMode }) {
               alignContent: "center",
             }}
           >
-            <BiImage style={{ marginLeft: 3, fontSize: 27 }} />
+            <BiImage style={{ marginLeft: 3, fontSize: 20 }} />
             الاعمال
           </motion.a>
         </Badge>
@@ -188,7 +188,7 @@ function Menus({ darkMode }) {
         <Badge count={'قريبا'} offset={[10, 5]} status='warning'>
           <motion.a
             style={{
-              fontWeight: 600,
+              fontWeight: 200,
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -199,7 +199,7 @@ function Menus({ darkMode }) {
               alignContent: "center",
             }}
           >
-            <TiGroupOutline style={{ marginLeft: 3, fontSize: 22 }} />
+            <TiGroupOutline style={{ marginLeft: 3, fontSize: 19 }} />
             المستقلين
           </motion.a>
         </Badge>
@@ -215,7 +215,7 @@ function Menus({ darkMode }) {
               scale: 1.02,
             }}
             style={{
-              fontWeight: 600,
+              fontWeight: 300,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -228,7 +228,7 @@ function Menus({ darkMode }) {
           >
             <i
               className="material-icons material-icons-outlined"
-              style={{ fontSize: 25 }}
+              style={{ fontSize: 18 }}
             >
               forum
             </i>{" "}
@@ -247,7 +247,7 @@ function Menus({ darkMode }) {
               scale: 1.02,
             }}
             style={{
-              fontWeight: 600,
+              fontWeight: 300,
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -260,7 +260,7 @@ function Menus({ darkMode }) {
           >
             <i
               className="material-icons material-icons-outlined"
-              style={{ fontSize: 25 }}
+              style={{ fontSize: 20 }}
             >
               article
             </i>{" "}

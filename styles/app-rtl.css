@@ -660,14 +660,14 @@
 }
 
 .timlands-navbar .logo-nav {
-  padding-left: 0;
+  padding-left: 6px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
 .timlands-navbar .logo-nav img {
-  height: 40px;
+  height: 35px;
   margin-top: 4px !important;
 }
 
@@ -911,6 +911,10 @@
 .timlands-navbar .nav-container .app-navbar > li .timlands-explores .main-explores-container .main-item-category-body .sub-cat-link:hover p.count {
   background-color: #475C80;
   color: #fff;
+}
+
+.timlands-navbar .nav-container .app-navbar > li .ant-scroll-number {
+  font-size: 11px;
 }
 
 @media (max-width: 1160px) {
@@ -1174,6 +1178,86 @@
   left: 0;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+
+.hr-divider {
+  position: relative;
+  margin: 0 5px;
+  display: block;
+  height: 40px;
+  width: 2px;
+  background-color: #f2f2f2;
+}
+
+.select-langs-inner {
+  position: relative;
+}
+
+.select-langs-inner .select-langs {
+  background-color: transparent;
+  color: #555;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 0;
+  outline: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.select-langs-inner .select-langs svg {
+  margin-left: 4px;
+}
+
+.select-langs-inner .select-langs .material-icons {
+  font-size: 17px;
+  margin-right: 2px;
+}
+
+.select-langs-inner .select-langs:hover {
+  color: #000;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.menu-langs {
+  background-color: #fff;
+  -webkit-box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.034);
+          box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.034);
+  border-radius: 6px;
+  overflow: hidden;
+  position: absolute;
+  top: 40px;
+  width: 150px;
+  z-index: 2000;
+}
+
+.menu-langs .langs-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  right: 0;
+  width: 100%;
+  border: 0;
+  background-color: #fff;
+  color: #666;
+  font-size: 14px;
+  padding: 10px 15px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.menu-langs .langs-item:hover {
+  background-color: #f3f3f3;
+  color: #000;
+}
+
+.menu-langs .langs-item span {
+  margin-right: 4px;
 }
 
 .timlands-post-item {

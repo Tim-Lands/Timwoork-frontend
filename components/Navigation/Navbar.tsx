@@ -23,7 +23,9 @@ import LastSeen from "../LastSeen";
 import { motion } from "framer-motion";
 
 function Navbar(): ReactElement {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
+  const [isShowenLangs, setIsShowenLangs] = useState(false)
+
   const hideList = () => {
     setTimeout(() => {
       setVisible(false);
@@ -46,23 +48,29 @@ function Navbar(): ReactElement {
     forceTLS: true,
     auth: token
       ? {
-          headers: {
-            // pass the authorization token when using private channels
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        headers: {
+          // pass the authorization token when using private channels
+          Authorization: `Bearer ${token}`,
+        },
+      }
       : undefined,
   });
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-  const channelChat = `presence-receiver.${
-    userInfo && userInfo.user_details.id
-  }`;
+  const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id
+    }`;
   const channel = pusher.subscribe(channelChat);
   const [size, setSize] = useState(0);
-  const channelNotification = `presence-notify.${
-    userInfo && userInfo.user_details.id
-  }`;
+  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id
+    }`;
   const channelNoty = pusher.subscribe(channelNotification);
+  const langsList = <div className="menu-langs bg-white">
+    <button className="langs-item" type="button">
+      <ImageLogo width={25} height={16} src='/sa.webp' /><span> العربية</span>
+    </button>
+    <button className="langs-item" type="button">
+      <ImageLogo width={25} height={16} src='/uk.webp' /> <span>الإنجليزية</span>
+    </button>
+  </div>
   useEffect(() => {
     setSize(window.innerWidth);
     window.addEventListener("scroll", () => {
@@ -436,6 +444,8 @@ function Navbar(): ReactElement {
                     </a>
                   </Link>
                 </div>
+
+                <span className="hr-divider" ></span>
                 <Menus darkMode={darkMode} />
                 {isMenuShowenMob && (
                   <MenusMobile
@@ -485,37 +495,7 @@ function Navbar(): ReactElement {
                   )}
                   {userData && (
                     <>
-                      {/*<li
-                                            className="right-butts-icon"
-                                            style={{
-                                                opacity: (darkLoading ? 0.5 : 1),
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                alignContent: 'center',
-                                                marginTop: 4
-                                            }}
-                                        >
-                                            <Tooltip placement="bottom" title='الوضع العادي والوضع الليلي'>
-                                                <motion.a onClick={darkModeToggle} whileTap={{ scale: 0.9 }} style={{
-                                                    display: 'flex',
-                                                    alignContent: 'center',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    alignSelf: 'center',
-                                                    color: !darkMode ? '#777' : '#ddd',
-                                                    height: 40,
-                                                    width: 40,
-                                                }}>
-                                                    <Badge count={0} offset={[2, -1]}>
-                                                        {userData.user_details.profile.dark_mode == 1 ?
-                                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">light_mode</motion.i>
-                                                            :
-                                                            <motion.i animate='visible' initial='hidden' variants={DarkIconvariants} className="material-icons material-icons-outlined">dark_mode</motion.i>
-                                                        }
-                                                    </Badge>
-                                                </motion.a>
-                                            </Tooltip>
-                                        </li>*/}
+                      <li className="hr-divider" ></li>
                       {!veriedEmail && (
                         <li className="right-butts-icon">
                           <Tooltip
@@ -644,6 +624,7 @@ function Navbar(): ReactElement {
                 </>
               ) : (
                 <>
+                  <li className="hr-divider" ></li>
                   <li className="login-nav-item">
                     <Link href="/login">
                       <a
@@ -666,22 +647,14 @@ function Navbar(): ReactElement {
                   </li>
                 </>
               )}
-              <li className="register-nav-item d-flex align-items-center justify-content-center">
-                <MdPublic />
-                <select
-                  style={{
-                    border: 0,
-                    display: "inline",
-                    backgroundColor: "#fff",
-                    fontSize: 13,
-                    color: "#555",
-                  }}
-                >
-                  <option value="">{size > 900 ? "العربية" : "ar"}</option>
-                  <option value="" disabled>
-                    {size > 900 ? "الانجليزية" : "en"}
-                  </option>
-                </select>
+              <li className="hr-divider" ></li>
+              <li className="register-nav-item select-langs-inner d-flex align-items-center justify-content-center" >
+                <button className="select-langs" onClick={() => setIsShowenLangs(!isShowenLangs)}>
+                  <MdPublic /> العربية <i className="material-icons material-icons-outlined">
+                    expand_more
+                  </i>
+                </button>
+                {isShowenLangs && langsList}
               </li>
             </ul>
           </div>
