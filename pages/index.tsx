@@ -78,7 +78,7 @@ function Home() {
       </Head>
       <Hero />
       <Categories
-        onClickCategory={(id) => router.push(`/sub-category/${id}`)}
+        onClickCategory={(id) => router.push(`/products?categoryID=${id}`)}
         categories={categories}
       />
 
