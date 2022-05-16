@@ -81,19 +81,19 @@ function Category() {
     const fetchData = async (pageNumber: number = 1) => {
         console.log(formik.values)
         setIsLoading(true)
-        const { minprice, maxprice, categoryID, tags, ratting, seller_level } = formik.values
+        const { minprice, maxprice, categoryID, tags, ratting, seller_level, delevring } = formik.values
         const tags_filtered = tags.filter(tag => tag.id).map(tag => tag.id)
         try {
             const params = {
                 paginate: 12,
                 page: pageNumber,
-                between: `price,${minprice},${maxprice}`,
+                between: delevring?`duration,${delevring}`:null,
                 category: categoryID.length == 0 ? null : categoryID.join(','),
                 tags: tags_filtered.length == 0 ? null : tags_filtered.join(','),
-                ratings_avg: ratting,
-                seller_level 
+                greater_or_equal: ratting,
+                seller_level,
             }
-            const res = await API.get(`api/filter`, {
+            const res = await API.get(`api/filter?between=price,${minprice},${maxprice}`, {
                 params,
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -219,7 +219,8 @@ function Category() {
             minprice: 5,
             query: '',
             ratting:'1',
-            seller_level:'1'
+            seller_level:'1',
+            delevring:null
         },
         isInitialValid: true,
         enableReinitialize: true,
@@ -580,19 +581,31 @@ function Category() {
                                     </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="delevring"  value="1" id="delevring-1" />
+                                            <input className="form-check-input" type="radio" name="delevring" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }}  value="1,7" id="delevring-1" />
                                             <label className="form-check-label" htmlFor="delevring-1">أقل من أسبوع</label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="delevring" value="2" id="delevring-2" />
+                                            <input className="form-check-input" type="radio" name="delevring" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="7,14" id="delevring-2" />
                                             <label className="form-check-label" htmlFor="delevring-2">من 1 إلى 2 أسابيع</label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="delevring" value="3" id="delevring-3" />
+                                            <input className="form-check-input" type="radio" name="delevring" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="3" id="delevring-3" />
                                             <label className="form-check-label" htmlFor="delevring-3">من 2 أسابيع إلى شهر</label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="delevring" value="4" id="delevring-4" />
+                                            <input className="form-check-input" type="radio" name="delevring" onChange={(e) => {
+                                                formik.handleChange(e);
+                                                setSentinel({ ...sentinel, mount: true })
+                                            }} value="4" id="delevring-4" />
                                             <label className="form-check-label" htmlFor="delevring-4">من شهر إلى 3 أشهر</label>
                                         </div>
                                     </div>
