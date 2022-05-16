@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { useOutSide } from "../useOutSide";
 import API from "../../config";
-import { MdPublic } from "@react-icons/all-files/md/MdPublic";
+import { FaGlobe } from "@react-icons/all-files/fa/FaGlobe";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
@@ -63,7 +63,7 @@ function Navbar(): ReactElement {
 
   const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id}`;
   const channelNoty = pusher.subscribe(channelNotification);
-  const langsList = <div className="menu-langs bg-white">
+  const langsList = <div className="menu-langs bg-white" style={{ top: 65, }}>
     <button className="langs-item" type="button">
       <ImageLogo width={25} height={16} src='/sa.webp' /><span> العربية</span>
     </button>
@@ -659,8 +659,17 @@ function Navbar(): ReactElement {
               )}
               <li className="hr-divider" ></li>
               <li className="register-nav-item select-langs-inner d-flex align-items-center justify-content-center" >
-                <button className="select-langs" onClick={() => setIsShowenLangs(!isShowenLangs)}>
-                  <MdPublic /> العربية <i className="material-icons material-icons-outlined">
+                <button
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#555',
+                    borderWidth: 0,
+                    outline: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  className="select-langs" onClick={() => setIsShowenLangs(!isShowenLangs)}>
+                  <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} /> العربية <i className="material-icons material-icons-outlined">
                     expand_more
                   </i>
                 </button>
