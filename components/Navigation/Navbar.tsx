@@ -59,9 +59,8 @@ function Navbar(): ReactElement {
   const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id
     }`;
   const channel = pusher.subscribe(channelChat);
-  const [size, setSize] = useState(0);
-  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id
-    }`;
+
+  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id}`;
   const channelNoty = pusher.subscribe(channelNotification);
   const langsList = <div className="menu-langs bg-white">
     <button className="langs-item" type="button">
@@ -72,7 +71,6 @@ function Navbar(): ReactElement {
     </button>
   </div>
   useEffect(() => {
-    setSize(window.innerWidth);
     window.addEventListener("scroll", () => {
       setVisible(false);
     });
