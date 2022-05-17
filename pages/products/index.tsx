@@ -4,13 +4,12 @@ import FilterContent from "../../components/products";
 import { useFormik } from "formik";
 import useSWR from "swr";
 import API from "../../config";
-import Loading from "@/components/Loading";
 import PropTypes from "prop-types";
 import Slider from "@mui/material/Slider";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Pagination from "react-js-pagination";
 import Cookies from "js-cookie";
-import { Collapse } from "antd";
+import { Collapse, Result } from "antd";
 import { Alert } from "@/components/Alert/Alert";
 import CreatableSelect from 'react-select/creatable';
 
@@ -67,30 +66,30 @@ function Category() {
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem("token");
 
-    const { data: categories, error }: any = useSWR("api/get_categories");
+    const { data: categories }: any = useSWR("api/get_categories");
     const [validationsGeneral, setValidationsGeneral]: any = useState({});
-    const [getProducts, setGetProducts]: any = useState();
+    const [getProducts, setGetProducts]: any = useState([]);
     const [sentinel, setSentinel]: any = useState({ mount: true })
     const [subcategories, setSubCategories]: any = useState({})
     const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({})
     const [isSubCategoryFetched, setIsSubCategoryFetched]: any = useState(false)
     const [activeKeys, setActiveKeys]: any = useState([])
-    const [filterBased, setFilterBased]:any = useState('')
+    const [filterBased, setFilterBased]: any = useState('')
     const products_type = useRef({
-        'most_recent':'الخدمات الأحدث',
-        'most_selling':'الخدمات الأكثر مبيعًا',
-        'popular':'الخدمات الأكثر شعبية'
+        'most_recent': 'الخدمات الأحدث',
+        'most_selling': 'الخدمات الأكثر مبيعًا',
+        'popular': 'الخدمات الأكثر شعبية'
     })
     //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
     /**----------------------------------------------------------**/
     useEffect(() => {
         if (isSubCategoryFetched) {
-            const { categoryID,type } = getQueryParams(window.location.search);
+            const { categoryID, type } = getQueryParams(window.location.search);
             if (categoryID) {
                 setActiveKeys(activeKeys.concat([2]))
                 setSubCategoryDisplay({ ...subCategoryDisplay, [categoryID]: 'block' })
             }
-            if(type){
+            if (type) {
                 setFilterBased(type)
             }
         }
@@ -104,7 +103,7 @@ function Category() {
             fetchSubCategories()
     }, [categories])
     useEffect(() => {
-        window.addEventListener('scroll',()=>setIsSettings(false))
+        window.addEventListener('scroll', () => setIsSettings(false))
         if (window.innerWidth > 950) {
             setSize(4);
         }
@@ -364,12 +363,12 @@ function Category() {
         }
     };
     return (
-        <div className="containerProductsPage py-5" onClick={e=>{
+        <div className="containerProductsPage py-5" onClick={e => {
             const target = e.target as HTMLElement
-            if(!target.closest('#setting-toggler'))
-            setIsSettings(false)
-            
-            }}>
+            if (!target.closest('#setting-toggler'))
+                setIsSettings(false)
+
+        }}>
             <MetaTags
                 title={"تصفح الخدمات"}
                 metaDescription={"تصفح الخدمات"}
@@ -399,7 +398,7 @@ function Category() {
                                     value={formik.values.query}
                                 />
                             </div>
-                            <Collapse onChange={(keys)=>setActiveKeys(keys)} activeKey={activeKeys} ghost expandIconPosition='right'>
+                            <Collapse onChange={(keys) => setActiveKeys(keys)} activeKey={activeKeys} ghost expandIconPosition='right'>
 
                                 <Panel header="السعر" key="1" style={{ backgroundColor: '#fff', borderRadius: 7, marginBottom: 6 }} >
 
@@ -471,7 +470,7 @@ function Category() {
 
                                                     <div className="list-inner" key={e.id}>
 
-                                                        <div className="list-cat-item" onClick={() => toggleCateogryDisplay(e.id)}>
+                                                        <div className={`list-cat-item ${subCategoryDisplay[e.id]}ed`} onClick={() => toggleCateogryDisplay(e.id)}>
                                                             <span className="item-cat-label">
                                                                 <span className="material-icons material-icons-outlined">{e.icon}</span>{e.name_ar}
                                                             </span>
@@ -698,7 +697,7 @@ function Category() {
                     </div>
                     <div className="col-md-9">
                         <div className="page-header flex-center" style={{ paddingTop: 0 }}>
-                            <h4 className="title me-auto">{products_type.current[filterBased]||'جميع الخدمات'}</h4>
+                            <h4 className="title me-auto">{products_type.current[filterBased] || 'جميع الخدمات'}</h4>
                             <div className="tool-right ml-auto">
                                 <button type="button" id="setting-toggler" className={"btn-tool flex-center " + (isSettings ? 'is-active' : '')} onClick={() => setIsSettings(!isSettings)}>
                                     <span className="material-icons material-icons-outlined">
@@ -709,14 +708,14 @@ function Category() {
                                     <div className="tool-menus">
                                         <ul className="listmenu-sort " >
                                             <li>
-                                                <button type="button" className="btn-item" onClick={()=>{
+                                                <button type="button" className="btn-item" onClick={() => {
                                                     setFilterBased('popular')
-                                                    }}>
+                                                }}>
                                                     الأكثر شعبية
                                                 </button>
                                             </li>
                                             <li>
-                                                <button type="button" className="btn-item" onClick={()=>{
+                                                <button type="button" className="btn-item" onClick={() => {
                                                     setFilterBased('most_selling')
 
                                                 }}>
@@ -724,34 +723,39 @@ function Category() {
                                                 </button>
                                             </li>
                                             <li>
-                                                <button type="button" className="btn-item" onClick={()=>{
+                                                <button type="button" className="btn-item" onClick={() => {
                                                     setFilterBased('most_recent')
 
-                                                    }}>
+                                                }}>
                                                     المضافة حديثا
                                                 </button>
                                             </li>
                                             <li>
-                                                <button type="button" className="btn-item" onClick={()=>{
+                                                <button type="button" className="btn-item" onClick={() => {
                                                     setFilterBased('')
-                                                    setSentinel({...sentinel,mount:true})
+                                                    setSentinel({ ...sentinel, mount: true })
 
                                                 }}>
-                                                 بدون ترتيب
+                                                    بدون ترتيب
                                                 </button>
                                             </li>
                                         </ul>
                                     </div>
                                 }
                             </div>
-                        </div>
-                        {!categories && <Loading />}
-                        {error && <div>Error</div>}
+                        </div>                        
                         <FilterContent
                             products={getProducts && getProducts.data}
                             isLoading={isLoading}
                             size={size}
                         />
+                        {getProducts && getProducts.data == null &&
+                            <Result
+                                status='404'
+                                title="لاتوجد بيانات"
+                                subTitle="لاتوجد خدمات في هذه الحالة يرجى اعادة المحاولة"
+                            />
+                        }
                         {getProducts && (
                             <div>
                                 <hr />
