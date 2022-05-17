@@ -482,12 +482,16 @@ function Category() {
                                                             <div className="list-subcat-item" onClick={() => {
                                                                 console.log('clicked')
                                                                 formik.setFieldValue('categoryID', [e.id])
+                                                                formik.setFieldValue('subcategoryID',null)
                                                                 setSentinel({ ...sentinel, mount: true })
                                                             }}>
                                                                 الجميع
                                                             </div>
                                                             {subcategories[e.id]?.map(sub_category => (
-                                                                <div key={sub_category.id} className="list-subcat-item">
+                                                                <div key={sub_category.id} onClick={()=>{
+                                                                    formik.setFieldValue('subcategoryID',sub_category.id)
+                                                                    setSentinel({...sentinel,mount:true})
+                                                                }} className="list-subcat-item">
                                                                     {sub_category.name_ar}
                                                                 </div>
                                                             ))}
