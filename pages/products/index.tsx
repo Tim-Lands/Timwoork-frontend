@@ -151,7 +151,7 @@ function Category() {
     const fetchData = async (pageNumber: number = 1) => {
         console.log(formik.values)
         setIsLoading(true)
-        const { minprice, query, maxprice, categoryID, tags, ratting, seller_level, delevring } = formik.values
+        const { minprice, query, maxprice, categoryID, tags,subcategoryID, ratting, seller_level, delevring } = formik.values
         const tags_filtered = tags.filter(tag => tag.id).map(tag => tag.id)
         try {
             const params = {
@@ -163,6 +163,7 @@ function Category() {
                 tags: tags_filtered.length == 0 ? null : tags_filtered.join(','),
                 ratings_avg: ratting,
                 seller_level,
+                subcategories:subcategoryID
             }
             const res = await API.get(`api/filter?${filterBased}&between=price,${minprice},${maxprice}`, {
                 params,
@@ -260,7 +261,8 @@ function Category() {
             ratting: null,
             seller_level: null,
             delevring: null,
-            filter: null
+            filter: null,
+            subcategoryID:null
         },
         isInitialValid: true,
         enableReinitialize: true,
