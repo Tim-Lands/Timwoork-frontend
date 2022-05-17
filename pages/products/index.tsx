@@ -527,7 +527,7 @@ function Category() {
                                     </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==1} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="1" id="ratting-1" />
@@ -545,7 +545,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" name="ratting" checked={formik.values.ratting==2} onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="2" id="ratting-2" />
@@ -563,7 +563,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==3} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="3" id="ratting-3" />
@@ -581,7 +581,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==4} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="4" id="ratting-4" />
@@ -599,7 +599,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==5} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="5" id="ratting-5" />
