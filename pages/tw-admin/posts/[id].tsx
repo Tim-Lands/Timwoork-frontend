@@ -222,126 +222,128 @@ function Id({ query, stars, errorFetch }) {
                                                 </>
                                             ))}
                                         </Slide>
-                                        <div className="timwoork-single-product-detailts">
-                                            {ProductData.data.content}
-                                        </div>
-                                        {ProductData.data.product_tag &&
-                                            <div className="timwoork-single-tags">
-                                                <ul className="single-tags-list">
-                                                    <li className="title">
-                                                        الوسوم:
+                                        <div
+                                            className="timwoork-single-product-detailts"
+                                            dangerouslySetInnerHTML={{
+                                                __html: ProductData.data.content,
+                                            }}
+                                        />
+                                    {ProductData.data.product_tag &&
+                                        <div className="timwoork-single-tags">
+                                            <ul className="single-tags-list">
+                                                <li className="title">
+                                                    الوسوم:
+                                                </li>
+                                                {ProductData.data.product_tag.map((e: any) => (
+                                                    <li key={e.id}>
+                                                        <span>{e.name}</span>
                                                     </li>
-                                                    {ProductData.data.product_tag.map((e: any) => (
-                                                        <li key={e.id}>
-                                                            <span>{e.name}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    }
+                                    {ProductData.data.profile_seller &&
+                                        <div className="timwoork-single-seller-info">
+                                            <div className="seller-info-header">
+                                                <h4 className="title">حول البائع</h4>
                                             </div>
-                                        }
-                                        {ProductData.data.profile_seller &&
-                                            <div className="timwoork-single-seller-info">
-                                                <div className="seller-info-header">
-                                                    <h4 className="title">حول البائع</h4>
-                                                </div>
-                                                <div className="seller-info-container">
-                                                    <div className="d-flex">
-                                                        <div className="seller-info-avatar">
-                                                            <Image
-                                                                className="circular-img huge-size"
-                                                                src={ProductData && ProductData.data.profile_seller.profile.avatar_path}
-                                                                quality={80}
-                                                                width={100}
-                                                                alt={ProductData.data.profile_seller.profile.full_name}
-                                                                placeholder='blur'
-                                                                blurDataURL={ProductData.data.profile_seller.profile.avatar_path}
-                                                                height={100}
-                                                            />
-                                                        </div>
-                                                        <div className="seller-info-content">
-                                                            <h4 className="user-title">
-                                                                {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
-                                                            </h4>
-                                                            <ul className="user-meta nav">
+                                            <div className="seller-info-container">
+                                                <div className="d-flex">
+                                                    <div className="seller-info-avatar">
+                                                        <Image
+                                                            className="circular-img huge-size"
+                                                            src={ProductData && ProductData.data.profile_seller.profile.avatar_path}
+                                                            quality={80}
+                                                            width={100}
+                                                            alt={ProductData.data.profile_seller.profile.full_name}
+                                                            placeholder='blur'
+                                                            blurDataURL={ProductData.data.profile_seller.profile.avatar_path}
+                                                            height={100}
+                                                        />
+                                                    </div>
+                                                    <div className="seller-info-content">
+                                                        <h4 className="user-title">
+                                                            {ProductData.data.profile_seller.profile.first_name + " " + ProductData.data.profile_seller.profile.last_name}
+                                                        </h4>
+                                                        <ul className="user-meta nav">
+                                                            <li>
+                                                                <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.level !== null && ProductData.data.profile_seller.level.name_ar}
+                                                            </li>
+                                                            {ProductData.data.profile_seller.profile.country !== null &&
                                                                 <li>
-                                                                    <span className="material-icons material-icons-outlined">badge</span> {ProductData && ProductData.data.profile_seller.level !== null && ProductData.data.profile_seller.level.name_ar}
+                                                                    <span className="material-icons material-icons-outlined">place</span> الجزائر
                                                                 </li>
-                                                                {ProductData.data.profile_seller.profile.country !== null &&
-                                                                    <li>
-                                                                        <span className="material-icons material-icons-outlined">place</span> الجزائر
-                                                                    </li>
-                                                                }
-                                                            </ul>
-                                                            <div className="seller-info-butts d-flex">
-                                                                <Link href={"/u/" + ProductData.data.profile_seller.profile.user.username}>
-                                                                    <a className="btn butt-primary butt-sm flex-center">
-                                                                        <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
-                                                                    </a>
-                                                                </Link>
-                                                            </div>
+                                                            }
+                                                        </ul>
+                                                        <div className="seller-info-butts d-flex">
+                                                            <Link href={"/u/" + ProductData.data.profile_seller.profile.user.username}>
+                                                                <a className="btn butt-primary butt-sm flex-center">
+                                                                    <i className="material-icons material-icons-outlined">account_circle</i> الملف الشخصي
+                                                                </a>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4">
-                            <div className="single-sidebar">
-                                <div className="single-panel-aside">
-                                    <div className="panel-aside-header">
-                                        <ul className="nav top-aside-nav">
-                                            <li className="delevr-time me-auto">
-                                                <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
-                                            </li>
-                                            <li className="cat-post ml-auto">
-                                                <Dropdown overlay={menu}>
-                                                    <span>
-                                                        <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
-                                                    </span>
-                                                </Dropdown>
-                                            </li>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="single-sidebar">
+                            <div className="single-panel-aside">
+                                <div className="panel-aside-header">
+                                    <ul className="nav top-aside-nav">
+                                        <li className="delevr-time me-auto">
+                                            <span className="material-icons material-icons-outlined">timer</span> مدة التسليم: {durationFunc()}
+                                        </li>
+                                        <li className="cat-post ml-auto">
+                                            <Dropdown overlay={menu}>
+                                                <span>
+                                                    <span className="material-icons material-icons-outlined">share</span> مشاركة الخدمة
+                                                </span>
+                                            </Dropdown>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {ProductData.data.developments &&
+                                    <div className="panel-aside-body">
+                                        <div className="add-devloppers-header">
+                                            <h4 className="title">التطويرات المتوفرة</h4>
+                                        </div>
+                                        {ProductData.data.developments.length == 0 &&
+                                            <div className="nothing-note">
+                                                <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
+                                            </div>
+                                        }
+                                        <ul className="add-devloppers-nav">
+                                            {ProductData.data.developments.map((e: any) => {
+                                                return (
+                                                    <li key={e.id} className="devloppers-item">
+                                                        <div className="form-check">
+                                                            <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
+                                                                {e.title}
+                                                                <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            })}
                                         </ul>
                                     </div>
-                                    {ProductData.data.developments &&
-                                        <div className="panel-aside-body">
-                                            <div className="add-devloppers-header">
-                                                <h4 className="title">التطويرات المتوفرة</h4>
-                                            </div>
-                                            {ProductData.data.developments.length == 0 &&
-                                                <div className="nothing-note">
-                                                    <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
-                                                </div>
-                                            }
-                                            <ul className="add-devloppers-nav">
-                                                {ProductData.data.developments.map((e: any) => {
-                                                    return (
-                                                        <li key={e.id} className="devloppers-item">
-                                                            <div className="form-check">
-                                                                <label className="form-check-label" htmlFor={"flexCheckDefault-id" + e.id}>
-                                                                    {e.title}
-                                                                    <p className="price-duration">ستكون المدة {DevdurationFunc(e.duration)} بمبلغ {e.price}$</p>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                    )
-                                                })}
-                                            </ul>
-                                        </div>
-                                    }
-                                    <div className="panel-aside-footer">
-                                        <div className="aside-footer-total-price">
-                                            <h4 className="price-total me-auto">
-                                                <strong>سعر الخدمة </strong> {ProductData && ProductData.data.price}$
-                                            </h4>
-                                            <div className="bayers-count">
-                                                <p className="num">
-                                                    <span className="count">{ProductData && ProductData.data.count_buying} </span>
-                                                    <span className="text"> اشتروا هذا</span>
-                                                </p>
-                                            </div>
+                                }
+                                <div className="panel-aside-footer">
+                                    <div className="aside-footer-total-price">
+                                        <h4 className="price-total me-auto">
+                                            <strong>سعر الخدمة </strong> {ProductData && ProductData.data.price}$
+                                        </h4>
+                                        <div className="bayers-count">
+                                            <p className="num">
+                                                <span className="count">{ProductData && ProductData.data.count_buying} </span>
+                                                <span className="text"> اشتروا هذا</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -349,8 +351,9 @@ function Id({ query, stars, errorFetch }) {
                         </div>
                     </div>
                 </div>
+                </div>
             }
-            {/*<div className="container">
+{/*<div className="container">
         <PostsAside title="خدمات ذات صلة" PostData={testServices} />
     </div>*/}
         </>

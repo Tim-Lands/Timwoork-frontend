@@ -11,7 +11,6 @@ import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import ChangePass from "@/components/ChangePass";
-import LogoutModal from "@/components/LogoutModal";
 
 const personalInformations = () => {
     let token = Cookies.get('token')
