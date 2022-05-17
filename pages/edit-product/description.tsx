@@ -123,7 +123,7 @@ function Description({ query, stars }) {
     })
     const html = editor && editor.getHTML()
     const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML()
-    async function stepFive() {
+    /* async function stepFive() {
         try {
             const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
                 headers: {
@@ -137,7 +137,7 @@ function Description({ query, stars }) {
         } catch (error: any) {
             message.error('حدث خطأ غير متوقع');
         }
-    }
+    } */
     const formik = useFormik({
         initialValues: {
             buyer_instruct: buyerInstructhtml,
@@ -157,7 +157,7 @@ function Description({ query, stars }) {
                 // Authentication was successful.
                 if (res.status === 200) {
                     message.success('لقد تم التحديث بنجاح')
-                    stepFive()
+                    router.push(`/edit-product/medias?id=${getProduct?.data.id}`)
                 }
             } catch (error: any) {
                 if (error.response && error.response.data && error.response.data.errors) {
@@ -220,7 +220,7 @@ function Description({ query, stars }) {
                                                 </Link>
                                             </h3>
                                         </div>
-                                        <div className="timlands-step-item">
+                                        <div className={`timlands-step-item ${getProduct?.data.current_step < 1 && 'pe-none'}`}>
                                             <h3 className="text">
                                                 <Link href={`/edit-product/prices?id=${id}`}>
                                                     <a>
@@ -232,7 +232,7 @@ function Description({ query, stars }) {
                                                 </Link>
                                             </h3>
                                         </div>
-                                        <div className="timlands-step-item active">
+                                        <div className={`timlands-step-item active ${getProduct?.data.current_step < 2 && 'pe-none'}`}>
                                             <h3 className="text">
                                                 <Link href={`/edit-product/description?id=${id}`}>
                                                     <a>
@@ -244,7 +244,7 @@ function Description({ query, stars }) {
                                                 </Link>
                                             </h3>
                                         </div>
-                                        <div className="timlands-step-item">
+                                        <div className={`timlands-step-item ${getProduct?.data.current_step < 3 && 'pe-none'}`}>
                                             <h3 className="text">
                                                 <Link href={`/edit-product/medias?id=${id}`}>
                                                     <a>
@@ -252,6 +252,18 @@ function Description({ query, stars }) {
                                                             <span className="material-icons material-icons-outlined">mms</span>
                                                         </span>
                                                         مكتبة الصور والملفات
+                                                    </a>
+                                                </Link>
+                                            </h3>
+                                        </div>
+                                        <div className="timlands-step-item " >
+                                            <h3 className="text">
+                                                <Link href={`/edit-product/complete?id=${getProduct?.data.id}`}>
+                                                    <a>
+                                                        <span className="icon-circular">
+                                                            <span className="material-icons material-icons-outlined">publish</span>
+                                                        </span>
+                                                        نشر الخدمة
                                                     </a>
                                                 </Link>
                                             </h3>
