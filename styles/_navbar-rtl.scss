@@ -439,6 +439,7 @@
 }
 .select-langs-inner {
   position: relative;
+  margin-right: 10px;
   .select-langs {
     background-color: transparent;
     color: #555;
@@ -458,6 +459,17 @@
       color: #000;
       transition: all 0.3s;
     }
+  }
+  &::after {
+    content: " ";
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 2px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
   }
 }
 .menu-langs {

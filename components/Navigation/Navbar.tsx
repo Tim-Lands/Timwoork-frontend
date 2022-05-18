@@ -417,13 +417,19 @@ function Navbar(): ReactElement {
                 </div>
                 <div className="logo-nav me-auto" style={{ display: "flex" }}>
                   <Link href="/">
-                    <a style={{ marginInline: 5 }}>
+                    <a>
                       <ImageLogo src={logoIMG} alt="Timwoork" />
                     </a>
                   </Link>
                 </div>
 
-                <span className="hr-divider" ></span>
+                <span className="hr-divider" style={{
+                  position: 'relative',
+                  marginBlock: 5,
+                  height: 40,
+                  width: 2,
+                  backgroundColor: '#f2f2f2',
+                }}></span>
                 <Menus darkMode={darkMode} />
                 {isMenuShowenMob && (
                   <MenusMobile
@@ -473,7 +479,13 @@ function Navbar(): ReactElement {
                   )}
                   {userData && (
                     <>
-                      <li className="hr-divider" ></li>
+                      <li className="hr-divider" style={{
+                        position: 'relative',
+                        marginBlock: 5,
+                        height: 40,
+                        width: 2,
+                        backgroundColor: '#f2f2f2',
+                      }}></li>
                       {!veriedEmail && (
                         <li className="right-butts-icon">
                           <Tooltip
@@ -602,7 +614,13 @@ function Navbar(): ReactElement {
                 </>
               ) : (
                 <>
-                  <li className="hr-divider" ></li>
+                  <li className="hr-divider" style={{
+                    position: 'relative',
+                    marginBlock: 5,
+                    height: 40,
+                    width: 2,
+                    backgroundColor: '#f2f2f2',
+                  }}></li>
                   <li className="login-nav-item">
                     <Link href="/login">
                       <a
@@ -625,8 +643,7 @@ function Navbar(): ReactElement {
                   </li>
                 </>
               )}
-              <li className="hr-divider" ></li>
-              <li className="register-nav-item select-langs-inner d-flex align-items-center justify-content-center" >
+              <li className="register-nav-item select-langs-inner" >
                 <button
                   style={{
                     backgroundColor: 'transparent',
