@@ -8,7 +8,7 @@ import Loading from "@/components/Loading";
 import API from '../../config'
 import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
-import { Modal, Progress, Rate, Result, Spin, Timeline } from "antd";
+import { Progress, Rate, Result, Spin, Timeline } from "antd";
 import router from "next/router";
 import { motion } from "framer-motion";
 import Link from 'next/link'
