@@ -440,58 +440,61 @@ const Order = ({ query }) => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="py-2">
-                                        {ShowItem && ShowItem.data.is_rating == 1 &&
-                                            <>
-                                                <Modal
-                                                    title="التعليق على الخدمة "
-                                                    visible={isModalVisibleRatting}
-                                                    okText='تقييم الآن'
-                                                    okType='default'
-                                                    onOk={() => rattingHandle(ShowItem && ShowItem.data.id)}
-                                                    onCancel={() => setModalVisibleRatting(false)}
-                                                    cancelText='إلغاء'
-                                                >
-                                                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
-                                                    <Spin spinning={isRattingLoading}>
-
-                                                        <div className="timlands-form">
-                                                            <label htmlFor="message_rating" className="form-text">اختر تقييما</label>
-
-                                                            <Rate style={{ fontSize: 30 }} onChange={(e: any) => setRattingCount(e)} value={rattingCount} />
-                                                            {rattingValidationsErrors && rattingValidationsErrors.rating &&
-                                                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                    <p className="text">{rattingValidationsErrors.rating[0]}</p>
-                                                                </motion.div>
-                                                            }
+                                        {ShowItem && ShowItem.data.is_rating == 1 && <>
+                                            {isModalVisibleRatting &&
+                                                <div className="single-comments-overlay">
+                                                    <motion.div initial={{ scale: 0, opacity: 0, y: 60 }} exit={{ scale: 0, opacity: 0, y: 60 }} animate={{ scale: 1, opacity: 1, y: 0 }} className="single-comments-modal">
+                                                        <div className="modal-title">
+                                                            <h4 className="title">
+                                                                إضافة رد
+                                                            </h4>
+                                                            <button
+                                                                className='btn-close'
+                                                                type='button'
+                                                                onClick={() => setModalVisibleRatting(false)}></button>
                                                         </div>
-                                                        <div className="timlands-form">
-                                                            <label htmlFor="message_type" className="form-text">أكتب نص التعليق</label>
-                                                            <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
-                                                                <textarea
-                                                                    id="input-buyer_instruct"
-                                                                    name="buyer_instruct"
-                                                                    placeholder="أكتب نص التعليق..."
-                                                                    className={"timlands-inputs"}
-                                                                    autoComplete="off"
-                                                                    value={rattingState}
-                                                                    onChange={(e: any) => setRattingState(e.target.value)}
-                                                                />
-                                                            </div>
-                                                            {rattingValidationsErrors && rattingValidationsErrors.comment &&
-                                                                <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                                                    <p className="text">{rattingValidationsErrors.comment[0]}</p>
-                                                                </motion.div>
-                                                            }
+
+                                                        <div className="modal-body">
+                                                            {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
+                                                            <Spin spinning={isRattingLoading}>
+                                                                <div className="timlands-form">
+                                                                    <label htmlFor="message_rating" className="form-text">اختر تقييما</label>
+
+                                                                    <Rate style={{ fontSize: 30 }} onChange={(e: any) => setRattingCount(e)} value={rattingCount} />
+                                                                    {rattingValidationsErrors && rattingValidationsErrors.rating &&
+                                                                        <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                            <p className="text">{rattingValidationsErrors.rating[0]}</p>
+                                                                        </motion.div>
+                                                                    }
+                                                                </div>
+                                                                <div className="timlands-form">
+                                                                    <label htmlFor="message_type" className="form-text">أكتب نص التعليق</label>
+                                                                    <div className="relative-form d-flex" style={{ position: 'relative', minHeight: 60 }}>
+                                                                        <textarea
+                                                                            id="input-buyer_instruct"
+                                                                            name="buyer_instruct"
+                                                                            placeholder="أكتب نص التعليق..."
+                                                                            className={"timlands-inputs"}
+                                                                            autoComplete="off"
+                                                                            value={rattingState}
+                                                                            onChange={(e: any) => setRattingState(e.target.value)}
+                                                                        />
+                                                                    </div>
+                                                                    {rattingValidationsErrors && rattingValidationsErrors.comment &&
+                                                                        <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
+                                                                            <p className="text">{rattingValidationsErrors.comment[0]}</p>
+                                                                        </motion.div>
+                                                                    }
+                                                                </div>
+                                                            </Spin>
+                                                            <hr />
+                                                            <button className='btn butt-primary butt-sm mx-1' type='submit' onClick={() => rattingHandle(ShowItem && ShowItem.data.id)}>إضافة التعليق</button>
+                                                            <button className='btn butt-red-text butt-sm mx-1' onClick={() => setModalVisibleRatting(false)} type='button'>إغلاق</button>
                                                         </div>
-                                                    </Spin>
-                                                </Modal>
-                                                <Alert type="success">
-                                                    <div className="d-flex" style={{ width: '100%' }}>
-                                                        <div className="text me-auto" style={{ fontSize: 20 }}>يمكنك إضافة تقييم لهذه الطلبية </div>
-                                                        <div className="ml-auto"><button className="btn butt-sm butt-green" onClick={() => setModalVisibleRatting(true)}>تقييم الآن!</button></div>
-                                                    </div>
-                                                </Alert>
-                                            </>
+                                                    </motion.div>
+                                                </div>
+                                            }
+                                        </>
                                         }
                                     </div>
                                     <div className="aside-header">

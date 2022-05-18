@@ -230,38 +230,6 @@ function Navbar(): ReactElement {
   const setIsMenuShowenHandle = () => {
     setIsMenuShowenMob(!isMenuShowenMob);
   };
-  /*const DarkIconvariants = {
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.41 },
-        },
-        hidden: {
-            opacity: 0,
-            y: 80,
-            transition: { duration: 0.41 },
-        },
-        
-    }
-    const [darkLoading, setSarkLoading] = useState(false)
-    async function darkModeToggle() {
-        setSarkLoading(true)
-        try {
-            const res = await API.post("api/mode", null, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            // Authentication was successful.
-            if (res.status === 200) {
-                router.reload()
-                setSarkLoading(false)
-            }
-        } catch (error: any) {
-            message.error('حدث خطأ غير متوقع')
-            setSarkLoading(false)
-        }
-    }*/
   const { data: userData }: any = useSWR(`api/me`);
   const logout = async () => {
     try {
@@ -449,7 +417,7 @@ function Navbar(): ReactElement {
                 </div>
                 <div className="logo-nav me-auto" style={{ display: "flex" }}>
                   <Link href="/">
-                    <a>
+                    <a style={{ marginInline: 5 }}>
                       <ImageLogo src={logoIMG} alt="Timwoork" />
                     </a>
                   </Link>
