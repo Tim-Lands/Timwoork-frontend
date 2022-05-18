@@ -2,8 +2,53 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import Image from 'next/image'
 import LastSeen from '../LastSeen';
+import { useState } from 'react';
+import { message } from 'antd';
+import API from "../../config";
+import { useFormik } from 'formik';
+import Cookies from "js-cookie";
+import { motion } from "framer-motion";
 
 function CommentPost(props: any): ReactElement {
+    const [validationsErrors, setValidationsErrors]: any = useState({});
+    const [isShowCommentForm, setIsShowCommentForm]: any = useState(false);
+    let token = Cookies.get("token");
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem("token");
+    const formik = useFormik({
+        initialValues: {
+            comment: "",
+        },
+        isInitialValid: true,
+        enableReinitialize: true,
+        onSubmit: async (values) => {
+            try {
+                setValidationsErrors({});
+                const res = await API.post(
+                    `api/product/product-step-one`,
+                    values,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                // Authentication was successful.
+                if (res.status === 200) {
+                    message.success("لقد تم إضافة الرد بنجاح");
+                    setIsShowCommentForm(false)
+                }
+            } catch (error: any) {
+                if (
+                    error.response &&
+                    error.response.data &&
+                    error.response.data.errors
+                ) {
+                    setValidationsErrors(error.response.data.errors);
+                }
+            }
+        },
+    });
     const showStars = () => {
         const xAr: any = [
             {
@@ -62,6 +107,63 @@ function CommentPost(props: any): ReactElement {
     }
     return (
         <li className="comment-item">
+            {!props.reply && <button className='btn butt-light butt-xs flex-center reply-button' onClick={() => setIsShowCommentForm(!isShowCommentForm)}>
+                <span className="material-icons-outlined outline-star" style={{ fontSize: 16 }}>reply</span> الرد
+            </button>}
+            {isShowCommentForm &&
+                <div className="single-comments-overlay">
+                    <motion.div initial={{ scale: 0, opacity: 0, y: 60 }} exit={{ scale: 0, opacity: 0, y: 60 }} animate={{ scale: 1, opacity: 1, y: 0 }} className="single-comments-modal">
+                        <div className="modal-title">
+                            <h4 className="title">
+                                إضافة رد
+                            </h4>
+                            <button
+                                className='btn-close'
+                                type='button'
+                                onClick={() => setIsShowCommentForm(false)}></button>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <div className="timlands-form">
+                                    <label className="label-block" htmlFor="input-title">
+                                        نص الرد
+                                    </label>
+                                    <textarea
+                                        id="input-title"
+                                        name="comment"
+                                        placeholder="نص الرد..."
+                                        className={
+                                            "timlands-inputs " +
+                                            (validationsErrors &&
+                                                validationsErrors.comment &&
+                                                " has-error")
+                                        }
+                                        autoComplete="off"
+                                        onChange={formik.handleChange}
+                                        value={formik.values.comment}
+                                    />
+                                    {validationsErrors && validationsErrors.comment && (
+                                        <div style={{ overflow: "hidden" }}>
+                                            <motion.div
+                                                initial={{ y: -70, opacity: 0 }}
+                                                animate={{ y: 0, opacity: 1 }}
+                                                className="timlands-form-note form-note-error"
+                                            >
+                                                <p className="text">
+                                                    {validationsErrors.comment[0]}
+                                                </p>
+                                            </motion.div>
+                                        </div>
+                                    )}
+                                </div>
+                                <hr />
+                                <button className='btn butt-primary butt-sm mx-1' type='submit'>إضافة الرد</button>
+                                <button className='btn butt-red-text butt-sm mx-1' onClick={() => setIsShowCommentForm(false)} type='button'>إغلاق</button>
+                            </form>
+                        </div>
+                    </motion.div>
+                </div>
+            }
             <div className="d-flex">
                 <div className="comment-item-avatar">
                     <Image
@@ -125,5 +227,6 @@ CommentPost.propTypes = {
     avatar: PropTypes.string,
     rating: PropTypes.number,
     content: PropTypes.string,
+    reply: PropTypes.any,
     replies: PropTypes.array
 };

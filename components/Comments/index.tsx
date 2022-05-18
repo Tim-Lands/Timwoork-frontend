@@ -1,6 +1,8 @@
 import CommentPost from './CommentPost'
 import PropTypes from "prop-types";
+
 function index({ comments }) {
+
     return (
         <div className="timwoork-single-comments">
             <div className="timwoork-single-comments-inner">
@@ -13,6 +15,7 @@ function index({ comments }) {
                                     avatar={e.user.profile.avatar_path}
                                     rating={e.rating}
                                     replies={e.reply}
+                                    reply={e.reply}
                                     time={e.created_at}
                                     author={e.user.profile.first_name + " " + e.user.profile.last_name}
                                     content={e.comment} />
