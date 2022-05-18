@@ -144,7 +144,7 @@ function Single({ query, stars }) {
     //getProductData()
     //console.log(ProductData);
 
-  }, [])
+  }, []) 
   const showStars = () => {
     const rate = Number(ProductData.ratings_count) || 0
     const xAr: any = [
@@ -234,6 +234,27 @@ function Single({ query, stars }) {
       return duration + ' يوم '
     }
   }
+
+  const routeToCurrentStep = ()=>{
+    console.log(ProductData)
+     let page_name = ''
+    switch(ProductData.data.current_step){
+      case 1:
+        page_name='overview'
+        break;
+      case 2:
+        page_name = 'prices'
+        break;
+      case 3:
+        page_name = 'description'
+        break;
+      case 4:
+        page_name = 'medias'
+        break;
+    }
+    router.push(`/edit-product/${page_name}?id=${ProductData.data.id}`) 
+  }
+
   const APIURL2 = 'https://timwoork-space.ams3.digitaloceanspaces.com/products/galaries-images/'
 
   return (
@@ -342,7 +363,7 @@ function Single({ query, stars }) {
                 </div>
                 }
                 {ProductData.data.is_active == null && <div className="d-flex">
-                  <button className="btn butt-md butt-green flex-center-just mb-1 mx-1">
+                  <button className="btn butt-md butt-green flex-center-just mb-1 mx-1" onClick={routeToCurrentStep}>
                     <span className="material-icons material-icons-outlined">create</span> طلب تعديل الخدمة
                   </button>
                   <button className="btn butt-md butt-red flex-center-just mb-1 mx-1">

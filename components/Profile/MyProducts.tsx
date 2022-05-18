@@ -144,6 +144,26 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
         return <span className="badge bg-info">في الإنتظار...</span>;
     }
   }
+
+  const routeToCurrentStep = (product)=>{
+    let page_name = ''
+    switch(product.current_step){
+      case 1:
+        page_name='overview'
+        break;
+      case 2:
+        page_name = 'prices'
+        break;
+      case 3:
+        page_name = 'description'
+        break;
+      case 4:
+        page_name = 'medias'
+        break;
+    }
+    router.push(`/edit-product/${page_name}?id=${product.id}`)
+  }
+
   return (
     <div className="profile-content-body">
       <div className="page-header">
@@ -280,14 +300,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                           size="small"
                           shape="circle"
                           icon={<EditOutlined />}
-                          onClick={() => {
-                            router.push({
-                              pathname: "/edit-product/overview",
-                              query: {
-                                id: e.id, // pass the id
-                              },
-                            });
-                          }}
+                          onClick={() => routeToCurrentStep(e)}
                         />
                       </Tooltip>
                     </td>

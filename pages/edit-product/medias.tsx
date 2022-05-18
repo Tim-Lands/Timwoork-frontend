@@ -177,6 +177,7 @@ function Medias({ query, stars }) {
             else
                 await uploadVideoUrl()
             await sendRemoveRequest()
+            router.push(`/edit-product/complete?id=${id}`)
 
         } catch (error: any) {
             setLoading(false)
@@ -197,7 +198,8 @@ function Medias({ query, stars }) {
         }
     }
     const uploadImages = async () => {
-        const [res1, res2] = await Promise.all([loadFeatureImage(), loadGalleryImages(), loadVideoUrl()])
+        const [res1, res2] = await Promise.all([loadFeatureImage(), loadGalleryImages()])
+        await loadVideoUrl();
         // Authentication was successful.
         if (res1.status === 200 && res2.status === 200) {
             setLoading(false)
@@ -214,7 +216,8 @@ function Medias({ query, stars }) {
         }
     }
     const uploadGallery = async () => {
-        const [res] = await Promise.all([loadGalleryImages(), loadVideoUrl()])
+        const [res] = await Promise.all([loadGalleryImages()])
+        await loadVideoUrl()
         // Authentication was successful.
         if (res.status === 200) {
             setLoading(false)
@@ -336,6 +339,18 @@ function Medias({ query, stars }) {
                                                     <span className="material-icons material-icons-outlined">mms</span>
                                                 </span>
                                                 مكتبة الصور والملفات
+                                            </a>
+                                        </Link>
+                                    </h3>
+                                </div>
+                                <div className="timlands-step-item " >
+                                    <h3 className="text">
+                                        <Link href={`/edit-product/complete?id=${id}`}>
+                                            <a>
+                                                <span className="icon-circular">
+                                                    <span className="material-icons material-icons-outlined">publish</span>
+                                                </span>
+                                                نشر الخدمة
                                             </a>
                                         </Link>
                                     </h3>

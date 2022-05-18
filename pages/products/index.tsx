@@ -150,7 +150,7 @@ function Category() {
     const fetchData = async (pageNumber: number = 1) => {
         console.log(formik.values)
         setIsLoading(true)
-        const { minprice, query, maxprice, categoryID, tags, ratting, seller_level, delevring } = formik.values
+        const { minprice, query, maxprice, categoryID, tags,subcategoryID, ratting, seller_level, delevring } = formik.values
         const tags_filtered = tags.filter(tag => tag.id).map(tag => tag.id)
         try {
             const params = {
@@ -162,6 +162,7 @@ function Category() {
                 tags: tags_filtered.length == 0 ? null : tags_filtered.join(','),
                 ratings_avg: ratting,
                 seller_level,
+                subcategories:subcategoryID
             }
             const res = await API.get(`api/filter?${filterBased}&between=price,${minprice},${maxprice}`, {
                 params,
@@ -259,7 +260,8 @@ function Category() {
             ratting: null,
             seller_level: null,
             delevring: null,
-            filter: null
+            filter: null,
+            subcategoryID:null
         },
         isInitialValid: true,
         enableReinitialize: true,
@@ -480,12 +482,16 @@ function Category() {
                                                             <div className="list-subcat-item" onClick={() => {
                                                                 console.log('clicked')
                                                                 formik.setFieldValue('categoryID', [e.id])
+                                                                formik.setFieldValue('subcategoryID',null)
                                                                 setSentinel({ ...sentinel, mount: true })
                                                             }}>
                                                                 الجميع
                                                             </div>
                                                             {subcategories[e.id]?.map(sub_category => (
-                                                                <div key={sub_category.id} className="list-subcat-item">
+                                                                <div key={sub_category.id} onClick={()=>{
+                                                                    formik.setFieldValue('subcategoryID',sub_category.id)
+                                                                    setSentinel({...sentinel,mount:true})
+                                                                }} className="list-subcat-item">
                                                                     {sub_category.name_ar}
                                                                 </div>
                                                             ))}
@@ -521,7 +527,7 @@ function Category() {
                                     </div>
                                     <div className="rate-filters">
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==1} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="1" id="ratting-1" />
@@ -539,7 +545,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" name="ratting" checked={formik.values.ratting==2} onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="2" id="ratting-2" />
@@ -557,7 +563,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==3} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="3" id="ratting-3" />
@@ -575,7 +581,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==4} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="4" id="ratting-4" />
@@ -593,7 +599,7 @@ function Category() {
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="ratting" onChange={(e) => {
+                                            <input className="form-check-input" type="radio" checked={formik.values.ratting==5} name="ratting" onChange={(e) => {
                                                 formik.handleChange(e);
                                                 setSentinel({ ...sentinel, mount: true })
                                             }} value="5" id="ratting-5" />
