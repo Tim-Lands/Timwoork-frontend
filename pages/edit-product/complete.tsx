@@ -84,11 +84,9 @@ function Complete({ query }) {
       />
       <div className="container-fluid">
         {!getProduct && <div>يرجى الانتظار...</div>}
-        <div
-          className="row my-3"
-          style={{ maxWidth: 1300, marginInline: "auto" }}
-        >
-          <div className="col-md-8 pt-3">
+
+        <div className="row justify-content-md-center my-3">
+          <div className="col-md-7 pt-3">
             <div className={"timlands-panel"}>
               <div className="timlands-steps-cont">
                 <div className="timlands-steps">
@@ -141,13 +139,13 @@ function Complete({ query }) {
                     </h3>
                   </div>
                   <div className="timlands-step-item active" ref={stepsView}>
-                  <h3 className="text">
+                    <h3 className="text">
                       <Link href={`/edit-product/complete?id=${getProduct?.data.id}`}>
                         <a>
                           <span className="icon-circular">
                             <span className="material-icons material-icons-outlined">publish</span>
                           </span>
-                         نشر الخدمة
+                          نشر الخدمة
                         </a>
                       </Link>
                     </h3>
