@@ -14,6 +14,11 @@ function BottomFooter() {
             src="/Wise-logo.png"
             alt=""
           />
+          <img
+            style={{ height: 22, marginInline: 4 }}
+            src="/ccp.png"
+            alt=""
+          />
         </span>
 
         <ul className="nav center-nav-footer col-12 col-md-auto mb-2 justify-content-center mb-md-0">
