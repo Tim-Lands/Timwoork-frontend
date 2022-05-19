@@ -85,7 +85,7 @@ const CheckoutForm = () => {
   );
 };
 const stripePromise = loadStripe(
-  "pk_live_51KVxMmKZiLP53MTnsIhnnYjdjWwCynAoNT2IJS0D0TllKvdK07C0XO3nFAPe2kjOOAVXd3WSSebR71Qd0KSb8SIF00TQc1n8ca"
+  "pk_live_51KVxMmKZiLP53MTnv5FYIaUkHebKN8foIJRwcHoOwfsMJq8wgNFZZcqx7UIXfpfsgS25WpCSO4orGz5m0TFLa0pC00CrKR1Vp8"
 );
 
 function Bill() {

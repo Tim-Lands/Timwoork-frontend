@@ -2,9 +2,9 @@ import Link from "next/link";
 
 function BottomFooter() {
   return (
-    <div className="bottom-footer px-4 py-2 d-flex align-items-center justify-content-center">
+    <div className="bottom-footer py-2 d-flex align-items-center justify-content-center">
       <header
-        style={{ maxWidth: 1300 }}
+        style={{ maxWidth: 1366 }}
         className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1"
       >
         <span className="d-flex payments-logo align-items-center col-md-3">
@@ -39,7 +39,7 @@ function BottomFooter() {
           </li>
         </ul>
 
-        <div className="col-md-3 text-end">
+        <div className="col-md-4 text-end">
           <p className="copy-text">
             © 2021-2022 <a href="/">Timwoork</a> جميع الحقوق محفوظة{" "}
           </p>
