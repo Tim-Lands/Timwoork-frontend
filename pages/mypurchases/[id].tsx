@@ -497,6 +497,10 @@ const Order = ({ query }) => {
                                         </>
                                         }
                                     </div>
+                                    {ShowItem && ShowItem.data.is_rating == 1 && <div className="alert-info p-3 d-flex" style={{ borderRadius: 7, flexDirection: 'column', textAlign: 'center' }}>
+                                        <p className="text">أصبح بإمكانك تقييم الخدمة الآن. إن لم تنل إعجابك، جرب التواصل مع البائع أولاً</p>
+                                        <button className="btn butt-sm butt-primary" style={{ width: '40%', margin: 'auto' }} type='button' onClick={() => setModalVisibleRatting(true)}>إضافة تقييم الآن</button>
+                                    </div>}
                                     <div className="aside-header">
                                         <h3 className="title">{ShowItem.data.title}</h3>
                                     </div>
