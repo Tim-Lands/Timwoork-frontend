@@ -164,9 +164,10 @@ function Medias({ query, stars }) {
 
         try {
             if (isGalleryChanged && isFeaturedChanged) {
-                const [res1, res2] = await Promise.all([loadFeatureImage(), loadGalleryImages(), loadVideoUrl()])
+                const [res1, res2] = await Promise.all([loadFeatureImage(), loadGalleryImages()])
                 // Authentication was successful.
                 if (res1.status === 200 && res2.status === 200) {
+                    await loadVideoUrl()
                     setLoading(false)
                     message.success('لقد تم تحديث بنجاح')
                     router.push({
@@ -178,9 +179,10 @@ function Medias({ query, stars }) {
                 }
             }
             else if (isFeaturedChanged) {
-                const [res] = await Promise.all([loadFeatureImage(), loadVideoUrl()])
+                const [res] = await Promise.all([loadFeatureImage()])
                 // Authentication was successful.
                 if (res.status === 200) {
+                    await loadVideoUrl()
                     setLoading(false)
                     message.success('لقد تم تحديث بنجاح')
                     router.push({
@@ -192,10 +194,12 @@ function Medias({ query, stars }) {
                 }
             }
             else if (isGalleryChanged) {
-                const [res] = await Promise.all([loadGalleryImages(), loadVideoUrl()])
+                const [res] = await Promise.all([loadGalleryImages()])
+
                 // Authentication was successful.
                 if (res.status === 200) {
                     setLoading(false)
+                    await loadVideoUrl()
                     message.success('لقد تم تحديث بنجاح')
                     router.push({
                         pathname: '/add-new/complete',

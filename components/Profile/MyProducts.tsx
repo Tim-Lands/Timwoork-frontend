@@ -160,6 +160,12 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       case 4:
         page_name = 'medias'
         break;
+      case 5:
+        page_name = 'complete'
+        break;
+      default:
+        page_name='overview'
+        break;
     }
     router.push(`/edit-product/${page_name}?id=${product.id}`)
   }

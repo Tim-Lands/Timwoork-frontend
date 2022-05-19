@@ -9,7 +9,7 @@ import Cookies from 'js-cookie'
 import router from "next/router";
 
 function DashboardLayout(props: any) {
-  let token = Cookies.get('token')
+  let token = Cookies.get('token_dash')
   if(!token &&typeof window !== "undefined")
     token=localStorage.getItem('token');
       useEffect(() => {
