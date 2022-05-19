@@ -174,8 +174,7 @@ function Medias({ query, stars }) {
                 await uploadFeatured()
             else if (isGalleryChanged)
                 await uploadGallery()
-            else
-                await uploadVideoUrl()
+            await uploadVideoUrl()
             await sendRemoveRequest()
             router.push(`/edit-product/complete?id=${id}`)
 
