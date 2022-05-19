@@ -12,8 +12,8 @@ import Cookies from 'js-cookie'
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get('token')
-  if(!token &&typeof window !== "undefined")
-    token=localStorage.getItem('token')
+  if (!token && typeof window !== "undefined")
+    token = localStorage.getItem('token')
   useEffect(() => {
 
     const handleStart = (url: any) => {
@@ -27,21 +27,23 @@ function Layout(props: any) {
   }, [router]);
   return (
     <SWRConfig value={{
-      fetcher: async (url: string) => { console.log(token); return await API.get(url, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).then((r: any) => r.data).catch(()=>{
-        if(url=="api/me" && token){
-          Cookies.remove('token');
-          if(typeof window !== undefined){
-            localStorage.removeItem('token')
-            return;
+      fetcher: async (url: string) => {
+        console.log(token); return await API.get(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        }).then((r: any) => r.data).catch(() => {
+          if (url == "api/me" && token) {
+            Cookies.remove('token');
+            if (typeof window !== undefined) {
+              localStorage.removeItem('token')
+              return;
+            }
+            router.reload();
           }
-          router.reload();
-        }
-        })}
+        })
+      }
     }}>
       <div className="pt-5">
-        
+
         <Navbar />
         <Spin tip="يرجى الإنتظار..." spinning={loading}>
           {props.children}

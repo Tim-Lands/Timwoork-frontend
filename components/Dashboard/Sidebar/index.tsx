@@ -2,10 +2,7 @@ import React, { ReactElement } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
-import { connect } from "react-redux";
-import { logout } from "../../../store/auth/authActions";
 import useSWR from 'swr'
-import { message } from 'antd';
 
 const sidebarLinks = [
     {
@@ -18,7 +15,24 @@ const sidebarLinks = [
         id: 3,
         name: 'إدارة المستخدمين',
         icon: 'people',
-        href: '/tw-admin/users'
+        href: '/tw-admin/users',
+        hasSubMenu: [
+            {
+                id: 1,
+                name: 'جميع المستخدمين',
+                href: '/tw-admin/users'
+            },
+            {
+                id: 2,
+                name: 'المعلقة مؤقتا',
+                href: '/tw-admin/users/suspondedstimer'
+            },
+            {
+                id: 3,
+                name: 'المعلقة دائما',
+                href: '/tw-admin/users/suspondedspermanent'
+            },
+        ]
     },
     {
         id: 4,
@@ -89,59 +103,13 @@ const sidebarLinks = [
     },
 ]
 function index(): ReactElement {
-    const { data: userData, error }: any = useSWR(`dashboard/me`)
+    const { data: userData }: any = useSWR(`dashboard/me`)
     const submenu = true
     const path = useRouter()
     return (
         <div className={"dashboard-sidebar"}>
-            {error && message.error('للأسف لم يتم جلب معلومات المستخدم')}
             {userData &&
                 <div className="dashboard-sidebar-inner">
-                    {/*userData.user_details.profile &&
-                        <div className="dashbord-user-details">
-                            <Link href={`/u/${userData.user_details.username}`}>
-                                <a className="dashbord-user-avatar">
-                                    {userData.user_details.profile.avatar_path == 'avatar.png' ?
-                                        <ImageLogo src="/avatar2.jpg" width={30} height={30} /> :
-                                        <ImageLogo
-                                            loader={myLoader}
-                                            src={userData.user_details.profile.avatar_path}
-                                            quality={60}
-                                            width={30}
-                                            height={30}
-                                            placeholder='blur'
-                                            blurDataURL='/avatar2.jpg'
-                                        />
-                                    }
-                                </a>
-                            </Link>
-                            <div className="dashbord-user-content">
-                                <h3 className="user-title">
-                                    <Link href={`/u/${userData.user_details.username}`}>
-                                        <a className="dashbord-user-avatar">
-                                            {userData.user_details.profile.first_name + ' ' + userData.user_details.profile.last_name}
-                                        </a>
-                                    </Link>
-                                </h3>
-                                <ul className="meta">
-                                    <li>
-                                        <a onClick={() => {
-                                            props.logout();
-                                        }}>
-                                            <span className="material-icons">logout</span> خروج
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <Link href="/dashboard/settings">
-                                            <a>
-                                                <span className="material-icons">settings</span> الإعدادات
-                                            </a>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                                    */}
 
                     <ul className="dashboard-sidebar-list">
                         {sidebarLinks.map(e => (
@@ -183,9 +151,4 @@ function index(): ReactElement {
         </div>
     )
 }
-
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { logout })(index);
+export default index

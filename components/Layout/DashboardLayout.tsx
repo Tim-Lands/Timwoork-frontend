@@ -1,23 +1,21 @@
 import Navbar from "../Dashboard/Navbar";
 import Sidebar from "../Dashboard/Sidebar";
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { logout } from "./../../store/auth/authActions";
 import { SWRConfig } from 'swr'
 import API from '../../config'
 import Cookies from 'js-cookie'
 import router from "next/router";
 
 function DashboardLayout(props: any) {
-  let token = Cookies.get('token')
-  if(!token &&typeof window !== "undefined")
-    token=localStorage.getItem('token');
-      useEffect(() => {
+  let token = Cookies.get('token_dash')
+  if (!token && typeof window !== "undefined")
+    token = localStorage.getItem('token_dash');
+  useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login")
       return
     }
-  }, [])
+  }, [token])
   const [isSidebarShowen, setIsSidebarShowen] = useState(false)
   const setIsSidebarShowenHandle = () => {
     setIsSidebarShowen(!isSidebarShowen)
@@ -45,8 +43,4 @@ function DashboardLayout(props: any) {
   )
 }
 
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { logout })(DashboardLayout);
+export default DashboardLayout

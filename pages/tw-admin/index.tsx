@@ -1,22 +1,11 @@
 import Link from "next/link";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import { connect } from "react-redux";
-import { logout } from "@/store/auth/authActions";
 import useSWR from "swr";
 import { message } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import router from "next/router";
-import Cookies from "js-cookie";
 
 function index(): ReactElement {
-  const token = Cookies.get("token_dash");
-  useEffect(() => {
-    if (!token) {
-      router.push("/tw-admin/login");
-      return;
-    }
-  }, []);
   const { data: postsList, categoriesError }: any = useSWR("dashboard");
 
   // Return statement.
@@ -216,8 +205,4 @@ function index(): ReactElement {
 index.getLayout = function getLayout(page: any): ReactElement {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { logout })(index);
+export default index

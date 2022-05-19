@@ -8,16 +8,11 @@ import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Image from "next/image";
 import { Space, Table } from 'antd';
-import SuspensionTimer from "@/components/SuspensionTimer";
-import SuspensionPermanent from "@/components/SuspensionPermanent";
 
-function index() {
+function suspondedstimer() {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [isShowSuspensionTimer, setIsShowSuspensionTimer] = useState(false)
-    const [isShowSuspensionPermanent, setIsShowSuspensionPermanent] = useState(false)
-    const [sQuery, setsQuery] = useState('')
 
     const token = Cookies.get('token_dash')
     const columns: any = [
@@ -70,18 +65,12 @@ function index() {
                 <>
                     <Space>
                         <button
-                            className="btn butt-xs butt-dark"
-                            onClick={() => setIsShowSuspensionTimer(true)}
-                            type="button"
-                        >تعليق مؤقت
-                        </button>
-                        <button
                             title={item.id}
-                            className="btn butt-xs butt-red"
-                            onClick={() => setIsShowSuspensionPermanent(true)}
+                            className="btn butt-xs butt-light"
                             type="button"
-
-                        >تعليق دائم </button>
+                        >
+                            إلغاء التعليق
+                        </button>
                     </Space>
                 </>
             ),
@@ -114,26 +103,7 @@ function index() {
         <>
             <div className="timlands-panel">
                 <div className="timlands-panel-header d-flex align-items-center">
-                    <h2 className="title"><span className="material-icons material-icons-outlined">people</span>إدارة الأعضاء</h2>
-                </div>
-                {isShowSuspensionTimer && <SuspensionTimer refreshData={refreshData} id={3} setIsShowSuspensionTimer={setIsShowSuspensionTimer} />}
-                {isShowSuspensionPermanent && <SuspensionPermanent refreshData={refreshData} id={3} setIsShowSuspensionPermanent={setIsShowSuspensionPermanent} />}
-
-                <div className="py-3">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="timlands-form">
-                                <input
-                                    id="input-sQuery"
-                                    name="sQuery"
-                                    placeholder="البحث في الجدول..."
-                                    className="timlands-inputs"
-                                    onChange={(e) => setsQuery(e.target.value)}
-                                    value={sQuery}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">people</span>الحسابات المعلقة مؤقتا</h2>
                 </div>
 
                 <Table
@@ -157,7 +127,7 @@ function index() {
     );
 }
 
-index.getLayout = function getLayout(page: any): ReactElement {
+suspondedstimer.getLayout = function getLayout(page: any): ReactElement {
     return (
         <DashboardLayout>
             {page}
@@ -165,4 +135,4 @@ index.getLayout = function getLayout(page: any): ReactElement {
     )
 
 }
-export default index;
+export default suspondedstimer;
