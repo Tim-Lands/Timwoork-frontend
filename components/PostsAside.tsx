@@ -3,7 +3,15 @@ import PropTypes from "prop-types";
 import Post from './Post/Post';
 import { Alert } from './Alert/Alert';
 import Link from 'next/link';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+// import required modules
 function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElement {
     if (isError) return (
         <div className="posts-aside error">
@@ -74,11 +82,37 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                     </Link>
                 </div>
                 <div className="posts-aside-body">
-                    <div className="row">
+                    <Swiper
+                        slidesPerView={1}
+                        spaceBetween={0}
+                        pagination={{
+                            type: "progressbar",
+                        }}
+                        navigation={true}
+                        modules={[Pagination, Navigation]}
+                        breakpoints={{
+                            "@0.00": {
+                                slidesPerView: 1,
+                                spaceBetween: 0,
+                            },
+                            "@0.75": {
+                                slidesPerView: 2,
+                                spaceBetween: 2,
+                            },
+                            "@1.00": {
+                                slidesPerView: 3,
+                                spaceBetween: 3,
+                            },
+                            "@1.50": {
+                                slidesPerView: 4,
+                                spaceBetween: 4,
+                            },
+                        }}
+                        className="mySwiper"
+                    >
                         {PostData.map((e: any) => (
-                            <div key={e.id} className={"col-sm-6 col-lg-" + (colNumber || 3)}>
+                            <SwiperSlide key={e.id}>
                                 <Post
-                                    size="small"
                                     title={e.title}
                                     author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
                                     rate={e.ratings_avg_rating}
@@ -88,9 +122,9 @@ function PostsAside({ PostData, title, colNumber, isError, linkURL }): ReactElem
                                     thumbnail={e.full_path_thumbnail}
                                     buyers={e.count_buying}
                                 />
-                            </div>
+                            </SwiperSlide>
                         ))}
-                    </div>
+                    </Swiper>
                 </div>
             </div>}
         </>
