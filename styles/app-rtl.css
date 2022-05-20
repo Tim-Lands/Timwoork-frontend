@@ -681,7 +681,7 @@
   display: none;
 }
 
-@media (max-width: 1160px) {
+@media (max-width: 900px) {
   .timlands-navbar .toggle-nav {
     display: block;
   }
@@ -917,7 +917,7 @@
   font-size: 11px;
 }
 
-@media (max-width: 1160px) {
+@media (max-width: 900px) {
   .timlands-navbar .nav-container .app-navbar {
     position: absolute;
     top: 60px;
@@ -973,10 +973,18 @@
 
 .timlands-navbar .nav-auth > li.login-nav-item > a {
   display: block;
-  padding: 13px;
   font-size: 14px;
   color: #555;
+  width: 120px;
+  padding: 5px 11px;
   font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+  .timlands-navbar .nav-auth > li.login-nav-item > a {
+    width: 90px;
+    font-size: 10px;
+  }
 }
 
 .timlands-navbar .nav-auth > li.login-user {
@@ -1031,6 +1039,41 @@
 
 .timlands-navbar .nav-auth > li.register-nav-item {
   padding: 7px;
+}
+
+@media (max-width: 1000px) {
+  .timlands-navbar .nav-auth > li.register-nav-item {
+    padding: 0;
+  }
+}
+
+.timlands-navbar .nav-auth > li.register-nav-item > a {
+  background-color: #475c80;
+  border-color: #475c80;
+  color: #fff;
+  border-width: 2px;
+  font-size: 12px;
+  padding: 6px 13px;
+  border-radius: 5px;
+}
+
+@media (max-width: 1000px) {
+  .timlands-navbar .nav-auth > li.register-nav-item > a {
+    padding: 4px 5px;
+    font-size: 10px;
+  }
+}
+
+.timlands-navbar .nav-auth > li.register-nav-item > a > .material-icons {
+  font-size: 17px;
+  margin-left: 5px;
+}
+
+@media (max-width: 1000px) {
+  .timlands-navbar .nav-auth > li.register-nav-item > a > .material-icons {
+    margin-left: 2px;
+    font-size: 13px;
+  }
 }
 
 .timlands-navbar .nav-auth > li.right-butts-icon {
@@ -1189,6 +1232,12 @@
   background-color: #f2f2f2;
 }
 
+@media (max-width: 700px) {
+  .hr-divider {
+    display: none;
+  }
+}
+
 .select-langs-inner {
   position: relative;
   margin-right: 10px;
@@ -1196,6 +1245,7 @@
 
 .select-langs-inner .select-langs {
   background-color: transparent;
+  position: relative;
   color: #555;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -1224,14 +1274,15 @@
   transition: all 0.3s;
 }
 
-.select-langs-inner::after {
+.select-langs-inner::before {
   content: " ";
-  position: absolute;
+  position: relative;
   background-color: #f1f1f1;
-  width: 2px;
-  height: 100%;
+  width: 20px;
+  height: 100px;
   right: 0;
   top: 0;
+  z-index: 100;
   bottom: 0;
 }
 
@@ -7409,7 +7460,7 @@ h3 {
   display: none !important;
 }
 
-@media (max-width: 1160px) {
+@media (max-width: 900px) {
   .is-mobile.nav {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
@@ -7423,7 +7474,7 @@ h3 {
   display: flex !important;
 }
 
-@media (max-width: 1160px) {
+@media (max-width: 900px) {
   .is-desktop.nav {
     display: none !important;
   }
@@ -8588,6 +8639,7 @@ h3 {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  color: auto;
 }
 
 @media (max-width: 385px) {
@@ -8630,12 +8682,12 @@ h3 {
   width: 100%;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 750px) {
   .timlands-navbar .nav-container .app-navbar {
-    gap: 1%;
+    gap: 1.5%;
   }
 }
-@media (max-width: 1160px) {
+@media (max-width: 900px) {
   .nav-container {
     width: -webkit-fit-content;
     width: -moz-fit-content;
@@ -8992,10 +9044,10 @@ h3 {
 }
 
 .active {
-  color: #d2ac02;
+  color: #d2ac02 !important;
 }
 
 .selected {
-  background-color: #475c80;
+  background-color: rgba(71, 92, 128, 0.4) !important;
 }
 /*# sourceMappingURL=app-rtl.css.map */

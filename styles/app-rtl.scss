@@ -4899,7 +4899,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.nav {
     display: none !important;
 
-    @media (max-width: 1160px) {
+    @media (max-width: 900px) {
       display: flex !important;
     }
   }
@@ -4909,7 +4909,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.nav {
     display: flex !important;
 
-    @media (max-width: 1160px) {
+    @media (max-width: 900px) {
       display: none !important;
     }
   }
@@ -5977,6 +5977,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   align-items: center;
   padding-bottom: 5px;
   justify-content: space-between;
+  color: auto;
 }
 
 @media (max-width: 385px) {
@@ -6010,14 +6011,14 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   width: 100%;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 750px) {
   .timlands-navbar .nav-container .app-navbar {
-    gap: 1%;
+    gap: 1.5%;
   }
 }
 
 /*# sourceMappingURL=app-rtl.css.map */
-@media (max-width: 1160px) {
+@media (max-width: 900px) {
   .nav-container {
     width: fit-content;
   }
@@ -6351,5 +6352,5 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   color: #d2ac02 !important;
 }
 .selected {
-  background-color: rgb(71, 92, 128, 0.4) !important;
+  background-color: rgba(71, 92, 128, 0.4) !important;
 }

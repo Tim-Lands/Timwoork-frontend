@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { useOutSide } from "../useOutSide";
 import API from "../../config";
-import { FaGlobe } from "@react-icons/all-files/fa/FaGlobe";
+import { FaSignInAlt, FaGlobe, FaUserPlus } from "react-icons/fa";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
@@ -12,6 +12,7 @@ import logoIMG from "../../public/logo.png";
 import useSWR from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
+
 import {
   MessageOutlined,
   InfoCircleOutlined,
@@ -24,9 +25,9 @@ import { motion } from "framer-motion";
 import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
-  const [visible, setVisible] = useState(false)
-  const [isShowenLangs, setIsShowenLangs] = useState(false)
-
+  const [size, setSize] = useState(10000);
+  const [visible, setVisible] = useState(false);
+  const [isShowenLangs, setIsShowenLangs] = useState(false);
   const hideList = () => {
     setTimeout(() => {
       setVisible(false);
@@ -49,32 +50,43 @@ function Navbar(): ReactElement {
     forceTLS: true,
     auth: token
       ? {
-        headers: {
-          // pass the authorization token when using private channels
-          Authorization: `Bearer ${token}`,
-        },
-      }
+          headers: {
+            // pass the authorization token when using private channels
+            Authorization: `Bearer ${token}`,
+          },
+        }
       : undefined,
   });
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-  const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id
-    }`;
+  const channelChat = `presence-receiver.${
+    userInfo && userInfo.user_details.id
+  }`;
   const channel = pusher.subscribe(channelChat);
 
-  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id}`;
+  const channelNotification = `presence-notify.${
+    userInfo && userInfo.user_details.id
+  }`;
   const channelNoty = pusher.subscribe(channelNotification);
-  const langsList = <div className="menu-langs bg-white" style={{ top: 65, }}>
-    <button className="langs-item" type="button">
-      <ImageLogo width={25} height={16} src='/sa.webp' /><span> العربية</span>
-    </button>
-    <button className="langs-item" type="button">
-      <ImageLogo width={25} height={16} src='/uk.webp' /> <span>الإنجليزية</span>
-    </button>
-  </div>
+  const langsList = (
+    <div className="menu-langs bg-white" style={{ top: 65 }}>
+      <button className="langs-item" type="button">
+        <ImageLogo width={25} height={16} src="/sa.webp" />
+        <span>{size > 1050 ? "العربية" : "Ar"} </span>
+      </button>
+      <button className="langs-item" type="button">
+        <ImageLogo width={25} height={16} src="/uk.webp" />{" "}
+        <span>{size > 1050 ? "الأنجليزية" : "En"}</span>
+      </button>
+    </div>
+  );
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setVisible(false);
     });
+    window.addEventListener("resize", () => {
+      setSize(window.innerWidth);
+    });
+    setSize(window.innerWidth);
     if (token) {
       channel.bind("message.sent", (data) => {
         const effect = new Audio("/effect.mp3");
@@ -213,6 +225,12 @@ function Navbar(): ReactElement {
       return () => {
         pusher.unsubscribe(channelChat);
         pusher.unsubscribe(channelNotification);
+        window.removeEventListener("resize", () => {
+          setSize(window.innerWidth);
+        });
+        window.removeEventListener("scroll", () => {
+          setVisible(false);
+        });
       };
     }
   }, [channelChat, channelNotification]);
@@ -249,8 +267,8 @@ function Navbar(): ReactElement {
     } catch (error) {
       //console.log(error);
     }
-  }
-  const [isLogoutModal, setIsLogoutModal]: any = useState(false)
+  };
+  const [isLogoutModal, setIsLogoutModal]: any = useState(false);
   const AccountList = (
     <Menu>
       <Menu.Item key="0">
@@ -351,7 +369,7 @@ function Navbar(): ReactElement {
         </a>
       </Menu.Item>
     </Menu>
-  )
+  );
   const myLoader = () => {
     return `${userData && userData.user_details.profile.avatar_path}`;
   };
@@ -360,9 +378,11 @@ function Navbar(): ReactElement {
 
   return (
     <>
-      {isLogoutModal && <div className="overlay-fixed">
-        <LogoutModal setIsLogoutModal={setIsLogoutModal} />
-      </div>}
+      {isLogoutModal && (
+        <div className="overlay-fixed">
+          <LogoutModal setIsLogoutModal={setIsLogoutModal} />
+        </div>
+      )}
       <div
         className={"timlands-navbar-container"}
         style={{
@@ -415,7 +435,10 @@ function Navbar(): ReactElement {
                     </span>
                   </button>
                 </div>
-                <div className="logo-nav me-auto" style={{ display: "flex" }}>
+                <div
+                  className="logo-nav me-auto"
+                  style={{ display: "flex", width: 55 }}
+                >
                   <Link href="/">
                     <a>
                       <ImageLogo src={logoIMG} alt="Timwoork" />
@@ -423,13 +446,15 @@ function Navbar(): ReactElement {
                   </Link>
                 </div>
 
-                <span className="hr-divider" style={{
-                  position: 'relative',
-                  marginBlock: 5,
-                  height: 40,
-                  width: 2,
-                  backgroundColor: '#f2f2f2',
-                }}></span>
+                <span
+                  className="hr-divider"
+                  style={{
+                    position: "relative",
+                    height: 40,
+                    width: 2,
+                    backgroundColor: "#f2f2f2",
+                  }}
+                ></span>
                 <Menus darkMode={darkMode} />
                 {isMenuShowenMob && (
                   <MenusMobile
@@ -444,48 +469,32 @@ function Navbar(): ReactElement {
               className="nav-auth ml-auto"
               style={{
                 alignItems: "center",
+                position: "relative",
                 alignContent: "center",
               }}
             >
               {token ? (
                 <>
                   {!userData && (
-                    <li
-                      className="nav-loading"
+                    <p
                       style={{
-                        display: "flex",
-                        alignContent: "center",
-                        alignItems: "center",
+                        position: "absolute",
+                        right: -120,
                         margin: 0,
+                        padding: 0,
                       }}
                     >
-                      <p
-                        className="loading-text"
-                        style={{
-                          fontSize: 13,
-                          fontWeight: "bold",
-                          color: !darkMode ? "#666" : "#ddd",
-                          margin: 0,
-                        }}
-                      >
-                        <span
-                          className="spinner-border spinner-border-sm"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>{" "}
-                        يرجى الإنتظار...
-                      </p>
-                    </li>
+                      <span
+                        style={{ marginLeft: 5 }}
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      يرجي الانتظار...
+                    </p>
                   )}
                   {userData && (
                     <>
-                      <li className="hr-divider" style={{
-                        position: 'relative',
-                        marginBlock: 5,
-                        height: 40,
-                        width: 2,
-                        backgroundColor: '#f2f2f2',
-                      }}></li>
                       {!veriedEmail && (
                         <li className="right-butts-icon">
                           <Tooltip
@@ -518,6 +527,17 @@ function Navbar(): ReactElement {
                             </a>
                           </Tooltip>
                         </li>
+                      )}
+                      {veriedEmail && (
+                        <li
+                          className="hr-divider"
+                          style={{
+                            position: "relative",
+                            height: 40,
+                            width: 2,
+                            backgroundColor: "#f2f2f2",
+                          }}
+                        ></li>
                       )}
                       {veriedEmail && (
                         <li className="right-butts-icon">
@@ -614,47 +634,86 @@ function Navbar(): ReactElement {
                 </>
               ) : (
                 <>
-                  <li className="hr-divider" style={{
-                    position: 'relative',
-                    marginBlock: 5,
-                    height: 40,
-                    width: 2,
-                    backgroundColor: '#f2f2f2',
-                  }}></li>
+                  <li
+                    className="hr-divider"
+                    style={{
+                      position: "relative",
+                      height: 40,
+                      width: 2,
+                      backgroundColor: "#f2f2f2",
+                    }}
+                  ></li>
                   <li className="login-nav-item">
                     <Link href="/login">
-                      <a
-                        className="btn butt-xs flex-center"
-                        style={{ width: 120 }}
-                      >
-                        تسجيل الدخول
-                      </a>
+                      {size > 350 ? (
+                        <a className=" flex-center">تسجيل الدخول</a>
+                      ) : (
+                        <FaSignInAlt
+                          style={{
+                            border: "1px solid rgba(0,0,0,0.2)",
+                            width: 32,
+                            height: 32,
+                            padding: 5,
+                            color: "gray",
+                            marginLeft: 8,
+                            cursor: "pointer",
+
+                            borderRadius: 5,
+                          }}
+                        />
+                      )}
                     </Link>
                   </li>
                   <li className="register-nav-item d-flex align-items-center">
                     <Link href="/register">
-                      <a className="btn butt-sm butt-primary flex-center">
-                        <i className="material-icons material-icons-outlined">
-                          person_add_alt
-                        </i>{" "}
-                        التسجيل
+                      <a className="btn butt-primary flex-center">
+                        {size > 350 ? (
+                          <>
+                            {" "}
+                            <i className="material-icons material-icons-outlined">
+                              person_add_alt
+                            </i>
+                            التسجيل
+                          </>
+                        ) : (
+                          <FaUserPlus
+                            style={{
+                              color: "white   ",
+                              fontSize: 17,
+                              cursor: "pointer",
+                            }}
+                          />
+                        )}
                       </a>
                     </Link>
                   </li>
                 </>
               )}
-              <li className="register-nav-item select-langs-inner" >
+              <li
+                className="hr-divider"
+                style={{
+                  position: "relative",
+                  height: 40,
+                  width: 2,
+                  backgroundColor: "#f2f2f2",
+                }}
+              ></li>
+              <li className="register-nav-item select-langs-inner">
                 <button
                   style={{
-                    backgroundColor: 'transparent',
-                    color: '#555',
+                    backgroundColor: "transparent",
+                    color: "#555",
                     borderWidth: 0,
-                    outline: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
+                    outline: "none",
+                    display: "flex",
+                    alignItems: "center",
                   }}
-                  className="select-langs" onClick={() => setIsShowenLangs(!isShowenLangs)}>
-                  <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} /> العربية <i className="material-icons material-icons-outlined">
+                  className="select-langs"
+                  onClick={() => setIsShowenLangs(!isShowenLangs)}
+                >
+                  <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} />{" "}
+                  {size > 400 ? (size > 1050 ? "العربية" : "Ar") : ""}
+                  <i className="material-icons material-icons-outlined">
                     expand_more
                   </i>
                 </button>

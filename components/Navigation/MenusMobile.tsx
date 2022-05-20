@@ -6,7 +6,7 @@ import { TiGroupOutline } from "@react-icons/all-files/ti/TiGroupOutline";
 import { BiTrophy } from "@react-icons/all-files/bi/BiTrophy";
 import { BiBriefcase } from "@react-icons/all-files/bi/BiBriefcase";
 import { BiImage } from "@react-icons/all-files/bi/BiImage";
-import { Popover } from "antd";
+import { Badge } from "antd";
 import PropTypes from "prop-types";
 import { useRef, useEffect } from "react";
 import { useOutsideAlerter } from "../useOutsideAlerter";
@@ -74,79 +74,6 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
         </Link>
       </li>
 
-      <Popover content={content} trigger="click" placement="bottom">
-        <li>
-          <motion.a
-            whileTap={{
-              color: "red",
-            }}
-            className="explore-butt"
-            style={{
-              fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
-              display: "flex",
-              paddingInline: 17,
-              paddingBlock: 0,
-              fontSize: 14,
-              height: 50,
-              alignItems: "center",
-              alignContent: "center",
-            }}
-          >
-            <BiTrophy style={{ marginLeft: 3, fontSize: 22 }} />
-            المسابقات
-          </motion.a>
-        </li>
-      </Popover>
-      <Popover content={content} trigger="click" placement="bottom">
-        <li>
-          <motion.a
-            whileTap={{
-              color: "red",
-            }}
-            className="explore-butt"
-            style={{
-              fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
-              display: "flex",
-              paddingInline: 17,
-              paddingBlock: 0,
-              fontSize: 14,
-              height: 50,
-              alignItems: "center",
-              alignContent: "center",
-            }}
-          >
-            <BiBriefcase style={{ marginLeft: 3, fontSize: 22 }} />
-            المشاريع
-          </motion.a>
-        </li>
-      </Popover>
-      <Popover content={content} trigger="click" placement="bottom">
-        <li>
-          <motion.a
-            whileTap={{
-              color: "red",
-            }}
-            className="explore-butt"
-            style={{
-              fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
-              display: "flex",
-              paddingInline: 17,
-              paddingBlock: 0,
-              fontSize: 14,
-              height: 50,
-              alignItems: "center",
-              alignContent: "center",
-            }}
-          >
-            <BiImage style={{ marginLeft: 3, fontSize: 27 }} />
-            الاعمال
-          </motion.a>
-        </li>
-      </Popover>
-
       <li>
         <Link href="/blog">
           <a
@@ -172,30 +99,6 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
           </a>
         </Link>
       </li>
-      <Popover content={content} trigger="click" placement="bottom">
-        <li>
-          <motion.a
-            whileTap={{
-              color: "red",
-            }}
-            className="explore-butt"
-            style={{
-              fontWeight: 600,
-              color: !darkMode ? "#666" : "#f1f1f1",
-              display: "flex",
-              paddingInline: 17,
-              paddingBlock: 0,
-              fontSize: 14,
-              height: 50,
-              alignItems: "center",
-              alignContent: "center",
-            }}
-          >
-            <TiGroupOutline style={{ marginLeft: 3, fontSize: 23 }} />
-            المستقلين
-          </motion.a>
-        </li>
-      </Popover>
       <li>
         <Link href="/club">
           <a
@@ -221,10 +124,139 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
           </a>
         </Link>
       </li>
+      <li>
+        <motion.a
+          className="explore-butt"
+          style={{
+            fontWeight: 600,
+            // color: !darkMode ? "#666" : "#f1f1f1",
+            display: "flex",
+            paddingInline: 17,
+            paddingBlock: 0,
+            fontSize: 14,
+            height: 50,
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          <Badge count={"قريبا"} offset={[100, 0]} color="#475C80" size="small">
+            <p
+              style={{
+                alignItems: "center",
+                alignContent: "center",
+                paddingBlock: 0,
+                display: "flex",
+                color: "#ccc",
+              }}
+            >
+              <BiTrophy style={{ marginLeft: 3, fontSize: 22 }} />
+              المسابقات
+            </p>
+          </Badge>
+        </motion.a>
+      </li>
+      <li>
+        <motion.a
+          className="explore-butt"
+          style={{
+            fontWeight: 600,
+            // color: !darkMode ? "#666" : "#f1f1f1",
+            color: "#ccc",
+            display: "flex",
+            paddingInline: 17,
+            paddingBlock: 0,
+            fontSize: 14,
+            height: 50,
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          <Badge count={"قريبا"} offset={[89, 0]} color="#475C80" size="small">
+            <p
+              style={{
+                alignItems: "center",
+                alignContent: "center",
+                paddingBlock: 0,
+                display: "flex",
+                color: "#ccc",
+              }}
+            >
+              <BiBriefcase style={{ marginLeft: 3, fontSize: 22 }} />
+              المشاريع
+            </p>
+          </Badge>
+        </motion.a>
+      </li>
+      <li>
+        <motion.a
+          className="explore-butt"
+          style={{
+            fontWeight: 600,
+            // color: !darkMode ? "#666" : "#f1f1f1",
+            color: "#ccc",
+            display: "flex",
+            paddingInline: 17,
+            paddingBlock: 0,
+            fontSize: 14,
+            height: 50,
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          <Badge count={"قريبا"} offset={[77, 0]} color="#475C80" size="small">
+            <p
+              style={{
+                alignItems: "center",
+                alignContent: "center",
+                paddingBlock: 0,
+                display: "flex",
+                color: "#ccc",
+              }}
+            >
+              <BiImage style={{ marginLeft: 3, fontSize: 22 }} />
+              الاعمال
+            </p>
+          </Badge>
+        </motion.a>
+      </li>
+      <li>
+        <motion.a
+          whileTap={{
+            color: "red",
+          }}
+          className="explore-butt"
+          style={{
+            fontWeight: 600,
+            // color: !darkMode ? "#666" : "#f1f1f1",
+            color: "#ccc",
+            display: "flex",
+            paddingInline: 17,
+            paddingBlock: 0,
+            fontSize: 14,
+            height: 50,
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          <Badge count={"قريبا"} offset={[100, 0]} color="#475C80" size="small">
+            <p
+              style={{
+                alignItems: "center",
+                alignContent: "center",
+                paddingBlock: 0,
+                display: "flex",
+                color: "#ccc",
+              }}
+            >
+              <TiGroupOutline style={{ marginLeft: 3, fontSize: 22 }} />
+              المستقلين
+            </p>
+          </Badge>
+        </motion.a>
+      </li>
     </ul>
   );
 }
-const content = <div>قريبا</div>;
 
 export default Menus;
 Menus.propTypes = {
