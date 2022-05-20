@@ -239,7 +239,9 @@ function Single({ query, stars, errorFetch }) {
           const key = `open${Date.now()}`;
           const btn = (
             <button
-              onClick={() => router.push("/cart")}
+              onClick={() =>{ 
+                notification.close(key)
+                router.push("/cart")}}
               className="btn butt-sm butt-primary"
             >
               الذهاب إلى السلة
