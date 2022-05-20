@@ -1,16 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { motion } from "framer-motion";
-import { message, Spin } from 'antd';
+import {  Spin } from 'antd';
 import { useFormik } from 'formik';
-import API from "../config";
 import Cookies from "js-cookie";
-import { Alert } from './Alert/Alert';
 
-function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, onSuspend }: any) {
+function SuspensionPermanent({ setIsShowSuspensionPermanent, id,  onSuspend }: any) {
 
-    const [validationsErrors, setValidationsErrors]: any = useState({});
-    const [validationsGeneral, setValidationsGeneral]: any = useState({});
 
     let token = Cookies.get("token");
     if (!token && typeof window !== "undefined")
@@ -42,7 +38,6 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, on
                 </div>
 
                 <div className="modal-body">
-                    {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
                     <Spin spinning={formik.isSubmitting}>
                         <form onSubmit={formik.handleSubmit}>
                             <div className="timlands-form" style={{ marginTop: -17 }}>
@@ -58,11 +53,7 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, on
                                         onChange={formik.handleChange}
                                     />
                                 </div>
-                                {validationsErrors && validationsErrors.cause &&
-                                    <motion.div initial={{ y: -6, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="timlands-form-note form-note-error">
-                                        <p className="text">{validationsErrors.cause[0]}</p>
-                                    </motion.div>
-                                }
+                                
                             </div>
                             <div className="sus-options-inner" style={{ overflowY: 'scroll', height: 190 }}>
                                 <div className="sus-options">
