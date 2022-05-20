@@ -77,15 +77,15 @@ function suspondedspermanent() {
         },
     ];
 
-    const data = postsList && postsList;
     const refreshData = async () => {
         setIsLoading(true)
         try {
-            const res: any = await API.get('dashboard/users', {
+            const res: any = await API.get('dashboard/users/get_users_banned', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res) {
                 setIsLoading(false)
+                console.log(res)
                 setPostsList(res.data.data)
                 setIsError(false)
             }
@@ -108,7 +108,7 @@ function suspondedspermanent() {
 
                 <Table
                     columns={columns}
-                    dataSource={data}
+                    dataSource={postsList}
                     bordered
                 />
                 {isError &&

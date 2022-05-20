@@ -7,9 +7,10 @@ import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Image from "next/image";
-import { Space, Table } from 'antd';
+import { notification, Space, Table } from 'antd';
 import SuspensionTimer from "@/components/SuspensionTimer";
 import SuspensionPermanent from "@/components/SuspensionPermanent";
+
 
 function index() {
     const [postsList, setPostsList] = useState([])
@@ -17,15 +18,34 @@ function index() {
     const [isLoading, setIsLoading] = useState(false)
     const [isShowSuspensionTimer, setIsShowSuspensionTimer] = useState(false)
     const [isShowSuspensionPermanent, setIsShowSuspensionPermanent] = useState(false)
+    const [selectedUserID, setSelectedUserID] :any = useState(null)
     const [sQuery, setsQuery] = useState('')
 
     const token = Cookies.get('token_dash')
+
+    const suspendUser = async(body)=>{
+        try{
+        const res =  await API.post(`dashboard/users/${selectedUserID}/ban`,body,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        if (res.status === 200)
+            notification.success({
+                message:'تم حظر المُستخدم بنجاح'
+            })
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    
     const columns: any = [
         {
             title: 'الاسم الكامل',
             dataIndex: ["profile"],
             render: (profile: any) => (
-                <Link href={`/u/${profile.id}`}>
+                <Link key={profile.id} href={`/u/${profile.id}`}>
                     <a className="flex-center">
                         <Image src={`${profile.avatar_path}`} width={20} height={20} />
                         <span className="me-1">{(!profile.full_name || profile.full_name == '') ? 'بدون اسم' : profile.full_name}</span>
@@ -56,7 +76,7 @@ function index() {
             //className: 'column-money',
             dataIndex: "created_at",
             key: 'created_at',
-            render: date => <LastSeen date={date} />,
+            render: date => <LastSeen key={date} date={date} />,
             sorter: {
                 compare: (a, b) => a.created_at - b.created_at,
                 multiple: 1,
@@ -68,17 +88,23 @@ function index() {
             dataIndex: "",
             render: item => (
                 <>
-                    <Space>
+                    <Space key={item.id}>
                         <button
                             className="btn butt-xs butt-dark"
-                            onClick={() => setIsShowSuspensionTimer(true)}
+                            onClick={() =>{
+                                setSelectedUserID(item.id)
+                                setIsShowSuspensionTimer(true)}}
                             type="button"
                         >تعليق مؤقت
                         </button>
                         <button
                             title={item.id}
                             className="btn butt-xs butt-red"
-                            onClick={() => setIsShowSuspensionPermanent(true)}
+                            onClick={() =>{
+                                setSelectedUserID(item.id) 
+                                setIsShowSuspensionPermanent(true)
+                                
+                                }}
                             type="button"
 
                         >تعليق دائم </button>
@@ -116,8 +142,8 @@ function index() {
                 <div className="timlands-panel-header d-flex align-items-center">
                     <h2 className="title"><span className="material-icons material-icons-outlined">people</span>إدارة الأعضاء</h2>
                 </div>
-                {isShowSuspensionTimer && <SuspensionTimer refreshData={refreshData} id={3} setIsShowSuspensionTimer={setIsShowSuspensionTimer} />}
-                {isShowSuspensionPermanent && <SuspensionPermanent refreshData={refreshData} id={3} setIsShowSuspensionPermanent={setIsShowSuspensionPermanent} />}
+                {isShowSuspensionTimer && <SuspensionTimer onSuspend={suspendUser} refreshData={refreshData} id={3} setIsShowSuspensionTimer={setIsShowSuspensionTimer} />}
+                {isShowSuspensionPermanent && <SuspensionPermanent onSuspend={suspendUser} refreshData={refreshData} id={3} setIsShowSuspensionPermanent={setIsShowSuspensionPermanent} />}
 
                 <div className="py-3">
                     <div className="row">

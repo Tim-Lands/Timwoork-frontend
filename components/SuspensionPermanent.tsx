@@ -7,7 +7,7 @@ import API from "../config";
 import Cookies from "js-cookie";
 import { Alert } from './Alert/Alert';
 
-function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData }: any) {
+function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, onSuspend }: any) {
 
     const [validationsErrors, setValidationsErrors]: any = useState({});
     const [validationsGeneral, setValidationsGeneral]: any = useState({});
@@ -24,36 +24,8 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData }: 
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async (values) => {
-            try {
-                setValidationsErrors({});
-                const res = await API.post(
-                    `api/hereapiURL/${id}`,
-                    values,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                // Authentication was successful.
-                if (res.status === 200) {
-                    message.success("لقد تم تعليق الحساب بنجاح");
-                    setIsShowSuspensionPermanent(false)
-                    refreshData()
-                }
-            } catch (error: any) {
-                if (
-                    error.response &&
-                    error.response.data &&
-                    error.response.data.errors
-                ) {
-                    setValidationsErrors(error.response.data.errors);
-                }
-
-                if (error.response && error.response.data) {
-                    setValidationsGeneral(error.response.data);
-                }
-            }
+            onSuspend({comment:values.cause})
+            setIsShowSuspensionPermanent(false)
         },
     });
     return (
@@ -93,7 +65,7 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData }: 
                                 }
                             </div>
                             <hr />
-                            <button className='btn butt-primary butt-sm mx-1' type='submit'>تعليق الحساب</button>
+                            <button className='btn butt-primary butt-sm mx-1' type='submit' >تعليق الحساب</button>
                             <button className='btn butt-red-text butt-sm mx-1' onClick={() => setIsShowSuspensionPermanent(false)} type='button'>إغلاق</button>
                         </form>
                     </Spin>
