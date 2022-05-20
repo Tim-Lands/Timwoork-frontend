@@ -8,11 +8,13 @@ import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Image from "next/image";
 import { Space, Table } from 'antd';
+import SuspensionInfo from "@/components/SuspensionInfo";
 
 function suspondedstimer() {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isShowSuspensionInfo, setIsShowSuspensionInfo] = useState(false)
 
     const token = Cookies.get('token_dash')
     const columns: any = [
@@ -71,6 +73,14 @@ function suspondedstimer() {
                         >
                             إلغاء التعليق
                         </button>
+                        <button
+                            title={item.id}
+                            onClick={() => setIsShowSuspensionInfo(true)}
+                            className="btn butt-xs butt-green"
+                            type="button"
+                        >
+                            معلومات التعليق
+                        </button>
                     </Space>
                 </>
             ),
@@ -105,6 +115,7 @@ function suspondedstimer() {
                 <div className="timlands-panel-header d-flex align-items-center">
                     <h2 className="title"><span className="material-icons material-icons-outlined">people</span>الحسابات المعلقة مؤقتا</h2>
                 </div>
+                {isShowSuspensionInfo && <SuspensionInfo id={4} setIsShowSuspensionInfo={setIsShowSuspensionInfo} />}
 
                 <Table
                     columns={columns}

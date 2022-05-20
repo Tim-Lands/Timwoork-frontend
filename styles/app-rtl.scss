@@ -6354,3 +6354,25 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 .selected {
   background-color: rgba(71, 92, 128, 0.4) !important;
 }
+.title-modal {
+  font-size: 17px;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #f8f8f8;
+}
+.cause-text {
+  font-size: 14px;
+  margin: 6px 0;
+  line-height: 28px;
+  
+}
+.sus-list-inner {
+  .sus-list {
+    li {
+      font-size: 13px;
+      line-height: 29px;
+      
+    }
+  }
+}

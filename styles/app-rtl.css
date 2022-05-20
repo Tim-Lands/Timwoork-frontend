@@ -1274,18 +1274,6 @@
   transition: all 0.3s;
 }
 
-.select-langs-inner::before {
-  content: " ";
-  position: relative;
-  background-color: #f1f1f1;
-  width: 20px;
-  height: 100px;
-  right: 0;
-  top: 0;
-  z-index: 100;
-  bottom: 0;
-}
-
 .menu-langs {
   background-color: #fff;
   -webkit-box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.034);
@@ -9049,5 +9037,24 @@ h3 {
 
 .selected {
   background-color: rgba(71, 92, 128, 0.4) !important;
+}
+
+.title-modal {
+  font-size: 17px;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.cause-text {
+  font-size: 14px;
+  margin: 6px 0;
+  line-height: 28px;
+}
+
+.sus-list-inner .sus-list li {
+  font-size: 13px;
+  line-height: 29px;
 }
 /*# sourceMappingURL=app-rtl.css.map */

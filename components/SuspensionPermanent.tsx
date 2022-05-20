@@ -54,7 +54,7 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, on
                                         placeholder="أكتب سبب التعليق..."
                                         className={"timlands-inputs"}
                                         value={formik.values.cause}
-                                        style={{ minHeight: 160 }}
+                                        style={{ minHeight: 130 }}
                                         onChange={formik.handleChange}
                                     />
                                 </div>
@@ -63,6 +63,193 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, on
                                         <p className="text">{validationsErrors.cause[0]}</p>
                                     </motion.div>
                                 }
+                            </div>
+                            <div className="sus-options-inner" style={{ overflowY: 'scroll', height: 190 }}>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="1"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-1"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-1">
+                                            إيقاف عمليات الشراء
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="2"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-2"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-2">
+                                            إيقاف عمليات البيع
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="3"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-3"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-3">
+                                            إيقاف المراسلات
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="4"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-4"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-4">
+                                            إيقاف التسليم
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="5"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-5"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-5">
+                                            إيقاف إضافة خدمة
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="6"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-6"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-6">
+                                            إيقاف ظهور الخدمات في الموقع
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="7"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-7"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-7">
+                                            إيقاف التعديل على الخدمات
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="8"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-8"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-8">
+                                            إيقاف حذف الخدمات
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="9"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-9"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-9">
+                                            إيقاف سحب الأموال
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="10"
+                                            checked={true}
+                                            disabled={true}
+                                            id="suspond-10"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-10">
+                                            إيقاف تغيير الحساب إلى بائع
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="sus-options">
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            name='susponds'
+                                            onChange={formik.handleChange}
+                                            value="11"
+                                            id="suspond-11"
+                                        />
+                                        <label className="form-check-label" htmlFor="suspond-11">
+                                            إيقاف تسجيل الدخول
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <hr />
                             <button className='btn butt-primary butt-sm mx-1' type='submit' >تعليق الحساب</button>
