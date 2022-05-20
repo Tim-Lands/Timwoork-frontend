@@ -8,16 +8,17 @@ import Categories from "@/components/Categories";
 import router from "next/router";
 import Head from "next/head";
 
+
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR(
-    "api/filter?paginate=4&popular"
+    "api/filter?paginate=9&popular"
   );
   const { data: latestProducts, latestError }: any = useSWR(
-    "api/filter?paginate=4&sort[0]=created_at,desc"
+    "api/filter?paginate=9&sort[0]=created_at,desc"
   );
   const { data: products, error }: any = useSWR(
-    "api/filter?paginate=4&sort=count_buying,desc"
-  );
+    "api/filter?paginate=9&sort=count_buying,desc"
+  )
   const { data: categories }: any = useSWR(`api/get_categories`);
   const menu = (
     <Menu>
@@ -42,7 +43,7 @@ function Home() {
         </a>
       </Menu.Item>
     </Menu>
-  );
+  )
   return (
     <>
       <Head>
@@ -77,6 +78,50 @@ function Home() {
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
       <Hero />
+      {/* <Swiper
+        slidesPerView={1}
+        spaceBetween={0}
+        pagination={{
+          type: "progressbar",
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        breakpoints={{
+          "@0.00": {
+            slidesPerView: 1,
+            spaceBetween: 0,
+          },
+          "@0.75": {
+            slidesPerView: 2,
+            spaceBetween: 2,
+          },
+          "@1.00": {
+            slidesPerView: 3,
+            spaceBetween: 3,
+          },
+          "@1.50": {
+            slidesPerView: 4,
+            spaceBetween: 4,
+          },
+        }}
+        className="mySwiper"
+      >
+        {productsCarousel && productsCarousel.data.data.map((e: any) => (
+          <SwiperSlide key={e.id}>
+            <PostInner 
+              title={e.title}
+              author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+              rate={e.ratings_avg_rating}
+              username={e.profile_seller && e.profile_seller.profile.user.username}
+              price={e.price}
+              slug={e.slug}
+              thumbnail={e.full_path_thumbnail}
+              buyers={e.count_buying}
+              avatar='/avatar2.jpg'
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper> */}
       <Categories
         onClickCategory={(id) => router.push(`/products?categoryID=${id}`)}
         categories={categories}

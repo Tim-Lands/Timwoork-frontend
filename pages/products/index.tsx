@@ -74,7 +74,6 @@ function Category() {
     const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({})
     const [isSubCategoryFetched, setIsSubCategoryFetched]: any = useState(false)
     const [activeKeys, setActiveKeys]: any = useState([])
-    const [selectedSubcategoryId, setSelectedSubcategoryId]: any = useState('')
     const [filterBased, setFilterBased]: any = useState('')
     const products_type = useRef({
         'most_recent': 'الخدمات الأحدث',
@@ -94,7 +93,6 @@ function Category() {
 
             }
             if (subcategoryID) {
-                setSelectedSubcategoryId(subcategoryID)
                 formik.setFieldError('subcategoryID', subcategoryID)
             }
             if (type) {
