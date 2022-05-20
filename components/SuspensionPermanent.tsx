@@ -265,7 +265,8 @@ function SuspensionPermanent({ setIsShowSuspensionPermanent, id, refreshData, on
 SuspensionPermanent.propTypes = {
     id: PropTypes.any,
     setIsShowSuspensionPermanent: PropTypes.func,
-    refreshData: PropTypes.func
+    refreshData: PropTypes.func,
+    onSuspend:PropTypes.func
 }
 
 export default SuspensionPermanent

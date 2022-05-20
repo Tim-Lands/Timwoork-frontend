@@ -7,7 +7,7 @@ import API from "../config";
 import Cookies from "js-cookie";
 import { Alert } from './Alert/Alert';
 
-function SuspensionTimer({ setIsShowSuspensionTimer, id, refreshData }: any) {
+function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
 
     const [validationsErrors, setValidationsErrors]: any = useState({});
     const [validationsGeneral, setValidationsGeneral]: any = useState({});
@@ -25,36 +25,8 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, refreshData }: any) {
         isInitialValid: true,
         enableReinitialize: true,
         onSubmit: async (values) => {
-            try {
-                setValidationsErrors({});
-                const res = await API.post(
-                    `api/hereapiURL/${id}`,
-                    values,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                // Authentication was successful.
-                if (res.status === 200) {
-                    message.success("لقد تم تعليق الحساب بنجاح");
-                    setIsShowSuspensionTimer(false)
-                    refreshData()
-                }
-            } catch (error: any) {
-                if (
-                    error.response &&
-                    error.response.data &&
-                    error.response.data.errors
-                ) {
-                    setValidationsErrors(error.response.data.errors);
-                }
-
-                if (error.response && error.response.data) {
-                    setValidationsGeneral(error.response.data);
-                }
-            }
+            onSuspend({comment:values.cause,expired_at:values.shutdownTime})
+            setIsShowSuspensionTimer(false)
         },
     });
     return (
@@ -294,7 +266,8 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, refreshData }: any) {
 SuspensionTimer.propTypes = {
     id: PropTypes.any,
     setIsShowSuspensionTimer: PropTypes.func,
-    refreshData: PropTypes.func
+    refreshData: PropTypes.func,
+    onSuspend:PropTypes.func
 }
 
 export default SuspensionTimer

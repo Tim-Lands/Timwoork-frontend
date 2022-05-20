@@ -7,22 +7,82 @@ import Cookies from 'js-cookie'
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Image from "next/image";
-import { Space, Table } from 'antd';
+import { notification, Space, Table } from 'antd';
 import SuspensionInfo from "@/components/SuspensionInfo";
+import Pagination from "react-js-pagination";
 
 function suspondedspermanent() {
-    const [postsList, setPostsList] = useState([])
+    const [postsList, setPostsList] = useState({ data: [], per_page: 10, total: 0 })
     const [isError, setIsError] = useState(false)
     const [isShowSuspensionInfo, setIsShowSuspensionInfo] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [paginationSize, setPaginationSize] = useState(8);
+    const [selectedUser, setSelectedUser]: any = useState(null)
+    const [pageNumber, setPageNumber]: any = useState(1)
+    const [username, setUsername] = useState('')
+    const [sentinel, setSentinel] = useState({ mount: true })
 
     const token = Cookies.get('token_dash')
+
+    useEffect(() => {
+        refreshData()
+    }, [pageNumber, sentinel])
+
+    useEffect(() => {
+        if (window.innerWidth < 550) {
+            setPaginationSize(2);
+        }
+        if (window.innerWidth > 550) {
+            setPaginationSize(8);
+        }
+        window.addEventListener("resize", () => {
+            if (window.innerWidth < 550) {
+                setPaginationSize(2);
+            }
+            if (window.innerWidth > 550) {
+                setPaginationSize(8);
+            }
+        });
+        return () => {
+            window.removeEventListener("resize", () => {
+                if (window.innerWidth < 550) {
+                    setPaginationSize(2);
+                }
+                if (window.innerWidth > 550) {
+                    setPaginationSize(8);
+                }
+            });
+        };
+    }, [])
+
+    const unSuspend = async (id) => {
+        try {
+            const res = await API.post(`dashboard/users/${id}/unban`, {
+
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (res.status === 200) {
+                notification.success({
+                    message: 'تم فك الحظر عن المستخدم بنجاح'
+                })
+                setPostsList(posts => ({ ...posts, data: posts.data.filter(post => post.id != id) }))
+
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     const columns: any = [
         {
             title: 'الاسم الكامل',
             dataIndex: ["profile"],
             render: (profile: any) => (
-                <Link href={`/u/${profile.id}`}>
+                <Link key={profile.id} href={`/u/${profile.id}`}>
                     <a className="flex-center">
                         <Image src={`${profile.avatar_path}`} width={20} height={20} />
                         <span className="me-1">{(!profile.full_name || profile.full_name == '') ? 'بدون اسم' : profile.full_name}</span>
@@ -31,7 +91,7 @@ function suspondedspermanent() {
             ),
 
             sorter: {
-                compare: (a, b) => a.profile.full_name - b.profile.full_name,
+                compare: (a, b) =>a.profile.full_name? a.profile.full_name.localeCompare( b.profile.full_name):null,
                 multiple: 3,
             },
             ellipsis: true,
@@ -42,7 +102,7 @@ function suspondedspermanent() {
             dataIndex: "email",
             key: 'email',
             sorter: {
-                compare: (a, b) => a.email - b.email,
+                compare: (a, b) => a.email.localeCompare(b.email),
                 multiple: 2,
             },
             onFilter: (value, record) => record.name.includes(value),
@@ -53,9 +113,9 @@ function suspondedspermanent() {
             //className: 'column-money',
             dataIndex: "created_at",
             key: 'created_at',
-            render: date => <LastSeen date={date} />,
+            render: date => <LastSeen key={date} date={date} />,
             sorter: {
-                compare: (a, b) => a.created_at - b.created_at,
+                compare: (a, b) => a.created_at.localeCompare(b.created_at),
                 multiple: 1,
             },
             ellipsis: true,
@@ -68,6 +128,7 @@ function suspondedspermanent() {
                     <Space>
                         <button
                             title={item.id}
+                            onClick={() => unSuspend(item.id)}
                             className="btn butt-xs butt-light"
                             type="button"
                         >
@@ -75,7 +136,10 @@ function suspondedspermanent() {
                         </button>
                         <button
                             title={item.id}
-                            onClick={() => setIsShowSuspensionInfo(true)}
+                            onClick={() => {
+                                setSelectedUser(item)
+                                setIsShowSuspensionInfo(true)
+                            }}
                             className="btn butt-xs butt-green"
                             type="button"
                         >
@@ -89,8 +153,13 @@ function suspondedspermanent() {
 
     const refreshData = async () => {
         setIsLoading(true)
+        const params = {
+            page:pageNumber,
+            like:username.length>0?[`username,${username}`,`email,${username}`]:null
+        }
         try {
-            const res: any = await API.get('dashboard/users/get_users_banned', {
+            const res: any = await API.get('dashboard/users/get_users_banned?ban_permanent', {
+                params,
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res) {
@@ -105,9 +174,6 @@ function suspondedspermanent() {
         }
     }
 
-    useEffect(() => {
-        refreshData()
-    }, [])
     // Return statement.
     return (
         <>
@@ -115,12 +181,46 @@ function suspondedspermanent() {
                 <div className="timlands-panel-header d-flex align-items-center">
                     <h2 className="title"><span className="material-icons material-icons-outlined">people</span>الحسابات المعلقة دائما</h2>
                 </div>
-                {isShowSuspensionInfo && <SuspensionInfo id={4} setIsShowSuspensionInfo={setIsShowSuspensionInfo} />}
+                {isShowSuspensionInfo && <SuspensionInfo user={selectedUser} setIsShowSuspensionInfo={setIsShowSuspensionInfo} />}
+                
+                <div className="py-3">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="timlands-form">
+                                <input
+                                    id="input-sQuery"
+                                    name="sQuery"
+                                    placeholder="البحث في الجدول..."
+                                    className="timlands-inputs"
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    value={username}
+                                    onKeyDown={e => e.keyCode === 13 && setSentinel({ ...sentinel, mount: true })}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <Table
                     columns={columns}
-                    dataSource={postsList}
+                    dataSource={postsList.data}
+                    pagination={false}
                     bordered
                 />
+                <div>
+                    <hr />
+                    <Pagination
+                        activePage={pageNumber}
+                        itemsCountPerPage={postsList.per_page}
+                        totalItemsCount={postsList.total ? postsList.total : 0}
+                        onChange={() => setPageNumber(pageNO => pageNO + 1)}
+                        pageRangeDisplayed={paginationSize}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        className="productPagination"
+                        firstPageText={"الصفحة الأولى"}
+                        lastPageText={"الصفحة الأخيرة"}
+                    />
+                </div>
                 {isError &&
                     <Alert type="error">
                         <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>

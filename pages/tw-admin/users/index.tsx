@@ -10,36 +10,72 @@ import Image from "next/image";
 import { notification, Space, Table } from 'antd';
 import SuspensionTimer from "@/components/SuspensionTimer";
 import SuspensionPermanent from "@/components/SuspensionPermanent";
+import Pagination from "react-js-pagination";
 
 
 function index() {
-    const [postsList, setPostsList] = useState([])
+    const [postsList, setPostsList] = useState({ data: [], per_page: 10, total: 0 })
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [paginationSize, setPaginationSize] = useState(8);
     const [isShowSuspensionTimer, setIsShowSuspensionTimer] = useState(false)
     const [isShowSuspensionPermanent, setIsShowSuspensionPermanent] = useState(false)
-    const [selectedUserID, setSelectedUserID] :any = useState(null)
-    const [sQuery, setsQuery] = useState('')
+    const [selectedUserID, setSelectedUserID]: any = useState(null)
+    const [pageNumber, setPageNumber]: any = useState(1)
+    const [username, setUsername] = useState('')
+    const [sentinel, setSentinel] = useState({mount:true})
 
     const token = Cookies.get('token_dash')
 
-    const suspendUser = async(body)=>{
-        try{
-        const res =  await API.post(`dashboard/users/${selectedUserID}/ban`,body,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        if (res.status === 200)
-            notification.success({
-                message:'تم حظر المُستخدم بنجاح'
-            })
+    useEffect(() => {
+        refreshData()
+    }, [pageNumber, sentinel])
+
+    useEffect(() => {
+        if (window.innerWidth < 550) {
+            setPaginationSize(2);
         }
-        catch(err){
+        if (window.innerWidth > 550) {
+            setPaginationSize(8);
+        }
+        window.addEventListener("resize", () => {
+            if (window.innerWidth < 550) {
+                setPaginationSize(2);
+            }
+            if (window.innerWidth > 550) {
+                setPaginationSize(8);
+            }
+        });
+        return () => {
+            window.removeEventListener("resize", () => {
+                if (window.innerWidth < 550) {
+                    setPaginationSize(2);
+                }
+                if (window.innerWidth > 550) {
+                    setPaginationSize(8);
+                }
+            });
+        };
+    }, [])
+
+    const suspendUser = async (body) => {
+        try {
+            const res = await API.post(`dashboard/users/${selectedUserID}/ban`, body, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (res.status === 200)
+                notification.success({
+                    message: 'تم حظر المُستخدم بنجاح'
+                })
+                setPostsList(posts=>({...posts,data:posts.data.filter(post=>post.id!=selectedUserID)}))
+        }
+        catch (err) {
             console.log(err)
         }
     }
-    
+
     const columns: any = [
         {
             title: 'الاسم الكامل',
@@ -54,7 +90,7 @@ function index() {
             ),
 
             sorter: {
-                compare: (a, b) => a.profile.full_name - b.profile.full_name,
+                compare: (a, b) =>a.profile.full_name? a.profile.full_name.localeCompare( b.profile.full_name):null,
                 multiple: 3,
             },
             ellipsis: true,
@@ -65,7 +101,7 @@ function index() {
             dataIndex: "email",
             key: 'email',
             sorter: {
-                compare: (a, b) => a.email - b.email,
+                compare: (a, b) => a.email.localeCompare(b.email),
                 multiple: 2,
             },
             onFilter: (value, record) => record.name.includes(value),
@@ -78,7 +114,7 @@ function index() {
             key: 'created_at',
             render: date => <LastSeen key={date} date={date} />,
             sorter: {
-                compare: (a, b) => a.created_at - b.created_at,
+                compare: (a, b) => a.created_at.localeCompare(b.created_at),
                 multiple: 1,
             },
             ellipsis: true,
@@ -91,20 +127,21 @@ function index() {
                     <Space key={item.id}>
                         <button
                             className="btn butt-xs butt-dark"
-                            onClick={() =>{
+                            onClick={() => {
                                 setSelectedUserID(item.id)
-                                setIsShowSuspensionTimer(true)}}
+                                setIsShowSuspensionTimer(true)
+                            }}
                             type="button"
                         >تعليق مؤقت
                         </button>
                         <button
                             title={item.id}
                             className="btn butt-xs butt-red"
-                            onClick={() =>{
-                                setSelectedUserID(item.id) 
+                            onClick={() => {
+                                setSelectedUserID(item.id)
                                 setIsShowSuspensionPermanent(true)
-                                
-                                }}
+
+                            }}
                             type="button"
 
                         >تعليق دائم </button>
@@ -114,15 +151,21 @@ function index() {
         },
     ];
 
-    const data = postsList && postsList;
     const refreshData = async () => {
         setIsLoading(true)
+        const params = {
+            page: pageNumber,
+            like:username.length>0?[`username,${username}`,`email,${username}`]:null
+        }
+        console.log(params)
         try {
             const res: any = await API.get('dashboard/users', {
+                params,
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (res) {
                 setIsLoading(false)
+                console.log(res)
                 setPostsList(res.data.data)
                 setIsError(false)
             }
@@ -132,9 +175,6 @@ function index() {
         }
     }
 
-    useEffect(() => {
-        refreshData()
-    }, [])
     // Return statement.
     return (
         <>
@@ -154,8 +194,9 @@ function index() {
                                     name="sQuery"
                                     placeholder="البحث في الجدول..."
                                     className="timlands-inputs"
-                                    onChange={(e) => setsQuery(e.target.value)}
-                                    value={sQuery}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    value={username}
+                                    onKeyDown={e => e.keyCode === 13 && setSentinel({ ...sentinel, mount: true })}
                                 />
                             </div>
                         </div>
@@ -164,9 +205,25 @@ function index() {
 
                 <Table
                     columns={columns}
-                    dataSource={data}
+                    dataSource={postsList?.data}
+                    pagination={false}
                     bordered
                 />
+                <div>
+                    <hr />
+                    <Pagination
+                        activePage={pageNumber}
+                        itemsCountPerPage={postsList.per_page}
+                        totalItemsCount={postsList.total ? postsList.total : 0}
+                        onChange={() => setPageNumber(pageNO => pageNO + 1)}
+                        pageRangeDisplayed={paginationSize}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        className="productPagination"
+                        firstPageText={"الصفحة الأولى"}
+                        lastPageText={"الصفحة الأخيرة"}
+                    />
+                </div>
                 {isError &&
                     <Alert type="error">
                         <p className="text"><span className="material-icons">warning_amber</span> حدث خطأ غير متوقع</p>
