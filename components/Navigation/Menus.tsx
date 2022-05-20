@@ -50,7 +50,6 @@ function Menus({ darkMode }) {
         paddingInlineStart: 15,
       }}
     >
-      
       <li>
         <motion.button
           ref={button}
@@ -77,7 +76,10 @@ function Menus({ darkMode }) {
             alignContent: "center",
           }}
         >
-          <i style={{ fontSize: 18 }} className="material-icons material-icons-outlined">
+          <i
+            style={{ fontSize: 18 }}
+            className="material-icons material-icons-outlined"
+          >
             chrome_reader_mode
           </i>
           <span style={{ marginInline: 4 }}> التصنيفات </span>
@@ -106,7 +108,7 @@ function Menus({ darkMode }) {
             }}
             style={{
               fontWeight: 300,
-              color: !darkMode ? "#666" : "#f1f1f1",
+              // color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
               paddingBlock: 0,
@@ -124,7 +126,7 @@ function Menus({ darkMode }) {
         </Link>
       </li>
       <li>
-        <Badge count={'قريبا'} offset={[10, 5]} color="#475C80">
+        <Badge count={"قريبا"} offset={[10, 5]} color="#475C80">
           <motion.a
             style={{
               fontWeight: 200,
@@ -139,13 +141,12 @@ function Menus({ darkMode }) {
             }}
           >
             <BiTrophy style={{ marginLeft: 3, fontSize: 19 }} />
-
             المسابقات
           </motion.a>
         </Badge>
       </li>
       <li>
-        <Badge count={'قريبا'} offset={[10, 5]} color="#475C80">
+        <Badge count={"قريبا"} offset={[10, 5]} color="#475C80">
           <motion.a
             style={{
               fontWeight: 200,
@@ -166,7 +167,7 @@ function Menus({ darkMode }) {
       </li>
 
       <li>
-        <Badge count={'قريبا'} offset={[10, 5]} color="#475C80">
+        <Badge count={"قريبا"} offset={[10, 5]} color="#475C80">
           <motion.a
             style={{
               fontWeight: 200,
@@ -186,7 +187,7 @@ function Menus({ darkMode }) {
         </Badge>
       </li>
       <li>
-        <Badge count={'قريبا'} offset={[10, 5]} color="#475C80">
+        <Badge count={"قريبا"} offset={[10, 5]} color="#475C80">
           <motion.a
             style={{
               fontWeight: 200,

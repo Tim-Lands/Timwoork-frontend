@@ -6347,3 +6347,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   padding: 5px 0;
   padding-right: 30px;
 }
+.active {
+  color: #d2ac02 !important;
+}
+.selected {
+  background-color: rgb(71, 92, 128, 0.4) !important;
+}
