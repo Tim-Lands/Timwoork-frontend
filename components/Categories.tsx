@@ -90,7 +90,7 @@ function Categories({ categories, onClickCategory }) {
                       <span
                         className={"material-icons material-icons-outlined"}
                       >
-                        {e.icon}
+                        <img src={e.image} width="50"/>
                       </span>
                     </div>
                     <div className="main-category-item-title">

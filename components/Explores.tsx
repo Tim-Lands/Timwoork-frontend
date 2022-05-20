@@ -70,7 +70,7 @@ function Explores() {
                             </motion.li>
                         ))}
                         <li className="main-item-category">
-                            <a href='/category'>
+                            <a href='/products'>
                                 مشاهدة كل التصنيفات...
                             </a>
                         </li>
@@ -89,7 +89,7 @@ function Explores() {
                                 <div className="row">
                                     {postsList && postsList.sub_categories && postsList.sub_categories.slice(0, 12).map((e: any) => (
                                         <div className="col-sm-6" key={e.id}>
-                                            <a href={"/category/" + e.id} className="sub-cat-link">
+                                            <a href={`/products?categoryID=${e.parent_id}&subcategoryID=${e.id}`} className="sub-cat-link">
                                                 <p className="text">{e.name_ar}</p>
                                             </a>
                                         </div>
