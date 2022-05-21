@@ -14,7 +14,10 @@
   font-weight: 100;
   font-style: normal;
 }
-
+@font-face {
+  font-family: "cairo";
+  src: url("../font/cairo.ttf") format("truetype");
+}
 @font-face {
   font-family: "jf";
   src: url("/fonts/JF-Flat-regular.ttf") format("truetype");
@@ -122,7 +125,7 @@ a:hover {
 
 body {
   direction: rtl;
-  font-family: "jf" !important;
+  font-family: "cairo" !important;
   background-color: #f7f7f7;
   padding-top: 21px;
 }
@@ -630,7 +633,7 @@ h3 {
         justify-content: center;
         color: #999 !important;
         box-shadow: none !important;
-        font-family: "jf" !important;
+        font-family: "cairo" !important;
         opacity: 1 !important;
 
         div {
@@ -6365,14 +6368,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   font-size: 14px;
   margin: 6px 0;
   line-height: 28px;
-  
 }
 .sus-list-inner {
   .sus-list {
     li {
       font-size: 13px;
       line-height: 29px;
-      
     }
   }
 }
