@@ -107,9 +107,7 @@ function CommentPost(props: any): ReactElement {
     }
     return (
         <li className="comment-item">
-            {!props.reply && <button className='btn butt-light butt-xs flex-center reply-button' onClick={() => setIsShowCommentForm(!isShowCommentForm)}>
-                <span className="material-icons-outlined outline-star" style={{ fontSize: 16 }}>reply</span> الرد
-            </button>}
+            
             {isShowCommentForm &&
                 <div className="single-comments-overlay">
                     <motion.div initial={{ scale: 0, opacity: 0, y: 60 }} exit={{ scale: 0, opacity: 0, y: 60 }} animate={{ scale: 1, opacity: 1, y: 0 }} className="single-comments-modal">
