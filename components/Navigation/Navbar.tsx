@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Badge, Tooltip, notification, Popover } from "antd";
+import { Menu, Dropdown, Badge, Tooltip, notification } from "antd";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { useOutSide } from "../useOutSide";
@@ -277,7 +277,9 @@ function Navbar(): ReactElement {
         Cookies.remove("token");
         router.reload();
       }
-    } catch (error) {}
+    } catch (error) {
+      () => {};
+    }
   };
   const [isLogoutModal, setIsLogoutModal]: any = useState(false);
   const AccountList = (

@@ -59,7 +59,9 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
               );
               refresh();
             }
-          } catch (error) {}
+          } catch (error) {
+            () => {};
+          }
         }
       });
   };

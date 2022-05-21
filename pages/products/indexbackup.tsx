@@ -41,7 +41,9 @@ function Category() {
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
-    } catch (error) {}
+    } catch (error) {
+      () => {};
+    }
   };
   /********************** price Slider **********************/
   function valuetext(value: number) {
@@ -177,7 +179,7 @@ function Category() {
         initialValues={{
           categoryID: [],
         }}
-        onSubmit={async (values) => {}}
+        onSubmit={async () => {}}
       >
         <Form>
           <div className="row">

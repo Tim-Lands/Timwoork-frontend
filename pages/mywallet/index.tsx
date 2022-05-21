@@ -69,7 +69,7 @@ function index() {
     },
   ];
   const data = userInfo && userInfo.user_details.profile.wallet.activities;
-  function onChange(pagination, filters, sorter, extra) {}
+  function onChange() {}
   return (
     <div className="py-3">
       {!userInfo && <Loading />}

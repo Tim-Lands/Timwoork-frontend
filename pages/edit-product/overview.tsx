@@ -126,13 +126,14 @@ function Overview({ query }) {
   if (!query) return message.error("حدث خطأ");
   async function getProductId() {
     try {
-      const res: any = await API.get(`api/my_products/product/${id}`, {
+      // const res: any =
+      await API.get(`api/my_products/product/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (res.status === 200) {
-      }
+      // if (res.status === 200) {
+      // }
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/myproducts");

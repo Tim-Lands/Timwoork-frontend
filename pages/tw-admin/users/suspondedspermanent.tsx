@@ -79,7 +79,9 @@ function suspondedspermanent() {
           data: posts.data.filter((post) => post.id != id),
         }));
       }
-    } catch (err) {}
+    } catch (err) {
+      () => {};
+    }
   };
 
   const columns: any = [

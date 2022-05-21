@@ -30,7 +30,9 @@ function BestSeller() {
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
-    } catch (error) {}
+    } catch (error) {
+      () => {};
+    }
   };
   useEffect(() => {
     if (window.innerWidth > 950) {
@@ -89,7 +91,7 @@ function BestSeller() {
         initialValues={{
           categoryID: [],
         }}
-        onSubmit={async (values) => {}}
+        onSubmit={async () => {}}
       >
         <Form>
           <div className="row">

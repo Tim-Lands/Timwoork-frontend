@@ -26,13 +26,14 @@ function Medias({ query, stars }) {
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
   async function getProductId() {
     try {
-      const res: any = await API.get(`api/my_products/product/${query.id}`, {
+      // const res: any =
+      await API.get(`api/my_products/product/${query.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (res.status === 200) {
-      }
+      // if (res.status === 200) {
+      // }
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");

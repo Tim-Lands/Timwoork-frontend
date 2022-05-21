@@ -20,7 +20,7 @@ const EmailForm = ({ setUser, setChat, visible }) => {
         { headers: { "Private-Key": REACT_APP_CE_PRIVATE_KEY } }
       )
       .then((r) => callback(r.data))
-      .catch((e) => {});
+      .catch(() => {});
   }
 
   function getOrCreateChat(callback) {
@@ -37,7 +37,7 @@ const EmailForm = ({ setUser, setChat, visible }) => {
         }
       )
       .then((r) => callback(r.data))
-      .catch((e) => {});
+      .catch(() => {});
   }
 
   function handleSubmit(event) {

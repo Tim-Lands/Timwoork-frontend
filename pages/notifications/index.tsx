@@ -23,18 +23,22 @@ function index() {
   const [paginationSize, setPaginationSize] = useState(8);
   const fetchData = async (pageNumber: number = 1) => {
     try {
-      const res = await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
+      // const res =
+      await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (res.status === 200) {
-      }
-    } catch (error) {}
+      // if (res.status === 200) {
+      // }
+    } catch (error) {
+      () => {};
+    }
   };
   async function markAllRead() {
     try {
-      const res = await API.post(
+      // const res =
+      await API.post(
         `api/notifications/markAllAsRead`,
         {},
         {
@@ -44,7 +48,9 @@ function index() {
         }
       );
       mutate("api/me");
-    } catch (error) {}
+    } catch (error) {
+      () => {};
+    }
 
     mutate("api/me");
   }

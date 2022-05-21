@@ -158,7 +158,9 @@ function suspondedstimer() {
           data: posts.data.filter((post) => post.id != id),
         }));
       }
-    } catch (err) {}
+    } catch (err) {
+      () => {};
+    }
   };
 
   const refreshData = async () => {

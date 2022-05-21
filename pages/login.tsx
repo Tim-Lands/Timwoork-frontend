@@ -78,7 +78,7 @@ const Login = (): ReactElement => {
     }
   };
 
-  const onLoginFailure = (res) => {};
+  const onLoginFailure = () => {};
 
   // The router object used for redirecting after login.
   const router = useRouter();

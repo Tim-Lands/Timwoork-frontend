@@ -36,11 +36,11 @@ export default function UploadPicture({ token, avatarPicture }) {
     fd.append("avatar", picture);
     fd.append("steps", 2);
     API.post("https://api.timwoork.com/api/profiles/step_two", fd, config)
-      .then((res) => {
+      .then(() => {
         message.success("لقد تم تحديث صورة البروفايل بنجاح");
         router.reload();
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   return (

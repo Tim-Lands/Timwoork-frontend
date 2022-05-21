@@ -48,7 +48,7 @@ function index(): ReactElement {
         return <span className="badge bg-success text-light">نشطة</span>;
     }
   };
-  function onChange(pagination, filters, sorter, extra) {}
+  function onChange() {}
   const columns: any = [
     {
       title: "العنوان",

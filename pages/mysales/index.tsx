@@ -108,7 +108,7 @@ function index() {
     },
   ];
   const data = buysList && buysList.data;
-  function onChange(pagination, filters, sorter, extra) {}
+  function onChange() {}
   return (
     <>
       <MetaTags

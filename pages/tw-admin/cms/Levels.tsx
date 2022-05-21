@@ -36,7 +36,9 @@ function Levels(): ReactElement {
         if (result.isConfirmed) {
           try {
             await API.post(`dashboard/levels/${id}/delete`);
-          } catch (error) {}
+          } catch (error) {
+            () => {};
+          }
           swalWithBootstrapButtons.fire(
             "تم الحذف!",
             "لقد تم حذف هذا العنصر بنجاح",

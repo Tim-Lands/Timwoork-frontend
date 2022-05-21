@@ -295,13 +295,14 @@ function Category() {
     enableReinitialize: true,
     onSubmit: async (values) => {
       try {
-        const res = await API.post(`api/filter?paginate=12`, values, {
+        // const res =
+        await API.post(`api/filter?paginate=12`, values, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (res.status === 200) {
-        }
+        // if (res.status === 200) {
+        // }
       } catch (error: any) {
         if (error.response && error.response.data) {
           setValidationsGeneral(error.response.data);

@@ -28,7 +28,7 @@ function UserStatus(): any {
 
   const echo = new Echo(options);
 
-  return echo.private("private-messages." + 1).listen(".chat", (data) => {});
+  return echo.private("private-messages." + 1).listen(".chat", () => {});
 }
 
 export default UserStatus;

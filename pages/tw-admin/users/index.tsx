@@ -81,7 +81,9 @@ function index() {
         ...posts,
         data: posts.data.filter((post) => post.id != selectedUserID),
       }));
-    } catch (err) {}
+    } catch (err) {
+      () => {};
+    }
   };
 
   const columns: any = [

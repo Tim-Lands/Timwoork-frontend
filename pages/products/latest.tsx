@@ -32,7 +32,9 @@ function Latest() {
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
-    } catch (error) {}
+    } catch (error) {
+      () => {};
+    }
   };
 
   useEffect(() => {
@@ -92,7 +94,7 @@ function Latest() {
         initialValues={{
           categoryID: [],
         }}
-        onSubmit={async (values) => {}}
+        onSubmit={async () => {}}
       >
         <Form>
           <div className="row">

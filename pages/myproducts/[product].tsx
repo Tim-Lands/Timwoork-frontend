@@ -119,7 +119,9 @@ function Single({ query, stars }) {
                 "success"
               );
             }
-          } catch (error) {}
+          } catch (error) {
+            () => {};
+          }
         }
       });
   };
