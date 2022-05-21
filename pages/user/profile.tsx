@@ -42,12 +42,9 @@ function Profile() {
       // Authentication was successful.
       if (res.status === 200) {
         setIsLoadingSeler(false);
-        console.log(res);
-        console.log(res.data);
         router.push("/user/editSeller");
       }
     } catch (error: any) {
-      console.log(error);
       message.error("حدث خطأ غير متوقع");
       setIsLoadingSeler(false);
     }
@@ -58,8 +55,8 @@ function Profile() {
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
-      detectHeight.current &&
-      detectHeight.current.scrollHeight > 230
+        detectHeight.current &&
+        detectHeight.current.scrollHeight > 230
     ),
       [detectHeight, detectHeight.current];
   }, [detectHeight]);
@@ -68,7 +65,6 @@ function Profile() {
       router.push("/login");
     }
   }, []);
-
 
   if (userInfo && userInfo.user_details.profile.steps < 1) {
     return (
@@ -87,9 +83,7 @@ function Profile() {
         </div>
       </div>
     );
-  }
-
-  else
+  } else
     return (
       <div className="py-3">
         {!userInfo && <Loading />}
@@ -122,7 +116,9 @@ function Profile() {
                   <div className="profile-content-avatar">
                     <Image
                       loader={myLoader}
-                      src={userInfo && userInfo.user_details.profile.avatar_path}
+                      src={
+                        userInfo && userInfo.user_details.profile.avatar_path
+                      }
                       quality={1}
                       width={120}
                       height={120}
@@ -172,7 +168,8 @@ function Profile() {
               <div className="row">
                 <Sidebar
                   withdrawable_amount={
-                    userInfo && userInfo.user_details.profile.withdrawable_amount
+                    userInfo &&
+                    userInfo.user_details.profile.withdrawable_amount
                   }
                   pending_amount={
                     userInfo && userInfo.user_details.profile.pending_amount
@@ -214,7 +211,9 @@ function Profile() {
                           >
                             <div
                               ref={detectHeight}
-                              className={"user-bro " + (isLess ? "is-less" : "")}
+                              className={
+                                "user-bro " + (isLess ? "is-less" : "")
+                              }
                               dangerouslySetInnerHTML={{
                                 __html:
                                   userInfo.user_details.profile.profile_seller
@@ -281,12 +280,12 @@ function Profile() {
                             <h3 className="text-label">الجنس</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile &&
-                                userInfo.user_details.profile.gender == null
+                              userInfo.user_details.profile.gender == null
                                 ? ""
                                 : userInfo.user_details.profile &&
-                                (userInfo.user_details.profile.gender == 0
-                                  ? "أنثى"
-                                  : "ذكر")}
+                                  (userInfo.user_details.profile.gender == 0
+                                    ? "أنثى"
+                                    : "ذكر")}
                             </p>
                           </div>
                         </div>
@@ -294,7 +293,8 @@ function Profile() {
                           <div className="content-text-item">
                             <h3 className="text-label">تاريخ الميلاد</h3>
                             <p className="text-value">
-                              {userInfo.user_details.profile.date_of_birth == null
+                              {userInfo.user_details.profile.date_of_birth ==
+                              null
                                 ? ""
                                 : userInfo.user_details.profile.date_of_birth}
                             </p>

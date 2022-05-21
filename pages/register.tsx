@@ -68,9 +68,7 @@ const Register = (): ReactElement => {
     return username;
   };
 
-  const onLoginFailure = (res) => {
-    console.log("Login Failed:", res);
-  };
+  const onLoginFailure = (res) => {};
   // Redirect to user home route if user is authenticated.
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")

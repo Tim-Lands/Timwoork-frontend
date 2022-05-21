@@ -48,7 +48,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             <i className="material-icons material-icons-outlined">
               chrome_reader_mode
             </i>{" "}
-            التصنيفات <i className="fa fa-angle-down"></i>
+            التصنيفات
           </a>
         </Link>
       </li>

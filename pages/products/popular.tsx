@@ -31,9 +31,7 @@ function Popular() {
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -93,9 +91,7 @@ function Popular() {
         initialValues={{
           categoryID: [],
         }}
-        onSubmit={async (values) => {
-          console.log(values);
-        }}
+        onSubmit={async (values) => {}}
       >
         <Form>
           <div className="row">

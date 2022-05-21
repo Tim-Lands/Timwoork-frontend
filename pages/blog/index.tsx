@@ -63,7 +63,6 @@ function Category(): JSX.Element {
         <div className="row">
           {getPosts &&
             getPosts.map((item: any) => {
-              console.log(item);
               return (
                 <div
                   className={innerWidth < 992 ? `col-md-6` : `col-md-4`}

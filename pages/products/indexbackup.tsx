@@ -41,9 +41,7 @@ function Category() {
       if (res.status === 200) {
         setGetProducts(res.data.data);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   /********************** price Slider **********************/
   function valuetext(value: number) {
@@ -81,7 +79,6 @@ function Category() {
     if (selectedTags == 0) {
       getCategoryFiltrPricing();
     } else {
-      console.log(selectedTags.length);
       setIsLoading(true);
       try {
         setTimeout(() => {
@@ -180,9 +177,7 @@ function Category() {
         initialValues={{
           categoryID: [],
         }}
-        onSubmit={async (values) => {
-          console.log(values);
-        }}
+        onSubmit={async (values) => {}}
       >
         <Form>
           <div className="row">

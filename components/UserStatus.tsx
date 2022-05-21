@@ -1,15 +1,14 @@
 //import Pusher from "pusher-js";
 import Echo from "laravel-echo";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 //import API from '../config'
-import useSWR from 'swr';
+import useSWR from "swr";
 
 function UserStatus(): any {
-
-  let token = Cookies.get('token')
-  if(!token &&typeof window !== "undefined")
-    token=localStorage.getItem('token');
-      const { data: broadcasting }: any = useSWR(`api/broadcasting/auth`)
+  let token = Cookies.get("token");
+  if (!token && typeof window !== "undefined")
+    token = localStorage.getItem("token");
+  const { data: broadcasting }: any = useSWR(`api/broadcasting/auth`);
 
   const options = {
     broadcaster: "pusher",
@@ -18,23 +17,18 @@ function UserStatus(): any {
     forceTLS: true,
     encrypted: false,
     //authEndpoint is your apiUrl + /broadcasting/auth
-    authEndpoint: broadcasting,   // As I'm using JWT tokens, I need to manually set up the headers.
+    authEndpoint: broadcasting, // As I'm using JWT tokens, I need to manually set up the headers.
     auth: {
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
+        Accept: "application/json",
       },
     },
   };
 
   const echo = new Echo(options);
 
-  return (
-    echo.private("private-messages." + 1).listen(".chat", data => {
-      console.log("rumman");
-      console.log(data);
-    }))
+  return echo.private("private-messages." + 1).listen(".chat", (data) => {});
 }
-
 
 export default UserStatus;

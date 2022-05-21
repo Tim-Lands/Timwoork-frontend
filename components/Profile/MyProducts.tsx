@@ -59,9 +59,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
               );
               refresh();
             }
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
         }
       });
   };
@@ -146,32 +144,32 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
   }
 
   const routeToCurrentStep = (product) => {
-    let page_name = 'overview'
+    let page_name = "overview";
     if (product.status == 1)
-      return router.push(`/edit-product/${page_name}?id=${product.id}`)
+      return router.push(`/edit-product/${page_name}?id=${product.id}`);
     else
       switch (product.current_step) {
         case 1:
-          page_name = 'overview'
+          page_name = "overview";
           break;
         case 2:
-          page_name = 'prices'
+          page_name = "prices";
           break;
         case 3:
-          page_name = 'description'
+          page_name = "description";
           break;
         case 4:
-          page_name = 'medias'
+          page_name = "medias";
           break;
         case 5:
-          page_name = 'complete'
+          page_name = "complete";
           break;
         default:
-          page_name = 'overview'
+          page_name = "overview";
           break;
       }
-    router.push(`/edit-product/${page_name}?id=${product.id}`)
-  }
+    router.push(`/edit-product/${page_name}?id=${product.id}`);
+  };
 
   return (
     <div className="profile-content-body">

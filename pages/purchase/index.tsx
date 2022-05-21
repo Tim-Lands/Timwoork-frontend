@@ -99,10 +99,10 @@ function Bill() {
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [getLink, setGetLink] = useState("");
   const [paymentsGates, setPaymentsGates]: any = useState({
-    'Stripe': false,
-    'Wallet': false,
-    "Paypal": false
-  })
+    Stripe: false,
+    Wallet: false,
+    Paypal: false,
+  });
 
   const { data: cartList, error }: any = useSWR("api/cart");
   const { data: userInfo }: any = useSWR("api/me");
@@ -144,14 +144,15 @@ function Bill() {
     }
     getPaypal();
   }, []);
-  useEffect(()=>{
-    if(cartList){
+  useEffect(() => {
+    if (cartList) {
       const new_gates = {};
-      cartList.data.cart_payments.forEach(gate=>new_gates[gate.name_en]=true)
-      setPaymentsGates(new_gates)
+      cartList.data.cart_payments.forEach(
+        (gate) => (new_gates[gate.name_en] = true)
+      );
+      setPaymentsGates(new_gates);
     }
-  },[cartList])
-  console.log(paymentsGates)
+  }, [cartList]);
   async function chargeWallet() {
     setIsWalletLoading(true);
     try {
@@ -272,7 +273,7 @@ function Bill() {
                         value="2"
                         name="billPayment"
                         id="billPayment-strap"
-                        disabled={!paymentsGates['Stripe']}
+                        disabled={!paymentsGates["Stripe"]}
                         checked={billPayment == 2}
                         onChange={onBillPaymentChange}
                       />
@@ -300,8 +301,7 @@ function Bill() {
                       <input
                         className="form-check-input"
                         type="radio"
-                        disabled={!paymentsGates['Paypal']}
-
+                        disabled={!paymentsGates["Paypal"]}
                         value="1"
                         name="billPayment"
                         id="billPayment-paypal"
@@ -343,7 +343,7 @@ function Bill() {
                       ) : null}
                     </div>
                     {Number(mybalance) <
-                      Number(cartList && cartList.data.price_with_tax) ? (
+                    Number(cartList && cartList.data.price_with_tax) ? (
                       <>
                         <Alert type="primary">
                           لا يمكنك الشراء بواسطة المحفظة . المبلغ الإجمالي اكبر
@@ -360,8 +360,7 @@ function Bill() {
                             name="billPayment"
                             id="billPayment-wallet"
                             checked={billPayment == 3}
-                            disabled={!paymentsGates['Wallet']}
-
+                            disabled={!paymentsGates["Wallet"]}
                             onChange={onBillPaymentChange}
                           />
                           <label

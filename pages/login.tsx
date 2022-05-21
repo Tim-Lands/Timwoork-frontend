@@ -54,7 +54,6 @@ const Login = (): ReactElement => {
       if (response.status === 200) {
         Cookies.set("token", response.data.data.token, { expires: 365 });
         if (!Cookies.get("token") && typeof window !== "undefined") {
-          console.log("local storage working");
           localStorage.setItem("token", response.data.data.token);
         }
         // Cookies.set('username', );
@@ -79,9 +78,7 @@ const Login = (): ReactElement => {
     }
   };
 
-  const onLoginFailure = (res) => {
-    console.log("Login Failed:", res);
-  };
+  const onLoginFailure = (res) => {};
 
   // The router object used for redirecting after login.
   const router = useRouter();

@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Unauthorized from "@/components/Unauthorized";
 import API from "../../config";
-import Link from 'next/link'
+import Link from "next/link";
 
 function Complete({ query }) {
   let token = Cookies.get("token");
@@ -31,7 +31,6 @@ function Complete({ query }) {
         },
       });
       if (res.status === 200) {
-        console.log(true);
       }
     } catch (error) {
       if (error.response && error.response.status === 422) {
@@ -92,10 +91,14 @@ function Complete({ query }) {
                 <div className="timlands-steps">
                   <div className="timlands-step-item">
                     <h3 className="text">
-                      <Link href={`/edit-product/overview?id=${getProduct?.data.id}`}>
+                      <Link
+                        href={`/edit-product/overview?id=${getProduct?.data.id}`}
+                      >
                         <a>
                           <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                            <span className="material-icons material-icons-outlined">
+                              collections_bookmark
+                            </span>
                           </span>
                           معلومات عامة
                         </a>
@@ -104,10 +107,14 @@ function Complete({ query }) {
                   </div>
                   <div className="timlands-step-item">
                     <h3 className="text">
-                      <Link href={`/edit-product/prices?id=${getProduct?.data.id}`}>
+                      <Link
+                        href={`/edit-product/prices?id=${getProduct?.data.id}`}
+                      >
                         <a>
                           <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">payments</span>
+                            <span className="material-icons material-icons-outlined">
+                              payments
+                            </span>
                           </span>
                           السعر والتطويرات
                         </a>
@@ -116,10 +123,14 @@ function Complete({ query }) {
                   </div>
                   <div className="timlands-step-item">
                     <h3 className="text">
-                      <Link href={`/edit-product/description?id=${getProduct?.data.id}`}>
+                      <Link
+                        href={`/edit-product/description?id=${getProduct?.data.id}`}
+                      >
                         <a>
                           <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">description</span>
+                            <span className="material-icons material-icons-outlined">
+                              description
+                            </span>
                           </span>
                           الوصف وتعليمات المشتري
                         </a>
@@ -128,10 +139,14 @@ function Complete({ query }) {
                   </div>
                   <div className="timlands-step-item ">
                     <h3 className="text">
-                      <Link href={`/edit-product/medias?id=${getProduct?.data.id}`}>
+                      <Link
+                        href={`/edit-product/medias?id=${getProduct?.data.id}`}
+                      >
                         <a>
                           <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">mms</span>
+                            <span className="material-icons material-icons-outlined">
+                              mms
+                            </span>
                           </span>
                           مكتبة الصور والملفات
                         </a>
@@ -140,10 +155,14 @@ function Complete({ query }) {
                   </div>
                   <div className="timlands-step-item active" ref={stepsView}>
                     <h3 className="text">
-                      <Link href={`/edit-product/complete?id=${getProduct?.data.id}`}>
+                      <Link
+                        href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                      >
                         <a>
                           <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">publish</span>
+                            <span className="material-icons material-icons-outlined">
+                              publish
+                            </span>
                           </span>
                           نشر الخدمة
                         </a>

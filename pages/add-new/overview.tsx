@@ -22,7 +22,6 @@ const MySelect = (props: any) => {
       if (res.status === 200) {
         setIsLoadingTags(false);
         setDataTags(res.data.data.data);
-        console.log(res.data.data.data);
       }
     } catch (error) {
       setIsLoadingTags(false);
@@ -139,7 +138,6 @@ function Overview({ query }) {
         },
       });
       if (res.status === 200) {
-        console.log(false);
       }
     } catch (error) {
       if (error.response && error.response.status === 422) {

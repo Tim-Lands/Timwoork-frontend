@@ -239,9 +239,10 @@ function Single({ query, stars, errorFetch }) {
           const key = `open${Date.now()}`;
           const btn = (
             <button
-              onClick={() =>{ 
-                notification.close(key)
-                router.push("/cart")}}
+              onClick={() => {
+                notification.close(key);
+                router.push("/cart");
+              }}
               className="btn butt-sm butt-primary"
             >
               الذهاب إلى السلة
@@ -381,7 +382,6 @@ function Single({ query, stars, errorFetch }) {
           ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
         />
       )}
-      {console.log(ProductData && ProductData.data)}
       {ProductData && (
         <div className="timwoork-single">
           <Modal

@@ -32,7 +32,6 @@ function Medias({ query, stars }) {
         },
       });
       if (res.status === 200) {
-        console.log(true);
       }
     } catch (error) {
       if (error.response && error.response.status === 422) {
@@ -122,8 +121,6 @@ function Medias({ query, stars }) {
     seFeaturedSuccess(false);
     const imageFeature = new FormData();
     featuredImages.map((e: any) => imageFeature.append("thumbnail", e.file));
-    console.log(e);
-    console.log(e.file);
     //galleries.append('images[]', images)
     try {
       const res: any = await API.post(

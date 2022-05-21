@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Menu, Dropdown, Badge, Tooltip, notification } from "antd";
+import { Menu, Dropdown, Badge, Tooltip, notification, Popover } from "antd";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { useOutSide } from "../useOutSide";
@@ -33,10 +33,16 @@ function Navbar(): ReactElement {
       setVisible(false);
     }, 200);
   };
+  const hideLangList = () => {
+    setTimeout(() => {
+      setIsShowenLangs(false);
+    }, 200);
+  };
   let token = Cookies.get("token");
   const userList = useRef();
-
+  const langList = useRef();
   useOutSide(userList, hideList);
+  useOutSide(langList, hideLangList);
 
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -68,12 +74,19 @@ function Navbar(): ReactElement {
   }`;
   const channelNoty = pusher.subscribe(channelNotification);
   const langsList = (
-    <div className="menu-langs bg-white" style={{ top: 65 }}>
-      <button className="langs-item" type="button">
+    <div
+      className="menu-langs bg-white"
+      style={{ top: 15, left: -5, width: "fit-content" }}
+    >
+      <button className="langs-item" type="button" style={{ width: "100%" }}>
         <ImageLogo width={25} height={16} src="/sa.webp" />
         <span>{size > 1050 ? "العربية" : "Ar"} </span>
       </button>
-      <button className="langs-item" type="button">
+      <button
+        className="langs-item"
+        type="button"
+        style={{ width: "max-content" }}
+      >
         <ImageLogo width={25} height={16} src="/uk.webp" />{" "}
         <span>{size > 1050 ? "الأنجليزية" : "En"}</span>
       </button>
@@ -82,6 +95,7 @@ function Navbar(): ReactElement {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setVisible(false);
+      setIsShowenLangs(false);
     });
     window.addEventListener("resize", () => {
       setSize(window.innerWidth);
@@ -181,7 +195,6 @@ function Navbar(): ReactElement {
       });
 
       channelNoty.bind("notification.sent", (data) => {
-        console.log(data);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
         notification.open({
@@ -264,9 +277,7 @@ function Navbar(): ReactElement {
         Cookies.remove("token");
         router.reload();
       }
-    } catch (error) {
-      //console.log(error);
-    }
+    } catch (error) {}
   };
   const [isLogoutModal, setIsLogoutModal]: any = useState(false);
   const AccountList = (
@@ -698,27 +709,35 @@ function Navbar(): ReactElement {
                   backgroundColor: "#f2f2f2",
                 }}
               ></li>
-              <li className="register-nav-item select-langs-inner">
-                <button
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "#555",
-                    borderWidth: 0,
-                    outline: "none",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                  className="select-langs"
+              <Dropdown
+                overlay={langsList}
+                placement="bottomLeft"
+                visible={isShowenLangs}
+              >
+                <li
+                  ref={langList}
+                  className="register-nav-item select-langs-inner"
                   onClick={() => setIsShowenLangs(!isShowenLangs)}
                 >
-                  <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} />{" "}
-                  {size > 400 ? (size > 1050 ? "العربية" : "Ar") : ""}
-                  <i className="material-icons material-icons-outlined">
-                    expand_more
-                  </i>
-                </button>
-                {isShowenLangs && langsList}
-              </li>
+                  <button
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "#555",
+                      borderWidth: 0,
+                      outline: "none",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                    className="select-langs"
+                  >
+                    <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} />{" "}
+                    {size > 400 ? (size > 1050 ? "العربية" : "Ar") : ""}
+                    <i className="material-icons material-icons-outlined">
+                      expand_more
+                    </i>
+                  </button>
+                </li>
+              </Dropdown>
             </ul>
           </div>
         </nav>

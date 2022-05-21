@@ -8,7 +8,6 @@ import Categories from "@/components/Categories";
 import router from "next/router";
 import Head from "next/head";
 
-
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=9&popular"
@@ -18,7 +17,7 @@ function Home() {
   );
   const { data: products, error }: any = useSWR(
     "api/filter?paginate=9&sort=count_buying,desc"
-  )
+  );
   const { data: categories }: any = useSWR(`api/get_categories`);
   const menu = (
     <Menu>
@@ -43,7 +42,7 @@ function Home() {
         </a>
       </Menu.Item>
     </Menu>
-  )
+  );
   return (
     <>
       <Head>

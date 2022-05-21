@@ -38,7 +38,6 @@ function index() {
       }
     } catch (error: any) {
       setIsLoading(false);
-      console.log(error);
     }
   };
   const updateItem = async (e: any, values: any) => {

@@ -22,7 +22,6 @@ const User = ({ query }) => {
   const { data: ShowItem, errorItem }: any = useSWR(`api/my_sales/${query.id}`);
   const inputRef: any = useRef();
   const inputRefMsg: any = useRef();
-  console.log(ShowItem);
   const { data: userInfo }: any = useSWR("api/me");
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
 
@@ -349,7 +348,6 @@ const User = ({ query }) => {
   };
   // دالة إرسال الرسالة
   //const scrollToRef = (ref) => window.scrollTo(5764, ref.current.offsetTop)
-  // console.log(ref.current.scrollTop + ' ', ref.current.scrollHeight)
 
   const messageRef: any = useRef();
 
