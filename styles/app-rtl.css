@@ -9275,4 +9275,92 @@ h3 {
   font-size: 13px;
   line-height: 29px;
 }
+
+.activities-items .activities-items-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.activities-items .activities-items-list li .item-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px;
+  border: 1px solid #f2f2f2;
+  border-top: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.activities-items .activities-items-list li .item-link .text {
+  font-weight: 200;
+  color: #444;
+  font-size: 14px;
+  color: #475C80;
+}
+
+.activities-items .activities-items-list li .item-link .u {
+  color: #222;
+  font-size: 14px;
+  margin-inline: 6px;
+  color: #475C80;
+}
+
+.activities-items .activities-items-list li .item-link .meta {
+  font-weight: 200;
+  color: #777;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 6px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 12px;
+}
+
+.activities-items .activities-items-list li .item-link .meta .material-icons {
+  font-size: 15px;
+  margin-left: 4px;
+}
+
+.activities-items .activities-items-list li .item-link .msg {
+  color: #000;
+  position: relative;
+}
+
+.activities-items .activities-items-list li .item-link .activity-item {
+  width: calc(100% - 60px);
+}
+
+.activities-items .activities-items-list li .item-link .activity-item-img {
+  padding-left: 10px;
+  width: 60px;
+}
+
+.activities-items .activities-items-list li .item-link .activity-item-img img {
+  border-radius: 50%;
+}
+
+.activities-items .activities-items-list li:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+.activities-items .activities-items-list li:first-child .item-link {
+  border-radius: 6px 6px 0 0;
+  border-top: 1px solid #f2f2f2;
+}
+
+.activities-items .activities-items-list li:last-child .item-link {
+  border-radius: 0 0 6px 6px;
+  border-bottom: 1px solid #f2f2f2;
+}
 /*# sourceMappingURL=app-rtl.css.map */

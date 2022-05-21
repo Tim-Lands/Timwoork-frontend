@@ -47,6 +47,34 @@ const sidebarLinks = [
         href: '/tw-admin/withdrawables',
     },
     {
+        id: 145,
+        name: 'نشاطات المستخدين',
+        icon: 'event_repeat',
+        href: null,
+        hasSubMenu: [
+            {
+                id: 1,
+                name: 'جميع النشاطات',
+                href: '/tw-admin/activities'
+            },
+            {
+                id: 2,
+                name: 'المعاملات المالية',
+                href: '/tw-admin/activities/transfers'
+            },
+            {
+                id: 3,
+                name: 'معاملات البيع والشراء',
+                href: '/tw-admin/activities/orders'
+            },
+            {
+                id: 4,
+                name: 'رسائل البائعين والمشتريين',
+                href: '/tw-admin/activities/messages'
+            },
+        ]
+    },
+    {
         id: 12,
         name: 'بوابات الدفع',
         icon: 'payments',
