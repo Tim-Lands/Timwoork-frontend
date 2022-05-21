@@ -48,7 +48,7 @@ function Menus({ darkMode }) {
         paddingLeft: 0,
         marginBottom: 0,
         listStyle: "none",
-        marginRight: 15,
+        paddingTop: 6,
         margin: 0,
       }}
     >
