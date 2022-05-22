@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import { ReactElement, useEffect, useState } from "react";
+import Comments from "../../components/Comments";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -120,7 +121,7 @@ function Single({ query, stars }) {
               );
             }
           } catch (error) {
-            () => {};
+            () => { };
           }
         }
       });
@@ -167,7 +168,8 @@ function Single({ query, stars }) {
     //getProductData()
   }, []);
   const showStars = () => {
-    const rate = Number(ProductData.ratings_count) || 0;
+    const rate =
+      Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0;
     const xAr: any = [
       {
         id: 1,
@@ -314,8 +316,7 @@ function Single({ query, stars }) {
               <Alert type="warning">
                 هذه الخدمة غير كامة تنقصها بعض التعديلات يمكنك{" "}
                 <Link href={`/edit-product/overview?id=${ProductData.data.id}`}>
-                  {" "}
-                  التعديل{" "}
+                  <a >التعديل</a>
                 </Link>
               </Alert>
             </div>
@@ -343,9 +344,8 @@ function Single({ query, stars }) {
                       </li>
                       <li className="category-item">
                         <Link
-                          href={`/category/${
-                            ProductData && ProductData.data.subcategory.id
-                          }`}
+                          href={`/category/${ProductData && ProductData.data.subcategory.id
+                            }`}
                         >
                           <a className="category-link">
                             <span className="material-icons material-icons-outlined">
@@ -423,8 +423,32 @@ function Single({ query, stars }) {
                         </ul>
                       </div>
                     )}
+                    <div className="timwoork-single-comments">
+                      <div className="timwoork-single-comments-inner">
+                        <div className="single-comments-header">
+                          <div className="flex-center">
+                            <h4 className="title">
+                              <span className="material-icons material-icons-outlined">
+                                question_answer
+                              </span>
+                              آراء المشتريين
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="single-comments-body">
+                          <Comments comments={ProductData.data.ratings} />
+                          {ProductData.data.ratings.length == 0 && (
+                            <Alert type="primary">
+                              <p className="text">لاتوجد آراء المشتريين</p>
+                            </Alert>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
                 </div>
+
               </div>
             </div>
             <div className="col-lg-4">
@@ -533,7 +557,7 @@ function Single({ query, stars }) {
                   {ProductData.data.status !== null && (
                     <Spin spinning={isProductActive}>
                       {ProductData.data.is_active == 0 &&
-                      ProductData.data.is_completed == 1 ? (
+                        ProductData.data.is_completed == 1 ? (
                         <button
                           disabled={isProductActive}
                           onClick={() =>

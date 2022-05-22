@@ -57,6 +57,7 @@ function Single({ query, stars, errorFetch }) {
     `api/product/${query.product}`
   );
   const { data: userInfo }: any = useSWR("api/me");
+  console.log(userInfo)
   const [quantutyCount, setQuantutyCount] = useState(1);
   const [isLoadingCart, setIsLoadingCart] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -630,7 +631,7 @@ function Single({ query, stars, errorFetch }) {
                                   <button
                                     className="btn butt-green butt-sm flex-center"
                                     disabled={createConversationLoading}
-                                    onClick={() => setIsModalVisible(true)}
+                                    onClick={() => userInfo?setIsModalVisible(true):router.push('/login')}
                                   >
                                     <i className="material-icons material-icons-outlined">
                                       email

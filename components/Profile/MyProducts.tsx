@@ -60,7 +60,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
               refresh();
             }
           } catch (error) {
-            () => {};
+            () => { };
           }
         }
       });
@@ -235,9 +235,12 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                 postsList.data.map((e: any) => (
                   <tr key={e.id}>
                     <td>
-                      <Link href={`/myproducts/${e.slug}`}>
-                        <a>{e.title}</a>
-                      </Link>
+                      {e.is_completed == 1 ?
+                        <Link href={`/myproducts/${e.slug}`}>
+                          <a>{e.title}</a>
+                        </Link>
+                        : <p>{e.title}</p>
+                      }
                     </td>
                     <td>
                       {e.is_completed == 0 ? (
