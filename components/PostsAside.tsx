@@ -99,22 +99,39 @@ function PostsAside({
               navigation={true}
               modules={[Pagination, Navigation]}
               breakpoints={{
-                "@0.00": {
-                  slidesPerView: 1,
-                  spaceBetween: 0,
-                },
-                "@0.75": {
-                  slidesPerView: 2,
-                  spaceBetween: 2,
-                },
-                "@1.00": {
-                  slidesPerView: 3,
-                  spaceBetween: 3,
-                },
-                "@1.50": {
+                1000: {
                   slidesPerView: 4,
                   spaceBetween: 15,
                 },
+                770: {
+                  slidesPerView: 3,
+                  spaceBetween: 15,
+                },
+                600: {
+                  slidesPerView: 2,
+                  spaceBetween: 15,
+                },
+                100: {
+                  slidesPerView: 1,
+                  spaceBetween: 15,
+                },
+                // "@0.00": {
+                //   slidesPerView: 2,
+                //   spaceBetween: 30,
+                // },
+
+                // "@1.50": {
+                //   slidesPerView: 4,
+                //   spaceBetween: 15,
+                // },
+                // // "@1.00": {
+                // //   slidesPerView: 3,
+                // //   spaceBetween: 3,
+                // // },
+                // // "@1.50": {
+                // //   slidesPerView: 4,
+                // //   spaceBetween: 15,
+                // // },
               }}
               className="mySwiper"
             >

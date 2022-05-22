@@ -98,7 +98,11 @@ function index() {
               <div className="cart-nothing my-5 py-5">
                 <div className="cart-nothing-inner">
                   <div className="cart-nothing-img">
-                    <img src="/empty-cart.webp" alt="" />
+                    <img
+                      src="/empty-cart.webp"
+                      alt=""
+                      style={{ width: "100%" }}
+                    />
                   </div>
                   <div className="cart-nothing-content">
                     <h1 className="title">السلة فارغة</h1>
