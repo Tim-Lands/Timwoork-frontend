@@ -139,7 +139,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[100, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
             <p
               style={{
                 alignItems: "center",
@@ -171,7 +171,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[89, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
             <p
               style={{
                 alignItems: "center",
@@ -203,7 +203,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[77, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
             <p
               style={{
                 alignItems: "center",
@@ -238,7 +238,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[100, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
             <p
               style={{
                 alignItems: "center",

@@ -56,7 +56,7 @@ function Menus({ darkMode }) {
         <motion.button
           ref={button}
           whileHover={{
-            color: !darkMode ? "#000" : "#fff",
+            color: !darkMode ? "#d2ac02" : "#d2ac02",
             scale: 1.07,
           }}
           whileTap={{
@@ -79,10 +79,9 @@ function Menus({ darkMode }) {
             alignContent: "center",
           }}
         >
-          <CgEreader style={{ fontSize: 18 }} />
+          <CgEreader style={{ fontSize: 18, color: "inherit" }} />
 
           <span>
-            {" "}
             التصنيفات
             <i className="fa fa-angle-down" style={{ paddingRight: 5 }}></i>
           </span>

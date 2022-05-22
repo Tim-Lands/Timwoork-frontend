@@ -83,3 +83,56 @@
     flex-direction: column-reverse;
   }
 }
+.social-link.bt-twitter {
+  color: #fff !important;
+  background-color: #1da1f2 !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-instagram {
+  color: #fff !important;
+  background-image: linear-gradient(to bottom, #405de6, #c13584) !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-facebook {
+  color: #fff !important;
+  background-color: #104ca5 !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.social-link.bt-telegram {
+  color: #fff !important;
+  background-color: #0088cc !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-tiktok {
+  color: #fff !important;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(black),
+    to(#481063)
+  ) !important;
+  background-image: linear-gradient(black, #481063) !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-linkedin {
+  color: #fff !important;
+  background-color: #2b3557 !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}

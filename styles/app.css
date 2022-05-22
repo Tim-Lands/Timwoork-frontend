@@ -485,10 +485,6 @@
   margin-right: 6px;
 }
 
-.timlands-navbar .nav-container .app-navbar > li > a:hover {
-  color: #000;
-}
-
 .timlands-navbar .nav-container .app-navbar > li.is-open > a {
   color: #000;
 }

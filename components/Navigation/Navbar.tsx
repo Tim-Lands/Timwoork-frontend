@@ -2,6 +2,18 @@ import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, notification } from "antd";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
+import { FiSettings } from "react-icons/fi";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import {
+  MdOutlineAccountBalanceWallet,
+  MdOutlineInventory2,
+  MdOutlineShoppingCart,
+  MdOutlineShop2,
+  MdLogout,
+  MdNotificationsNone,
+  MdOutlineMailOutline,
+} from "react-icons/md";
+
 import { useOutSide } from "../useOutSide";
 import API from "../../config";
 import { FaSignInAlt, FaGlobe, FaUserPlus } from "react-icons/fa";
@@ -21,7 +33,6 @@ import {
 } from "@ant-design/icons";
 import Pusher from "pusher-js";
 import LastSeen from "../LastSeen";
-import { motion } from "framer-motion";
 import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
@@ -281,15 +292,57 @@ function Navbar(): ReactElement {
       () => {};
     }
   };
+  const myLoader = () => {
+    return `${userData && userData.user_details.profile.avatar_path}`;
+  };
   const [isLogoutModal, setIsLogoutModal]: any = useState(false);
   const AccountList = (
-    <Menu>
+    <Menu
+      style={{ padding: 5, borderRadius: 3, width: size > 450 ? 270 : 220 }}
+    >
       <Menu.Item key="0">
         <Link href="/user/profile">
-          <a>
-            <span className="material-icons material-icons-outlined">
-              account_circle
-            </span>
+          <a
+            style={{
+              color: "black",
+              fontWeight: 400,
+              width: "100%",
+              padding: 6,
+              backgroundColor: "#F5F5F5",
+              height: "100%",
+            }}
+          >
+            <div
+              className="d-flex align-items-center justify-content-center"
+              style={{
+                borderRadius: "100%",
+                overflow: "hidden",
+                marginLeft: 7,
+                padding: 2,
+                border: "2px solid rgb(0,0,0,0.2)",
+              }}
+            >
+              <div
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                  borderRadius: "100%",
+                  overflow: "hidden",
+                  margin: 0,
+                }}
+              >
+                <ImageLogo
+                  loader={myLoader}
+                  src={userData?.user_details?.profile?.avatar_path}
+                  quality={60}
+                  width={32}
+                  height={32}
+                  alt={userData && userData.user_details.profile.full_name}
+                  placeholder="blur"
+                  blurDataURL="/avatar2.jpg"
+                />
+              </div>
+            </div>
+
             {userData && userData.user_details.profile.full_name == ""
               ? "بدون اسم"
               : userData && userData.user_details.profile.full_name}
@@ -299,10 +352,26 @@ function Navbar(): ReactElement {
       {veriedEmail && userData && userData.user_details.profile.is_seller == 1 && (
         <Menu.Item key="7">
           <Link href="/add-new">
-            <a>
-              <span className="material-icons material-icons-outlined">
-                add_circle_outline
-              </span>
+            <a
+              style={{
+                width: "100%",
+                padding: 6,
+                height: "100%",
+              }}
+            >
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{
+                  backgroundColor: "#F5F5F5",
+                  padding: 4,
+                  marginLeft: 5,
+                  borderRadius: "100%",
+                  color: "#707070",
+                  fontSize: 20,
+                }}
+              >
+                <IoIosAddCircleOutline />
+              </div>
               إضافة خدمة جديدة
             </a>
           </Link>
@@ -311,10 +380,26 @@ function Navbar(): ReactElement {
       {veriedEmail && (
         <Menu.Item key="70">
           <Link href="/mywallet">
-            <a>
-              <span className="material-icons material-icons-outlined">
-                account_balance_wallet
-              </span>
+            <a
+              style={{
+                width: "100%",
+                padding: 6,
+                height: "100%",
+              }}
+            >
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{
+                  backgroundColor: "#F5F5F5",
+                  padding: 4,
+                  borderRadius: "100%",
+                  color: "#707070",
+                  fontSize: 20,
+                  marginLeft: 5,
+                }}
+              >
+                <MdOutlineAccountBalanceWallet />
+              </div>
               محفظتي
             </a>
           </Link>
@@ -324,10 +409,26 @@ function Navbar(): ReactElement {
       {veriedEmail && userData && userData.user_details.profile.is_seller == 1 && (
         <Menu.Item key="0">
           <Link href="/myproducts">
-            <a>
-              <span className="material-icons material-icons-outlined">
-                inventory_2
-              </span>
+            <a
+              style={{
+                padding: 6,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{
+                  backgroundColor: "#F5F5F5",
+                  padding: 4,
+                  borderRadius: "100%",
+                  color: "#707070",
+                  fontSize: 20,
+                  marginLeft: 5,
+                }}
+              >
+                <MdOutlineInventory2 />
+              </div>
               خدماتي
             </a>
           </Link>
@@ -336,10 +437,26 @@ function Navbar(): ReactElement {
       {veriedEmail && (
         <Menu.Item key="1">
           <Link href="/mypurchases">
-            <a>
-              <span className="material-icons material-icons-outlined">
-                shopping_cart
-              </span>
+            <a
+              style={{
+                width: "100%",
+                height: "100%",
+                padding: 6,
+              }}
+            >
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{
+                  backgroundColor: "#F5F5F5",
+                  padding: 4,
+                  borderRadius: "100%",
+                  color: "#707070",
+                  fontSize: 20,
+                  marginLeft: 5,
+                }}
+              >
+                <MdOutlineShoppingCart />
+              </div>
               مشترياتي
             </a>
           </Link>
@@ -348,10 +465,26 @@ function Navbar(): ReactElement {
       {veriedEmail && userData && userData.user_details.profile.is_seller == 1 && (
         <Menu.Item key="43">
           <Link href="/mysales">
-            <a>
-              <span className="material-icons material-icons-outlined">
-                shop_2
-              </span>
+            <a
+              style={{
+                width: "100%",
+                height: "100%",
+                padding: 6,
+              }}
+            >
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{
+                  backgroundColor: "#F5F5F5",
+                  padding: 4,
+                  borderRadius: "100%",
+                  color: "#707070",
+                  fontSize: 20,
+                  marginLeft: 5,
+                }}
+              >
+                <MdOutlineShop2 />
+              </div>
               مبيعاتي
             </a>
           </Link>
@@ -359,33 +492,85 @@ function Navbar(): ReactElement {
       )}
       <Menu.Item key="14">
         <Link href="/user/personalInformations">
-          <a>
-            <span className="material-icons material-icons-outlined">
-              settings
-            </span>
+          <a
+            style={{
+              width: "100%",
+              height: "100%",
+              padding: 6,
+            }}
+          >
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{
+                backgroundColor: "#F5F5F5",
+                padding: 4,
+                borderRadius: "100%",
+                color: "#707070",
+                fontSize: 20,
+                marginLeft: 5,
+              }}
+            >
+              <FiSettings />
+            </div>
             الإعدادات
           </a>
         </Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3">
-        <a onClick={logout}>
-          <span className="material-icons material-icons-outlined">logout</span>
+        <a
+          style={{
+            width: "100%",
+            height: "100%",
+            padding: 6,
+          }}
+          onClick={logout}
+        >
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{
+              backgroundColor: "#F5F5F5",
+              padding: 4,
+              borderRadius: "100%",
+              color: "#707070",
+              fontSize: 20,
+              marginLeft: 5,
+            }}
+          >
+            <MdLogout />
+          </div>
           تسجيل الخروج
         </a>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3">
-        <a onClick={() => setIsLogoutModal(true)}>
-          <span className="material-icons material-icons-outlined">logout</span>
+        <a
+          style={{
+            width: "100%",
+            padding: 6,
+            height: "100%",
+          }}
+          onClick={() => setIsLogoutModal(true)}
+        >
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{
+              backgroundColor: "#F5F5F5",
+              padding: 4,
+              borderRadius: "100%",
+              color: "#707070",
+              fontSize: 20,
+              marginLeft: 5,
+            }}
+          >
+            <MdLogout />
+          </div>
           الخروج من جميع الأجهزة
         </a>
       </Menu.Item>
     </Menu>
   );
-  const myLoader = () => {
-    return `${userData && userData.user_details.profile.avatar_path}`;
-  };
+
   const darkMode = userData && userData.user_details.profile.dark_mode;
   const button = useRef();
 
@@ -460,7 +645,7 @@ function Navbar(): ReactElement {
                 </div>
 
                 <span
-                  className="hr-divider"
+                  className="hr-divider "
                   style={{
                     position: "relative",
                     height: 40,
@@ -543,7 +728,7 @@ function Navbar(): ReactElement {
                       )}
                       {veriedEmail && (
                         <li
-                          className="hr-divider"
+                          className="hr-divider "
                           style={{
                             position: "relative",
                             height: 40,
@@ -561,9 +746,12 @@ function Navbar(): ReactElement {
                                   count={userData && userData.cart_items_count}
                                   offset={[2, -1]}
                                 >
-                                  <i className="material-icons material-icons-outlined">
-                                    shopping_cart
-                                  </i>
+                                  <MdOutlineShoppingCart
+                                    style={{
+                                      fontSize: size > 450 ? 22 : 15,
+                                      color: "#666",
+                                    }}
+                                  />
                                 </Badge>
                               </a>
                             </Link>
@@ -576,9 +764,12 @@ function Navbar(): ReactElement {
                             <Link href="/conversations">
                               <a>
                                 <Badge count={countMsg} offset={[2, -1]}>
-                                  <i className="material-icons material-icons-outlined">
-                                    email
-                                  </i>
+                                  <MdOutlineMailOutline
+                                    style={{
+                                      fontSize: size > 450 ? 22 : 16,
+                                      color: "#666",
+                                    }}
+                                  />
                                 </Badge>
                               </a>
                             </Link>
@@ -588,7 +779,12 @@ function Navbar(): ReactElement {
                       <li className="right-butts-icon">
                         <Tooltip placement="bottom" title="الإشعارات">
                           <Link href="/notifications">
-                            <a>
+                            <a
+                              className="d-flex align-items-center justify-content-center"
+                              style={{
+                                marginLeft: size > 450 ? 7 : 6,
+                              }}
+                            >
                               <Badge
                                 count={
                                   userData &&
@@ -596,9 +792,12 @@ function Navbar(): ReactElement {
                                 }
                                 offset={[2, -1]}
                               >
-                                <i className="material-icons material-icons-outlined">
-                                  notifications
-                                </i>
+                                <MdNotificationsNone
+                                  style={{
+                                    fontSize: size > 450 ? 22 : 17,
+                                    color: "#666",
+                                  }}
+                                />
                               </Badge>
                             </a>
                           </Link>
@@ -607,6 +806,7 @@ function Navbar(): ReactElement {
                       <li className="login-user">
                         <span
                           ref={userList}
+                          className="d-flex align-items-center justify-content-center"
                           onClick={() => {
                             setVisible(() => !visible);
                           }}
@@ -616,29 +816,19 @@ function Navbar(): ReactElement {
                             placement="bottomLeft"
                             visible={visible}
                           >
-                            <motion.span
-                              style={{ display: "inline-block" }}
-                              whileHover={{
-                                scale: 1.07,
-                              }}
-                              whileTap={{
-                                scale: 1,
-                              }}
-                            >
-                              <ImageLogo
-                                loader={myLoader}
-                                src={userData.user_details.profile.avatar_path}
-                                quality={60}
-                                width={32}
-                                height={32}
-                                alt={
-                                  userData &&
-                                  userData.user_details.profile.full_name
-                                }
-                                placeholder="blur"
-                                blurDataURL="/avatar2.jpg"
-                              />
-                            </motion.span>
+                            <ImageLogo
+                              loader={myLoader}
+                              src={userData.user_details.profile.avatar_path}
+                              quality={60}
+                              width={32}
+                              height={32}
+                              alt={
+                                userData &&
+                                userData.user_details.profile.full_name
+                              }
+                              placeholder="blur"
+                              blurDataURL="/avatar2.jpg"
+                            />
                           </Dropdown>
                         </span>
                       </li>
@@ -648,7 +838,7 @@ function Navbar(): ReactElement {
               ) : (
                 <>
                   <li
-                    className="hr-divider"
+                    className="hr-divider "
                     style={{
                       position: "relative",
                       height: 40,
@@ -703,7 +893,7 @@ function Navbar(): ReactElement {
                 </>
               )}
               <li
-                className="hr-divider"
+                className="hr-divider except"
                 style={{
                   position: "relative",
                   height: 40,
@@ -724,7 +914,7 @@ function Navbar(): ReactElement {
                   <button
                     style={{
                       backgroundColor: "transparent",
-                      color: "#555",
+                      color: "#707070",
                       borderWidth: 0,
                       outline: "none",
                       display: "flex",
@@ -732,7 +922,9 @@ function Navbar(): ReactElement {
                     }}
                     className="select-langs"
                   >
-                    <FaGlobe style={{ marginLeft: 3, fontSize: 17 }} />{" "}
+                    <FaGlobe
+                      style={{ marginLeft: 3, fontSize: 14, color: "#707070" }}
+                    />{" "}
                     {size > 400 ? (size > 1050 ? "العربية" : "Ar") : ""}
                     <i className="material-icons material-icons-outlined">
                       expand_more
