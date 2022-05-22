@@ -441,6 +441,12 @@ h3 {
   background-color: #fff;
   padding: 20px;
 
+  img {
+    width: 50px;
+    @media (max-width: 410px) {
+      width: 38px;
+    }
+  }
   .app-bill-header {
     border-bottom: 2px dashed #ddd;
     padding: 14px 0;
@@ -450,6 +456,9 @@ h3 {
       font-size: 19px;
       font-weight: bold;
       color: #333;
+      @media (max-width: 410px) {
+        font-size: 15px;
+      }
     }
   }
 
@@ -5621,7 +5630,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   @media (max-width: 600px) {
     margin: 7px 0;
   }
-
+  @media (max-width: 340px) {
+    transform: scale(0.9);
+  }
   .main-category-item-icon {
     .material-icons {
       font-size: 50px;

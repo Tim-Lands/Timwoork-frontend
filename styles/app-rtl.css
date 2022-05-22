@@ -2899,6 +2899,16 @@ h3 {
   padding: 20px;
 }
 
+.app-bill img {
+  width: 50px;
+}
+
+@media (max-width: 410px) {
+  .app-bill img {
+    width: 38px;
+  }
+}
+
 .app-bill .app-bill-header {
   border-bottom: 2px dashed #ddd;
   padding: 14px 0;
@@ -2909,6 +2919,12 @@ h3 {
   font-size: 19px;
   font-weight: bold;
   color: #333;
+}
+
+@media (max-width: 410px) {
+  .app-bill .app-bill-header .title {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -8549,6 +8565,13 @@ h3 {
 @media (max-width: 600px) {
   .main-category-item {
     margin: 7px 0;
+  }
+}
+
+@media (max-width: 340px) {
+  .main-category-item {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
   }
 }
 
