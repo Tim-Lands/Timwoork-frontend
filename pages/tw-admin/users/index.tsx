@@ -249,6 +249,7 @@ function index() {
           dataSource={postsList?.data}
           pagination={false}
           bordered
+          size="small"
         />
         <div>
           <hr />
