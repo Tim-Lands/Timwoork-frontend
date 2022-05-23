@@ -2283,7 +2283,12 @@ h3 {
     padding: 7px 0;
     border-bottom: 1px solid #f4f4f4;
     margin-bottom: 17px;
-
+    .title {
+      a {
+        margin: 0 4px;
+        color: #000;
+      }
+    }
     .header-butt {
       display: flex;
       margin-right: auto;
@@ -5170,7 +5175,63 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+.modal-conferm {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.226);
+    z-index: 3000;
+  }
+  .modal-conferm-inner {
+    position: relative;
+    z-index: 4000;
+    background-color: #fff;
+    width: 400px;
+    overflow: hidden;
+    border-radius: 7px;
+  }
 
+  .modal-conferm-head {
+    border-bottom: 2px dashed #f6f6f6;
+    margin-bottom: 9px;
+
+    .title {
+      margin: 0;
+      font-size: 21px;
+      font-weight: bold;
+    }
+  }
+
+  .modal-conferm-body {
+    .text {
+      margin: 0;
+    }
+  }
+
+  .modal-conferm-footer {
+    border-top: 2px dashed #f6f6f6;
+    margin-top: 9px;
+  }
+
+  .modal-conferm-head,
+  .modal-conferm-body,
+  .modal-conferm-footer {
+    padding: 15px;
+  }
+}
 // ------------------------------------------------------------------------------------------- //
 .aside-attachments {
   .ant-timeline-item-head {
@@ -6466,4 +6527,108 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   font-weight: 200;
   font-size: 16px;
   overflow: hidden;
+}
+.conversation-items {
+  .conversation-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      .item-link {
+        display: flex;
+        padding: 10px;
+        border-bottom: 1px solid #f2f2f2;
+        position: relative;
+        .item-actions {
+          position: absolute;
+          left: 8px;
+          top: 7px;
+          .btn-item {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            background-color: #f9f9f9;
+            color: #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            margin-left: 3px;
+            transition: all 0.3s;
+            .material-icons {
+              font-size: 17px;
+            }
+            &:hover {
+              background-color: #f2f2f2;
+              color: #000;
+              transition: all 0.3s;
+            }
+            &.del {
+              &:hover {
+                background-color: #c52a2a;
+                color: #fff;
+                transition: all 0.3s;
+              }
+            }
+          }
+        }
+        .conversation-item-img {
+          padding: 0 6px;
+          img {
+            border-radius: 50%;
+          }
+        }
+          p {
+            margin: 0;
+            &.username {
+              font-weight: bold;
+              a {
+                color: #000;
+                &:hover {
+                  color: $primary2;
+                }
+              }
+            }
+            &.text {
+              margin: 10px 0;
+              font-weight: 200;
+            }
+          }
+          .meta {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            color: #777;
+            .material-icons {
+              font-size: 16px;
+              margin-left: 3px;
+            }
+          }
+          &.user-from {
+            flex-direction: row;
+          }
+          &.user-to {
+            flex-direction: row-reverse;
+            text-align: left;
+            .meta {
+              flex-direction: row-reverse;
+              .material-icons {
+                margin-right: 3px;
+              }
+            }
+            .item-actions {
+              right: 8px;
+              .btn-item {
+                margin-right: 3px;
+              }
+            }
+          }
+      }
+      &:last-child {
+        .item-link {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
 }
