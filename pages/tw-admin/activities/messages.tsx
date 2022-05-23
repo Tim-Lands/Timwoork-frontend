@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import LastSeen from "@/components/LastSeen";
 import Image from "next/image";
+import Link from "next/link";
 
 function index() {
 
@@ -30,7 +31,9 @@ function index() {
                                             <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
                                             <span className="text">رسالة خاصة لـ </span>
                                             <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <a href="" rel="noreferrer" target="_blank" className="msg"> ترجمة مقال يتكون من 19 كلمة بسعر خيالي</a>
+                                            <Link href={`/tw-admin/activities/conversation/${2}`}>
+                                                <a className="msg"> ترجمة مقال يتكون من 19 كلمة بسعر خيالي</a>
+                                            </Link>
                                             <span className="meta">
                                                 <span className="material-icons material-icons-outlined">schedule</span>
                                                 <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
