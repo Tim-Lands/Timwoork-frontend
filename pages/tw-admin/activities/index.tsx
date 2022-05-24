@@ -4,6 +4,7 @@ import LastSeen from "@/components/LastSeen";
 import Image from "next/image";
 import API from '../../../config'
 import Cookies from "js-cookie";
+import Pagination from "react-js-pagination";
 
 const extractTextFromActivity = (activity) => {
     switch (activity.type) {
@@ -18,20 +19,25 @@ const extractTextFromActivity = (activity) => {
 function index() {
 
     const [pageNumber, setPagenNumber]: any = useState(1)
-    const [activities, setActivities]: any = useState({ data: [], last_page: 1 })
+    const [activities, setActivities]: any = useState({ data: [], last_page: 1, per_page: 12 })
     const token = useRef(Cookies.get('token_dash'))
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [pageNumber])
     const fetchData = async () => {
         try {
-            const data = await API.get(`dashboard/activities/get_all_notifications?page = 3`, {
+            const params = {
+                page:pageNumber
+            }
+            const data = await API.get(`dashboard/activities/get_all_notifications`, {
+                params,
                 headers: {
                     Authorization: `Bearer ${token.current} `
                 }
             })
-            setActivities({ ...activities, data: data.data.data.data.map(not => JSON.parse(not.data)) })
+            console.log(data)
+            setActivities({ ...activities, last_page: data.data.data.last_page, per_page: data.data.data.per_page, data: data.data.data.data.map(not => JSON.parse(not.data)) })
 
 
         }
@@ -57,7 +63,7 @@ function index() {
                         <div className="activities-items">
                             <ul className="activities-items-list">
                                 {activities?.data?.map(activity => (
-                                    <li>
+                                    <li key={activity.id}>
                                         <span className="item-link">
                                             <div className="activity-item-img">
                                                 <Image src={'/avatar.png'} width={50} height={50} />
@@ -72,113 +78,29 @@ function index() {
                                         </span>
                                     </li>
                                 ))}
-                                <li>
-                                    <span className="item-link">
-                                        <div className="activity-item-img">
-                                            <Image src={'/avatar.png'} width={50} height={50} />
-                                        </div>
-                                        <div className="activity-item">
-                                            <span className="text">قام </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
-                                            <span className="text">بتقييم خدمة </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <a href="" rel="noreferrer" target="_blank" className="text">&25B6; ترجمة مقال يتكون من 19 كلمة بسعر خيالي</a>
-                                            <span className="meta">
-                                                <span className="material-icons material-icons-outlined">schedule</span>
-                                                <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                            </span>
-                                        </div>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className="item-link">
-                                        <div className="activity-item-img">
-                                            <Image src={'/avatar.png'} width={50} height={50} />
-                                        </div>
-                                        <div className="activity-item">
-                                            <span className="text">قام </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
-                                            <span className="text">بتصميم صفحة النشاطات لـ </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <span className="meta">
-                                                <span className="material-icons material-icons-outlined">schedule</span>
-                                                <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                            </span>
-                                        </div>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className="item-link">
-                                        <div className="activity-item-img">
-                                            <Image src={'/avatar.png'} width={50} height={50} />
-                                        </div>
-                                        <div className="activity-item">
-                                            <span className="text">أرسل </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
-                                            <span className="text">رسالة خاصة لـ </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <a href="" rel="noreferrer" target="_blank" className="msg"> ترجمة مقال يتكون من 19 كلمة بسعر خيالي</a>
-                                            <span className="meta">
-                                                <span className="material-icons material-icons-outlined">schedule</span>
-                                                <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                            </span>
-                                        </div>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className="item-link">
-                                        <div className="activity-item-img">
-                                            <Image src={'/avatar.png'} width={50} height={50} />
-                                        </div>
-                                        <div className="activity-item">
-                                            <span className="text">قام </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
-                                            <span className="text">بتقييم خدمة </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <a href="" rel="noreferrer" target="_blank" className="text">&25B6; ترجمة مقال يتكون من 19 كلمة بسعر خيالي</a>
-                                            <span className="meta">
-                                                <span className="material-icons material-icons-outlined">schedule</span>
-                                                <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                            </span>
-                                        </div>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className="item-link">
-                                        <div className="activity-item-img">
-                                            <Image src={'/avatar.png'} width={50} height={50} />
-                                        </div>
-                                        <div className="activity-item">
-                                            <span className="text">قام </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
-                                            <span className="text">بتصميم صفحة النشاطات لـ </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <span className="meta">
-                                                <span className="material-icons material-icons-outlined">schedule</span>
-                                                <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                            </span>
-                                        </div>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className="item-link">
-                                        <div className="activity-item-img">
-                                            <Image src={'/avatar.png'} width={50} height={50} />
-                                        </div>
-                                        <div className="activity-item">
-                                            <span className="text">أرسل </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">عبد الحميد بومقواس</a>
-                                            <span className="text">رسالة خاصة لـ </span>
-                                            <a href="" rel="noreferrer" target="_blank" className="u">شرف الدين</a>
-                                            <a href="" rel="noreferrer" target="_blank" className="msg"> ترجمة مقال يتكون من 19 كلمة بسعر خيالي</a>
-                                            <span className="meta">
-                                                <span className="material-icons material-icons-outlined">schedule</span>
-                                                <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                            </span>
-                                        </div>
-                                    </span>
-                                </li>
+                               
                             </ul>
+                        </div>
+                        <div>
+                            <hr />
+                            <Pagination
+                                activePage={
+                                    pageNumber
+                                }
+                                itemsCountPerPage={
+                                    activities.per_page || 0
+                                }
+                                totalItemsCount={activities?.per_page * activities?.last_page}
+                                onChange={(pageNumber) => {
+                                    setPagenNumber(pageNumber);
+                                }}
+                                pageRangeDisplayed={8}
+                                itemClass="page-item"
+                                linkClass="page-link"
+                                className="productPagination"
+                                firstPageText={"الصفحة الأولى"}
+                                lastPageText={"الصفحة الأخيرة"}
+                            />
                         </div>
                     </div>
                 </div>

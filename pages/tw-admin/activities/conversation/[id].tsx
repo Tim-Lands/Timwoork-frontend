@@ -46,7 +46,7 @@ function Single({ query }: any) {
             })
             if (res.status == 200) {
                 setConversation({ ...conversation, data: conversation.data.filter(message => message.id != selectedMessageId) })
-                setSelectedMessageId(-1)
+                
                 notification.success({
                     message: 'تم حذف الرسالة بنجاح'
                 })
