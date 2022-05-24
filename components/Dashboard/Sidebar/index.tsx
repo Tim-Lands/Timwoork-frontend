@@ -54,19 +54,10 @@ const sidebarLinks = [
         hasSubMenu: [
             {
                 id: 1,
-                name: 'جميع النشاطات',
+                name: 'جميع الإشعاراات',
                 href: '/tw-admin/activities'
             },
-            {
-                id: 2,
-                name: 'المعاملات المالية',
-                href: '/tw-admin/activities/transfers'
-            },
-            {
-                id: 3,
-                name: 'معاملات البيع والشراء',
-                href: '/tw-admin/activities/orders'
-            },
+
             {
                 id: 4,
                 name: 'رسائل البائعين والمشتريين',

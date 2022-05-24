@@ -1,93 +1,118 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import DashboardLayout from '@/components/Layout/DashboardLayout';
 import LastSeen from '@/components/LastSeen';
 import Image from 'next/image';
 import Link from 'next/link';
 import ConfirmText from '@/components/ConfirmText';
+import API from '../../../../config'
+import Cookies from "js-cookie";
+import { notification } from 'antd';
 
 function Single({ query }: any) {
     const [isConfirmText, setIsConfirmText] = useState(false)
-    async function deleteMsg() {
-        console.log('test');
+    const [conversation, setConversation] = useState({ data: [] })
+    const [participants, setParticipants] = useState([])
+    const [selectedMessageId, setSelectedMessageId] = useState(-1)
+    const token = useRef(Cookies.get('token_dash'))
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+    const fetchData = async () => {
+        try {
+            const { id } = query
+            const res = await API.get(`dashboard/activities/${id}/conversation`, {
+                headers: {
+                    Authorization: `Bearer ${token.current}`
+                }
+            })
+            setConversation({ ...conversation, data: res?.data?.data?.conversation })
+            setParticipants(res?.data?.data?.members)
+            console.log(res)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+    const deleteMsg = async (body) => {
+        try {
+            const res = await API.post(`dashboard/activities/message/${selectedMessageId}/delete`, {
+                ...body
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token.current}`
+                }
+            })
+            if (res.status == 200) {
+                setConversation({ ...conversation, data: conversation.data.filter(message => message.id != selectedMessageId) })
+                setSelectedMessageId(-1)
+                notification.success({
+                    message: 'تم حذف الرسالة بنجاح'
+                })
+
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
     return (
         <div className="timlands-panel">
             {isConfirmText && <ConfirmText setIsConfirmText={setIsConfirmText} text='هل تريد حقا حذف هذه الرسالة؟' handleFunc={deleteMsg} />}
             <div className="timlands-panel-header" title={query.id}>
-                <h2 className="title">
+                                <h2 className="title">
                     <span className="material-icons material-icons-outlined">
                         event_repeat
                     </span>
-                    محادثة بين <a href="" rel="noreferrer" target="_blank">عبد الحميد بومقواس</a> و <a href="" rel="noreferrer" target="_blank">طارق عروي</a>
-                </h2>
+                    محادثة بين <a href="" rel="noreferrer" target="_blank">{participants[0]?.username}</a> و <a href="" rel="noreferrer" target="_blank">{participants[1]?.username}</a>
+                </h2> 
             </div>
             <div className="row justify-content-center">
                 <div className="col-xl-8">
                     <div className="conversation-items">
                         <ul className="conversation-items-list">
-                            <li>
-                                <span className="item-link user-from">
-                                    <div className="item-actions d-flex">
-                                        <button className='btn-item'>
-                                            <span className="material-icons material-icons-outlined">edit</span>
-                                        </button>
-                                        <button className='btn-item del' onClick={() => setIsConfirmText(true)}>
-                                            <span className="material-icons material-icons-outlined">close</span>
-                                        </button>
-                                    </div>
-                                    <div className="conversation-item-img">
-                                        <Image src={'/avatar.png'} width={50} height={50} />
-                                    </div>
-                                    <div className="conversation-item">
-                                        <p className="username">
-                                            <Link href={`/u/${122}`}>
-                                                <a>
-                                                    عبد الحميد بومقواس
-                                                </a>
-                                            </Link>
-                                        </p>
-                                        <span className="meta">
-                                            <span className="material-icons material-icons-outlined">schedule</span>
-                                            <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
+                            {conversation?.data?.map(message => {
+            
+                                return (
+                                    <li key={message.id}>
+                                        <span className={`item-link user-${participants[0]?.user_id == message.user.id ? 'from' : 'to'}`}>
+                                            <div className="item-actions d-flex">
+                                                <button className='btn-item'>
+                                                    <span className="material-icons material-icons-outlined">edit</span>
+                                                </button>
+                                                <button className='btn-item del' onClick={() => {
+                                                    setSelectedMessageId(message.id)
+                                                    setIsConfirmText(true)
+                                                }}>
+                                                    <span className="material-icons material-icons-outlined">close</span>
+                                                </button>
+                                            </div>
+                                            <div className="conversation-item-img">
+                                                <Image src={'/avatar.png'} width={50} height={50} />
+                                            </div>
+                                            <div className="conversation-item">
+                                                <p className="username">
+                                                    <Link href={`/u/${message.user.id}`}>
+                                                        <a>
+                                                            {message.user.username}
+                                                        </a>
+                                                    </Link>
+                                                </p>
+                                                <span className="meta">
+                                                    <span className="material-icons material-icons-outlined">schedule</span>
+                                                    <LastSeen date={message.created_at} />
+                                                </span>
+                                                <p className='text'>
+                                                    {message.message}
+                                                </p>
+                                            </div>
                                         </span>
-                                        <p className='text'>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
-                                        </p>
-                                    </div>
-                                </span>
-                            </li>
-                            <li>
-                                <span className="item-link user-to">
-                                    <div className="item-actions d-flex">
-                                        <button className='btn-item' onClick={() => setIsConfirmText(true)}>
-                                            <span className="material-icons material-icons-outlined">close</span>
-                                        </button>
-                                        <button className='btn-item'>
-                                            <span className="material-icons material-icons-outlined">edit</span>
-                                        </button>
-                                    </div>
-                                    <div className="conversation-item-img">
-                                        <Image src={'/avatar.png'} width={50} height={50} />
-                                    </div>
-                                    <div className="conversation-item">
-                                        <p className="username">
-                                            <Link href={`/u/${122}`}>
-                                                <a>
-                                                    عبد الحميد بومقواس
-                                                </a>
-                                            </Link>
-                                        </p>
-                                        <span className="meta">
-                                            <span className="material-icons material-icons-outlined">schedule</span>
-                                            <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
-                                        </span>
-                                        <p className='text'>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
-                                        </p>
-                                    </div>
-                                </span>
-                            </li>
+                                    </li>
+                                )
+                            })}
+
                         </ul>
                     </div>
                 </div>
