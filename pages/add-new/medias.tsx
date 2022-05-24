@@ -368,7 +368,7 @@ function Medias({ query, stars }) {
                 <Alert type="error">{validationsGeneral.msg}</Alert>
               )}
               <div className="row justify-content-md-center">
-                <div className="col-xl-10">
+                <div className="">
                   <FeaturedUploadingGalleries
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}

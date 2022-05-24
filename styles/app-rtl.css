@@ -7072,6 +7072,16 @@ h3 {
   }
 }
 
+.page-content h5 {
+  font-size: 25px;
+}
+
+@media (max-width: 580px) {
+  .page-content h5 {
+    font-size: 20px;
+  }
+}
+
 .page-content .sub-title {
   font-size: 25px;
   font-weight: bold;
@@ -7113,6 +7123,19 @@ h3 {
   line-height: 41px;
   margin-right: 25px;
   margin-bottom: 15px;
+}
+
+.page-content .list li.title {
+  font-weight: 400;
+  font-size: 22px;
+  color: #444;
+}
+
+@media (max-width: 580px) {
+  .page-content .list li.title {
+    font-size: 16px;
+    line-height: 31px;
+  }
 }
 
 @media (max-width: 580px) {
@@ -7775,7 +7798,7 @@ h3 {
 }
 
 .category-item .category-item-content li a:hover {
-  color: #475C80;
+  color: #ffd000;
 }
 
 .is-mobile.nav {
@@ -8096,7 +8119,7 @@ h3 {
 }
 
 .modal-conferm::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;

@@ -45,13 +45,17 @@ function index() {
                       </div>
                       <ul className="category-item-content">
                         {e.subcategories &&
-                          e.subcategories.map((item: any) => (
-                            <li key={item.id}>
-                              <Link href={`/category/${item.id}`}>
-                                {item.name_ar}
-                              </Link>
-                            </li>
-                          ))}
+                          e.subcategories.map((item: any) => {
+                            return (
+                              <li key={item.id} className="item">
+                                <Link
+                                  href={`products?categoryID=${item.parent_id}&subcategoryID=${item.id}`}
+                                >
+                                  {item.name_ar}
+                                </Link>
+                              </li>
+                            );
+                          })}
                       </ul>
                     </div>
                   </div>
