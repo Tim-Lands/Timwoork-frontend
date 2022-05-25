@@ -10,14 +10,18 @@ import Cookies from "js-cookie";
 function index() {
     const [messages, setMessages] = useState({ last_page: 1, per_page: 12, data: [] })
     const [pageNumber, setPageNumber] = useState(1)
+    const [sentinel, setSentinel] = useState({ mount: true })
+    const email = useRef(null)
     const token = useRef(Cookies.get('token_dash'))
     useEffect(() => {
+        console.log('email changed')
         fetchData()
-    }, [pageNumber])
+    }, [pageNumber, email.current])
     const fetchData = async () => {
         try {
-            const params ={
-                page:pageNumber
+            const params = {
+                page: pageNumber,
+                email: email.current
             }
             const res = await API.get(`dashboard/activities/get_all_conversations`, {
                 params,
@@ -43,9 +47,33 @@ function index() {
                         </span>
                         رسائل البائعين والمشتريين
                     </h2>
+
                 </div>
+
                 <div className="row justify-content-center">
+
                     <div className="col-xl-8">
+                        <div className="py-3">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="timlands-form">
+                                        <input
+                                            id="input-sQuery"
+                                            name="sQuery"
+                                            placeholder="إكتب بريد المُستخدم للبحث."
+                                            className="timlands-inputs"
+                                            onChange={(e) => email.current = (e.target.value)}
+                                            onKeyDown={(e) => {
+                                                email.current = e.target.value
+                                                if (e.keyCode === 13)
+                                                    setSentinel({ ...sentinel, mount: true })
+                                            }
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="activities-items">
                             <ul className="activities-items-list">
                                 {messages?.data?.map(message => (

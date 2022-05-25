@@ -48,7 +48,7 @@ const sidebarLinks = [
     },
     {
         id: 145,
-        name: 'نشاطات المستخدين',
+        name: 'نشاطات المستخدمين',
         icon: 'event_repeat',
         href: null,
         hasSubMenu: [
@@ -57,7 +57,11 @@ const sidebarLinks = [
                 name: 'جميع الإشعاراات',
                 href: '/tw-admin/activities'
             },
-
+            {
+                id:2,
+                name:'المعاملات المالية',
+                href:'/tw-admin/transfers'
+            },
             {
                 id: 4,
                 name: 'رسائل البائعين والمشتريين',

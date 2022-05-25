@@ -6,14 +6,16 @@ import API from '../../../config'
 import Cookies from "js-cookie";
 import Pagination from "react-js-pagination";
 
-const extractTextFromActivity = (activity) => {
-    switch (activity.type) {
+const ActivityData = (activity) => {
+    switch (activity.data.type) {
         case 'order':
-            return `${activity.title} عنوان الخدمة  ${activity.content.title}`;
+            return <p> {activity.data.title} عنوان الخدمة  <a href={`/p/${activity.data.content.item_id}`}>{activity.data.content.title}</a> , مقدمة من <a href={`/u/${activity.user_id}`} target="_blank" rel="noreferrer"> {activity.username}</a></p>;
         case 'rating':
-            return `قام ${activity.user_sender.full_name} بتقييم  خدمة ${activity.content.slug.split('-').slice(1).join('')}`
+            return <p> قام <a href=""> {activity.data.user_sender.full_name}</a> بتقييم خدمة {activity.content.slug.split('-').slice(1).join('')} المُقدمة من <a href={`/u/${activity.user.user_id}`} target='_blank' rel="noreferrer">  {activity.user.username}</a></p>
+        case 'system':
+            return <p>إشعار من الإدارة إلى <a href={`/u/${activity.user_id}`}>{activity.username}</a> : <a href={``}>{activity.data.title}</a></p>
         default:
-            return activity.title
+            return activity.data.title
     }
 }
 function index() {
@@ -21,14 +23,16 @@ function index() {
     const [pageNumber, setPagenNumber]: any = useState(1)
     const [activities, setActivities]: any = useState({ data: [], last_page: 1, per_page: 12 })
     const token = useRef(Cookies.get('token_dash'))
-
+    const [sentinel, setSentinel] = useState({ mount: true })
+    const email = useRef(null)
     useEffect(() => {
         fetchData()
-    }, [pageNumber])
+    }, [pageNumber, sentinel])
     const fetchData = async () => {
         try {
             const params = {
-                page:pageNumber
+                page: pageNumber,
+                email: email.current
             }
             const data = await API.get(`dashboard/activities/get_all_notifications`, {
                 params,
@@ -36,8 +40,13 @@ function index() {
                     Authorization: `Bearer ${token.current} `
                 }
             })
-            console.log(data)
-            setActivities({ ...activities, last_page: data.data.data.last_page, per_page: data.data.data.per_page, data: data.data.data.data.map(not => JSON.parse(not.data)) })
+
+            setActivities({
+                ...activities, last_page: data.data.data.last_page, per_page: data.data.data.per_page, data: data.data.data.data.map(not => ({
+                    data: JSON.parse(not.data),
+                    email: not.email, created_at: not.created_at, user_id: not.user_id, username: not.username
+                }))
+            })
 
 
         }
@@ -60,6 +69,27 @@ function index() {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-xl-8">
+                        {/* <div className="py-3">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="timlands-form">
+                                        <input
+                                            id="input-sQuery"
+                                            name="sQuery"
+                                            placeholder="إكتب بريد المُستخدم للبحث."
+                                            className="timlands-inputs"
+                                            onChange={(e) => email.current = (e.target.value)}
+                                            onKeyDown={(e) => {
+                                                email.current = e.target.value
+                                                if (e.keyCode === 13)
+                                                    setSentinel({ ...sentinel, mount: true })
+                                            }
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                         <div className="activities-items">
                             <ul className="activities-items-list">
                                 {activities?.data?.map(activity => (
@@ -69,16 +99,16 @@ function index() {
                                                 <Image src={'/avatar.png'} width={50} height={50} />
                                             </div>
                                             <div className="activity-item">
-                                                <p>{extractTextFromActivity(activity)}</p>
+                                                {ActivityData(activity)}
                                                 <span className="meta">
                                                     <span className="material-icons material-icons-outlined">schedule</span>
-                                                    <LastSeen date={'2022-03-07T23:42:20.000000Z'} />
+                                                    <LastSeen date={activity.created_at} />
                                                 </span>
                                             </div>
                                         </span>
                                     </li>
                                 ))}
-                               
+
                             </ul>
                         </div>
                         <div>
