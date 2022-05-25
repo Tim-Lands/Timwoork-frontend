@@ -6646,3 +6646,16 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+
+.linked-image {
+  a {
+    display: flex;
+    align-items: center;
+    img {
+      border-radius: 50%;
+    }
+    .text {
+      margin-right: 4px;
+    }
+  }
+}

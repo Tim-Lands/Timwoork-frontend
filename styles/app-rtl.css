@@ -9719,4 +9719,21 @@ h3 {
 .conversation-items .conversation-items-list li:last-child .item-link {
   border-bottom: 0;
 }
+
+.linked-image a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.linked-image a img {
+  border-radius: 50%;
+}
+
+.linked-image a .text {
+  margin-right: 4px;
+}
 /*# sourceMappingURL=app-rtl.css.map */
