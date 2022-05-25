@@ -127,7 +127,7 @@ function Medias({ query, stars }) {
       );
       return res;
     } catch (e) {
-      () => {};
+      () => { };
     }
   };
   const loadImagesHandle = async () => {
@@ -135,11 +135,11 @@ function Medias({ query, stars }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (isGalleryChanged && galleryMedia.size <= 0) {
@@ -284,15 +284,13 @@ function Medias({ query, stars }) {
         <div className="row justify-content-md-center my-3">
           <div className="col-md-7 pt-3">
             {isRemoveModal && (
-              <div className="overlay-fixed">
-                <RemoveImageModal
-                  onSubmit={onRemoveSubmit}
-                  product_id={query.id}
-                  image_id={removedImage.id}
-                  index={removedImage.index}
-                  setIsRemoveModal={setIsRemoveModal}
-                />
-              </div>
+              <RemoveImageModal
+                onSubmit={onRemoveSubmit}
+                product_id={query.id}
+                image_id={removedImage.id}
+                index={removedImage.index}
+                setIsRemoveModal={setIsRemoveModal}
+              />
             )}
             {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
