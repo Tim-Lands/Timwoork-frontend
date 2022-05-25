@@ -1,9 +1,8 @@
-import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState } from "react";
+import Layout from "@/components/Layout/DashboardLayout";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
-import API from "../../config";
+import API from "../../../../config";
 import router from "next/router";
-import SidebarAdvices from "./SidebarAdvices";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
@@ -15,6 +14,7 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
+import Link from "next/link";
 
 function Medias({ query, stars }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -22,15 +22,14 @@ function Medias({ query, stars }) {
     stars.data.full_path_thumbnail
   );
   const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries);
-  const [isFeaturedChanged, setIsFeaturedChanged] = useState(false);
-  const [isGalleryChanged, setIsGalleryChanged] = useState(false);
+  const [isGalleryChanged, setIsGalleryChanged]: any = useState(false);
+  const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
   const [removedImages, setRemovedImages] = useState([]);
-
-  let token = Cookies.get("token");
+  let token = Cookies.get("token_dash");
   if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+    token = localStorage.getItem("token_dash");
   const id = query.id;
   const { data: userInfo }: any = useSWR("api/me");
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
@@ -60,13 +59,20 @@ function Medias({ query, stars }) {
     }
     getProductId();
   }, []);
-
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
-
   const [url_video, setVideourl] = useState("");
-  const handleSetVideourl = (e: any) => {
-    setVideourl(e.target.value);
+  const [temp_url_video, setTempUrlVideo] = useState("");
+  const timer = useRef(null);
+  const handleSetVideourl = () => {
+    setVideourl(temp_url_video);
   };
+  const handleChangeVideoUrl = (e) => {
+    setTempUrlVideo(e.target.value);
+  };
+  useEffect(() => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(handleSetVideourl, 1000);
+  }, [temp_url_video]);
   const [loading, setLoading] = useState(false);
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
@@ -136,7 +142,7 @@ function Medias({ query, stars }) {
         "(\\#[-a-z\\d_]*)?$",
       "i"
     );
-    if (galleryMedia.length <= 0) {
+    if (isGalleryChanged && galleryMedia.size <= 0) {
       notification.open({
         message: "حدث خطأ",
         description: "برجاء وضع صورة على الأقل في المعرض",
@@ -147,10 +153,7 @@ function Medias({ query, stars }) {
       return;
     }
 
-    if (
-      !(featuredMedia instanceof Array) &&
-      featuredMedia.split("/")[5].length <= 0
-    ) {
+    if (isFeaturedChanged && !(featuredMedia instanceof Array)) {
       notification.open({
         message: "حدث خطأ",
         description: "برجاء وضع صورة بارزة",
@@ -160,7 +163,6 @@ function Medias({ query, stars }) {
 
       return;
     }
-
     if (url_video.length > 0 && !pattern.test(url_video)) {
       notification.open({
         message: "حدث خطأ",
@@ -173,63 +175,12 @@ function Medias({ query, stars }) {
     }
 
     try {
-      if (isGalleryChanged && isFeaturedChanged) {
-        const [res1, res2] = await Promise.all([
-          loadFeatureImage(),
-          loadGalleryImages(),
-        ]);
-        // Authentication was successful.
-        if (res1.status === 200 && res2.status === 200) {
-          await loadVideoUrl();
-          setLoading(false);
-          message.success("لقد تم تحديث بنجاح");
-          router.push({
-            pathname: "/add-new/complete",
-            query: {
-              id: id, // pass the id
-            },
-          });
-        }
-      } else if (isFeaturedChanged) {
-        const [res] = await Promise.all([loadFeatureImage()]);
-        // Authentication was successful.
-        if (res.status === 200) {
-          await loadVideoUrl();
-          setLoading(false);
-          message.success("لقد تم تحديث بنجاح");
-          router.push({
-            pathname: "/add-new/complete",
-            query: {
-              id: id, // pass the id
-            },
-          });
-        }
-      } else if (isGalleryChanged) {
-        const [res] = await Promise.all([loadGalleryImages()]);
-
-        // Authentication was successful.
-        if (res.status === 200) {
-          setLoading(false);
-          await loadVideoUrl();
-          message.success("لقد تم تحديث بنجاح");
-          router.push({
-            pathname: "/add-new/complete",
-            query: {
-              id: id, // pass the id
-            },
-          });
-        }
-      } else {
-        setLoading(false);
-        message.success("لقد تم تحديث بنجاح");
-        router.push({
-          pathname: "/add-new/complete",
-          query: {
-            id: id, // pass the id
-          },
-        });
-      }
+      if (isFeaturedChanged && isGalleryChanged) await uploadImages();
+      else if (isFeaturedChanged) await uploadFeatured();
+      else if (isGalleryChanged) await uploadGallery();
+      await uploadVideoUrl();
       await sendRemoveRequest();
+      router.push(`/edit-product/complete?id=${id}`);
     } catch (error: any) {
       setLoading(false);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -247,6 +198,43 @@ function Medias({ query, stars }) {
       }
     }
   };
+  const uploadImages = async () => {
+    const [res1, res2] = await Promise.all([
+      loadFeatureImage(),
+      loadGalleryImages(),
+    ]);
+    await loadVideoUrl();
+    // Authentication was successful.
+    if (res1.status === 200 && res2.status === 200) {
+      setLoading(false);
+      message.success("لقد تم تحديث بنجاح");
+    }
+  };
+  const uploadFeatured = async () => {
+    const [res] = await Promise.all([loadFeatureImage(), loadVideoUrl()]);
+    // Authentication was successful.
+    if (res.status === 200) {
+      setLoading(false);
+      message.success("لقد تم تحديث بنجاح");
+    }
+  };
+  const uploadGallery = async () => {
+    const [res] = await Promise.all([loadGalleryImages()]);
+    await loadVideoUrl();
+    // Authentication was successful.
+    if (res.status === 200) {
+      setLoading(false);
+      message.success("لقد تم تحديث بنجاح");
+    }
+  };
+  const uploadVideoUrl = async () => {
+    const res = await loadVideoUrl();
+    if (res.status === 200) {
+      setLoading(false);
+      message.success("لقد تم تحديث بنجاح");
+    }
+  };
+
   const removeImage = async (image, index) => {
     setIsRemoveModal(true);
     setRemovedImage({ id: image.id, index });
@@ -291,23 +279,21 @@ function Medias({ query, stars }) {
         metaDescription="اتصل بنا - تيموورك"
         ogDescription="اتصل بنا - تيموورك"
       />
+
       {token && veriedEmail && (
-        <div className="row my-3">
-          {isRemoveModal && (
-            <div className="overlay-fixed">
-              <RemoveImageModal
-                onSubmit={onRemoveSubmit}
-                product_id={query.id}
-                image_id={removedImage.id}
-                index={removedImage.index}
-                setIsRemoveModal={setIsRemoveModal}
-              />
-            </div>
-          )}
-          <div className="col-xl-4">
-            <SidebarAdvices />
-          </div>
-          <div className="col-xl-8 pt-3">
+        <div className="row justify-content-md-center my-3">
+          <div className="col-md-7 pt-3">
+            {isRemoveModal && (
+              <div className="overlay-fixed">
+                <RemoveImageModal
+                  onSubmit={onRemoveSubmit}
+                  product_id={query.id}
+                  image_id={removedImage.id}
+                  index={removedImage.index}
+                  setIsRemoveModal={setIsRemoveModal}
+                />
+              </div>
+            )}
             {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
@@ -315,52 +301,72 @@ function Medias({ query, stars }) {
               <div className="timlands-steps">
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        collections_bookmark
-                      </span>
-                    </span>
-                    معلومات عامة
+                    <Link href={`/edit-product/overview?id=${id}`}>
+                      <a>
+                        <span className="icon-circular">
+                          <span className="material-icons material-icons-outlined">
+                            collections_bookmark
+                          </span>
+                        </span>
+                        معلومات عامة
+                      </a>
+                    </Link>
                   </h3>
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        payments
-                      </span>
-                    </span>
-                    السعر والتطويرات
+                    <Link href={`/edit-product/prices?id=${id}`}>
+                      <a>
+                        <span className="icon-circular">
+                          <span className="material-icons material-icons-outlined">
+                            payments
+                          </span>
+                        </span>
+                        السعر والتطويرات
+                      </a>
+                    </Link>
                   </h3>
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        description
-                      </span>
-                    </span>
-                    الوصف وتعليمات المشتري
+                    <Link href={`/edit-product/description?id=${id}`}>
+                      <a>
+                        <span className="icon-circular">
+                          <span className="material-icons material-icons-outlined">
+                            description
+                          </span>
+                        </span>
+                        الوصف وتعليمات المشتري
+                      </a>
+                    </Link>
                   </h3>
                 </div>
                 <div className="timlands-step-item active">
                   <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        mms
-                      </span>
-                    </span>
-                    مكتبة الصور والملفات
+                    <Link href={`/edit-product/medias?id=${id}`}>
+                      <a>
+                        <span className="icon-circular">
+                          <span className="material-icons material-icons-outlined">
+                            mms
+                          </span>
+                        </span>
+                        مكتبة الصور والملفات
+                      </a>
+                    </Link>
                   </h3>
                 </div>
-                <div className="timlands-step-item">
+                <div className="timlands-step-item ">
                   <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        publish
-                      </span>
-                    </span>
-                    نشر الخدمة
+                    <Link href={`/edit-product/complete?id=${id}`}>
+                      <a>
+                        <span className="icon-circular">
+                          <span className="material-icons material-icons-outlined">
+                            publish
+                          </span>
+                        </span>
+                        نشر الخدمة
+                      </a>
+                    </Link>
                   </h3>
                 </div>
               </div>
@@ -368,17 +374,17 @@ function Medias({ query, stars }) {
                 <Alert type="error">{validationsGeneral.msg}</Alert>
               )}
               <div className="row justify-content-md-center">
-                <div className="">
+                <div className="col-xl-10">
                   <FeaturedUploadingGalleries
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}
                     full_path_thumbnail={featuredMedia || "/seo.png"}
                   />
                   <ImagesUploadingGalleries
-                    callback={removeImage}
                     setIsChanged={setIsGalleryChanged}
                     setGalleryMedia={setGalleryMedia}
                     galaries={galleryMedia}
+                    callback={removeImage}
                   />
                   <div className="timlands-content-form mt-2">
                     <div className="choose-images-file">
@@ -393,8 +399,7 @@ function Medias({ query, stars }) {
                           type="text"
                           id="input-videourl"
                           name="url_video"
-                          value={url_video}
-                          onChange={handleSetVideourl}
+                          onKeyUp={handleChangeVideoUrl}
                           dir="ltr"
                           placeholder="https://"
                           className="timlands-inputs"
@@ -458,7 +463,7 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
 };
 
 export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token || "";
+  const token = cookies(ctx).token_dash || "";
   const uriString = `api/my_products/product/${ctx.query.id}`;
   // Fetch data from external API
   const res = await API.get(uriString, {

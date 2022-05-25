@@ -129,6 +129,14 @@ function index(): ReactElement {
             >
               رفض
             </button>
+            <Link href={`/tw-admin/posts/edit-product/overview?id=${tes.id}`}>
+              <a
+                title="تعديل هذه الخدمة"
+                className="btn butt-xs2 butt-green"
+              >
+                تعديل
+              </a>
+            </Link>
           </Space>
         );
       },

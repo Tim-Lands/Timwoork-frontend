@@ -21,7 +21,7 @@ function FeaturedUploadingGalleries({
     setIsChanged(true);
   };
   return (
-    <div className="choose-images-file">
+    <div className="choose-images-file" style={{ width: "100%" }}>
       <div className="choose-images-list">
         <div className={"panel-modal-body login-panel-body auto-height"}>
           <div className="images-list-uploading align-center">

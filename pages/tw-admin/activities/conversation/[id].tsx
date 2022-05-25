@@ -8,6 +8,7 @@ import ConfirmText from '@/components/ConfirmText';
 import API from '../../../../config'
 import Cookies from "js-cookie";
 import { notification } from 'antd';
+import EditModal from '@/components/EditModal';
 
 function Single({ query }: any) {
     const [isConfirmText, setIsConfirmText] = useState(false)
@@ -46,7 +47,7 @@ function Single({ query }: any) {
             })
             if (res.status == 200) {
                 setConversation({ ...conversation, data: conversation.data.filter(message => message.id != selectedMessageId) })
-                
+
                 notification.success({
                     message: 'تم حذف الرسالة بنجاح'
                 })
@@ -58,28 +59,34 @@ function Single({ query }: any) {
         }
 
     }
+    const [msgText, setMsgText] = useState('')
+    const [isShowEdit, setIsShowEdit] = useState(false)
+    async function handleSubmit() {
+        console.log('submited!');
+    }
     return (
         <div className="timlands-panel">
             {isConfirmText && <ConfirmText setIsConfirmText={setIsConfirmText} text='هل تريد حقا حذف هذه الرسالة؟' handleFunc={deleteMsg} />}
+            {isShowEdit && <EditModal setIsConfirmText={setIsShowEdit} text={null} handleFunc={handleSubmit} title="التعديل على الرسالة" handleChange={setMsgText} msgValues={msgText} />}
             <div className="timlands-panel-header" title={query.id}>
-                                <h2 className="title">
+                <h2 className="title">
                     <span className="material-icons material-icons-outlined">
                         event_repeat
                     </span>
                     محادثة بين <a href="" rel="noreferrer" target="_blank">{participants[0]?.username}</a> و <a href="" rel="noreferrer" target="_blank">{participants[1]?.username}</a>
-                </h2> 
+                </h2>
             </div>
             <div className="row justify-content-center">
                 <div className="col-xl-8">
                     <div className="conversation-items">
                         <ul className="conversation-items-list">
                             {conversation?.data?.map(message => {
-            
+
                                 return (
                                     <li key={message.id}>
                                         <span className={`item-link user-${participants[0]?.user_id == message.user.id ? 'from' : 'to'}`}>
                                             <div className="item-actions d-flex">
-                                                <button className='btn-item'>
+                                                <button className='btn-item' type='button' onClick={() => setIsShowEdit(true)}>
                                                     <span className="material-icons material-icons-outlined">edit</span>
                                                 </button>
                                                 <button className='btn-item del' onClick={() => {

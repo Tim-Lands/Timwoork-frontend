@@ -427,10 +427,10 @@ function About() {
               ما هي المستويات الموجودة في موقع تيم ورك؟
             </h2>
             <ul className="list">
-              <li>
+              <li className="title">
                 البائعين
                 <ol className="list">
-                  <li>
+                  <li style={{ fontWeight: 300 }}>
                     بائع جديد
                     <ul className="list">
                       <li>يمكنه إضافة 6 خدمات لحسابه كحد أقصى</li>
@@ -440,7 +440,7 @@ function About() {
                       </li>
                     </ul>
                   </li>
-                  <li>
+                  <li style={{ fontWeight: 300 }}>
                     بائع نشيط
                     <ul className="list">
                       <li>قام بإنهاء وبيع 10 طلبات على الأقل</li>
@@ -453,7 +453,7 @@ function About() {
                       <li>دعم فني أسرع</li>
                     </ul>
                   </li>
-                  <li>
+                  <li style={{ fontWeight: 300 }}>
                     بائع مميز
                     <ul className="list">
                       <li>قام بإنهاء وبيع 50 طلب بتقييم لا يقل عن 95%</li>
@@ -466,7 +466,7 @@ function About() {
                       <li>أولوية في الدعم الفني</li>
                     </ul>
                   </li>
-                  <li>
+                  <li style={{ fontWeight: 300 }}>
                     بائع موثوق
                     <br />
                     يحدد حساب بائع موثوق يدويا من إدارة تيم ورك، الاختيار يتم
@@ -486,7 +486,7 @@ function About() {
                   </li>
                 </ol>
               </li>
-              <li>
+              <li className="title">
                 المشترين
                 <ol className="list">
                   <li>
