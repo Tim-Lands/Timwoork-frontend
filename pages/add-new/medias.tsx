@@ -121,7 +121,7 @@ function Medias({ query, stars }) {
       );
       return res;
     } catch (e) {
-      () => {};
+      () => { };
     }
   };
   const loadImagesHandle = async () => {
@@ -129,11 +129,11 @@ function Medias({ query, stars }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (galleryMedia.length <= 0) {
@@ -292,163 +292,163 @@ function Medias({ query, stars }) {
         ogDescription="اتصل بنا - تيموورك"
       />
       {token && veriedEmail && (
-        <div className="row my-3">
+        <>
           {isRemoveModal && (
-            <div className="overlay-fixed">
-              <RemoveImageModal
-                onSubmit={onRemoveSubmit}
-                product_id={query.id}
-                image_id={removedImage.id}
-                index={removedImage.index}
-                setIsRemoveModal={setIsRemoveModal}
-              />
-            </div>
+            <RemoveImageModal
+              onSubmit={onRemoveSubmit}
+              product_id={query.id}
+              image_id={removedImage.id}
+              index={removedImage.index}
+              setIsRemoveModal={setIsRemoveModal}
+            />
           )}
-          <div className="col-xl-4">
-            <SidebarAdvices />
-          </div>
-          <div className="col-xl-8 pt-3">
-            {/* {getProduct && getProduct.data.galaries.map((item: any) => (
+          <div className="row my-3">
+            <div className="col-xl-4">
+              <SidebarAdvices />
+            </div>
+            <div className="col-xl-8 pt-3">
+              {/* {getProduct && getProduct.data.galaries.map((item: any) => (
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
-            <div className={"timlands-panel" + (loading ? " is-loader" : "")}>
-              <div className="timlands-steps">
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        collections_bookmark
+              <div className={"timlands-panel" + (loading ? " is-loader" : "")}>
+                <div className="timlands-steps">
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <span className="icon-circular">
+                        <span className="material-icons material-icons-outlined">
+                          collections_bookmark
+                        </span>
                       </span>
-                    </span>
-                    معلومات عامة
-                  </h3>
-                </div>
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        payments
+                      معلومات عامة
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <span className="icon-circular">
+                        <span className="material-icons material-icons-outlined">
+                          payments
+                        </span>
                       </span>
-                    </span>
-                    السعر والتطويرات
-                  </h3>
-                </div>
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        description
+                      السعر والتطويرات
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <span className="icon-circular">
+                        <span className="material-icons material-icons-outlined">
+                          description
+                        </span>
                       </span>
-                    </span>
-                    الوصف وتعليمات المشتري
-                  </h3>
-                </div>
-                <div className="timlands-step-item active">
-                  <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        mms
+                      الوصف وتعليمات المشتري
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item active">
+                    <h3 className="text">
+                      <span className="icon-circular">
+                        <span className="material-icons material-icons-outlined">
+                          mms
+                        </span>
                       </span>
-                    </span>
-                    مكتبة الصور والملفات
-                  </h3>
-                </div>
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <span className="icon-circular">
-                      <span className="material-icons material-icons-outlined">
-                        publish
+                      مكتبة الصور والملفات
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <span className="icon-circular">
+                        <span className="material-icons material-icons-outlined">
+                          publish
+                        </span>
                       </span>
-                    </span>
-                    نشر الخدمة
-                  </h3>
+                      نشر الخدمة
+                    </h3>
+                  </div>
                 </div>
-              </div>
-              {validationsGeneral.msg && (
-                <Alert type="error">{validationsGeneral.msg}</Alert>
-              )}
-              <div className="row justify-content-md-center">
-                <div className="">
-                  <FeaturedUploadingGalleries
-                    setIsChanged={setIsFeaturedChanged}
-                    setImage={setFeaturedImages}
-                    full_path_thumbnail={featuredMedia || "/seo.png"}
-                  />
-                  <ImagesUploadingGalleries
-                    callback={removeImage}
-                    setIsChanged={setIsGalleryChanged}
-                    setGalleryMedia={setGalleryMedia}
-                    galaries={galleryMedia}
-                  />
-                  <div className="timlands-content-form mt-2">
-                    <div className="choose-images-file">
-                      <h4 className="timlands-content-form-subtitle">
-                        فيديو تعريفي للخدمة (اختياري)
-                      </h4>
-                      <div className="timlands-form">
-                        <label className="label-block" htmlFor="input-videourl">
-                          رابط الفيديو
-                        </label>
-                        <input
-                          type="text"
-                          id="input-videourl"
-                          name="url_video"
-                          value={url_video}
-                          onChange={handleSetVideourl}
-                          dir="ltr"
-                          placeholder="https://"
-                          className="timlands-inputs"
-                          autoComplete="off"
-                        />
-                        {url_video && (
-                          <ReactPlayer
-                            style={{
-                              borderRadius: 6,
-                              overflow: "hidden",
-                              marginTop: 6,
-                            }}
-                            width="100%"
-                            url={url_video}
+                {validationsGeneral.msg && (
+                  <Alert type="error">{validationsGeneral.msg}</Alert>
+                )}
+                <div className="row justify-content-md-center">
+                  <div className="">
+                    <FeaturedUploadingGalleries
+                      setIsChanged={setIsFeaturedChanged}
+                      setImage={setFeaturedImages}
+                      full_path_thumbnail={featuredMedia || "/seo.png"}
+                    />
+                    <ImagesUploadingGalleries
+                      callback={removeImage}
+                      setIsChanged={setIsGalleryChanged}
+                      setGalleryMedia={setGalleryMedia}
+                      galaries={galleryMedia}
+                    />
+                    <div className="timlands-content-form mt-2">
+                      <div className="choose-images-file">
+                        <h4 className="timlands-content-form-subtitle">
+                          فيديو تعريفي للخدمة (اختياري)
+                        </h4>
+                        <div className="timlands-form">
+                          <label className="label-block" htmlFor="input-videourl">
+                            رابط الفيديو
+                          </label>
+                          <input
+                            type="text"
+                            id="input-videourl"
+                            name="url_video"
+                            value={url_video}
+                            onChange={handleSetVideourl}
+                            dir="ltr"
+                            placeholder="https://"
+                            className="timlands-inputs"
+                            autoComplete="off"
                           />
-                        )}
+                          {url_video && (
+                            <ReactPlayer
+                              style={{
+                                borderRadius: 6,
+                                overflow: "hidden",
+                                marginTop: 6,
+                              }}
+                              width="100%"
+                              url={url_video}
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="col-md-12">
-                <div className="py-4 d-flex">
-                  <button
-                    onClick={() => router.back()}
-                    type="button"
-                    className="btn flex-center butt-green-out me-auto butt-xs"
-                  >
-                    <span className="material-icons-outlined">
-                      chevron_right
-                    </span>
-                    <span className="text">المرحلة السابقة</span>
-                    <div
-                      className="spinner-border spinner-border-sm text-white"
-                      role="status"
-                    ></div>
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    onClick={loadImagesHandle}
-                    className="btn flex-center butt-green ml-auto butt-sm"
-                  >
-                    <span className="text">المرحلة التالية</span>
-                    <span className="material-icons-outlined">
-                      chevron_left
-                    </span>
-                  </button>
+                <div className="col-md-12">
+                  <div className="py-4 d-flex">
+                    <button
+                      onClick={() => router.back()}
+                      type="button"
+                      className="btn flex-center butt-green-out me-auto butt-xs"
+                    >
+                      <span className="material-icons-outlined">
+                        chevron_right
+                      </span>
+                      <span className="text">المرحلة السابقة</span>
+                      <div
+                        className="spinner-border spinner-border-sm text-white"
+                        role="status"
+                      ></div>
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      onClick={loadImagesHandle}
+                      className="btn flex-center butt-green ml-auto butt-sm"
+                    >
+                      <span className="text">المرحلة التالية</span>
+                      <span className="material-icons-outlined">
+                        chevron_left
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

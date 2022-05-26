@@ -39,6 +39,39 @@ const sidebarLinks = [
         name: 'الخدمات',
         icon: 'collections_bookmark',
         href: '/tw-admin/posts',
+        hasSubMenu: [
+            {
+                id: 1,
+                name: 'جميع الخدمات',
+                href: '/tw-admin/posts'
+            },
+
+            {
+                id: 2,
+                name: 'الخدمات النشطة',
+                href: '/tw-admin/posts/activates'
+            },
+            {
+                id: 4,
+                name: 'الخدمات المرفوضة',
+                href: '/tw-admin/posts/canceled'
+            },
+            {
+                id: 5,
+                name: 'الخدمات قيد الانتظار',
+                href: '/tw-admin/posts/pendings'
+            },
+            {
+                id: 6,
+                name: 'الخدمات المعطلة',
+                href: '/tw-admin/posts/pauseds'
+            },
+            {
+                id: 7,
+                name: 'الخدمات المؤرشفة',
+                href: '/tw-admin/posts/archived'
+            },
+        ]
     },
     {
         id: 166,
