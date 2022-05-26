@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout/DashboardLayout";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import Cookies from "js-cookie";
 import API from "../../../../config";
 import router from "next/router";
 import { message, notification } from "antd";
@@ -8,7 +7,6 @@ import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
 import cookies from "next-cookies";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
@@ -16,48 +14,25 @@ import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries"
 import RemoveImageModal from "@/components/removeImageModal";
 import Link from "next/link";
 
-function Medias({ query, stars }) {
+function Medias({ query, product, token }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
-    stars.data.full_path_thumbnail
+    product.full_path_thumbnail
   );
-  const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries);
+  const [galleryMedia, setGalleryMedia]: any = useState(product.galaries);
   const [isGalleryChanged, setIsGalleryChanged]: any = useState(false);
   const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
   const [removedImages, setRemovedImages] = useState([]);
-  let token = Cookies.get("token_dash");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token_dash");
   const id = query.id;
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
-  async function getProductId() {
-    try {
-      // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // if (res.status === 200) {
-      // }
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
+
+
   useEffect(() => {
     if (!token) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, []);
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [url_video, setVideourl] = useState("");
@@ -83,7 +58,7 @@ function Medias({ query, stars }) {
     imageFeature.append("thumbnail", featuredMedia[0].file);
     imageFeature.append("url_video", url_video);
     const res = await API.post(
-      `api/product/${id}/upload-thumbnail-step-four`,
+      `dashboard/products/${id}/step_four`,
       imageFeature,
       {
         headers: {
@@ -102,7 +77,7 @@ function Medias({ query, stars }) {
     );
     //galleries.append('images[]', images)
     const res: any = await API.post(
-      `api/product/${id}/upload-galaries-step-four`,
+      `dashboard/products/${id}/upload_galaries`,
       galleries,
       {
         headers: {
@@ -116,7 +91,7 @@ function Medias({ query, stars }) {
   const loadVideoUrl: any = async () => {
     try {
       const res = await API.post(
-        `api/product/${id}/product-step-four`,
+        `dashboard/products/${id}/step_four`,
         { url_video: url_video },
         {
           headers: {
@@ -127,7 +102,7 @@ function Medias({ query, stars }) {
       );
       return res;
     } catch (e) {
-      () => {};
+      () => { };
     }
   };
   const loadImagesHandle = async () => {
@@ -135,11 +110,11 @@ function Medias({ query, stars }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (isGalleryChanged && galleryMedia.size <= 0) {
@@ -180,7 +155,7 @@ function Medias({ query, stars }) {
       else if (isGalleryChanged) await uploadGallery();
       await uploadVideoUrl();
       await sendRemoveRequest();
-      router.push(`/edit-product/complete?id=${id}`);
+      router.push(`/tw-admin/posts/edit-product/complete?id=${id}`);
     } catch (error: any) {
       setLoading(false);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -255,7 +230,7 @@ function Medias({ query, stars }) {
     try {
       const promises = removedImages.map((img) =>
         API.post(
-          `api/product/${query.id}/delete_galary`,
+          `dashboard/products/${id}/delete_galary`,
           { id: img },
           {
             headers: {
@@ -280,7 +255,7 @@ function Medias({ query, stars }) {
         ogDescription="اتصل بنا - تيموورك"
       />
 
-      {token && veriedEmail && (
+      {token && (
         <div className="row justify-content-md-center my-3">
           <div className="col-md-7 pt-3">
             {isRemoveModal && (
@@ -301,7 +276,7 @@ function Medias({ query, stars }) {
               <div className="timlands-steps">
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/edit-product/overview?id=${id}`}>
+                    <Link href={`/tw-admin/psots/edit-product/overview?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -315,7 +290,7 @@ function Medias({ query, stars }) {
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/edit-product/prices?id=${id}`}>
+                    <Link href={`/tw-admin/psots/edit-product/prices?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -329,7 +304,7 @@ function Medias({ query, stars }) {
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/edit-product/description?id=${id}`}>
+                    <Link href={`/tw-admin/psots/edit-product/description?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -343,7 +318,7 @@ function Medias({ query, stars }) {
                 </div>
                 <div className="timlands-step-item active">
                   <h3 className="text">
-                    <Link href={`/edit-product/medias?id=${id}`}>
+                    <Link href={`/tw-admin/psots/edit-product/medias?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -355,9 +330,9 @@ function Medias({ query, stars }) {
                     </Link>
                   </h3>
                 </div>
-                <div className="timlands-step-item ">
+                {/* <div className="timlands-step-item ">
                   <h3 className="text">
-                    <Link href={`/edit-product/complete?id=${id}`}>
+                    <Link href={`/tw-admin/psots/edit-product/complete?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -368,7 +343,7 @@ function Medias({ query, stars }) {
                       </a>
                     </Link>
                   </h3>
-                </div>
+                </div> */}
               </div>
               {validationsGeneral.msg && (
                 <Alert type="error">{validationsGeneral.msg}</Alert>
@@ -464,7 +439,7 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
 
 export async function getServerSideProps(ctx) {
   const token = cookies(ctx).token_dash || "";
-  const uriString = `api/my_products/product/${ctx.query.id}`;
+  const uriString = `dashboard/products/${ctx.query.id}`;
   // Fetch data from external API
   const res = await API.get(uriString, {
     headers: {
@@ -472,10 +447,11 @@ export async function getServerSideProps(ctx) {
     },
   });
 
-  return { props: { query: ctx.query, stars: res.data } };
+  return { props: { query: ctx.query, product: res.data.data, token } };
 }
 export default Medias;
 Medias.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  product: PropTypes.any,
+  token: PropTypes.string
 };

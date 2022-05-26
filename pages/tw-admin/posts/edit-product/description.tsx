@@ -1,3 +1,4 @@
+import { ReactElement, useEffect, useState, useRef } from "react";
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import router from "next/router";
@@ -7,8 +8,6 @@ import { message } from "antd";
 import Layout from "@/components/Layout/DashboardLayout";
 import Cookies from "js-cookie";
 import API from "../../../../config";
-import { ReactElement, useEffect, useState } from "react";
-import useSWR from "swr";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -115,41 +114,29 @@ const Tiptap = (props: any) => {
     />
   );
 };
-function Description({ query, stars }) {
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
-  let token = Cookies.get("token_dash");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token_dash");
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+function Description({ query, product }) {
+  console.log(product)
+  const token = useRef(Cookies.get("token_dash"));
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const editor = useEditor({
     extensions: [StarterKit],
-    content: stars && stars.data.content,
+    content: product && product.content,
   });
   const buyerInstruct = useEditor({
     extensions: [StarterKit],
-    content: stars && stars.data.buyer_instruct,
+    content: product && product.buyer_instruct,
   });
+
   const html = editor && editor.getHTML();
   const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML();
-  /* async function stepFive() {
-        try {
-            const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
+  useEffect(() => {
+    if (!token) {
+      router.push("/tw-admin/login");
+      return;
+    }
+  }, [query.id])
 
-            }
-        } catch (error: any) {
-            message.error('حدث خطأ غير متوقع');
-        }
-    } */
   const formik = useFormik({
     initialValues: {
       buyer_instruct: buyerInstructhtml,
@@ -160,20 +147,20 @@ function Description({ query, stars }) {
     onSubmit: async (values) => {
       setValidationsErrors({});
       try {
-        const id = query.id;
+        const { id } = query;
         const res = await API.post(
-          `api/product/${id}/product-step-three`,
+          `dashboard/products/${id}/step_three`,
           values,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${token.current}`,
             },
           }
         );
         // Authentication was successful.
         if (res.status === 200) {
           message.success("لقد تم التحديث بنجاح");
-          router.push(`/edit-product/medias?id=${getProduct?.data.id}`);
+          router.push(`/tw-admin/posts/edit-product/medias?id=${product.id}`);
         }
       } catch (error: any) {
         if (
@@ -186,32 +173,6 @@ function Description({ query, stars }) {
       }
     },
   });
-  async function getProductId() {
-    try {
-      // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // if (res.status === 200) {
-      // }
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
-  useEffect(() => {
-    if (!token) {
-      router.push("/login");
-      return;
-    }
-    getProductId();
-  }, []);
   return (
     <>
       <MetaTags
@@ -219,7 +180,7 @@ function Description({ query, stars }) {
         metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
         ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
       />
-      {token && veriedEmail && (
+      {token  && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
             <div className="col-md-7 pt-3">
@@ -232,7 +193,7 @@ function Description({ query, stars }) {
                   <div className="timlands-steps">
                     <div className="timlands-step-item">
                       <h3 className="text">
-                        <Link href={`/edit-product/overview?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/overview?id=${id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -245,12 +206,11 @@ function Description({ query, stars }) {
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${
-                        getProduct?.data.current_step < 1 && "pe-none"
-                      }`}
+                      className={`timlands-step-item ${product.current_step < 1 && "pe-none"
+                        }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/prices?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/prices?id=${query.id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -263,12 +223,11 @@ function Description({ query, stars }) {
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item active ${
-                        getProduct?.data.current_step < 2 && "pe-none"
-                      }`}
+                      className={`timlands-step-item active ${product.current_step < 2 && "pe-none"
+                        }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/description?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/description?id=${query.id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -281,12 +240,11 @@ function Description({ query, stars }) {
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${
-                        getProduct?.data.current_step < 3 && "pe-none"
-                      }`}
+                      className={`timlands-step-item ${product.current_step < 3 && "pe-none"
+                        }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/medias?id=${id}`}>
+                        <Link href={`/edit-product/medias?id=${query.id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -298,10 +256,10 @@ function Description({ query, stars }) {
                         </Link>
                       </h3>
                     </div>
-                    <div className="timlands-step-item ">
+                   {/*  <div className="timlands-step-item ">
                       <h3 className="text">
                         <Link
-                          href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                          href={`/tw-admin/posts/edit-product/complete?id=${product.id}`}
                         >
                           <a>
                             <span className="icon-circular">
@@ -313,7 +271,7 @@ function Description({ query, stars }) {
                           </a>
                         </Link>
                       </h3>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="timlands-panel-header mt-3">
                     <div className="flex-center">
@@ -332,7 +290,7 @@ function Description({ query, stars }) {
                         <button
                           type="submit"
                           disabled={
-                            (!getProduct ? true : false) || formik.isSubmitting
+                            (!product ? true : false) || formik.isSubmitting
                           }
                           className="btn flex-center butt-green mr-auto butt-xs"
                         >
@@ -437,7 +395,7 @@ function Description({ query, stars }) {
                           <button
                             type="submit"
                             disabled={
-                              (!getProduct ? true : false) ||
+                              (!product ? true : false) ||
                               formik.isSubmitting
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
@@ -462,8 +420,9 @@ Description.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export async function getServerSideProps(ctx) {
+  console.log('serverside')
   const token = cookies(ctx).token_dash || "";
-  const uriString = `api/my_products/product/${ctx.query.id}`;
+  const uriString = `dashboard/products/${ctx.query.id}`;
   // Fetch data from external API
   const res = await API.get(uriString, {
     headers: {
@@ -471,11 +430,11 @@ export async function getServerSideProps(ctx) {
     },
   });
 
-  return { props: { query: ctx.query, stars: res.data } };
+  return { props: { query: ctx.query, product: res.data.data } };
 }
 Description.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  product: PropTypes.any,
 };
 MenuBar.propTypes = {
   editor: PropTypes.any,

@@ -1,12 +1,11 @@
 import Layout from "@/components/Layout/DashboardLayout";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Cookies from "js-cookie";
 import API from "../../../../config";
-import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
@@ -58,36 +57,86 @@ const MySelect = (props: any) => {
   );
 };
 function Overview({ query }) {
+  const [product, setProduct]: any = useState({})
+  const [categories, setCategories] = useState({})
+  const [subCategories, setSubCategories]: any = useState({})
+  const [isLoading, setIsLoading] = useState(true)
   const id = query.id;
-  let token = Cookies.get("token_dash");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token_dash");
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
-  const { data: categories, categoriesError }: any = useSWR(
-    "api/get_categories_for_add_product"
-  );
+  const token = useRef(Cookies.get("token_dash"));
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+
+  useEffect(() => {
+    if (!token) {
+      router.push('/tw-admin/login')
+      return
+    }
+    fetchCategories()
+  }, [])
+  useEffect(() => {
+    if (Object.keys(categories).length > 0)
+      fetchSubCategories()
+  }, [categories])
+  useEffect(() => {
+    if (!token) {
+      router.push("/tw-admin/login");
+      return;
+    }
+    fetchData()
+  }, [query.id])
+  const fetchCategories = async () => {
+    try {
+      const res = await API.get(`api/get_categories`)
+      setCategories(res.data.data.reduce((a, v) => ({ ...a, [v.id]: v }), {}))
+
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+  const fetchSubCategories = async () => {
+    const promises = [];
+    let temp_subCategories = {};
+    Object.keys(categories)?.forEach((key) =>
+      promises.push(API.get(`api/get_categories/${categories[key].id}`))
+    );
+    const sub_categories = await Promise.all(promises);
+    sub_categories.forEach((sub_category) => {
+      console.log(sub_category.data.data.sub_categories)
+      temp_subCategories = { ...temp_subCategories, ...sub_category.data.data.sub_categories.reduce((a, v) => ({ ...a, [v.id]: v }), {}) }
+
+    });
+    setSubCategories(temp_subCategories)
+  };
+  const fetchData = async () => {
+    try {
+      const res = await API.get(`dashboard/products/${query.id}`, {
+        headers: {
+          Authorization: `Bearer ${token.current}`
+        }
+      })
+      setProduct(res?.data?.data)
+      setIsLoading(false)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
   const formik = useFormik({
     initialValues: {
-      catetory:
-        getProduct &&
-        getProduct.data.subcategory &&
-        getProduct.data.subcategory.category &&
-        getProduct.data.subcategory.category.id,
-      title: getProduct && getProduct.data.title,
+      category:
+        product && subCategories &&
+        subCategories[product.category_id]?.parent_id,
+      title: product && product.title,
       subcategory:
-        getProduct &&
-        getProduct.data.subcategory &&
-        getProduct.data.subcategory.id,
-      tags: getProduct && getProduct.data.product_tag,
+        product &&
+        product.subcategory &&
+        product.subcategory.id,
+      tags: product && product.product_tag,
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -95,18 +144,18 @@ function Overview({ query }) {
       try {
         setValidationsErrors({});
         const res = await API.post(
-          `api/product/${id}/product-step-one`,
+          `dashboard/products/${query.id}/step_one`,
           values,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${token.current}`,
             },
           }
         );
         // Authentication was successful.
         if (res.status === 200) {
           message.success("لقد تم التحديث بنجاح");
-          router.push(`/edit-product/prices?id=${getProduct?.data?.id}`);
+          router.push(`/tw-admin/posts/edit-product/prices?id=${product?.id}`);
         }
       } catch (error: any) {
         if (
@@ -119,37 +168,8 @@ function Overview({ query }) {
       }
     },
   });
-  const { data: subCategories, subCategoriesError }: any = useSWR(
-    `api/get_categories_for_add_product/${formik.values.catetory}`
-  );
-
   if (!query) return message.error("حدث خطأ");
-  async function getProductId() {
-    try {
-      // const res: any =
-      await API.get(`api/my_products/product/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // if (res.status === 200) {
-      // }
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/myproducts");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/myproducts");
-      }
-    }
-  }
-  useEffect(() => {
-    if (!token) {
-      router.push("/login");
-      return;
-    }
-    getProductId();
-  }, []);
+  console.log(formik.values)
   return (
     <>
       <MetaTags
@@ -157,9 +177,9 @@ function Overview({ query }) {
         metaDescription="تعديل الخدمة - معلومات عامة "
         ogDescription="تعديل الخدمة - معلومات عامة"
       />
-      {token && veriedEmail && (
+      {token && (
         <div className="container-fluid">
-          {!getProduct && <div>يرجى الانتظار...</div>}
+          {isLoading && <div>يرجى الانتظار...</div>}
           <div className="row justify-content-md-center my-3">
             <div className="col-md-7 pt-3">
               <form onSubmit={formik.handleSubmit}>
@@ -171,7 +191,7 @@ function Overview({ query }) {
                   <div className="timlands-steps">
                     <div className="timlands-step-item active">
                       <h3 className="text">
-                        <Link href={`/edit-product/overview?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/overview?id=${id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -184,12 +204,11 @@ function Overview({ query }) {
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${
-                        getProduct?.data.current_step < 1 && "pe-none"
-                      }`}
+                      className={`timlands-step-item ${product?.current_step < 1 && "pe-none"
+                        }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/prices?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/prices?id=${id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -202,12 +221,11 @@ function Overview({ query }) {
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${
-                        getProduct?.data.current_step < 2 && "pe-none"
-                      }`}
+                      className={`timlands-step-item ${product?.current_step < 2 && "pe-none"
+                        }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/description?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/description?id=${id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -220,12 +238,11 @@ function Overview({ query }) {
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${
-                        getProduct?.data.current_step < 3 && "pe-none"
-                      }`}
+                      className={`timlands-step-item ${product?.current_step < 3 && "pe-none"
+                        }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/medias?id=${id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/medias?id=${id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
@@ -237,10 +254,10 @@ function Overview({ query }) {
                         </Link>
                       </h3>
                     </div>
-                    <div className="timlands-step-item ">
+                    {/* <div className="timlands-step-item ">
                       <h3 className="text">
                         <Link
-                          href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                          href={`/tw-admin/posts/edit-product/complete?id=${product.id}`}
                         >
                           <a>
                             <span className="icon-circular">
@@ -252,7 +269,7 @@ function Overview({ query }) {
                           </a>
                         </Link>
                       </h3>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="timlands-content-form">
@@ -273,7 +290,7 @@ function Overview({ query }) {
                                 " has-error")
                             }
                             autoComplete="off"
-                            disabled={!getProduct ? true : false}
+                            disabled={!product ? true : false}
                             onKeyUp={clearValidationHandle}
                             onChange={formik.handleChange}
                             value={formik.values.title}
@@ -301,27 +318,29 @@ function Overview({ query }) {
                           >
                             اختر التصنيف الرئيسي
                           </label>
-                          {categoriesError && "حدث خطأ"}
                           <select
                             id="input-catetory"
-                            name="catetory"
+                            name="category"
                             className="timlands-inputs select"
-                            disabled={!getProduct ? true : false}
+                            disabled={!product ? true : false}
                             autoComplete="off"
                             onChange={formik.handleChange}
-                            value={formik.values.catetory}
-                            //onChange={() => setmainCat(values.catetory)}
+                            value={formik.values.category}
+                            defaultValue={formik.values.category}
+                          //onChange={() => setmainCat(values.catetory)}
                           >
                             <option value="">اختر التصنيف الرئيسي</option>
                             {!categories && (
                               <option value="">يرجى الانتظار...</option>
                             )}
                             {categories &&
-                              categories.data.map((e: any) => (
-                                <option value={e.id} key={e.id}>
-                                  {e.name_ar}
+                              Object.keys(categories).map((key: any) =>
+                              (
+                                <option value={categories[key].id} key={categories[key].id}>
+                                  {categories[key].name_ar}
                                 </option>
-                              ))}
+                              )
+                              )}
                           </select>
                         </div>
                       </div>
@@ -335,7 +354,7 @@ function Overview({ query }) {
                           </label>
                           <select
                             id="input-subcategory"
-                            disabled={!getProduct ? true : false}
+                            disabled={!product ? true : false}
                             name="subcategory"
                             className={
                               "timlands-inputs select " +
@@ -348,18 +367,17 @@ function Overview({ query }) {
                             value={formik.values.subcategory}
                           >
                             <option value={0}>اختر التصنيف الفرعي</option>
-                            {subCategoriesError && (
-                              <option value="">حدث خطأ</option>
-                            )}
+
                             {!subCategories && (
                               <option value="">يرجى الانتظار...</option>
                             )}
                             {subCategories &&
-                              subCategories.data.subcategories.map((e: any) => (
-                                <option value={e.id} key={e.id}>
-                                  {e.name_ar}
-                                </option>
-                              ))}
+                              Object.keys(subCategories).filter(key => subCategories[key].parent_id == formik.values.category)
+                                .map((key: any) => (
+                                  <option value={subCategories[key].id} key={subCategories[key].id}>
+                                    {subCategories[key].name_ar}
+                                  </option>
+                                ))}
                           </select>
                           {validationsErrors && validationsErrors.subcategory && (
                             <div style={{ overflow: "hidden" }}>
@@ -379,7 +397,7 @@ function Overview({ query }) {
                       <MySelect
                         value={formik.values.tags}
                         onChange={formik.setFieldValue}
-                        disabled={!getProduct ? true : false}
+                        disabled={!product ? true : false}
                         onBlur={formik.setFieldTouched}
                       />
                       <div className="col-md-12">
@@ -388,7 +406,7 @@ function Overview({ query }) {
                           <button
                             type="submit"
                             disabled={
-                              (!getProduct ? true : false) ||
+                              (!product ? true : false) ||
                               formik.isSubmitting
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
