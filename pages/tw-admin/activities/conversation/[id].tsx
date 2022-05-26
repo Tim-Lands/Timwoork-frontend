@@ -59,15 +59,40 @@ function Single({ query }: any) {
         }
 
     }
-    const [msgText, setMsgText] = useState('')
-    const [isShowEdit, setIsShowEdit] = useState(false)
-    async function handleSubmit() {
-        console.log('submited!');
+    const editMsg = async (body) => {
+        try {
+            const res = await API.post(`dashboard/activities/message/${selectedMessageId}/update`, {
+                ...body
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token.current}`
+                }
+            })
+            if (res.status == 200) {
+                setConversation({
+                    ...conversation,
+                    data: conversation.data
+                        .map(message => message.id == selectedMessageId
+                            ? { ...message, message: body.message }
+                            : message)
+                })
+                setIsShowEdit(false)
+                notification.success({
+                    message: 'تم تعديل الرسالة بنجاح'
+                })
+
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
+    const [isShowEdit, setIsShowEdit] = useState(false)
+    console.log(conversation)
     return (
         <div className="timlands-panel">
             {isConfirmText && <ConfirmText setIsConfirmText={setIsConfirmText} text='هل تريد حقا حذف هذه الرسالة؟' handleFunc={deleteMsg} />}
-            {isShowEdit && <EditModal setIsConfirmText={setIsShowEdit} text={null} handleFunc={handleSubmit} title="التعديل على الرسالة" handleChange={setMsgText} msgValues={msgText} />}
+            {isShowEdit && <EditModal setIsConfirmText={setIsShowEdit} text={null} handleFunc={editMsg} title="التعديل على الرسالة" msgValues={conversation?.data.find(elm => elm.id == selectedMessageId).message} />}
             <div className="timlands-panel-header" title={query.id}>
                 <h2 className="title">
                     <span className="material-icons material-icons-outlined">
@@ -86,7 +111,10 @@ function Single({ query }: any) {
                                     <li key={message.id}>
                                         <span className={`item-link user-${participants[0]?.user_id == message.user.id ? 'from' : 'to'}`}>
                                             <div className="item-actions d-flex">
-                                                <button className='btn-item' type='button' onClick={() => setIsShowEdit(true)}>
+                                                <button className='btn-item' type='button' onClick={() => {
+                                                    setSelectedMessageId(message.id)
+                                                    setIsShowEdit(true)
+                                                }}>
                                                     <span className="material-icons material-icons-outlined">edit</span>
                                                 </button>
                                                 <button className='btn-item del' onClick={() => {

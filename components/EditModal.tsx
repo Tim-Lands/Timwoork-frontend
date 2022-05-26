@@ -1,8 +1,9 @@
 import { Space } from 'antd'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-function EditModal({ setIsConfirmText, text, handleFunc, title, handleChange, msgValues }): ReactElement {
+function EditModal({ setIsConfirmText, text, handleFunc, title, msgValues }): ReactElement {
+    const [msg, setMsg] = useState(msgValues)
     return (
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm'>
             <div className="modal-conferm-inner">
@@ -26,8 +27,8 @@ function EditModal({ setIsConfirmText, text, handleFunc, title, handleChange, ms
                             name="msg"
                             placeholder="نص الرسالة..."
                             className={"timlands-inputs"}
-                            onChange={handleChange}
-                            value={msgValues}
+                            onChange={e => setMsg(e.target.value)}
+                            value={msg}
                             style={{ minHeight: 120 }}
                         />
                     </div>
@@ -35,7 +36,7 @@ function EditModal({ setIsConfirmText, text, handleFunc, title, handleChange, ms
 
                 <div className="modal-conferm-footer">
                     <Space>
-                        <button className='btn butt-sm butt-green' onClick={() => handleFunc()}>تحديث المعلومات</button>
+                        <button className='btn butt-sm butt-green' onClick={() => handleFunc({ message: msg })}>تحديث المعلومات</button>
                         <button className='btn butt-sm butt-red-text' onClick={() => setIsConfirmText(false)}>إلغاء الأمر</button>
                     </Space>
                 </div>

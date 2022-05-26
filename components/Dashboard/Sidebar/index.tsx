@@ -58,11 +58,6 @@ const sidebarLinks = [
                 href: '/tw-admin/activities'
             },
             {
-                id:2,
-                name:'المعاملات المالية',
-                href:'/tw-admin/transfers'
-            },
-            {
                 id: 4,
                 name: 'رسائل البائعين والمشتريين',
                 href: '/tw-admin/activities/messages'

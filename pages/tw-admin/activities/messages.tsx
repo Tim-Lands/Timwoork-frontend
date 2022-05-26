@@ -6,6 +6,7 @@ import Link from "next/link";
 import Pagination from "react-js-pagination";
 import API from '../../../config'
 import Cookies from "js-cookie";
+import { useRouter } from 'next/router'
 
 function index() {
     const [messages, setMessages] = useState({ last_page: 1, per_page: 12, data: [] })
@@ -13,6 +14,8 @@ function index() {
     const [sentinel, setSentinel] = useState({ mount: true })
     const email = useRef(null)
     const token = useRef(Cookies.get('token_dash'))
+    const router = useRouter()
+
     useEffect(() => {
         console.log('email changed')
         fetchData()
@@ -64,7 +67,7 @@ function index() {
                                             className="timlands-inputs"
                                             onChange={(e) => email.current = (e.target.value)}
                                             onKeyDown={(e) => {
-                                                email.current = e.target.value
+                                                email.current (e.target as HTMLTextAreaElement).value
                                                 if (e.keyCode === 13)
                                                     setSentinel({ ...sentinel, mount: true })
                                             }
@@ -77,7 +80,10 @@ function index() {
                         <div className="activities-items">
                             <ul className="activities-items-list">
                                 {messages?.data?.map(message => (
-                                    <li key={message.id}>
+                                    <li key={message.id} onClick={e => {
+                                        if ((e.target as HTMLTextAreaElement).classList[0])
+                                            router.push(`/tw-admin/activities/conversation/${message.id}`)
+                                    }}>
                                         <span className="item-link">
                                             <div className="activity-item-img">
                                                 <Image src={'/avatar.png'} width={50} height={50} />

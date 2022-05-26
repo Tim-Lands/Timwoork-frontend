@@ -23,7 +23,7 @@ function index() {
     const [pageNumber, setPagenNumber]: any = useState(1)
     const [activities, setActivities]: any = useState({ data: [], last_page: 1, per_page: 12 })
     const token = useRef(Cookies.get('token_dash'))
-    const [sentinel, setSentinel] = useState({ mount: true })
+    const [sentinel,] = useState({ mount: true })
     const email = useRef(null)
     useEffect(() => {
         fetchData()
@@ -96,7 +96,7 @@ function index() {
                                     <li key={activity.id}>
                                         <span className="item-link">
                                             <div className="activity-item-img">
-                                                <Image src={'/avatar.png'} width={50} height={50} />
+                                                <Image src={activity.data.user_sender.avatar_path || activity.data.user_sender.avatar_url || '/avatar.png'} width={50} height={50} />
                                             </div>
                                             <div className="activity-item">
                                                 {ActivityData(activity)}

@@ -1,6 +1,7 @@
 import API from "../../../config";
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
+import { useRouter } from 'next/router'
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from "js-cookie";
 import { Modal, Space, Table } from "antd";
@@ -8,27 +9,54 @@ import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import Pagination from "react-js-pagination";
+const getQueryParams = (query) => {
+  return query
+    ? (/^[?#]/.test(query) ? query.slice(1) : query)
+      .split("&")
+      .reduce((params, param) => {
+        const [key, value] = param.split("=");
+        params[key] = value
+          ? decodeURIComponent(value.replace(/\+/g, " "))
+          : "";
+        return params;
+      }, {})
+    : {};
+};
 function index(): ReactElement {
-  const [postsList, setPostsList] = useState([]);
+  const [postsList, setPostsList] = useState({ last_page: 1, per_page: 10, data: [] });
+  const [pageNumber, setPageNumber] = useState(null)
   const [cause, setCause] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const token = Cookies.get("token_dash");
-
+  const router = useRouter()
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const data = postsList && postsList;
   //const data = postsList && postsList;
+  useEffect(() => {
+    if (window) {
+      const queryParams = getQueryParams(window.location.search);
+      if (queryParams?.pageNumber)
+        setPageNumber(queryParams.pageNumber)
+      else
+        setPageNumber(1)
+    }
+  }, [])
   const refreshData = async () => {
     setIsLoading(true);
     try {
+      const params = {
+        page: pageNumber
+      }
       const res: any = await API.get("dashboard/products", {
+        params,
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 200) {
+        console.log(res)
         setIsLoading(false);
-        setPostsList(res.data.data);
+        setPostsList({ last_page: res.data.data.last_page, per_page: res.data.data.per_page, data: res.data.data.data });
       }
     } catch (error) {
       setIsLoading(false);
@@ -48,7 +76,7 @@ function index(): ReactElement {
         return <span className="badge bg-success text-light">نشطة</span>;
     }
   };
-  function onChange() {}
+  function onChange() { }
   const columns: any = [
     {
       title: "العنوان",
@@ -183,8 +211,9 @@ function index(): ReactElement {
       });
   };
   useEffect(() => {
-    refreshData();
-  }, []);
+    if (pageNumber)
+      refreshData();
+  }, [pageNumber]);
   const activateProduct = async (id: any) => {
     setIsLoading(true);
     try {
@@ -226,6 +255,7 @@ function index(): ReactElement {
       setIsLoading(false);
     }
   };
+
   // Return statement.
   return (
     <>
@@ -274,10 +304,33 @@ function index(): ReactElement {
         <Table
           columns={columns}
           onChange={onChange}
-          dataSource={data}
+          dataSource={postsList.data}
+          pagination={false}
           bordered
           size="small"
         />
+        <div>
+          <hr />
+          <Pagination
+            activePage={
+              pageNumber
+            }
+            itemsCountPerPage={
+              postsList.per_page || 0
+            }
+            totalItemsCount={postsList?.per_page * postsList?.last_page}
+            onChange={(pageNumber) => {
+              router.push(`/tw-admin/posts?pageNumber=${pageNumber}`)
+              setPageNumber(pageNumber)
+            }}
+            pageRangeDisplayed={8}
+            itemClass="page-item"
+            linkClass="page-link"
+            className="productPagination"
+            firstPageText={"الصفحة الأولى"}
+            lastPageText={"الصفحة الأخيرة"}
+          />
+        </div>
         {isLoading && (
           <motion.div
             initial={{ opacity: 0, y: 29 }}
