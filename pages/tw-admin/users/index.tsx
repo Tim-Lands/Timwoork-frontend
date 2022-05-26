@@ -257,7 +257,7 @@ function index() {
             activePage={pageNumber}
             itemsCountPerPage={postsList.per_page}
             totalItemsCount={postsList.total ? postsList.total : 0}
-            onChange={() => setPageNumber((pageNO) => pageNO + 1)}
+            onChange={(page) => setPageNumber(page)}
             pageRangeDisplayed={paginationSize}
             itemClass="page-item"
             linkClass="page-link"

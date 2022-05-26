@@ -61,11 +61,7 @@ const sidebarLinks = [
                 name: 'الخدمات قيد الانتظار',
                 href: '/tw-admin/posts/pendings'
             },
-            {
-                id: 6,
-                name: 'الخدمات المعطلة',
-                href: '/tw-admin/posts/pauseds'
-            },
+       
             {
                 id: 7,
                 name: 'الخدمات المؤرشفة',

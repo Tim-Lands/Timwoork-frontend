@@ -9,11 +9,11 @@ import Pagination from "react-js-pagination";
 const ActivityData = (activity) => {
     switch (activity.data.type) {
         case 'order':
-            return <p> {activity.data.title} عنوان الخدمة  <a href={`/p/${activity.data.content.item_id}`}>{activity.data.content.title}</a> , مقدمة من <a href={`/u/${activity.user_id}`} target="_blank" rel="noreferrer"> {activity.username}</a></p>;
+            return <p> {activity?.data?.title} عنوان الخدمة  <a href={`/p/${activity?.data?.content?.item_id}`}>{activity?.data?.content?.title}</a> , مقدمة من <a href={`/u/${activity.user_id}`} target="_blank" rel="noreferrer"> {activity.username}</a></p>;
         case 'rating':
-            return <p> قام <a href=""> {activity.data.user_sender.full_name}</a> بتقييم خدمة {activity.content.slug.split('-').slice(1).join('')} المُقدمة من <a href={`/u/${activity.user.user_id}`} target='_blank' rel="noreferrer">  {activity.user.username}</a></p>
+            return <p> قام <a href=""> {activity?.data?.user_sender?.full_name}</a> بتقييم خدمة {activity?.data?.content?.slug.split('-').slice(1).join('')} المُقدمة من <a href={`/u/${activity?.user_id}`} target='_blank' rel="noreferrer">  {activity?.username}</a></p>
         case 'system':
-            return <p>إشعار من الإدارة إلى <a href={`/u/${activity.user_id}`}>{activity.username}</a> : <a href={``}>{activity.data.title}</a></p>
+            return <p>إشعار من الإدارة إلى <a href={`/u/${activity.user_id}`}>{activity.username}</a> : <a href={``}>{activity?.data?.title}</a></p>
         default:
             return activity.data.title
     }
