@@ -5161,7 +5161,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     width: 400px;
     overflow: hidden;
     border-radius: 7px;
-
+    &.md {
+      width: 550px;
+    }
+    &.lg {
+      width: 700px;
+    }
     .modal-conferm-head {
       border-bottom: 2px dashed #f6f6f6;
       margin-bottom: 9px;
@@ -5219,7 +5224,21 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     overflow: hidden;
     border-radius: 7px;
   }
-
+  &.md {
+    .modal-conferm-inner {
+      width: 550px;
+    } 
+  }
+  &.lg {
+    .modal-conferm-inner {
+      width: 700px;
+    } 
+  }
+  &.xl {
+    .modal-conferm-inner {
+      width: 850px;
+    } 
+  }
   .modal-conferm-head {
     border-bottom: 2px dashed #f6f6f6;
     margin-bottom: 9px;
