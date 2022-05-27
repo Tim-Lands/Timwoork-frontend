@@ -7,6 +7,7 @@ import { BiTrophy } from "@react-icons/all-files/bi/BiTrophy";
 import { BiBriefcase } from "@react-icons/all-files/bi/BiBriefcase";
 import { BiImage } from "@react-icons/all-files/bi/BiImage";
 import { Badge } from "antd";
+import { PRIMARY } from "../../styles/variables";
 import PropTypes from "prop-types";
 import { useRef, useEffect } from "react";
 import { useOutsideAlerter } from "../useOutsideAlerter";
@@ -139,7 +140,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color={PRIMARY} size="small">
             <p
               style={{
                 alignItems: "center",
@@ -171,7 +172,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color={PRIMARY} size="small">
             <p
               style={{
                 alignItems: "center",
@@ -203,7 +204,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color={PRIMARY} size="small">
             <p
               style={{
                 alignItems: "center",
@@ -238,7 +239,7 @@ function Menus({ darkMode, setIsMenuShowenMob, button }) {
             alignContent: "center",
           }}
         >
-          <Badge count={"قريبا"} offset={[-10, 0]} color="#475C80" size="small">
+          <Badge count={"قريبا"} offset={[-10, 0]} color={PRIMARY} size="small">
             <p
               style={{
                 alignItems: "center",

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
@@ -12,6 +12,8 @@ import Link from "next/link";
 import PropTypes from "prop-types";
 
 function Prices({ query }) {
+  const stepsView = useRef(null);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -55,6 +57,7 @@ function Prices({ query }) {
         }
     } */
   useEffect(() => {
+    stepsView.current && stepsView.current.scrollIntoView();
     if (!token) {
       router.push("/login");
       return;
@@ -71,7 +74,7 @@ function Prices({ query }) {
       {token && veriedEmail && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
-            <div className="col-md-7 pt-3">
+            <div className="col-md-8 pt-3">
               <Formik
                 isInitialValid={true}
                 initialValues={{
@@ -118,90 +121,93 @@ function Prices({ query }) {
                         "timlands-panel " + (isSubmitting ? " is-loader" : "")
                       }
                     >
-                      <div className="timlands-steps">
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <Link href={`/edit-product/overview?id=${id}`}>
-                              <a>
-                                <span className="icon-circular">
-                                  <span className="material-icons material-icons-outlined">
-                                    collections_bookmark
+                      <div className="timlands-steps-cont">
+                        <div className="timlands-steps">
+                          <div className="timlands-step-item">
+                            <h3 className="text">
+                              <Link href={`/edit-product/overview?id=${id}`}>
+                                <a>
+                                  <span className="icon-circular">
+                                    <span className="material-icons material-icons-outlined">
+                                      collections_bookmark
+                                    </span>
                                   </span>
-                                </span>
-                                معلومات عامة
-                              </a>
-                            </Link>
-                          </h3>
-                        </div>
-                        <div
-                          className={`timlands-step-item ${
-                            getProduct?.data.current_step < 1 && "pe-none"
-                          } active`}
-                        >
-                          <h3 className="text">
-                            <Link href={`/edit-product/prices?id=${id}`}>
-                              <a>
-                                <span className="icon-circular">
-                                  <span className="material-icons material-icons-outlined">
-                                    payments
+                                  معلومات عامة
+                                </a>
+                              </Link>
+                            </h3>
+                          </div>
+                          <div
+                            className={`timlands-step-item ${
+                              getProduct?.data.current_step < 1 && "pe-none"
+                            } active`}
+                            ref={stepsView}
+                          >
+                            <h3 className="text">
+                              <Link href={`/edit-product/prices?id=${id}`}>
+                                <a>
+                                  <span className="icon-circular">
+                                    <span className="material-icons material-icons-outlined">
+                                      payments
+                                    </span>
                                   </span>
-                                </span>
-                                السعر والتطويرات
-                              </a>
-                            </Link>
-                          </h3>
-                        </div>
-                        <div
-                          className={`timlands-step-item ${
-                            getProduct?.data.current_step < 2 && "pe-none"
-                          }`}
-                        >
-                          <h3 className="text">
-                            <Link href={`/edit-product/description?id=${id}`}>
-                              <a>
-                                <span className="icon-circular">
-                                  <span className="material-icons material-icons-outlined">
-                                    description
+                                  السعر والتطويرات
+                                </a>
+                              </Link>
+                            </h3>
+                          </div>
+                          <div
+                            className={`timlands-step-item ${
+                              getProduct?.data.current_step < 2 && "pe-none"
+                            }`}
+                          >
+                            <h3 className="text">
+                              <Link href={`/edit-product/description?id=${id}`}>
+                                <a>
+                                  <span className="icon-circular">
+                                    <span className="material-icons material-icons-outlined">
+                                      description
+                                    </span>
                                   </span>
-                                </span>
-                                الوصف وتعليمات المشتري
-                              </a>
-                            </Link>
-                          </h3>
-                        </div>
-                        <div
-                          className={`timlands-step-item ${
-                            getProduct?.data.current_step < 3 && "pe-none"
-                          }`}
-                        >
-                          <h3 className="text">
-                            <Link href={`/edit-product/medias?id=${id}`}>
-                              <a>
-                                <span className="icon-circular">
-                                  <span className="material-icons material-icons-outlined">
-                                    mms
+                                  الوصف وتعليمات المشتري
+                                </a>
+                              </Link>
+                            </h3>
+                          </div>
+                          <div
+                            className={`timlands-step-item ${
+                              getProduct?.data.current_step < 3 && "pe-none"
+                            }`}
+                          >
+                            <h3 className="text">
+                              <Link href={`/edit-product/medias?id=${id}`}>
+                                <a>
+                                  <span className="icon-circular">
+                                    <span className="material-icons material-icons-outlined">
+                                      mms
+                                    </span>
                                   </span>
-                                </span>
-                                مكتبة الصور والملفات
-                              </a>
-                            </Link>
-                          </h3>
-                        </div>
-                        <div className="timlands-step-item ">
-                          <h3 className="text">
-                            <Link
-                              href={`/edit-product/complete?id=${getProduct?.data.id}`}
-                            >
-                              <a>
-                                <span className="icon-circular">
-                                  <span className="material-icons material-icons-outlined">
-                                    publish
+                                  مكتبة الصور والملفات
+                                </a>
+                              </Link>
+                            </h3>
+                          </div>
+                          <div className="timlands-step-item ">
+                            <h3 className="text">
+                              <Link
+                                href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                              >
+                                <a>
+                                  <span className="icon-circular">
+                                    <span className="material-icons material-icons-outlined">
+                                      publish
+                                    </span>
                                   </span>
-                                </span>
-                                نشر الخدمة
-                              </a>
-                            </Link>
-                          </h3>
+                                  نشر الخدمة
+                                </a>
+                              </Link>
+                            </h3>
+                          </div>
                         </div>
                       </div>
                       <div className="timlands-panel-header mt-3">

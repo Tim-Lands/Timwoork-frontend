@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Explores from "../Explores";
 import { Badge } from "antd";
+import { PRIMARY } from "../../styles/variables";
 import { motion } from "framer-motion";
 import { AiOutlineShoppingCart } from "@react-icons/all-files/ai/AiOutlineShoppingCart";
 import { TiGroupOutline } from "@react-icons/all-files/ti/TiGroupOutline";
@@ -184,7 +185,7 @@ function Menus({ darkMode }) {
         </Link>
       </li>
       <li>
-        <Badge count={"قريبا"} offset={[7, 5]} color="#475C80" size="small">
+        <Badge count={"قريبا"} offset={[7, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
               fontWeight: 200,
@@ -205,7 +206,7 @@ function Menus({ darkMode }) {
         </Badge>
       </li>
       <li>
-        <Badge count={"قريبا"} offset={[3, 5]} color="#475C80" size="small">
+        <Badge count={"قريبا"} offset={[3, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
               fontWeight: 200,
@@ -227,7 +228,7 @@ function Menus({ darkMode }) {
       </li>
 
       <li>
-        <Badge count={"قريبا"} offset={[-2, 5]} color="#475C80" size="small">
+        <Badge count={"قريبا"} offset={[-2, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
               fontWeight: 200,
@@ -248,7 +249,7 @@ function Menus({ darkMode }) {
         </Badge>
       </li>
       <li>
-        <Badge count={"قريبا"} offset={[7, 5]} color="#475C80" size="small">
+        <Badge count={"قريبا"} offset={[7, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
               fontWeight: 200,

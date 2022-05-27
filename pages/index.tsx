@@ -7,7 +7,7 @@ import { Menu, Dropdown, Button } from "antd";
 import Categories from "@/components/Categories";
 import router from "next/router";
 import Head from "next/head";
-
+import { PRIMARY } from "../styles/variables";
 function Home() {
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=9&popular"
@@ -170,8 +170,8 @@ function Home() {
               height: "75px",
               borderRadius: "50%",
               padding: "0",
-              color: "#475c80",
-              borderColor: "#475c80",
+              color: PRIMARY,
+              borderColor: PRIMARY,
             }}
           >
             <i className="fa fa-comments fa-3x"></i>

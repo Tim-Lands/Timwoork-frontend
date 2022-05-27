@@ -86,7 +86,7 @@ function Complete({ query }) {
         {!getProduct && <div>يرجى الانتظار...</div>}
 
         <div className="row justify-content-md-center my-3">
-          <div className="col-md-7 pt-3">
+          <div className="col-md-9 pt-3">
             <div className={"timlands-panel"}>
               <div className="timlands-steps-cont">
                 <div className="timlands-steps">

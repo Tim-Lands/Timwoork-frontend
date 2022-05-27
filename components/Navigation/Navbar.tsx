@@ -20,7 +20,7 @@ import { FaSignInAlt, FaGlobe, FaUserPlus } from "react-icons/fa";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
-import logoIMG from "../../public/logo.png";
+import logoIMG from "../../public/newLogo.png";
 import useSWR from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
@@ -67,20 +67,22 @@ function Navbar(): ReactElement {
     forceTLS: true,
     auth: token
       ? {
-        headers: {
-          // pass the authorization token when using private channels
-          Authorization: `Bearer ${token}`,
-        },
-      }
+          headers: {
+            // pass the authorization token when using private channels
+            Authorization: `Bearer ${token}`,
+          },
+        }
       : undefined,
   });
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-  const channelChat = `presence-receiver.${userInfo && userInfo.user_details.id
-    }`;
+  const channelChat = `presence-receiver.${
+    userInfo && userInfo.user_details.id
+  }`;
   const channel = pusher.subscribe(channelChat);
 
-  const channelNotification = `presence-notify.${userInfo && userInfo.user_details.id
-    }`;
+  const channelNotification = `presence-notify.${
+    userInfo && userInfo.user_details.id
+  }`;
   const channelNoty = pusher.subscribe(channelNotification);
   const langsList = (
     <div
@@ -287,7 +289,7 @@ function Navbar(): ReactElement {
         router.reload();
       }
     } catch (error) {
-      () => { };
+      () => {};
     }
   };
   const myLoader = () => {
@@ -574,9 +576,7 @@ function Navbar(): ReactElement {
 
   return (
     <>
-      {isLogoutModal && (
-        <LogoutModal setIsLogoutModal={setIsLogoutModal} />
-      )}
+      {isLogoutModal && <LogoutModal setIsLogoutModal={setIsLogoutModal} />}
       <div
         className={"timlands-navbar-container"}
         style={{

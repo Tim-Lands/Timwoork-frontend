@@ -17,6 +17,7 @@ import RemoveImageModal from "@/components/removeImageModal";
 import Link from "next/link";
 
 function Medias({ query, stars }) {
+  const stepsView = useRef(null);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail
@@ -53,6 +54,8 @@ function Medias({ query, stars }) {
     }
   }
   useEffect(() => {
+    stepsView.current && stepsView.current.scrollIntoView();
+
     if (!token) {
       router.push("/login");
       return;
@@ -127,7 +130,7 @@ function Medias({ query, stars }) {
       );
       return res;
     } catch (e) {
-      () => { };
+      () => {};
     }
   };
   const loadImagesHandle = async () => {
@@ -135,11 +138,11 @@ function Medias({ query, stars }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (isGalleryChanged && galleryMedia.size <= 0) {
@@ -282,7 +285,7 @@ function Medias({ query, stars }) {
 
       {token && veriedEmail && (
         <div className="row justify-content-md-center my-3">
-          <div className="col-md-7 pt-3">
+          <div className="col-md-8 pt-3">
             {isRemoveModal && (
               <RemoveImageModal
                 onSubmit={onRemoveSubmit}
@@ -296,76 +299,78 @@ function Medias({ query, stars }) {
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
             <div className={"timlands-panel" + (loading ? " is-loader" : "")}>
-              <div className="timlands-steps">
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <Link href={`/edit-product/overview?id=${id}`}>
-                      <a>
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            collections_bookmark
+              <div className="timlands-steps-cont">
+                <div className="timlands-steps">
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <Link href={`/edit-product/overview?id=${id}`}>
+                        <a>
+                          <span className="icon-circular">
+                            <span className="material-icons material-icons-outlined">
+                              collections_bookmark
+                            </span>
                           </span>
-                        </span>
-                        معلومات عامة
-                      </a>
-                    </Link>
-                  </h3>
-                </div>
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <Link href={`/edit-product/prices?id=${id}`}>
-                      <a>
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            payments
+                          معلومات عامة
+                        </a>
+                      </Link>
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <Link href={`/edit-product/prices?id=${id}`}>
+                        <a>
+                          <span className="icon-circular">
+                            <span className="material-icons material-icons-outlined">
+                              payments
+                            </span>
                           </span>
-                        </span>
-                        السعر والتطويرات
-                      </a>
-                    </Link>
-                  </h3>
-                </div>
-                <div className="timlands-step-item">
-                  <h3 className="text">
-                    <Link href={`/edit-product/description?id=${id}`}>
-                      <a>
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            description
+                          السعر والتطويرات
+                        </a>
+                      </Link>
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item">
+                    <h3 className="text">
+                      <Link href={`/edit-product/description?id=${id}`}>
+                        <a>
+                          <span className="icon-circular">
+                            <span className="material-icons material-icons-outlined">
+                              description
+                            </span>
                           </span>
-                        </span>
-                        الوصف وتعليمات المشتري
-                      </a>
-                    </Link>
-                  </h3>
-                </div>
-                <div className="timlands-step-item active">
-                  <h3 className="text">
-                    <Link href={`/edit-product/medias?id=${id}`}>
-                      <a>
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            mms
+                          الوصف وتعليمات المشتري
+                        </a>
+                      </Link>
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item active" ref={stepsView}>
+                    <h3 className="text">
+                      <Link href={`/edit-product/medias?id=${id}`}>
+                        <a>
+                          <span className="icon-circular">
+                            <span className="material-icons material-icons-outlined">
+                              mms
+                            </span>
                           </span>
-                        </span>
-                        مكتبة الصور والملفات
-                      </a>
-                    </Link>
-                  </h3>
-                </div>
-                <div className="timlands-step-item ">
-                  <h3 className="text">
-                    <Link href={`/edit-product/complete?id=${id}`}>
-                      <a>
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            publish
+                          مكتبة الصور والملفات
+                        </a>
+                      </Link>
+                    </h3>
+                  </div>
+                  <div className="timlands-step-item ">
+                    <h3 className="text">
+                      <Link href={`/edit-product/complete?id=${id}`}>
+                        <a>
+                          <span className="icon-circular">
+                            <span className="material-icons material-icons-outlined">
+                              publish
+                            </span>
                           </span>
-                        </span>
-                        نشر الخدمة
-                      </a>
-                    </Link>
-                  </h3>
+                          نشر الخدمة
+                        </a>
+                      </Link>
+                    </h3>
+                  </div>
                 </div>
               </div>
               {validationsGeneral.msg && (
