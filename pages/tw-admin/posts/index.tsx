@@ -4,12 +4,13 @@ import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from "js-cookie";
-import { Modal, Space, Table } from "antd";
+import { Space, Table } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Pagination from "react-js-pagination";
+import RejectProductCause from "@/components/RejectProductCause";
 const getQueryParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query)
@@ -32,7 +33,6 @@ function index(): ReactElement {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const token = Cookies.get("token_dash");
   const router = useRouter()
-  const [validationsErrors, setValidationsErrors]: any = useState({});
   //const data = postsList && postsList;
   useEffect(() => {
     if (window) {
@@ -60,9 +60,6 @@ function index(): ReactElement {
       }
     } catch (error) {
       setIsLoading(false);
-      if (error.response && error.response.data && error.response.data.errors) {
-        setValidationsErrors(error.response.data.errors);
-      }
     }
   };
 
@@ -165,6 +162,13 @@ function index(): ReactElement {
                 تعديل
               </a>
             </Link>
+            <button
+              title="إرسال إشعار"
+              className="btn butt-xs2 butt-orange"
+              //onClick={() => setShowReject(true)}
+            >
+              إرسال إشعار
+            </button>
           </Space>
         );
       },
@@ -261,39 +265,15 @@ function index(): ReactElement {
     <>
       <div className="timlands-panel">
         <div className="timlands-panel-header">
-          <Modal
-            title="Basic Modal"
-            visible={isModalVisible}
-            onOk={() => rejectProduct()}
-            onCancel={() => setIsModalVisible(false)}
-            okText={""}
-          >
-            <div className="timlands-form">
-              <label className="label-block" htmlFor="cause">
-                أكتب سبب رفض الخدمة
-              </label>
-              <textarea
-                id="cause"
-                name="cause"
-                value={cause}
-                onChange={(e) => setCause(e.target.value)}
-                placeholder="أكتب سبب رفض الخدمة"
-                className="timlands-inputs"
-                autoComplete="off"
-              />
-              {validationsErrors && validationsErrors.cause && (
-                <div style={{ overflow: "hidden" }}>
-                  <motion.div
-                    initial={{ y: -70, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    className="timlands-form-note form-note-error"
-                  >
-                    <p className="text">{validationsErrors.cause[0]}</p>
-                  </motion.div>
-                </div>
-              )}
-            </div>
-          </Modal>
+          {isModalVisible &&
+            <RejectProductCause
+              setIsConfirmText={setIsModalVisible}
+              handleFunc={() => rejectProduct()}
+              title="سبب الرفض"
+              msg={cause}
+              setMsg={(e) => setCause(e.target.value)}
+            />
+          }
           <h2 className="title">
             <span className="material-icons material-icons-outlined">
               collections_bookmark

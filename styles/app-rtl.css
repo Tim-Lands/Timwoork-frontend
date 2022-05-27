@@ -4967,6 +4967,12 @@ h3 {
   padding: 7px 0;
   border-bottom: 1px solid #f4f4f4;
   margin-bottom: 17px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .timlands-panel .timlands-panel-header .title a {
