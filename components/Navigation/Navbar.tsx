@@ -20,7 +20,7 @@ import { FaSignInAlt, FaGlobe, FaUserPlus } from "react-icons/fa";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
-import logoIMG from "../../public/newLogo.png";
+import logoIMG from "../../public/logo.png";
 import useSWR from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";

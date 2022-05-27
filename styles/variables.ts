@@ -1,2 +1,2 @@
-const PRIMARY = "#3db6fe";
+const PRIMARY = "#475C80";
 export { PRIMARY };

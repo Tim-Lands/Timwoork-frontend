@@ -7,7 +7,7 @@ import { useOutsideAlerter } from "./useOutsideAlerter";
 import { Result } from "antd";
 //import Typical from 'react-typical';
 import bgIMG from "../styles/5313770.jpg";
-import heroIMG from "../public/hero2.png";
+import heroIMG from "../public/hero3.png";
 import Image from "next/image";
 import InfiniteScroll from "react-infinite-scroll-component";
 
