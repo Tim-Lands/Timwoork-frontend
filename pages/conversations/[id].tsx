@@ -592,17 +592,20 @@ function linkify(text, query) {
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
   return text.replace(urlRegex, function (url) {
     const start = url.startsWith("http") || url.startsWith("https");
-    console.log(start);
     let newUrl = url;
     newUrl = !start ? "https://" + url : url;
-    return (
-      '<a href="/redirect/f?url=' +
-      newUrl +
-      `&*conversations/${query.id}` +
-      '" target="_blank">' +
-      url +
-      "</a>"
-    );
+    if (newUrl.startsWith("https://timwoork")) {
+      return '<a href="' + newUrl + '" target="_blank">' + url + "</a>";
+    } else {
+      return (
+        '<a href="/redirect/f?url=' +
+        newUrl +
+        `&*conversations/${query.id}` +
+        '" target="_blank">' +
+        url +
+        "</a>"
+      );
+    }
   });
 }
 Conversation.getLayout = function getLayout(page: any): ReactElement {
