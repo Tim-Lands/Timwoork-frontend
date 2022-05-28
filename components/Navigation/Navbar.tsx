@@ -4,6 +4,7 @@ import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { FiSettings } from "react-icons/fi";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import Conversations from "./chats";
 import {
   MdOutlineAccountBalanceWallet,
   MdOutlineInventory2,
@@ -36,6 +37,9 @@ import LastSeen from "../LastSeen";
 import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
+  const { data: conversationsList }: any = useSWR(
+    `api/conversations?paginate=10  &page=1`
+  );
   const [size, setSize] = useState(10000);
   const [visible, setVisible] = useState(false);
   const [isShowenLangs, setIsShowenLangs] = useState(false);
@@ -756,20 +760,22 @@ function Navbar(): ReactElement {
                       )}
                       {veriedEmail && (
                         <li className="right-butts-icon">
-                          <Tooltip placement="bottom" title="صندوق الرسائل">
-                            <Link href="/conversations">
-                              <a>
-                                <Badge count={countMsg} offset={[2, -1]}>
-                                  <MdOutlineMailOutline
-                                    style={{
-                                      fontSize: size > 450 ? 22 : 16,
-                                      color: "#666",
-                                    }}
-                                  />
-                                </Badge>
-                              </a>
-                            </Link>
-                          </Tooltip>
+                          <Dropdown
+                            overlay={<Conversations data={conversationsList} />}
+                            placement="bottomLeft"
+                            trigger={["click"]}
+                          >
+                            <a>
+                              <Badge count={countMsg} offset={[2, -1]}>
+                                <MdOutlineMailOutline
+                                  style={{
+                                    fontSize: size > 450 ? 22 : 16,
+                                    color: "#666",
+                                  }}
+                                />
+                              </Badge>
+                            </a>
+                          </Dropdown>
                         </li>
                       )}
                       <li className="right-butts-icon">

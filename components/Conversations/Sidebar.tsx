@@ -6,9 +6,11 @@ import PropTypes from "prop-types";
 import Pagination from "react-js-pagination";
 
 function Sidebar({ RouterId }) {
-  const [pageNumber, setPageNumber]: any = useState(1)
-  const { data: conversationsList }: any = useSWR(`api/conversations?paginate=6&page=${pageNumber}`);
-  console.log(conversationsList)
+  const [pageNumber, setPageNumber]: any = useState(1);
+  const { data: conversationsList }: any = useSWR(
+    `api/conversations?paginate=6&page=${pageNumber}`
+  );
+
   return (
     <div className="conversations-sidebar">
       <div className="conversations-items">
@@ -135,7 +137,9 @@ function Sidebar({ RouterId }) {
         <Pagination
           activePage={pageNumber}
           itemsCountPerPage={6}
-          totalItemsCount={conversationsList?.data ? 6 * conversationsList.data.last_page : 0}
+          totalItemsCount={
+            conversationsList?.data ? 6 * conversationsList.data.last_page : 0
+          }
           onChange={(page) => {
             setPageNumber(page);
           }}
