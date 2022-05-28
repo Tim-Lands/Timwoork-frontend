@@ -19,6 +19,7 @@ function Home() {
     "api/filter?paginate=9&sort=count_buying,desc"
   );
   const { data: categories }: any = useSWR(`api/get_categories`);
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -77,6 +78,7 @@ function Home() {
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
       <Hero />
+
       {/* <Swiper
         slidesPerView={1}
         spaceBetween={0}
@@ -181,6 +183,7 @@ function Home() {
     </>
   );
 }
+
 Home.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

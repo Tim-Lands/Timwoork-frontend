@@ -1,5 +1,6 @@
 @import "variables";
 @import "alerts-rtl";
+@import "redirect-rtl";
 @import "forms-rtl";
 @import "buttons-rtl";
 @import "navbar-rtl";
@@ -5230,17 +5231,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.md {
     .modal-conferm-inner {
       width: 550px;
-    } 
+    }
   }
   &.lg {
     .modal-conferm-inner {
       width: 700px;
-    } 
+    }
   }
   &.xl {
     .modal-conferm-inner {
       width: 850px;
-    } 
+    }
   }
   .modal-conferm-head {
     border-bottom: 2px dashed #f6f6f6;

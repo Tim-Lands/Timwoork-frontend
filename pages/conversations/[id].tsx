@@ -15,6 +15,7 @@ import Loading from "@/components/Loading";
 
 function Conversation({ query }) {
   let token = Cookies.get("token");
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();
@@ -263,8 +264,9 @@ function Conversation({ query }) {
   return (
     <>
       <MetaTags
-        title={`المحادثات - ${conversationsSingle && conversationsSingle.data.title
-          }`}
+        title={`المحادثات - ${
+          conversationsSingle && conversationsSingle.data.title
+        }`}
         metaDescription={"مبيعاتي - تيموورك"}
         ogDescription={"مبيعاتي - تيموورك"}
       />
@@ -283,8 +285,7 @@ function Conversation({ query }) {
                 <div className="conversations-list">
                   <div className="conversations-title">
                     <h4 className="title">
-                      {conversationsSingle &&
-                        conversationsSingle.data.title}
+                      {conversationsSingle && conversationsSingle.data.title}
                     </h4>
                   </div>
                   <ul
@@ -304,7 +305,7 @@ function Conversation({ query }) {
                           key={1}
                           className={
                             (profileInfo &&
-                              profileInfo.user_details.id == item.user.id
+                            profileInfo.user_details.id == item.user.id
                               ? ""
                               : "recieved ") +
                             "d-flex message-item " +
@@ -376,32 +377,28 @@ function Conversation({ query }) {
                                   fontWeight: 200,
                                 }}
                               >
-                                {item.attachments.map(
-                                  (att: any, i: number) => (
-                                    <div className="att-item" key={att.id}>
-                                      <a
-                                        href={att.full_path}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                      >
-                                        {switchFileTypes(att.mime_type)}{" "}
-                                        تحميل الملف {i + 1}#
-                                      </a>
-                                    </div>
-                                  )
-                                )}
+                                {item.attachments.map((att: any, i: number) => (
+                                  <div className="att-item" key={att.id}>
+                                    <a
+                                      href={att.full_path}
+                                      rel="noreferrer"
+                                      target="_blank"
+                                    >
+                                      {switchFileTypes(att.mime_type)} تحميل
+                                      الملف {i + 1}#
+                                    </a>
+                                  </div>
+                                ))}
                               </div>
                             )}
-                            <p
-                              className="text2"
-                              style={{ margin: 0, wordBreak: "break-word" }}
-                            >
-                              {item.message}
-                            </p>
 
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: linkify(item.message, query),
+                              }}
+                            />
                             {profileInfo &&
-                              profileInfo.user_details.id ==
-                              item.user.id && (
+                              profileInfo.user_details.id == item.user.id && (
                                 <>
                                   {item.read_at && (
                                     <span className="readed is-readed">
@@ -438,9 +435,7 @@ function Conversation({ query }) {
                           disabled={sendMessageLoading}
                           name="message_type"
                           id="message_type"
-                          onChange={(e: any) =>
-                            setMessageType(e.target.value)
-                          }
+                          onChange={(e: any) => setMessageType(e.target.value)}
                         >
                           <option value="0">نص عادي</option>
                           <option value="1">تعليمات</option>
@@ -591,6 +586,24 @@ function Conversation({ query }) {
       </div>
     </>
   );
+}
+function linkify(text, query) {
+  const urlRegex =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  return text.replace(urlRegex, function (url) {
+    const start = url.startsWith("http") || url.startsWith("https");
+    console.log(start);
+    let newUrl = url;
+    newUrl = !start ? "https://" + url : url;
+    return (
+      '<a href="/redirect/f?url=' +
+      newUrl +
+      `&*conversations/${query.id}` +
+      '" target="_blank">' +
+      url +
+      "</a>"
+    );
+  });
 }
 Conversation.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
