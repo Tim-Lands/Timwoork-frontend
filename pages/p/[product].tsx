@@ -212,11 +212,11 @@ function Single({ query, stars, errorFetch }) {
     }
   }
   const addToCart = async () => {
-    const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
-    if (!veriedEmail) {
-      router.push("/email/verification");
-      return;
-    }
+    // const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+    // if (!veriedEmail) {
+    //   router.push("/email/verification");
+    //   return;
+    // }
     if (token) {
       setIsLoadingCart(true);
       try {
