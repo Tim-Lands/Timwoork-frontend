@@ -436,7 +436,7 @@ function Single({ query, stars }) {
                           </div>
                         </div>
                         <div className="single-comments-body">
-                          <Comments comments={ProductData.data.ratings} />
+                          <Comments canReply={true} comments={ProductData.data.ratings} />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">لاتوجد آراء المشتريين</p>
