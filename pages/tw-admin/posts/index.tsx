@@ -31,7 +31,7 @@ function index(): ReactElement {
   const [cause, setCause] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const token = Cookies.get("token_dash");
@@ -82,10 +82,11 @@ function index(): ReactElement {
       title: "العنوان",
       dataIndex: "",
       render: (profile: any) => (
-        <Link href={`/tw-admin/posts/${profile.id}`}>
+        <Link href={`/tw-admin/posts/${profile.slug}`}>
           <a>{profile.title}</a>
         </Link>
-      ),
+      )
+      ,
       width: 390,
     },
     {

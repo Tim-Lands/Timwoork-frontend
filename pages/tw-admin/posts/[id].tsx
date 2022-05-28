@@ -24,6 +24,7 @@ const properties = {
 function Id({ query, stars, errorFetch }) {
 
     const { data: ProductData, errorLoad }: any = useSWR(`dashboard/product/${query.id}`)
+    
     useEffect(() => {
         if (errorFetch) {
             router.push('/404')

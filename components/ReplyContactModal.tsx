@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-export const MenuBar = ({ editor }) => {
+export const MenuBar = ({ editor }:any) => {
     if (!editor) {
         return null;
     }
@@ -279,4 +279,5 @@ ReplyContactModal.propTypes = {
     setIsConfirmText: PropTypes.func,
     title: PropTypes.string,
     handleFunc: PropTypes.func,
+    editor: PropTypes.any
 };

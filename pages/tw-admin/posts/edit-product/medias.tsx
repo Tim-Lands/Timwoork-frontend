@@ -155,7 +155,7 @@ function Medias({ query, product, token }) {
       else if (isGalleryChanged) await uploadGallery();
       await uploadVideoUrl();
       await sendRemoveRequest();
-      router.push(`/tw-admin/posts/edit-product/complete?id=${id}`);
+      router.push(`/tw-admin/posts`);
     } catch (error: any) {
       setLoading(false);
       if (error.response && error.response.data && error.response.data.errors) {

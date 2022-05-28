@@ -53,7 +53,7 @@ const MySelect = (props: any) => {
     );
 };
 
-export const MenuBar = ({ editor }) => {
+export const MenuBar = ({ editor }: any) => {
     if (!editor) {
         return null;
     }
@@ -157,7 +157,7 @@ const Tiptap = (props: any) => {
 function SendNotification({ setIsConfirmText, title }): ReactElement {
     const [toState, setToState] = useState('')
     const [fromState, setFromState] = useState('')
-    
+
     const [messageState, setMessageState] = useState('')
     const [subject, setSubject] = useState('')
     const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -218,7 +218,7 @@ function SendNotification({ setIsConfirmText, title }): ReactElement {
                                 <MySelect
                                     value={toState}
                                     onChange={(e: any) => setToState(e)}
-                                    //onBlur={formik.setFieldTouched}
+                                //onBlur={formik.setFieldTouched}
                                 />
                                 {validationsErrors && validationsErrors.toState && (
                                     <div style={{ overflow: "hidden" }}>
@@ -317,4 +317,5 @@ SendNotification.propTypes = {
     text: PropTypes.string,
     title: PropTypes.string,
     handleFunc: PropTypes.func,
+    editor: PropTypes.any
 };
