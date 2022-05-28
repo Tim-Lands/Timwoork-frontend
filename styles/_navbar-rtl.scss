@@ -606,9 +606,6 @@
         gap: 2px;
       }
     }
-    @media (max-width: 500px) {
-      transform: scale(0.8);
-    }
   }
   .footer {
     background-color: white;
@@ -625,5 +622,8 @@
         color: $primary;
       }
     }
+  }
+  @media (max-width: 500px) {
+    transform: scale(0.8);
   }
 }

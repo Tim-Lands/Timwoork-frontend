@@ -1502,13 +1502,6 @@
   gap: 2px;
 }
 
-@media (max-width: 500px) {
-  .navbar-conversations-container .header {
-    -webkit-transform: scale(0.8);
-            transform: scale(0.8);
-  }
-}
-
 .navbar-conversations-container .footer {
   background-color: white;
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -1527,6 +1520,13 @@
 
 .navbar-conversations-container .footer button:hover {
   color: #475c80;
+}
+
+@media (max-width: 500px) {
+  .navbar-conversations-container {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
 }
 
 .timlands-post-item {
