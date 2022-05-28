@@ -188,8 +188,7 @@ function Single({ query, stars, errorFetch }) {
     setCreateConversationLoading(true);
     try {
       const res = await API.post(
-        `api/product/${
-          ProductData && ProductData.data.id
+        `api/product/${ProductData && ProductData.data.id
         }/conversations/create`,
         {
           initial_message: message,
@@ -454,9 +453,8 @@ function Single({ query, stars, errorFetch }) {
                         <span style={{ marginInline: 5 }}>||</span>
                         <small>
                           <Link
-                            href={`/category/${
-                              ProductData && ProductData.data.subcategory.id
-                            }`}
+                            href={`/category/${ProductData && ProductData.data.subcategory.id
+                              }`}
                           >
                             <a
                               style={{ marginInline: 5 }}
@@ -598,19 +596,19 @@ function Single({ query, stars, errorFetch }) {
                                   </span>{" "}
                                   {ProductData &&
                                     ProductData.data.profile_seller.level !==
-                                      null &&
+                                    null &&
                                     ProductData.data.profile_seller.level
                                       .name_ar}
                                 </li>
                                 {ProductData.data.profile_seller.profile
                                   .country !== null && (
-                                  <li>
-                                    <span className="material-icons material-icons-outlined">
-                                      place
-                                    </span>{" "}
-                                    الجزائر
-                                  </li>
-                                )}
+                                    <li>
+                                      <span className="material-icons material-icons-outlined">
+                                        place
+                                      </span>{" "}
+                                      الجزائر
+                                    </li>
+                                  )}
                               </ul>
                               <div className="seller-info-butts d-flex">
                                 <Link
@@ -631,7 +629,7 @@ function Single({ query, stars, errorFetch }) {
                                   <button
                                     className="btn butt-green butt-sm flex-center"
                                     disabled={createConversationLoading}
-                                    onClick={() => userInfo?setIsModalVisible(true):router.push('/login')}
+                                    onClick={() => userInfo ? setIsModalVisible(true) : router.push('/login')}
                                   >
                                     <i className="material-icons material-icons-outlined">
                                       email
@@ -665,7 +663,7 @@ function Single({ query, stars, errorFetch }) {
                           </div>
                         </div>
                         <div className="single-comments-body">
-                          <Comments comments={ProductData.data.ratings} />
+                          <Comments canReply={userInfo.user_details.profile.id == ProductData.data.profile_seller.id} comments={ProductData.data.ratings} />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">لاتوجد آراء المشتريين</p>

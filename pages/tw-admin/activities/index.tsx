@@ -23,8 +23,8 @@ function index() {
     const [pageNumber, setPagenNumber]: any = useState(1)
     const [activities, setActivities]: any = useState({ data: [], last_page: 1, per_page: 12 })
     const token = useRef(Cookies.get('token_dash'))
-    const [sentinel,] = useState({ mount: true })
-    const email = useRef(null)
+    const [sentinel, setSentinel] = useState({ mount: true })
+    const search = useRef(null)
     useEffect(() => {
         fetchData()
     }, [pageNumber, sentinel])
@@ -32,7 +32,7 @@ function index() {
         try {
             const params = {
                 page: pageNumber,
-                email: email.current
+                search: search.current
             }
             const data = await API.get(`dashboard/activities/get_all_notifications`, {
                 params,
@@ -69,18 +69,18 @@ function index() {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-xl-8">
-                        {/* <div className="py-3">
+                         <div className="py-3">
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="timlands-form">
                                         <input
                                             id="input-sQuery"
                                             name="sQuery"
-                                            placeholder="إكتب بريد المُستخدم للبحث."
+                                            placeholder=" للبحث في الجدول ."
                                             className="timlands-inputs"
-                                            onChange={(e) => email.current = (e.target.value)}
+                                            onChange={(e) => search.current = (e.target.value)}
                                             onKeyDown={(e) => {
-                                                email.current = e.target.value
+                                                search.current = (e.target as HTMLTextAreaElement).value
                                                 if (e.keyCode === 13)
                                                     setSentinel({ ...sentinel, mount: true })
                                             }
@@ -89,7 +89,7 @@ function index() {
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div> 
                         <div className="activities-items">
                             <ul className="activities-items-list">
                                 {activities?.data?.map(activity => (

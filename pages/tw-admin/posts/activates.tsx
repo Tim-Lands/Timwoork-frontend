@@ -321,7 +321,7 @@ function ActivatesPost(): ReactElement {
             }
             totalItemsCount={postsList?.per_page * postsList?.last_page}
             onChange={(pageNumber) => {
-              router.push(`/tw-admin/posts?pageNumber=${pageNumber}`)
+              router.push(`/tw-admin/posts/activates?pageNumber=${pageNumber}`)
               setPageNumber(pageNumber)
             }}
             pageRangeDisplayed={8}

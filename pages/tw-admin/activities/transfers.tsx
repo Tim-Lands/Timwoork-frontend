@@ -31,17 +31,17 @@ function index() {
     const [pageNumber, setPageNumber]: any = useState(1)
     const [transfers, setTransfers]: any = useState({ data: [], last_page: 1, per_page: 12 })
     const [sentinel, setSentinel] = useState({ mount: true })
-    const email = useRef(null)
+    const search = useRef(null)
     const token = useRef(Cookies.get('token_dash'))
     useEffect(() => {
         fetchData()
-    }, [pageNumber,sentinel])
+    }, [pageNumber, sentinel])
     const fetchData = async () => {
         console.log('fetching')
         try {
             const params = {
                 page: pageNumber,
-                email: email.current
+                search: search.current
             }
             const data = await API.get(`dashboard/activities/all_financial_transactions`, {
                 params,
@@ -80,18 +80,18 @@ function index() {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-xl-12">
-                    <div className="py-3">
+                        <div className="py-3">
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="timlands-form">
                                         <input
                                             id="input-sQuery"
                                             name="sQuery"
-                                            placeholder="إكتب بريد المُستخدم للبحث."
+                                            placeholder=" للبحث في الجدول ."
                                             className="timlands-inputs"
-                                            onChange={(e) => email.current = (e.target.value)}
+                                            onChange={(e) => search.current = (e.target.value)}
                                             onKeyDown={(e) => {
-                                                email.current =(e.target as HTMLTextAreaElement).value
+                                                search.current = (e.target as HTMLTextAreaElement).value
                                                 if (e.keyCode === 13)
                                                     setSentinel({ ...sentinel, mount: true })
                                             }
@@ -129,7 +129,7 @@ function index() {
                                                         </a>
                                                     </Link>
                                                 </td>
-                                                <td>{transfer.created_at.substring(0,10)}</td>
+                                                <td>{transfer.created_at.substring(0, 10)}</td>
                                             </tr>
                                         ))}
                                     </tbody>

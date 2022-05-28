@@ -276,7 +276,7 @@ function Medias({ query, product, token }) {
               <div className="timlands-steps">
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/tw-admin/psots/edit-product/overview?id=${id}`}>
+                    <Link href={`/tw-admin/posts/edit-product/overview?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -290,7 +290,7 @@ function Medias({ query, product, token }) {
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/tw-admin/psots/edit-product/prices?id=${id}`}>
+                    <Link href={`/tw-admin/posts/edit-product/prices?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -304,7 +304,7 @@ function Medias({ query, product, token }) {
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/tw-admin/psots/edit-product/description?id=${id}`}>
+                    <Link href={`/tw-admin/posts/edit-product/description?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -318,7 +318,7 @@ function Medias({ query, product, token }) {
                 </div>
                 <div className="timlands-step-item active">
                   <h3 className="text">
-                    <Link href={`/tw-admin/psots/edit-product/medias?id=${id}`}>
+                    <Link href={`/tw-admin/posts/edit-product/medias?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
@@ -332,7 +332,7 @@ function Medias({ query, product, token }) {
                 </div>
                 {/* <div className="timlands-step-item ">
                   <h3 className="text">
-                    <Link href={`/tw-admin/psots/edit-product/complete?id=${id}`}>
+                    <Link href={`/tw-admin/posts/edit-product/complete?id=${id}`}>
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">

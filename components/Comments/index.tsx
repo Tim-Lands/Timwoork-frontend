@@ -1,7 +1,7 @@
 import CommentPost from './CommentPost'
 import PropTypes from "prop-types";
 
-function index({ comments }) {
+function index({ comments,canReply }) {
 
     return (
         <div className="timwoork-single-comments">
@@ -18,7 +18,10 @@ function index({ comments }) {
                                     reply={e.reply}
                                     time={e.created_at}
                                     author={e.user.profile.first_name + " " + e.user.profile.last_name}
-                                    content={e.comment} />
+                                    content={e.comment} 
+                                    canReply={canReply}
+
+                                    />
                             ))}
                         </ul>
                     </div>
