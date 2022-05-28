@@ -8080,6 +8080,14 @@ h3 {
   border-radius: 7px;
 }
 
+.overlay-fixed .modal-conferm.md {
+  width: 550px;
+}
+
+.overlay-fixed .modal-conferm.lg {
+  width: 700px;
+}
+
 .overlay-fixed .modal-conferm .modal-conferm-head {
   border-bottom: 2px dashed #f6f6f6;
   margin-bottom: 9px;
@@ -8142,6 +8150,18 @@ h3 {
   width: 400px;
   overflow: hidden;
   border-radius: 7px;
+}
+
+.modal-conferm.md .modal-conferm-inner {
+  width: 550px;
+}
+
+.modal-conferm.lg .modal-conferm-inner {
+  width: 700px;
+}
+
+.modal-conferm.xl .modal-conferm-inner {
+  width: 850px;
 }
 
 .modal-conferm .modal-conferm-head {

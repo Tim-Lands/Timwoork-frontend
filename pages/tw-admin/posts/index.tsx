@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Pagination from "react-js-pagination";
 import RejectProductCause from "@/components/RejectProductCause";
+import SendNotification from "@/components/SendNotification";
 const getQueryParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query)
@@ -29,6 +30,8 @@ function index(): ReactElement {
   const [pageNumber, setPageNumber] = useState(null)
   const [cause, setCause] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
+  
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const token = Cookies.get("token_dash");
@@ -165,7 +168,7 @@ function index(): ReactElement {
             <button
               title="إرسال إشعار"
               className="btn butt-xs2 butt-orange"
-              //onClick={() => setShowReject(true)}
+              onClick={() => setIsNotifyModalVisible(true)}
             >
               إرسال إشعار
             </button>
@@ -274,6 +277,7 @@ function index(): ReactElement {
               setMsg={(e) => setCause(e.target.value)}
             />
           }
+          {isNotifyModalVisible && <SendNotification setIsConfirmText={setIsNotifyModalVisible} title="إرسال اشعار للمستخدمين" />}
           <h2 className="title">
             <span className="material-icons material-icons-outlined">
               collections_bookmark

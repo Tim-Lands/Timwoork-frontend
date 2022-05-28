@@ -78,7 +78,7 @@ function Id({ query }): ReactElement {
                                 </h1>
                                 <p className="meta" style={{ display: 'flex', alignItems: 'center', fontSize: 12, color: '#777', fontWeight: 200 }}>
                                     <span className="material-icons material-icons-outlined ml-1" style={{ fontSize: 15 }}>
-                                        collections_bookmark
+                                    schedule
                                     </span>
                                     <LastSeen date={'2022-03-13T13:12:06.000000Z'} />
                                 </p>

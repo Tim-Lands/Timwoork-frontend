@@ -4,6 +4,54 @@ import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import CreatableSelect from "react-select/creatable";
+import API from "../config";
+
+const MySelect = (props: any) => {
+    const [dataTags, setDataTags] = useState([]);
+    const [isLoadingTags, setIsLoadingTags] = useState(false);
+    const getdataTags = async (tag: string) => {
+        setIsLoadingTags(true);
+        try {
+            const res: any = await API.get(`api/tags/filter?tag=${tag}`);
+            if (res.status === 200) {
+                setIsLoadingTags(false);
+                setDataTags(res.data.data.data);
+            }
+        } catch (error) {
+            setIsLoadingTags(false);
+        }
+    };
+    const handleChange = (value) => {
+        props.onChange("tags", value);
+    };
+    const handleBlur = () => {
+        props.onBlur("tags", true);
+    };
+    return (
+        <div
+            className="select-tags-form"
+            style={{ margin: "1rem 0", position: "relative", maxWidth: 1300 }}
+        >
+            {isLoadingTags && (
+                <span className="spinner-border spinner-border-sm" role="status"></span>
+            )}
+            <CreatableSelect
+                id="color"
+                options={dataTags}
+                onKeyDown={(e: any) => {
+                    if (e.target.value) {
+                        getdataTags(e.target.value);
+                    }
+                }}
+                isMulti={true}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={props.value}
+            />
+        </div>
+    );
+};
 
 export const MenuBar = ({ editor }) => {
     if (!editor) {
@@ -106,35 +154,36 @@ const Tiptap = (props: any) => {
         />
     );
 };
-function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElement {
-    const [fromState, setFromState] = useState('')
+function SendNotification({ setIsConfirmText, title }): ReactElement {
     const [toState, setToState] = useState('')
+    const [fromState, setFromState] = useState('')
+    
     const [messageState, setMessageState] = useState('')
     const [subject, setSubject] = useState('')
-
     const [validationsErrors, setValidationsErrors]: any = useState({});
     const editor = useEditor({
         extensions: [StarterKit],
         content: 'stars && stars.data.buyer_instruct',
     });
+
     return (
-        <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm lg'>
+        <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm md'>
             <div className="modal-conferm-inner">
                 <div className="modal-conferm-head">
-                    <h3 className="title" style={{ fontSize: 17 }}>
+                    <h3 className="title">
                         {title}
                     </h3>
                 </div>
                 <div className="modal-conferm-body" style={{ paddingTop: 0 }}>
                     <div className="row">
-                        <div className="col-xl-6">
+                        <div className="col-xl-12">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-msg">
+                                <label className="label-block" htmlFor="input-fromState">
                                     من
                                 </label>
                                 <input
                                     type='text'
-                                    id="input-msg"
+                                    id="input-fromState"
                                     name="fromState"
                                     placeholder="من..."
                                     className={
@@ -161,24 +210,15 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
                                 )}
                             </div>
                         </div>
-                        <div className="col-xl-6">
+                        <div className="col-xl-12">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-toState">
                                     إلى
                                 </label>
-                                <input
-                                    type='text'
-                                    id="input-toState"
-                                    name="toState"
-                                    placeholder="إلى..."
-                                    className={
-                                        "timlands-inputs sm " +
-                                        (validationsErrors &&
-                                            validationsErrors.toState &&
-                                            " has-error")
-                                    }
-                                    onChange={e => setToState(e.target.value)}
+                                <MySelect
                                     value={toState}
+                                    onChange={(e: any) => setToState(e)}
+                                    //onBlur={formik.setFieldTouched}
                                 />
                                 {validationsErrors && validationsErrors.toState && (
                                     <div style={{ overflow: "hidden" }}>
@@ -259,14 +299,8 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
 
                 <div className="modal-conferm-footer">
                     <Space>
-                        <button className='btn butt-sm butt-green' onClick={() => handleFunc()}>إرسال الآن</button>
-                        <button
-                            className='btn butt-sm butt-red-text'
-                            onClick={() => {
-                                setIsConfirmText(false)
-                                setValidationsErrors() // just Test
-                            }}
-                        >إلغاء الأمر</button>
+                        <button className='btn butt-sm butt-green' onClick={() => setValidationsErrors('error')}>إرسال الإشعار الآن</button>
+                        <button className='btn butt-sm butt-red-text' onClick={() => setIsConfirmText(false)}>إلغاء الأمر</button>
                     </Space>
                 </div>
             </div>
@@ -274,9 +308,13 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
     )
 }
 
-export default ReplyContactModal
-ReplyContactModal.propTypes = {
+export default SendNotification
+SendNotification.propTypes = {
     setIsConfirmText: PropTypes.func,
+    handleChange: PropTypes.func,
+    setMsg: PropTypes.func,
+    msg: PropTypes.string,
+    text: PropTypes.string,
     title: PropTypes.string,
     handleFunc: PropTypes.func,
 };
