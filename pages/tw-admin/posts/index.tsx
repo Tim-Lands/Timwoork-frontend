@@ -12,6 +12,8 @@ import withReactContent from "sweetalert2-react-content";
 import Pagination from "react-js-pagination";
 import RejectProductCause from "@/components/RejectProductCause";
 import SendNotification from "@/components/SendNotification";
+import EmailModalCause from "@/components/EmailModalCause";
+import DisactiveProductCause from "@/components/DisactiveProductCause";
 const getQueryParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query)
@@ -31,6 +33,8 @@ function index(): ReactElement {
   const [cause, setCause] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
+  const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
+  const [isDisactiveModalVisible, setIsDisactiveModalVisible] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -136,7 +140,7 @@ function index(): ReactElement {
             {tes.status == 1 ? (
               <button
                 title="تعطيل هذه الخدمة"
-                onClick={() => onRejectClick(tes.id)}
+                onClick={() => onDisactiveClick(tes.id)}
                 className="btn butt-xs2 butt-orange"
               >
                 تعطيل
@@ -167,9 +171,16 @@ function index(): ReactElement {
               </a>
             </Link>
             <button
-              title="إرسال إشعار"
-              className="btn butt-xs2 butt-orange"
+              title="إرسال إيميل"
+              className="btn butt-xs2 butt-dark"
               onClick={() => setIsNotifyModalVisible(true)}
+            >
+              إرسال إيميل
+            </button>
+            <button
+              title="إرسال إشعار"
+              className="btn butt-xs2 butt-light"
+              onClick={() => setIsEmailModalVisible(true)}
             >
               إرسال إشعار
             </button>
@@ -244,6 +255,11 @@ function index(): ReactElement {
     setSelectedProductId(id);
     setIsModalVisible(true);
   };
+  const onDisactiveClick = async (id: any) => {
+    setSelectedProductId(id);
+    setIsDisactiveModalVisible(true);
+  };
+  
   const rejectProduct = async () => {
     setIsLoading(true);
     try {
@@ -278,13 +294,45 @@ function index(): ReactElement {
               setMsg={(e) => setCause(e.target.value)}
             />
           }
-          {isNotifyModalVisible && <SendNotification setIsConfirmText={setIsNotifyModalVisible} title="إرسال اشعار للمستخدمين" />}
+          {isDisactiveModalVisible &&
+            <DisactiveProductCause
+              setIsConfirmText={setIsDisactiveModalVisible}
+              handleFunc={() => rejectProduct()}
+              title="سبب التعطيل"
+              msg={cause}
+              setMsg={(e) => setCause(e.target.value)}
+            />
+          }
+          {isEmailModalVisible &&
+            <EmailModalCause
+              setIsConfirmText={setIsEmailModalVisible}
+              handleFunc={() => rejectProduct()}
+              title="إشعار للمستخدم"
+              msg={cause}
+              setMsg={(e) => setCause(e.target.value)}
+            />
+          }
+          {isNotifyModalVisible && <SendNotification setIsConfirmText={setIsNotifyModalVisible} title="إرسال إيميل للمستخدم" />}
           <h2 className="title">
             <span className="material-icons material-icons-outlined">
               collections_bookmark
             </span>
             إدارة الخدمات
           </h2>
+        </div>
+        <div className="py-3">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="timlands-form">
+                <input
+                  id="input-sQuery"
+                  name="sQuery"
+                  placeholder="البحث في الجدول..."
+                  className="timlands-inputs"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <Table
           columns={columns}

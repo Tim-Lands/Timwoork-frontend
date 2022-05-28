@@ -271,6 +271,21 @@ function index(): ReactElement {
             الخدمات المعطلة
           </h2>
         </div>
+        
+        <div className="py-3">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="timlands-form">
+                <input
+                  id="input-sQuery"
+                  name="sQuery"
+                  placeholder="البحث في الجدول..."
+                  className="timlands-inputs"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <Table
           columns={columns}
           onChange={onChange}

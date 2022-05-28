@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-export const MenuBar = ({ editor }:any) => {
+export const MenuBar = ({ editor }: any) => {
     if (!editor) {
         return null;
     }
@@ -132,8 +132,7 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
                                 <label className="label-block" htmlFor="input-msg">
                                     من
                                 </label>
-                                <input
-                                    type='text'
+                                <select
                                     id="input-msg"
                                     name="fromState"
                                     placeholder="من..."
@@ -145,7 +144,18 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
                                     }
                                     onChange={e => setFromState(e.target.value)}
                                     value={fromState}
-                                />
+                                >
+                                    <option value="1">info@timlands.com</option>
+                                    <option value="1">contact@timlands.com</option>
+                                    <option value="1">support@timlands.com</option>
+                                    <option value="1">timlands@timlands.com</option>
+                                    <option value="1">chairman@timlands.com</option>
+                                    <option value="1">info@timwoork.com</option>
+                                    <option value="1">contact@timwoork.com</option>
+                                    <option value="1">support@timwoork.com</option>
+                                    <option value="1">timwoork@timwoork.com</option>
+                                    <option value="1">chairman@timwoork.com</option>
+                                </select>
                                 {validationsErrors && validationsErrors.fromState && (
                                     <div style={{ overflow: "hidden" }}>
                                         <motion.div

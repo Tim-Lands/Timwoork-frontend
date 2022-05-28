@@ -5192,6 +5192,10 @@ h3 {
   border-top: 1px solid #f3f3f3;
 }
 
+.timlands-panel-item .panel-item-footer .absolute-btns {
+  margin-right: auto;
+}
+
 .timlands-panel-item.center {
   text-align: center;
 }

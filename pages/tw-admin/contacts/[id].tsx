@@ -66,31 +66,29 @@ function Id({ query }): ReactElement {
                         </tbody>
                     </table>
                 </div>
-                <div className="row justify-content-md-center">
-                    <div className="col-lg-8">
-                        <div className="timlands-panel-header">
-                            <h2 className="title">الردود</h2>
-                        </div>
-                        <div className="timlands-panel-item p-2">
-                            <div className="panel-item-body">
-                                <h1 className="title" style={{ fontSize: 18 }}>
-                                    aboumegouass@gmail.com
-                                </h1>
-                                <p className="meta" style={{ display: 'flex', alignItems: 'center', fontSize: 12, color: '#777', fontWeight: 200 }}>
-                                    <span className="material-icons material-icons-outlined ml-1" style={{ fontSize: 15 }}>
+                <div className="justify-content-md-center">
+                    <div className="timlands-panel-header">
+                        <h2 className="title">الردود</h2>
+                    </div>
+                    <div className="timlands-panel-item p-2">
+                        <div className="panel-item-body">
+                            <h1 className="title" style={{ fontSize: 18 }}>
+                                aboumegouass@gmail.com
+                            </h1>
+                            <p className="meta" style={{ display: 'flex', alignItems: 'center', fontSize: 12, color: '#777', fontWeight: 200 }}>
+                                <span className="material-icons material-icons-outlined ml-1" style={{ fontSize: 15 }}>
                                     schedule
-                                    </span>
-                                    <LastSeen date={'2022-03-13T13:12:06.000000Z'} />
-                                </p>
-                                <p className="text" style={{ margin: 0, fontSize: 14, lineHeight: 1.9, fontWeight: 200  }}>
-                                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
-                                    إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى
-                                </p>
-                            </div>
-                            <div className="panel-item-footer">
-                                <div className="absolute-btns">
-                                    <button className="btn butt-xs butt-blue">مشاهدة التفاصيل</button>
-                                </div>
+                                </span>
+                                <LastSeen date={'2022-03-13T13:12:06.000000Z'} />
+                            </p>
+                            <p className="text" style={{ margin: 0, fontSize: 14, lineHeight: 1.9, fontWeight: 200 }}>
+                                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.
+                                إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى
+                            </p>
+                        </div>
+                        <div className="panel-item-footer d-flex">
+                            <div className="absolute-btns">
+                                <button className="btn butt-xs butt-blue">مشاهدة التفاصيل</button>
                             </div>
                         </div>
                     </div>

@@ -2493,6 +2493,9 @@ h3 {
 
   .panel-item-footer {
     border-top: 1px solid #f3f3f3;
+    .absolute-btns {
+      margin-right: auto;
+    }
   }
 
   &.center {

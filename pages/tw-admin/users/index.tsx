@@ -11,6 +11,8 @@ import { notification, Space, Table } from "antd";
 import SuspensionTimer from "@/components/SuspensionTimer";
 import SuspensionPermanent from "@/components/SuspensionPermanent";
 import Pagination from "react-js-pagination";
+import EmailModalCause from "@/components/EmailModalCause";
+import SendNotification from "@/components/SendNotification";
 
 function index() {
   const [postsList, setPostsList] = useState({
@@ -27,8 +29,11 @@ function index() {
   const [selectedUserID, setSelectedUserID]: any = useState(null);
   const [pageNumber, setPageNumber]: any = useState(1);
   const [username, setUsername] = useState("");
+  const [cause, setCause] = useState("");
+  
   const [sentinel, setSentinel] = useState({ mount: true });
-
+  const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
+  const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
 
   useEffect(() => {
@@ -135,6 +140,7 @@ function index() {
         multiple: 1,
       },
       ellipsis: true,
+      width: 120
     },
     {
       title: "الأدوات",
@@ -143,7 +149,7 @@ function index() {
         <>
           <Space key={item.id}>
             <button
-              className="btn butt-xs butt-dark"
+              className="btn butt-xs2 butt-dark"
               onClick={() => {
                 setSelectedUserID(item.id);
                 setIsShowSuspensionTimer(true);
@@ -154,7 +160,7 @@ function index() {
             </button>
             <button
               title={item.id}
-              className="btn butt-xs butt-red"
+              className="btn butt-xs2 butt-red"
               onClick={() => {
                 setSelectedUserID(item.id);
                 setIsShowSuspensionPermanent(true);
@@ -162,6 +168,20 @@ function index() {
               type="button"
             >
               تعليق دائم{" "}
+            </button>
+            <button
+              title="إرسال إيميل"
+              className="btn butt-xs2 butt-blue"
+              onClick={() => setIsNotifyModalVisible(true)}
+            >
+              إرسال إيميل
+            </button>
+            <button
+              title="إرسال إشعار"
+              className="btn butt-xs2 butt-green"
+              onClick={() => setIsEmailModalVisible(true)}
+            >
+              إرسال إشعار
             </button>
           </Space>
         </>
@@ -206,6 +226,16 @@ function index() {
             إدارة الأعضاء
           </h2>
         </div>
+        {isEmailModalVisible &&
+            <EmailModalCause
+              setIsConfirmText={setIsEmailModalVisible}
+              handleFunc={() => console.log('test')}
+              title="إشعار للمستخدم"
+              msg={cause}
+              setMsg={(e) => setCause(e.target.value)}
+            />
+          }
+          {isNotifyModalVisible && <SendNotification setIsConfirmText={setIsNotifyModalVisible} title="إرسال إيميل للمستخدم" />}
         {isShowSuspensionTimer && (
           <SuspensionTimer
             onSuspend={suspendUser}

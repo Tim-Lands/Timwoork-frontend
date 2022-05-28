@@ -181,20 +181,31 @@ function SendNotification({ setIsConfirmText, title }): ReactElement {
                                 <label className="label-block" htmlFor="input-fromState">
                                     من
                                 </label>
-                                <input
-                                    type='text'
+                                <select
                                     id="input-fromState"
                                     name="fromState"
                                     placeholder="من..."
                                     className={
-                                        "timlands-inputs sm " +
+                                        "timlands-inputs select sm " +
                                         (validationsErrors &&
                                             validationsErrors.fromState &&
                                             " has-error")
                                     }
                                     onChange={e => setFromState(e.target.value)}
                                     value={fromState}
-                                />
+                                >
+                                    <option value="1">info@timlands.com</option>
+                                    <option value="1">contact@timlands.com</option>
+                                    <option value="1">support@timlands.com</option>
+                                    <option value="1">timlands@timlands.com</option>
+                                    <option value="1">chairman@timlands.com</option>
+                                    <option value="1">info@timwoork.com</option>
+                                    <option value="1">contact@timwoork.com</option>
+                                    <option value="1">support@timwoork.com</option>
+                                    <option value="1">timwoork@timwoork.com</option>
+                                    <option value="1">chairman@timwoork.com</option>
+                                </select>
+
                                 {validationsErrors && validationsErrors.fromState && (
                                     <div style={{ overflow: "hidden" }}>
                                         <motion.div
@@ -299,7 +310,7 @@ function SendNotification({ setIsConfirmText, title }): ReactElement {
 
                 <div className="modal-conferm-footer">
                     <Space>
-                        <button className='btn butt-sm butt-green' onClick={() => setValidationsErrors('error')}>إرسال الإشعار الآن</button>
+                        <button className='btn butt-sm butt-green' onClick={() => setValidationsErrors('error')}>إرسال الآن</button>
                         <button className='btn butt-sm butt-red-text' onClick={() => setIsConfirmText(false)}>إلغاء الأمر</button>
                     </Space>
                 </div>
