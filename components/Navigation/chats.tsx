@@ -50,7 +50,7 @@ function Conversations({ data }) {
   );
 }
 Conversations.propTypes = {
-  RouterId: PropTypes.any,
+  data: PropTypes.any,
 };
 
 export default Conversations;
