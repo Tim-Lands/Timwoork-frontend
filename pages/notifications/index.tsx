@@ -21,20 +21,20 @@ function index() {
   );
   const [size, setSize] = useState(4);
   const [paginationSize, setPaginationSize] = useState(8);
-  const fetchData = async (pageNumber: number = 1) => {
-    try {
-      // const res =
-      await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // if (res.status === 200) {
-      // }
-    } catch (error) {
-      () => {};
-    }
-  };
+  // const fetchData = async (pageNumber: number = 1) => {
+  //   try {
+  //     // const res =
+  //     await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     // if (res.status === 200) {
+  //     // }
+  //   } catch (error) {
+  //     () => {};
+  //   }
+  // };
   async function markAllRead() {
     try {
       // const res =
@@ -88,7 +88,7 @@ function index() {
         setPaginationSize(8);
       }
     });
-    fetchData();
+    // fetchData();
     return () => {
       window.removeEventListener("resize", () => {
         if (window.innerWidth > 950) {
