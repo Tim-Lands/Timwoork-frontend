@@ -1437,6 +1437,11 @@
           align-items: center;
   padding: 3px;
   cursor: pointer;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+  -ms-overflow-style: scroll;
 }
 
 .navbar-conversations-container .header .item {
@@ -1500,6 +1505,29 @@
       -ms-flex-align: center;
           align-items: center;
   gap: 2px;
+}
+
+.navbar-conversations-container .header::-webkit-scrollbar {
+  width: 8px;
+}
+
+.navbar-conversations-container .header:hover {
+  scrollbar-color: #cbd1d8 #cbd1d8;
+}
+
+.navbar-conversations-container .header::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  height: 11px;
+  background-color: #cbd1d8;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.navbar-conversations-container .header:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  background-color: #cbd1d8;
 }
 
 .navbar-conversations-container .noData {

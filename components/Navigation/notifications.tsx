@@ -10,9 +10,9 @@ import { lighten } from "@mui/material";
 import notifications from "../../public/notifications.png";
 import logo from "../../public/logo.png";
 import Image from "next/image";
-function Notifications({ data }) {
+function Notifications({ data, refer }) {
   return (
-    <div className="navbar-conversations-container">
+    <div ref={refer} className="navbar-conversations-container">
       <div className="header">
         {data?.data?.data?.length > 0 ? (
           data?.data?.data?.map((item, index) => {
@@ -116,6 +116,7 @@ function switchNotifyType(to, type, item_id, slug) {
 }
 Notifications.propTypes = {
   data: PropTypes.any,
+  refer: PropTypes.any,
 };
 
 export default Notifications;

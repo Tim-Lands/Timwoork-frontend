@@ -16,13 +16,14 @@ import {
 } from "react-icons/md";
 import Notifications from "./notifications";
 import { useOutSide } from "../useOutSide";
+import { useOutsideAlerter } from "../useOutsideAlerter";
 import API from "../../config";
 import { FaSignInAlt, FaGlobe, FaUserPlus } from "react-icons/fa";
 import MenusMobile from "./MenusMobile";
 import Link from "next/link";
 import ImageLogo from "next/image";
 import logoIMG from "../../public/logo.png";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
 
@@ -40,6 +41,8 @@ function Navbar(): ReactElement {
   const { data: conversationsList }: any = useSWR(
     `api/conversations?paginate=10  &page=1`
   );
+  const { mutate } = useSWRConfig();
+
   const { data: notifications }: any = useSWR(`api/notifications?page=1`);
   const [size, setSize] = useState(10000);
   const [visible, setVisible] = useState(false);
@@ -69,12 +72,14 @@ function Navbar(): ReactElement {
   let token = Cookies.get("token");
   const userList = useRef();
   const chatList = useRef();
+  const chat = useRef();
   const langList = useRef();
   const notifyList = useRef();
+  const notify = useRef();
   useOutSide(userList, hideList);
-  useOutSide(chatList, hideChat);
+  useOutsideAlerter(chatList, hideChat, chat);
   useOutSide(langList, hideLangList);
-  useOutSide(notifyList, hideNotify);
+  useOutsideAlerter(notifyList, hideNotify, notify);
 
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -95,6 +100,25 @@ function Navbar(): ReactElement {
         }
       : undefined,
   });
+  async function markAllRead() {
+    try {
+      // const res =
+      await API.post(
+        `api/notifications/markAllAsRead`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      mutate("api/me");
+    } catch (error) {
+      () => {};
+    }
+
+    mutate("api/me");
+  }
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
   const channelChat = `presence-receiver.${
     userInfo && userInfo.user_details.id
@@ -783,13 +807,18 @@ function Navbar(): ReactElement {
                       {veriedEmail && (
                         <li
                           className="right-butts-icon"
-                          ref={chatList}
+                          ref={chat}
                           onClick={() => {
                             setChatVisible(() => !chatsVisible);
                           }}
                         >
                           <Dropdown
-                            overlay={<Conversations data={conversationsList} />}
+                            overlay={
+                              <Conversations
+                                data={conversationsList}
+                                refer={chatList}
+                              />
+                            }
                             placement="bottomLeft"
                             visible={chatsVisible}
                           >
@@ -808,13 +837,19 @@ function Navbar(): ReactElement {
                       )}
                       <li
                         className="right-butts-icon"
-                        ref={notifyList}
+                        ref={notify}
                         onClick={() => {
                           setNotifyVisible(!notifyVisible);
+                          if (!notifyVisible) markAllRead();
                         }}
                       >
                         <Dropdown
-                          overlay={<Notifications data={notifications} />}
+                          overlay={
+                            <Notifications
+                              data={notifications}
+                              refer={notifyList}
+                            />
+                          }
                           placement="bottomLeft"
                           visible={notifyVisible}
                         >
