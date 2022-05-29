@@ -66,7 +66,7 @@ function Menus({ darkMode }) {
           className={"explore-butt " + (showExplore && "is-open")}
           onClick={setShowExploreHandle}
           style={{
-            fontWeight: 300,
+            fontWeight: "bold",
             color: !darkMode ? "#666" : "#f1f1f1",
             display: "flex",
             paddingInline: 0,
@@ -109,7 +109,7 @@ function Menus({ darkMode }) {
               scale: 1.02,
             }}
             style={{
-              fontWeight: 300,
+              fontWeight: "bold",
               // color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -139,7 +139,7 @@ function Menus({ darkMode }) {
               scale: 1.02,
             }}
             style={{
-              fontWeight: 300,
+              fontWeight: "bold",
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -167,7 +167,7 @@ function Menus({ darkMode }) {
               scale: 1.02,
             }}
             style={{
-              fontWeight: 300,
+              fontWeight: "bold",
               color: !darkMode ? "#666" : "#f1f1f1",
               display: "flex",
               flexDirection: "column",
@@ -188,7 +188,7 @@ function Menus({ darkMode }) {
         <Badge count={"قريبا"} offset={[7, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
-              fontWeight: 200,
+              fontWeight: "bold",
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -209,7 +209,7 @@ function Menus({ darkMode }) {
         <Badge count={"قريبا"} offset={[3, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
-              fontWeight: 200,
+              fontWeight: "bold",
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -231,7 +231,7 @@ function Menus({ darkMode }) {
         <Badge count={"قريبا"} offset={[-2, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
-              fontWeight: 200,
+              fontWeight: "bold",
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,
@@ -252,7 +252,7 @@ function Menus({ darkMode }) {
         <Badge count={"قريبا"} offset={[7, 5]} color={PRIMARY} size="small">
           <motion.a
             style={{
-              fontWeight: 200,
+              fontWeight: "bold",
               color: !darkMode ? "#ccc" : "#f1f1f1",
               display: "flex",
               paddingInline: 0,

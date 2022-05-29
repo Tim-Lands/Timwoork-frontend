@@ -746,7 +746,7 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .timlands-navbar .toggle-nav {
     display: block;
   }
@@ -990,7 +990,7 @@
   font-size: 11px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .timlands-navbar .nav-container .app-navbar {
     position: absolute;
     top: 60px;
@@ -2683,6 +2683,11 @@
   src: url("/fonts/KacstBook.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
+}
+
+.mainHomeIndex {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#ebeff4), to(white));
+  background-image: linear-gradient(to top, #ebeff4, white);
 }
 
 .circular-center {
@@ -8030,7 +8035,7 @@ h3 {
   display: none !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .is-mobile.nav {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
@@ -8044,7 +8049,7 @@ h3 {
   display: flex !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .is-desktop.nav {
     display: none !important;
   }
@@ -9348,7 +9353,7 @@ h3 {
     gap: 1.5%;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .nav-container {
     width: -webkit-fit-content;
     width: -moz-fit-content;

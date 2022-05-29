@@ -40,6 +40,9 @@
   font-style: normal;
 }
 
+.mainHomeIndex {
+  background-image: linear-gradient(to top, lighten($primary, 55%), white);
+}
 // Create Circular Center
 .circular-center {
   display: flex;
@@ -4936,7 +4939,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.nav {
     display: none !important;
 
-    @media (max-width: 900px) {
+    @media (max-width: 940px) {
       display: flex !important;
     }
   }
@@ -4946,7 +4949,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.nav {
     display: flex !important;
 
-    @media (max-width: 900px) {
+    @media (max-width: 940px) {
       display: none !important;
     }
   }
@@ -6132,7 +6135,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 /*# sourceMappingURL=app-rtl.css.map */
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .nav-container {
     width: fit-content;
   }

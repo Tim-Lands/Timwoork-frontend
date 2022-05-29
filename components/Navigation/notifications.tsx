@@ -9,12 +9,13 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import { lighten } from "@mui/material";
 import notifications from "../../public/notifications.png";
+import logo from "../../public/logo.png";
 import Image from "next/image";
 function Notifications({ data }) {
   return (
     <div className="navbar-conversations-container">
       <div className="header">
-        {data?.data?.legnth > 0 ? (
+        {data?.data?.data?.length > 0 ? (
           data?.data?.data?.map((item, index) => {
             if (index < 10) {
               return (
@@ -39,13 +40,7 @@ function Notifications({ data }) {
                             borderRadius: "100%",
                           }}
                         >
-                          <BsShieldFillPlus
-                            style={{
-                              color: PRIMARY,
-                              width: "70%",
-                              height: "70%",
-                            }}
-                          />
+                          <Image src={logo} width={20} height={20} />
                         </div>
                       ) : item.data.user_sender.avatar_path ? (
                         <img
@@ -88,7 +83,7 @@ function Notifications({ data }) {
           </div>
         )}
       </div>
-      {data?.data?.length > 0 && (
+      {data?.data?.data?.length > 0 && (
         <div className="footer">
           <Link href="/notifications">
             <button>

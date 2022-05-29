@@ -13,7 +13,7 @@ function Conversations({ data }) {
   return (
     <div className="navbar-conversations-container">
       <div className="header">
-        {data?.data?.length > 0 ? (
+        {data?.data?.data?.length > 0 ? (
           data?.data?.data?.map((item, index) => {
             if (index < 10) {
               return (
@@ -57,7 +57,7 @@ function Conversations({ data }) {
           </div>
         )}
       </div>
-      {data?.data?.length > 0 && (
+      {data?.data?.data?.length > 0 && (
         <div className="footer">
           <Link href="/conversations">
             <button>
