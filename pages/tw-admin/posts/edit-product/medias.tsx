@@ -54,11 +54,12 @@ function Medias({ query, product, token }) {
     setValidationsGeneral({});
   }
   const loadFeatureImage: any = async () => {
+    console.log('load featured called')
     const imageFeature = new FormData();
     imageFeature.append("thumbnail", featuredMedia[0].file);
     imageFeature.append("url_video", url_video);
     const res = await API.post(
-      `dashboard/products/${id}/step_four`,
+      `dashboard/products/${id}/upload_thumbnail`,
       imageFeature,
       {
         headers: {
@@ -194,6 +195,7 @@ function Medias({ query, product, token }) {
     }
   };
   const uploadGallery = async () => {
+  
     const [res] = await Promise.all([loadGalleryImages()]);
     await loadVideoUrl();
     // Authentication was successful.
