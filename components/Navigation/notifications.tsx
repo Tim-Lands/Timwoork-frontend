@@ -56,9 +56,12 @@ function Notifications({ data, refer }) {
                       )}
                       <p>
                         <span style={{ color: PRIMARY }}>
-                          {item.data.content.title}{" "}
+                          {item?.data?.content?.title?.slice(0, 65)}
+                          {item?.data?.content?.title?.length > 64 &&
+                            "..."}{" "}
                         </span>
-                        {item.data.title}
+                        {item?.data?.title?.slice(0, 65)}
+                        {item?.data?.title?.length > 64 && "..."}{" "}
                       </p>
                     </div>
                     <p>
