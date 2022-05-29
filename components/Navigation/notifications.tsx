@@ -8,80 +8,95 @@ import { BsShieldFillPlus } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import { lighten } from "@mui/material";
-
+import notifications from "../../public/notifications.png";
+import Image from "next/image";
 function Notifications({ data }) {
   return (
     <div className="navbar-conversations-container">
       <div className="header">
-        {data.data.data.map((item, index) => {
-          if (index < 10) {
-            return (
-              <Link
-                key={item.id}
-                href={switchNotifyType(
-                  item.data.to,
-                  item.data.type,
-                  item.data.content.item_id,
-                  item.data.content.slug
-                )}
-              >
-                <div className="item">
-                  <div className="rowItem">
-                    {item.data.user_sender.full_name === "اﻹدارة" ? (
-                      <div
-                        className="d-flex align-items-center justify-content-center "
-                        style={{
-                          backgroundColor: lighten(PRIMARY, 0.8),
-                          width: 35,
-                          height: 35,
-                          borderRadius: "100%",
-                        }}
-                      >
-                        <BsShieldFillPlus
+        {data?.data?.legnth > 0 ? (
+          data?.data?.data?.map((item, index) => {
+            if (index < 10) {
+              return (
+                <Link
+                  key={item.id}
+                  href={switchNotifyType(
+                    item.data.to,
+                    item.data.type,
+                    item.data.content.item_id,
+                    item.data.content.slug
+                  )}
+                >
+                  <div className="item">
+                    <div className="rowItem">
+                      {item.data.user_sender.full_name === "اﻹدارة" ? (
+                        <div
+                          className="d-flex align-items-center justify-content-center "
                           style={{
-                            color: PRIMARY,
-                            width: "70%",
-                            height: "70%",
+                            backgroundColor: lighten(PRIMARY, 0.8),
+                            width: 35,
+                            height: 35,
+                            borderRadius: "100%",
                           }}
+                        >
+                          <BsShieldFillPlus
+                            style={{
+                              color: PRIMARY,
+                              width: "70%",
+                              height: "70%",
+                            }}
+                          />
+                        </div>
+                      ) : item.data.user_sender.avatar_path ? (
+                        <img
+                          width={35}
+                          style={{ borderRadius: "100%" }}
+                          height={35}
+                          src={item.data.user_sender.avatar_path}
+                          alt={item.data.user_sender.username}
                         />
-                      </div>
-                    ) : item.data.user_sender.avatar_path ? (
-                      <img
-                        width={35}
-                        style={{ borderRadius: "100%" }}
-                        height={35}
-                        src={item.data.user_sender.avatar_path}
-                        alt={item.data.user_sender.username}
-                      />
-                    ) : (
-                      <FaUserCircle
-                        style={{ height: 35, width: 35, color: "lightgray" }}
-                      />
-                    )}
+                      ) : (
+                        <FaUserCircle
+                          style={{ height: 35, width: 35, color: "lightgray" }}
+                        />
+                      )}
+                      <p>
+                        <span style={{ color: PRIMARY }}>
+                          {item.data.content.title}{" "}
+                        </span>
+                        {item.data.title}
+                      </p>
+                    </div>
                     <p>
-                      <span style={{ color: PRIMARY }}>
-                        {item.data.content.title}{" "}
-                      </span>
-                      {item.data.title}
+                      <AiOutlineClockCircle />
+                      <LastSeen date={item.updated_at} />
                     </p>
                   </div>
-                  <p>
-                    <AiOutlineClockCircle />
-                    <LastSeen date={item.updated_at} />
-                  </p>
-                </div>
-              </Link>
-            );
-          }
-        })}
+                </Link>
+              );
+            }
+          })
+        ) : (
+          <div className="noData">
+            <Image
+              src={notifications}
+              alt="لا توجد اشعارات"
+              width={60}
+              height={60}
+            />
+            <p>لا توجد لديك اشعارات</p>
+          </div>
+        )}
       </div>
-      <div className="footer">
-        <Link href="/notifications">
-          <button>
-            جميع الاشعارات <IoMdNotificationsOutline size={16} />
-          </button>
-        </Link>
-      </div>
+      {data?.data?.length > 0 && (
+        <div className="footer">
+          <Link href="/notifications">
+            <button>
+              جميع الاشعارات <IoMdNotificationsOutline size={16} />
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
