@@ -4,6 +4,7 @@ import { ReactElement, useEffect, useState, useRef } from "react";
 import Menus from "./Menus";
 import { FiSettings } from "react-icons/fi";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import Conversations from "./chats";
 import {
   MdOutlineAccountBalanceWallet,
   MdOutlineInventory2,
@@ -13,7 +14,7 @@ import {
   MdNotificationsNone,
   MdOutlineMailOutline,
 } from "react-icons/md";
-
+import Notifications from "./notifications";
 import { useOutSide } from "../useOutSide";
 import API from "../../config";
 import { FaSignInAlt, FaGlobe, FaUserPlus } from "react-icons/fa";
@@ -36,12 +37,23 @@ import LastSeen from "../LastSeen";
 import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
+  const { data: conversationsList }: any = useSWR(
+    `api/conversations?paginate=10  &page=1`
+  );
+  const { data: notifications }: any = useSWR(`api/notifications?page=1`);
   const [size, setSize] = useState(10000);
   const [visible, setVisible] = useState(false);
+  const [chatsVisible, setChatVisible] = useState(false);
+  const [notifyVisible, setNotifyVisible] = useState(false);
   const [isShowenLangs, setIsShowenLangs] = useState(false);
   const hideList = () => {
     setTimeout(() => {
       setVisible(false);
+    }, 200);
+  };
+  const hideChat = () => {
+    setTimeout(() => {
+      setChatVisible(false);
     }, 200);
   };
   const hideLangList = () => {
@@ -49,11 +61,20 @@ function Navbar(): ReactElement {
       setIsShowenLangs(false);
     }, 200);
   };
+  const hideNotify = () => {
+    setTimeout(() => {
+      setNotifyVisible(false);
+    }, 200);
+  };
   let token = Cookies.get("token");
   const userList = useRef();
+  const chatList = useRef();
   const langList = useRef();
+  const notifyList = useRef();
   useOutSide(userList, hideList);
+  useOutSide(chatList, hideChat);
   useOutSide(langList, hideLangList);
+  useOutSide(notifyList, hideNotify);
 
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -107,6 +128,8 @@ function Navbar(): ReactElement {
     window.addEventListener("scroll", () => {
       setVisible(false);
       setIsShowenLangs(false);
+      setChatVisible(false);
+      setNotifyVisible(false);
     });
     window.addEventListener("resize", () => {
       setSize(window.innerWidth);
@@ -254,6 +277,9 @@ function Navbar(): ReactElement {
         });
         window.removeEventListener("scroll", () => {
           setVisible(false);
+          setIsShowenLangs(false);
+          setChatVisible(false);
+          setNotifyVisible(false);
         });
       };
     }
@@ -755,49 +781,64 @@ function Navbar(): ReactElement {
                         </li>
                       )}
                       {veriedEmail && (
-                        <li className="right-butts-icon">
-                          <Tooltip placement="bottom" title="صندوق الرسائل">
-                            <Link href="/conversations">
-                              <a>
-                                <Badge count={countMsg} offset={[2, -1]}>
-                                  <MdOutlineMailOutline
-                                    style={{
-                                      fontSize: size > 450 ? 22 : 16,
-                                      color: "#666",
-                                    }}
-                                  />
-                                </Badge>
-                              </a>
-                            </Link>
-                          </Tooltip>
-                        </li>
-                      )}
-                      <li className="right-butts-icon">
-                        <Tooltip placement="bottom" title="الإشعارات">
-                          <Link href="/notifications">
-                            <a
-                              className="d-flex align-items-center justify-content-center"
-                              style={{
-                                marginLeft: size > 450 ? 7 : 6,
-                              }}
-                            >
-                              <Badge
-                                count={
-                                  userData &&
-                                  userData.unread_notifications_count
-                                }
-                                offset={[2, -1]}
-                              >
-                                <MdNotificationsNone
+                        <li
+                          className="right-butts-icon"
+                          ref={chatList}
+                          onClick={() => {
+                            setChatVisible(() => !chatsVisible);
+                          }}
+                        >
+                          <Dropdown
+                            overlay={<Conversations data={conversationsList} />}
+                            placement="bottomLeft"
+                            visible={chatsVisible}
+                          >
+                            <a>
+                              <Badge count={countMsg} offset={[2, -1]}>
+                                <MdOutlineMailOutline
                                   style={{
-                                    fontSize: size > 450 ? 22 : 17,
+                                    fontSize: size > 450 ? 22 : 16,
                                     color: "#666",
                                   }}
                                 />
                               </Badge>
                             </a>
-                          </Link>
-                        </Tooltip>
+                          </Dropdown>
+                        </li>
+                      )}
+                      <li
+                        className="right-butts-icon"
+                        ref={notifyList}
+                        onClick={() => {
+                          setNotifyVisible(!notifyVisible);
+                        }}
+                      >
+                        <Dropdown
+                          overlay={<Notifications data={notifications} />}
+                          placement="bottomLeft"
+                          visible={notifyVisible}
+                        >
+                          <a
+                            className="d-flex align-items-center justify-content-center"
+                            style={{
+                              marginLeft: size > 450 ? 7 : 6,
+                            }}
+                          >
+                            <Badge
+                              count={
+                                userData && userData.unread_notifications_count
+                              }
+                              offset={[2, -1]}
+                            >
+                              <MdNotificationsNone
+                                style={{
+                                  fontSize: size > 450 ? 22 : 17,
+                                  color: "#666",
+                                }}
+                              />
+                            </Badge>
+                          </a>
+                        </Dropdown>
                       </li>
                       <li className="login-user">
                         <span

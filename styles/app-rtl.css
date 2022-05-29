@@ -86,6 +86,71 @@
   top: 0;
 }
 
+.redirect h4 {
+  margin-block: 1em;
+}
+
+.redirect .warnings {
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.redirect .warnings .list li {
+  margin-block: 10px;
+}
+
+.redirect .warnings .controllers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.redirect .warnings .controllers button {
+  background-color: #475c80;
+  color: white;
+  border: none;
+  font-weight: 400;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  padding: 5px 10px;
+}
+
+.redirect .warnings .controllers button a {
+  color: white;
+}
+
+.redirect .warnings .controllers button:hover {
+  background-color: #35445f;
+}
+
+.redirect .warnings .controllers button:first-child {
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  background-color: #f0f0f0;
+  color: black;
+}
+
+.redirect .warnings .controllers button:first-child a {
+  color: black;
+}
+
+.redirect .warnings .controllers button:first-child:hover {
+  background-color: white;
+}
+
 .timlands-inputs {
   border: 1px solid #ddd;
   background-color: #fff;
@@ -681,7 +746,7 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .timlands-navbar .toggle-nav {
     display: block;
   }
@@ -925,7 +990,7 @@
   font-size: 11px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .timlands-navbar .nav-container .app-navbar {
     position: absolute;
     top: 60px;
@@ -1337,6 +1402,156 @@
 
 .menu-langs .langs-item span {
   margin-right: 4px;
+}
+
+.navbar-conversations-container {
+  top: 100px;
+}
+
+.navbar-conversations-container .header {
+  z-index: 2;
+  width: 300px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1px;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.navbar-conversations-container .header .item {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 5px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 4px;
+  padding: 7px 5px;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.navbar-conversations-container .header .item .rowItem {
+  gap: 7px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar-conversations-container .header .item .rowItem p {
+  width: 75%;
+  font-size: 12px;
+  margin: 0px;
+  word-wrap: break-word;
+  padding: 0px;
+  display: inline-block;
+  color: black;
+}
+
+.navbar-conversations-container .header .item:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar-conversations-container .header .item p {
+  margin: 0px;
+  font-size: 11px;
+  font-weight: 200;
+  width: 75%;
+  word-wrap: break-word;
+  padding-right: 40px;
+  color: gray;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 2px;
+}
+
+.navbar-conversations-container .noData {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 5px;
+  padding: 10px 0px;
+}
+
+.navbar-conversations-container .noData * {
+  margin: 0;
+}
+
+.navbar-conversations-container .footer {
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-conversations-container .footer button {
+  background-color: transparent;
+  border: none;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  padding: 6px;
+  width: 100%;
+  height: 100%;
+}
+
+.navbar-conversations-container .footer button:hover {
+  color: #475c80;
+}
+
+@media (max-width: 500px) {
+  .navbar-conversations-container {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
 }
 
 .timlands-post-item {
@@ -2468,6 +2683,11 @@
   src: url("/fonts/KacstBook.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
+}
+
+.mainHomeIndex {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#ebeff4), to(white));
+  background-image: linear-gradient(to top, #ebeff4, white);
 }
 
 .circular-center {
@@ -5192,6 +5412,10 @@ h3 {
   border-top: 1px solid #f3f3f3;
 }
 
+.timlands-panel-item .panel-item-footer .absolute-btns {
+  margin-right: auto;
+}
+
 .timlands-panel-item.center {
   text-align: center;
 }
@@ -7811,7 +8035,7 @@ h3 {
   display: none !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .is-mobile.nav {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
@@ -7825,7 +8049,7 @@ h3 {
   display: flex !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .is-desktop.nav {
     display: none !important;
   }
@@ -9129,7 +9353,7 @@ h3 {
     gap: 1.5%;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .nav-container {
     width: -webkit-fit-content;
     width: -moz-fit-content;

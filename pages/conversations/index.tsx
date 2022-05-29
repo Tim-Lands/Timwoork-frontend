@@ -26,28 +26,24 @@ function index() {
       />
       {veriedEmail && (
         <div className=" my-3" style={{ maxWidth: 1300, marginInline: "auto" }}>
-          <div className="row py-4 justify-content-center">
-            <div className="col-lg-11">
-              <div className="row">
-                <div className="col-lg-4">
-                  <Sidebar />
-                </div>
-                <div className="col-lg-8">
-                  <div
-                    className="conversations-form-main"
-                    style={{
-                      padding: 9,
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      alignContent: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div className="conversations-form">
-                      <Empty description={"اختر أحد المحادثات لعرض رسائلها"} />
-                    </div>
-                  </div>
+          <div className="row">
+            <div className="col-lg-4">
+              <Sidebar />
+            </div>
+            <div className="col-lg-8">
+              <div
+                className="conversations-form-main"
+                style={{
+                  padding: 9,
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  alignContent: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div className="conversations-form">
+                  <Empty description={"اختر أحد المحادثات لعرض رسائلها"} />
                 </div>
               </div>
             </div>

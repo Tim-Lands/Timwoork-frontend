@@ -1,5 +1,6 @@
 @import "variables";
 @import "alerts-rtl";
+@import "redirect-rtl";
 @import "forms-rtl";
 @import "buttons-rtl";
 @import "navbar-rtl";
@@ -39,6 +40,9 @@
   font-style: normal;
 }
 
+.mainHomeIndex {
+  background-image: linear-gradient(to top, lighten($primary, 55%), white);
+}
 // Create Circular Center
 .circular-center {
   display: flex;
@@ -2493,6 +2497,9 @@ h3 {
 
   .panel-item-footer {
     border-top: 1px solid #f3f3f3;
+    .absolute-btns {
+      margin-right: auto;
+    }
   }
 
   &.center {
@@ -4932,7 +4939,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.nav {
     display: none !important;
 
-    @media (max-width: 900px) {
+    @media (max-width: 940px) {
       display: flex !important;
     }
   }
@@ -4942,7 +4949,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.nav {
     display: flex !important;
 
-    @media (max-width: 900px) {
+    @media (max-width: 940px) {
       display: none !important;
     }
   }
@@ -5227,17 +5234,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   &.md {
     .modal-conferm-inner {
       width: 550px;
-    } 
+    }
   }
   &.lg {
     .modal-conferm-inner {
       width: 700px;
-    } 
+    }
   }
   &.xl {
     .modal-conferm-inner {
       width: 850px;
-    } 
+    }
   }
   .modal-conferm-head {
     border-bottom: 2px dashed #f6f6f6;
@@ -6128,7 +6135,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 /*# sourceMappingURL=app-rtl.css.map */
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .nav-container {
     width: fit-content;
   }

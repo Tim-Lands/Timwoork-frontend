@@ -1062,12 +1062,11 @@ const User = ({ query }) => {
                                           )}
                                         </div>
                                       )}
-                                      <p
-                                        className="text2"
-                                        style={{ margin: 0 }}
-                                      >
-                                        {item.message}
-                                      </p>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html: linkify(item.message, query),
+                                        }}
+                                      />
                                       {ShowItem &&
                                         ShowItem.data.profile_seller.id ==
                                           item.user.id && (
@@ -1622,6 +1621,27 @@ const User = ({ query }) => {
     </>
   );
 };
+function linkify(text, query) {
+  const urlRegex =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  return text.replace(urlRegex, function (url) {
+    const start = url.startsWith("http") || url.startsWith("https");
+    let newUrl = url;
+    newUrl = !start ? "https://" + url : url;
+    if (newUrl.startsWith("https://timwoork")) {
+      return '<a href="' + newUrl + '" target="_blank">' + url + "</a>";
+    } else {
+      return (
+        '<a href="/redirect/f?url=' +
+        newUrl +
+        `&*mysales/${query.id}` +
+        '" target="_blank">' +
+        url +
+        "</a>"
+      );
+    }
+  });
+}
 
 export default User;
 User.getLayout = function getLayout(page: any): ReactElement {

@@ -45,7 +45,7 @@ function Layout(props: any) {
         },
       }}
     >
-      <div className="pt-5">
+      <div className="pt-5 mainHomeIndex">
         <Navbar />
         <Spin tip="يرجى الإنتظار..." spinning={loading}>
           {props.children}

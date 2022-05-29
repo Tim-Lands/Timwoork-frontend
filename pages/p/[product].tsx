@@ -663,7 +663,7 @@ function Single({ query, stars, errorFetch }) {
                           </div>
                         </div>
                         <div className="single-comments-body">
-                          <Comments canReply={userInfo.user_details.profile.id == ProductData.data.profile_seller.id} comments={ProductData.data.ratings} />
+                          <Comments canReply={userInfo && userInfo.user_details.profile.id == ProductData.data.profile_seller.id} comments={ProductData.data.ratings} />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">لاتوجد آراء المشتريين</p>
