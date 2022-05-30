@@ -55,7 +55,7 @@ function EditModal({
           <Space>
             <button
               className="btn butt-sm butt-green"
-              onClick={() => handleFunc({ message: msg, reason })}
+              onClick={() => handleFunc({ message: msg, cause: reason })}
             >
               تحديث المعلومات
             </button>
