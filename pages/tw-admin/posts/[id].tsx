@@ -23,7 +23,7 @@ const properties = {
 }
 function Id({ query, stars, errorFetch }) {
 
-    const { data: ProductData, errorLoad }: any = useSWR(`dashboard/product/${query.id}`)
+    const { data: ProductData, errorLoad }: any = useSWR(`dashboard/products/${query.id}`)
     
     useEffect(() => {
         if (errorFetch) {

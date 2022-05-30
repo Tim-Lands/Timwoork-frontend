@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
@@ -61,7 +61,7 @@ const sidebarLinks = [
                 name: 'الخدمات قيد الانتظار',
                 href: '/tw-admin/posts/pendings'
             },
-       
+
             {
                 id: 7,
                 name: 'الخدمات المؤرشفة',
@@ -168,47 +168,52 @@ const sidebarLinks = [
 ]
 function index(): ReactElement {
     const { data: userData }: any = useSWR(`dashboard/me`)
+    const [showedMenues, setShowedMenues] = useState({})
     const submenu = true
     const path = useRouter()
+    console.log(showedMenues)
     return (
         <div className={"dashboard-sidebar"}>
             {userData &&
                 <div className="dashboard-sidebar-inner">
 
                     <ul className="dashboard-sidebar-list">
-                        {sidebarLinks.map(e => (
-                            <>
-                                <li key={e.id} className={"dash-item" + (e.href == path.route ? ' active' : '')}>
+                        {sidebarLinks.map(e => {
+                            return (
+                                <>
+                                    <li key={e.id} className={"dash-item" + (e.href == path.route ? ' active' : '')}>
 
-                                    {(e.href == null) ?
-                                        <a className="dash-link">
-                                            <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
-                                        </a>
-                                        :
-                                        <Link href={e.href}>
-                                            <a className="dash-link">
-                                                <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
-                                            </a>
-                                        </Link>
-                                    }
-                                    {
-                                        (submenu && (e.hasSubMenu &&
-                                            <motion.ul initial={{ opacity: 0, scaleY: 0 }} animate={{ opacity: 1, scaleY: 1 }} className="sub-dashnav-list">
-                                                {e.hasSubMenu.map(p => (
-                                                    <li key={p.id} className={"subdash-item" + (p.href == path.route ? ' active' : '')}>
-                                                        <Link href={p.href}>
-                                                            <a className="subdash-link">
-                                                                {p.name}
-                                                            </a>
-                                                        </Link>
-                                                    </li>
-                                                ))}
-                                            </motion.ul>
-                                        ))
-                                    }
-                                </li>
-                            </>
-                        ))}
+                                        {
+                                            e.hasSubMenu ?
+                                                <a className="dash-link" onClick={() => setShowedMenues({ ...showedMenues, [e.id]: !showedMenues[e.id] })}>
+                                                    <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
+                                                </a>
+                                                :
+                                                <Link href={e.href}>
+                                                    <a className="dash-link" onClick={() => setShowedMenues({ ...showedMenues, [e.id]: !showedMenues[e.id] })}>
+                                                        <span className="material-icons material-icons-outlined">{e.icon}</span> {e.name}
+                                                    </a>
+                                                </Link>
+                                        }
+                                        {
+                                            (submenu && (e.hasSubMenu &&
+                                                <motion.ul initial={{ opacity: 0, scaleY: 0 }} animate={{ opacity: 1, scaleY: 1 }} className="sub-dashnav-list">
+                                                    {e.hasSubMenu.map(p => (
+                                                        <li key={p.id} className={`subdash-item d-${showedMenues[e.id] ? 'block' : 'none'}` + (p.href == path.route ? ' active' : '')}>
+                                                            <Link href={p.href}>
+                                                                <a className="subdash-link">
+                                                                    {p.name}
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                </motion.ul>
+                                            ))
+                                        }
+                                    </li>
+                                </>
+                            )
+                        })}
                     </ul>
                 </div>
             }

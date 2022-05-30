@@ -80,6 +80,49 @@ function index(): ReactElement {
         return <span className="badge bg-success text-light">نشطة</span>;
     }
   };
+  const archieveHandle = (id) => {
+    const MySwal = withReactContent(Swal);
+
+    const swalWithBootstrapButtons = MySwal.mixin({
+      customClass: {
+        confirmButton: "btn butt-red butt-sm me-1",
+        cancelButton: "btn butt-green butt-sm",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "هل أنت متأكد؟",
+        text: "هل انت متأكد أنك تريد أرشفة هذا العنصر",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "نعم, أريد الأرشفى",
+        cancelButtonText: "لا",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          try {
+            const res: any = API.post(
+              `dashboard/products/${id}/delete `
+              , {}, {
+              headers: {
+                Authorization: token
+              }
+            });
+            if (res) {
+              refreshData();
+            }
+          } catch (error) {
+            setIsLoading(false);
+          }
+          refreshData();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire("ملغى", "تم الإلغاء", "error");
+        }
+      });
+  }
   function onChange() { }
   const columns: any = [
     {
@@ -149,11 +192,11 @@ function index(): ReactElement {
               ""
             )}
             <button
-              title="حذف هذه الخدمة"
+              title="أرشفة هذه الخدمة"
               className="btn butt-xs2 butt-red"
-              onClick={() => deleteHandle(tes.id)}
+              onClick={() => archieveHandle(tes.id)}
             >
-              حذف
+              أرشفة
             </button>
             <button
               title="رفض الخدمة"
@@ -190,45 +233,7 @@ function index(): ReactElement {
       ellipsis: true,
     },
   ];
-  const deleteHandle = (id) => {
-    const MySwal = withReactContent(Swal);
 
-    const swalWithBootstrapButtons = MySwal.mixin({
-      customClass: {
-        confirmButton: "btn butt-red butt-sm me-1",
-        cancelButton: "btn butt-green butt-sm",
-      },
-      buttonsStyling: false,
-    });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
-        cancelButtonText: "لا",
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          try {
-            const res: any = API.post(
-              `dashboard/products/${id}/force_delete_product`
-            );
-            if (res) {
-              refreshData();
-            }
-          } catch (error) {
-            setIsLoading(false);
-          }
-          refreshData();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire("ملغى", "تم الإلغاء", "error");
-        }
-      });
-  };
   useEffect(() => {
     if (pageNumber)
       refreshData();
@@ -259,7 +264,7 @@ function index(): ReactElement {
     setSelectedProductId(id);
     setIsDisactiveModalVisible(true);
   };
-  
+
   const rejectProduct = async () => {
     setIsLoading(true);
     try {
