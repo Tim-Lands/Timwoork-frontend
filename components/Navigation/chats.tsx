@@ -11,7 +11,7 @@ import Image from "next/image";
 
 function Conversations({ data, refer }) {
   return (
-    <div ref={refer} className="navbar-conversations-container">
+    <div ref={refer} className="navbar-conversations-container conv">
       <div className="header">
         {data?.data?.data?.length > 0 ? (
           data?.data?.data?.map((item, index) => {
@@ -37,8 +37,12 @@ function Conversations({ data, refer }) {
                         />
                       )}
                       <p>
-                        <span style={{ color: PRIMARY }}>{item.title} </span>
-                        {item.latest_message.message}
+                        <span style={{ color: PRIMARY }}>
+                          {item?.title?.slice(0, 65)}
+                          {item?.title?.length > 64 && "..."}{" "}
+                        </span>
+                        {item?.latest_message?.message?.slice(0, 65)}
+                        {item?.latest_message?.message?.length > 64 && "..."}
                       </p>
                     </div>
                     <p>
