@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
 import { PRIMARY } from "../../styles/variables";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { BsShieldFillPlus } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import { lighten } from "@mui/material";
