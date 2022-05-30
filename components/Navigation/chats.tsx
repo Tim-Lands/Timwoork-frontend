@@ -9,9 +9,9 @@ import { FaUserCircle } from "react-icons/fa";
 import messages from "../../public/messages.png";
 import Image from "next/image";
 
-function Conversations({ data }) {
+function Conversations({ data, refer }) {
   return (
-    <div className="navbar-conversations-container">
+    <div ref={refer} className="navbar-conversations-container conv">
       <div className="header">
         {data?.data?.data?.length > 0 ? (
           data?.data?.data?.map((item, index) => {
@@ -37,8 +37,12 @@ function Conversations({ data }) {
                         />
                       )}
                       <p>
-                        <span style={{ color: PRIMARY }}>{item.title} </span>
-                        {item.latest_message.message}
+                        <span style={{ color: PRIMARY }}>
+                          {item?.title?.slice(0, 65)}
+                          {item?.title?.length > 64 && "..."}{" "}
+                        </span>
+                        {item?.latest_message?.message?.slice(0, 65)}
+                        {item?.latest_message?.message?.length > 64 && "..."}
                       </p>
                     </div>
                     <p>
@@ -71,6 +75,7 @@ function Conversations({ data }) {
 }
 Conversations.propTypes = {
   data: PropTypes.any,
+  refer: PropTypes.any,
 };
 
 export default Conversations;

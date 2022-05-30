@@ -7,13 +7,11 @@ import Cookies from 'js-cookie'
 import { Result } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
-import AddNewMessage from "@/components/AddNewMessage";
 
-function index() {
+function index(): ReactElement {
     const [postsList, setPostsList] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [newMessageModal, setNewMessageModal] = useState(false)
 
     const token = Cookies.get('token_dash')
 
@@ -23,7 +21,7 @@ function index() {
             const res: any = await API.get('dashboard/contacts', {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            if (res.status === 200) {
+            if (res) {
                 setIsLoading(false)
                 setPostsList(res.data.data)
 
@@ -50,24 +48,9 @@ function index() {
     // Return statement.
     return (
         <>
-            {newMessageModal && <AddNewMessage setIsConfirmText={setNewMessageModal} title="إضافة رسالة جديدة" />}
-
             <div className="timlands-panel">
                 <div className="timlands-panel-header">
-                    <h2 className="title">
-                        <span className="material-icons material-icons-outlined">
-                            collections_bookmark
-                        </span>
-                        إدارة الخدمات
-                    </h2>
-                    <div className="header-butt">
-                        <button className="btn butt-primary butt-sm flex-center" onClick={() => setNewMessageModal(true)}>
-                            <span className="material-icons material-icons-outlined">
-                                maps_ugc
-                            </span>
-                            إضافة رسالة جديدة
-                        </button>
-                    </div>
+                    <h2 className="title"><span className="material-icons material-icons-outlined">collections_bookmark</span>رسائل اتصل بنا</h2>
                 </div>
                 <div className="timlands-table">
                     <table className="table">
