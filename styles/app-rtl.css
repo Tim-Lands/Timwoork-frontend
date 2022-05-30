@@ -10027,7 +10027,7 @@ h3 {
   /* CHECKED STYLES */
 }
 
-.theme-item [type=radio] {
+.theme-item [type="radio"] {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   position: absolute;
@@ -10036,7 +10036,7 @@ h3 {
   height: 0;
 }
 
-.theme-item [type=radio] + img {
+.theme-item [type="radio"] + img {
   cursor: pointer;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -10045,7 +10045,7 @@ h3 {
           transform: scale(0.8);
 }
 
-.theme-item [type=radio]:checked + img {
+.theme-item [type="radio"]:checked + img {
   opacity: 1;
   -webkit-transform: scale(1);
           transform: scale(1);

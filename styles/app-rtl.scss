@@ -6786,7 +6786,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   padding: 4px;
   padding-left: 2px;
   /* HIDE RADIO */
-  [type=radio] {
+  [type="radio"] {
     transition: all 0.3s;
     position: absolute;
     opacity: 0;
@@ -6795,7 +6795,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 
   /* IMAGE STYLES */
-  [type=radio]+img {
+  [type="radio"]+img {
     cursor: pointer;
     transition: all 0.3s;
     opacity: 0.6;
@@ -6803,7 +6803,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 
   /* CHECKED STYLES */
-  [type=radio]:checked+img {
+  [type="radio"]:checked+img {
     opacity: 1;
     transform: scale(1);
     transition: all 0.3s;
