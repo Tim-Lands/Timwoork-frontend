@@ -149,9 +149,21 @@ const sidebarLinks = [
     },
     {
         id: 9,
-        name: 'رسائل اتصل بنا',
+        name: 'الرسائل',
         icon: 'email',
-        href: '/tw-admin/contacts'
+        href: null,
+        hasSubMenu: [
+            {
+                id: 1,
+                name: 'جميع الرسائل',
+                href: '/tw-admin/contacts'
+            },
+            {
+                id: 2,
+                name: 'رسائل اتصل بنا',
+                href: '/tw-admin/contacts/contactus'
+            },
+        ]
     },
 ]
 function index(): ReactElement {
