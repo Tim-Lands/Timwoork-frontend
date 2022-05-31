@@ -8397,6 +8397,10 @@ h3 {
           justify-content: center;
 }
 
+.modal-conferm.sub-modal {
+  position: absolute;
+}
+
 .modal-conferm::after {
   content: "";
   position: absolute;
@@ -9621,10 +9625,7 @@ h3 {
   color: #475c80;
 }
 
-.ant-collapse-icon-position-right
-> .ant-collapse-item
-> .ant-collapse-header
-.ant-collapse-arrow {
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
   right: auto;
   left: 16px;
 }
@@ -10026,5 +10027,40 @@ h3 {
 
 .linked-image a .text {
   margin-right: 4px;
+}
+
+.theme-item {
+  border-radius: 14px;
+  padding: 4px;
+  padding-left: 2px;
+  /* HIDE RADIO */
+  /* IMAGE STYLES */
+  /* CHECKED STYLES */
+}
+
+.theme-item [type="radio"] {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-item [type="radio"] + img {
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  opacity: 0.6;
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+}
+
+.theme-item [type="radio"]:checked + img {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 /*# sourceMappingURL=app-rtl.css.map */

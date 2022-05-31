@@ -1,11 +1,57 @@
-import { notification, Space } from 'antd'
 import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import API from '../config'
-import Cookies from "js-cookie";
+import CreatableSelect from "react-select/creatable";
+import API from "../config";
+import SetSelectThemesModal from './SetSelectThemesModal';
+
+const MySelect = (props: any) => {
+    const [dataTags, setDataTags] = useState([]);
+    const [isLoadingTags, setIsLoadingTags] = useState(false);
+    const getdataTags = async (tag: string) => {
+        setIsLoadingTags(true);
+        try {
+            const res: any = await API.get(`api/tags/filter?tag=${tag}`);
+            if (res.status === 200) {
+                setIsLoadingTags(false);
+                setDataTags(res.data.data.data);
+            }
+        } catch (error) {
+            setIsLoadingTags(false);
+        }
+    };
+    const handleChange = (value) => {
+        props.onChange("tags", value);
+    };
+    const handleBlur = () => {
+        props.onBlur("tags", true);
+    };
+    return (
+        <div
+            className="select-tags-form"
+            style={{ margin: "1rem 0", position: "relative", maxWidth: 1300 }}
+        >
+            {isLoadingTags && (
+                <span className="spinner-border spinner-border-sm" role="status"></span>
+            )}
+            <CreatableSelect
+                id="color"
+                options={dataTags}
+                onKeyDown={(e: any) => {
+                    if (e.target.value) {
+                        getdataTags(e.target.value);
+                    }
+                }}
+                isMulti={true}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={props.value}
+            />
+        </div>
+    );
+};
 
 export const MenuBar = ({ editor }: any) => {
     if (!editor) {
@@ -98,66 +144,51 @@ export const MenuBar = ({ editor }: any) => {
         </div>
     );
 };
-const Tiptap = ({ value, editor }: any) => {
+const Tiptap = (props: any) => {
     return (
         <EditorContent
-            content={value}
-            editor={editor}
-            onChange={() => console.log('test')}
+            content={props.value}
+            editor={props.editor}
+            onChange={props.changeHandle}
             style={{ minHeight: 170 }}
         />
     );
 };
-function ReplyContactModal({ setIsConfirmText, onClose, title, user }): ReactElement {
+function AddNewMessage({ setIsConfirmText, title }): ReactElement {
+    const [toState, setToState] = useState('')
     const [fromState, setFromState] = useState('')
-    const [toEmail, setToEmail] = useState(user?.email)
+    const [setSlectThemesModal, setSetSlectThemesModal] = useState(false)
+
     const [messageState, setMessageState] = useState('')
     const [subject, setSubject] = useState('')
     const [validationsErrors, setValidationsErrors]: any = useState({});
     const editor = useEditor({
-        onUpdate({ editor }) { setMessageState(editor.getText()) },
         extensions: [StarterKit],
         content: 'stars && stars.data.buyer_instruct',
     });
-    async function sendEmail() {
-        console.log(messageState)
-        const token = Cookies.get('token_dash')
-        const res = await API.post(`dashboard/contacts/sent_to_client_by_email/${user.id}`, {
-            message: messageState
-        }, {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        })
-        if (res.status == 200)
-            notification.open({
-                message: 'تم إرسال الرد بنجاح',
-                type: "success"
-            })
 
-        onClose()
-    }
     return (
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm lg'>
             <div className="modal-conferm-inner">
+                {setSlectThemesModal && <SetSelectThemesModal title='تحديد قالب للرسالة' setIsConfirmText={setSetSlectThemesModal} />}
                 <div className="modal-conferm-head">
-                    <h3 className="title" style={{ fontSize: 17 }}>
+                    <h3 className="title">
                         {title}
                     </h3>
                 </div>
                 <div className="modal-conferm-body" style={{ paddingTop: 0 }}>
                     <div className="row">
-                        <div className="col-xl-6">
+                        <div className="col-xl-5">
                             <div className="timlands-form">
-                                <label className="label-block" htmlFor="input-msg">
+                                <label className="label-block" htmlFor="input-fromState">
                                     من
                                 </label>
                                 <select
-                                    id="input-msg"
+                                    id="input-fromState"
                                     name="fromState"
                                     placeholder="من..."
                                     className={
-                                        "timlands-inputs sm " +
+                                        "timlands-inputs select sm " +
                                         (validationsErrors &&
                                             validationsErrors.fromState &&
                                             " has-error")
@@ -176,6 +207,7 @@ function ReplyContactModal({ setIsConfirmText, onClose, title, user }): ReactEle
                                     <option value="1">timwoork@timwoork.com</option>
                                     <option value="1">chairman@timwoork.com</option>
                                 </select>
+
                                 {validationsErrors && validationsErrors.fromState && (
                                     <div style={{ overflow: "hidden" }}>
                                         <motion.div
@@ -191,25 +223,31 @@ function ReplyContactModal({ setIsConfirmText, onClose, title, user }): ReactEle
                                 )}
                             </div>
                         </div>
-                        <div className="col-xl-6">
+                        <div className="col-xl-7">
                             <div className="timlands-form">
                                 <label className="label-block" htmlFor="input-toState">
                                     إلى
                                 </label>
-                                <input
-                                    type='text'
-                                    id="input-toState"
-                                    name="toState"
-                                    placeholder="إلى..."
-                                    className={
-                                        "timlands-inputs sm " +
-                                        (validationsErrors &&
-                                            validationsErrors.toState &&
-                                            " has-error")
-                                    }
-                                    onChange={e => setToEmail(e.target.value)}
-                                    value={toEmail}
-                                />
+                                <div style={{ marginTop: -8 }}>
+                                    <MySelect
+                                        value={toState}
+                                        onChange={(e: any) => setToState(e)}
+                                    //onBlur={formik.setFieldTouched}
+                                    />
+
+                                    <div style={{ overflow: "hidden" }}>
+                                        <motion.div
+                                            style={{ padding: 0, marginTop: 0 }}
+                                            initial={{ y: -70, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            className="timlands-form-note"
+                                        >
+                                            <p className="text">
+                                                لتحديد جميع المستخدمين اكتب <strong>(*)</strong>
+                                            </p>
+                                        </motion.div>
+                                    </div>
+                                </div>
                                 {validationsErrors && validationsErrors.toState && (
                                     <div style={{ overflow: "hidden" }}>
                                         <motion.div
@@ -265,8 +303,7 @@ function ReplyContactModal({ setIsConfirmText, onClose, title, user }): ReactEle
                                     <MenuBar editor={editor} />
                                     <Tiptap
                                         value={messageState}
-
-                                        changeHandle={(e: any) => () => { console.log(e.target.value); setMessageState(e.target.value) }}
+                                        changeHandle={(e: any) => setMessageState(e.target.value)}
                                         editor={editor}
                                     />
                                 </div>
@@ -289,27 +326,30 @@ function ReplyContactModal({ setIsConfirmText, onClose, title, user }): ReactEle
                 </div>
 
                 <div className="modal-conferm-footer">
-                    <Space>
-                        <button className='btn butt-sm butt-green' onClick={() => sendEmail()}>إرسال الآن</button>
-                        <button
-                            className='btn butt-sm butt-red-text'
-                            onClick={() => {
-                                setIsConfirmText(false)
-                                setValidationsErrors() // just Test
-                            }}
-                        >إلغاء الأمر</button>
-                    </Space>
+                    <div className='d-flex'>
+                        <div className="me-auto">
+                            <button className='btn butt-sm butt-green mx-1' onClick={() => setValidationsErrors('error')}>إرسال الآن</button>
+                            <button className='btn butt-sm butt-red-text mx-1' onClick={() => setIsConfirmText(false)}>إلغاء الأمر</button>
+                        </div>
+                        <button className='btn butt-sm butt-blue ml-auto flex-center' onClick={() => setSetSlectThemesModal(true)}>
+                            <span className="material-icons material-icons-outlined">collections_bookmark</span>
+                            تحديد قالب للرسالة
+                        </button>
+                    </div>
                 </div>
             </div>
         </motion.div>
     )
 }
 
-export default ReplyContactModal
-ReplyContactModal.propTypes = {
+export default AddNewMessage
+AddNewMessage.propTypes = {
     setIsConfirmText: PropTypes.func,
+    handleChange: PropTypes.func,
+    setMsg: PropTypes.func,
+    msg: PropTypes.string,
+    text: PropTypes.string,
     title: PropTypes.string,
-    onClose: PropTypes.func,
-    editor: PropTypes.any,
-    user: PropTypes.any
+    handleFunc: PropTypes.func,
+    editor: PropTypes.any
 };
