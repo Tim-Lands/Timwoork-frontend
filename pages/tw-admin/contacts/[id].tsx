@@ -11,7 +11,7 @@ function Id({ query }): ReactElement {
     const [isShowReplyModal, setIsShowReplyModal] = useState(false)
     return (
         <>
-            {isShowReplyModal && <ReplyContactModal setIsConfirmText={setIsShowReplyModal} handleFunc={() => console.log('test')} title='الرد على الرسالة' />}
+            {isShowReplyModal && <ReplyContactModal user={postsList?.data} setIsConfirmText={setIsShowReplyModal} handleFunc={() => console.log('test')} title='الرد على الرسالة' />}
             <div className="timlands-panel">
                 {!postsList && <Loading />}
                 <div className="timlands-panel-header">

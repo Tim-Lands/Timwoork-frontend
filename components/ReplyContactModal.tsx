@@ -1,9 +1,11 @@
-import { Space } from 'antd'
+import { notification, Space } from 'antd'
 import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import API from '../config'
+import Cookies from "js-cookie";
 
 export const MenuBar = ({ editor }: any) => {
     if (!editor) {
@@ -96,27 +98,45 @@ export const MenuBar = ({ editor }: any) => {
         </div>
     );
 };
-const Tiptap = (props: any) => {
+const Tiptap = ({ value, editor }: any) => {
     return (
         <EditorContent
-            content={props.value}
-            editor={props.editor}
-            onChange={props.changeHandle}
+            content={value}
+            editor={editor}
+            onChange={() => console.log('test')}
             style={{ minHeight: 170 }}
         />
     );
 };
-function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElement {
+function ReplyContactModal({ setIsConfirmText, onClose, title, user }): ReactElement {
     const [fromState, setFromState] = useState('')
-    const [toState, setToState] = useState('')
+    const [toEmail, setToEmail] = useState(user?.email)
     const [messageState, setMessageState] = useState('')
     const [subject, setSubject] = useState('')
-
     const [validationsErrors, setValidationsErrors]: any = useState({});
     const editor = useEditor({
+        onUpdate({ editor }) { setMessageState(editor.getText()) },
         extensions: [StarterKit],
         content: 'stars && stars.data.buyer_instruct',
     });
+    async function sendEmail() {
+        console.log(messageState)
+        const token = Cookies.get('token_dash')
+        const res = await API.post(`dashboard/contacts/sent_to_client_by_email/${user.id}`, {
+            message: messageState
+        }, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
+        if (res.status == 200)
+            notification.open({
+                message: 'تم إرسال الرد بنجاح',
+                type: "success"
+            })
+
+        onClose()
+    }
     return (
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm lg'>
             <div className="modal-conferm-inner">
@@ -187,8 +207,8 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
                                             validationsErrors.toState &&
                                             " has-error")
                                     }
-                                    onChange={e => setToState(e.target.value)}
-                                    value={toState}
+                                    onChange={e => setToEmail(e.target.value)}
+                                    value={toEmail}
                                 />
                                 {validationsErrors && validationsErrors.toState && (
                                     <div style={{ overflow: "hidden" }}>
@@ -245,7 +265,8 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
                                     <MenuBar editor={editor} />
                                     <Tiptap
                                         value={messageState}
-                                        changeHandle={(e: any) => setMessageState(e.target.value)}
+
+                                        changeHandle={(e: any) => () => { console.log(e.target.value); setMessageState(e.target.value) }}
                                         editor={editor}
                                     />
                                 </div>
@@ -269,7 +290,7 @@ function ReplyContactModal({ setIsConfirmText, handleFunc, title }): ReactElemen
 
                 <div className="modal-conferm-footer">
                     <Space>
-                        <button className='btn butt-sm butt-green' onClick={() => handleFunc()}>إرسال الآن</button>
+                        <button className='btn butt-sm butt-green' onClick={() => sendEmail()}>إرسال الآن</button>
                         <button
                             className='btn butt-sm butt-red-text'
                             onClick={() => {
@@ -288,6 +309,7 @@ export default ReplyContactModal
 ReplyContactModal.propTypes = {
     setIsConfirmText: PropTypes.func,
     title: PropTypes.string,
-    handleFunc: PropTypes.func,
-    editor: PropTypes.any
+    onClose: PropTypes.func,
+    editor: PropTypes.any,
+    user: PropTypes.any
 };
