@@ -163,7 +163,7 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
                     <hr />
                     <Pagination
                         activePage={
-                            pageNumber
+                            Number(pageNumber)
                         }
                         itemsCountPerPage={
                             postsList.per_page || 0

@@ -33,7 +33,7 @@ export async function getServerSideProps(ctx) {
       }
     }
   const token = cookies(ctx).token_dash || ""
-  const params = { page: pageNumber, status: 1, like: search && `title,${search}` }
+  const params = { page: pageNumber, status: 0, like: search && `title,${search}` }
   try {
     console.log(token)
     const res = await API.get("dashboard/products", {
