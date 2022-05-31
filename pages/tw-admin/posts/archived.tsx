@@ -3,12 +3,12 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Posts from '@/components/Dashboard/posts'
 import cookies from "next-cookies";
-function index({ pageNumber = 1, postsData }): ReactElement {
+function index({ postsData }): ReactElement {
   const [postsList, setPostsList] = useState(postsData)
   useEffect(() => {
     setPostsList(postsData)
   }, [postsData])
-  console.log(pageNumber)
+  console.log(postsList)
   return (
     <>
       <div className="timlands-panel">
@@ -33,7 +33,7 @@ export async function getServerSideProps(ctx) {
       }
     }
   const token = cookies(ctx).token_dash || ""
-  const params = { page: pageNumber,  like: search && `title,${search}` }
+  const params = { page: pageNumber, like: search && `title,${search}` }
   try {
     console.log(token)
     const res = await API.get("dashboard/products/get_products_soft_deleted", {
