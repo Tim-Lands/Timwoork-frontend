@@ -1,9 +1,10 @@
 import { Space } from 'antd'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
-function RejectProductCause({ setIsConfirmText, text, handleFunc, title, msg, setMsg }): ReactElement {
+function RejectProductCause({ setIsConfirmText, text, handleFunc, title }): ReactElement {
+    const [msg, setMsg] = useState('')
     return (
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm'>
             <div className="modal-conferm-inner">
@@ -36,7 +37,7 @@ function RejectProductCause({ setIsConfirmText, text, handleFunc, title, msg, se
 
                 <div className="modal-conferm-footer">
                     <Space>
-                        <button className='btn butt-sm butt-green' onClick={() => handleFunc({ message: msg })}>رفض الآن</button>
+                        <button className='btn butt-sm butt-green' onClick={() => handleFunc({ cause: msg })}>رفض الآن</button>
                         <button className='btn butt-sm butt-red-text' onClick={() => setIsConfirmText(false)}>إلغاء الأمر</button>
                     </Space>
                 </div>
