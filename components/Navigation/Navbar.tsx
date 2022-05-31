@@ -817,7 +817,6 @@ function Navbar(): ReactElement {
                               <Conversations
                                 data={conversationsList}
                                 refer={chatList}
-                                countMsg={countMsg}
                               />
                             }
                             placement="bottomLeft"

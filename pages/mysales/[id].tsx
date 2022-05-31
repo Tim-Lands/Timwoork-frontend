@@ -1624,7 +1624,7 @@ const User = ({ query }) => {
 function linkify(text, query) {
   const urlRegex =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-  return text.replace(urlRegex, function (url) {
+  const before = text.replace(urlRegex, function (url) {
     const start = url.startsWith("http") || url.startsWith("https");
     let newUrl = url;
     newUrl = !start ? "https://" + url : url;
@@ -1634,13 +1634,14 @@ function linkify(text, query) {
       return (
         '<a href="/redirect/f?url=' +
         newUrl +
-        `&*mysales/${query.id}` +
+        `&*conversations/${query.id}` +
         '" target="_blank">' +
         url +
         "</a>"
       );
     }
   });
+  return `<p style="word-break: break-word;">${before}</p>`;
 }
 
 export default User;
