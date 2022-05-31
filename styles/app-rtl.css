@@ -1460,6 +1460,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  position: relative;
 }
 
 .navbar-conversations-container .header .item .rowItem {
@@ -1470,6 +1471,16 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.navbar-conversations-container .header .item .rowItem .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 100%;
+  background-color: red;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 .navbar-conversations-container .header .item .rowItem p {
