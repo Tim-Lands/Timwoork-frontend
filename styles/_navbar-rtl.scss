@@ -578,10 +578,20 @@
       padding: 7px 5px;
       transition: all 0.3s linear;
       flex-direction: column;
+      position: relative;
       .rowItem {
         gap: 7px;
         display: flex;
         align-items: center;
+        .dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 100%;
+          background-color: red;
+          position: absolute;
+          top: 10px;
+          left: 10px;
+        }
         p {
           width: 75%;
           font-size: 12px;
