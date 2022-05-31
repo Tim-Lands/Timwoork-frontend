@@ -29,7 +29,7 @@ export async function getServerSideProps(ctx) {
     return {
       redirect: {
         permanent: false,
-        destination: "canceled?pageNumber=1"
+        destination: "/tw-admin/posts/canceled?pageNumber=1"
       }
     }
   const token = cookies(ctx).token_dash || ""
