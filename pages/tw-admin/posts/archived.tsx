@@ -29,7 +29,7 @@ export async function getServerSideProps(ctx) {
     return {
       redirect: {
         permanent: false,
-        destination: "?pageNumber=1"
+        destination: "archived?pageNumber=1"
       }
     }
   const token = cookies(ctx).token_dash || ""
