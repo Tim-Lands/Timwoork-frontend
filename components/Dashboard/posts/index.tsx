@@ -64,7 +64,7 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
         setIsDisactiveModalVisible(true);
     }
 
-    async function rejectProduct() {
+    async function rejectProduct(cause) {
         setIsLoading(true);
         try {
             const res: any = await API.post(
@@ -91,16 +91,13 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
                     {isModalVisible &&
                         <RejectProductCause
                             setIsConfirmText={setIsModalVisible}
-                            handleFunc={() => rejectProduct()}
+                            handleFunc={(msg) => rejectProduct(msg)}
                             title="سبب الرفض"
-                            msg={cause}
-                            setMsg={(e) => setCause((e.target as HTMLInputElement).value)}
                         />
                     }
                     {isDisactiveModalVisible &&
                         <DisactiveProductCause
                             setIsConfirmText={setIsDisactiveModalVisible}
-                            handleFunc={() => rejectProduct()}
                             title="سبب التعطيل"
                             msg={cause}
                             setMsg={(e) => setCause((e.target as HTMLInputElement).value)}
@@ -109,7 +106,6 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
                     {isEmailModalVisible &&
                         <EmailModalCause
                             setIsConfirmText={setIsEmailModalVisible}
-                            handleFunc={() => rejectProduct()}
                             title="إشعار للمستخدم"
                             msg={cause}
                             setMsg={(e) => setCause(e.target.value)}
@@ -166,7 +162,7 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
                             Number(pageNumber)
                         }
                         itemsCountPerPage={
-                            postsList.per_page || 0
+                            postsList?.per_page || 0
                         }
                         totalItemsCount={postsList?.per_page * postsList?.last_page}
                         onChange={(pageNumber) => {

@@ -3,10 +3,12 @@ import Swal from "sweetalert2";
 import Link from "next/link";
 import LastSeen from "@/components/LastSeen";
 import { Space } from "antd";
-
+import Cookies from "js-cookie";
 import API from "../../../config"
 
-export const archieveHandle = (id, token) => {
+export async function archieveHandle(id) {
+    const token = Cookies.get("token_dash");
+
     const MySwal = withReactContent(Swal);
 
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -27,18 +29,21 @@ export const archieveHandle = (id, token) => {
             cancelButtonText: "لا",
             reverseButtons: true,
         })
-        .then((result) => {
+        .then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res: any = API.post(
+                    const res: any = await API.post(
                         `dashboard/products/${id}/delete `
                         , {}, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
                     });
-                    if (res) {
+                    console.log(res)
+                    if (res.status == 200) {
                         console.log('res success')
+                        location.reload();
+
                     }
                 } catch (error) {
                     console.log('err')
@@ -49,6 +54,97 @@ export const archieveHandle = (id, token) => {
         });
 }
 
+async function forceDelete(id) {
+    const token = Cookies.get("token_dash");
+    const MySwal = withReactContent(Swal);
+
+    const swalWithBootstrapButtons = MySwal.mixin({
+        customClass: {
+            confirmButton: "btn butt-red butt-sm me-1",
+            cancelButton: "btn butt-green butt-sm",
+        },
+        buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+        .fire({
+            title: "هل أنت متأكد؟",
+            text: "هل انت متأكد أنك تريد حذف هذا العنصر نهائيًا",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "نعم, أريد الحذف",
+            cancelButtonText: "لا",
+            reverseButtons: true,
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res: any = API.post(
+                        `dashboard/products/${id}/force_delete_product`
+                        , {}, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    if (res) {
+                        console.log('res success')
+                        location.reload();
+
+                    }
+                } catch (error) {
+                    console.log('err')
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire("ملغى", "تم الإلغاء", "error");
+            }
+        });
+}
+
+async function restoreArchieved(id) {
+    const token = Cookies.get("token_dash");
+    const MySwal = withReactContent(Swal);
+
+    const swalWithBootstrapButtons = MySwal.mixin({
+        customClass: {
+            confirmButton: "btn butt-red butt-sm me-1",
+            cancelButton: "btn butt-green butt-sm",
+        },
+        buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+        .fire({
+            title: "هل أنت متأكد؟",
+            text: "هل انت متأكد أنك تريد إستعادة هذا العنصر ",
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonText: "نعم, أريد الإستعادة",
+            cancelButtonText: "لا",
+            reverseButtons: true,
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res: any = API.post(
+                        `dashboard/products/${id}/restore_product_deleted`
+                        , {}, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    if (res) {
+                        console.log('res success')
+                        location.reload();
+
+                    }
+                } catch (error) {
+                    console.log('err')
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire("ملغى", "تم الإلغاء", "error");
+            }
+        });
+}
 export const switchStatus = (status) => {
     switch (status) {
         case null:
@@ -68,9 +164,11 @@ export const generatecolumns = ({ status, callbacks }) => [
         title: "العنوان",
         dataIndex: "",
         render: (profile: any) => (
-            <Link href={`/tw-admin/posts/${profile.slug}`}>
-                <a>{profile.title}</a>
-            </Link>
+            status != 'archieved' ?
+                <Link href={`/tw-admin/posts/${profile.slug}`}>
+                    <a>{profile.title}</a>
+                </Link>
+                : <a>{profile.title}</a>
         )
         ,
         width: 390,
@@ -114,13 +212,12 @@ export const generatecolumns = ({ status, callbacks }) => [
 const generateButtonSet = ({ status, post, callbacks }) => {
     const { activateProduct,
         onDisactiveClick,
-        archieveHandle,
         onRejectClick,
         onSendNotificationClick,
         onSendEmailClick } = callbacks
     return (
         <Space>
-            {status != "activated" && (post.status == 0 || post.status == null) ? (
+            {!['activated', 'archieved'].includes(status) && (post.status == 0 || post.status == null) ? (
                 <button
                     title="تنشيط هذه الخدمة"
                     onClick={() => activateProduct(post.id)}
@@ -142,6 +239,23 @@ const generateButtonSet = ({ status, post, callbacks }) => {
             ) : (
                 ""
             )}
+            {
+                status == "archieved" && <> <button
+                    title="حذف هذه الخدمة"
+                    className="btn butt-xs2 butt-red"
+                    onClick={() => forceDelete(post.id)}
+                >
+                    حذف نهائي
+                </button>
+                    <button
+                        title="إستعادة هذه الخدمة"
+                        onClick={() => restoreArchieved(post.id)}
+                        className="btn butt-xs2 butt-green"
+                    >
+                        إستعادة
+                    </button>
+                </>
+            }
             {
                 status != 'archieved' && <button
                     title="أرشفة هذه الخدمة"
