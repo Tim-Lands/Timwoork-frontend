@@ -9,7 +9,7 @@ import { FaUserCircle } from "react-icons/fa";
 import messages from "../../public/messages.png";
 import Image from "next/image";
 
-function Conversations({ data, refer, countMsg }) {
+function Conversations({ data, refer }) {
   return (
     <div ref={refer} className="navbar-conversations-container conv">
       <div className="header">
@@ -17,14 +17,13 @@ function Conversations({ data, refer, countMsg }) {
           data?.data?.data?.map((item, index) => {
             if (index < 10) {
               return (
-                <Link
-                  key={item.id}
-                  href={`/conversations/${item.id}#msg-item-${item.latest_message.id}`}
-                >
+                <Link key={item.id} href={`/conversations/${item.id}`}>
                   <div key="0" className="item">
                     <div className="rowItem">
-                      {!item?.latest_message?.read_at && countMsg > 0 && (
+                      {item?.messages_count !== 0 ? (
                         <div className="dot"></div>
+                      ) : (
+                        <></>
                       )}
                       {item.members[0].profile.avatar_path ? (
                         <img
@@ -79,7 +78,6 @@ function Conversations({ data, refer, countMsg }) {
 Conversations.propTypes = {
   data: PropTypes.any,
   refer: PropTypes.any,
-  countMsg: PropTypes.number,
 };
 
 export default Conversations;

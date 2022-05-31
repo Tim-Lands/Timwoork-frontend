@@ -101,9 +101,7 @@ function Sidebar({ RouterId }) {
                 }
                 key={item.id}
               >
-                <Link
-                  href={`/conversations/${item.id}#msg-item-${item.latest_message.id}`}
-                >
+                <Link href={`/conversations/${item.id}`}>
                   <a>
                     <div className="conv-item-inner">
                       <div className="conv-item-head">
