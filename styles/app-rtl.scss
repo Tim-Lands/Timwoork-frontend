@@ -455,7 +455,42 @@ h3 {
     scrollbar-color: transparent transparent;
     scrollbar-width: thin;
     -ms-overflow-style: scroll;
+  }
+  .myPurchasesTable {
+    @media (max-width: 650px) {
+      width: 100%;
+      overflow-x: auto;
+      max-height: 350px;
+      overflow-y: auto;
+      scrollbar-color: transparent transparent;
+      scrollbar-width: thin;
+      -ms-overflow-style: scroll;
+      &::-webkit-scrollbar {
+        height: 7px;
+      }
 
+      &:hover {
+        scrollbar-color: #cbd1d8 #cbd1d8;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        height: 7px;
+        background-color: #cbd1d8;
+        transition: all 0.1s linear;
+      }
+
+      &:hover::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        transition: all 0.1s linear;
+        background-color: #cbd1d8;
+      }
+    }
+    .inner-purchases {
+      @media (max-width: 650px) {
+        min-width: 650px;
+      }
+    }
     &::-webkit-scrollbar {
       width: 7px;
     }
