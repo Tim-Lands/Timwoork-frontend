@@ -3168,15 +3168,52 @@ h3 {
   -ms-overflow-style: scroll;
 }
 
-.app-bill.conv::-webkit-scrollbar {
+@media (max-width: 650px) {
+  .app-bill .myPurchasesTable {
+    width: 100%;
+    overflow-x: auto;
+    max-height: 350px;
+    overflow-y: auto;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    -ms-overflow-style: scroll;
+  }
+  .app-bill .myPurchasesTable::-webkit-scrollbar {
+    height: 7px;
+  }
+  .app-bill .myPurchasesTable:hover {
+    scrollbar-color: #cbd1d8 #cbd1d8;
+  }
+  .app-bill .myPurchasesTable::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    height: 7px;
+    background-color: #cbd1d8;
+    -webkit-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+  }
+  .app-bill .myPurchasesTable:hover::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    -webkit-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+    background-color: #cbd1d8;
+  }
+}
+
+@media (max-width: 650px) {
+  .app-bill .myPurchasesTable .inner-purchases {
+    min-width: 650px;
+  }
+}
+
+.app-bill .myPurchasesTable::-webkit-scrollbar {
   width: 7px;
 }
 
-.app-bill.conv:hover {
+.app-bill .myPurchasesTable:hover {
   scrollbar-color: #cbd1d8 #cbd1d8;
 }
 
-.app-bill.conv::-webkit-scrollbar-thumb {
+.app-bill .myPurchasesTable::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   width: 7px;
   background-color: #cbd1d8;
@@ -3184,7 +3221,7 @@ h3 {
   transition: all 0.1s linear;
 }
 
-.app-bill.conv:hover::-webkit-scrollbar-thumb {
+.app-bill .myPurchasesTable:hover::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;

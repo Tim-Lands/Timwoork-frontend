@@ -17,7 +17,11 @@ function BlogFooter() {
             getPosts.map((item: any) => (
               <li key={item.id}>
                 <Link href={`/blog/${item.slug}`}>
-                  <a>{item.title.rendered}</a>
+                  {item.title.rendered.length < 35 ? (
+                    <a>{item.title.rendered}</a>
+                  ) : (
+                    <a>{item.title.rendered.slice(0, 35)} ...</a>
+                  )}
                 </Link>
               </li>
             ))}

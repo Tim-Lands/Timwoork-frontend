@@ -127,13 +127,16 @@ function index() {
                 <div className="app-bill-header">
                   <h3 className="title">مشترياتي</h3>
                 </div>
-                <Table
-                  columns={columns}
-                  onChange={onChange}
-                  dataSource={data}
-                  bordered
-                  size="small"
-                />
+                <div className="myPurchasesTable">
+                  <Table
+                    className="inner-purchases"
+                    columns={columns}
+                    onChange={onChange}
+                    dataSource={data}
+                    bordered
+                    size="small"
+                  />
+                </div>
               </div>
             </div>
           </div>
