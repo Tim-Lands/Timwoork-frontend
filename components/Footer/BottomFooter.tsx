@@ -14,11 +14,7 @@ function BottomFooter() {
             src="/Wise-logo.png"
             alt=""
           />
-          <img
-            style={{ height: 22, marginInline: 4 }}
-            src="/ccp.png"
-            alt=""
-          />
+          <img style={{ height: 22, marginInline: 4 }} src="/ccp.png" alt="" />
         </span>
 
         <ul className="nav center-nav-footer col-12 col-md-auto mb-2 justify-content-center mb-md-0">
@@ -39,8 +35,8 @@ function BottomFooter() {
           </li>
         </ul>
 
-        <div className="col-md-4 text-end">
-          <p className="copy-text">
+        <div className="col-md-5 text-end">
+          <p className="copy-text w-100">
             © 2021-2022 <a href="/">Timwoork</a> جميع الحقوق محفوظة{" "}
           </p>
         </div>
