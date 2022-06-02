@@ -100,6 +100,21 @@
             color: #000;
         }
     }
+    &.butt-white-out {
+        background-color: transparent;
+        border-color: #fff;
+        color: #fff;
+        &:hover {
+            background-color: darken(#fff, 5);
+            border-color: darken(#fff, 5);
+            color: #111;
+        }
+        &:focus {
+            background-color: darken(#fff, 13);
+            border-color: darken(#fff, 13);
+            color: #000;
+        }
+    }
     &.butt-green {
         background-color: #43b465;
         border-color: #43b465;
