@@ -17,41 +17,64 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 import PostInner from '@/components/Post/PostInner'
+import PostsAside from '@/components/PostsAside'
+
 function index() {
   const { data: categories }: any = useSWR(`api/get_categories`);
+  const { data: popularProducts, popularError }: any = useSWR(
+    "api/filter?paginate=9&popular"
+  );
+  const { data: latestProducts, latestError }: any = useSWR(
+    "api/filter?paginate=9&sort[0]=created_at,desc"
+  );
+  const { data: products, error }: any = useSWR(
+    "api/filter?paginate=9&sort=count_buying,desc"
+  );
   const catData = [
     {
       id: 1,
-      thumbnail: '/avatar.png',
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741678/logo-design-2x.png',
       name: 'التصميم الغرافيكي',
       slug: "وصف التصنيف الرئيسي"
     },
     {
       id: 2,
-      thumbnail: '/avatar.png',
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/ae11e2d45410b0eded7fba0e46b09dbd-1598561917003/wordpress-2x.png',
       name: 'التصميم الغرافيكي',
       slug: "وصف التصنيف الرئيسي"
     },
     {
       id: 3,
-      thumbnail: '/avatar.png',
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/data-entry-2x.png',
       name: 'التصميم الغرافيكي',
       slug: "وصف التصنيف الرئيسي"
     },
     {
       id: 4,
-      thumbnail: '/avatar.png',
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/illustration-2x.png',
       name: 'التصميم الغرافيكي',
       slug: "وصف التصنيف الرئيسي"
     },
     {
       id: 5,
-      thumbnail: '/avatar.png',
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741668/seo-2x.png',
+      name: 'التصميم الغرافيكي',
+      slug: "وصف التصنيف الرئيسي"
+    },
+    {
+      id: 6,
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741678/book-covers-2x.png',
+      name: 'التصميم الغرافيكي',
+      slug: "وصف التصنيف الرئيسي"
+    },
+    {
+      id: 7,
+      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741663/animated-explainer-2x.png',
       name: 'التصميم الغرافيكي',
       slug: "وصف التصنيف الرئيسي"
     },
   ]
-  
+
   const { data: productsCarousel }: any = useSWR(
     "api/filter?paginate=9&sort=count_buying,desc"
   );
@@ -88,17 +111,18 @@ function index() {
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
-      
+
       <Hero />
       <div className='container'>
         <CategoriesSlider data={catData} title='التصنيفات الأكثر شعبية' isLoading={false} showAll={'المزيد...'} link={'/test'} />
       </div>
       <VideoAside />
+
       <Categories
         onClickCategory={(id) => router.push(`/products?categoryID=${id}`)}
         categories={categories}
       />
-      <div className='container-fluid'>
+      <div className='container'>
 
         <Swiper
           slidesPerView={1}
@@ -145,6 +169,33 @@ function index() {
           ))}
         </Swiper>
       </div>
+      {products &&
+        popularProducts &&
+        latestProducts &&
+        products.data.length !== 0 &&
+        popularProducts.data.length !== 0 &&
+        latestProducts.data.length !== 0 && (
+          <div className="container">
+            <PostsAside
+              title="الخدمات الأكثر شعبية "
+              PostData={popularProducts && popularProducts.data.data}
+              isError={popularError}
+              linkURL="/products?type=popular"
+            />
+            <PostsAside
+              title="الخدمات التي أضيفت حديثا"
+              PostData={latestProducts && latestProducts.data.data}
+              isError={latestError}
+              linkURL="/products?type=most_recent"
+            />
+            <PostsAside
+              title="الخدمات الأكثر مبيعا"
+              PostData={products && products.data.data}
+              isError={error}
+              linkURL="/products?type=most_selling"
+            />
+          </div>
+        )}
     </>
   )
 }

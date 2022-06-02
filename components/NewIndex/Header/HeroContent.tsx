@@ -4,10 +4,8 @@ import Navbar from './Navbar'
 function HeroContent() {
     return (
         <div className='hero-content'>
-            <div className="container-fluid">
-                <Navbar />
-            </div>
             <div className="container">
+                <Navbar />
                 <HeroContainer />
             </div>
         </div>
