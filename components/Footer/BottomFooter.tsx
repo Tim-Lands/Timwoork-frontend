@@ -7,7 +7,7 @@ function BottomFooter() {
         style={{ maxWidth: 1366 }}
         className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1"
       >
-        <span className="d-flex payments-logo align-items-center col-md-3">
+        <span className="d-flex payments-logo align-items-center col-md-3 ms-3">
           <img src="/payments.png" alt="" />
           <img
             style={{ height: 22, marginInline: 4 }}

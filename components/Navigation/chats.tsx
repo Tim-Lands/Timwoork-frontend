@@ -49,7 +49,7 @@ function Conversations({ data, refer }) {
                     </div>
                     <p>
                       <AiOutlineClockCircle />
-                      <LastSeen date={item.updated_at} />
+                      <LastSeen date={item.latest_message.updated_at} />
                     </p>
                   </div>
                 </Link>
