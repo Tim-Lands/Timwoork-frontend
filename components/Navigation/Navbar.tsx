@@ -39,7 +39,7 @@ import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
   const { data: conversationsList }: any = useSWR(
-    `api/conversations?paginate=10  &page=1`
+    `api/conversations?paginate=10&page=1`
   );
   const { mutate } = useSWRConfig();
 
