@@ -254,6 +254,27 @@
   position: relative;
 }
 
+.timlands-form.confirm {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+@media (max-width: 500px) {
+  .timlands-form.confirm {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
 .timlands-form .timlands-input {
   display: block;
   width: 100%;
@@ -3166,6 +3187,35 @@ h3 {
   scrollbar-color: transparent transparent;
   scrollbar-width: thin;
   -ms-overflow-style: scroll;
+  overflow-x: auto;
+  max-height: 350px;
+  overflow-y: auto;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+  -ms-overflow-style: scroll;
+}
+
+.app-bill.conv::-webkit-scrollbar {
+  width: 7px;
+}
+
+.app-bill.conv:hover {
+  scrollbar-color: #cbd1d8 #cbd1d8;
+}
+
+.app-bill.conv::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  width: 7px;
+  background-color: #cbd1d8;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+.app-bill.conv:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  background-color: #cbd1d8;
 }
 
 @media (max-width: 650px) {

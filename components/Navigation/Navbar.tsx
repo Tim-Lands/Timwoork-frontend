@@ -998,9 +998,9 @@ function Navbar(): ReactElement {
                       style={{ marginLeft: 3, fontSize: 14, color: "#707070" }}
                     />{" "}
                     {size > 400 ? (size > 1050 ? "العربية" : "Ar") : ""}
-                    <i className="material-icons material-icons-outlined">
+                    {/* <i className="material-icons material-icons-outlined">
                       expand_more
-                    </i>
+                    </i> */}
                   </button>
                 </li>
               </Dropdown>
