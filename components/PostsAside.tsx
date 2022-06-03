@@ -5,11 +5,10 @@ import { Alert } from "./Alert/Alert";
 import Link from "next/link";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper";
+import { Navigation } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
 // import required modules
 function PostsAside({
@@ -97,7 +96,7 @@ function PostsAside({
                 type: "progressbar",
               }}
               navigation={true}
-              modules={[Pagination, Navigation]}
+              modules={[Navigation]}
               breakpoints={{
                 1000: {
                   slidesPerView: 4,

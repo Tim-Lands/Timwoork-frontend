@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SWRConfig } from "swr";
 import API from "../../../config";
 import Cookies from "js-cookie";
+import Footer from "../Footer/Footer";
 function LayoutHome(props: any) {
     const [loading, setLoading] = useState(false);
     let token = Cookies.get("token");
@@ -42,6 +43,7 @@ function LayoutHome(props: any) {
         >
             <Spin tip="يرجى الإنتظار..." spinning={loading}>
                 {props.children}
+                <Footer />
             </Spin>
         </SWRConfig>
     );

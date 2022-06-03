@@ -6,7 +6,7 @@ function Category({ thumbnail, name, slug }): ReactElement {
     const thumbnailUrl = `url(${thumbnail})`;
   return (
     <Link href={`/`}>
-      <a className='category-item'>
+      <a className='category-items'>
           <div className="category-item-image" style={{ backgroundImage: thumbnailUrl }}/>
           <div className="category-item-content">
               <p className="meta">{slug}</p>

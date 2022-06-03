@@ -54,7 +54,7 @@ function Categories({ categories, onClickCategory }) {
   //const { data: categories }: any = useSWR(`api/get_categories`)
   return (
     <div className="container">
-      <div className="app-bill my-5" style={{ borderRadius: 7 }}>
+      <div className="app-bill bg-transparent my-5" style={{ borderRadius: 7 }}>
         <div className="app-bill-content">
           {!categories && (
             <div className="row">
