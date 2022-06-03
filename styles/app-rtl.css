@@ -10401,6 +10401,10 @@ h3 {
   display: flex;
 }
 
+.hero-content .app-new-navbar .app-new-logo img {
+  height: 30px;
+}
+
 .hero-content .app-new-navbar .app-new-nav {
   margin-right: auto;
 }
@@ -10549,6 +10553,71 @@ h3 {
   left: 0;
   right: 0;
   top: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  padding-inline: 0 70px;
+  padding-right: 80px;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li a {
+  margin-right: 4px;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li a:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li.link-item a {
+  color: #666;
+  text-shadow: none;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li.link-item a:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li.circular-item .link-circular-button {
+  color: #000;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown {
+  background-color: #fff;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a .dropd-item-img .icon-item {
+  color: #777;
+  background-color: #f7f7f7;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a .dropd-item-img .icon-item .material-icons {
+  font-size: 17px;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a .dropd-item-content .title {
+  font-size: 14px;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a .dropd-item-content .text {
+  color: #666;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a:hover {
+  background-color: #f8f8f8;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.hero-content .app-new-navbar.is-fixed-nav .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a:hover .dropd-item-img .icon-item {
+  color: #fff;
+  background-color: #ef750f;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
@@ -11050,5 +11119,41 @@ h3 {
 
 .submit-button-modal {
   width: 100%;
+}
+
+.new-drop-check {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.new-drop-check li .checked-item-button {
+  border-radius: 6px;
+  color: #777;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  font-size: 13px;
+  border: 0;
+  background-color: #fff;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 17px;
+}
+
+.new-drop-check li .checked-item-button:hover {
+  background-color: #f9f9f9;
+}
+
+.new-drop-check li .checked-item-button:focus {
+  background-color: #f1f1f1;
+  color: #000;
+}
+
+.new-drop-check li .checked-item-button.checked {
+  background-color: #f1f1f1;
+  color: #000;
 }
 /*# sourceMappingURL=app-rtl.css.map */

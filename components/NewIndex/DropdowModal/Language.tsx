@@ -2,35 +2,35 @@ import { Space } from 'antd'
 import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-function Currency({ setIsConfirmText }): ReactElement {
+function Language({ setIsConfirmText }): ReactElement {
   return (
     <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm'>
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head">
           <h3 className="title">
-            اختيار عملة الموقع
+            اختيار لغة الموقع
           </h3>
         </div>
         <div className="modal-conferm-body">
-          <ul className="new-drop-check currency-list">
+          <ul className="new-drop-check language-list">
               <li>
                   <button className='checked-item-button'>
-                    USD الدولار الأمريكي
+                    العربية
                   </button>
               </li>
               <li>
                   <button className='checked-item-button checked'>
-                    EUR اليورو
+                    الإنجليزية
                   </button>
               </li>
               <li>
                   <button className='checked-item-button'>
-                  TRY الليرة التركية
+                    الفرنسية
                   </button>
               </li>
               <li>
                   <button className='checked-item-button'>
-                  GBP الجنيه الإسترليني
+                    التركية
                   </button>
               </li>
           </ul>
@@ -47,7 +47,7 @@ function Currency({ setIsConfirmText }): ReactElement {
   )
 }
 
-export default Currency
-Currency.propTypes = {
+export default Language
+Language.propTypes = {
   setIsConfirmText: PropTypes.func,
 };

@@ -7046,7 +7046,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   .app-new-navbar {
     padding: 20px 0;
     display: flex;
-
+    .app-new-logo {
+      img {
+        height: 30px;
+      }
+    }
     .app-new-nav {
       margin-right: auto;
 
@@ -7186,6 +7190,82 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       right: 0;
       top: 0;
       transition: all 0.3s;
+      padding-inline: 0 70px;
+      padding-right: 80px;
+      .app-new-nav {
+        > li {
+          a {
+            margin-right: 4px;
+  
+            &:hover {
+              transition: all 0.3s;
+            }
+          }
+  
+          &.link-item {
+            a {
+              color: #666;
+              text-shadow: none;
+  
+              &:hover {
+                background-color: rgba(0, 0, 0, 0.09);
+              }
+            }
+          }
+  
+          &.circular-item {
+            .link-circular-button {
+              color: #000;
+            }
+          }
+  
+          .nav-menu-dropdown {
+            background-color: #fff;
+            .menu-list-dropdown {
+              li {
+                a {
+                  transition: all 0.3s;
+  
+                  .dropd-item-img {
+                    .icon-item {
+                      color: #777;
+                      background-color: #f7f7f7;
+                      transition: all 0.3s;
+  
+                      .material-icons {
+                        font-size: 17px;
+                      }
+                    }
+                  }
+  
+                  .dropd-item-content {
+                    .title {
+                      font-size: 14px;
+                    }
+  
+                    .text {
+                      color: #666;
+                    }
+                  }
+  
+                  &:hover {
+                    background-color: #f8f8f8;
+                    transition: all 0.3s;
+  
+                    .dropd-item-img {
+                      .icon-item {
+                        color: #fff;
+                        background-color: $primary3;
+                        transition: all 0.3s;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -7581,4 +7661,37 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 .submit-button-modal {
   width: 100%;
+}
+
+// DropdowList
+
+.new-drop-check {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    .checked-item-button {
+      border-radius: 6px;
+      color: #777;
+      display: flex;
+      width: 100%;
+      font-size: 13px;
+      border: 0;
+      background-color: #fff;
+      align-items: center;
+      padding: 10px 17px;
+      &:hover {
+        background-color: #f9f9f9;
+      }
+      &:focus {
+        background-color: #f1f1f1;
+        color: #000;
+      }
+      &.checked {
+        background-color: #f1f1f1;
+        color: #000;
+      }
+
+    }
+  }
 }

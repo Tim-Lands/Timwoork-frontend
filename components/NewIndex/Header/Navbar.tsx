@@ -22,9 +22,10 @@ function Navbar() {
     return (
         <>
             {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
-            <nav className={'app-new-navbar ' + (visible ? ' is-fixed-nav' : '')}>
+            <nav className={'app-new-navbar ' + (!visible ? ' is-fixed-nav' : '')}>
                 <div className="app-new-logo">
-                    <img src="/logo7.png" alt="" />
+                    {!visible ? <img src="/logo6.png" alt="" /> : <img src="/logo7.png" alt="" />}
+                    
                 </div>
                 <ul className="app-new-nav nav">
                     <li className='link-item'>
@@ -48,7 +49,7 @@ function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <a className='btn butt-xs butt-white-out flex-center' onClick={() => setIsShowLoginForm(true)}>
+                        <a className={`btn butt-xs flex-center ${!visible ? ' butt-primary2-out' : ' butt-white-out'}`} onClick={() => setIsShowLoginForm(true)}>
                             <span className="material-icons material-icons-outlined">person</span> تسجيل الدخول
                         </a>
                     </li>

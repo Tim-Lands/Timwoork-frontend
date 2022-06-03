@@ -1,10 +1,16 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTiktok, FaFacebook, FaYoutube, FaTwitter, FaInstagram, FaTelegram, FaGlobe, FaDollarSign } from "react-icons/fa";
+import Currency from '@/components/NewIndex/DropdowModal/Currency'
+import Language from '@/components/NewIndex/DropdowModal/Language'
 
 function Footer() {
+    const [isCurrencyVisible, setIsCurrencyVisible] = useState(false)
+    const [isLanguageVisible, setIsLanguageVisible] = useState(false)
     return (
         <>
+            {isCurrencyVisible && <Currency setIsConfirmText={setIsCurrencyVisible} />}
+            {isLanguageVisible && <Language setIsConfirmText={setIsLanguageVisible} />}
             <div className='footer-inner'>
                 <div className="container">
                     <div className="row">
@@ -182,12 +188,12 @@ function Footer() {
                         <div className="left-footer">
                             <ul className="currency">
                                 <li>
-                                    <button type='button' className='rounded-button'>
+                                    <button type='button' className='rounded-button' onClick={() => setIsLanguageVisible(true)}>
                                         <FaGlobe /> العربية
                                     </button>
                                 </li>
                                 <li>
-                                    <button type='button' className='rounded-button'>
+                                    <button type='button' className='rounded-button' onClick={() => setIsCurrencyVisible(true)}>
                                         <FaDollarSign /> الدولار
                                     </button>
                                 </li>
