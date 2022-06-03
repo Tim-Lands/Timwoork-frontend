@@ -8,7 +8,6 @@ import { BiMailSend } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import messages from "../../public/messages.png";
 import Image from "next/image";
-
 function Conversations({ data, refer }) {
   return (
     <div ref={refer} className="navbar-conversations-container conv">

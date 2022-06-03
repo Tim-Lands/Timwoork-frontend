@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { Menu, Dropdown, Badge, Tooltip, notification } from "antd";
-import { ReactElement, useEffect, useState, useRef } from "react";
+import { ReactElement, useEffect, useState, useRef, useContext } from "react";
 import Menus from "./Menus";
+import { PusherContext } from "../../contexts/pusherContext";
 import { FiSettings } from "react-icons/fi";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Conversations from "./chats";
@@ -26,7 +27,6 @@ import logoIMG from "../../public/logo.png";
 import useSWR, { useSWRConfig } from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
-import pusher from "../../config/pusher";
 
 import {
   MessageOutlined,
@@ -38,6 +38,8 @@ import LastSeen from "../LastSeen";
 import LogoutModal from "../LogoutModal";
 
 function Navbar(): ReactElement {
+  const [chatPusher, notificationPusher] = useContext(PusherContext);
+
   const { data: conversationsList }: any = useSWR(
     `api/conversations?paginate=10&page=1`
   );
@@ -109,15 +111,7 @@ function Navbar(): ReactElement {
     mutate("api/me");
   }
   //myRef.current.scrollTo(0, myRef.current.scrollHeight + 80)
-  const channelChat = `presence-receiver.${
-    userInfo && userInfo.user_details.id
-  }`;
-  const channel = pusher.subscribe(channelChat);
 
-  const channelNotification = `presence-notify.${
-    userInfo && userInfo.user_details.id
-  }`;
-  const channelNoty = pusher.subscribe(channelNotification);
   const langsList = (
     <div
       className="menu-langs bg-white"
@@ -149,11 +143,10 @@ function Navbar(): ReactElement {
     });
     setSize(window.innerWidth);
     if (token) {
-      channel.bind("message.sent", (data) => {
+      chatPusher.bind("message.sent", (data) => {
         const effect = new Audio("/effect.mp3");
         effect.play();
         mutate("api/me");
-
         if (data.message.type == 0) {
           notification.open({
             message: "لديك رسالة جديدة",
@@ -174,9 +167,9 @@ function Navbar(): ReactElement {
                   </small>
                   <Link href={`/u/${data.message.user.username}`}>
                     <a style={{ color: "#666", fontWeight: 300 }}>
-                      {/*<span style={{ color: '#666', fontWeight: 300, }}>
+                      <span style={{ color: '#666', fontWeight: 300, }}>
                                             {data.message.user.profile.full_name}
-                                        </span>*/}
+                                        </span>
                     </a>
                   </Link>
                 </p>
@@ -242,7 +235,7 @@ function Navbar(): ReactElement {
         }
       });
 
-      channelNoty.bind("notification.sent", (data) => {
+      notificationPusher.bind("notification.sent", (data) => {
         const NotifyEffect = new Audio("/bell.mp3");
         mutate("api/me");
         NotifyEffect.play();
@@ -285,8 +278,6 @@ function Navbar(): ReactElement {
         });
       });
       return () => {
-        pusher.unsubscribe(channelChat);
-        pusher.unsubscribe(channelNotification);
         window.removeEventListener("resize", () => {
           setSize(window.innerWidth);
         });
@@ -298,7 +289,7 @@ function Navbar(): ReactElement {
         });
       };
     }
-  }, [channelChat, channelNotification]);
+  }, [chatPusher, notificationPusher]);
 
   //store username, email & userID in Cookies just for chat
   if (token) {
