@@ -12,7 +12,7 @@ import { Progress } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Loading from "@/components/Loading";
-
+import pusher from "../../config/pusher";
 function Conversation({ query }) {
   let token = Cookies.get("token");
 
@@ -26,7 +26,10 @@ function Conversation({ query }) {
     `api/conversations/${query.id}`
   );
   const { data: profileInfo }: any = useSWR(`api/me`);
-
+  const channelChat = `presence-receiver.${
+    profileInfo && profileInfo.user_details.id
+  }`;
+  const channel = pusher.subscribe(channelChat);
   const veriedEmail = profileInfo && profileInfo.user_details.email_verified_at;
   const [messageProgress, setMessageProgress] = useState(0);
   const [messageErrors, setMessageErrors]: any = useState({});
@@ -86,6 +89,7 @@ function Conversation({ query }) {
       );
       if (res.status === 200) {
         setSendMessageLoading(false);
+
         conversationsSingle.data.messages.push(res.data.data);
         setMessage("");
         messageRef.current.focus();
@@ -99,6 +103,9 @@ function Conversation({ query }) {
       }
     }
   };
+  channel.bind("message.sent", () => {
+    mutate(`api/conversations/${query.id}`);
+  });
   function switchTypeMessage(type: any) {
     switch (type) {
       case 0:

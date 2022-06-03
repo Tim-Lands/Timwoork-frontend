@@ -26,6 +26,7 @@ import logoIMG from "../../public/logo.png";
 import useSWR, { useSWRConfig } from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
+import pusher from "../../config/pusher";
 
 import {
   MessageOutlined,
@@ -33,7 +34,6 @@ import {
   CloseCircleOutlined,
   BellOutlined,
 } from "@ant-design/icons";
-import Pusher from "pusher-js";
 import LastSeen from "../LastSeen";
 import LogoutModal from "../LogoutModal";
 
@@ -88,19 +88,7 @@ function Navbar(): ReactElement {
 
   const countMsg = userInfo && userInfo.unread_messages_count;
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
-  const pusher = new Pusher("a00614632e45ad3d49ff", {
-    cluster: "eu",
-    authEndpoint: "https://api.timwoork.com/api/broadcasting/auth",
-    forceTLS: true,
-    auth: token
-      ? {
-          headers: {
-            // pass the authorization token when using private channels
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      : undefined,
-  });
+
   async function markAllRead() {
     try {
       // const res =
@@ -164,6 +152,7 @@ function Navbar(): ReactElement {
       channel.bind("message.sent", (data) => {
         const effect = new Audio("/effect.mp3");
         effect.play();
+        mutate("api/me");
 
         if (data.message.type == 0) {
           notification.open({
@@ -255,6 +244,7 @@ function Navbar(): ReactElement {
 
       channelNoty.bind("notification.sent", (data) => {
         const NotifyEffect = new Audio("/bell.mp3");
+        mutate("api/me");
         NotifyEffect.play();
         notification.open({
           message: "لديك اشعار جديد",
