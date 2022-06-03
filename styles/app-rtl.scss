@@ -7178,6 +7178,15 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         }
       }
     }
+    &.is-fixed-nav {
+      position: fixed;
+      background-color: #fff;
+      z-index: 9000;
+      left: 0;
+      right: 0;
+      top: 0;
+      transition: all 0.3s;
+    }
   }
 }
 
@@ -7528,4 +7537,48 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       background-color: #f1f1f1;
       color: #666;
   }
+}
+.new-form-forget {
+  display: flex;
+  align-items: center;
+  .forget-pass {
+    margin-right: auto;
+    a {
+      font-size: 12px;
+      font-weight: 300;
+      color: #777;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+.external-login-modal {
+  border-top: 1px solid #f2f2f2;
+  margin-top: 15px;
+  padding: 20px 0;
+  .title {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 17px;
+    text-align: center;
+    color: #888;
+  }
+  .ext-butt {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-family: 'jf' !important;
+    background-color: #f8f8f8;
+    border-radius: 6px !important;
+    &:hover {
+      color: #000 !important;
+    }
+    span {
+      margin: 0 !important;
+    }
+  }
+}
+.submit-button-modal {
+  width: 100%;
 }

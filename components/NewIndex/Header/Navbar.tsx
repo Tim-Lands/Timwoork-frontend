@@ -18,11 +18,11 @@ function Navbar() {
       return () => {
         window.removeEventListener("scroll", handleScroll);
       }
-    }, [])
+    }, [handleScroll])
     return (
         <>
             {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
-            <nav className={'app-new-navbar ' + (visible ?? ' is-fixed-nav')}>
+            <nav className={'app-new-navbar ' + (visible ? ' is-fixed-nav' : '')}>
                 <div className="app-new-logo">
                     <img src="/logo7.png" alt="" />
                 </div>

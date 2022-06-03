@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react'
 import PropTypes from "prop-types";
 import { motion } from 'framer-motion'
 import Cookies from 'js-cookie';
-export function FormInput({ name, value, title, handleChange, validationsErrors, isLoading, type = 'text', isVisibleBtn = false, setIsShowenPass, isShowenPass }: any): ReactElement {
+export function FormInput({ name, value, title, handleChange, validationsErrors, isLoading, type = 'text', isVisibleBtn = false, setIsShowenPass, isShowenPass, size }: any): ReactElement {
     return (
-        <div className="timlands-form" style={{ position: 'relative' }}>
+        <div className={`timlands-form ${size}`} style={{ position: 'relative' }}>
             <label className="label-block" htmlFor={`input-${name}`}>{title}</label>
             <input
                 type={type}
@@ -42,6 +42,7 @@ FormInput.propTypes = {
     isLoading: PropTypes.bool,
     isVisibleBtn: PropTypes.bool,
     type: PropTypes.string,
+    size: PropTypes.string,
     validationsErrors: PropTypes.string,
 };
 export function FormSelect(props: any): ReactElement {
