@@ -70,6 +70,7 @@ function Navbar(): ReactElement {
     }, 200);
   };
   let token = Cookies.get("token");
+
   const userList = useRef();
   const chatList = useRef();
   const chat = useRef();
@@ -84,10 +85,10 @@ function Navbar(): ReactElement {
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
-  //const [msg, setMsg] = useState();
+
   const countMsg = userInfo && userInfo.unread_messages_count;
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
-  const pusher = new Pusher("510f53f8ccb3058a96fc", {
+  const pusher = new Pusher("a00614632e45ad3d49ff", {
     cluster: "eu",
     authEndpoint: "https://api.timwoork.com/api/broadcasting/auth",
     forceTLS: true,
