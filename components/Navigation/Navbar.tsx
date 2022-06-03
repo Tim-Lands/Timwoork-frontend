@@ -167,9 +167,9 @@ function Navbar(): ReactElement {
                   </small>
                   <Link href={`/u/${data.message.user.username}`}>
                     <a style={{ color: "#666", fontWeight: 300 }}>
-                      <span style={{ color: '#666', fontWeight: 300, }}>
-                                            {data.message.user.profile.full_name}
-                                        </span>
+                      <span style={{ color: "#666", fontWeight: 300 }}>
+                        {data.message.user.profile.full_name}
+                      </span>
                     </a>
                   </Link>
                 </p>
@@ -237,8 +237,9 @@ function Navbar(): ReactElement {
 
       notificationPusher.bind("notification.sent", (data) => {
         const NotifyEffect = new Audio("/bell.mp3");
-        mutate("api/me");
         NotifyEffect.play();
+        mutate("api/me");
+
         notification.open({
           message: "لديك اشعار جديد",
           description: (
@@ -304,7 +305,6 @@ function Navbar(): ReactElement {
   const setIsMenuShowenHandle = () => {
     setIsMenuShowenMob(!isMenuShowenMob);
   };
-  const { data: userData }: any = useSWR(`api/me`);
   const logout = async () => {
     try {
       const res = await API.post(
@@ -325,7 +325,7 @@ function Navbar(): ReactElement {
     }
   };
   const myLoader = () => {
-    return `${userData && userData.user_details.profile.avatar_path}`;
+    return `${userInfo && userInfo.user_details.profile.avatar_path}`;
   };
   const [isLogoutModal, setIsLogoutModal]: any = useState(false);
   const AccountList = (
@@ -364,24 +364,24 @@ function Navbar(): ReactElement {
               >
                 <ImageLogo
                   loader={myLoader}
-                  src={userData?.user_details?.profile?.avatar_path}
+                  src={userInfo?.user_details?.profile?.avatar_path}
                   quality={60}
                   width={32}
                   height={32}
-                  alt={userData && userData.user_details.profile.full_name}
+                  alt={userInfo && userInfo.user_details.profile.full_name}
                   placeholder="blur"
                   blurDataURL="/avatar2.jpg"
                 />
               </div>
             </div>
 
-            {userData && userData.user_details.profile.full_name == ""
+            {userInfo && userInfo.user_details.profile.full_name == ""
               ? "بدون اسم"
-              : userData && userData.user_details.profile.full_name}
+              : userInfo && userInfo.user_details.profile.full_name}
           </a>
         </Link>
       </Menu.Item>
-      {veriedEmail && userData && userData.user_details.profile.is_seller == 1 && (
+      {veriedEmail && userInfo && userInfo.user_details.profile.is_seller == 1 && (
         <Menu.Item key="7">
           <Link href="/add-new">
             <a
@@ -438,7 +438,7 @@ function Navbar(): ReactElement {
         </Menu.Item>
       )}
 
-      {veriedEmail && userData && userData.user_details.profile.is_seller == 1 && (
+      {veriedEmail && userInfo && userInfo.user_details.profile.is_seller == 1 && (
         <Menu.Item key="0">
           <Link href="/myproducts">
             <a
@@ -494,7 +494,7 @@ function Navbar(): ReactElement {
           </Link>
         </Menu.Item>
       )}
-      {veriedEmail && userData && userData.user_details.profile.is_seller == 1 && (
+      {veriedEmail && userInfo && userInfo.user_details.profile.is_seller == 1 && (
         <Menu.Item key="43">
           <Link href="/mysales">
             <a
@@ -603,7 +603,7 @@ function Navbar(): ReactElement {
     </Menu>
   );
 
-  const darkMode = userData && userData.user_details.profile.dark_mode;
+  const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
   const button = useRef();
 
   return (
@@ -701,7 +701,7 @@ function Navbar(): ReactElement {
             >
               {token ? (
                 <>
-                  {!userData && (
+                  {!userInfo && (
                     <p
                       style={{
                         position: "absolute",
@@ -719,7 +719,7 @@ function Navbar(): ReactElement {
                       يرجي الانتظار...
                     </p>
                   )}
-                  {userData && (
+                  {userInfo && (
                     <>
                       {!veriedEmail && (
                         <li className="right-butts-icon">
@@ -771,7 +771,7 @@ function Navbar(): ReactElement {
                             <Link href="/cart">
                               <a>
                                 <Badge
-                                  count={userData && userData.cart_items_count}
+                                  count={userInfo && userInfo.cart_items_count}
                                   offset={[2, -1]}
                                 >
                                   <MdOutlineShoppingCart
@@ -843,7 +843,7 @@ function Navbar(): ReactElement {
                           >
                             <Badge
                               count={
-                                userData && userData.unread_notifications_count
+                                userInfo && userInfo.unread_notifications_count
                               }
                               offset={[2, -1]}
                             >
@@ -872,13 +872,13 @@ function Navbar(): ReactElement {
                           >
                             <ImageLogo
                               loader={myLoader}
-                              src={userData.user_details.profile.avatar_path}
+                              src={userInfo.user_details.profile.avatar_path}
                               quality={60}
                               width={32}
                               height={32}
                               alt={
-                                userData &&
-                                userData.user_details.profile.full_name
+                                userInfo &&
+                                userInfo.user_details.profile.full_name
                               }
                               placeholder="blur"
                               blurDataURL="/avatar2.jpg"
@@ -997,7 +997,7 @@ Navbar.propTypes = {
   setIsDarkenHandle: PropTypes.func,
   logout: PropTypes.func,
   isDarken: PropTypes.bool,
-  userData: PropTypes.object,
+  userInfo: PropTypes.object,
 };
 
 export default Navbar;
