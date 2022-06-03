@@ -78,8 +78,7 @@ function Categories({ categories, onClickCategory }) {
             </div>
           )}
           <div className="row">
-            {categories &&
-              categories.data.map((e: any) => (
+            {categories && categories.data.map((e: any) => (
                 <div
                   onClick={() => onClickCategory(e.id)}
                   className="col-md-3 col-6"

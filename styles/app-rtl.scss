@@ -7047,8 +7047,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     padding: 20px 0;
     display: flex;
     .app-new-logo {
+      align-items: center;
+      height: 100%;
       img {
-        height: 30px;
+        height: 26px;
       }
     }
     .app-new-nav {
@@ -7190,8 +7192,8 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       right: 0;
       top: 0;
       transition: all 0.3s;
-      padding-inline: 0 70px;
-      padding-right: 80px;
+      padding-inline: 0 110px;
+      padding-right: 120px;
       .app-new-nav {
         > li {
           a {
@@ -7216,6 +7218,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
           &.circular-item {
             .link-circular-button {
               color: #000;
+              background-color: #f8f8f8;
             }
           }
   
@@ -7290,6 +7293,46 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     font-size: 25px;
     font-weight: 100;
     line-height: 36px;
+  }
+}
+// Search Navbar
+.new-search-bar {
+  width: 350px; 
+  position: relative;
+  .new-search-bar-form {
+    display: flex;
+    padding-right: 10px;
+    position: relative;
+    .new-searchbar {
+      position: absolute;
+      color: #ccc;
+      right: 18px;
+      top: 5px;
+      font-size: 16px;
+    }
+    input {
+      padding: 8px 13px;
+      padding-right: 34px;
+      border: 1px solid #f4f4f4;
+      background-color: #fff;
+      border-radius: 0 5px 5px 0;
+      font-size: 12px;
+      outline: none; 
+      &::placeholder {
+        color: #ccc;
+      }
+      width: calc(100% - 80px);
+      &:hover {
+        border: 1px solid #ccc;
+      }
+      &:focus {
+        border: 1px solid $primary;
+      }
+    }
+    .btn {
+      border-radius: 5px 0 0 5px;
+      width: 80px;
+    }
   }
 }
 
@@ -7662,7 +7705,48 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 .submit-button-modal {
   width: 100%;
 }
+// Sub Navbar
 
+.new-subnavbar {
+  position: fixed;
+  background-color: #fff;
+  z-index: 8000;
+  left: 0;
+  right: 0;
+  top: 77px;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  transition: all 0.3s;
+  .subnavbar-nav {
+    li {
+      a {
+        display: flex;
+        padding: 8px 10px;
+        color: #777;
+        font-size: 13px;
+        font-weight: 200;
+        position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          background-color: $primary;
+          width: 0;
+          transition: all 0.3s;
+          bottom: 0;
+        }
+        &:hover {
+          color: #000;
+          transition: all 0.3s;
+          &::after {
+            transition: all 0.3s;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
 // DropdowList
 
 .new-drop-check {
