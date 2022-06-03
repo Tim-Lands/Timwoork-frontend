@@ -55,22 +55,8 @@ function Categories({ categories, onClickCategory }) {
   //const { data: categories }: any = useSWR(`api/get_categories`)
   return (
     <div className="container">
-      <div className="app-bill my-5" style={{ borderRadius: 7 }}>
+      <div className="app-bill bg-transparent my-5" style={{ borderRadius: 7 }}>
         <div className="app-bill-content">
-          <div className="timlands-horizontale-header">
-            <h3 className="title">
-              التصنيفات الأكثر شعبية
-            </h3>
-            <div className="aside-button">
-              <Link href={`link`}>
-                <a className='btn butt-sm butt-light'>
-                  المزيد...
-                </a>
-
-              </Link>
-            </div>
-
-          </div>
           {!categories && (
             <div className="row">
               {placeholders &&

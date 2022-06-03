@@ -111,7 +111,6 @@ function index() {
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
-
       <Hero />
       <div className='container'>
         <CategoriesSlider data={catData} title='التصنيفات الأكثر شعبية' isLoading={false} showAll={'المزيد...'} link={'/test'} />

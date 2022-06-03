@@ -1,15 +1,28 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Community from './Community'
 import LoginForm from '@/components/NewIndex/LoginForm'
 function Navbar() {
     const [showCommunityMenu, setShowCommunityMenu] = useState(false)
     const [isShowLoginForm, setIsShowLoginForm] = useState(false)
-
+    const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
+    const [visible, setVisible] = useState(true)
+    const handleScroll = () => {
+      const currentScrollPos: any = (typeof window === "undefined") ?? window.pageYOffset;
+      const visible = prevScrollpos > currentScrollPos;
+      setrtPrevScrollpos(currentScrollPos)
+      setVisible(visible)
+    };
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      }
+    }, [])
     return (
         <>
             {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
-            <nav className='app-new-navbar'>
+            <nav className={'app-new-navbar ' + (visible ?? ' is-fixed-nav')}>
                 <div className="app-new-logo">
                     <img src="/logo7.png" alt="" />
                 </div>
