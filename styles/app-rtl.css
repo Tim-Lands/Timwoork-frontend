@@ -336,6 +336,21 @@
   color: #ccc;
 }
 
+.timlands-form .timlands-input .selectCode {
+  margin: 0px !important;
+  height: 38px !important;
+}
+
+.timlands-form .timlands-input .ant-select {
+  height: 38px !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
 @-webkit-keyframes formscale {
   0% {
     -webkit-transform: scale(1.08);
@@ -11401,7 +11416,7 @@ h3 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  font-family: 'jf' !important;
+  font-family: "jf" !important;
   background-color: #f8f8f8;
   border-radius: 6px !important;
 }
@@ -11499,5 +11514,104 @@ h3 {
 .new-drop-check li .checked-item-button.checked {
   background-color: #f1f1f1;
   color: #000;
+}
+
+.registerPhone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-weight: 500;
+  outline: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.registerPhone .innerPhone {
+  border: none;
+  width: 100%;
+  padding-right: 19px;
+  padding-block: 8px;
+}
+
+.registerPhone .innerPhone:focus {
+  border: none;
+  outline: none;
+}
+
+.registerPhone .selectCode {
+  width: 100px;
+}
+
+.registerPhone .selectCode:focus {
+  border: none;
+}
+
+.registerPhone::-webkit-input-placeholder {
+  color: #ddd;
+}
+
+.registerPhone:-ms-input-placeholder {
+  color: #ddd;
+}
+
+.registerPhone::-ms-input-placeholder {
+  color: #ddd;
+}
+
+.registerPhone::placeholder {
+  color: #ddd;
+}
+
+.registerPhone:disabled {
+  opacity: 0.3;
+}
+
+.registerPhone:hover {
+  border: 1px solid #ccc;
+}
+
+.registerPhone:focus {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  outline: none;
+  border: 1px solid #475c80;
+}
+
+.registerPhone:focus::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+.registerPhone:focus:-ms-input-placeholder {
+  color: #ccc;
+}
+
+.registerPhone:focus::-ms-input-placeholder {
+  color: #ccc;
+}
+
+.registerPhone:focus::placeholder {
+  color: #ccc;
+}
+
+@keyframes formscale {
+  0% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+.registerPhone.has-error {
+  -webkit-animation: formscale 0.4s;
+          animation: formscale 0.4s;
+  border: 1px solid #f03535;
 }
 /*# sourceMappingURL=app-rtl.css.map */
