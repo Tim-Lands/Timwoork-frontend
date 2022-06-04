@@ -8,6 +8,8 @@ import Cookies from "js-cookie";
 import Notifications from '../DropdowModal/Notifications'
 import Messages from '../DropdowModal/Messages'
 import Language from '../DropdowModal/Language'
+import Image from 'next/image'
+import ProfileMenu from '../DropdowModal/ProfileMenu'
 
 function Navbar() {
 
@@ -15,10 +17,11 @@ function Navbar() {
     if (!token && typeof window !== "undefined")
         token = localStorage.getItem("token");
     const [isLanguageVisible, setIsLanguageVisible] = useState(false)
-
     const [showCommunityMenu, setShowCommunityMenu] = useState(false)
     const [showNotificationsMenu, setShowNotificationsMenu] = useState(false)
     const [showMessagesMenu, setShowMessagesMenu] = useState(false)
+    const [isShowProfileMenu, setIsShowProfileMenu] = useState(false)
+
     const [isShowLoginForm, setIsShowLoginForm] = useState(false)
     const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
     const [visible, setVisible] = useState(true)
@@ -48,7 +51,7 @@ function Navbar() {
                                     <FaSearch />
                                 </span>
                                 <input type="text" placeholder='البحث في الموقع...' className='form-serach-nav' />
-                                <button className='btn butt-xs butt-primary'>البحث</button>
+                                <button className='btn butt-xs butt-primary2'>البحث</button>
                             </div>
                         </div>
                     }
@@ -81,6 +84,12 @@ function Navbar() {
                             </a>
                         </li>
                     </> : <>
+                        <li className='circular-newitem'>
+                            <a className='link-circular-button' onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}>
+                                <Image src={`/avatar.png`} width={31} height={31} alt={''} className='link-circular-button' />
+                            </a>
+                            {isShowProfileMenu && <ProfileMenu />}
+                        </li>
                         <li className='circular-newitem'>
                             <Link href={'/test'}>
                                 <a className='link-circular-button'>

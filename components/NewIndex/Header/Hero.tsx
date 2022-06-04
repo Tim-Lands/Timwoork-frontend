@@ -10,6 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 import HeroContent from './HeroContent';
+import Link from 'next/link';
 
 function Hero() {
     return (
@@ -29,19 +30,75 @@ function Hero() {
                     loop
                 >
                     <SwiperSlide>
-    
-                        <div className="timlands-hero-img hero-red">
-                            <img src='/img/001.png' />
+                        <div className="timlands-hero-img hero-red" style={{ backgroundImage: `url('/img/1.png')` }}>
+                            <Link href={`/`}>
+                                <a className="timlands-hero-text">
+                                    <h4 className="rating">
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                    </h4>
+                                    <h4 className="text">
+                                        رحمة, <strong>كتابة وترجمة</strong>
+                                    </h4>
+                                </a>
+                            </Link>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="timlands-hero-img hero-green">
-                            <img src='/img/002.png' />
+                        <div className="timlands-hero-img hero-green" style={{ backgroundImage: `url('/img/2.png')` }}>
+                            <Link href={`/`}>
+                                <a className="timlands-hero-text">
+                                    <h4 className="rating">
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                    </h4>
+                                    <h4 className="text">
+                                        فوزي, <strong>صوتبات</strong>
+                                    </h4>
+                                </a>
+                            </Link>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="timlands-hero-img hero-dark">
-                            <img src='/img/003.png' />
+                        <div className="timlands-hero-img hero-dark" style={{ backgroundImage: `url('/img/3.png')` }}>
+                            <Link href={`/`}>
+                                <a className="timlands-hero-text">
+                                    <h4 className="rating">
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons material-icons-outlined">star</span>
+                                    </h4>
+                                    <h4 className="text">
+                                        فوزي, <strong>صوتبات</strong>
+                                    </h4>
+                                </a>
+                            </Link>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="timlands-hero-img hero-dark" style={{ backgroundImage: `url('/img/4.png')` }}>
+                            <Link href={`/`}>
+                                <a className="timlands-hero-text">
+                                    <h4 className="rating">
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons">star</span>
+                                        <span className="material-icons material-icons-outlined">star</span>
+                                    </h4>
+                                    <h4 className="text">
+                                        فوزي, <strong>صوتبات</strong>
+                                    </h4>
+                                </a>
+                            </Link>
                         </div>
                     </SwiperSlide>
                 </Swiper>

@@ -183,7 +183,7 @@ function Footer() {
                     <div className="footer-bottom-inner">
                         <div className="right-footer">
                             <img src="/logofoot.png" alt="" />
-                            <p className="text">© جميع الحقوق محفوظة LTD Timwoork</p>
+                            <p className="text">© 2021-2022 Timwoork جميع الحقوق محفوظة</p>
                         </div>
                         <div className="left-footer">
                             <ul className="currency">

@@ -3,10 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { FaBell, FaClock } from 'react-icons/fa'
+import { motion } from 'framer-motion'
 
 function Notifications() {
   return (
-    <div className='nav-popup-dropdown'>
+    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className='nav-popup-dropdown'>
         <div className="popup-dropdown-inner">
             <div className="popup-dropdown-header">
                 <h4 className="title">
@@ -79,7 +80,7 @@ function Notifications() {
                 </Link>
             </div>
         </div>
-    </div>
+    </motion.div>
   )
 }
 
