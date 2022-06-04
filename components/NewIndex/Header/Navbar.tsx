@@ -4,9 +4,21 @@ import Community from './Community'
 import LoginForm from '@/components/NewIndex/LoginForm'
 import { FaSearch } from 'react-icons/fa'
 import Subnavbar from './Subnavbar'
+import Cookies from "js-cookie";
+import Notifications from '../DropdowModal/Notifications'
+import Messages from '../DropdowModal/Messages'
+import Language from '../DropdowModal/Language'
+
 function Navbar() {
 
+    let token = Cookies.get("token");
+    if (!token && typeof window !== "undefined")
+        token = localStorage.getItem("token");
+    const [isLanguageVisible, setIsLanguageVisible] = useState(false)
+
     const [showCommunityMenu, setShowCommunityMenu] = useState(false)
+    const [showNotificationsMenu, setShowNotificationsMenu] = useState(false)
+    const [showMessagesMenu, setShowMessagesMenu] = useState(false)
     const [isShowLoginForm, setIsShowLoginForm] = useState(false)
     const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
     const [visible, setVisible] = useState(true)
@@ -24,6 +36,7 @@ function Navbar() {
     }, [handleScroll])
     return (
         <>
+            {isLanguageVisible && <Language setIsConfirmText={setIsLanguageVisible} />}
             {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
             <nav className={'app-new-navbar ' + (!visible ? ' is-fixed-nav' : '')}>
                 <div className="app-new-logo d-flex">
@@ -54,24 +67,46 @@ function Navbar() {
                         </a>
                         {showCommunityMenu && <Community />}
                     </li>
-                    <li>
-                        <Link href={'/test'}>
-                            <a className='btn butt-xs butt-primary2 flex-center'>
-                                <span className="material-icons material-icons-outlined">person_add</span> التسجيل
+                    {token ? <>
+                        <li>
+                            <Link href={'/test'}>
+                                <a className='btn butt-xs butt-primary2 flex-center'>
+                                    <span className="material-icons material-icons-outlined">person_add</span> التسجيل
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <a className={`btn butt-xs flex-center ${!visible ? ' butt-primary2-out' : ' butt-white-out'}`} onClick={() => setIsShowLoginForm(true)}>
+                                <span className="material-icons material-icons-outlined">person</span> تسجيل الدخول
                             </a>
-                        </Link>
-                    </li>
-                    <li>
-                        <a className={`btn butt-xs flex-center ${!visible ? ' butt-primary2-out' : ' butt-white-out'}`} onClick={() => setIsShowLoginForm(true)}>
-                            <span className="material-icons material-icons-outlined">person</span> تسجيل الدخول
+                        </li>
+                    </> : <>
+                        <li className='circular-newitem'>
+                            <Link href={'/test'}>
+                                <a className='link-circular-button'>
+                                    <span className="material-icons material-icons-outlined">shopping_cart</span>
+                                </a>
+                            </Link>
+                        </li>
+                        <li className='circular-newitem'>
+                            <a className='link-circular-button' onClick={() => setShowMessagesMenu(!showMessagesMenu)}>
+                                <span className="material-icons material-icons-outlined">mail</span>
+                            </a>
+                            {showMessagesMenu && <Messages />}
+                        </li>
+                        <li className='circular-newitem'>
+                            <a className='link-circular-button' onClick={() => setShowNotificationsMenu(!showNotificationsMenu)}>
+                                <span className="material-icons material-icons-outlined">notifications</span>
+                            </a>
+                            {showNotificationsMenu && <Notifications />}
+                        </li>
+                    </>
+                    }
+
+                    <li className='circular-newitem'>
+                        <a className='link-circular-button' onClick={() => setIsLanguageVisible(true)}>
+                            <span className="material-icons material-icons-outlined">language</span>
                         </a>
-                    </li>
-                    <li className='circular-item'>
-                        <Link href={'/test'}>
-                            <a className='link-circular-button'>
-                                <span className="material-icons material-icons-outlined">language</span>
-                            </a>
-                        </Link>
                     </li>
                 </ul>
             </nav>
