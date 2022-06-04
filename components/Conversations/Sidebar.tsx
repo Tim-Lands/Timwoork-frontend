@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 import { Badge, Skeleton } from "antd";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import PropTypes from "prop-types";
 import Pagination from "react-js-pagination";
-
+import { PusherContext } from "../../contexts/pusherContext";
 function Sidebar({ RouterId }) {
+  const [chatPusher] = useContext(PusherContext);
+  const { mutate } = useSWRConfig();
   const [pageNumber, setPageNumber]: any = useState(1);
   const { data: conversationsList }: any = useSWR(
     `api/conversations?paginate=6&page=${pageNumber}`
   );
-
+  chatPusher.bind("message.sent", () => {
+    mutate(`api/conversations?paginate=6&page=${pageNumber}`);
+  });
   return (
     <div className="conversations-sidebar">
       <div className="conversations-items">
@@ -95,6 +99,9 @@ function Sidebar({ RouterId }) {
           {conversationsList &&
             conversationsList.data.data.map((item: any) => (
               <li
+                onClick={() => {
+                  mutate(`api/conversations?paginate=6&page=${pageNumber}`);
+                }}
                 className={
                   (item.messages_count !== 0 && "is-readed ") +
                   (RouterId == item.id && " active")
@@ -120,7 +127,7 @@ function Sidebar({ RouterId }) {
                           {item.latest_message.message}
                         </p>
                       </div>
-                      {item.messages_count !== 0 && (
+                      {item.messages_count !== 0 && RouterId != item.id && (
                         <Badge
                           className="msg-count"
                           count={item.messages_count}

@@ -98,7 +98,7 @@ const User = ({ query, stars }) => {
                     className="btn butt-primary2 flex-center butt-sm"
                     onClick={() =>
                       navigator.clipboard.writeText(
-                        `https://timwoork.com/u/${userInfo.user_details.username}`
+                        `https://timwoork.com/u/${query?.user}`
                       )
                     }
                   >

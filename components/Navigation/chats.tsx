@@ -8,7 +8,6 @@ import { BiMailSend } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import messages from "../../public/messages.png";
 import Image from "next/image";
-
 function Conversations({ data, refer }) {
   return (
     <div ref={refer} className="navbar-conversations-container conv">
@@ -49,7 +48,7 @@ function Conversations({ data, refer }) {
                     </div>
                     <p>
                       <AiOutlineClockCircle />
-                      <LastSeen date={item.updated_at} />
+                      <LastSeen date={item.latest_message.updated_at} />
                     </p>
                   </div>
                 </Link>

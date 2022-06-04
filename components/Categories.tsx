@@ -54,7 +54,7 @@ function Categories({ categories, onClickCategory }) {
   //const { data: categories }: any = useSWR(`api/get_categories`)
   return (
     <div className="container">
-      <div className="app-bill my-5" style={{ borderRadius: 7 }}>
+      <div className="app-bill bg-transparent my-5" style={{ borderRadius: 7 }}>
         <div className="app-bill-content">
           {!categories && (
             <div className="row">
@@ -78,8 +78,7 @@ function Categories({ categories, onClickCategory }) {
             </div>
           )}
           <div className="row">
-            {categories &&
-              categories.data.map((e: any) => (
+            {categories && categories.data.map((e: any) => (
                 <div
                   onClick={() => onClickCategory(e.id)}
                   className="col-md-3 col-6"
