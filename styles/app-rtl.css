@@ -336,6 +336,21 @@
   color: #ccc;
 }
 
+.timlands-form .timlands-input .selectCode {
+  margin: 0px !important;
+  height: 38px !important;
+}
+
+.timlands-form .timlands-input .ant-select {
+  height: 38px !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
 @-webkit-keyframes formscale {
   0% {
     -webkit-transform: scale(1.08);
@@ -10364,6 +10379,100 @@ h3 {
   transition: all 0.3s;
 }
 
+.nav-profile-list {
+  position: absolute;
+  background-color: #fff;
+  top: 40px;
+  left: 0;
+  z-index: 2000;
+  width: 260px;
+  border-radius: 7px;
+  padding: 6px;
+  -webkit-box-shadow: 3px 4px 17px rgba(0, 0, 0, 0.071);
+          box-shadow: 3px 4px 17px rgba(0, 0, 0, 0.071);
+}
+
+.nav-profile-list .nav-profile-list-header {
+  padding: 5px 8px;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.nav-profile-list .nav-profile-list-header .nav-profile-list-header-img {
+  margin-left: 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.nav-profile-list .nav-profile-list-header .nav-profile-list-header-img img {
+  border-radius: 50%;
+}
+
+.nav-profile-list .nav-profile-list-header .title {
+  font-size: 14px;
+  margin: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-profile-list .nav-profile-list-header:hover {
+  background-color: #f7f7f7;
+}
+
+.nav-profile-list .nav-profile-list-content .list-profile-withicons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-profile-list .nav-profile-list-content .list-profile-withicons li a {
+  color: #666;
+  padding: 5px 8px;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 14px;
+}
+
+.nav-profile-list .nav-profile-list-content .list-profile-withicons li a .circul-icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #f8f8f8;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.nav-profile-list .nav-profile-list-content .list-profile-withicons li a:hover {
+  background-color: #f8f8f8;
+  color: #000;
+}
+
+.nav-profile-list .nav-profile-list-content .list-profile-withicons li a:hover .circul-icon {
+  background-color: #f2f2f2;
+}
+
 .timland-hero {
   position: relative;
 }
@@ -10374,11 +10483,32 @@ h3 {
   position: relative;
 }
 
-.timland-hero .timlands-hero-carousel .timlands-hero-img img {
+.timland-hero .timlands-hero-carousel .timlands-hero-img .timlands-hero-text {
+  display: block;
   position: absolute;
-  left: 20px;
-  bottom: 0;
-  height: 590px;
+  left: 40px;
+  bottom: 40px;
+}
+
+.timland-hero .timlands-hero-carousel .timlands-hero-img .timlands-hero-text .text {
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.362);
+  color: #fff;
+  font-size: 14px;
+  margin: 0;
+}
+
+.timland-hero .timlands-hero-carousel .timlands-hero-img .timlands-hero-text .rating {
+  font-size: 13px;
+  color: #ef750f;
+  margin: 0;
+}
+
+.timland-hero .timlands-hero-carousel .timlands-hero-img .timlands-hero-text .rating .material-icons {
+  font-size: 16px;
+}
+
+.timland-hero .timlands-hero-carousel .timlands-hero-img .timlands-hero-text .rating .material-icons-outlined {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .timland-hero .timlands-hero-carousel .timlands-hero-img.hero-dark {
@@ -10728,7 +10858,7 @@ h3 {
 }
 
 .new-search-bar .new-search-bar-form input:focus {
-  border: 1px solid #475c80;
+  border: 1px solid #ffd000;
 }
 
 .new-search-bar .new-search-bar-form .btn {
@@ -10839,7 +10969,7 @@ h3 {
 }
 
 .video-section .video-section-play .video-section-play-inner {
-  height: 300px;
+  height: 390px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11286,7 +11416,7 @@ h3 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  font-family: 'jf' !important;
+  font-family: "jf" !important;
   background-color: #f8f8f8;
   border-radius: 6px !important;
 }
@@ -11384,5 +11514,104 @@ h3 {
 .new-drop-check li .checked-item-button.checked {
   background-color: #f1f1f1;
   color: #000;
+}
+
+.registerPhone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-weight: 500;
+  outline: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.registerPhone .innerPhone {
+  border: none;
+  width: 100%;
+  padding-right: 19px;
+  padding-block: 8px;
+}
+
+.registerPhone .innerPhone:focus {
+  border: none;
+  outline: none;
+}
+
+.registerPhone .selectCode {
+  width: 100px;
+}
+
+.registerPhone .selectCode:focus {
+  border: none;
+}
+
+.registerPhone::-webkit-input-placeholder {
+  color: #ddd;
+}
+
+.registerPhone:-ms-input-placeholder {
+  color: #ddd;
+}
+
+.registerPhone::-ms-input-placeholder {
+  color: #ddd;
+}
+
+.registerPhone::placeholder {
+  color: #ddd;
+}
+
+.registerPhone:disabled {
+  opacity: 0.3;
+}
+
+.registerPhone:hover {
+  border: 1px solid #ccc;
+}
+
+.registerPhone:focus {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  outline: none;
+  border: 1px solid #475c80;
+}
+
+.registerPhone:focus::-webkit-input-placeholder {
+  color: #ccc;
+}
+
+.registerPhone:focus:-ms-input-placeholder {
+  color: #ccc;
+}
+
+.registerPhone:focus::-ms-input-placeholder {
+  color: #ccc;
+}
+
+.registerPhone:focus::placeholder {
+  color: #ccc;
+}
+
+@keyframes formscale {
+  0% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+.registerPhone.has-error {
+  -webkit-animation: formscale 0.4s;
+          animation: formscale 0.4s;
+  border: 1px solid #f03535;
 }
 /*# sourceMappingURL=app-rtl.css.map */

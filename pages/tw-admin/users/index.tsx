@@ -30,7 +30,7 @@ function index() {
   const [pageNumber, setPageNumber]: any = useState(1);
   const [username, setUsername] = useState("");
   const [cause, setCause] = useState("");
-  
+
   const [sentinel, setSentinel] = useState({ mount: true });
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
@@ -113,7 +113,7 @@ function index() {
           a.profile.full_name
             ? a.profile.full_name.localeCompare(b.profile.full_name)
             : null,
-        multiple: 3,
+        multiple: 4,
       },
       ellipsis: true,
     },
@@ -124,10 +124,21 @@ function index() {
       key: "email",
       sorter: {
         compare: (a, b) => a.email.localeCompare(b.email),
-        multiple: 2,
+        multiple: 3,
       },
       onFilter: (value, record) => record.name.includes(value),
       ellipsis: true,
+    },
+    {
+      title: "الهاتف",
+      dataIndex: "phone",
+      key: "phone",
+      sorter: {
+        compare: (a, b) => a.phone?.localeCompare(b.phone),
+        multiple: 2,
+      },
+      ellipsis: true,
+      width: 120,
     },
     {
       title: "تاريخ التسجيل",
@@ -140,7 +151,7 @@ function index() {
         multiple: 1,
       },
       ellipsis: true,
-      width: 120
+      width: 120,
     },
     {
       title: "الأدوات",
@@ -226,16 +237,21 @@ function index() {
             إدارة الأعضاء
           </h2>
         </div>
-        {isEmailModalVisible &&
-            <EmailModalCause
-              setIsConfirmText={setIsEmailModalVisible}
-              handleFunc={() => console.log('test')}
-              title="إشعار للمستخدم"
-              msg={cause}
-              setMsg={(e) => setCause(e.target.value)}
-            />
-          }
-          {isNotifyModalVisible && <SendNotification setIsConfirmText={setIsNotifyModalVisible} title="إرسال إيميل للمستخدم" />}
+        {isEmailModalVisible && (
+          <EmailModalCause
+            setIsConfirmText={setIsEmailModalVisible}
+            handleFunc={() => console.log("test")}
+            title="إشعار للمستخدم"
+            msg={cause}
+            setMsg={(e) => setCause(e.target.value)}
+          />
+        )}
+        {isNotifyModalVisible && (
+          <SendNotification
+            setIsConfirmText={setIsNotifyModalVisible}
+            title="إرسال إيميل للمستخدم"
+          />
+        )}
         {isShowSuspensionTimer && (
           <SuspensionTimer
             onSuspend={suspendUser}

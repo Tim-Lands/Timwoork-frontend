@@ -7,16 +7,22 @@ import { motion } from "framer-motion";
 import { GoogleLogin } from "react-google-login";
 import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { Badge, message, Tooltip } from "antd";
+import { Badge, message, Tooltip, Select } from "antd";
 
+const { Option } = Select;
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (): ReactElement => {
   const [passVisibled, setPassVisibled] = useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [validationsErrors, setValidationsErrors]: any = useState({});
+  const [code, setCode] = useState("+1");
+  const [codes, setCodes] = useState([]);
   const clearValidationHandle = () => {
     setValidationsErrors({});
+  };
+  const handleChange = (value: string) => {
+    setCode(value);
   };
   const onLoginSuccess = async (res) => {
     //أرسل هذا الريسبونس الى الباكند
@@ -74,6 +80,9 @@ const Register = (): ReactElement => {
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   useEffect(() => {
+    API.get("/api/get_countries").then((data) => {
+      setCodes(data.data.data);
+    });
     if (token) {
       router.push("/");
     }
@@ -93,13 +102,17 @@ const Register = (): ReactElement => {
           password: "",
           password_confirmation: "",
           username: "",
+          phone: ``,
         }}
         onSubmit={async (values) => {
           setRegisterLoading(true);
           setValidationsErrors({});
           try {
             // Start loading.
-            const res = await API.post("api/register", values);
+            const res = await API.post("api/register", {
+              ...values,
+              phone: values.phone && code + values.phone,
+            });
             // Authentication was successful.
             if (res.status === 200) {
               setRegisterLoading(false);
@@ -215,6 +228,57 @@ const Register = (): ReactElement => {
                               className="timlands-form-note form-note-error"
                             >
                               <p className="text">{validationsErrors.email}</p>
+                            </motion.div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="timlands-form">
+                        <label className="label-block" htmlFor="phone">
+                          رقم الهاتف
+                        </label>
+                        <div className="registerPhone">
+                          <Field
+                            id="phone"
+                            name="phone"
+                            onKeyUp={clearValidationHandle}
+                            placeholder="رقم الهاتف..."
+                            className={
+                              "innerPhone " +
+                              (validationsErrors &&
+                                validationsErrors.phone &&
+                                " has-error")
+                            }
+                            autoComplete="off"
+                          />
+                          <Select
+                            defaultValue="+1"
+                            className="selectCode"
+                            onChange={handleChange}
+                          >
+                            {codes.map((code) => {
+                              if (code.code_phone) {
+                                return (
+                                  <Option
+                                    key={code.code_phone}
+                                    value={code.code_phone}
+                                  >
+                                    {code.code_phone}
+                                  </Option>
+                                );
+                              }
+                            })}
+                          </Select>
+                        </div>
+                        {validationsErrors && validationsErrors.phone && (
+                          <div style={{ overflow: "hidden" }}>
+                            <motion.div
+                              initial={{ y: -70, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              className="timlands-form-note form-note-error"
+                            >
+                              <p className="text">{validationsErrors.phone}</p>
                             </motion.div>
                           </div>
                         )}
