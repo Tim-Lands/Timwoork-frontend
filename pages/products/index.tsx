@@ -79,7 +79,6 @@ function Category() {
   const [isSubCategoryFetched, setIsSubCategoryFetched]: any = useState(false);
   const [activeKeys, setActiveKeys]: any = useState([]);
   const [filterBased, setFilterBased]: any = useState("");
-
   const products_type = useRef({
     most_recent: "الخدمات الأحدث",
     most_selling: "الخدمات الأكثر مبيعًا",
@@ -89,7 +88,7 @@ function Category() {
   /**----------------------------------------------------------**/
   useEffect(() => {
     if (isSubCategoryFetched) {
-      const { categoryID, subcategoryID, type } = getQueryParams(
+      const { categoryID, subcategoryID, type, query } = getQueryParams(
         window.location.search
       );
       if (categoryID) {
@@ -98,11 +97,13 @@ function Category() {
         formik.setFieldValue("categoryID", [categoryID]);
       }
       if (subcategoryID) {
-        formik.setFieldError("subcategoryID", subcategoryID);
+        formik.setFieldValue("subcategoryID", subcategoryID);
       }
       if (type) {
         setFilterBased(type);
       }
+      if (query)
+        formik.setFieldValue('query', query)
     }
   }, [isSubCategoryFetched]);
   useEffect(() => {
@@ -172,11 +173,12 @@ function Category() {
       delevring,
     } = formik.values;
     const tags_filtered = tags.filter((tag) => tag.id).map((tag) => tag.id);
+    console.log(queryParams);
     try {
       const params = {
         paginate: 12,
         page: pageNumber,
-        like: `title,${query}`,
+        like: `title,${query ? query : queryParams.query ? queryParams.query : ''}`,
         between: delevring ? `duration,${delevring}` : null,
         category:
           categoryID.length == 0
@@ -190,8 +192,8 @@ function Category() {
         subcategories: subcategoryID
           ? subcategoryID
           : queryParams.subcategoryID
-          ? queryParams.subcategoryID
-          : null,
+            ? queryParams.subcategoryID
+            : null,
       };
       const res = await API.get(
         `api/filter?${filterBased}&between=price,${minprice},${maxprice}`,
@@ -267,14 +269,14 @@ function Category() {
   const getQueryParams = (query) => {
     return query
       ? (/^[?#]/.test(query) ? query.slice(1) : query)
-          .split("&")
-          .reduce((params, param) => {
-            const [key, value] = param.split("=");
-            params[key] = value
-              ? decodeURIComponent(value.replace(/\+/g, " "))
-              : "";
-            return params;
-          }, {})
+        .split("&")
+        .reduce((params, param) => {
+          const [key, value] = param.split("=");
+          params[key] = value
+            ? decodeURIComponent(value.replace(/\+/g, " "))
+            : "";
+          return params;
+        }, {})
       : {};
   };
   //const { data: categories }: any = useSWR('api/get_categories')
@@ -285,7 +287,7 @@ function Category() {
       maxprice: 1000,
       tags: [],
       minprice: 5,
-      query: "",
+      query: null,
       ratting: null,
       seller_level: null,
       delevring: null,
@@ -535,9 +537,8 @@ function Category() {
                           <>
                             <div className="list-inner" key={e.id}>
                               <div
-                                className={`list-cat-item ${
-                                  subCategoryDisplay[e.id]
-                                }ed`}
+                                className={`list-cat-item ${subCategoryDisplay[e.id]
+                                  }ed`}
                                 onClick={() => toggleCateogryDisplay(e.id)}
                               >
                                 <span className="item-cat-label">
@@ -549,9 +550,8 @@ function Category() {
                               </div>
 
                               <div
-                                className={`filter-subcategories-list d-${
-                                  subCategoryDisplay[e.id]
-                                }`}
+                                className={`filter-subcategories-list d-${subCategoryDisplay[e.id]
+                                  }`}
                               >
                                 <div
                                   className="list-subcat-item"

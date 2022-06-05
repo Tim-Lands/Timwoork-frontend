@@ -3,13 +3,13 @@ import Hero from '@/components/NewIndex/Header/Hero'
 import VideoAside from '@/components/NewIndex/VideoSection/VideoAside'
 import Head from 'next/head'
 import React, { ReactElement } from 'react'
-import useSWR from "swr";
 import router from "next/router";
 import Categories from "@/components/Categories";
 import LayoutHome from '@/components/NewIndex/Layout/LayoutHome'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
+import API from '../config'
 // Import Swiper styles
 import "swiper/css";
 import 'swiper/css/navigation';
@@ -19,17 +19,9 @@ import 'swiper/css/autoplay';
 import PostInner from '@/components/Post/PostInner'
 import PostsAside from '@/components/PostsAside'
 
-function index() {
-  const { data: categories }: any = useSWR(`api/get_categories`);
-  const { data: popularProducts, popularError }: any = useSWR(
-    "api/filter?paginate=9&popular"
-  );
-  const { data: latestProducts, latestError }: any = useSWR(
-    "api/filter?paginate=9&sort[0]=created_at,desc"
-  );
-  const { data: products, error }: any = useSWR(
-    "api/filter?paginate=9&sort=count_buying,desc"
-  );
+function index({ products, latestProducts, categories, popularProducts, productsCarousel }) {
+
+  console.log(productsCarousel)
   const catData = [
     {
       id: 1,
@@ -75,9 +67,7 @@ function index() {
     },
   ]
 
-  const { data: productsCarousel }: any = useSWR(
-    "api/filter?paginate=9&sort=count_buying,desc"
-  );
+
   return (
     <>
       <Head>
@@ -119,6 +109,7 @@ function index() {
 
       <Categories
         onClickCategory={(id) => router.push(`/products?categoryID=${id}`)}
+        href={`/products?categoryID=`}
         categories={categories}
       />
       <div className='container'>
@@ -151,7 +142,7 @@ function index() {
           }}
           className="mySwiper"
         >
-          {productsCarousel && productsCarousel.data.data.map((e: any) => (
+          {productsCarousel && productsCarousel.data.map((e: any) => (
             <SwiperSlide key={e.id}>
               <PostInner
                 title={e.title}
@@ -171,26 +162,23 @@ function index() {
       {products &&
         popularProducts &&
         latestProducts &&
-        products.data.length !== 0 &&
-        popularProducts.data.length !== 0 &&
-        latestProducts.data.length !== 0 && (
+        products.length !== 0 &&
+        popularProducts.length !== 0 &&
+        latestProducts.length !== 0 && (
           <div className="container">
             <PostsAside
               title="الخدمات الأكثر شعبية "
-              PostData={popularProducts && popularProducts.data.data}
-              isError={popularError}
+              PostData={popularProducts && popularProducts.data}
               linkURL="/products?type=popular"
             />
             <PostsAside
               title="الخدمات التي أضيفت حديثا"
-              PostData={latestProducts && latestProducts.data.data}
-              isError={latestError}
+              PostData={latestProducts && latestProducts.data}
               linkURL="/products?type=most_recent"
             />
             <PostsAside
               title="الخدمات الأكثر مبيعا"
-              PostData={products && products.data.data}
-              isError={error}
+              PostData={products && products.data}
               linkURL="/products?type=most_selling"
             />
           </div>
@@ -201,4 +189,32 @@ function index() {
 index.getLayout = function getLayout(page: any): ReactElement {
   return <LayoutHome>{page}</LayoutHome>;
 };
+export async function getServerSideProps() {
+  try {
+    const [categories, popularProducts, latestProducts, productsCarousel, products] =
+      await Promise.all([
+        API.get('api/get_categories'),
+        API.get('api/filter?paginate=9&popular'),
+        API.get('api/filter?paginate=9&sort[0]=created_at,desc'),
+        API.get('api/filter?paginate=9&sort=count_buying,desc'),
+        API.get('api/filter?paginate=9&sort=count_buying,desc'),
+
+      ])
+
+    // Pass data to the page via props
+    return {
+      props: {
+        products: products?.data?.data,
+        popularProducts: popularProducts?.data?.data,
+        latestProducts: latestProducts?.data?.data,
+        productsCarousel: productsCarousel?.data?.data,
+        categories: categories?.data,
+        errorFetch: false
+      }
+    }
+
+  } catch (error) {
+    return { props: { errorFetch: true } }
+  }
+}
 export default index
