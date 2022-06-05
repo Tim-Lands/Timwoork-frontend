@@ -16,7 +16,7 @@ const Register = (): ReactElement => {
   const [passVisibled, setPassVisibled] = useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState("+1");
   const [codes, setCodes] = useState([]);
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -253,7 +253,7 @@ const Register = (): ReactElement => {
                             autoComplete="off"
                           />
                           <Select
-                            defaultValue="..."
+                            defaultValue="+1"
                             className="selectCode"
                             onChange={handleChange}
                           >
