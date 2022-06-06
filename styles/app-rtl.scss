@@ -7970,9 +7970,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   font-weight: 500;
   outline: none;
   transition: all 0.3s;
+  &.prof {
+    input {
+      border: none;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 0px;
+    }
+  }
   .innerPhone {
     border: none;
     width: 100%;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
     padding-right: 19px;
     padding-block: 8px;
     &:focus {
@@ -8016,4 +8024,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     animation: formscale 0.4s;
     border: 1px solid rgb(240, 53, 53);
   }
+}
+.ant-select-selector {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
 }

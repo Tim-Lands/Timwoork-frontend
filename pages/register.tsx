@@ -81,12 +81,19 @@ const Register = (): ReactElement => {
     token = localStorage.getItem("token");
   useEffect(() => {
     API.get("/api/get_countries").then((data) => {
-      setCodes(data.data.data);
+      setCodes(() => {
+        const newArray = data.data.data;
+        newArray.sort((a, b) => {
+          return a?.code_phone?.split("+")[1] - b?.code_phone?.split("+")[1];
+        });
+        return newArray;
+      });
     });
     if (token) {
       router.push("/");
     }
   }, []);
+
   const router = useRouter();
   // Return statement.
   return (

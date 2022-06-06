@@ -11531,9 +11531,16 @@ h3 {
   transition: all 0.3s;
 }
 
+.registerPhone.prof input {
+  border: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+}
+
 .registerPhone .innerPhone {
   border: none;
   width: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
   padding-right: 19px;
   padding-block: 8px;
 }
@@ -11613,5 +11620,15 @@ h3 {
   -webkit-animation: formscale 0.4s;
           animation: formscale 0.4s;
   border: 1px solid #f03535;
+}
+
+.ant-select-selector {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+  height: 100% !important;
 }
 /*# sourceMappingURL=app-rtl.css.map */
