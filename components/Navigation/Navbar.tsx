@@ -236,6 +236,7 @@ function Navbar(): ReactElement {
       });
 
       notificationPusher.bind("notification.sent", (data) => {
+        console.log(data)
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
         mutate("api/me");

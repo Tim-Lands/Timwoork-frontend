@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import useSWR from 'swr'
 import Community from './Community'
 import LoginForm from '@/components/NewIndex/LoginForm'
 import { FaSearch } from 'react-icons/fa'
@@ -10,7 +11,17 @@ import Messages from '../DropdowModal/Messages'
 import Language from '../DropdowModal/Language'
 import Image from 'next/image'
 import ProfileMenu from '../DropdowModal/ProfileMenu'
+import { PusherContext } from "../../../contexts/pusherContext";
+import API from '../../../config'
+import { notification } from "antd";
+import LastSeen from "@/components/LastSeen";
 
+import {
+    MessageOutlined,
+    InfoCircleOutlined,
+    CloseCircleOutlined,
+    BellOutlined,
+} from "@ant-design/icons";
 function Navbar() {
 
     let token = Cookies.get("token");
@@ -21,10 +32,17 @@ function Navbar() {
     const [showNotificationsMenu, setShowNotificationsMenu] = useState(false)
     const [showMessagesMenu, setShowMessagesMenu] = useState(false)
     const [isShowProfileMenu, setIsShowProfileMenu] = useState(false)
-
     const [isShowLoginForm, setIsShowLoginForm] = useState(false)
     const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
     const [visible, setVisible] = useState(true)
+    const [notifications, setNotifications] = useState([])
+    const [messages, setMessages] = useState([])
+    const [chatPusher, notificationPusher] = useContext(PusherContext);
+    const { data: userInfo }: any = useSWR('api/me')
+
+    const user_details = userInfo?.user_details || null
+    console.log(userInfo)
+    console.log(user_details)
     const handleScroll = () => {
         const currentScrollPos: any = (typeof window === "undefined") ?? window.pageYOffset;
         const visible = prevScrollpos > currentScrollPos;
@@ -32,11 +50,171 @@ function Navbar() {
         setVisible(visible)
     };
     useEffect(() => {
+        fetchData();
+    }, [])
+    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         }
     }, [handleScroll])
+
+    useEffect(() => {
+        if (userInfo) {
+            chatPusher.bind("message.sent", (data) => {
+                const effect = new Audio("/effect.mp3");
+                effect.play();
+                if (data.message.type == 0) {
+                    notification.open({
+                        message: "لديك رسالة جديدة",
+                        description: (
+                            <div className="msg-notification">
+                                <a
+                                    href={`/conversations/${data.message.conversation.id}#msg-item-${data.message.id}`}
+                                    style={{ color: "#666", fontWeight: 300 }}
+                                >
+                                    <p className="meta">
+                                        <LastSeen date={data.message.created_at} />
+                                    </p>
+                                    <h4 className="title">{data.message.message}</h4>
+                                </a>
+                                <p className="text">
+                                    <small className="ml-1">
+                                        <strong>من طرف: </strong>
+                                    </small>
+                                    <Link href={`/u/${data.message.user.username}`}>
+                                        <a style={{ color: "#666", fontWeight: 300 }}>
+                                            <span style={{ color: "#666", fontWeight: 300 }}>
+                                                {data.message.user.profile.full_name}
+                                            </span>
+                                        </a>
+                                    </Link>
+                                </p>
+                            </div>
+                        ),
+                        icon: <MessageOutlined style={{ color: "#108ee9" }} />,
+                        placement: "bottomLeft",
+                    });
+                }
+                if (data.message.type == 1) {
+                    notification["info"]({
+                        message: "لديك تعليمة جديدة",
+                        description: (
+                            <div className="msg-notification">
+                                <p className="meta">
+                                    <LastSeen date={data.message.created_at} />
+                                </p>
+                                <h4 className="title">{data.message.message}</h4>
+                                <p className="text">
+                                    <small className="ml-1">
+                                        <strong>من طرف: </strong>
+                                    </small>
+                                    <Link href={`/u/${data.message.user.username}`}>
+                                        <a style={{ color: "#666", fontWeight: 300 }}>
+                                            <span style={{ color: "#666", fontWeight: 300 }}>
+                                                {data.message.user.profile.full_name}
+                                            </span>
+                                        </a>
+                                    </Link>
+                                </p>
+                            </div>
+                        ),
+                        icon: <InfoCircleOutlined style={{ color: "#80c26c" }} />,
+                        placement: "bottomLeft",
+                    });
+                }
+                if (data.message.type == 2) {
+                    notification["error"]({
+                        message: "لديك سبب إلغاء",
+                        description: (
+                            <div className="msg-notification">
+                                <p className="meta">
+                                    <LastSeen date={data.message.created_at} />
+                                </p>
+                                <h4 className="title">{data.message.message}</h4>
+                                <p className="text">
+                                    <small className="ml-1">
+                                        <strong>من طرف: </strong>
+                                    </small>
+                                    <Link href={`/u/${data.message.user.username}`}>
+                                        <a style={{ color: "#666", fontWeight: 300 }}>
+                                            <span style={{ color: "#666", fontWeight: 300 }}>
+                                                {data.message.user.profile.full_name}
+                                            </span>
+                                        </a>
+                                    </Link>
+                                </p>
+                            </div>
+                        ),
+                        icon: <CloseCircleOutlined style={{ color: "#d33232" }} />,
+                        placement: "bottomLeft",
+                    });
+                }
+
+            });
+
+            notificationPusher.bind("notification.sent", (data) => {
+                console.log(data)
+                const today = new Date()
+                const date = `${today.getFullYear()}_${today.getMonth() + 1}-${today.getDate()}`
+                console.log(date);
+                setNotifications([{ created_at: date, data }, ...notifications])
+                const NotifyEffect = new Audio("/bell.mp3");
+                NotifyEffect.play();
+                notification.open({
+                    message: "لديك اشعار جديد",
+                    description: (
+                        <div className="msg-notification">
+                            {data.to == "seller" && (
+                                <a
+                                    href={`/mysales/${data.content.item_id}`}
+                                    style={{ color: "#666", fontWeight: 300 }}
+                                >
+                                    <h4 className="title">{data.title}</h4>
+                                </a>
+                            )}
+                            {data.to == "buyer" && (
+                                <a
+                                    href={`/mypurchases/${data.content.item_id}`}
+                                    style={{ color: "#666", fontWeight: 300 }}
+                                >
+                                    <h4 className="title">{data.title}</h4>
+                                </a>
+                            )}
+                            <p className="text">
+                                <small className="ml-1">
+                                    <strong>من طرف: </strong>
+                                </small>
+                                <Link href={`/u/${data.user_sender.username}`}>
+                                    <a style={{ color: "#666", fontWeight: 300 }}>
+                                        <span style={{ color: "#666", fontWeight: 300 }}>
+                                            {data.user_sender.full_name}
+                                        </span>
+                                    </a>
+                                </Link>
+                            </p>
+                        </div>
+                    ),
+                    icon: <BellOutlined style={{ color: "#108ee9" }} />,
+                    placement: "bottomRight",
+                });
+            });
+        }
+    }, [notificationPusher, userInfo])
+    const fetchData = async () => {
+        const notificationsData = await API.get('api/notifications?page=4', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        const messagesData = await API.get('api/conversations', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        setMessages(messagesData?.data?.data?.data)
+        setNotifications(notificationsData?.data?.data?.data)
+    }
     return (
         <>
             {isLanguageVisible && <Language setIsConfirmText={setIsLanguageVisible} />}
@@ -70,20 +248,8 @@ function Navbar() {
                         </a>
                         {showCommunityMenu && <Community />}
                     </li>
-                    {token ? <>
-                        <li>
-                            <Link href={'/test'}>
-                                <a className='btn butt-xs butt-primary2 flex-center'>
-                                    <span className="material-icons material-icons-outlined">person_add</span> التسجيل
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <a className={`btn butt-xs flex-center ${!visible ? ' butt-primary2-out' : ' butt-white-out'}`} onClick={() => setIsShowLoginForm(true)}>
-                                <span className="material-icons material-icons-outlined">person</span> تسجيل الدخول
-                            </a>
-                        </li>
-                    </> : <>
+                    {userInfo ? <>
+
                         <li className='circular-newitem'>
                             <a className='link-circular-button' onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}>
                                 <Image src={`/avatar.png`} width={31} height={31} alt={''} className='link-circular-button' />
@@ -101,13 +267,27 @@ function Navbar() {
                             <a className='link-circular-button' onClick={() => setShowMessagesMenu(!showMessagesMenu)}>
                                 <span className="material-icons material-icons-outlined">mail</span>
                             </a>
-                            {showMessagesMenu && <Messages />}
+                            {showMessagesMenu && <Messages messages={messages} />}
                         </li>
                         <li className='circular-newitem'>
                             <a className='link-circular-button' onClick={() => setShowNotificationsMenu(!showNotificationsMenu)}>
                                 <span className="material-icons material-icons-outlined">notifications</span>
                             </a>
-                            {showNotificationsMenu && <Notifications />}
+                            {showNotificationsMenu && <Notifications notifications={notifications} />}
+                        </li>
+
+                    </> : <>
+                        <li>
+                            <Link href={'/register'}>
+                                <a className='btn butt-xs butt-primary2 flex-center'>
+                                    <span className="material-icons material-icons-outlined">person_add</span> التسجيل
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <a className={`btn butt-xs flex-center ${!visible ? ' butt-primary2-out' : ' butt-white-out'}`} onClick={() => setIsShowLoginForm(true)}>
+                                <span className="material-icons material-icons-outlined">person</span> تسجيل الدخول
+                            </a>
                         </li>
                     </>
                     }
@@ -123,5 +303,4 @@ function Navbar() {
         </>
     )
 }
-
 export default Navbar

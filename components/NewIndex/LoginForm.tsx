@@ -79,6 +79,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
     isInitialValid: true,
     enableReinitialize: true,
     onSubmit: async (values) => {
+      console.log('submittung')
       setValidationsErrors({});
       try {
         const res = await API.post("api/login", values);
@@ -87,7 +88,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
           Cookies.set("token", res.data.data.token, { expires: 365 });
           Cookies.set("username", values.username);
           if (res.data.data.is_verified) {
-            router.push("/");
+            router.reload();
           } else {
             router.push("/email/verification");
           }
@@ -116,52 +117,56 @@ function LoginForm({ setIsConfirmText }): ReactElement {
           </h3>
         </div>
         <div className="modal-conferm-body">
-          <FormInput
-            name="username"
-            value={formik.values.username}
-            size='small'
-            title="البريد الإلكتروني أو اسم المستخدم"
-            handleChange={formik.handleChange}
-            validationsErrors={validationsErrors && validationsErrors.username && validationsErrors.username[0]}
-          />
-          <FormInput
-            type={!isShowenPass ? 'password' : 'text'}
-            name='password'
-            isVisibleBtn={true}
-            size='small'
-            setIsShowenPass={setIsShowenPass}
-            isShowenPass={isShowenPass}
-            value={formik.values.password}
-            title="كلمة المرور"
-            handleChange={formik.handleChange}
-            validationsErrors={validationsErrors && validationsErrors.password && validationsErrors.password[0]}
-          />
-          <div className="new-form-forget">
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" value="" id="remember_me" />
-              <label className="form-check-label" htmlFor="remember_me">
-                تذكرني
-              </label>
-            </div>
-            <div className="forget-pass">
-              <a href="#">نسيت كلمة المرور؟</a>
-            </div>
-          </div>
-          <div className="external-login-modal">
-            <h5 className="title">
-              أو التسجيل بواسطة غوغل
-            </h5>
-            <GoogleLogin
-              clientId={clientId}
-              buttonText="غوغل"
-              onSuccess={onLoginSuccess}
-              onFailure={onLoginFailure}
-              cookiePolicy={"single_host_origin"}
-              //isSignedIn={true}
-              className="ext-butt"
+          <form onSubmit={formik.handleSubmit}>
+            <FormInput
+              name="username"
+              value={formik.values.username}
+              size='small'
+              title="البريد الإلكتروني أو اسم المستخدم"
+              handleChange={formik.handleChange}
+              validationsErrors={validationsErrors && validationsErrors.username && validationsErrors.username[0]}
             />
-          </div>
-          <button className='btn butt-md butt-green submit-button-modal' type='submit'>تسجيل الدخول</button>
+            <FormInput
+              type={!isShowenPass ? 'password' : 'text'}
+              name='password'
+              isVisibleBtn={true}
+              size='small'
+              setIsShowenPass={setIsShowenPass}
+              isShowenPass={isShowenPass}
+              value={formik.values.password}
+              title="كلمة المرور"
+              handleChange={formik.handleChange}
+              validationsErrors={validationsErrors && validationsErrors.password && validationsErrors.password[0]}
+            />
+            <div className="new-form-forget">
+              <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="remember_me" />
+                <label className="form-check-label" htmlFor="remember_me">
+                  تذكرني
+                </label>
+              </div>
+              <div className="forget-pass">
+                <a href="#">نسيت كلمة المرور؟</a>
+              </div>
+            </div>
+            <div className="external-login-modal">
+              <h5 className="title">
+                أو التسجيل بواسطة غوغل
+              </h5>
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="غوغل"
+                onSuccess={onLoginSuccess}
+                onFailure={onLoginFailure}
+                cookiePolicy={"single_host_origin"}
+                //isSignedIn={true}
+                className="ext-butt"
+              />
+            </div>
+
+            <button className='btn butt-md butt-green submit-button-modal' type='submit'>تسجيل الدخول</button>
+          </form>
+
         </div>
 
         <div className="modal-conferm-footer">
@@ -170,7 +175,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
           </Space>
         </div>
       </div>
-    </motion.div>
+    </motion.div >
   )
 }
 

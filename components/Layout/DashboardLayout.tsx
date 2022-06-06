@@ -8,9 +8,9 @@ import router from "next/router";
 
 function DashboardLayout(props: any) {
   let token = Cookies.get('token_dash')
-  if(!token &&typeof window !== "undefined")
-    token=localStorage.getItem('token_dash');
-      useEffect(() => {
+  if (!token && typeof window !== "undefined")
+    token = localStorage.getItem('token_dash');
+  useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login")
       return
@@ -22,9 +22,12 @@ function DashboardLayout(props: any) {
   }
   return (
     <SWRConfig value={{
-      fetcher: async (url: string) => await API.get(url, {
-        headers: { Authorization: `Bearer ${token}` }
-      }).then((r: any) => r.data)
+      fetcher: async (url: string) => {
+        console.log(url);
+        return await API.get(url, {
+          headers: { Authorization: `Bearer ${token}` }
+        }).then((r: any) => r.data)
+      }
     }}>
       <div className='is-dashboard'>
         <div className="clearflex">
