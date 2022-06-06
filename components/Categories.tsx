@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Link from 'next/link'
+
 const placeholders = [
   {
     id: 1,
@@ -50,7 +52,7 @@ const placeholders = [
     name_ar: "",
   },
 ];
-function Categories({ categories, onClickCategory }) {
+function Categories({ categories, onClickCategory, href }) {
   //const { data: categories }: any = useSWR(`api/get_categories`)
   return (
     <div className="container">
@@ -79,25 +81,29 @@ function Categories({ categories, onClickCategory }) {
           )}
           <div className="row">
             {categories && categories.data.map((e: any) => (
-                <div
-                  onClick={() => onClickCategory(e.id)}
-                  className="col-md-3 col-6"
-                  key={e.id}
-                >
-                  <div className="main-category-item">
-                    <div className="main-category-item-icon">
-                      <span
-                        className={"material-icons material-icons-outlined"}
-                      >
-                        <img src={e.image} />
-                      </span>
-                    </div>
-                    <div className="main-category-item-title">
-                      <h3 className="title">{e.name_ar}</h3>
-                    </div>
+              <div
+                onClick={() => onClickCategory(e.id)}
+                className="col-md-3 col-6"
+                key={e.id}
+              >
+                <div className="main-category-item">
+                  <div className="main-category-item-icon">
+                    <span
+                      className={"material-icons material-icons-outlined"}
+                    >
+                      <Link href={`${href}${e.id}`}>
+                        <a href="">
+                          <img src={e.image} onClick={() => onClickCategory(e.id)} />
+                        </a>
+                      </Link>
+                    </span>
+                  </div>
+                  <div className="main-category-item-title">
+                    <h3 className="title">{e.name_ar}</h3>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -108,4 +114,5 @@ export default Categories;
 Categories.propTypes = {
   categories: PropTypes.any,
   onClickCategory: PropTypes.func,
+  href: PropTypes.string
 };

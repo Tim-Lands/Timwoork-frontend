@@ -48,8 +48,9 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            if (res) {
+            if (res.status == 200) {
                 setIsLoading(false);
+                router.reload()
             }
         } catch (error) {
             setIsLoading(false);
@@ -77,6 +78,7 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
             if (res.status === 200) {
                 setIsLoading(false);
                 setIsModalVisible(false);
+                router.reload()
             }
         } catch (error) {
             setIsLoading(false);
