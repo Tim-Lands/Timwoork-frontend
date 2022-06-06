@@ -79,7 +79,7 @@ function Home() {
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
-      {false && (
+      {!userInfo.user_details.profile && (
         <Link href="/user/personalInformations">
           <Alert
             message="برجاء اضافة رقم الهاتف"
