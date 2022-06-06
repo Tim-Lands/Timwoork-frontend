@@ -3,12 +3,14 @@ import { ReactElement } from "react";
 import Hero from "@/components/Hero";
 import PostsAside from "@/components/PostsAside";
 import useSWR from "swr";
-import { Menu, Dropdown, Button } from "antd";
+import { Menu, Dropdown, Button, Alert } from "antd";
 import Categories from "@/components/Categories";
 import router from "next/router";
 import Head from "next/head";
 import { PRIMARY } from "../styles/variables";
+import Link from "next/link";
 function Home() {
+  const { data: userInfo }: any = useSWR("api/me");
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=9&popular"
   );
@@ -77,8 +79,22 @@ function Home() {
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
+      {false && (
+        <Link href="/user/personalInformations">
+          <Alert
+            message="برجاء اضافة رقم الهاتف"
+            type="error"
+            style={{
+              position: "absolute",
+              top: 50,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 100,
+            }}
+          />
+        </Link>
+      )}
       <Hero />
-
       {/* <Swiper
         slidesPerView={1}
         spaceBetween={0}
