@@ -140,7 +140,11 @@ function Home() {
         ))}
       </Swiper> */}
       <Categories
-        onClickCategory={(id) => router.push(`/products?categoryID=${id}`)}
+        href={`/products?categoryID=`}
+        onClickCategory={(id) => {
+          console.log(`/products?categoryID=${id}`)
+          router.push(`/products?categoryID=${id}`)
+        }}
         categories={categories}
       />
 
