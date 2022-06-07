@@ -74,7 +74,7 @@ const Register = (): ReactElement => {
     return username;
   };
 
-  const onLoginFailure = () => {};
+  const onLoginFailure = () => { };
   // Redirect to user home route if user is authenticated.
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -110,6 +110,7 @@ const Register = (): ReactElement => {
           password_confirmation: "",
           username: "",
           phone: ``,
+          code_phone: ''
         }}
         onSubmit={async (values) => {
           setRegisterLoading(true);
@@ -118,7 +119,8 @@ const Register = (): ReactElement => {
             // Start loading.
             const res = await API.post("api/register", {
               ...values,
-              phone: values.phone && code + values.phone,
+              phone: values.phone,
+              code_phone: code
             });
             // Authentication was successful.
             if (res.status === 200) {

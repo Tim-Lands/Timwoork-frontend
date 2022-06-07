@@ -37,6 +37,7 @@ function Navbar() {
     const [visible, setVisible] = useState(true)
     const [notifications, setNotifications] = useState([])
     const [messages, setMessages] = useState([])
+    const [sentinel, setSentinel] = useState({ mount: true });
     const [chatPusher, notificationPusher] = useContext(PusherContext);
     const { data: userInfo }: any = useSWR('api/me')
 
@@ -62,6 +63,11 @@ function Navbar() {
     useEffect(() => {
         if (userInfo) {
             chatPusher.bind("message.sent", (data) => {
+                console.log(data)
+                console.log(messages)
+                const message = { members: [data?.message?.user], id: data?.message?.conversation_id, ...data?.message?.conversation };
+                console.log(message)
+                setMessages([message, ...messages.filter(msg => msg.id != data?.message?.conversation_id)])
                 const effect = new Audio("/effect.mp3");
                 effect.play();
                 if (data.message.type == 0) {
@@ -200,7 +206,7 @@ function Navbar() {
                 });
             });
         }
-    }, [notificationPusher, userInfo])
+    }, [notificationPusher, userInfo, sentinel])
     const fetchData = async () => {
         const notificationsData = await API.get('api/notifications?page=4', {
             headers: {
@@ -214,7 +220,9 @@ function Navbar() {
         })
         setMessages(messagesData?.data?.data?.data)
         setNotifications(notificationsData?.data?.data?.data)
+        setSentinel({ ...sentinel })
     }
+    console.log(messages)
     return (
         <>
             {isLanguageVisible && <Language setIsConfirmText={setIsLanguageVisible} />}
