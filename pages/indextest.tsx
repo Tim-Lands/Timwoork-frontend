@@ -1,4 +1,3 @@
-import CategoriesSlider from '@/components/NewIndex/CategoriesSlider'
 import Hero from '@/components/NewIndex/Header/Hero'
 import VideoAside from '@/components/NewIndex/VideoSection/VideoAside'
 import Head from 'next/head'
@@ -17,55 +16,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 import PostInner from '@/components/Post/PostInner'
-import PostsAside from '@/components/PostsAside'
 
-function index({ products, latestProducts, categories, popularProducts, productsCarousel }) {
-
-  console.log(productsCarousel)
-  const catData = [
-    {
-      id: 1,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741678/logo-design-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 2,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/ae11e2d45410b0eded7fba0e46b09dbd-1598561917003/wordpress-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 3,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/data-entry-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 4,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/illustration-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 5,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741668/seo-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 6,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741678/book-covers-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 7,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741663/animated-explainer-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-  ]
+function index({ products, latestProducts, categories, popularProducts }) {
 
 
   return (
@@ -102,9 +54,7 @@ function index({ products, latestProducts, categories, popularProducts, products
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
       <Hero />
-      <div className='container'>
-        <CategoriesSlider data={catData} title='التصنيفات الأكثر شعبية' isLoading={false} showAll={'المزيد...'} link={'/test'} />
-      </div>
+
       <VideoAside />
 
       <Categories
@@ -112,77 +62,157 @@ function index({ products, latestProducts, categories, popularProducts, products
         href={`/products?categoryID=`}
         categories={categories}
       />
-      <div className='container'>
-
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={0}
-          pagination={{
-            type: "progressbar",
-          }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          breakpoints={{
-            "@0.00": {
-              slidesPerView: 1,
-              spaceBetween: 0,
-            },
-            "@0.75": {
-              slidesPerView: 2,
-              spaceBetween: 2,
-            },
-            "@1.00": {
-              slidesPerView: 3,
-              spaceBetween: 3,
-            },
-            "@1.50": {
-              slidesPerView: 4,
-              spaceBetween: 4,
-            },
-          }}
-          className="mySwiper"
-        >
-          {productsCarousel && productsCarousel.data.map((e: any) => (
-            <SwiperSlide key={e.id}>
-              <PostInner
-                title={e.title}
-                author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                rate={e.ratings_avg_rating}
-                username={e.profile_seller && e.profile_seller.profile.user.username}
-                price={e.price}
-                slug={e.slug}
-                thumbnail={e.full_path_thumbnail}
-                buyers={e.count_buying}
-                avatar='/avatar2.jpg'
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-      {products &&
+      {
+        products &&
         popularProducts &&
         latestProducts &&
         products.length !== 0 &&
         popularProducts.length !== 0 &&
         latestProducts.length !== 0 && (
-          <div className="container">
-            <PostsAside
-              title="الخدمات الأكثر شعبية "
-              PostData={popularProducts && popularProducts.data}
-              linkURL="/products?type=popular"
-            />
-            <PostsAside
-              title="الخدمات التي أضيفت حديثا"
-              PostData={latestProducts && latestProducts.data}
-              linkURL="/products?type=most_recent"
-            />
-            <PostsAside
-              title="الخدمات الأكثر مبيعا"
-              PostData={products && products.data}
-              linkURL="/products?type=most_selling"
-            />
-          </div>
-        )}
+          <>
+            <div className='container'>
+            <h1 className="title me-auto">الخدمات الأحدث</h1>
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={0}
+                pagination={{
+                  type: "progressbar",
+                }}
+                navigation={true}
+                modules={[Pagination, Navigation]}
+                breakpoints={{
+                  "@0.00": {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                  },
+                  "@0.75": {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                  },
+                  "@1.00": {
+                    slidesPerView: 3,
+                    spaceBetween: 3,
+                  },
+                  "@1.50": {
+                    slidesPerView: 4,
+                    spaceBetween: 4,
+                  },
+                }}
+                className="mySwiper"
+              >
+                {latestProducts && latestProducts.data.map((e: any) => (
+                  <SwiperSlide key={e.id}>
+                    <PostInner
+                      title={e.title}
+                      author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                      rate={e.ratings_avg_rating}
+                      username={e.profile_seller && e.profile_seller.profile.user.username}
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                      avatar='/avatar2.jpg'
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            <div className='container'>
+            <h1 className="title me-auto">الخدمات الأكثر مبيعًا</h1>
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={0}
+                pagination={{
+                  type: "progressbar",
+                }}
+                navigation={true}
+                modules={[Pagination, Navigation]}
+                breakpoints={{
+                  "@0.00": {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                  },
+                  "@0.75": {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                  },
+                  "@1.00": {
+                    slidesPerView: 3,
+                    spaceBetween: 3,
+                  },
+                  "@1.50": {
+                    slidesPerView: 4,
+                    spaceBetween: 4,
+                  },
+                }}
+                className="mySwiper"
+              >
+                {products && products.data.map((e: any) => (
+                  <SwiperSlide key={e.id}>
+                    <PostInner
+                      title={e.title}
+                      author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                      rate={e.ratings_avg_rating}
+                      username={e.profile_seller && e.profile_seller.profile.user.username}
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                      avatar='/avatar2.jpg'
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            <div className='container'>
+            <h1 className="title me-auto">الخدمات الأكثر شعبية</h1>
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={0}
+                pagination={{
+                  type: "progressbar",
+                }}
+                navigation={true}
+                modules={[Pagination, Navigation]}
+                breakpoints={{
+                  "@0.00": {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                  },
+                  "@0.75": {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                  },
+                  "@1.00": {
+                    slidesPerView: 3,
+                    spaceBetween: 3,
+                  },
+                  "@1.50": {
+                    slidesPerView: 4,
+                    spaceBetween: 4,
+                  },
+                }}
+                className="mySwiper"
+              >
+                {popularProducts && popularProducts.data.map((e: any) => (
+                  <SwiperSlide key={e.id}>
+                    <PostInner
+                      title={e.title}
+                      author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
+                      rate={e.ratings_avg_rating}
+                      username={e.profile_seller && e.profile_seller.profile.user.username}
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                      avatar='/avatar2.jpg'
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </>)
+      }
     </>
   )
 }
@@ -191,7 +221,7 @@ index.getLayout = function getLayout(page: any): ReactElement {
 };
 export async function getServerSideProps() {
   try {
-    const [categories, popularProducts, latestProducts, productsCarousel, products] =
+    const [categories, popularProducts, latestProducts, products] =
       await Promise.all([
         API.get('api/get_categories'),
         API.get('api/filter?paginate=9&popular'),
@@ -207,7 +237,6 @@ export async function getServerSideProps() {
         products: products?.data?.data,
         popularProducts: popularProducts?.data?.data,
         latestProducts: latestProducts?.data?.data,
-        productsCarousel: productsCarousel?.data?.data,
         categories: categories?.data,
         errorFetch: false
       }

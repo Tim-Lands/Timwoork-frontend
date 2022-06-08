@@ -4,84 +4,102 @@ import Link from 'next/link'
 import React from 'react'
 import { FaClock, FaEnvelope } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import PropTypes from "prop-types";
 
-function Messages() {
-  return (
-    <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className='nav-popup-dropdown'>
-        <div className="popup-dropdown-inner">
-            <div className="popup-dropdown-header">
-                <h4 className="title">
-                 <FaEnvelope />  الرسائل 
-                </h4>
-            </div>
-            <div className="popup-dropdown-body">
-                <div className="popup-dropdown-content">
-                    <ul className="popup-dropdown-content-list">
-                        <li>
-                            <Link href={`/`}>
-                                <a className='new-popup-item'>
-                                    <div className="new-popup-item-image">
-                                        <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
-                                    </div>
-                                    <div className="new-popup-item-content">
-                                        <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
-                                        <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
-                                    </div>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href={`/`}>
-                                <a className='new-popup-item'>
-                                    <div className="new-popup-item-image">
-                                        <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
-                                    </div>
-                                    <div className="new-popup-item-content">
-                                        <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
-                                        <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
-                                    </div>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href={`/`}>
-                                <a className='new-popup-item'>
-                                    <div className="new-popup-item-image">
-                                        <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
-                                    </div>
-                                    <div className="new-popup-item-content">
-                                        <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
-                                        <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
-                                    </div>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href={`/`}>
-                                <a className='new-popup-item'>
-                                    <div className="new-popup-item-image">
-                                        <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
-                                    </div>
-                                    <div className="new-popup-item-content">
-                                        <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
-                                        <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
-                                    </div>
-                                </a>
-                            </Link>
-                        </li>
-                    </ul>
+function Messages({ messages }) {
+    return (
+        <motion.div initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className='nav-popup-dropdown'>
+            <div className="popup-dropdown-inner">
+                <div className="popup-dropdown-header">
+                    <h4 className="title">
+                        <FaEnvelope />  الرسائل
+                    </h4>
+                </div>
+                <div className="popup-dropdown-body">
+                    <div className="popup-dropdown-content">
+                        <ul className="popup-dropdown-content-list">
+                            {messages?.map(message => (
+                                <li key={message?.id}>
+                                    <Link href={`/conversations/${message.id}`}>
+                                        <a className='new-popup-item'>
+                                            <div className="new-popup-item-image">
+                                                <Image src={message?.members[0].profile.avatar_url} width={50} height={50} alt={``} />
+                                            </div>
+                                            <div className="new-popup-item-content">
+                                                <p className="text">قام {message?.members[0].username} بالتعليق على خدمتك <strong>{message?.title}</strong></p>
+                                                <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
+                                            </div>
+                                        </a>
+                                    </Link>
+                                </li>
+                            ))}
+                            <li>
+                                <Link href={`/`}>
+                                    <a className='new-popup-item'>
+                                        <div className="new-popup-item-image">
+                                            <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
+                                        </div>
+                                        <div className="new-popup-item-content">
+                                            <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
+                                            <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={`/`}>
+                                    <a className='new-popup-item'>
+                                        <div className="new-popup-item-image">
+                                            <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
+                                        </div>
+                                        <div className="new-popup-item-content">
+                                            <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
+                                            <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={`/`}>
+                                    <a className='new-popup-item'>
+                                        <div className="new-popup-item-image">
+                                            <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
+                                        </div>
+                                        <div className="new-popup-item-content">
+                                            <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
+                                            <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={`/`}>
+                                    <a className='new-popup-item'>
+                                        <div className="new-popup-item-image">
+                                            <Image src={`/avatar3.jpg`} width={50} height={50} alt={``} />
+                                        </div>
+                                        <div className="new-popup-item-content">
+                                            <p className="text">قام فلان بن فلان بالتعليق على خدمتك <strong>اكتشف سوق تيم ورك للخدمات الالكترونية</strong></p>
+                                            <p className="meta"><FaClock /> <LastSeen date={`2022-04-29T00:53:50.000000Z`} /></p>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="popup-dropdown-footer">
+                    <Link href={`/`}>
+                        <a className='nav-see-more'>
+                            مشاهدة جميع الرسائل
+                        </a>
+                    </Link>
                 </div>
             </div>
-            <div className="popup-dropdown-footer">
-                <Link href={`/`}>
-                    <a className='nav-see-more'>
-                        مشاهدة جميع الرسائل
-                    </a>
-                </Link>
-            </div>
-        </div>
-    </motion.div>
-  )
+        </motion.div>
+    )
 }
-
+Messages.propTypes = {
+    messages: PropTypes.array
+};
 export default Messages

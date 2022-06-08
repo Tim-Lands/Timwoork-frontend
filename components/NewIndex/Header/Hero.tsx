@@ -105,7 +105,7 @@ function Hero() {
             </div>
             <div className="timlands-here-content">
                 <HeroContent />
-            </div>
+            </div> 
         </div>
     )
 }

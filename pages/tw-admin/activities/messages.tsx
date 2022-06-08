@@ -67,7 +67,7 @@ function index() {
                                             className="timlands-inputs"
                                             onChange={(e) => email.current = (e.target.value)}
                                             onKeyDown={(e) => {
-                                                email.current (e.target as HTMLTextAreaElement).value
+                                                email.current = (e.target as HTMLTextAreaElement).value
                                                 if (e.keyCode === 13)
                                                     setSentinel({ ...sentinel, mount: true })
                                             }
