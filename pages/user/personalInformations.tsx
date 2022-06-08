@@ -4,7 +4,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Field, Form, Formik } from "formik";
 import API from "../../config";
 import { motion } from "framer-motion";
-import { message, Select } from "antd";
+import { message } from "antd";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
 import router from "next/router";
@@ -16,26 +16,24 @@ const personalInformations = () => {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
-  const [code, setCode] = useState("+1");
   const [codes, setCodes] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
   const { data: userInfo }: any = useSWR("api/me");
   const { data: Countries }: any = useSWR("dashboard/countries");
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const handleChange = (value: string) => {
-    setCode(value);
-  };
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }
   // Redirect to user home route if user is authenticated.
   useEffect(() => {
-    API.get("/api/get_countries").then((data) => {
+    API.get("/api/phone_codes").then((data) => {
       setCodes(() => {
-        const newArray = data.data.data;
-        newArray.sort((a, b) => {
-          return a?.code_phone?.split("+")[1] - b?.code_phone?.split("+")[1];
-        });
-        return newArray;
+        return data.data.data;
+      });
+    });
+    API.get("/api/currency").then((data) => {
+      setCurrencies(() => {
+        return data.data.data;
       });
     });
     if (!token) {
@@ -43,6 +41,7 @@ const personalInformations = () => {
     }
   }, [token]);
   // Return statement.
+
   return (
     <>
       <MetaTags
@@ -73,18 +72,20 @@ const personalInformations = () => {
                     gender: parseInt(userInfo.user_details.profile.gender),
                     country_id:
                       parseInt(userInfo.user_details.profile.country_id) || "",
-                    phone: userInfo.user_details.profile.phone || "",
+                    phone: userInfo.user_details.phone || "",
+                    currency:
+                      userInfo.user_details.profile.currency.symbol_native ||
+                      "",
+                    code: userInfo.user_details.code_phone || "",
                   }}
                   //validationSchema={SignupSchema}
                   onSubmit={async (values) => {
                     setValidationsErrors({});
+
                     try {
                       const res = await API.post(
                         "api/profiles/step_one",
-                        {
-                          ...values,
-                          phone: values.phone && code + values.phone,
-                        },
+                        { ...values, code_phone: values.code },
                         {
                           headers: {
                             Authorization: `Bearer ${token}`,
@@ -368,52 +369,104 @@ const personalInformations = () => {
                                 <label className="label-block" htmlFor="phone">
                                   رقم الهاتف
                                 </label>
-                                <div className="registerPhone prof">
+                                <div
+                                  style={{
+                                    borderColor:
+                                      validationsErrors &&
+                                      anyone(
+                                        validationsErrors.phone,
+                                        validationsErrors.code_phone
+                                      ) &&
+                                      " red",
+                                  }}
+                                  className={"registerPhone prof "}
+                                >
                                   <Field
                                     id="phone"
                                     name="phone"
                                     onKeyUp={setValidationsErrorsHandle}
                                     placeholder="رقم الهاتف..."
-                                    className={
-                                      "timlands-inputs " +
-                                      (validationsErrors &&
-                                        validationsErrors.phone &&
-                                        " has-error")
-                                    }
+                                    className={"timlands-inputs "}
                                     autoComplete="off"
                                   />
-                                  <Select
-                                    defaultValue="+1"
-                                    className="selectCode prof"
-                                    onChange={handleChange}
+                                  <Field
+                                    as="select"
+                                    id="code"
+                                    name="code"
+                                    style={{ border: "none", width: 100 }}
+                                    className={"timlands-inputs "}
                                   >
-                                    {codes.map((code) => {
-                                      if (code.code_phone) {
-                                        return (
-                                          <Select.Option
-                                            key={code.code_phone}
-                                            value={code.code_phone}
-                                          >
-                                            {code.code_phone}
-                                          </Select.Option>
-                                        );
-                                      }
-                                    })}
-                                  </Select>
+                                    <option value="">كود</option>
+                                    {codes.map((e: any) => (
+                                      <option key={e.id} value={e.code_phone}>
+                                        {e.code_phone}
+                                      </option>
+                                    ))}
+                                  </Field>
                                 </div>
-                                {validationsErrors && validationsErrors.phone && (
-                                  <div style={{ overflow: "hidden" }}>
-                                    <motion.div
-                                      initial={{ y: -70, opacity: 0 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      className="timlands-form-note form-note-error"
-                                    >
-                                      <p className="text">
-                                        {validationsErrors.phone[0]}
-                                      </p>
-                                    </motion.div>
-                                  </div>
-                                )}
+                                {validationsErrors &&
+                                  anyone(
+                                    validationsErrors.phone,
+                                    validationsErrors.code_phone
+                                  ) && (
+                                    <div style={{ overflow: "hidden" }}>
+                                      <motion.div
+                                        initial={{ y: -70, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        className="timlands-form-note form-note-error"
+                                      >
+                                        <p className="text">
+                                          {which(
+                                            validationsErrors.phone,
+                                            validationsErrors.code_phone
+                                          )}
+                                        </p>
+                                      </motion.div>
+                                    </div>
+                                  )}
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="timlands-form">
+                                <label
+                                  className="label-block"
+                                  htmlFor="currency"
+                                >
+                                  اختر عملة
+                                </label>
+                                <Field
+                                  as="select"
+                                  id="currency"
+                                  name="currency"
+                                  className={
+                                    "timlands-inputs " +
+                                    (validationsErrors &&
+                                      validationsErrors.currency &&
+                                      " has-error")
+                                  }
+                                >
+                                  <option value="">الافتراضية</option>
+
+                                  {currencies.map((e: any) => (
+                                    <option key={e.id} value={e.symbol_native}>
+                                      {e.code}
+                                    </option>
+                                  ))}
+                                </Field>
+                                {validationsErrors &&
+                                  validationsErrors.country_id && (
+                                    <div style={{ overflow: "hidden" }}>
+                                      <motion.div
+                                        initial={{ y: -70, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        className="timlands-form-note form-note-error"
+                                      >
+                                        <p className="text">
+                                          {validationsErrors.country_id[0]}
+                                        </p>
+                                      </motion.div>
+                                    </div>
+                                  )}
                               </div>
                             </div>
                           </div>
@@ -442,6 +495,20 @@ const personalInformations = () => {
       </div>
     </>
   );
+};
+const which = (one, two) => {
+  if (one) {
+    return one[0];
+  } else {
+    return two[0];
+  }
+};
+const anyone = (one, two) => {
+  if (one || two) {
+    return true;
+  } else {
+    return false;
+  }
 };
 export default personalInformations;
 personalInformations.getLayout = function getLayout(page: any): ReactElement {

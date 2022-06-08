@@ -8030,3 +8030,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   align-items: center !important;
   height: 100% !important;
 }
+.descriptionInputHold {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  border-color: rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  &:focus {
+    outline: none;
+  }
+}

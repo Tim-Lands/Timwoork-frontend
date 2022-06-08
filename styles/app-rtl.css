@@ -11631,4 +11631,16 @@ h3 {
           align-items: center !important;
   height: 100% !important;
 }
+
+.descriptionInputHold {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  border-color: rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.descriptionInputHold:focus {
+  outline: none;
+}
 /*# sourceMappingURL=app-rtl.css.map */

@@ -12,6 +12,7 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ConfigProvider } from "antd";
 import { PusherProvider } from "../contexts/pusherContext";
+import { CurrencyProvider } from "../contexts/currencyContext";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
 };
@@ -32,7 +33,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <Provider store={store}>
         <ConfigProvider direction="rtl">
           <PusherProvider>
-            {getLayout(<Component {...pageProps} />)}
+            <CurrencyProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </CurrencyProvider>
           </PusherProvider>
         </ConfigProvider>
       </Provider>

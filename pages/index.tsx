@@ -10,7 +10,7 @@ import Head from "next/head";
 import { PRIMARY } from "../styles/variables";
 import Link from "next/link";
 function Home() {
-  // const { data: userInfo }: any = useSWR("api/me");
+  const { data: userInfo }: any = useSWR("api/me");
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=9&popular"
   );
@@ -79,7 +79,7 @@ function Home() {
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
-      {false && (
+      {!userInfo?.user_details?.phone && userInfo && (
         <Link href="/user/personalInformations">
           <Alert
             message="برجاء اضافة رقم الهاتف"
