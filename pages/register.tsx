@@ -102,7 +102,7 @@ const Register = (): ReactElement => {
           password_confirmation: "",
           username: "",
           phone: ``,
-          code: "",
+          code_phone: "",
         }}
         onSubmit={async (values) => {
           setRegisterLoading(true);
@@ -235,7 +235,18 @@ const Register = (): ReactElement => {
                         <label className="label-block" htmlFor="phone">
                           رقم الهاتف
                         </label>
-                        <div className="registerPhone">
+                        <div
+                          style={{
+                            borderColor:
+                              validationsErrors &&
+                              anyone(
+                                validationsErrors.phone,
+                                validationsErrors.code_phone
+                              ) &&
+                              " red",
+                          }}
+                          className="registerPhone"
+                        >
                           <Field
                             id="phone"
                             name="phone"
@@ -251,8 +262,8 @@ const Register = (): ReactElement => {
                           />
                           <Field
                             as="select"
-                            id="code"
-                            name="code"
+                            id="code_phone"
+                            name="code_phone"
                             style={{ border: "none", width: 100 }}
                             className={"timlands-inputs "}
                           >
@@ -264,17 +275,26 @@ const Register = (): ReactElement => {
                             ))}
                           </Field>
                         </div>
-                        {validationsErrors && validationsErrors.phone && (
-                          <div style={{ overflow: "hidden" }}>
-                            <motion.div
-                              initial={{ y: -70, opacity: 0 }}
-                              animate={{ y: 0, opacity: 1 }}
-                              className="timlands-form-note form-note-error"
-                            >
-                              <p className="text">{validationsErrors.phone}</p>
-                            </motion.div>
-                          </div>
-                        )}
+                        {validationsErrors &&
+                          anyone(
+                            validationsErrors.phone,
+                            validationsErrors.code_phone
+                          ) && (
+                            <div style={{ overflow: "hidden" }}>
+                              <motion.div
+                                initial={{ y: -70, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                className="timlands-form-note form-note-error"
+                              >
+                                <p className="text">
+                                  {which(
+                                    validationsErrors.phone,
+                                    validationsErrors.code_phone
+                                  )}
+                                </p>
+                              </motion.div>
+                            </div>
+                          )}
                       </div>
                     </div>
                     <div className="col-lg-6">
@@ -482,5 +502,18 @@ const Register = (): ReactElement => {
     </>
   );
 };
-
+const which = (one, two) => {
+  if (one) {
+    return one[0];
+  } else {
+    return two[0];
+  }
+};
+const anyone = (one, two) => {
+  if (one || two) {
+    return true;
+  } else {
+    return false;
+  }
+};
 export default Register;
