@@ -105,9 +105,13 @@ function PostInner({
     };
     return (
         <div className={"timlands-post-inner" + sizeClass()}>
-            <div
-                style={{ backgroundImage: thumbnailUrl }}
-                className="post-item-img"></div>
+            <Link href={`/p/${slug}`}>
+                <a>
+                    <div
+                        style={{ backgroundImage: thumbnailUrl }}
+                        className="post-item-img"></div>
+                </a>
+            </Link>
             <div className="post-item-content">
                 <h3 className="title">
                     <a href={`/p/${slug}`}>{title}</a>
