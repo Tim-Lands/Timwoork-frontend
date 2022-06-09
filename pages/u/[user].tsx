@@ -8,7 +8,7 @@ import useSWR from "swr";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import API from "../../config";
-import Post from "@/components/Post/Post";
+import PostInner from "@/components/Post/PostInner";
 
 const User = ({ query, stars }) => {
   // Return statement.
@@ -195,12 +195,6 @@ const User = ({ query, stars }) => {
                           </p>
                         </div>
                       </div>
-                      {/* <div className="col-sm-4">
-                                            <div className="content-text-item">
-                                                <h3 className="text-label">تاريخ الميلاد</h3>
-                                                <p className="text-value">{User.profile && User.profile.date_of_birth == null ? '' : userInfo.data.profile && userInfo.data.profile.date_of_birth}</p>
-                                            </div>
-                                        </div> */}
                     </div>
                   </div>
                 </div>
@@ -225,8 +219,9 @@ const User = ({ query, stars }) => {
                       User.profile.profile_seller.products &&
                       User.profile.profile_seller.products.map((e: any) => (
                         <div key={e.id} className={"col-sm-6 col-lg-4"}>
-                          <Post
-                            size="small2"
+                          <PostInner
+                            avatar={`/avatar.png`}
+                            size="small"
                             title={e.title}
                             author={
                               e.profile_seller &&

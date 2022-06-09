@@ -125,19 +125,40 @@ function PostInner({
                 <span>{author}</span>
               </a>
             </Link>
-          </li>
-          <li className="post-meta-rate">
-            {showStars().map((e: any) => (
-              <span key={e.id}>{e.name}</span>
-            ))}
+            <div className="post-item-content">
+              <h3 className="title">
+                <a href={`/p/${slug}`}>{title}</a>
+              </h3>
+              <ul className="nav post-meta">
+                <li className="post-meta-user">
+                  <Link href={`/u/${username}`}>
+                    <a>
+                      <Image
+                        width={20}
+                        height={20}
+                        src={avatar}
+                        alt={username}
+                      />{" "}
+                      <span>{author}</span>
+                    </a>
+                  </Link>
+                </li>
+                <li className="post-meta-rate">
+                  {showStars().map((e: any) => (
+                    <span key={e.id}>{e.name}</span>
+                  ))}
+                </li>
+              </ul>
+            </div>
+            <div className="post-item-footer">
+              <p className="post-meta-price">السعر من: {price}$</p>
+              <p className="post-meta-bayer">
+                {(buyers == 0 ? buyers : buyers + " اشتروا هذا") ||
+                  "اشتري الآن"}
+              </p>
+            </div>
           </li>
         </ul>
-      </div>
-      <div className="post-item-footer">
-        <p className="post-meta-price">السعر من: {price}$</p>
-        <p className="post-meta-bayer">
-          {(buyers == 0 ? buyers : buyers + " اشتروا هذا") || "اشتري الآن"}
-        </p>
       </div>
     </div>
   );

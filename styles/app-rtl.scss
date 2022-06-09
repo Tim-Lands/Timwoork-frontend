@@ -51,7 +51,6 @@
   display: flex;
   border-radius: 50%;
   align-items: center;
-  align-content: center;
   justify-content: center;
 
   &.small-size {
@@ -5344,11 +5343,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-
   &.sub-modal {
     position: absolute;
   }
-
   &::after {
     content: "";
     position: absolute;
@@ -6962,7 +6959,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     margin-right: auto;
   }
 }
-
+.transition-all {
+  transition: all 0.3s;
+}
 // Category Item
 .category-items {
   overflow: hidden;
@@ -7108,7 +7107,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 .timland-hero {
   position: relative;
-
   .timlands-hero-carousel {
     .timlands-hero-img {
       height: 100vh;
@@ -7116,6 +7114,8 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       max-height: 700px;
       background-repeat: no-repeat;
       background-position: center;
+      background-clip: content-box;
+      background-attachment: fixed;
       position: relative;
       .timlands-hero-text {
         display: block;
@@ -7254,6 +7254,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
           border-radius: 7px;
           box-shadow: 3px 3px 17px rgba(0, 0, 0, 0.055);
           top: 37px;
+          z-index: 800;
 
           .menu-list-dropdown {
             list-style: none;
@@ -7275,11 +7276,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
                   .icon-item {
                     width: 40px;
                     height: 40px;
-                    color: #777;
+                    color: #555;
                     background-color: #f7f7f7;
                     transition: all 0.3s;
 
                     .material-icons {
+                      margin-top: -1px;
+                      margin-left: -1px;
                       font-size: 17px;
                     }
                   }
@@ -7318,11 +7321,16 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         }
       }
     }
+    // position: fixed;
+    z-index: 9000;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding-inline: 0 110px;
+    padding-right: 120px;
     &.is-fixed-nav {
       background-color: #fff;
       transition: all 0.3s;
-      padding-inline: 0 110px;
-      padding-right: 120px;
       .app-new-nav {
         > li {
           a {
@@ -8035,69 +8043,32 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
-.registerPhone {
-  display: flex;
-  width: 100%;
+.nav-subcategories-list {
+  position: absolute;
+  width: 650px;
+  right: 0;
+  z-index: 2000;
   background-color: #fff;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-weight: 500;
-  outline: none;
-  transition: all 0.3s;
-  &.prof {
-    input {
-      border: none;
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 0px;
+  top: 37px;
+  border-radius: 7px;
+  box-shadow: 2p 4px 17px rgba(0, 0, 0, 0.041);
+  overflow: hidden;
+  .nav-subcategories-list-content {
+    padding: 15px;
+  }
+  .list-subcategories-withicons {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      a {
+        color: #555;
+        font-size: 13px;
+        font-weight: 200;
+        display: block;
+        padding: 10px 0;
+      }
     }
-  }
-  .innerPhone {
-    border: none;
-    width: 100%;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-right: 19px;
-    padding-block: 8px;
-    &:focus {
-      border: none;
-      outline: none;
-    }
-  }
-  .selectCode {
-    width: 100px;
-    &:focus {
-      border: none;
-    }
-  }
-  &::placeholder {
-    color: #ddd;
-  }
-  &:disabled {
-    opacity: 0.3;
-  }
-  &:hover {
-    border: 1px solid #ccc;
-  }
-  &:focus {
-    transition: all 0.3s;
-    outline: none;
-    border: 1px solid $primary;
-    &::placeholder {
-      color: #ccc;
-    }
-  }
-
-  @keyframes formscale {
-    0% {
-      transform: scale(1.08);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  &.has-error {
-    animation: formscale 0.4s;
-    border: 1px solid rgb(240, 53, 53);
   }
 }
 .ant-select-selector {

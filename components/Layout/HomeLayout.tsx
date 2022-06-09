@@ -1,8 +1,8 @@
-import Navbar from "@/components/NewIndex/Header/Navbar";
+import Navbar from "@/components/Navigation/Navbar";
 import { Spin } from "antd";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import Footer from "../NewIndex/Footer/Footer";
+import Footer from "../Footer/index";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import { SWRConfig } from "swr";

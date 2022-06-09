@@ -165,17 +165,17 @@ function whichColor(num) {
     default:
       return "transparent";
     case 0:
-      return "#222222";
+      return "#dc6d08";
     case 1:
-      return "#18683d";
+      return "#023813";
     case 2:
-      return "#7b1110";
+      return "#822921";
     case 3:
-      return "#aa3d58";
+      return "#b3455e";
     case 4:
-      return "#222222";
+      return "#dc6d08";
     case 5:
-      return "#18683d";
+      return "#023813";
   }
 }
 export default Hero;

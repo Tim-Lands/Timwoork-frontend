@@ -10,7 +10,7 @@ function Community() {
                         <a className='dropd-item'>
                             <div className="dropd-item-img">
                                 <span className='icon-item link-circular-button'>
-                                    <span className="material-icons material-icons-outlined">shopping_cart</span>
+                                    <span className="material-icons material-icons-outlined">flag_circle</span>
                                 </span>
                             </div>
                             <div className="dropd-item-content">
@@ -25,11 +25,11 @@ function Community() {
                         <a className='dropd-item'>
                             <div className="dropd-item-img">
                                 <span className='icon-item link-circular-button'>
-                                    <span className="material-icons material-icons-outlined">shopping_cart</span>
+                                    <span className="material-icons material-icons-outlined">account_balance_wallet</span>
                                 </span>
                             </div>
                             <div className="dropd-item-content">
-                                <h4 className="title">المسابقات</h4>
+                                <h4 className="title">المشاريع</h4>
                                 <p className="text">هذا النص شرح للرابط</p>
                             </div>
                         </a>
@@ -40,11 +40,11 @@ function Community() {
                         <a className='dropd-item'>
                             <div className="dropd-item-img">
                                 <span className='icon-item link-circular-button'>
-                                    <span className="material-icons material-icons-outlined">shopping_cart</span>
+                                    <span className="material-icons material-icons-outlined">photo_library</span>
                                 </span>
                             </div>
                             <div className="dropd-item-content">
-                                <h4 className="title">المسابقات</h4>
+                                <h4 className="title">الاعمال</h4>
                                 <p className="text">هذا النص شرح للرابط</p>
                             </div>
                         </a>
@@ -55,11 +55,11 @@ function Community() {
                         <a className='dropd-item'>
                             <div className="dropd-item-img">
                                 <span className='icon-item link-circular-button'>
-                                    <span className="material-icons material-icons-outlined">shopping_cart</span>
+                                    <span className="material-icons material-icons-outlined">edit_note</span>
                                 </span>
                             </div>
                             <div className="dropd-item-content">
-                                <h4 className="title">المسابقات</h4>
+                                <h4 className="title">المدونة</h4>
                                 <p className="text">هذا النص شرح للرابط</p>
                             </div>
                         </a>

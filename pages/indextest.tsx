@@ -1,3 +1,8 @@
+// import Hero from "@/components/NewIndex/Header/Hero";
+// import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
+// import Head from "next/head";
+// import React, { ReactElement } from "react";
+
 import Hero from "@/components/NewIndex/Header/Hero";
 import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
 import Head from "next/head";
@@ -52,7 +57,6 @@ function index({ products, latestProducts, categories, popularProducts }) {
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
       <Hero />
-
       <VideoAside />
 
       <Categories

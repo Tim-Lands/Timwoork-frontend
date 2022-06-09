@@ -42,15 +42,8 @@ function Navbar({ dark = false }) {
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
   const { data: userInfo }: any = useSWR("api/me");
-
-  const user_details = userInfo?.user_details || null;
-  console.log(userInfo);
-  console.log(user_details);
+  var hello = "";
   const handleScroll = () => {
-    // const currentScrollPos: any = (typeof window === "undefined") ?? window.pageYOffset;
-    // const visible = prevScrollpos > currentScrollPos;
-    // setrtPrevScrollpos(currentScrollPos)
-
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
   };
   useEffect(() => {
@@ -233,10 +226,56 @@ function Navbar({ dark = false }) {
       setMessages(messagesData?.data?.data?.data);
       setNotifications(notificationsData?.data?.data?.data);
       setSentinel({ ...sentinel });
-    } catch (err) {
-      console.log(err);
+    } catch {
+      () => {};
     }
   };
+
+  //   console.log(messages)
+  //   return (
+  //       <>
+  //           {isLanguageVisible && <Language setIsConfirmText={setIsLanguageVisible} />}
+  //           {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
+  //           <nav className={'app-new-navbar ' + (!visible ? ' is-fixed-nav' : '')}>
+  //               <div className="app-new-logo d-flex">
+  //                   {!visible ? <img src="/logo6.png" alt="" /> : <img src="/logo7.png" alt="" />}
+  //                   {!visible &&
+  //                       <div className="new-search-bar">
+  //                           <div className="new-search-bar-form">
+  //                               <span className="new-searchbar">
+  //                                   <FaSearch />
+  //                               </span>
+  //                               <input type="text" onKeyDown={(e) =>
+  //                                   e.keyCode === 13 &&
+  //                                   router.push(`/products?query=${query}`)} onChange={e => setQuery(e.target.value)} placeholder='البحث في الموقع...' className='form-serach-nav' />
+  //                               <button className='btn butt-xs butt-primary2' onClick={() => router.push(`/products?query=${query}`)}>البحث</button>
+  //                           </div>
+  //                       </div>
+  //                   }
+  //               </div>
+  //               <ul className="app-new-nav nav">
+  //                   <li className='link-item'>
+  //                       <Link href={'/products'}>
+  //                           <a>
+  //                               <span className="material-icons material-icons-outlined">shopping_cart</span> تصفح الخدمات
+  //                           </a>
+  //                       </Link>
+  //                   </li>
+  //                   <li className='link-item'>
+  //                       <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
+  //                           <span className="material-icons material-icons-outlined">backup_table</span> أقسام تيم وورك <span className="material-icons material-icons-outlined expand-more">expand_more</span>
+  //                       </a>
+  //                       {showCommunityMenu && <Community />}
+  //                   </li>
+  //                   {userInfo ? <>
+
+  //     setMessages(messagesData?.data?.data?.data);
+  //     setNotifications(notificationsData?.data?.data?.data);
+  //     setSentinel({ ...sentinel });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   return (
     <nav className="app-new-navbar-cont">
       {isLanguageVisible && (

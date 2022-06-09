@@ -2817,8 +2817,6 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -10330,6 +10328,11 @@ h3 {
   margin-right: auto;
 }
 
+.transition-all {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
 .category-items {
   overflow: hidden;
   width: 200px;
@@ -10522,6 +10525,8 @@ h3 {
   max-height: 700px;
   background-repeat: no-repeat;
   background-position: center;
+  background-clip: content-box;
+  background-attachment: fixed;
   position: relative;
 }
 
@@ -10593,6 +10598,12 @@ h3 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding-right: 120px;
+  z-index: 9000;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding-inline: 0 110px;
   padding-right: 120px;
 }
 
@@ -10690,6 +10701,7 @@ h3 {
   -webkit-box-shadow: 3px 3px 17px rgba(0, 0, 0, 0.055);
           box-shadow: 3px 3px 17px rgba(0, 0, 0, 0.055);
   top: 37px;
+  z-index: 800;
 }
 
 .app-new-navbar-cont .app-new-navbar .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown {
@@ -10719,13 +10731,15 @@ h3 {
 .app-new-navbar-cont .app-new-navbar .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a .dropd-item-img .icon-item {
   width: 40px;
   height: 40px;
-  color: #777;
+  color: #555;
   background-color: #f7f7f7;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
 
 .app-new-navbar-cont .app-new-navbar .app-new-nav > li .nav-menu-dropdown .menu-list-dropdown li a .dropd-item-img .icon-item .material-icons {
+  margin-top: -1px;
+  margin-left: -1px;
   font-size: 17px;
 }
 
@@ -10759,8 +10773,6 @@ h3 {
   background-color: #fff;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-  padding-inline: 0 110px;
-  padding-right: 120px;
 }
 
 .app-new-navbar-cont .app-new-navbar.is-fixed-nav .app-new-nav > li a {
@@ -11632,110 +11644,35 @@ h3 {
   color: #000;
 }
 
-.registerPhone {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
+.nav-subcategories-list {
+  position: absolute;
+  width: 650px;
+  right: 0;
+  z-index: 2000;
   background-color: #fff;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-weight: 500;
-  outline: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  top: 37px;
+  border-radius: 7px;
+  -webkit-box-shadow: 2p 4px 17px rgba(0, 0, 0, 0.041);
+          box-shadow: 2p 4px 17px rgba(0, 0, 0, 0.041);
+  overflow: hidden;
 }
 
-.registerPhone.prof input {
-  border: none;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0px;
+.nav-subcategories-list .nav-subcategories-list-content {
+  padding: 15px;
 }
 
-.registerPhone .innerPhone {
-  border: none;
-  width: 100%;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding-right: 19px;
-  padding-block: 8px;
+.nav-subcategories-list .list-subcategories-withicons {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.registerPhone .innerPhone:focus {
-  border: none;
-  outline: none;
-}
-
-.registerPhone .selectCode {
-  width: 100px;
-}
-
-.registerPhone .selectCode:focus {
-  border: none;
-}
-
-.registerPhone::-webkit-input-placeholder {
-  color: #ddd;
-}
-
-.registerPhone:-ms-input-placeholder {
-  color: #ddd;
-}
-
-.registerPhone::-ms-input-placeholder {
-  color: #ddd;
-}
-
-.registerPhone::placeholder {
-  color: #ddd;
-}
-
-.registerPhone:disabled {
-  opacity: 0.3;
-}
-
-.registerPhone:hover {
-  border: 1px solid #ccc;
-}
-
-.registerPhone:focus {
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  outline: none;
-  border: 1px solid #475c80;
-}
-
-.registerPhone:focus::-webkit-input-placeholder {
-  color: #ccc;
-}
-
-.registerPhone:focus:-ms-input-placeholder {
-  color: #ccc;
-}
-
-.registerPhone:focus::-ms-input-placeholder {
-  color: #ccc;
-}
-
-.registerPhone:focus::placeholder {
-  color: #ccc;
-}
-
-@keyframes formscale {
-  0% {
-    -webkit-transform: scale(1.08);
-            transform: scale(1.08);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-}
-
-.registerPhone.has-error {
-  -webkit-animation: formscale 0.4s;
-          animation: formscale 0.4s;
-  border: 1px solid #f03535;
+.nav-subcategories-list .list-subcategories-withicons li a {
+  color: #555;
+  font-size: 13px;
+  font-weight: 200;
+  display: block;
+  padding: 10px 0;
 }
 
 .ant-select-selector {

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Subcategories from "../DropdowModal/Subcategories";
 
 function Subnavbar({ visible }) {
+  const [isSubcategoriesToggle, setIsSubcategoriesToggle] = useState(false);
   const categories = {
     data: [
       {
@@ -53,8 +55,17 @@ function Subnavbar({ visible }) {
         <ul className="subnavbar-nav nav">
           {categories &&
             categories.data.map((e: any) => (
-              <li key={e.id}>
+              <li
+                key={e.id}
+                onMouseEnter={() => {
+                  setIsSubcategoriesToggle(true);
+                }}
+                onMouseLeave={() => {
+                  setIsSubcategoriesToggle(false);
+                }}
+              >
                 <a href={e.to}>{e.name_ar}</a>
+                {isSubcategoriesToggle && <Subcategories />}
               </li>
             ))}
         </ul>
