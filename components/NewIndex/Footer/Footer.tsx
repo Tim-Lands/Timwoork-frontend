@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { FaTiktok, FaFacebook, FaYoutube, FaTwitter, FaInstagram, FaTelegram, FaGlobe, FaDollarSign } from "react-icons/fa";
 import Currency from '@/components/NewIndex/DropdowModal/Currency'
 import Language from '@/components/NewIndex/DropdowModal/Language'
+import { Tooltip } from 'antd';
 
 function Footer() {
     const [isCurrencyVisible, setIsCurrencyVisible] = useState(false)
@@ -14,7 +15,7 @@ function Footer() {
             <div className='footer-inner'>
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-3 col-sm-6 p-0">
+                        <div className="col-lg-4 col-sm-6 p-0">
                             <div className="footer-item">
                                 <h3 className="title">
                                     الخدمات الأكثر شعبية
@@ -40,25 +41,28 @@ function Footer() {
                                             <a>التصنيف الرابع</a>
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link href={'/'}>
-                                            <a>التصنيف الخامس</a>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href={'/'}>
-                                            <a>التصنيف الرابع</a>
-                                        </Link>
-                                    </li>
                                 </ul>
-                            </div>
-                            <div className="payments-footer">
-                                <img src="/payments.png" className='pays' alt="" />
-                                <img src="/ccp.png" alt="" className='ccp' />
-                                <img src="/wise1.png" alt="" className='wise' />
+                                <div className="payments-me">
+                                    <h4 className="title">وسائل الدفع</h4>
+                                    <Tooltip title='الفيزا كارد'>
+                                        <img src="/png1.png" alt="" height={38} className='mx-1' />
+                                    </Tooltip>
+                                    <Tooltip title='الماستر كارد'>
+                                        <img src="/png2.png" alt="" height={38} className='mx-1' />
+                                    </Tooltip>
+                                    <Tooltip title='الوايز'>
+                                        <img src="/png3.png" alt="" height={30} className='mx-1' />
+                                    </Tooltip>
+                                    <Tooltip title='البايبال'>
+                                        <img src="/png4.png" alt="" height={38} className='mx-1' />
+                                    </Tooltip>
+                                    <Tooltip title='بريد الجزائر'>
+                                        <img src="/ccp.png" alt="" height={30} className='mx-1' />
+                                    </Tooltip>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-sm-6 p-0">
+                        <div className="col-lg-2 col-sm-6 p-0">
                             <div className="footer-item">
                                 <h3 className="title">
                                     التصنيفات
@@ -200,55 +204,55 @@ function Footer() {
                             </ul>
                             <ul className="socials">
                                 <li>
-                                    <a 
-                                    href=""             
-                                    rel="noreferrer"
-                                    target="_blank"
+                                    <a
+                                        href=""
+                                        rel="noreferrer"
+                                        target="_blank"
                                     >
                                         <FaTiktok />
                                     </a>
                                 </li>
                                 <li>
-                                    <a 
-                                    href=""             
-                                    rel="noreferrer"
-                                    target="_blank"
+                                    <a
+                                        href=""
+                                        rel="noreferrer"
+                                        target="_blank"
                                     >
                                         <FaFacebook />
                                     </a>
                                 </li>
                                 <li>
-                                    <a 
-                                    href=""             
-                                    rel="noreferrer"
-                                    target="_blank"
+                                    <a
+                                        href=""
+                                        rel="noreferrer"
+                                        target="_blank"
                                     >
                                         <FaYoutube />
                                     </a>
                                 </li>
                                 <li>
-                                    <a 
-                                    href=""             
-                                    rel="noreferrer"
-                                    target="_blank"
+                                    <a
+                                        href=""
+                                        rel="noreferrer"
+                                        target="_blank"
                                     >
                                         <FaInstagram />
                                     </a>
                                 </li>
                                 <li>
-                                    <a 
-                                    href=""             
-                                    rel="noreferrer"
-                                    target="_blank"
+                                    <a
+                                        href=""
+                                        rel="noreferrer"
+                                        target="_blank"
                                     >
                                         <FaTwitter />
                                     </a>
                                 </li>
                                 <li>
-                                    <a 
-                                    href=""             
-                                    rel="noreferrer"
-                                    target="_blank"
+                                    <a
+                                        href=""
+                                        rel="noreferrer"
+                                        target="_blank"
                                     >
                                         <FaTelegram />
                                     </a>

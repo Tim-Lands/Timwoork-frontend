@@ -1,4 +1,4 @@
-import CategoriesSlider from '@/components/NewIndex/CategoriesSlider'
+//import CategoriesSlider from '@/components/NewIndex/CategoriesSlider'
 import Hero from '@/components/NewIndex/Header/Hero'
 import VideoAside from '@/components/NewIndex/VideoSection/VideoAside'
 import Head from 'next/head'
@@ -20,54 +20,6 @@ import PostInner from '@/components/Post/PostInner'
 import PostsAside from '@/components/PostsAside'
 
 function index({ products, latestProducts, categories, popularProducts, productsCarousel }) {
-
-  console.log(productsCarousel)
-  const catData = [
-    {
-      id: 1,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741678/logo-design-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 2,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/ae11e2d45410b0eded7fba0e46b09dbd-1598561917003/wordpress-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 3,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/data-entry-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 4,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741664/illustration-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 5,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741668/seo-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 6,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741678/book-covers-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-    {
-      id: 7,
-      thumbnail: 'https://fiverr-res.cloudinary.com/q_auto,f_auto,w_550,dpr_1.0/v1/attachments/generic_asset/asset/055f758c1f5b3a1ab38c047dce553860-1598561741663/animated-explainer-2x.png',
-      name: 'التصميم الغرافيكي',
-      slug: "وصف التصنيف الرئيسي"
-    },
-  ]
-
-
   return (
     <>
       <Head>
@@ -102,9 +54,14 @@ function index({ products, latestProducts, categories, popularProducts, products
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
       <Hero />
-      <div className='container'>
+      {/* <div className='container'>
         <CategoriesSlider data={catData} title='التصنيفات الأكثر شعبية' isLoading={false} showAll={'المزيد...'} link={'/test'} />
-      </div>
+      </div> */}
+      <Categories
+        onClickCategory={(id) => router.push(`/products?categoryID=${id}`)}
+        href={`/products?categoryID=`}
+        categories={categories}
+      />
       <VideoAside />
 
       <Categories

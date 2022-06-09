@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
-import Post from "@/components/Post/Post";
 import { message, Result } from "antd";
+import PostInner from "../Post/PostInner";
 
 function index({ products, isError, isLoading, size }): ReactElement {
   if (isError) message.error("حدث خطأ أثناء جلب الخدمات");
@@ -62,9 +62,10 @@ function index({ products, isError, isLoading, size }): ReactElement {
         {products &&
           products.map((e: any) => (
             <div className={"col-md-" + size} key={e.id}>
-              <Post
+              <PostInner
                 size="small"
                 title={e.title}
+                avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
                 author={
                   e.profile_seller &&
                   e.profile_seller.profile.first_name +

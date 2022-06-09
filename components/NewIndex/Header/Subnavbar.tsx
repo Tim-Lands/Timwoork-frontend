@@ -1,7 +1,8 @@
-import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
+import Subcategories from '../DropdowModal/Subcategories'
 
 function Subnavbar() {
+    const [isSubcategoriesToggle, setIsSubcategoriesToggle] = useState(false)
     const categories = {
         data: [
             {
@@ -33,11 +34,10 @@ function Subnavbar() {
                 <ul className="subnavbar-nav nav">
                     {categories && categories.data.map((e: any) => (
                         <li key={e.id}>
-                            <Link href={`/`}>
-                                <a>
-                                    {e.name_ar}
-                                </a>
-                            </Link>
+                            <a onClick={() => setIsSubcategoriesToggle(!isSubcategoriesToggle)}>
+                                {e.name_ar}
+                            </a>
+                            {isSubcategoriesToggle && <Subcategories />}
                         </li>
                     ))}
                 </ul>

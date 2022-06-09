@@ -244,7 +244,7 @@ function Navbar() {
                     </li>
                     <li className='link-item'>
                         <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
-                            <span className="material-icons material-icons-outlined">backup_table</span> مجتمع تيم وورك <span className="material-icons material-icons-outlined expand-more">expand_more</span>
+                            <span className="material-icons material-icons-outlined">backup_table</span> أقسام تيم وورك <span className="material-icons material-icons-outlined expand-more">expand_more</span>
                         </a>
                         {showCommunityMenu && <Community />}
                     </li>

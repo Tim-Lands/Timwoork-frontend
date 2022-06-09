@@ -116,7 +116,13 @@ function PostInner({
                     <li className="post-meta-user">
                         <Link href={`/u/${username}`}>
                             <a>
-                                <Image width={20} height={20} src={avatar} /> <span>{author}</span>
+                                <Image 
+                                width={20} 
+                                height={20} 
+                                src={avatar} 
+                                alt={username} 
+                                
+                                /> <span>{author}</span>
                             </a>
                         </Link>
                     </li>
