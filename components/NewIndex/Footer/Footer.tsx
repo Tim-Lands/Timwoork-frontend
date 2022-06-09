@@ -26,7 +26,7 @@ function Footer() {
         <Language setIsConfirmText={setIsLanguageVisible} />
       )}
       <div>
-        <div className="footer-inner">
+        <div className="footer-inner" style={{ marginTop: 0 }}>
           <div className="container">
             <div className="row">
               <div className="col-lg-4 col-sm-6 p-0">
