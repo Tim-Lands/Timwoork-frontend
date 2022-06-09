@@ -42,7 +42,6 @@ function Navbar({ dark = false }) {
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
   const { data: userInfo }: any = useSWR("api/me");
-  var hello = "";
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
   };
