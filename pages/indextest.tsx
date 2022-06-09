@@ -1,25 +1,23 @@
-import Hero from '@/components/NewIndex/Header/Hero'
-import VideoAside from '@/components/NewIndex/VideoSection/VideoAside'
-import Head from 'next/head'
-import React, { ReactElement } from 'react'
+import Hero from "@/components/NewIndex/Header/Hero";
+import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
+import Head from "next/head";
+import React, { ReactElement } from "react";
 import router from "next/router";
 import Categories from "@/components/Categories";
-import LayoutHome from '@/components/NewIndex/Layout/LayoutHome'
+import LayoutHome from "@/components/NewIndex/Layout/LayoutHome";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import API from '../config'
+import API from "../config";
 // Import Swiper styles
 import "swiper/css";
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import 'swiper/css/autoplay';
-import PostInner from '@/components/Post/PostInner'
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "swiper/css/autoplay";
+import PostInner from "@/components/Post/PostInner";
 
 function index({ products, latestProducts, categories, popularProducts }) {
-
-
   return (
     <>
       <Head>
@@ -62,16 +60,20 @@ function index({ products, latestProducts, categories, popularProducts }) {
         href={`/products?categoryID=`}
         categories={categories}
       />
-      {
-        products &&
+      {products &&
         popularProducts &&
         latestProducts &&
         products.length !== 0 &&
         popularProducts.length !== 0 &&
         latestProducts.length !== 0 && (
           <>
-            <div className='container'>
-            <h1 className="title me-auto">الخدمات الأحدث</h1>
+            <div className="container ">
+              <h6
+                className="title me-auto mb-5 fw-bold"
+                style={{ fontSize: 19 }}
+              >
+                الخدمات الأحدث
+              </h6>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={0}
@@ -81,44 +83,54 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 breakpoints={{
-                  "@0.00": {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                  },
-                  "@0.75": {
-                    slidesPerView: 2,
-                    spaceBetween: 2,
-                  },
-                  "@1.00": {
+                  1000: {
                     slidesPerView: 3,
-                    spaceBetween: 3,
+                    spaceBetween: 15,
                   },
-                  "@1.50": {
-                    slidesPerView: 4,
-                    spaceBetween: 4,
+                  770: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                  },
+                  600: {
+                    slidesPerView: 1,
+                    spaceBetween: 15,
                   },
                 }}
                 className="mySwiper"
               >
-                {latestProducts && latestProducts.data.map((e: any) => (
-                  <SwiperSlide key={e.id}>
-                    <PostInner
-                      title={e.title}
-                      author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                      rate={e.ratings_avg_rating}
-                      username={e.profile_seller && e.profile_seller.profile.user.username}
-                      price={e.price}
-                      slug={e.slug}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                      avatar='/avatar2.jpg'
-                    />
-                  </SwiperSlide>
-                ))}
+                {latestProducts &&
+                  latestProducts.data.map((e: any) => (
+                    <SwiperSlide key={e.id}>
+                      <PostInner
+                        title={e.title}
+                        author={
+                          e.profile_seller &&
+                          e.profile_seller.profile.first_name +
+                            " " +
+                            e.profile_seller.profile.last_name
+                        }
+                        rate={e.ratings_avg_rating}
+                        username={
+                          e.profile_seller &&
+                          e.profile_seller.profile.user.username
+                        }
+                        price={e.price}
+                        slug={e.slug}
+                        thumbnail={e.full_path_thumbnail}
+                        buyers={e.count_buying}
+                        avatar="/avatar2.jpg"
+                      />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </div>
-            <div className='container'>
-            <h1 className="title me-auto">الخدمات الأكثر مبيعًا</h1>
+            <div className="container " style={{ marginBlock: 90 }}>
+              <h6
+                className="title me-auto mb-5 fw-bold"
+                style={{ fontSize: 19 }}
+              >
+                الخدمات الأكثر مبيعًا
+              </h6>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={0}
@@ -128,44 +140,54 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 breakpoints={{
-                  "@0.00": {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                  },
-                  "@0.75": {
-                    slidesPerView: 2,
-                    spaceBetween: 2,
-                  },
-                  "@1.00": {
+                  1000: {
                     slidesPerView: 3,
-                    spaceBetween: 3,
+                    spaceBetween: 15,
                   },
-                  "@1.50": {
-                    slidesPerView: 4,
-                    spaceBetween: 4,
+                  770: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                  },
+                  600: {
+                    slidesPerView: 1,
+                    spaceBetween: 15,
                   },
                 }}
                 className="mySwiper"
               >
-                {products && products.data.map((e: any) => (
-                  <SwiperSlide key={e.id}>
-                    <PostInner
-                      title={e.title}
-                      author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                      rate={e.ratings_avg_rating}
-                      username={e.profile_seller && e.profile_seller.profile.user.username}
-                      price={e.price}
-                      slug={e.slug}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                      avatar='/avatar2.jpg'
-                    />
-                  </SwiperSlide>
-                ))}
+                {products &&
+                  products.data.map((e: any) => (
+                    <SwiperSlide key={e.id}>
+                      <PostInner
+                        title={e.title}
+                        author={
+                          e.profile_seller &&
+                          e.profile_seller.profile.first_name +
+                            " " +
+                            e.profile_seller.profile.last_name
+                        }
+                        rate={e.ratings_avg_rating}
+                        username={
+                          e.profile_seller &&
+                          e.profile_seller.profile.user.username
+                        }
+                        price={e.price}
+                        slug={e.slug}
+                        thumbnail={e.full_path_thumbnail}
+                        buyers={e.count_buying}
+                        avatar="/avatar2.jpg"
+                      />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </div>
-            <div className='container'>
-            <h1 className="title me-auto">الخدمات الأكثر شعبية</h1>
+            <div className="container ">
+              <h6
+                className="title me-auto mb-5 fw-bold"
+                style={{ fontSize: 19 }}
+              >
+                الخدمات الأكثر شعبية
+              </h6>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={0}
@@ -175,61 +197,65 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 breakpoints={{
-                  "@0.00": {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                  },
-                  "@0.75": {
-                    slidesPerView: 2,
-                    spaceBetween: 2,
-                  },
-                  "@1.00": {
+                  1000: {
                     slidesPerView: 3,
-                    spaceBetween: 3,
+                    spaceBetween: 15,
                   },
-                  "@1.50": {
-                    slidesPerView: 4,
-                    spaceBetween: 4,
+                  770: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                  },
+                  600: {
+                    slidesPerView: 1,
+                    spaceBetween: 15,
                   },
                 }}
-                className="mySwiper"
+                className="mySwiper "
               >
-                {popularProducts && popularProducts.data.map((e: any) => (
-                  <SwiperSlide key={e.id}>
-                    <PostInner
-                      title={e.title}
-                      author={e.profile_seller && (e.profile_seller.profile.first_name + ' ' + e.profile_seller.profile.last_name)}
-                      rate={e.ratings_avg_rating}
-                      username={e.profile_seller && e.profile_seller.profile.user.username}
-                      price={e.price}
-                      slug={e.slug}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                      avatar='/avatar2.jpg'
-                    />
-                  </SwiperSlide>
-                ))}
+                {popularProducts &&
+                  popularProducts.data.map((e: any) => (
+                    <SwiperSlide key={e.id}>
+                      <PostInner
+                        title={e.title}
+                        author={
+                          e.profile_seller &&
+                          e.profile_seller.profile.first_name +
+                            " " +
+                            e.profile_seller.profile.last_name
+                        }
+                        rate={e.ratings_avg_rating}
+                        username={
+                          e.profile_seller &&
+                          e.profile_seller.profile.user.username
+                        }
+                        price={e.price}
+                        slug={e.slug}
+                        thumbnail={e.full_path_thumbnail}
+                        buyers={e.count_buying}
+                        avatar="/avatar2.jpg"
+                      />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </div>
-          </>)
-      }
+          </>
+        )}
     </>
-  )
+  );
 }
 index.getLayout = function getLayout(page: any): ReactElement {
-  return <LayoutHome>{page}</LayoutHome>;
+  return <LayoutHome dark={true}>{page}</LayoutHome>;
 };
 export async function getServerSideProps() {
   try {
     const [categories, popularProducts, latestProducts, products] =
       await Promise.all([
-        API.get('api/get_categories'),
-        API.get('api/filter?paginate=9&popular'),
-        API.get('api/filter?paginate=9&sort[0]=created_at,desc'),
-        API.get('api/filter?paginate=9&sort=count_buying,desc'),
-        API.get('api/filter?paginate=9&sort=count_buying,desc'),
-
-      ])
+        API.get("api/get_categories"),
+        API.get("api/filter?paginate=9&popular"),
+        API.get("api/filter?paginate=9&sort[0]=created_at,desc"),
+        API.get("api/filter?paginate=9&sort=count_buying,desc"),
+        API.get("api/filter?paginate=9&sort=count_buying,desc"),
+      ]);
 
     // Pass data to the page via props
     return {
@@ -238,12 +264,11 @@ export async function getServerSideProps() {
         popularProducts: popularProducts?.data?.data,
         latestProducts: latestProducts?.data?.data,
         categories: categories?.data,
-        errorFetch: false
-      }
-    }
-
+        errorFetch: false,
+      },
+    };
   } catch (error) {
-    return { props: { errorFetch: true } }
+    return { props: { errorFetch: true } };
   }
 }
-export default index
+export default index;

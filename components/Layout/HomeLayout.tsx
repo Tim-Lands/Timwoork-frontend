@@ -1,8 +1,8 @@
-import Navbar from "@/components/Navigation/Navbar";
+import Navbar from "@/components/NewIndex/Header/Navbar";
 import { Spin } from "antd";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import Footer from "../Footer";
+import Footer from "../NewIndex/Footer/Footer";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import { SWRConfig } from "swr";
@@ -28,15 +28,14 @@ function Layout(props: any) {
     <SWRConfig
       value={{
         fetcher: async (url: string) => {
-
-          console.log(url)
+          console.log(url);
           return await API.get(url, {
             headers: { Authorization: `Bearer ${token}` },
           })
             .then((r: any) => r.data)
             .catch(() => {
               if (url == "api/me" && token) {
-                console.log('error in me api and cookies will be removed')
+                console.log("error in me api and cookies will be removed");
                 Cookies.remove("token");
                 if (typeof window !== undefined) {
                   localStorage.removeItem("token");

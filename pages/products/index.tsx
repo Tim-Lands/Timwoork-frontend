@@ -102,8 +102,7 @@ function Category() {
       if (type) {
         setFilterBased(type);
       }
-      if (query)
-        formik.setFieldValue('query', query)
+      if (query) formik.setFieldValue("query", query);
     }
   }, [isSubCategoryFetched]);
   useEffect(() => {
@@ -178,7 +177,9 @@ function Category() {
       const params = {
         paginate: 12,
         page: pageNumber,
-        like: `title,${query ? query : queryParams.query ? queryParams.query : ''}`,
+        like: `title,${
+          query ? query : queryParams.query ? queryParams.query : ""
+        }`,
         between: delevring ? `duration,${delevring}` : null,
         category:
           categoryID.length == 0
@@ -192,8 +193,8 @@ function Category() {
         subcategories: subcategoryID
           ? subcategoryID
           : queryParams.subcategoryID
-            ? queryParams.subcategoryID
-            : null,
+          ? queryParams.subcategoryID
+          : null,
       };
       const res = await API.get(
         `api/filter?${filterBased}&between=price,${minprice},${maxprice}`,
@@ -269,14 +270,14 @@ function Category() {
   const getQueryParams = (query) => {
     return query
       ? (/^[?#]/.test(query) ? query.slice(1) : query)
-        .split("&")
-        .reduce((params, param) => {
-          const [key, value] = param.split("=");
-          params[key] = value
-            ? decodeURIComponent(value.replace(/\+/g, " "))
-            : "";
-          return params;
-        }, {})
+          .split("&")
+          .reduce((params, param) => {
+            const [key, value] = param.split("=");
+            params[key] = value
+              ? decodeURIComponent(value.replace(/\+/g, " "))
+              : "";
+            return params;
+          }, {})
       : {};
   };
   //const { data: categories }: any = useSWR('api/get_categories')
@@ -537,8 +538,9 @@ function Category() {
                           <>
                             <div className="list-inner" key={e.id}>
                               <div
-                                className={`list-cat-item ${subCategoryDisplay[e.id]
-                                  }ed`}
+                                className={`list-cat-item ${
+                                  subCategoryDisplay[e.id]
+                                }ed`}
                                 onClick={() => toggleCateogryDisplay(e.id)}
                               >
                                 <span className="item-cat-label">
@@ -550,8 +552,9 @@ function Category() {
                               </div>
 
                               <div
-                                className={`filter-subcategories-list d-${subCategoryDisplay[e.id]
-                                  }`}
+                                className={`filter-subcategories-list d-${
+                                  subCategoryDisplay[e.id]
+                                }`}
                               >
                                 <div
                                   className="list-subcat-item"
