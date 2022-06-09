@@ -72,7 +72,12 @@ export default function UploadPicture({ token, avatarPicture }) {
         )}
         <p
           className="note"
-          style={{ color: "red", textAlign: "center", fontWeight: "bold" }}
+          style={{
+            color: "red",
+            textAlign: "center",
+            fontWeight: "bold",
+            marginTop: 10,
+          }}
         >
           يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2
           ميجابايت

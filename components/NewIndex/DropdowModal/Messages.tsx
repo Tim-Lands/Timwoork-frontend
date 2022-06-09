@@ -20,7 +20,7 @@ function Messages({ messages }) {
                         <ul className="popup-dropdown-content-list">
                             {messages?.map(message => (
                                 <li key={message?.id}>
-                                    <Link href={`/`}>
+                                    <Link href={`/conversations/${message.id}`}>
                                         <a className='new-popup-item'>
                                             <div className="new-popup-item-image">
                                                 <Image src={message?.members[0].profile.avatar_url} width={50} height={50} alt={``} />

@@ -65,7 +65,6 @@ function Profile() {
       router.push("/login");
     }
   }, []);
-
   if (userInfo && userInfo.user_details.profile.steps < 1) {
     return (
       <div className="row justify-content-md-center">
@@ -262,6 +261,28 @@ function Profile() {
                             <h3 className="text-label">الاسم الأخير</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.last_name}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="content-text-item">
+                            <h3 className="text-label">رقم الهاتف</h3>
+                            <p className="text-value">
+                              {userInfo.user_details.phone
+                                ? userInfo.user_details.code_phone +
+                                  userInfo.user_details.phone
+                                : "غير مكتمل"}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="col-sm-4">
+                          <div className="content-text-item">
+                            <h3 className="text-label">العملة</h3>
+                            <p className="text-value">
+                              {
+                                userInfo.user_details.profile.currency
+                                  .symbol_native
+                              }
                             </p>
                           </div>
                         </div>

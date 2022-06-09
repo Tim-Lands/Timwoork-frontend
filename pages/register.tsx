@@ -7,22 +7,17 @@ import { motion } from "framer-motion";
 import { GoogleLogin } from "react-google-login";
 import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { Badge, message, Tooltip, Select } from "antd";
+import { Badge, message, Tooltip } from "antd";
 
-const { Option } = Select;
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (): ReactElement => {
   const [passVisibled, setPassVisibled] = useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const [code, setCode] = useState("+1");
   const [codes, setCodes] = useState([]);
   const clearValidationHandle = () => {
     setValidationsErrors({});
-  };
-  const handleChange = (value: string) => {
-    setCode(value);
   };
   const onLoginSuccess = async (res) => {
     //أرسل هذا الريسبونس الى الباكند
@@ -80,13 +75,10 @@ const Register = (): ReactElement => {
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   useEffect(() => {
-    API.get("/api/get_countries").then((data) => {
+    API.get("/api/phone_codes").then((data) => {
       setCodes(() => {
-        const newArray = data.data.data;
-        newArray.sort((a, b) => {
-          return a?.code_phone?.split("+")[1] - b?.code_phone?.split("+")[1];
-        });
-        return newArray;
+        console.log(data.data.data);
+        return data.data.data;
       });
     });
     if (token) {
@@ -110,16 +102,14 @@ const Register = (): ReactElement => {
           password_confirmation: "",
           username: "",
           phone: ``,
+          code_phone: "",
         }}
         onSubmit={async (values) => {
           setRegisterLoading(true);
           setValidationsErrors({});
           try {
             // Start loading.
-            const res = await API.post("api/register", {
-              ...values,
-              phone: values.phone && code + values.phone,
-            });
+            const res = await API.post("api/register", values);
             // Authentication was successful.
             if (res.status === 200) {
               setRegisterLoading(false);
@@ -245,7 +235,18 @@ const Register = (): ReactElement => {
                         <label className="label-block" htmlFor="phone">
                           رقم الهاتف
                         </label>
-                        <div className="registerPhone">
+                        <div
+                          style={{
+                            borderColor:
+                              validationsErrors &&
+                              anyone(
+                                validationsErrors.phone,
+                                validationsErrors.code_phone
+                              ) &&
+                              " red",
+                          }}
+                          className="registerPhone"
+                        >
                           <Field
                             id="phone"
                             name="phone"
@@ -259,36 +260,41 @@ const Register = (): ReactElement => {
                             }
                             autoComplete="off"
                           />
-                          <Select
-                            defaultValue="+1"
-                            className="selectCode"
-                            onChange={handleChange}
+                          <Field
+                            as="select"
+                            id="code_phone"
+                            name="code_phone"
+                            style={{ border: "none", width: 100 }}
+                            className={"timlands-inputs "}
                           >
-                            {codes.map((code) => {
-                              if (code.code_phone) {
-                                return (
-                                  <Option
-                                    key={code.code_phone}
-                                    value={code.code_phone}
-                                  >
-                                    {code.code_phone}
-                                  </Option>
-                                );
-                              }
-                            })}
-                          </Select>
+                            <option value="">كود</option>
+                            {codes.map((e: any) => (
+                              <option key={e.id} value={e.code_phone}>
+                                {e.code_phone}
+                              </option>
+                            ))}
+                          </Field>
                         </div>
-                        {validationsErrors && validationsErrors.phone && (
-                          <div style={{ overflow: "hidden" }}>
-                            <motion.div
-                              initial={{ y: -70, opacity: 0 }}
-                              animate={{ y: 0, opacity: 1 }}
-                              className="timlands-form-note form-note-error"
-                            >
-                              <p className="text">{validationsErrors.phone}</p>
-                            </motion.div>
-                          </div>
-                        )}
+                        {validationsErrors &&
+                          anyone(
+                            validationsErrors.phone,
+                            validationsErrors.code_phone
+                          ) && (
+                            <div style={{ overflow: "hidden" }}>
+                              <motion.div
+                                initial={{ y: -70, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                className="timlands-form-note form-note-error"
+                              >
+                                <p className="text">
+                                  {which(
+                                    validationsErrors.phone,
+                                    validationsErrors.code_phone
+                                  )}
+                                </p>
+                              </motion.div>
+                            </div>
+                          )}
                       </div>
                     </div>
                     <div className="col-lg-6">
@@ -496,5 +502,18 @@ const Register = (): ReactElement => {
     </>
   );
 };
-
+const which = (one, two) => {
+  if (one) {
+    return one[0];
+  } else {
+    return two[0];
+  }
+};
+const anyone = (one, two) => {
+  if (one || two) {
+    return true;
+  } else {
+    return false;
+  }
+};
 export default Register;

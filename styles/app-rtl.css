@@ -11559,4 +11559,16 @@ h3 {
   display: block;
   padding: 10px 0;
 }
+
+.descriptionInputHold {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  border-color: rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.descriptionInputHold:focus {
+  outline: none;
+}
 /*# sourceMappingURL=app-rtl.css.map */
