@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 //  import cookies from 'next-cookies'
 import API from "../../../config";
 import PropTypes from "prop-types";
-import { message, Result } from "antd";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Field, Form, Formik } from "formik";
-import Loading from "@/components/Loading";
+import { message, Result } from 'antd';
+import Link from 'next/link'
+import { motion } from 'framer-motion';
+import { Field, Form, Formik } from 'formik';
+import Loading from '@/components/Loading';
 function Token({ query }) {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
