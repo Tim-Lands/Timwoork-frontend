@@ -57,10 +57,6 @@ function Hero() {
               className="timlands-hero-img hero-red"
               style={{
                 backgroundImage: `url('/img/1.png')`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                maxHeight: 700,
               }}
             >
               <Link href={`/`}>

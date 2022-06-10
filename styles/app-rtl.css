@@ -10528,13 +10528,9 @@ h3 {
 }
 
 .timland-hero .timlands-hero-carousel .timlands-hero-img {
-  height: 100vh;
+  height: 520px;
   background-size: cover;
-  max-height: 700px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-clip: content-box;
-  background-attachment: fixed;
+  max-height: 570px;
   position: relative;
 }
 
@@ -11548,7 +11544,7 @@ h3 {
   opacity: 0;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
-  margin-top: 1px;
+  margin-top: 0;
   -webkit-transform: rotateX(-90deg);
           transform: rotateX(-90deg);
 }

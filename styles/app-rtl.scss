@@ -7109,13 +7109,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   position: relative;
   .timlands-hero-carousel {
     .timlands-hero-img {
-      height: 100vh;
+      height: 520px;
       background-size: cover;
-      max-height: 700px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-clip: content-box;
-      background-attachment: fixed;
+      max-height: 570px;
       position: relative;
       .timlands-hero-text {
         display: block;
@@ -7966,7 +7962,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   transition: all 0.3s;
   opacity: 0;
   transform-style: preserve-3d;
-  margin-top: 1px;
+  margin-top: 0;
   transform: rotateX(-90deg);
   &.show {
     animation: showRotate 0.4s ease-in-out both;
