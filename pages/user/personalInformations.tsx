@@ -74,7 +74,7 @@ const personalInformations = () => {
                       parseInt(userInfo.user_details.profile.country_id) || "",
                     phone: userInfo.user_details.phone || "",
                     currency:
-                      userInfo.user_details.profile.currency.symbol_native ||
+                      userInfo.user_details.profile.currency?.symbol_native ||
                       "",
                     code: userInfo.user_details.code_phone || "",
                   }}
@@ -448,8 +448,11 @@ const personalInformations = () => {
                                   <option value="">الافتراضية</option>
 
                                   {currencies.map((e: any) => (
-                                    <option key={e.id} value={e.symbol_native}>
-                                      {e.code}
+                                    <option
+                                      key={e?.id}
+                                      value={e?.symbol_native}
+                                    >
+                                      {e?.code}
                                     </option>
                                   ))}
                                 </Field>

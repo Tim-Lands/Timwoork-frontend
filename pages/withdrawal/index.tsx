@@ -83,7 +83,7 @@ function Withdrawal() {
 
   const formik = useFormik({
     initialValues: {
-      withdrawal_type: 1,
+      withdrawal_type: 4,
       amount: "",
     },
     onSubmit: sendMoney,
@@ -158,9 +158,9 @@ function Withdrawal() {
         ogDescription="طلب السحب"
       />
       {!userInfo && <Loading />}
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-lg-4">
+      <div className="container-fluid transition-all pt-5">
+        <div className={`row transition-all ${(formik.values.withdrawal_type == 4) && ' justify-content-md-center'}`}>
+          <div className="col-lg-4 transition-all">
             <div className="withdrawable-sidebar">
               <form onSubmit={formik.handleSubmit}>
                 <div className="list-group list-group-checkable">
@@ -364,79 +364,81 @@ function Withdrawal() {
               </form>
             </div>
           </div>
-          <div className="col-lg-8">
-            {formik.values.withdrawal_type == 1 && (
-              <>
-                {!isShowBankTransfert && (
-                  <BankAccountCart
-                    setIsShowBankTransfert={setIsShowBankTransfert}
-                    userInfo={paymentInfo.bank_transfer_detail}
-                  />
-                )}
-                {isShowBankTransfert && (
-                  <BankAccount
-                    create={isPaymentAvailable["bank_transfer_detail"]}
-                    token={token}
-                    setIsShowBankTransfert={setIsShowBankTransfert}
-                  />
-                )}
-              </>
-            )}
-            {formik.values.withdrawal_type == 0 && (
-              <>
-                {!isShowMoneyTransfert && (
-                  <MoneyAccountCart
-                    setIsShowBankTransfert={setIsShowMoneyTransfert}
-                    userInfo={paymentInfo.bank_account}
-                  />
-                )}
-                {isShowMoneyTransfert && (
-                  <MoneyAccount
-                    create={isPaymentAvailable["bank_account"]}
-                    token={token}
-                    setIsShowBankTransfert={setIsShowMoneyTransfert}
-                  />
-                )}
-              </>
-            )}
-            {formik.values.withdrawal_type == 3 && (
-              <>
-                {!isShowWiseTransfert && (
-                  <WiseCart
-                    token={token}
-                    setIsShowBankTransfert={setIsShowWiseTransfert}
-                    userInfo={paymentInfo.wise_account}
-                  />
-                )}
-                {isShowWiseTransfert && (
-                  <Wise
-                    create={isPaymentAvailable["wise_account"]}
-                    token={token}
-                    setIsShowBankTransfert={setIsShowWiseTransfert}
-                  />
-                )}
-              </>
-            )}
-            {formik.values.withdrawal_type == 2 && (
-              <>
-                {!isShowPaypalTransfert && (
-                  <PaypalCart
-                    token={token}
-                    setIsShowBankTransfert={setIsShowPaypalTransfert}
-                    userInfo={paymentInfo.paypal_account}
-                  />
-                )}
-                {isShowPaypalTransfert && (
-                  <Paypal
-                    token={token}
-                    create={isPaymentAvailable["paypal_account"]}
-                    setIsShowBankTransfert={setIsShowPaypalTransfert}
-                    userInfo={paymentInfo.paypal_account}
-                  />
-                )}
-              </>
-            )}
-          </div>
+          {formik.values.withdrawal_type !== 4 &&
+            <div className="col-lg-8 transition-all">
+              {formik.values.withdrawal_type == 1 && (
+                <>
+                  {!isShowBankTransfert && (
+                    <BankAccountCart
+                      setIsShowBankTransfert={setIsShowBankTransfert}
+                      userInfo={paymentInfo.bank_transfer_detail}
+                    />
+                  )}
+                  {isShowBankTransfert && (
+                    <BankAccount
+                      create={isPaymentAvailable["bank_transfer_detail"]}
+                      token={token}
+                      setIsShowBankTransfert={setIsShowBankTransfert}
+                    />
+                  )}
+                </>
+              )}
+              {formik.values.withdrawal_type == 0 && (
+                <>
+                  {!isShowMoneyTransfert && (
+                    <MoneyAccountCart
+                      setIsShowBankTransfert={setIsShowMoneyTransfert}
+                      userInfo={paymentInfo.bank_account}
+                    />
+                  )}
+                  {isShowMoneyTransfert && (
+                    <MoneyAccount
+                      create={isPaymentAvailable["bank_account"]}
+                      token={token}
+                      setIsShowBankTransfert={setIsShowMoneyTransfert}
+                    />
+                  )}
+                </>
+              )}
+              {formik.values.withdrawal_type == 3 && (
+                <>
+                  {!isShowWiseTransfert && (
+                    <WiseCart
+                      token={token}
+                      setIsShowBankTransfert={setIsShowWiseTransfert}
+                      userInfo={paymentInfo.wise_account}
+                    />
+                  )}
+                  {isShowWiseTransfert && (
+                    <Wise
+                      create={isPaymentAvailable["wise_account"]}
+                      token={token}
+                      setIsShowBankTransfert={setIsShowWiseTransfert}
+                    />
+                  )}
+                </>
+              )}
+              {formik.values.withdrawal_type == 2 && (
+                <>
+                  {!isShowPaypalTransfert && (
+                    <PaypalCart
+                      token={token}
+                      setIsShowBankTransfert={setIsShowPaypalTransfert}
+                      userInfo={paymentInfo.paypal_account}
+                    />
+                  )}
+                  {isShowPaypalTransfert && (
+                    <Paypal
+                      token={token}
+                      create={isPaymentAvailable["paypal_account"]}
+                      setIsShowBankTransfert={setIsShowPaypalTransfert}
+                      userInfo={paymentInfo.paypal_account}
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          }
         </div>
       </div>
     </>

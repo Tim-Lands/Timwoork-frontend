@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
-import Post from "./Post/Post";
 import { Alert } from "./Alert/Alert";
 import Link from "next/link";
 // Import Swiper React components
@@ -10,6 +9,7 @@ import { Navigation } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
+import PostInner from "./Post/PostInner";
 // import required modules
 function PostsAside({
   PostData,
@@ -136,8 +136,9 @@ function PostsAside({
             >
               {PostData.map((e: any) => (
                 <SwiperSlide key={e.id}>
-                  <Post
+                  <PostInner
                     title={e.title}
+                    avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
                     author={
                       e.profile_seller &&
                       e.profile_seller.profile.first_name +

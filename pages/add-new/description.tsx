@@ -3,7 +3,7 @@ import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
-// import { message } from "antd";
+import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from "js-cookie";
 import API from "../../config";
@@ -145,37 +145,36 @@ function Description({ query }) {
     enableReinitialize: true,
     onSubmit: async (values) => {
       setValidationsErrors({});
-      console.log(values);
-      // try {
-      //   const id = query.id;
-      //   const res = await API.post(
-      //     `api/product/${id}/product-step-three`,
-      //     values,
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${token}`,
-      //       },
-      //     }
-      //   );
-      //   // Authentication was successful.
-      //   if (res.status === 200) {
-      //     message.success("لقد تم التحديث بنجاح");
-      //     router.push({
-      //       pathname: "/add-new/medias",
-      //       query: {
-      //         id: id, // pass the id
-      //       },
-      //     });
-      //   }
-      // } catch (error: any) {
-      //   if (
-      //     error.response &&
-      //     error.response.data &&
-      //     error.response.data.errors
-      //   ) {
-      //     setValidationsErrors(error.response.data.errors);
-      //   }
-      // }
+      try {
+        const id = query.id;
+        const res = await API.post(
+          `api/product/${id}/product-step-three`,
+          values,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // Authentication was successful.
+        if (res.status === 200) {
+          message.success("لقد تم التحديث بنجاح");
+          router.push({
+            pathname: "/add-new/medias",
+            query: {
+              id: id, // pass the id
+            },
+          });
+        }
+      } catch (error: any) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          setValidationsErrors(error.response.data.errors);
+        }
+      }
     },
   });
 
