@@ -156,6 +156,9 @@ function index({ products, latestProducts, categories, popularProducts }) {
                     slidesPerView: 1,
                     spaceBetween: 15,
                   },
+                  100: {
+                    spaceBetween: 7,
+                  },
                 }}
                 className="mySwiper"
               >

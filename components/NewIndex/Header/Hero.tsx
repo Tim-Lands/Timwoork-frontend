@@ -58,22 +58,21 @@ function Hero() {
               style={{
                 backgroundImage: `url('/img/1.png')`,
               }}
-            >
-              <Link href={`/`}>
-                <a className="timlands-hero-text">
-                  <h4 className="rating">
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                  </h4>
-                  <h4 className="text">
-                    رحمة, <strong>كتابة وترجمة</strong>
-                  </h4>
-                </a>
-              </Link>
-            </div>
+            ></div>
+            <Link href={`/`}>
+              <a className="timlands-hero-text">
+                <h4 className="rating">
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                </h4>
+                <h4 className="text">
+                  رحمة, <strong>كتابة وترجمة</strong>
+                </h4>
+              </a>
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
             <div
@@ -81,22 +80,21 @@ function Hero() {
               style={{
                 backgroundImage: `url('/img/2.png')`,
               }}
-            >
-              <Link href={`/`}>
-                <a className="timlands-hero-text">
-                  <h4 className="rating">
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                  </h4>
-                  <h4 className="text">
-                    فوزي, <strong>صوتبات</strong>
-                  </h4>
-                </a>
-              </Link>
-            </div>
+            ></div>
+            <Link href={`/`}>
+              <a className="timlands-hero-text">
+                <h4 className="rating">
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                </h4>
+                <h4 className="text">
+                  فوزي, <strong>صوتبات</strong>
+                </h4>
+              </a>
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
             <div
@@ -104,24 +102,23 @@ function Hero() {
               style={{
                 backgroundImage: `url('/img/3.png')`,
               }}
-            >
-              <Link href={`/`}>
-                <a className="timlands-hero-text">
-                  <h4 className="rating">
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons material-icons-outlined">
-                      star
-                    </span>
-                  </h4>
-                  <h4 className="text">
-                    فوزي, <strong>صوتبات</strong>
-                  </h4>
-                </a>
-              </Link>
-            </div>
+            ></div>
+            <Link href={`/`}>
+              <a className="timlands-hero-text">
+                <h4 className="rating">
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons material-icons-outlined">
+                    star
+                  </span>
+                </h4>
+                <h4 className="text">
+                  فوزي, <strong>صوتبات</strong>
+                </h4>
+              </a>
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
             <div
@@ -129,24 +126,23 @@ function Hero() {
               style={{
                 backgroundImage: `url('/img/4.png')`,
               }}
-            >
-              <Link href={`/`}>
-                <a className="timlands-hero-text">
-                  <h4 className="rating">
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons">star</span>
-                    <span className="material-icons material-icons-outlined">
-                      star
-                    </span>
-                  </h4>
-                  <h4 className="text">
-                    فوزي, <strong>صوتبات</strong>
-                  </h4>
-                </a>
-              </Link>
-            </div>
+            ></div>
+            <Link href={`/`}>
+              <a className="timlands-hero-text">
+                <h4 className="rating">
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons material-icons-outlined">
+                    star
+                  </span>
+                </h4>
+                <h4 className="text">
+                  فوزي, <strong>صوتبات</strong>
+                </h4>
+              </a>
+            </Link>
           </SwiperSlide>
         </Swiper>
       </div>
