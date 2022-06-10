@@ -73,13 +73,15 @@ function Token({ query }) {
                             }}
                             //validationSchema={SignupSchema}
                             onSubmit={async values => {
+                                console.log(values)
                                 setValidationsErrors({})
                                 try {
-                                    const res = await API.post("api/password/forget/reset", values)
+                                    console.log(query)
+                                    const res = await API.post("api/password/forget/reset", { ...values, token: query.token })
                                     // Authentication was successful.
                                     if (res.status === 200) {
                                         message.success('لقد تم التحديث بنجاح')
-                                        router.push('/')
+                                        //router.push('/')
                                     }
                                 } catch (error: any) {
                                     if (error.response && error.response.data && error.response.data.errors) {
