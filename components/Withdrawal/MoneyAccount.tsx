@@ -144,11 +144,11 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
       >
         <div className="page-header d-flex">
           <h4 className="title me-auto">تحويل البنكي</h4>
-          <button
+          {/* <button
             type="button"
             onClick={() => setIsShowBankTransfert(false)}
             className="btn-close ml-auto"
-          ></button>
+          ></button> */}
         </div>
         <div className="timlands-content-form">
           {validationsGeneral.msg && (
