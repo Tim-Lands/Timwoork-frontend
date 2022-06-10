@@ -74,7 +74,7 @@ function Paypal({ token, create , setIsShowBankTransfert, userInfo={} }:any) {
             <div className={"timlands-panel" + (formik.isSubmitting ? ' is-loader' : '')}>
                 <div className="page-header d-flex">
                     <h4 className="title">حساب الباييال Paypal</h4>
-                    <button type='button' onClick={() => setIsShowBankTransfert(false)} className='btn-close ml-auto'></button>
+                    {/* <button type='button' onClick={() => setIsShowBankTransfert(false)} className='btn-close ml-auto'></button> */}
                 </div>
                 <div className="timlands-content-form">
                     {validationsGeneral.msg && <Alert type="error">{validationsGeneral.msg}</Alert>}
