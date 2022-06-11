@@ -1,9 +1,17 @@
 import PropTypes from "prop-types";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 function Subcategories({ right = 0, postsList, categoryID }) {
-  console.log(categoryID, postsList);
+  const [list, setList] = useState({ subcategories: [] });
+  useEffect(() => {
+    postsList.forEach((posts) => {
+      if (posts.id === categoryID) {
+        setList(posts);
+      }
+    });
+  }, [categoryID]);
   return (
     <motion.div
       initial={{ y: -70, opacity: 0 }}
@@ -12,57 +20,18 @@ function Subcategories({ right = 0, postsList, categoryID }) {
       style={{ right }}
     >
       <div className="nav-subcategories-list-content">
-        <ul className="list-subcategories-withicons row">
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
-          <li className="col-lg-3 col-md-4 col-sm-6">
-            <Link href={`/`}>
-              <a>إضافة خدمة جديدة</a>
-            </Link>
-          </li>
+        <ul className="list-subcategories-withicons ">
+          {list?.subcategories?.map((item) => {
+            return (
+              <li key={item.id} className="">
+                <a
+                  href={`/products?categoryID=${categoryID}&subcategoryID=${item.id}`}
+                >
+                  {item.name_ar}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </motion.div>

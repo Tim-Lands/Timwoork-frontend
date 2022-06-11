@@ -48,7 +48,7 @@ function Navbar({ dark = false }) {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
   };
   useEffect(() => {
-    API.get(`api/get_categories`)
+    API.get(`api/categories`)
       .then((res) => {
         setPostsList(res.data.data);
       })

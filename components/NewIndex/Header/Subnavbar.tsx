@@ -5,6 +5,7 @@ import useOnScreen from "../../useOnScreen";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 function Subnavbar({ visible, postsList }) {
   const [isSubcategoriesToggle, setIsSubcategoriesToggle] = useState(false);
+  const [right, setRight] = useState(0);
   const end = useRef(null);
   const start = useRef(null);
   const middle = useRef(null);
@@ -24,23 +25,27 @@ function Subnavbar({ visible, postsList }) {
         name_ar: "برمجة وتطوير",
         to: "products?categoryID=11",
         categoryID: 11,
+        right: 20,
       },
       {
         id: 3,
         name_ar: "تسويق الكتروني",
         to: "products?categoryID=10",
         categoryID: 10,
+        right: 35,
       },
       {
         id: 4,
         name_ar: "تدريب عن بعد",
         to: "products?categoryID=9",
         categoryID: 9,
+        right: 50,
       },
       {
         id: 5,
         name_ar: "تصميم فيديو",
         to: "products?categoryID=8",
+        right: 65,
         categoryID: 8,
       },
       {
@@ -48,11 +53,13 @@ function Subnavbar({ visible, postsList }) {
         name_ar: "تصميم عام",
         to: "products?categoryID=7",
         categoryID: 7,
+        right: 80,
       },
       {
         id: 7,
         name_ar: "صوتيات",
         to: "products?categoryID=6",
+        right: 95,
         categoryID: 6,
       },
       {
@@ -97,6 +104,7 @@ function Subnavbar({ visible, postsList }) {
                 onMouseEnter={() => {
                   if (!e.end) {
                     setIsSubcategoriesToggle(true);
+                    setRight(e.right);
                     setCategoryID(e.categoryID);
                   } else {
                     setIsSubcategoriesToggle(false);
@@ -107,7 +115,11 @@ function Subnavbar({ visible, postsList }) {
               </li>
             ))}
           {isSubcategoriesToggle && (
-            <Subcategories postsList={postsList} categoryID={categoryID} />
+            <Subcategories
+              postsList={postsList}
+              categoryID={categoryID}
+              right={right}
+            />
           )}
         </ul>
         <span className="arrows-sub">
