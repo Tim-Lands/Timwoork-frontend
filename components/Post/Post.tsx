@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
+import Image from "next/image";
 
 function Post({
   title,
@@ -8,7 +9,9 @@ function Post({
   author,
   buyers,
   price,
+  level,
   username,
+  avatar,
   size,
   slug,
   rate = 2,
@@ -103,27 +106,32 @@ function Post({
   };
   return (
     <div className={"timlands-post-item" + sizeClass()}>
-      <a href={`/p/${slug}`}>
-        <div
+      <Link href={`/p/${slug}`}>
+        <a href={`/p/${slug}`}
           className="post-item-img"
           style={{ backgroundImage: thumbnailUrl }}
-        ></div>
-      </a>
+        ></a>
+      </Link>
       <div className="post-item-content">
+        <Link href={`/u/${username}`}>
+          <a className="user-mata-post">
+              <div className="user-mata-post-img">
+                <Image src={avatar} width={30} height={30} alt={author} />
+              </div>
+              <div className="user-mata-post-content">
+                <p className="text-user">
+                  <span className="text">{author}</span>
+                </p>
+                <p className="text-meta">
+                  <span className="text">{level}</span>
+                </p>
+              </div>
+          </a>
+        </Link>
         <h3 className="title">
           <a href={`/p/${slug}`}>{title}</a>
         </h3>
         <ul className="nav post-meta">
-          <li className="post-meta-user">
-            <Link href={`/u/${username}`}>
-              <a>
-                <span className="material-icons material-icons-outlined">
-                  person_outline
-                </span>{" "}
-                {author}
-              </a>
-            </Link>
-          </li>
           <li className="post-meta-rate">
             {showStars().map((e: any) => (
               <span key={e.id}>{e.name}</span>
@@ -142,11 +150,13 @@ function Post({
 }
 Post.propTypes = {
   title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string,
+  thumbnail: PropTypes.any,
+  avatar: PropTypes.string,
   author: PropTypes.string,
   slug: PropTypes.string,
   size: PropTypes.string,
   username: PropTypes.string,
+  level: PropTypes.string,
   rate: PropTypes.any,
   buyers: PropTypes.number,
   price: PropTypes.number,

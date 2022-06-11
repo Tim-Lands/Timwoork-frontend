@@ -139,17 +139,24 @@ function Description({ query }) {
   const formik = useFormik({
     initialValues: {
       // buyer_instruct: buyerInstructhtml,
+      buyer_instruct: "",
       // content: html,
+      content: "",
     },
     isInitialValid: true,
     enableReinitialize: true,
     onSubmit: async (values) => {
       setValidationsErrors({});
+
       try {
         const id = query.id;
         const res = await API.post(
           `api/product/${id}/product-step-three`,
-          values,
+          {
+            ...values,
+            content: values.content.replace(/\n/g, "<br />"),
+            buyer_instruct: values.buyer_instruct.replace(/\n/g, "<br />"),
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -395,16 +402,12 @@ function Description({ query }) {
                             <button
                               onClick={() => router.back()}
                               type="button"
-                              className="btn flex-center butt-green-out me-auto butt-xs"
+                              className="btn flex-center butt-primary2-out me-auto butt-md"
                             >
                               <span className="material-icons-outlined">
                                 chevron_right
                               </span>
                               <span className="text">المرحلة السابقة</span>
-                              <div
-                                className="spinner-border spinner-border-sm text-white"
-                                role="status"
-                              ></div>
                             </button>
                             <button
                               type="submit"

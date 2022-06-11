@@ -1,23 +1,52 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { ReactElement, useEffect } from "react";
-import { connect } from "react-redux";
-import { logout, addNewProduct } from "./../../store/auth/authActions";
+import { ReactElement, useEffect, useState } from "react";
 //import withAuth from '../../services/withAuth'
 import { Spin } from "antd";
-import { Alert } from "@/components/Alert/Alert";
+import { Alert } from "antd";
 import useSWR from "swr";
 import NotSeller from "@/components/NotSeller";
 import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import router from "next/router";
+import API from "../../config";
 
-function index(props: any) {
-  let token = Cookies.get("token");
+function index() {
+  let token = Cookies.get("token")
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const [validationsGeneral, setValidationsGeneral]: any = useState({});
+  const [isLoading, setIsLoading]: any = useState(false);
+
+  const addNewProduct = async () => {
+    setIsLoading(true)
+    try {
+      const res = await API.get("api/product/store", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // If Activate Network
+      // Authentication was successful.
+      if (res.status === 200) {
+        setIsLoading(false)
+        router.push({
+          pathname: `/add-new/overview`,
+          query: {
+            id: res.data.data.id, // pass the id
+          },
+        });
+      }
+    } catch (error) {
+      setIsLoading(false)
+      if (error.response && error.response.data) {
+        setValidationsGeneral(error.response.data);
+      }
+
+    }
+  };
   useEffect(() => {
     if (!token) {
       router.push("/login");
@@ -38,18 +67,22 @@ function index(props: any) {
       <div className="container">
         {token && veriedEmail && (
           <div className="row justify-content-center my-3">
-            <div className="col-md-8">
-              <Spin spinning={props.addNewProductLoading}>
-                {props.addNewProductError && (
-                  <Alert type="danger">{props.addNewProductError}</Alert>
-                )}
+            <div className="col-md-7">
+              <Spin spinning={isLoading}>
                 <div className="timlands-add-new">
-                  <div className="timlands-add-new-icon">
-                    <span className="material-icons material-icons-outlined">
-                      add_circle_outline
-                    </span>
-                  </div>
-                  <div className="timlands-add-new-body">
+                  {validationsGeneral.msg && (
+                    <div style={{ textAlign: 'right', marginBottom: 16 }}>
+                      <Alert
+                        message="حدث خطأ"
+                        description={validationsGeneral.msg}
+                        type="error"
+                        showIcon
+                        closable
+                      />
+                    </div>
+                  )}
+                  <img src="/img/g10.png" alt="" className="add-new-image" />
+                  <div className="timlands-add-new-body mt-3">
                     <h3 className="title">إضافة خدمة جديدة</h3>
                     <p className="text">
                       رائع ! وصلت الى خطوتك الأخيرة لتنظم الى فريق بائعي تيموورك
@@ -60,7 +93,7 @@ function index(props: any) {
                           type="button"
                           disabled={true}
                           className="btn butt-md butt-white"
-                          onClick={props.addNewProduct}
+                          onClick={addNewProduct}
                         >
                           يرجى الإنتظار...
                         </button>
@@ -71,7 +104,7 @@ function index(props: any) {
                         <button
                           type="button"
                           className="btn butt-md butt-primary2"
-                          onClick={props.addNewProduct}
+                          onClick={addNewProduct}
                         >
                           إضافة خدمة
                         </button>
@@ -91,10 +124,4 @@ index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  addNewProductLoading: state.auth.addNewProductLoading,
-  addNewProductError: state.auth.addNewProductError,
-});
-
-export default connect(mapStateToProps, { logout, addNewProduct })(index);
+export default index

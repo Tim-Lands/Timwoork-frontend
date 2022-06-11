@@ -10,6 +10,7 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import PostInner from "./Post/PostInner";
+import Post from "./Post/Post";
 // import required modules
 function PostsAside({
   PostData,
@@ -136,24 +137,48 @@ function PostsAside({
             >
               {PostData.map((e: any) => (
                 <SwiperSlide key={e.id}>
-                  <PostInner
-                    title={e.title}
-                    avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
-                    author={
-                      e.profile_seller &&
-                      e.profile_seller.profile.first_name +
+                  <div className="post-resposive-with-desktop">
+                    <PostInner
+                      title={e.title}
+                      avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+                      author={
+                        e.profile_seller &&
+                        e.profile_seller.profile.first_name +
                         " " +
                         e.profile_seller.profile.last_name
-                    }
-                    rate={e.ratings_avg_rating}
-                    username={
-                      e.profile_seller && e.profile_seller.profile.user.username
-                    }
-                    price={e.price}
-                    slug={e.slug}
-                    thumbnail={e.full_path_thumbnail}
-                    buyers={e.count_buying}
-                  />
+                      }
+                      rate={e.ratings_avg_rating}
+                      username={
+                        e.profile_seller && e.profile_seller.profile.user.username
+                      }
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                    />
+                  </div>
+                  <div className="post-resposive-with-smart">
+                    <Post
+                      size="small"
+                      avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+                      title={e.title}
+                      level={e.profile_seller && e.profile_seller.level.name_ar}
+                      author={
+                        e.profile_seller &&
+                        e.profile_seller.profile.first_name +
+                        " " +
+                        e.profile_seller.profile.last_name
+                      }
+                      rate={e.ratings_avg_rating}
+                      username={
+                        e.profile_seller && e.profile_seller.profile.user.username
+                      }
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                    />
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>

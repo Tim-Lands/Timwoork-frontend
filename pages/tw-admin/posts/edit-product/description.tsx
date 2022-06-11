@@ -180,10 +180,10 @@ function Description({ query, product }) {
         metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
         ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
       />
-      {token  && (
+      {token && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
-            <div className="col-md-7 pt-3">
+            <div className="col-md-8 pt-3">
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -256,7 +256,7 @@ function Description({ query, product }) {
                         </Link>
                       </h3>
                     </div>
-                   {/*  <div className="timlands-step-item ">
+                    {/*  <div className="timlands-step-item ">
                       <h3 className="text">
                         <Link
                           href={`/tw-admin/posts/edit-product/complete?id=${product.id}`}
@@ -281,26 +281,6 @@ function Description({ query, product }) {
                         </span>
                         الوصف وتعليمات المشتري
                       </h2>
-                      <div
-                        className={
-                          "header-butt" +
-                          (formik.isSubmitting ? " is-loader" : "")
-                        }
-                      >
-                        <button
-                          type="submit"
-                          disabled={
-                            (!product ? true : false) || formik.isSubmitting
-                          }
-                          className="btn flex-center butt-green mr-auto butt-xs"
-                        >
-                          <span className="text">حفظ التغييرات</span>
-                          <div
-                            className="spinner-border spinner-border-sm text-white"
-                            role="status"
-                          ></div>
-                        </button>
-                      </div>
                     </div>
                   </div>
 
@@ -392,6 +372,16 @@ function Description({ query, product }) {
                       </div>
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
+                          <button
+                            onClick={() => router.back()}
+                            type="button"
+                            className="btn flex-center butt-primary2-out me-auto butt-md"
+                          >
+                            <span className="material-icons-outlined">
+                              chevron_right
+                            </span>
+                            <span className="text">المرحلة السابقة</span>
+                          </button>
                           <button
                             type="submit"
                             disabled={

@@ -37,7 +37,9 @@ function Navbar({ dark = false }) {
   // const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
   const [visible, setVisible] = useState(true);
   const [notifications, setNotifications] = useState([]);
+  const [postsList, setPostsList]: any = useState([]);
   const [messages, setMessages] = useState([]);
+
   const [sentinel, setSentinel] = useState({ mount: true });
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
@@ -46,6 +48,13 @@ function Navbar({ dark = false }) {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
   };
   useEffect(() => {
+    API.get(`api/categories`)
+      .then((res) => {
+        setPostsList(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
@@ -440,7 +449,7 @@ function Navbar({ dark = false }) {
           </li>
         </ul>
       </div>
-      {!visible && <Subnavbar visible={visible} />}
+      {!visible && <Subnavbar visible={visible} postsList={postsList} />}
     </nav>
   );
 }

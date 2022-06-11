@@ -195,7 +195,7 @@ function Medias({ query, product, token }) {
     }
   };
   const uploadGallery = async () => {
-  
+
     const [res] = await Promise.all([loadGalleryImages()]);
     await loadVideoUrl();
     // Authentication was successful.
@@ -259,7 +259,7 @@ function Medias({ query, product, token }) {
 
       {token && (
         <div className="row justify-content-md-center my-3">
-          <div className="col-md-7 pt-3">
+          <div className="col-md-8 pt-3">
             {isRemoveModal && (
               <div className="overlay-fixed">
                 <RemoveImageModal
@@ -401,19 +401,16 @@ function Medias({ query, product, token }) {
 
               <div className="col-md-12">
                 <div className="py-4 d-flex">
+
                   <button
                     onClick={() => router.back()}
                     type="button"
-                    className="btn flex-center butt-green-out me-auto butt-xs"
+                    className="btn flex-center butt-primary2-out me-auto butt-md"
                   >
                     <span className="material-icons-outlined">
                       chevron_right
                     </span>
                     <span className="text">المرحلة السابقة</span>
-                    <div
-                      className="spinner-border spinner-border-sm text-white"
-                      role="status"
-                    ></div>
                   </button>
                   <button
                     type="submit"
