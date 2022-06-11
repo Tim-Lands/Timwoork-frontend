@@ -65,12 +65,12 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
         setIsDisactiveModalVisible(true);
     }
 
-    async function rejectProduct(cause) {
+    async function rejectProduct(body) {
         setIsLoading(true);
         try {
             const res: any = await API.post(
                 `dashboard/products/${selectedProductId}/rejectProduct`,
-                { cause },
+                body,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -78,7 +78,7 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
             if (res.status === 200) {
                 setIsLoading(false);
                 setIsModalVisible(false);
-                router.reload()
+                //router.reload()
             }
         } catch (error) {
             setIsLoading(false);
