@@ -327,29 +327,8 @@ function Description({ query, stars }) {
                         </span>
                         الوصف وتعليمات المشتري
                       </h2>
-                      <div
-                        className={
-                          "header-butt" +
-                          (formik.isSubmitting ? " is-loader" : "")
-                        }
-                      >
-                        <button
-                          type="submit"
-                          disabled={
-                            (!getProduct ? true : false) || formik.isSubmitting
-                          }
-                          className="btn flex-center butt-green mr-auto butt-xs"
-                        >
-                          <span className="text">حفظ التغييرات</span>
-                          <div
-                            className="spinner-border spinner-border-sm text-white"
-                            role="status"
-                          ></div>
-                        </button>
-                      </div>
                     </div>
                   </div>
-
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">

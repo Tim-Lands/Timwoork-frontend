@@ -13,7 +13,6 @@ import Unauthorized from "@/components/Unauthorized";
 import router from "next/router";
 
 function index(props: any) {
-  const xyz = 'ABCD';
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
