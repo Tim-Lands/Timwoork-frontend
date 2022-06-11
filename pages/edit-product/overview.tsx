@@ -161,7 +161,7 @@ function Overview({ query }) {
         <div className="container-fluid">
           {!getProduct && <div>يرجى الانتظار...</div>}
           <div className="row justify-content-md-center my-3">
-            <div className="col-md-8 pt-3">
+            <div className="col-md-7 pt-3">
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -185,9 +185,8 @@ function Overview({ query }) {
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${
-                          getProduct?.data.current_step < 1 && "pe-none"
-                        }`}
+                        className={`timlands-step-item ${getProduct?.data.current_step < 1 && "pe-none"
+                          }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/prices?id=${id}`}>
@@ -203,9 +202,8 @@ function Overview({ query }) {
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${
-                          getProduct?.data.current_step < 2 && "pe-none"
-                        }`}
+                        className={`timlands-step-item ${getProduct?.data.current_step < 2 && "pe-none"
+                          }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/description?id=${id}`}>
@@ -221,9 +219,8 @@ function Overview({ query }) {
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${
-                          getProduct?.data.current_step < 3 && "pe-none"
-                        }`}
+                        className={`timlands-step-item ${getProduct?.data.current_step < 3 && "pe-none"
+                          }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/medias?id=${id}`}>
@@ -262,12 +259,12 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
-                            العنوان
+                            عنوان الخدمة
                           </label>
                           <input
                             id="input-title"
                             name="title"
-                            placeholder="العنوان..."
+                            placeholder="عنوان الخدمة..."
                             className={
                               "timlands-inputs " +
                               (validationsErrors &&
@@ -280,6 +277,11 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
+                          <div className="note-form-text-sh">
+                            <p className="text">
+                              يجب أن لايحتوي عنوان الخدمة على رموز
+                            </p>
+                          </div>
                           {validationsErrors && validationsErrors.title && (
                             <div style={{ overflow: "hidden" }}>
                               <motion.div
@@ -312,7 +314,7 @@ function Overview({ query }) {
                             autoComplete="off"
                             onChange={formik.handleChange}
                             value={formik.values.catetory}
-                            //onChange={() => setmainCat(values.catetory)}
+                          //onChange={() => setmainCat(values.catetory)}
                           >
                             <option value="">اختر التصنيف الرئيسي</option>
                             {!categories && (

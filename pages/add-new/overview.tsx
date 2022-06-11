@@ -241,12 +241,12 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
-                            العنوان
+                            عنوان الخدمة
                           </label>
                           <input
                             id="input-title"
                             name="title"
-                            placeholder="العنوان..."
+                            placeholder="عنوان الخدمة..."
                             disabled={!getProduct ? true : false}
                             className={
                               "timlands-inputs " +
@@ -259,6 +259,11 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
+                          <div className="note-form-text-sh">
+                            <p className="text">
+                              يجب أن لايحتوي عنوان الخدمة على رموز
+                            </p>
+                          </div>
                           {validationsErrors && validationsErrors.title && (
                             <div style={{ overflow: "hidden" }}>
                               <motion.div

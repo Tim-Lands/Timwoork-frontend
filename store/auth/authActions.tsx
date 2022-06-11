@@ -14,65 +14,6 @@ import * as types from "../actionTypes";
 import Cookies from "js-cookie";
 import router from "next/router";
 import useSWR from "swr";
-import { userInfo } from "os";
-import { message } from "antd";
-
-export const addNewProduct = () => {
-  return async (dispatch: CallableFunction) => {
-    try {
-      let token = Cookies.get("token");
-      if (!token && typeof window !== "undefined")
-        token = localStorage.getItem("token");
-      dispatch({
-        type: types.ADD_PRODUCT_LOADING,
-      });
-      const res = await API.get("api/product/store", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // If Activate Network
-      // Authentication was successful.
-      if (res.status == 201 || res.status == 200) {
-        dispatch({
-          type: types.ADDED_PRODUCT,
-        });
-        router.push({
-          pathname: `/add-new/overview`,
-          query: {
-            id: res.data.data.id, // pass the id
-          },
-        });
-      } else {
-        return dispatch({
-          type: types.ADD_NEW_PRODUCT_ERROR,
-          payload: "حدث خطأ غير متوقع",
-        });
-      }
-    } catch (ex) {
-      if (ex.response && ex.response.status === 403) {
-        return dispatch({
-          type: types.ADD_NEW_PRODUCT_ERROR,
-          payload: "هذا العنصر غير موجود",
-        });
-      }
-
-      if (ex.response && ex.response.status === 422) {
-        return dispatch({
-          type: types.ADD_NEW_PRODUCT_ERROR,
-          payload: "يرجى ملأ البيانات",
-        });
-      }
-
-      if (ex.response && ex.response.status === 401) {
-        return dispatch({
-          type: types.ADD_NEW_PRODUCT_ERROR,
-          payload: "ليس لديك الصلاحية",
-        });
-      }
-    }
-  };
-};
 
 /**
  * Load currently logged in user from DB.

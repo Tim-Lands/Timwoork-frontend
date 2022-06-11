@@ -130,7 +130,7 @@ function Medias({ query, stars }) {
       );
       return res;
     } catch (e) {
-      () => {};
+      () => { };
     }
   };
   const loadImagesHandle = async () => {
@@ -138,11 +138,11 @@ function Medias({ query, stars }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (isGalleryChanged && galleryMedia.size <= 0) {
@@ -285,7 +285,7 @@ function Medias({ query, stars }) {
 
       {token && veriedEmail && (
         <div className="row justify-content-md-center my-3">
-          <div className="col-md-8 pt-3">
+          <div className="col-md-7 pt-3">
             {isRemoveModal && (
               <RemoveImageModal
                 onSubmit={onRemoveSubmit}
@@ -430,7 +430,7 @@ function Medias({ query, stars }) {
                   <button
                     onClick={() => router.back()}
                     type="button"
-                    className="btn flex-center butt-green-out me-auto butt-xs"
+                    className="btn flex-center butt-primary2-out me-auto butt-xs"
                   >
                     <span className="material-icons-outlined">
                       chevron_right

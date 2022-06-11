@@ -161,6 +161,16 @@ function Complete({ query }) {
                   </p>
                   <div className="add-butts">
                     <button
+                      onClick={() => router.back()}
+                      type="button"
+                      className="btn flex-center butt-primary2-out mx-1 butt-md"
+                    >
+                      <span className="material-icons-outlined">
+                        chevron_right
+                      </span>
+                      <span className="text">المرحلة السابقة</span>
+                    </button>
+                    <button
                       onClick={stepFive}
                       className="btn butt-md butt-primary2"
                     >

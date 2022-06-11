@@ -86,7 +86,7 @@ function Complete({ query }) {
         {!getProduct && <div>يرجى الانتظار...</div>}
 
         <div className="row justify-content-md-center my-3">
-          <div className="col-md-9 pt-3">
+          <div className="col-md-7 pt-3">
             <div className={"timlands-panel"}>
               <div className="timlands-steps-cont">
                 <div className="timlands-steps">
@@ -186,8 +186,18 @@ function Complete({ query }) {
                   </p>
                   <div className="add-butts">
                     <button
+                      onClick={() => router.back()}
+                      type="button"
+                      className="btn flex-center butt-primary2-out mx-1 butt-md"
+                    >
+                      <span className="material-icons-outlined">
+                        chevron_right
+                      </span>
+                      <span className="text">المرحلة السابقة</span>
+                    </button>
+                    <button
                       onClick={stepFive}
-                      className="btn butt-md butt-primary2"
+                      className="btn butt-md butt-primary2 mx-1"
                     >
                       نشر الخدمة
                     </button>

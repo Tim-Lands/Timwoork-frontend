@@ -307,7 +307,7 @@ function Description({ query }) {
                                 id="content"
                                 className="descriptionInputHold"
                                 onChange={(e) => formik.handleChange(e)}
-                                // onChange={formik.setFieldValue}
+                              // onChange={formik.setFieldValue}
                               ></textarea>
                               {/* <MenuBar editor={editor} />
                               <Tiptap
@@ -395,16 +395,12 @@ function Description({ query }) {
                             <button
                               onClick={() => router.back()}
                               type="button"
-                              className="btn flex-center butt-green-out me-auto butt-xs"
+                              className="btn flex-center butt-primary2-out me-auto butt-md"
                             >
                               <span className="material-icons-outlined">
                                 chevron_right
                               </span>
                               <span className="text">المرحلة السابقة</span>
-                              <div
-                                className="spinner-border spinner-border-sm text-white"
-                                role="status"
-                              ></div>
                             </button>
                             <button
                               type="submit"

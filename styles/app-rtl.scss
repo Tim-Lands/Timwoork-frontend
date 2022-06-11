@@ -7176,8 +7176,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 // Hero Content Header
-.hero-content {
-}
 .app-new-navbar-cont {
   z-index: 9000;
   position: fixed;
@@ -8152,8 +8150,33 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     outline: none;
   }
 }
-.arrows-sub {
-  @media (min-width: 992px) {
+@media (min-width: 720px) {
+  .post-resposive-with-desktop {
+    display: block;
+  }
+  .post-resposive-with-smart {
     display: none;
+  }
+}
+@media (max-width: 720px) {
+  .post-resposive-with-desktop {
+    display: none;
+  }
+  .post-resposive-with-smart {
+    display: block;
+  }
+}
+.add-butts {
+  display: flex;
+  justify-content: center;
+}
+.note-form-text-sh {
+  margin-top: 6px;
+  .text {
+    font-size: 12px;
+    font-weight: 200;
+    font-style: italic;
+    color: #777;
+    margin: 0;
   }
 }
