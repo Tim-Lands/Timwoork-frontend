@@ -139,17 +139,24 @@ function Description({ query }) {
   const formik = useFormik({
     initialValues: {
       // buyer_instruct: buyerInstructhtml,
+      buyer_instruct: "",
       // content: html,
+      content: "",
     },
     isInitialValid: true,
     enableReinitialize: true,
     onSubmit: async (values) => {
       setValidationsErrors({});
+
       try {
         const id = query.id;
         const res = await API.post(
           `api/product/${id}/product-step-three`,
-          values,
+          {
+            ...values,
+            content: values.content.replace(/\n/g, "<br />"),
+            buyer_instruct: values.buyer_instruct.replace(/\n/g, "<br />"),
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -307,7 +314,7 @@ function Description({ query }) {
                                 id="content"
                                 className="descriptionInputHold"
                                 onChange={(e) => formik.handleChange(e)}
-                              // onChange={formik.setFieldValue}
+                                // onChange={formik.setFieldValue}
                               ></textarea>
                               {/* <MenuBar editor={editor} />
                               <Tiptap
