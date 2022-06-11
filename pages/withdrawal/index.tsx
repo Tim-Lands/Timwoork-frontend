@@ -158,7 +158,7 @@ function Withdrawal() {
         ogDescription="طلب السحب"
       />
       {!userInfo && <Loading />}
-      <div className="container-fluid transition-all pt-5">
+      <div className="container-fluid transition-all pt-5 pb-5">
         <div className={`row transition-all ${(formik.values.withdrawal_type == 4) && ' justify-content-md-center'}`}>
           <div className="col-lg-4 transition-all">
             <div className="withdrawable-sidebar">

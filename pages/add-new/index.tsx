@@ -13,6 +13,7 @@ import Unauthorized from "@/components/Unauthorized";
 import router from "next/router";
 
 function index(props: any) {
+  const xyz = 'ABCD';
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -38,18 +39,14 @@ function index(props: any) {
       <div className="container">
         {token && veriedEmail && (
           <div className="row justify-content-center my-3">
-            <div className="col-md-8">
+            <div className="col-md-7">
               <Spin spinning={props.addNewProductLoading}>
                 {props.addNewProductError && (
                   <Alert type="danger">{props.addNewProductError}</Alert>
                 )}
                 <div className="timlands-add-new">
-                  <div className="timlands-add-new-icon">
-                    <span className="material-icons material-icons-outlined">
-                      add_circle_outline
-                    </span>
-                  </div>
-                  <div className="timlands-add-new-body">
+                    <img src="/img/g10.png" alt="" className="add-new-image" />
+                  <div className="timlands-add-new-body mt-3">
                     <h3 className="title">إضافة خدمة جديدة</h3>
                     <p className="text">
                       رائع ! وصلت الى خطوتك الأخيرة لتنظم الى فريق بائعي تيموورك

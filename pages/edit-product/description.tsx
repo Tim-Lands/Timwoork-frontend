@@ -226,7 +226,7 @@ function Description({ query, stars }) {
       {token && veriedEmail && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
-            <div className="col-md-8 pt-3">
+            <div className="col-md-7 pt-3">
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -250,9 +250,8 @@ function Description({ query, stars }) {
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${
-                          getProduct?.data.current_step < 1 && "pe-none"
-                        }`}
+                        className={`timlands-step-item ${getProduct?.data.current_step < 1 && "pe-none"
+                          }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/prices?id=${id}`}>
@@ -268,9 +267,8 @@ function Description({ query, stars }) {
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item active ${
-                          getProduct?.data.current_step < 2 && "pe-none"
-                        }`}
+                        className={`timlands-step-item active ${getProduct?.data.current_step < 2 && "pe-none"
+                          }`}
                         ref={stepsView}
                       >
                         <h3 className="text">
@@ -287,9 +285,8 @@ function Description({ query, stars }) {
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${
-                          getProduct?.data.current_step < 3 && "pe-none"
-                        }`}
+                        className={`timlands-step-item ${getProduct?.data.current_step < 3 && "pe-none"
+                          }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/medias?id=${id}`}>
@@ -441,6 +438,20 @@ function Description({ query, stars }) {
                       </div>
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
+                          <button
+                            onClick={() => router.back()}
+                            type="button"
+                            className="btn flex-center butt-primary2-out me-auto butt-xs"
+                          >
+                            <span className="material-icons-outlined">
+                              chevron_right
+                            </span>
+                            <span className="text">المرحلة السابقة</span>
+                            <div
+                              className="spinner-border spinner-border-sm text-white"
+                              role="status"
+                            ></div>
+                          </button>
                           <button
                             type="submit"
                             disabled={

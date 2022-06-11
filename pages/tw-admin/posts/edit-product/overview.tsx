@@ -181,7 +181,7 @@ function Overview({ query }) {
         <div className="container-fluid">
           {isLoading && <div>يرجى الانتظار...</div>}
           <div className="row justify-content-md-center my-3">
-            <div className="col-md-7 pt-3">
+            <div className="col-md-8 pt-3">
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -277,12 +277,12 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
-                            العنوان
+                            عنوان الخدمة
                           </label>
                           <input
                             id="input-title"
                             name="title"
-                            placeholder="العنوان..."
+                            placeholder="عنوان الخدمة..."
                             className={
                               "timlands-inputs " +
                               (validationsErrors &&
@@ -295,6 +295,12 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
+                          
+                          <div className="note-form-text-sh">
+                            <p className="text">
+                              يجب أن لايحتوي عنوان الخدمة على رموز
+                            </p>
+                          </div>
                           {validationsErrors && validationsErrors.title && (
                             <div style={{ overflow: "hidden" }}>
                               <motion.div
