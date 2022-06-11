@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { message, Result } from "antd";
-import PostInner from "../Post/PostInner";
 import Post from "../Post/Post";
 
 function index({ products, isError, isLoading, size }): ReactElement {
@@ -63,47 +62,25 @@ function index({ products, isError, isLoading, size }): ReactElement {
         {products &&
           products.map((e: any) => (
             <div className={"col-md-" + size} key={e.id}>
-              <div className="post-resposive-with-desktop">
-                <PostInner
-                  size="small"
-                  title={e.title}
-                  avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
-                  author={
-                    e.profile_seller &&
-                    e.profile_seller.profile.first_name +
-                    " " +
-                    e.profile_seller.profile.last_name
-                  }
-                  rate={e.ratings_avg_rating}
-                  price={e.price}
-                  slug={e.slug}
-                  username={
-                    e.profile_seller && e.profile_seller.profile.user.username
-                  }
-                  thumbnail={e.full_path_thumbnail}
-                  buyers={e.count_buying}
-                />
-              </div>
-              <div className="post-resposive-with-smart">
-                <Post
-                  size="small"
-                  title={e.title}
-                  author={
-                    e.profile_seller &&
-                    e.profile_seller.profile.first_name +
-                    " " +
-                    e.profile_seller.profile.last_name
-                  }
-                  rate={e.ratings_avg_rating}
-                  price={e.price}
-                  slug={e.slug}
-                  username={
-                    e.profile_seller && e.profile_seller.profile.user.username
-                  }
-                  thumbnail={e.full_path_thumbnail}
-                  buyers={e.count_buying}
-                />
-              </div>
+              <Post
+                size="small"
+                avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+                title={e.title}
+                level={e.profile_seller && e.profile_seller.level.name_ar}
+                author={
+                  e.profile_seller &&
+                  e.profile_seller.profile.first_name + " " +
+                  e.profile_seller.profile.last_name
+                }
+                rate={e.ratings_avg_rating}
+                price={e.price}
+                slug={e.slug}
+                username={
+                  e.profile_seller && e.profile_seller.profile.user.username
+                }
+                thumbnail={e.full_path_thumbnail}
+                buyers={e.count_buying}
+              />
             </div>
           ))}
       </div>

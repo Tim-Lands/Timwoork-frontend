@@ -159,7 +159,10 @@ function PostsAside({
                   </div>
                   <div className="post-resposive-with-smart">
                     <Post
+                      size="small"
+                      avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
                       title={e.title}
+                      level={e.profile_seller && e.profile_seller.level.name_ar}
                       author={
                         e.profile_seller &&
                         e.profile_seller.profile.first_name +

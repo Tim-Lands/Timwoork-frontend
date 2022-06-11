@@ -1670,12 +1670,12 @@
   margin: 5px 0;
   margin-bottom: 12px;
   overflow: hidden;
-  height: 420px;
+  height: 480px;
 }
 
 @media (max-width: 600px) {
   .timlands-post-item {
-    height: 450px;
+    height: 490px;
   }
 }
 
@@ -1726,6 +1726,36 @@
   padding: 10px;
 }
 
+.timlands-post-item .post-item-content .user-mata-post {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.timlands-post-item .post-item-content .user-mata-post .user-mata-post-img {
+  padding-left: 6px;
+}
+
+.timlands-post-item .post-item-content .user-mata-post .user-mata-post-img img {
+  border-radius: 50%;
+}
+
+.timlands-post-item .post-item-content .user-mata-post .user-mata-post-content .text-user {
+  font-size: 14px;
+  margin: 0;
+  color: #333;
+}
+
+.timlands-post-item .post-item-content .user-mata-post .user-mata-post-content .text-meta {
+  font-size: 12px;
+  margin: 0;
+  font-weight: 200;
+  color: #555;
+}
+
 .timlands-post-item .post-item-content .post-meta li {
   font-size: 11px;
   padding: 3px 7px;
@@ -1753,7 +1783,6 @@
 
 .timlands-post-item .post-item-content .post-meta li:first-child {
   padding-right: 0;
-  border-left: 1px solid #f3f3f3;
 }
 
 .timlands-post-item .post-item-content .post-meta li a {
@@ -1880,12 +1909,12 @@
   border-radius: 5px;
   margin: 4px 0;
   margin-bottom: 10px;
-  height: 350px;
+  height: 390px;
 }
 
 @media (max-width: 600px) {
   .timlands-post-item.small {
-    height: 400px;
+    height: 440px;
   }
 }
 
@@ -1901,6 +1930,24 @@
 
 .timlands-post-item.small .post-item-content {
   padding: 8px;
+}
+
+.timlands-post-item.small .post-item-content .user-mata-post {
+  margin-bottom: 10px;
+}
+
+.timlands-post-item.small .post-item-content .user-mata-post .user-mata-post-img {
+  padding-left: 4px;
+}
+
+.timlands-post-item.small .post-item-content .user-mata-post .user-mata-post-content .text-user {
+  line-height: 14px;
+  font-size: 13px;
+}
+
+.timlands-post-item.small .post-item-content .user-mata-post .user-mata-post-content .text-meta {
+  font-size: 11px;
+  line-height: 14px;
 }
 
 .timlands-post-item.small .post-item-content .post-meta li {
