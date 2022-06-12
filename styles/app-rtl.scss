@@ -7112,6 +7112,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   position: relative;
   .timlands-hero-carousel {
     height: 100%;
+    @media (max-width: 900px) {
+      display: none !important;
+    }
     .timlands-hero-img {
       height: 100%;
 
@@ -7131,9 +7134,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       }
       &.hero-green {
         background-image: linear-gradient(#186d3f, #155633);
-      }
-      @media (max-width: 900px) {
-        display: none;
       }
     }
     .timlands-hero-text {

@@ -154,7 +154,7 @@ function Hero() {
 function whichColor(num) {
   switch (num) {
     default:
-      return "transparent";
+      return "#dc6d08";
     case 0:
       return "#dc6d08";
     case 1:
