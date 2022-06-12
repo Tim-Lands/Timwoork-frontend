@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Navigation,
   Pagination,
-  Scrollbar,
+  // Scrollbar,
   A11y,
   EffectCreative,
   Autoplay,
