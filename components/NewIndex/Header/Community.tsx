@@ -91,7 +91,7 @@ const Community = ({ refs }) => {
               </div>
               <div className="dropd-item-content">
                 <h4 className="title">المدونة</h4>
-                <p className="text">هذا النص شرح للرابط</p>
+                <p className="text">معلومات عامة ومفيدة</p>
               </div>
             </a>
           </Link>
