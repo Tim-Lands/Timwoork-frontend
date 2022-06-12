@@ -71,7 +71,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
                   onClick={() => setShowNotificationsMenu(false)}
                 >
                   <Link href={switchNotifyType(notification)}>
-                    <a className="new-popup-item">
+                    <a className="new-popup-item" style={{ marginRight: 0 }}>
                       <div className="new-popup-item-image">
                         <Image
                           src={notification?.data?.user_sender?.avatar_path}
@@ -98,7 +98,12 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
         </div>
         <div className="popup-dropdown-footer">
           <Link href={`/notifications`}>
-            <a className="nav-see-more">مشاهدة جميع الإشعارات</a>
+            <a
+              className="nav-see-more"
+              style={{ marginRight: 0, borderRadius: 6 }}
+            >
+              مشاهدة جميع الإشعارات
+            </a>
           </Link>
         </div>
       </div>
