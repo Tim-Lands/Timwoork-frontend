@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useState, useRef } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { useFormik } from "formik";
-import useSWR from "swr";
 import API from "../../config";
 import PropTypes from "prop-types";
 import Slider from "@mui/material/Slider";
@@ -12,6 +11,9 @@ import Cookies from "js-cookie";
 import { Collapse, Result } from "antd";
 import { Alert } from "@/components/Alert/Alert";
 import CreatableSelect from "react-select/creatable";
+import Link from "next/link";
+import cookies from "next-cookies";
+import router from "next/router";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -58,10 +60,10 @@ const MySelect = (props: any) => {
     </div>
   );
 };
-function Category() {
+function Category({ products, categories, url_params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
-
+  console.log(categories)
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
 
@@ -70,15 +72,12 @@ function Category() {
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
 
-  const { data: categories }: any = useSWR("api/get_categories");
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
-  const [getProducts, setGetProducts]: any = useState([]);
+  const [getProducts, setGetProducts]: any = useState(products);
   const [sentinel, setSentinel]: any = useState({ mount: true });
   const [subcategories, setSubCategories]: any = useState({});
   const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({});
-  const [isSubCategoryFetched, setIsSubCategoryFetched]: any = useState(false);
   const [activeKeys, setActiveKeys]: any = useState([]);
-  const [filterBased, setFilterBased]: any = useState("");
   const products_type = useRef({
     most_recent: "الخدمات الأحدث",
     most_selling: "الخدمات الأكثر مبيعًا",
@@ -87,27 +86,12 @@ function Category() {
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
   /**----------------------------------------------------------**/
   useEffect(() => {
-    if (isSubCategoryFetched) {
-      const { categoryID, subcategoryID, type, query } = getQueryParams(
-        window.location.search
-      );
-      if (categoryID) {
-        setActiveKeys(activeKeys.concat([2]));
-        setSubCategoryDisplay({ ...subCategoryDisplay, [categoryID]: "block" });
-        formik.setFieldValue("categoryID", [categoryID]);
-      }
-      if (subcategoryID) {
-        formik.setFieldValue("subcategoryID", subcategoryID);
-      }
-      if (type) {
-        setFilterBased(type);
-      }
-      if (query) formik.setFieldValue("query", query);
-    }
-  }, [isSubCategoryFetched]);
+    setGetProducts(products)
+  }, [products])
+
   useEffect(() => {
     fetchData();
-  }, [sentinel, filterBased]);
+  }, [sentinel]);
 
   useEffect(() => {
     if (categories?.data) fetchSubCategories();
@@ -159,45 +143,31 @@ function Category() {
   }, []);
   const fetchData = async (pageNumber: number = 1) => {
     setIsLoading(true);
-    const queryParams = getQueryParams(window.location.search);
     const {
       minprice,
       query,
       maxprice,
-      categoryID,
       tags,
-      subcategoryID,
       ratting,
       seller_level,
       delevring,
     } = formik.values;
     const tags_filtered = tags.filter((tag) => tag.id).map((tag) => tag.id);
-    console.log(queryParams);
     try {
       const params = {
         paginate: 12,
         page: pageNumber,
-        like: `title,${
-          query ? query : queryParams.query ? queryParams.query : ""
-        }`,
+        like: `title,${query ? query : url_params.query ? url_params.query : ""
+          }`,
         between: delevring ? `duration,${delevring}` : null,
-        category:
-          categoryID.length == 0
-            ? queryParams.categoryID == null
-              ? null
-              : queryParams.categoryID
-            : categoryID.join(","),
+        category: url_params.categoryID,
         tags: tags_filtered.length == 0 ? null : tags_filtered.join(","),
         ratings_avg: ratting,
         seller_level,
-        subcategories: subcategoryID
-          ? subcategoryID
-          : queryParams.subcategoryID
-          ? queryParams.subcategoryID
-          : null,
+        subcategories: url_params.subcategoryID
       };
       const res = await API.get(
-        `api/filter?${filterBased}&between=price,${minprice},${maxprice}`,
+        `api/filter?${url_params.type}&between=price,${minprice},${maxprice}`,
         {
           params,
           headers: {
@@ -228,7 +198,6 @@ function Category() {
     });
     setSubCategories(temp_subCategories);
     setSubCategoryDisplay(temp_subCategoriesDisplay);
-    setIsSubCategoryFetched(true);
   };
 
   const toggleCateogryDisplay = (id) => {
@@ -267,19 +236,7 @@ function Category() {
     formik.setFieldValue("minprice", -1 * newValue[1]);
   };
 
-  const getQueryParams = (query) => {
-    return query
-      ? (/^[?#]/.test(query) ? query.slice(1) : query)
-          .split("&")
-          .reduce((params, param) => {
-            const [key, value] = param.split("=");
-            params[key] = value
-              ? decodeURIComponent(value.replace(/\+/g, " "))
-              : "";
-            return params;
-          }, {})
-      : {};
-  };
+
   //const { data: categories }: any = useSWR('api/get_categories')
   const formik = useFormik({
     initialValues: {
@@ -521,8 +478,7 @@ function Category() {
                         <div
                           className="list-cat-item"
                           onClick={() => {
-                            formik.setFieldValue("categoryID", []);
-                            setSentinel({ ...sentinel, mount: true });
+                            router.push({ pathname: '/products' })
                           }}
                         >
                           <span className="item-cat-label">
@@ -538,9 +494,8 @@ function Category() {
                           <>
                             <div className="list-inner" key={e.id}>
                               <div
-                                className={`list-cat-item ${
-                                  subCategoryDisplay[e.id]
-                                }ed`}
+                                className={`list-cat-item ${subCategoryDisplay[e.id]
+                                  }ed`}
                                 onClick={() => toggleCateogryDisplay(e.id)}
                               >
                                 <span className="item-cat-label">
@@ -552,33 +507,32 @@ function Category() {
                               </div>
 
                               <div
-                                className={`filter-subcategories-list d-${
-                                  subCategoryDisplay[e.id]
-                                }`}
+                                className={`filter-subcategories-list d-${subCategoryDisplay[e.id]
+                                  }`}
                               >
                                 <div
                                   className="list-subcat-item"
                                   onClick={() => {
-                                    formik.setFieldValue("categoryID", [e.id]);
-                                    formik.setFieldValue("subcategoryID", null);
-                                    setSentinel({ ...sentinel, mount: true });
+
                                   }}
                                 >
-                                  الجميع
+                                  <Link href={`/products?categoryID=${e.id}`}>
+                                    <a className='item-cat-label text-black'>
+                                      الجميع
+                                    </a>
+                                  </Link>
                                 </div>
                                 {subcategories[e.id]?.map((sub_category) => (
                                   <div
                                     key={sub_category.id}
-                                    onClick={() => {
-                                      formik.setFieldValue(
-                                        "subcategoryID",
-                                        sub_category.id
-                                      );
-                                      setSentinel({ ...sentinel, mount: true });
-                                    }}
+
                                     className="list-subcat-item"
                                   >
-                                    {sub_category.name_ar}
+                                    <Link href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}>
+                                      <a>
+                                        {sub_category.name_ar}
+                                      </a>
+                                    </Link>
                                   </div>
                                 ))}
                               </div>
@@ -956,7 +910,8 @@ function Category() {
           <div className="col-md-9">
             <div className="page-header flex-center" style={{ paddingTop: 0 }}>
               <h4 className="title me-auto">
-                {products_type.current[filterBased] || "جميع الخدمات"}
+
+                {products_type.current[url_params.type] || "جميع الخدمات"}
               </h4>
               <div className="tool-right ml-auto">
                 <button
@@ -979,7 +934,7 @@ function Category() {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            setFilterBased("popular");
+                            router.push({ pathname: '/products', query: { ...url_params, type: 'popular' } })
                           }}
                         >
                           الأكثر شعبية
@@ -990,7 +945,8 @@ function Category() {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            setFilterBased("most_selling");
+                            router.push({ pathname: '/products', query: { ...url_params, type: 'most_selling' } })
+
                           }}
                         >
                           الأكثر مبيعا
@@ -1001,7 +957,8 @@ function Category() {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            setFilterBased("most_recent");
+                            router.push({ pathname: '/products', query: { ...url_params, type: 'most_recent' } })
+
                           }}
                         >
                           المضافة حديثا
@@ -1012,8 +969,8 @@ function Category() {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            setFilterBased("");
-                            setSentinel({ ...sentinel, mount: true });
+                            router.push({ pathname: '/products', query: { ...url_params, type: null } })
+
                           }}
                         >
                           بدون ترتيب
@@ -1048,7 +1005,7 @@ function Category() {
                   }
                   totalItemsCount={getProducts.total ? getProducts.total : 0}
                   onChange={(pageNumber) => {
-                    fetchData(pageNumber);
+                    fetchData(pageNumber)
                   }}
                   pageRangeDisplayed={paginationSize}
                   itemClass="page-item"
@@ -1065,10 +1022,58 @@ function Category() {
     </div>
   );
 }
+export async function getServerSideProps(context) {
+  console.log('begin server side')
+  const token = cookies(context).token || ""
+  const { query } = context;
+  console.log(query)
+  console.log('in server side');
+  try {
+    const query_params = {
+      paginate: 12,
+      page: query.pageNumber,
+      category: query.categoryID,
+      subcategories: query.subcategoryID,
+      query: query.query
+    };
+
+    const [productsRes, categoriesRes] = await Promise.all([API.get(
+      `api/filter?${query.type}`,
+      {
+        params: query_params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ),
+    API.get(`api/get_categories`)
+    ]);
+
+    return {
+      props: {
+        products: productsRes?.data?.data,
+        categories: categoriesRes.data,
+        url_params: query,
+        errorFetch: false,
+      },
+    };
+
+  } catch (error) {
+    console.log(error)
+    return {
+      props: {
+        errorFetch: true,
+      },
+    }
+  }
+}
 Category.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Category;
 Category.propTypes = {
   query: PropTypes.any,
+  products: PropTypes.any,
+  categories: PropTypes.any,
+  url_params: PropTypes.any
 };
