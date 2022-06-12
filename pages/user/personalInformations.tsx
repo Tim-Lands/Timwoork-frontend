@@ -379,30 +379,34 @@ const personalInformations = () => {
                                       ) &&
                                       " red",
                                   }}
-                                  className={"registerPhone prof "}
+                                  className={"registerPhone prof row"}
                                 >
-                                  <Field
-                                    id="phone"
-                                    name="phone"
-                                    onKeyUp={setValidationsErrorsHandle}
-                                    placeholder="رقم الهاتف..."
-                                    className={"timlands-inputs "}
-                                    autoComplete="off"
-                                  />
-                                  <Field
-                                    as="select"
-                                    id="code"
-                                    name="code"
-                                    style={{ border: "none", width: 100 }}
-                                    className={"timlands-inputs "}
-                                  >
-                                    <option value="">كود</option>
-                                    {codes.map((e: any) => (
-                                      <option key={e.id} value={e.code_phone}>
-                                        {e.code_phone}
-                                      </option>
-                                    ))}
-                                  </Field>
+                                  <div className="col-9 p-0">
+                                    <Field
+                                      id="phone"
+                                      name="phone"
+                                      onKeyUp={setValidationsErrorsHandle}
+                                      placeholder="رقم الهاتف..."
+                                      className={"timlands-inputs "}
+                                      autoComplete="off"
+                                    />
+                                  </div>
+                                  <div className="col-3 p-0">
+                                    <Field
+                                      as="select"
+                                      id="code"
+                                      name="code"
+                                      style={{ border: "none", width: 100 }}
+                                      className={"timlands-inputs "}
+                                    >
+                                      <option value="">كود</option>
+                                      {codes.map((e: any) => (
+                                        <option key={e.id} value={e.code_phone}>
+                                          {e.code_phone}
+                                        </option>
+                                      ))}
+                                    </Field>
+                                  </div>
                                 </div>
                                 {validationsErrors &&
                                   anyone(
