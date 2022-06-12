@@ -5,9 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Navigation,
   Pagination,
-  Scrollbar,
+  // Scrollbar,
   A11y,
-  EffectFade,
+  EffectCreative,
   Autoplay,
 } from "swiper";
 // Import Swiper styles
@@ -21,7 +21,6 @@ import Link from "next/link";
 
 function Hero() {
   const [index, setIndex] = useState(1);
-  console.log(index);
   return (
     <div
       className="timland-hero d-flex align-items-center justify-content-center"
@@ -36,21 +35,21 @@ function Hero() {
           modules={[
             Navigation,
             Pagination,
-            Scrollbar,
+            // Scrollbar,
             A11y,
-            EffectFade,
+            EffectCreative,
             Autoplay,
           ]}
           spaceBetween={0}
           slidesPerView={1}
-          effect="fade"
+          effect="creative"
           navigation={false}
           pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
+          // scrollbar={{ draggable: true }}
           onSlideChange={(i) => setIndex(i.activeIndex)}
           autoplay
           loop
-          style={{ maxHeight: 700 }}
+          style={{ maxHeight: 700, height: "100%" }}
         >
           <SwiperSlide>
             <div
@@ -155,7 +154,7 @@ function Hero() {
 function whichColor(num) {
   switch (num) {
     default:
-      return "transparent";
+      return "#dc6d08";
     case 0:
       return "#dc6d08";
     case 1:

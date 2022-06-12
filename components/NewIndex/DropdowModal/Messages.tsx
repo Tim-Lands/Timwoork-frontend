@@ -6,11 +6,12 @@ import { FaClock, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 
-function Messages({ messages }) {
+function Messages({ messages, refs, setShowMessagesMenu }) {
   return (
     <motion.div
       initial={{ y: -70, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      ref={refs}
       className="nav-popup-dropdown"
     >
       <div className="popup-dropdown-inner">
@@ -23,9 +24,13 @@ function Messages({ messages }) {
           <div className="popup-dropdown-content">
             <ul className="popup-dropdown-content-list">
               {messages?.map((message) => {
-                console.log(message);
                 return (
-                  <li key={message?.id}>
+                  <li
+                    key={message?.id}
+                    onClick={() => {
+                      setShowMessagesMenu(false);
+                    }}
+                  >
                     <Link href={`/conversations/${message.id}`}>
                       <a className="new-popup-item">
                         <div className="new-popup-item-image">
@@ -120,5 +125,7 @@ function Messages({ messages }) {
 }
 Messages.propTypes = {
   messages: PropTypes.array,
+  refs: PropTypes.any,
+  setShowMessagesMenu: PropTypes.func,
 };
 export default Messages;
