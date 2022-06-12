@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import useSWR from "swr";
 import Community from "./Community";
 import LoginForm from "@/components/NewIndex/LoginForm";
@@ -45,15 +45,23 @@ function Navbar({ dark = false }) {
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
   const { data: userInfo }: any = useSWR("api/me");
+  const chatRef: any = useRef(HTMLAnchorElement)
+  const notificationsRef: any = useRef(HTMLAnchorElement);
+  const profileRef: any = useRef(HTMLAnchorElement)
+  const communityRef: any = useRef(HTMLAnchorElement)
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
   };
+  useEffect(() => {
+    document.addEventListener('click', closeMenues);
+    return () => document.removeEventListener('click', closeMenues)
+  }, [showCommunityMenu, showMessagesMenu, isShowProfileMenu, showNotificationsMenu])
   useEffect(() => {
     API.get(`api/categories`)
       .then((res) => {
         setPostsList(res.data.data);
       })
-      .catch(() => {});
+      .catch(() => { });
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
@@ -167,9 +175,8 @@ function Navbar({ dark = false }) {
 
       notificationPusher.bind("notification.sent", (data) => {
         const today = new Date();
-        const date = `${today.getFullYear()}_${
-          today.getMonth() + 1
-        }-${today.getDate()}`;
+        const date = `${today.getFullYear()}_${today.getMonth() + 1
+          }-${today.getDate()}`;
         setNotifications([{ created_at: date, data }, ...notifications]);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
@@ -230,9 +237,22 @@ function Navbar({ dark = false }) {
       setNotifications(notificationsData?.data?.data?.data);
       setSentinel({ ...sentinel });
     } catch {
-      () => {};
+      () => { };
     }
   };
+
+  const closeMenues = e => {
+    console.log(showMessagesMenu)
+    setShowMessagesMenu(chatRef.current.contains(e.target) &&
+    !showMessagesMenu)
+    
+    setShowNotificationsMenu(notificationsRef.current.contains(e.target) &&
+      !showNotificationsMenu)
+    setIsShowProfileMenu(profileRef.current.contains(e.target) &&
+      !isShowProfileMenu)
+    setShowCommunityMenu(communityRef.current.contains(e.target) && !showCommunityMenu)
+
+  }
 
   return (
     <nav className="app-new-navbar-cont">
@@ -294,7 +314,7 @@ function Navbar({ dark = false }) {
             </Link>
           </li>
           <li className="link-item">
-            <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
+            <a ref={communityRef} onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
               <span className="material-icons material-icons-outlined">
                 backup_table
               </span>{" "}
@@ -309,8 +329,8 @@ function Navbar({ dark = false }) {
             <>
               <li className="circular-newitem avatar">
                 <a
+                  ref={profileRef}
                   className="link-circular-button"
-                  onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}
                 >
                   <Image
                     src={userInfo?.user_details?.profile?.avatar_path}
@@ -335,8 +355,8 @@ function Navbar({ dark = false }) {
               </li>
               <li className="circular-newitem">
                 <a
+                  ref={chatRef}
                   className="link-circular-button"
-                  onClick={() => setShowMessagesMenu(!showMessagesMenu)}
                 >
                   <span className="material-icons material-icons-outlined">
                     mail
@@ -346,10 +366,9 @@ function Navbar({ dark = false }) {
               </li>
               <li className="circular-newitem">
                 <a
+                  ref={notificationsRef}
                   className="link-circular-button"
-                  onClick={() =>
-                    setShowNotificationsMenu(!showNotificationsMenu)
-                  }
+    
                 >
                   <span className="material-icons material-icons-outlined">
                     notifications
@@ -375,9 +394,8 @@ function Navbar({ dark = false }) {
               <li className="mobAuthBtn">الدخول</li>
               <li className="authBtn">
                 <a
-                  className={`btn butt-xs flex-center ${
-                    !visible ? " butt-primary2-out" : " butt-white-out"
-                  }`}
+                  className={`btn butt-xs flex-center ${!visible ? " butt-primary2-out" : " butt-white-out"
+                    }`}
                   onClick={() => setIsShowLoginForm(true)}
                 >
                   <span className="material-icons material-icons-outlined">

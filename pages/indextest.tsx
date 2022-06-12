@@ -122,7 +122,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         slug={e.slug}
                         thumbnail={e.full_path_thumbnail}
                         buyers={e.count_buying}
-                        avatar="/avatar2.jpg"
+                        avatar={e.profile_seller.profile.avatar_path}
                       />
                     </SwiperSlide>
                   ))}
@@ -182,7 +182,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         slug={e.slug}
                         thumbnail={e.full_path_thumbnail}
                         buyers={e.count_buying}
-                        avatar="/avatar2.jpg"
+                        avatar={e.profile_seller.profile.avatar_path}
                       />
                     </SwiperSlide>
                   ))}
@@ -239,7 +239,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         slug={e.slug}
                         thumbnail={e.full_path_thumbnail}
                         buyers={e.count_buying}
-                        avatar="/avatar2.jpg"
+                        avatar={e.profile_seller.profile.avatar_path}
                       />
                     </SwiperSlide>
                   ))}
@@ -260,7 +260,6 @@ export async function getServerSideProps() {
         API.get("api/get_categories"),
         API.get("api/filter?paginate=9&popular"),
         API.get("api/filter?paginate=9&sort[0]=created_at,desc"),
-        API.get("api/filter?paginate=9&sort=count_buying,desc"),
         API.get("api/filter?paginate=9&sort=count_buying,desc"),
       ]);
 
