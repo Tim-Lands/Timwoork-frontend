@@ -70,6 +70,7 @@ function Subnavbar({ visible, postsList }) {
       },
     ],
   };
+  const [selected, setSelected] = useState(false);
   const [showLeft, setShowLeft] = useState(true);
   const [showRight, setShowRight] = useState(true);
   useOnScreen(end, setShowLeft);
@@ -94,20 +95,24 @@ function Subnavbar({ visible, postsList }) {
           ref={scroll}
           onMouseLeave={() => {
             setIsSubcategoriesToggle(false);
+            setSelected(false);
           }}
         >
           {categories &&
             categories.data.map((e: any) => (
               <li
+                className={`sub ${selected === e.id ? "selectedSub" : ""}`}
                 ref={e.end ? end : e.start ? start : middle}
                 key={e.id}
                 onMouseEnter={() => {
                   if (!e.end) {
                     setIsSubcategoriesToggle(true);
+                    setSelected(e.id);
                     setRight(e.right);
                     setCategoryID(e.categoryID);
                   } else {
                     setIsSubcategoriesToggle(false);
+                    setSelected(false);
                   }
                 }}
               >

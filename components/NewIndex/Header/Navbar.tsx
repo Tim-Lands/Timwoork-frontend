@@ -16,6 +16,7 @@ import { PusherContext } from "../../../contexts/pusherContext";
 import API from "../../../config";
 import { notification } from "antd";
 import LastSeen from "@/components/LastSeen";
+import MobileMenu from "./mobileMenus";
 import router from "next/router";
 
 import {
@@ -52,9 +53,7 @@ function Navbar({ dark = false }) {
       .then((res) => {
         setPostsList(res.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
@@ -67,8 +66,6 @@ function Navbar({ dark = false }) {
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
-        console.log(data);
-        console.log(messages);
         const message = {
           members: [data?.message?.user],
           id: data?.message?.conversation_id,
@@ -169,12 +166,10 @@ function Navbar({ dark = false }) {
       });
 
       notificationPusher.bind("notification.sent", (data) => {
-        console.log(data);
         const today = new Date();
         const date = `${today.getFullYear()}_${
           today.getMonth() + 1
         }-${today.getDate()}`;
-        console.log(date);
         setNotifications([{ created_at: date, data }, ...notifications]);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
@@ -239,51 +234,6 @@ function Navbar({ dark = false }) {
     }
   };
 
-  //   console.log(messages)
-  //   return (
-  //       <>
-  //           {isLanguageVisible && <Language setIsConfirmText={setIsLanguageVisible} />}
-  //           {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
-  //           <nav className={'app-new-navbar ' + (!visible ? ' is-fixed-nav' : '')}>
-  //               <div className="app-new-logo d-flex">
-  //                   {!visible ? <img src="/logo6.png" alt="" /> : <img src="/logo7.png" alt="" />}
-  //                   {!visible &&
-  //                       <div className="new-search-bar">
-  //                           <div className="new-search-bar-form">
-  //                               <span className="new-searchbar">
-  //                                   <FaSearch />
-  //                               </span>
-  //                               <input type="text" onKeyDown={(e) =>
-  //                                   e.keyCode === 13 &&
-  //                                   router.push(`/products?query=${query}`)} onChange={e => setQuery(e.target.value)} placeholder='البحث في الموقع...' className='form-serach-nav' />
-  //                               <button className='btn butt-xs butt-primary2' onClick={() => router.push(`/products?query=${query}`)}>البحث</button>
-  //                           </div>
-  //                       </div>
-  //                   }
-  //               </div>
-  //               <ul className="app-new-nav nav">
-  //                   <li className='link-item'>
-  //                       <Link href={'/products'}>
-  //                           <a>
-  //                               <span className="material-icons material-icons-outlined">shopping_cart</span> تصفح الخدمات
-  //                           </a>
-  //                       </Link>
-  //                   </li>
-  //                   <li className='link-item'>
-  //                       <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
-  //                           <span className="material-icons material-icons-outlined">backup_table</span> أقسام تيم وورك <span className="material-icons material-icons-outlined expand-more">expand_more</span>
-  //                       </a>
-  //                       {showCommunityMenu && <Community />}
-  //                   </li>
-  //                   {userInfo ? <>
-
-  //     setMessages(messagesData?.data?.data?.data);
-  //     setNotifications(notificationsData?.data?.data?.data);
-  //     setSentinel({ ...sentinel });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
   return (
     <nav className="app-new-navbar-cont">
       {isLanguageVisible && (
@@ -296,6 +246,7 @@ function Navbar({ dark = false }) {
           (!visible ? " is-fixed-nav" : "")
         }
       >
+        <MobileMenu postsList={postsList} />
         <div className="app-new-logo d-flex">
           {!visible ? (
             <Link href="/">
@@ -356,7 +307,7 @@ function Navbar({ dark = false }) {
           </li>
           {userInfo ? (
             <>
-              <li className="circular-newitem">
+              <li className="circular-newitem avatar">
                 <a
                   className="link-circular-button"
                   onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}
@@ -411,7 +362,7 @@ function Navbar({ dark = false }) {
             </>
           ) : (
             <>
-              <li>
+              <li className="authBtn">
                 <Link href={"/register"}>
                   <a className="btn butt-xs butt-primary2 flex-center">
                     <span className="material-icons material-icons-outlined">
@@ -421,7 +372,8 @@ function Navbar({ dark = false }) {
                   </a>
                 </Link>
               </li>
-              <li>
+              <li className="mobAuthBtn">الدخول</li>
+              <li className="authBtn">
                 <a
                   className={`btn butt-xs flex-center ${
                     !visible ? " butt-primary2-out" : " butt-white-out"

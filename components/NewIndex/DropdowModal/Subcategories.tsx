@@ -24,6 +24,7 @@ function Subcategories({ right = 0, postsList, categoryID }) {
             return (
               <li key={item.id} className="">
                 <a
+                  className="sub"
                   href={`/products?categoryID=${categoryID}&subcategoryID=${item.id}`}
                 >
                   {item.name_ar}
