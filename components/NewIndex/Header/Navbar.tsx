@@ -30,7 +30,7 @@ function Navbar({ dark = false }) {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
-  const [isLanguageVisible, setIsLanguageVisible] = useState(false);
+  // const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [showCommunityMenu, setShowCommunityMenu] = useState(false);
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
@@ -441,7 +441,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem">
             <a
               className="link-circular-button"
-              onClick={() => setIsLanguageVisible(true)}
+              // onClick={() => setIsLanguageVisible(true)}
             >
               <span className="material-icons material-icons-outlined">
                 language
