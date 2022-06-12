@@ -10828,16 +10828,18 @@ h3 {
   }
 }
 
-.app-new-navbar-cont .app-new-navbar .app-new-nav > li.mobAuthBtn {
+.app-new-navbar-cont .app-new-navbar .app-new-nav > li.mobAuthBtn button {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
   border-radius: 5px;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
   color: #ffd000;
   padding: 7px 10px;
 }
 
-.app-new-navbar-cont .app-new-navbar .app-new-nav > li.mobAuthBtn:hover {
+.app-new-navbar-cont .app-new-navbar .app-new-nav > li.mobAuthBtn button:hover {
   background-color: #ffd000;
   color: white;
 }

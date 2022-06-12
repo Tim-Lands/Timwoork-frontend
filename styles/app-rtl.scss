@@ -7289,14 +7289,18 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
           }
         }
         &.mobAuthBtn {
-          transition: all 0.3s linear;
-          border-radius: 5px;
-          cursor: pointer;
-          color: $primary2;
-          padding: 7px 10px;
-          &:hover {
-            background-color: $primary2;
-            color: white;
+          button {
+            transition: all 0.3s linear;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            color: $primary2;
+            padding: 7px 10px;
+            &:hover {
+              background-color: $primary2;
+              color: white;
+            }
           }
           @media (min-width: 600px) {
             display: none;

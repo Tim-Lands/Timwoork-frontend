@@ -269,9 +269,9 @@ function Navbar({ dark = false }) {
 
   return (
     <nav className="app-new-navbar-cont">
-      {isLanguageVisible && (
+      {/* {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
-      )}
+      )} */}
       {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
       <div
         className={
@@ -419,7 +419,9 @@ function Navbar({ dark = false }) {
                   </a>
                 </Link>
               </li>
-              <li className="mobAuthBtn">الدخول</li>
+              <li className="mobAuthBtn">
+                <button>الدخول</button>
+              </li>
               <li className="authBtn">
                 <a
                   className={`btn butt-xs flex-center ${
