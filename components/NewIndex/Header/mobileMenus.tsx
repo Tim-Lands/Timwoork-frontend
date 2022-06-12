@@ -176,6 +176,7 @@ const MobileMenu = ({ postsList }) => {
                       {post.subcategories.map((category) => {
                         return (
                           <a
+                            key={category.id}
                             href={`products?categoryID=${post.id}&subcategoryID=${category.id}`}
                             className="sideSubCat"
                             onClick={() => setVisible(false)}
