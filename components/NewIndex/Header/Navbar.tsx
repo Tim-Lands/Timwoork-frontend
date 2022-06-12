@@ -1,6 +1,7 @@
 import Link from "next/link";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import useSWR from "swr";
+import { useOutsideAlerter } from "../../useOutsideAlerter";
 import Community from "./Community";
 import LoginForm from "@/components/NewIndex/LoginForm";
 import { FaSearch } from "react-icons/fa";
@@ -47,7 +48,39 @@ function Navbar({ dark = false }) {
   const { data: userInfo }: any = useSWR("api/me");
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
+    setShowMessagesMenu(false);
+    setShowNotificationsMenu(false);
+    setShowCommunityMenu(false);
+    setIsShowProfileMenu(false);
   };
+  const messagesRef = useRef(null);
+  const notificationsRef = useRef(null);
+  const profileRef = useRef(null);
+  const profileBtn = useRef(null);
+  const communityRef = useRef(null);
+  const messagesBtn = useRef(null);
+  const notificationsBtn = useRef(null);
+  const communityBtn = useRef(null);
+  const hideMessages = () => {
+    setShowMessagesMenu(false);
+  };
+  const hideNotifications = () => {
+    setShowNotificationsMenu(false);
+  };
+  const hideCommunity = () => {
+    setShowCommunityMenu(false);
+  };
+  const hideProfile = () => {
+    setIsShowProfileMenu(false);
+  };
+
+  useOutsideAlerter(messagesRef, hideMessages, messagesBtn);
+
+  useOutsideAlerter(notificationsRef, hideNotifications, notificationsBtn);
+
+  useOutsideAlerter(communityRef, hideCommunity, communityBtn);
+  useOutsideAlerter(profileRef, hideProfile, profileBtn);
+
   useEffect(() => {
     API.get(`api/categories`)
       .then((res) => {
@@ -250,11 +283,11 @@ function Navbar({ dark = false }) {
         <div className="app-new-logo d-flex">
           {!visible ? (
             <Link href="/">
-              <img src="/logo6.png" alt="" style={{ cursor: "pointer" }} />
+              <img src="img/logo6.png" alt="" style={{ cursor: "pointer" }} />
             </Link>
           ) : (
             <Link href="/">
-              <img src="/logo7.png" alt="" style={{ cursor: "pointer" }} />
+              <img src="img/logo7.png" alt="" style={{ cursor: "pointer" }} />
             </Link>
           )}
           {!visible && (
@@ -293,21 +326,21 @@ function Navbar({ dark = false }) {
               </a>
             </Link>
           </li>
-          <li className="link-item">
+          <li className="link-item" ref={communityBtn}>
             <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
               <span className="material-icons material-icons-outlined">
                 backup_table
               </span>{" "}
-              مجتمع تيم وورك{" "}
+              اقسام تيم وورك
               <span className="material-icons material-icons-outlined expand-more">
                 expand_more
               </span>
             </a>
-            {showCommunityMenu && <Community />}
+            {showCommunityMenu && <Community refs={communityRef} />}
           </li>
           {userInfo ? (
             <>
-              <li className="circular-newitem avatar">
+              <li className="circular-newitem avatar" ref={profileBtn}>
                 <a
                   className="link-circular-button"
                   onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}
@@ -321,7 +354,11 @@ function Navbar({ dark = false }) {
                   />
                 </a>
                 {isShowProfileMenu && (
-                  <ProfileMenu user_details={userInfo?.user_details} />
+                  <ProfileMenu
+                    user_details={userInfo?.user_details}
+                    refs={profileRef}
+                    setIsShowProfileMenu={setIsShowProfileMenu}
+                  />
                 )}
               </li>
               <li className="circular-newitem">
@@ -333,7 +370,7 @@ function Navbar({ dark = false }) {
                   </a>
                 </Link>
               </li>
-              <li className="circular-newitem">
+              <li className="circular-newitem" ref={messagesBtn}>
                 <a
                   className="link-circular-button"
                   onClick={() => setShowMessagesMenu(!showMessagesMenu)}
@@ -342,9 +379,15 @@ function Navbar({ dark = false }) {
                     mail
                   </span>
                 </a>
-                {showMessagesMenu && <Messages messages={messages} />}
+                {showMessagesMenu && (
+                  <Messages
+                    refs={messagesRef}
+                    messages={messages}
+                    setShowMessagesMenu={setShowMessagesMenu}
+                  />
+                )}
               </li>
-              <li className="circular-newitem">
+              <li className="circular-newitem" ref={notificationsBtn}>
                 <a
                   className="link-circular-button"
                   onClick={() =>
@@ -356,7 +399,11 @@ function Navbar({ dark = false }) {
                   </span>
                 </a>
                 {showNotificationsMenu && (
-                  <Notifications notifications={notifications} />
+                  <Notifications
+                    notifications={notifications}
+                    setShowNotificationsMenu={setShowNotificationsMenu}
+                    refs={notificationsRef}
+                  />
                 )}
               </li>
             </>

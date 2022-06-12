@@ -1,4 +1,4 @@
-import {  Drawer } from "antd";
+import { Drawer } from "antd";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useSWR from "swr";
@@ -175,12 +175,13 @@ const MobileMenu = ({ postsList }) => {
                     <Panel header={post.name_ar} key={post.id}>
                       {post.subcategories.map((category) => {
                         return (
-                          <Link
+                          <a
                             href={`products?categoryID=${post.id}&subcategoryID=${category.id}`}
-                            key={category.id}
+                            className="sideSubCat"
+                            onClick={() => setVisible(false)}
                           >
-                            <a className="sideSubCat">{category.name_ar}</a>
-                          </Link>
+                            {category.name_ar}
+                          </a>
                         );
                       })}
                     </Panel>

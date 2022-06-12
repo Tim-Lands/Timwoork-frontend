@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navigation/Navbar";
+import Navbar from "@/components/NewIndex/Header/Navbar";
 import { Spin } from "antd";
 import router from "next/router";
 import { useEffect, useState } from "react";
