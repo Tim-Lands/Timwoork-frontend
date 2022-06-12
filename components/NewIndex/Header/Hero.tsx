@@ -35,7 +35,7 @@ function Hero() {
           modules={[
             Navigation,
             Pagination,
-            Scrollbar,
+            // Scrollbar,
             A11y,
             EffectCreative,
             Autoplay,
@@ -45,7 +45,7 @@ function Hero() {
           effect="creative"
           navigation={false}
           pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
+          // scrollbar={{ draggable: true }}
           onSlideChange={(i) => setIndex(i.activeIndex)}
           autoplay
           loop
