@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useState, useContext, useRef } from "react";
 import useSWR from "swr";
+import { useOutsideAlerter } from "../../useOutsideAlerter";
 import Community from "./Community";
 import LoginForm from "@/components/NewIndex/LoginForm";
 import { FaSearch } from "react-icons/fa";
@@ -9,7 +10,7 @@ import Cookies from "js-cookie";
 import Notifications from "../DropdowModal/Notifications";
 import PropTypes from "prop-types";
 import Messages from "../DropdowModal/Messages";
-import Language from "../DropdowModal/Language";
+// import Language from "../DropdowModal/Language";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
 import { PusherContext } from "../../../contexts/pusherContext";
@@ -29,7 +30,7 @@ function Navbar({ dark = false }) {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
-  const [isLanguageVisible, setIsLanguageVisible] = useState(false);
+  // const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [showCommunityMenu, setShowCommunityMenu] = useState(false);
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
@@ -45,23 +46,47 @@ function Navbar({ dark = false }) {
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
   const { data: userInfo }: any = useSWR("api/me");
-  const chatRef: any = useRef(HTMLAnchorElement)
-  const notificationsRef: any = useRef(HTMLAnchorElement);
-  const profileRef: any = useRef(HTMLAnchorElement)
-  const communityRef: any = useRef(HTMLAnchorElement)
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
+    setShowMessagesMenu(false);
+    setShowNotificationsMenu(false);
+    setShowCommunityMenu(false);
+    setIsShowProfileMenu(false);
   };
-  useEffect(() => {
-    document.addEventListener('click', closeMenues);
-    return () => document.removeEventListener('click', closeMenues)
-  }, [showCommunityMenu, showMessagesMenu, isShowProfileMenu, showNotificationsMenu])
+  const messagesRef = useRef(null);
+  const notificationsRef = useRef(null);
+  const profileRef = useRef(null);
+  const profileBtn = useRef(null);
+  const communityRef = useRef(null);
+  const messagesBtn = useRef(null);
+  const notificationsBtn = useRef(null);
+  const communityBtn = useRef(null);
+  const hideMessages = () => {
+    setShowMessagesMenu(false);
+  };
+  const hideNotifications = () => {
+    setShowNotificationsMenu(false);
+  };
+  const hideCommunity = () => {
+    setShowCommunityMenu(false);
+  };
+  const hideProfile = () => {
+    setIsShowProfileMenu(false);
+  };
+
+  useOutsideAlerter(messagesRef, hideMessages, messagesBtn);
+
+  useOutsideAlerter(notificationsRef, hideNotifications, notificationsBtn);
+
+  useOutsideAlerter(communityRef, hideCommunity, communityBtn);
+  useOutsideAlerter(profileRef, hideProfile, profileBtn);
+
   useEffect(() => {
     API.get(`api/categories`)
       .then((res) => {
         setPostsList(res.data.data);
       })
-      .catch(() => { });
+      .catch(() => {});
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
@@ -175,8 +200,9 @@ function Navbar({ dark = false }) {
 
       notificationPusher.bind("notification.sent", (data) => {
         const today = new Date();
-        const date = `${today.getFullYear()}_${today.getMonth() + 1
-          }-${today.getDate()}`;
+        const date = `${today.getFullYear()}_${
+          today.getMonth() + 1
+        }-${today.getDate()}`;
         setNotifications([{ created_at: date, data }, ...notifications]);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
@@ -237,28 +263,15 @@ function Navbar({ dark = false }) {
       setNotifications(notificationsData?.data?.data?.data);
       setSentinel({ ...sentinel });
     } catch {
-      () => { };
+      () => {};
     }
   };
 
-  const closeMenues = e => {
-    console.log(showMessagesMenu)
-    setShowMessagesMenu(chatRef.current.contains(e.target) &&
-    !showMessagesMenu)
-    
-    setShowNotificationsMenu(notificationsRef.current.contains(e.target) &&
-      !showNotificationsMenu)
-    setIsShowProfileMenu(profileRef.current.contains(e.target) &&
-      !isShowProfileMenu)
-    setShowCommunityMenu(communityRef.current.contains(e.target) && !showCommunityMenu)
-
-  }
-
   return (
     <nav className="app-new-navbar-cont">
-      {isLanguageVisible && (
+      {/* {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
-      )}
+      )} */}
       {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
       <div
         className={
@@ -270,11 +283,11 @@ function Navbar({ dark = false }) {
         <div className="app-new-logo d-flex">
           {!visible ? (
             <Link href="/">
-              <img src="/logo6.png" alt="" style={{ cursor: "pointer" }} />
+              <img src="img/logo6.png" alt="" style={{ cursor: "pointer" }} />
             </Link>
           ) : (
             <Link href="/">
-              <img src="/logo7.png" alt="" style={{ cursor: "pointer" }} />
+              <img src="img/logo7.png" alt="" style={{ cursor: "pointer" }} />
             </Link>
           )}
           {!visible && (
@@ -313,24 +326,24 @@ function Navbar({ dark = false }) {
               </a>
             </Link>
           </li>
-          <li className="link-item">
-            <a ref={communityRef} onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
+          <li className="link-item" ref={communityBtn}>
+            <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
               <span className="material-icons material-icons-outlined">
                 backup_table
               </span>{" "}
-              مجتمع تيم وورك{" "}
+              اقسام تيم وورك
               <span className="material-icons material-icons-outlined expand-more">
                 expand_more
               </span>
             </a>
-            {showCommunityMenu && <Community />}
+            {showCommunityMenu && <Community refs={communityRef} />}
           </li>
           {userInfo ? (
             <>
-              <li className="circular-newitem avatar">
+              <li className="circular-newitem avatar" ref={profileBtn}>
                 <a
-                  ref={profileRef}
                   className="link-circular-button"
+                  onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}
                 >
                   <Image
                     src={userInfo?.user_details?.profile?.avatar_path}
@@ -341,7 +354,11 @@ function Navbar({ dark = false }) {
                   />
                 </a>
                 {isShowProfileMenu && (
-                  <ProfileMenu user_details={userInfo?.user_details} />
+                  <ProfileMenu
+                    user_details={userInfo?.user_details}
+                    refs={profileRef}
+                    setIsShowProfileMenu={setIsShowProfileMenu}
+                  />
                 )}
               </li>
               <li className="circular-newitem">
@@ -353,29 +370,40 @@ function Navbar({ dark = false }) {
                   </a>
                 </Link>
               </li>
-              <li className="circular-newitem">
+              <li className="circular-newitem" ref={messagesBtn}>
                 <a
-                  ref={chatRef}
                   className="link-circular-button"
+                  onClick={() => setShowMessagesMenu(!showMessagesMenu)}
                 >
                   <span className="material-icons material-icons-outlined">
                     mail
                   </span>
                 </a>
-                {showMessagesMenu && <Messages messages={messages} />}
+                {showMessagesMenu && (
+                  <Messages
+                    refs={messagesRef}
+                    messages={messages}
+                    setShowMessagesMenu={setShowMessagesMenu}
+                  />
+                )}
               </li>
-              <li className="circular-newitem">
+              <li className="circular-newitem" ref={notificationsBtn}>
                 <a
-                  ref={notificationsRef}
                   className="link-circular-button"
-    
+                  onClick={() =>
+                    setShowNotificationsMenu(!showNotificationsMenu)
+                  }
                 >
                   <span className="material-icons material-icons-outlined">
                     notifications
                   </span>
                 </a>
                 {showNotificationsMenu && (
-                  <Notifications notifications={notifications} />
+                  <Notifications
+                    notifications={notifications}
+                    setShowNotificationsMenu={setShowNotificationsMenu}
+                    refs={notificationsRef}
+                  />
                 )}
               </li>
             </>
@@ -391,11 +419,14 @@ function Navbar({ dark = false }) {
                   </a>
                 </Link>
               </li>
-              <li className="mobAuthBtn">الدخول</li>
+              <li className="mobAuthBtn">
+                <button>الدخول</button>
+              </li>
               <li className="authBtn">
                 <a
-                  className={`btn butt-xs flex-center ${!visible ? " butt-primary2-out" : " butt-white-out"
-                    }`}
+                  className={`btn butt-xs flex-center ${
+                    !visible ? " butt-primary2-out" : " butt-white-out"
+                  }`}
                   onClick={() => setIsShowLoginForm(true)}
                 >
                   <span className="material-icons material-icons-outlined">
@@ -410,7 +441,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem">
             <a
               className="link-circular-button"
-              onClick={() => setIsLanguageVisible(true)}
+              // onClick={() => setIsLanguageVisible(true)}
             >
               <span className="material-icons material-icons-outlined">
                 language
