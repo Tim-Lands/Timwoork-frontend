@@ -7798,6 +7798,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   .footer-bottom-inner {
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
     align-items: center;
     .right-footer {
       margin-left: auto;
