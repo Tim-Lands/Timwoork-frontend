@@ -9,7 +9,6 @@ import Footer from "../Footer/Footer";
 import Navbar from "../Header/Navbar";
 
 function LayoutHome(props: any) {
-  console.log(props);
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -48,7 +47,7 @@ function LayoutHome(props: any) {
         },
       }}
     >
-      <div className="hero-content">
+      <div className="hero-content" style={{ overflowX: "hidden" }}>
         <div className="container">
           <Navbar dark={props.dark} />
         </div>

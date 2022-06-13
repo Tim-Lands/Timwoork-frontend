@@ -11406,10 +11406,23 @@ h3 {
 }
 
 .footer-inner {
-  margin-top: 100px;
+  overflow-x: hidden;
   padding: 120px 0;
   background-color: #fff;
   border-top: 2px solid #ddd;
+}
+
+.footer-inner .footer-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 30px;
+  padding: 0px 50px;
 }
 
 .footer-inner .footer-item .title {

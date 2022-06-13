@@ -7762,10 +7762,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 
 // Footer
 .footer-inner {
-  margin-top: 100px;
+  overflow-x: hidden;
   padding: 120px 0;
   background-color: #fff;
   border-top: 2px solid #ddd;
+  .footer-cont {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 0px 50px;
+  }
   .footer-item {
     .title {
       font-size: 16px;
