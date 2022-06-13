@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 import useSWR from "swr";
+import { useRouter } from 'next/router'
 import {
   MdOutlineShoppingCart,
   MdNotificationsNone,
@@ -19,6 +20,8 @@ const MobileMenu = ({ postsList }) => {
   const [visible, setVisible] = useState(false);
   const { data: userInfo }: any = useSWR("api/me");
   const [size, setSize] = useState("70%");
+  const [query, setQuery] = useState('')
+  const router = useRouter();
   const showDrawer = () => {
     setVisible(true);
   };
@@ -57,16 +60,16 @@ const MobileMenu = ({ postsList }) => {
               </span>
               <input
                 type="text"
-                // onKeyDown={(e) =>
-                //   e.keyCode === 13 && router.push(`/products?query=${query}`)
-                // }
-                // onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) =>
+                  e.keyCode === 13 && router.push(`/products?query=${query}`)
+                }
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="البحث في الموقع..."
                 className="form-serach-nav"
               />
               <button
                 className="btn butt-xs butt-primary2"
-                // onClick={() => router.push(`/products?query=${query}`)}
+              // onClick={() => router.push(`/products?query=${query}`)}
               >
                 البحث
               </button>

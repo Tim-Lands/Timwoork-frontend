@@ -64,6 +64,15 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
         setSelectedProductId(id);
         setIsDisactiveModalVisible(true);
     }
+    async function disactiveProduct() {
+        try {
+            await API.post(`dashboard/${selectedProductId}/disactive_product`)
+            setIsDisactiveModalVisible(false);
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
     async function rejectProduct(body) {
         setIsLoading(true);
@@ -102,7 +111,8 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
                             setIsConfirmText={setIsDisactiveModalVisible}
                             title="سبب التعطيل"
                             msg={cause}
-                            setMsg={(e) => setCause((e.target as HTMLInputElement).value)}
+                            setMsg={(e) => setCause(e)}
+                            handleFunc={disactiveProduct}
                         />
                     }
                     {isEmailModalVisible &&
