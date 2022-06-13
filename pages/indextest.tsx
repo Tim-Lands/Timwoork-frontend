@@ -110,8 +110,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
+                          " " +
+                          e.profile_seller.profile.last_name
                         }
                         rate={e.ratings_avg_rating}
                         username={
@@ -170,8 +170,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
+                          " " +
+                          e.profile_seller.profile.last_name
                         }
                         rate={e.ratings_avg_rating}
                         username={
@@ -227,8 +227,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
+                          " " +
+                          e.profile_seller.profile.last_name
                         }
                         rate={e.ratings_avg_rating}
                         username={
@@ -260,7 +260,7 @@ export async function getServerSideProps() {
         API.get("api/get_categories"),
         API.get("api/filter?paginate=9&popular"),
         API.get("api/filter?paginate=9&sort[0]=created_at,desc"),
-        API.get("api/filter?paginate=9&sort=count_buying,desc"),
+        API.get("api/filter?paginate=9&sort=count_buying,desc")
       ]);
 
     // Pass data to the page via props

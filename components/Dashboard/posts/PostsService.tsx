@@ -195,7 +195,7 @@ export const generatecolumns = ({ status, callbacks }) => [
         dataIndex: ["profile_seller"],
         render: (seller: any) => (
             <Link href={`/u/${seller.profile.user.username}`}>
-                <a>{seller.profile.full_name||seller.profile.first_name+seller.profile.last_name}</a>
+                <a>{seller.profile.full_name || seller.profile.first_name + seller.profile.last_name}</a>
             </Link>
         ),
         ellipsis: true,
@@ -210,12 +210,17 @@ export const generatecolumns = ({ status, callbacks }) => [
     },
 ]
 const generateButtonSet = ({ status, post, callbacks }) => {
+    console.log(status)
     const { activateProduct,
         onRejectClick,
         onSendNotificationClick,
-        onSendEmailClick } = callbacks
+        onSendEmailClick,
+        onDisactiveClick
+    } = callbacks
     return (
         <Space>
+
+
             {!['activated', 'archieved'].includes(status) && (post.status == 0 || post.status == null) ? (
                 <button
                     title="تنشيط هذه الخدمة"
@@ -227,7 +232,13 @@ const generateButtonSet = ({ status, post, callbacks }) => {
             ) : (
                 ""
             )}
-
+            <button
+                title="تعطيل هذه الخدمة"
+                onClick={() => onDisactiveClick(post.id)}
+                className="btn butt-xs2 butt-orange"
+            >
+                تعطيل
+            </button>
             {
                 status == "archieved" && <> <button
                     title="حذف هذه الخدمة"

@@ -35,7 +35,7 @@ function index() {
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
-
+  console.log(postsList);
   useEffect(() => {
     refreshData();
   }, [pageNumber, sentinel]);
@@ -87,25 +87,26 @@ function index() {
         data: posts.data.filter((post) => post.id != selectedUserID),
       }));
     } catch (err) {
-      () => {};
+      () => { };
     }
   };
 
   const columns: any = [
     {
       title: "الاسم الكامل",
-      dataIndex: ["profile"],
-      render: (profile: any) => (
-        <Link key={profile.id} href={`/u/${profile.id}`}>
+      dataIndex: "",
+      render: (e: any) => (
+
+         <Link key={e.id} href={`/u/${e.id}`}>
           <a className="flex-center">
-            <Image src={`${profile.avatar_path}`} width={20} height={20} />
+            <Image src={`${e.profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
-              {!profile.full_name || profile.full_name == ""
+              {!e.profile.full_name || e.profile.full_name == ""
                 ? "بدون اسم"
-                : profile.full_name}
+                : e.profile.full_name}
             </span>
           </a>
-        </Link>
+        </Link> 
       ),
 
       sorter: {
