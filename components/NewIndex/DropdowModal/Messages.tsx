@@ -32,7 +32,7 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
                     }}
                   >
                     <Link href={`/conversations/${message.id}`}>
-                      <a className="new-popup-item">
+                      <a className="new-popup-item" style={{ marginRight: 0 }}>
                         <div className="new-popup-item-image">
                           <Image
                             src={message?.members[0].profile.avatar_url}
@@ -116,7 +116,12 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
         </div>
         <div className="popup-dropdown-footer">
           <Link href={`/`}>
-            <a className="nav-see-more">مشاهدة جميع الرسائل</a>
+            <a
+              className="nav-see-more"
+              style={{ marginRight: 0, borderRadius: 6 }}
+            >
+              مشاهدة جميع الرسائل
+            </a>
           </Link>
         </div>
       </div>

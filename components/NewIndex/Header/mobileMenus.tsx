@@ -1,6 +1,7 @@
 import { Drawer } from "antd";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { RiUserSmileLine } from "react-icons/ri";
 import useSWR from "swr";
 import {
   MdOutlineShoppingCart,
@@ -83,7 +84,7 @@ const MobileMenu = ({ postsList }) => {
             <div className="society">
               <Collapse>
                 <Panel
-                  header="مجتمع تيم وورك"
+                  header="أقسام تيم وورك"
                   key="1"
                   extra={<MdBackupTable style={{ marginLeft: 20 }} />}
                 >
@@ -101,7 +102,7 @@ const MobileMenu = ({ postsList }) => {
                             </div>
                             <div className="dropd-item-content">
                               <h4 className="title">المسابقات</h4>
-                              <p className="text">هذا النص شرح للرابط</p>
+                              <p className="text">قريبا</p>
                             </div>
                           </a>
                         </Link>
@@ -118,7 +119,7 @@ const MobileMenu = ({ postsList }) => {
                             </div>
                             <div className="dropd-item-content">
                               <h4 className="title">المشاريع</h4>
-                              <p className="text">هذا النص شرح للرابط</p>
+                              <p className="text">قريبا</p>
                             </div>
                           </a>
                         </Link>
@@ -135,13 +136,29 @@ const MobileMenu = ({ postsList }) => {
                             </div>
                             <div className="dropd-item-content">
                               <h4 className="title">الاعمال</h4>
-                              <p className="text">هذا النص شرح للرابط</p>
+                              <p className="text">قريبا</p>
                             </div>
                           </a>
                         </Link>
                       </li>
                       <li>
                         <Link href={`/`}>
+                          <a className="dropd-item">
+                            <div className="dropd-item-img">
+                              <span className="icon-item link-circular-button">
+                                <RiUserSmileLine />
+                              </span>
+                            </div>
+                            <div className="dropd-item-content">
+                              <h4 className="title">مجتمع تيم وورك</h4>
+                              <p className="text">قريبا</p>
+                            </div>
+                          </a>
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link href={`/blog`}>
                           <a className="dropd-item">
                             <div className="dropd-item-img">
                               <span className="icon-item link-circular-button">
@@ -152,7 +169,7 @@ const MobileMenu = ({ postsList }) => {
                             </div>
                             <div className="dropd-item-content">
                               <h4 className="title">المدونة</h4>
-                              <p className="text">هذا النص شرح للرابط</p>
+                              <p className="text">معلومات عامة ومفيدة</p>
                             </div>
                           </a>
                         </Link>
