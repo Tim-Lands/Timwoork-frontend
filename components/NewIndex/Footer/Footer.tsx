@@ -130,14 +130,23 @@ function Footer() {
               <Tooltip title="الماستر كارد">
                 <img src="/png2.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title="الوايز">
-                <img src="/png3.png" alt="" height={30} className="mx-1" />
-              </Tooltip>
               <Tooltip title="البايبال">
                 <img src="/png4.png" alt="" height={38} className="mx-1" />
               </Tooltip>
+            </div>
+            <div className="payments-me mt-2">
+              <h4 className="title">وسائل السحب</h4>
+              <Tooltip title="ويستر يونيون">
+                <img src="/western.png" alt="" height={38} className="mx-1" />
+              </Tooltip>
+              <Tooltip title="الوايز">
+                <img src="/png3.png" alt="" height={30} className="mx-1" />
+              </Tooltip>
               <Tooltip title="بريد الجزائر">
                 <img src="/ccp.png" alt="" height={30} className="mx-1" />
+              </Tooltip>
+              <Tooltip title="حوالة بنكية">
+                <img src="/bank.png" alt="" height={34} className="mx-1" />
               </Tooltip>
             </div>
           </div>

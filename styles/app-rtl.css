@@ -10574,12 +10574,34 @@ h3 {
   height: 100vh;
   -webkit-transition: background 0.3s linear;
   transition: background 0.3s linear;
+  width: 100%;
   max-height: 750px;
   position: relative;
 }
 
+.timland-hero.hero-orange {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ea7707), to(#de7006));
+  background-image: linear-gradient(#ea7707, #de7006);
+}
+
+.timland-hero.hero-red {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#7d1010), to(#872d25));
+  background-image: linear-gradient(#7d1010, #872d25);
+}
+
+.timland-hero.hero-green {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#013914), to(#013914));
+  background-image: linear-gradient(#013914, #013914);
+}
+
+.timland-hero.hero-pink {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#b64663), to(#b64761));
+  background-image: linear-gradient(#b64663, #b64761);
+}
+
 .timland-hero .timlands-hero-carousel {
   height: 100%;
+  width: 100%;
 }
 
 @media (max-width: 900px) {
@@ -10590,9 +10612,20 @@ h3 {
 
 .timland-hero .timlands-hero-carousel .timlands-hero-img {
   height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
   max-height: 750px;
   background-size: cover;
   background-position: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  padding-left: 15px;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -10603,19 +10636,9 @@ h3 {
   }
 }
 
-.timland-hero .timlands-hero-carousel .timlands-hero-img.hero-dark {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#111), to(#222));
-  background-image: linear-gradient(#111, #222);
-}
-
-.timland-hero .timlands-hero-carousel .timlands-hero-img.hero-red {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#7d1010), to(#641010));
-  background-image: linear-gradient(#7d1010, #641010);
-}
-
-.timland-hero .timlands-hero-carousel .timlands-hero-img.hero-green {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#186d3f), to(#155633));
-  background-image: linear-gradient(#186d3f, #155633);
+.timland-hero .timlands-hero-carousel .timlands-hero-img img {
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
 }
 
 .timland-hero .timlands-hero-carousel .timlands-hero-text {
@@ -10682,12 +10705,27 @@ h3 {
   z-index: 9000;
   position: fixed;
   inset: 0px 0px auto 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .app-new-navbar-cont .app-new-navbar {
+  max-width: 1400px;
   -webkit-transition: all 0.4s linear;
   transition: all 0.4s linear;
   padding: 20px 0px;
+  width: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -11837,6 +11875,8 @@ h3 {
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
   margin-top: 0;
+  width: 100%;
+  max-width: 1400px;
   -webkit-transform: rotateX(-90deg);
           transform: rotateX(-90deg);
 }

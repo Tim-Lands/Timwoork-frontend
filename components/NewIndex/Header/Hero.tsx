@@ -23,10 +23,12 @@ function Hero() {
   const [index, setIndex] = useState(1);
   return (
     <div
-      className="timland-hero d-flex align-items-center justify-content-center"
+      className={
+        "timland-hero d-flex align-items-center justify-content-center " +
+        whichColor(index)
+      }
       style={{
         maxHeight: 700,
-        backgroundColor: whichColor(index),
         transition: "all .3s linear",
       }}
     >
@@ -52,15 +54,99 @@ function Hero() {
           style={{ maxHeight: 700, height: "100%" }}
         >
           <SwiperSlide>
-            <div
-              className="timlands-hero-img hero-red"
-              style={{
-                backgroundImage: `url('/img/1.png')`,
-              }}
-            ></div>
+            <div className="timlands-hero-img ">
+              <img
+                src="/img/1.png"
+                alt=""
+                style={{ opacity: index === 1 ? 1 : 0, height: 500 }}
+              />
+            </div>
             <Link href={`/`}>
-              <a className="timlands-hero-text">
+              <a
+                className="timlands-hero-text"
+                style={{ opacity: index === 1 ? 1 : 0 }}
+              >
                 <h4 className="rating">
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                </h4>
+                <h4 className="text">
+                  حسام, <strong>معلق صوتي</strong>
+                </h4>
+              </a>
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="timlands-hero-img ">
+              <img
+                src="/img/2.png"
+                alt=""
+                style={{ opacity: index === 2 ? 1 : 0, height: 500 }}
+              />
+            </div>
+            <Link href={`/`}>
+              <a
+                className="timlands-hero-text"
+                style={{ opacity: index === 2 ? 1 : 0 }}
+              >
+                <h4 className="rating">
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                </h4>
+                <h4 className="text">
+                  أيات, <strong>معلق صوتي</strong>
+                </h4>
+              </a>
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="timlands-hero-img ">
+              <img
+                src="/img/3.png"
+                alt=""
+                style={{ opacity: index === 3 ? 1 : 0, height: 500 }}
+              />
+            </div>
+            <Link href={`/`}>
+              <a
+                className="timlands-hero-text"
+                style={{ opacity: index === 3 ? 1 : 0 }}
+              >
+                <h4 className="rating">
+                  {" "}
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                  <span className="material-icons">star</span>
+                </h4>
+                <h4 className="text">
+                  فوزي, <strong>صوتبات</strong>
+                </h4>
+              </a>
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="timlands-hero-img ">
+              <img
+                src="/img/4.png"
+                alt=""
+                style={{ opacity: index === 4 ? 1 : 0, height: 500 }}
+              />
+            </div>
+            <Link href={`/`}>
+              <a
+                className="timlands-hero-text"
+                style={{ opacity: index === 4 ? 1 : 0 }}
+              >
+                <h4 className="rating">
+                  {" "}
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
@@ -69,76 +155,6 @@ function Hero() {
                 </h4>
                 <h4 className="text">
                   رحمة, <strong>كتابة وترجمة</strong>
-                </h4>
-              </a>
-            </Link>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div
-              className="timlands-hero-img hero-green"
-              style={{
-                backgroundImage: `url('/img/2.png')`,
-              }}
-            ></div>
-            <Link href={`/`}>
-              <a className="timlands-hero-text">
-                <h4 className="rating">
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                </h4>
-                <h4 className="text">
-                  فوزي, <strong>صوتبات</strong>
-                </h4>
-              </a>
-            </Link>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div
-              className="timlands-hero-img hero-dark"
-              style={{
-                backgroundImage: `url('/img/3.png')`,
-              }}
-            ></div>
-            <Link href={`/`}>
-              <a className="timlands-hero-text">
-                <h4 className="rating">
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons material-icons-outlined">
-                    star
-                  </span>
-                </h4>
-                <h4 className="text">
-                  فوزي, <strong>صوتبات</strong>
-                </h4>
-              </a>
-            </Link>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div
-              className="timlands-hero-img hero-dark"
-              style={{
-                backgroundImage: `url('/img/4.png')`,
-              }}
-            ></div>
-            <Link href={`/`}>
-              <a className="timlands-hero-text">
-                <h4 className="rating">
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons">star</span>
-                  <span className="material-icons material-icons-outlined">
-                    star
-                  </span>
-                </h4>
-                <h4 className="text">
-                  فوزي, <strong>صوتبات</strong>
                 </h4>
               </a>
             </Link>
@@ -153,20 +169,18 @@ function Hero() {
 }
 function whichColor(num) {
   switch (num) {
-    default:
-      return "#dc6d08";
-    case 0:
-      return "#dc6d08";
+    // case 0:
+    //   return "hero-red";
     case 1:
-      return "#023813";
+      return "hero-green";
     case 2:
-      return "#822921";
+      return "hero-pink";
     case 3:
-      return "#b3455e";
+      return "hero-red";
     case 4:
-      return "#dc6d08";
-    case 5:
-      return "#023813";
+      return "hero-orange";
+    // case 5:
+    //   return "hero-green";
   }
 }
 export default Hero;

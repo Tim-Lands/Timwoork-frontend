@@ -268,7 +268,10 @@ function Navbar({ dark = false }) {
   };
 
   return (
-    <nav className="app-new-navbar-cont">
+    <nav
+      className="app-new-navbar-cont"
+      style={{ backgroundColor: visible ? "transparent" : "white" }}
+    >
       {/* {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
       )} */}
