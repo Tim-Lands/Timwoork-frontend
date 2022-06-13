@@ -43,7 +43,7 @@ const MobileMenu = ({ postsList }) => {
       <Drawer
         placement="left"
         onClose={onClose}
-        title="Timwoork"
+        title={<img src="img/logo6.png" height='23' alt="" style={{ cursor: "pointer" }} />}
         visible={visible}
         style={{ zIndex: 9000 }}
         width={size}
