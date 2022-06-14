@@ -115,7 +115,7 @@ function Hero() {
                   <span className="material-icons">star</span>
                 </h4>
                 <h4 className="text">
-                  فوزي, <strong>صوتبات</strong>
+                  فوزي, <strong>صوتيات</strong>
                 </h4>
               </a>
             </Link>
