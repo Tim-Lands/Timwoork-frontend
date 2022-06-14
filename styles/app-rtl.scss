@@ -7227,9 +7227,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         display: none;
       }
     }
-    &.dr {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+    // &.dr {
+    //   background-color: lighten($primary, 40%);
+    // }
     .app-new-logo {
       align-items: center;
       display: flex;
@@ -7782,7 +7782,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 // Footer
 .footer-inner {
   overflow-x: hidden;
-  padding: 120px 0;
+  padding: 70px 0;
   background-color: #fff;
   border-top: 2px solid #ddd;
   .footer-cont {
@@ -7793,6 +7793,15 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     flex-wrap: wrap;
     gap: 30px;
     padding: 0px 50px;
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
+    @media (max-width: 700px) {
+      padding: 0px 30px;
+    }
+    @media (max-width: 400px) {
+      padding: 0px 8px;
+    }
   }
   .footer-item {
     .title {
@@ -7845,6 +7854,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .right-footer {
       margin-left: auto;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       img {
         height: 25px;
@@ -7862,6 +7872,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       margin-right: auto;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       .currency {
         display: flex;
         list-style: none;
@@ -8221,11 +8232,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 .nav-subcategories-list {
-  position: absolute;
-  width: 650px;
+  width: 600px;
   z-index: 2000;
   background-color: #fff;
-  top: 37px;
   border-radius: 7px;
   box-shadow: 2px 4px 17px rgba(0, 0, 0, 0.041);
   overflow: hidden;

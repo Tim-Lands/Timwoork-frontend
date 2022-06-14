@@ -2,10 +2,9 @@ import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Subcategories from "../DropdowModal/Subcategories";
 import useOnScreen from "../../useOnScreen";
+import { Dropdown } from "antd";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 function Subnavbar({ visible, postsList }) {
-  const [isSubcategoriesToggle, setIsSubcategoriesToggle] = useState(false);
-  const [right, setRight] = useState(0);
   const end = useRef(null);
   const start = useRef(null);
   const middle = useRef(null);
@@ -13,6 +12,12 @@ function Subnavbar({ visible, postsList }) {
   const [categoryID, setCategoryID] = useState(0);
   const categories = {
     data: [
+      {
+        id: 8,
+        name_ar: "كل التصنيفات",
+        to: "products",
+        end: true,
+      },
       {
         id: 1,
         name_ar: "اعمال",
@@ -25,27 +30,23 @@ function Subnavbar({ visible, postsList }) {
         name_ar: "برمجة وتطوير",
         to: "products?categoryID=11",
         categoryID: 11,
-        right: 20,
       },
       {
         id: 3,
         name_ar: "تسويق الكتروني",
         to: "products?categoryID=10",
         categoryID: 10,
-        right: 35,
       },
       {
         id: 4,
         name_ar: "تدريب عن بعد",
         to: "products?categoryID=9",
         categoryID: 9,
-        right: 50,
       },
       {
         id: 5,
         name_ar: "تصميم فيديو",
         to: "products?categoryID=8",
-        right: 65,
         categoryID: 8,
       },
       {
@@ -53,20 +54,12 @@ function Subnavbar({ visible, postsList }) {
         name_ar: "تصميم عام",
         to: "products?categoryID=7",
         categoryID: 7,
-        right: 80,
       },
       {
         id: 7,
         name_ar: "صوتيات",
         to: "products?categoryID=6",
-        right: 95,
         categoryID: 6,
-      },
-      {
-        id: 8,
-        name_ar: "كل التصنيفات",
-        to: "products",
-        end: true,
       },
     ],
   };
@@ -94,38 +87,54 @@ function Subnavbar({ visible, postsList }) {
           className="subnavbar-nav nav"
           ref={scroll}
           onMouseLeave={() => {
-            setIsSubcategoriesToggle(false);
             setSelected(false);
           }}
         >
           {categories &&
-            categories.data.map((e: any) => (
-              <li
-                className={`sub ${selected === e.id ? "selectedSub" : ""}`}
-                ref={e.end ? end : e.start ? start : middle}
-                key={e.id}
-                onMouseEnter={() => {
-                  if (!e.end) {
-                    setIsSubcategoriesToggle(true);
-                    setSelected(e.id);
-                    setRight(e.right);
-                    setCategoryID(e.categoryID);
-                  } else {
-                    setIsSubcategoriesToggle(false);
-                    setSelected(false);
+            categories.data.map((e: any, index: number) => {
+              return e.end ? (
+                <li
+                  className={`sub ${selected === e.id ? "selectedSub" : ""}`}
+                  ref={e.end ? end : e.start ? start : middle}
+                  onMouseEnter={() => {
+                    if (!e.end) {
+                      setSelected(e.id);
+                      setCategoryID(e.categoryID);
+                    } else {
+                      setSelected(false);
+                    }
+                  }}
+                >
+                  <a href={e.to}>{e.name_ar}</a>
+                </li>
+              ) : (
+                <Dropdown
+                  key={e.id}
+                  placement={index > 3 ? "bottomLeft" : "bottomRight"}
+                  overlay={
+                    <Subcategories
+                      postsList={postsList}
+                      categoryID={categoryID}
+                    />
                   }
-                }}
-              >
-                <a href={e.to}>{e.name_ar}</a>
-              </li>
-            ))}
-          {isSubcategoriesToggle && (
-            <Subcategories
-              postsList={postsList}
-              categoryID={categoryID}
-              right={right}
-            />
-          )}
+                >
+                  <li
+                    className={`sub ${selected === e.id ? "selectedSub" : ""}`}
+                    ref={e.end ? end : e.start ? start : middle}
+                    onMouseEnter={() => {
+                      if (!e.end) {
+                        setSelected(e.id);
+                        setCategoryID(e.categoryID);
+                      } else {
+                        setSelected(false);
+                      }
+                    }}
+                  >
+                    <a href={e.to}>{e.name_ar}</a>
+                  </li>
+                </Dropdown>
+              );
+            })}
         </ul>
         <span className="arrows-sub">
           <IoIosArrowBack

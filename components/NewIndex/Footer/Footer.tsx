@@ -182,32 +182,56 @@ function Footer() {
               </ul>
               <ul className="socials">
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.tiktok.com/@timwoorkdotcom"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaTiktok />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.facebook.com/timWorkDotCom"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaFacebook />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.youtube.com/channel/UC9SRbfwKagfcaG5TYzi5Acg"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaYoutube />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.instagram.com/timwoorkdotcom/"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaInstagram />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://twitter.com/timwoorkDotCom"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaTwitter />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://t.me/timwoork"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaTelegram />
                   </a>
                 </li>

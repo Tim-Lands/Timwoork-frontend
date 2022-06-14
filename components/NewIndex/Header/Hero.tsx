@@ -170,6 +170,8 @@ function Hero() {
 function whichColor(num) {
   switch (num) {
     // case 0:
+    default:
+      return "hero-orange";
     //   return "hero-red";
     case 1:
       return "hero-green";

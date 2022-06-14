@@ -2,7 +2,8 @@
 // import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
 // import Head from "next/head";
 // import React, { ReactElement } from "react";
-
+import { Menu, Dropdown, Button } from "antd";
+import { PRIMARY } from "../styles/variables";
 import Hero from "@/components/NewIndex/Header/Hero";
 import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
 import Head from "next/head";
@@ -21,7 +22,30 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import PostInner from "@/components/Post/PostInner";
-
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://wa.me/+905519951407"
+      >
+        <i className="fab fa-whatsapp fa-fw"></i>
+        واتساب
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://t.me/timwoorkDotCom"
+      >
+        <i className="fab fa-telegram fa-fw"></i>
+        تيليجرام
+      </a>
+    </Menu.Item>
+  </Menu>
+);
 function index({ products, latestProducts, categories, popularProducts }) {
   return (
     <>
@@ -110,8 +134,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
+                            " " +
+                            e.profile_seller.profile.last_name
                         }
                         rate={e.ratings_avg_rating}
                         username={
@@ -170,8 +194,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
+                            " " +
+                            e.profile_seller.profile.last_name
                         }
                         rate={e.ratings_avg_rating}
                         username={
@@ -227,8 +251,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
+                            " " +
+                            e.profile_seller.profile.last_name
                         }
                         rate={e.ratings_avg_rating}
                         username={
@@ -247,6 +271,31 @@ function index({ products, latestProducts, categories, popularProducts }) {
             </div>
           </>
         )}
+      <div
+        className="shadow"
+        style={{
+          position: "fixed",
+          bottom: "2rem",
+          right: "2rem",
+          borderRadius: "50%",
+          zIndex: 999,
+        }}
+      >
+        <Dropdown overlay={menu} placement="topCenter" arrow>
+          <Button
+            style={{
+              width: "75px",
+              height: "75px",
+              borderRadius: "50%",
+              padding: "0",
+              color: PRIMARY,
+              borderColor: PRIMARY,
+            }}
+          >
+            <i className="fa fa-comments fa-3x"></i>
+          </Button>
+        </Dropdown>
+      </div>
     </>
   );
 }
@@ -260,7 +309,7 @@ export async function getServerSideProps() {
         API.get("api/get_categories"),
         API.get("api/filter?paginate=9&popular"),
         API.get("api/filter?paginate=9&sort[0]=created_at,desc"),
-        API.get("api/filter?paginate=9&sort=count_buying,desc")
+        API.get("api/filter?paginate=9&sort=count_buying,desc"),
       ]);
 
     // Pass data to the page via props

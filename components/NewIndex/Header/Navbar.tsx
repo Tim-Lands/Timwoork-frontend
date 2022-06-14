@@ -26,6 +26,8 @@ import {
   CloseCircleOutlined,
   BellOutlined,
 } from "@ant-design/icons";
+import { lighten } from "@mui/material";
+import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -270,7 +272,13 @@ function Navbar({ dark = false }) {
   return (
     <nav
       className="app-new-navbar-cont"
-      style={{ backgroundColor: visible ? "transparent" : "white" }}
+      style={{
+        backgroundColor: visible
+          ? !dark
+            ? lighten(PRIMARY, 0.4)
+            : "transparent"
+          : "white",
+      }}
     >
       {/* {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
@@ -319,16 +327,6 @@ function Navbar({ dark = false }) {
           )}
         </div>
         <ul className="app-new-nav nav">
-          <li className="link-item">
-            <Link href={"/products"}>
-              <a>
-                <span className="material-icons material-icons-outlined">
-                  shopping_cart
-                </span>{" "}
-                تصفح الخدمات
-              </a>
-            </Link>
-          </li>
           <li className="link-item" ref={communityBtn}>
             <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
               <span className="material-icons material-icons-outlined">
@@ -340,6 +338,16 @@ function Navbar({ dark = false }) {
               </span>
             </a>
             {showCommunityMenu && <Community refs={communityRef} />}
+          </li>
+          <li className="link-item">
+            <Link href={"/products"}>
+              <a>
+                <span className="material-icons material-icons-outlined">
+                  shopping_cart
+                </span>{" "}
+                تصفح الخدمات
+              </a>
+            </Link>
           </li>
           {userInfo ? (
             <>
@@ -422,7 +430,10 @@ function Navbar({ dark = false }) {
                   </a>
                 </Link>
               </li>
-              <li className="mobAuthBtn">
+              <li
+                className="mobAuthBtn"
+                onClick={() => setIsShowLoginForm(true)}
+              >
                 <button>الدخول</button>
               </li>
               <li className="authBtn">
