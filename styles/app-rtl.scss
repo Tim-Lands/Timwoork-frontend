@@ -7112,16 +7112,16 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   max-height: 750px;
   position: relative;
   &.hero-orange {
-    background-image: linear-gradient(#ea7707, #de7006);
+    background-image: linear-gradient(to left, #ea7707, lighten(#ea7707, 10%));
   }
   &.hero-red {
-    background-image: linear-gradient(#7d1010, #872d25);
+    background-image: linear-gradient(to left, #7d1010, lighten(#7d1010, 10%));
   }
   &.hero-green {
-    background-image: linear-gradient(#013914, #013914);
+    background-image: linear-gradient(to left, #013914, lighten(#013914, 10%));
   }
   &.hero-pink {
-    background-image: linear-gradient(#b64663, #b64761);
+    background-image: linear-gradient(to left, #b64663, lighten(#b64663, 10%));
   }
   .timlands-hero-carousel {
     height: 100%;
@@ -7146,6 +7146,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       }
       img {
         transition: all 0.3s linear;
+        height: 500px;
       }
     }
     .timlands-hero-text {

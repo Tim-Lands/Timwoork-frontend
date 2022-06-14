@@ -7,7 +7,7 @@ import {
   Pagination,
   // Scrollbar,
   A11y,
-  EffectCreative,
+  // EffectCreative,
   Autoplay,
 } from "swiper";
 // Import Swiper styles
@@ -38,11 +38,11 @@ function Hero() {
             Navigation,
             Pagination,
             // Scrollbar,
-            A11y,
-            EffectCreative,
+            // A11y,
+            // EffectCreative,
             Autoplay,
           ]}
-          spaceBetween={0}
+          spaceBetween={15}
           slidesPerView={1}
           effect="creative"
           navigation={false}
@@ -58,14 +58,11 @@ function Hero() {
               <img
                 src="/img/1.png"
                 alt=""
-                style={{ opacity: index === 1 ? 1 : 0, height: 500 }}
+                // style={{ opacity: index === 1 ? 1 : 0, height: 500 }}
               />
             </div>
             <Link href={`/`}>
-              <a
-                className="timlands-hero-text"
-                style={{ opacity: index === 1 ? 1 : 0 }}
-              >
+              <a className="timlands-hero-text">
                 <h4 className="rating">
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
@@ -84,14 +81,11 @@ function Hero() {
               <img
                 src="/img/2.png"
                 alt=""
-                style={{ opacity: index === 2 ? 1 : 0, height: 500 }}
+                // style={{ opacity: index === 2 ? 1 : 0, height: 500 }}
               />
             </div>
             <Link href={`/`}>
-              <a
-                className="timlands-hero-text"
-                style={{ opacity: index === 2 ? 1 : 0 }}
-              >
+              <a className="timlands-hero-text">
                 <h4 className="rating">
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
@@ -110,14 +104,11 @@ function Hero() {
               <img
                 src="/img/3.png"
                 alt=""
-                style={{ opacity: index === 3 ? 1 : 0, height: 500 }}
+                // style={{ opacity: index === 3 ? 1 : 0, height: 500 }}
               />
             </div>
             <Link href={`/`}>
-              <a
-                className="timlands-hero-text"
-                style={{ opacity: index === 3 ? 1 : 0 }}
-              >
+              <a className="timlands-hero-text">
                 <h4 className="rating">
                   {" "}
                   <span className="material-icons">star</span>
@@ -137,14 +128,11 @@ function Hero() {
               <img
                 src="/img/4.png"
                 alt=""
-                style={{ opacity: index === 4 ? 1 : 0, height: 500 }}
+                // style={{ opacity: index === 4 ? 1 : 0, height: 500 }}
               />
             </div>
             <Link href={`/`}>
-              <a
-                className="timlands-hero-text"
-                style={{ opacity: index === 4 ? 1 : 0 }}
-              >
+              <a className="timlands-hero-text">
                 <h4 className="rating">
                   {" "}
                   <span className="material-icons">star</span>

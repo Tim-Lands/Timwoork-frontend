@@ -10580,23 +10580,23 @@ h3 {
 }
 
 .timland-hero.hero-orange {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#ea7707), to(#de7006));
-  background-image: linear-gradient(#ea7707, #de7006);
+  background-image: -webkit-gradient(linear, right top, left top, from(#ea7707), to(#f9912b));
+  background-image: linear-gradient(to left, #ea7707, #f9912b);
 }
 
 .timland-hero.hero-red {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#7d1010), to(#872d25));
-  background-image: linear-gradient(#7d1010, #872d25);
+  background-image: -webkit-gradient(linear, right top, left top, from(#7d1010), to(#aa1616));
+  background-image: linear-gradient(to left, #7d1010, #aa1616);
 }
 
 .timland-hero.hero-green {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#013914), to(#013914));
-  background-image: linear-gradient(#013914, #013914);
+  background-image: -webkit-gradient(linear, right top, left top, from(#013914), to(#026b26));
+  background-image: linear-gradient(to left, #013914, #026b26);
 }
 
 .timland-hero.hero-pink {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#b64663), to(#b64761));
-  background-image: linear-gradient(#b64663, #b64761);
+  background-image: -webkit-gradient(linear, right top, left top, from(#b64663), to(#c66a81));
+  background-image: linear-gradient(to left, #b64663, #c66a81);
 }
 
 .timland-hero .timlands-hero-carousel {
@@ -10639,6 +10639,7 @@ h3 {
 .timland-hero .timlands-hero-carousel .timlands-hero-img img {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
+  height: 500px;
 }
 
 .timland-hero .timlands-hero-carousel .timlands-hero-text {
