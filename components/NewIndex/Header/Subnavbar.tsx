@@ -105,7 +105,9 @@ function Subnavbar({ visible, postsList }) {
                     }
                   }}
                 >
-                  <a href={e.to}>{e.name_ar}</a>
+                  <a href={e.to} style={{ fontWeight: "bold" }}>
+                    {e.name_ar}
+                  </a>
                 </li>
               ) : (
                 <Dropdown
@@ -130,7 +132,9 @@ function Subnavbar({ visible, postsList }) {
                       }
                     }}
                   >
-                    <a href={e.to}>{e.name_ar}</a>
+                    <a href={e.to} style={{ fontWeight: "bold" }}>
+                      {e.name_ar}
+                    </a>
                   </li>
                 </Dropdown>
               );

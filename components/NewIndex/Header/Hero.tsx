@@ -2,14 +2,7 @@ import React, { useState } from "react";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  // Scrollbar,
-  A11y,
-  // EffectCreative,
-  Autoplay,
-} from "swiper";
+import { Navigation, Pagination, Autoplay } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -42,6 +35,10 @@ function Hero() {
             // EffectCreative,
             Autoplay,
           ]}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
           spaceBetween={15}
           slidesPerView={1}
           effect="creative"
@@ -49,7 +46,6 @@ function Hero() {
           pagination={{ clickable: true }}
           // scrollbar={{ draggable: true }}
           onSlideChange={(i) => setIndex(i.activeIndex)}
-          autoplay
           loop
           style={{ maxHeight: 700, height: "100%" }}
         >

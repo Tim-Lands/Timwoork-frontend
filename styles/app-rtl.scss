@@ -7215,7 +7215,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     display: flex;
     // padding-right: 120px;
     padding-inline: 50px;
-
     @media (max-width: 600px) {
       justify-content: space-between;
       padding-inline: 20px;
@@ -7274,7 +7273,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
             border-radius: 6px;
             font-size: 13px;
             text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.555);
-
+            font-weight: bold;
             .material-icons {
               font-size: 16px;
               margin-left: 4px;
@@ -7289,7 +7288,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
             display: none;
           }
         }
-
         &.circular-newitem {
           .link-circular-button {
             width: 33px;
@@ -7445,6 +7443,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
               color: #000;
               background-color: #f8f8f8;
               opacity: 0.7;
+
               &:hover {
                 background-color: #f3f3f3;
                 opacity: 1;
@@ -7792,7 +7791,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 20px;
     padding: 0px 50px;
     @media (max-width: 800px) {
       flex-direction: column;
@@ -7814,11 +7813,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       padding-right: 6px;
       li {
         padding: 7px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         a {
           font-size: 14px;
           font-weight: 300;
           color: #666;
-          line-height: 26px;
           &:hover {
             color: $primary3;
           }
@@ -8255,6 +8256,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         font-weight: 200;
         display: block;
         padding: 10px 0;
+        transition: all 0.3s linear;
+        &:hover {
+          color: $primary2;
+        }
       }
     }
   }

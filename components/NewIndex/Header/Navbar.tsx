@@ -422,7 +422,10 @@ function Navbar({ dark = false }) {
             <>
               <li className="authBtn">
                 <Link href={"/register"}>
-                  <a className="btn butt-xs butt-primary2 flex-center">
+                  <a
+                    style={{ fontWeight: "bold" }}
+                    className="btn butt-xs butt-primary2 flex-center"
+                  >
                     <span className="material-icons material-icons-outlined">
                       person_add
                     </span>{" "}
@@ -438,6 +441,7 @@ function Navbar({ dark = false }) {
               </li>
               <li className="authBtn">
                 <a
+                  style={{ fontWeight: "bold" }}
                   className={`btn butt-xs flex-center ${
                     !visible ? " butt-primary2-out" : " butt-white-out"
                   }`}

@@ -10825,6 +10825,7 @@ h3 {
   border-radius: 6px;
   font-size: 13px;
   text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.555);
+  font-weight: bold;
 }
 
 .app-new-navbar-cont .app-new-navbar .app-new-nav > li.link-item a .material-icons {
@@ -11458,7 +11459,7 @@ h3 {
           justify-content: space-between;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  gap: 30px;
+  gap: 20px;
   padding: 0px 50px;
 }
 
@@ -11495,13 +11496,15 @@ h3 {
 
 .footer-inner .footer-item .footerlist li {
   padding: 7px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .footer-inner .footer-item .footerlist li a {
   font-size: 14px;
   font-weight: 300;
   color: #666;
-  line-height: 26px;
 }
 
 .footer-inner .footer-item .footerlist li a:hover {
@@ -12071,6 +12074,12 @@ h3 {
   font-weight: 200;
   display: block;
   padding: 10px 0;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.nav-subcategories-list .list-subcategories-withicons li a:hover {
+  color: #ffd000;
 }
 
 .ant-select-selector {
