@@ -1023,7 +1023,7 @@ h3 {
             display: block;
             font-size: 12px;
             margin: 0 4px;
-            color: #333;
+            color: white;
             padding: 5px 9px;
             background-color: #f1f1f1;
             border-radius: 5px;
@@ -1031,7 +1031,7 @@ h3 {
 
             &:hover {
               background-color: #ddd;
-              color: #000;
+              color: $primary2;
             }
           }
         }
@@ -7665,15 +7665,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       }
 
       &.pop-item {
-        border-radius: 30px;
-        color: #fff;
-        border: 1px solid #fff;
-        padding: 4px 7px;
-        margin: 0 3px;
-
-        &:hover {
-          background-color: #fff;
-          color: #000;
+        a {
+          border-radius: 30px;
+          color: #fff;
+          border: 1px solid #fff;
+          padding: 4px 7px;
+          margin: 0 3px;
+          transition: all 0.3s linear;
+          &:hover {
+            background-color: #fff;
+            color: darken($primary2, 20%);
+          }
         }
       }
     }

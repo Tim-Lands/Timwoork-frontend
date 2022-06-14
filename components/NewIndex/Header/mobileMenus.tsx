@@ -76,14 +76,17 @@ const MobileMenu = ({ postsList }) => {
               />
               <button
                 className="btn butt-xs butt-primary2"
-                // onClick={() => router.push(`/products?query=${query}`)}
+                onClick={() => {
+                  router.push(`/products?query=${query}`);
+                  onClose();
+                }}
               >
                 البحث
               </button>
             </div>
           </div>
           <Link href={"/products"}>
-            <div className="products">
+            <div className="products" onClick={onClose}>
               <MdOutlineShoppingCart />
               تصفح الخدمات
             </div>
@@ -99,70 +102,70 @@ const MobileMenu = ({ postsList }) => {
                   <div className="nav-menu-dropdown">
                     <ul className="menu-list-dropdown">
                       <li>
-                        <Link href={`/`}>
-                          <a className="dropd-item">
-                            <div className="dropd-item-img">
-                              <span className="icon-item link-circular-button">
-                                <span className="material-icons material-icons-outlined">
-                                  flag_circle
-                                </span>
+                        {/* <Link href={`/`}> */}
+                        <a className="dropd-item">
+                          <div className="dropd-item-img">
+                            <span className="icon-item link-circular-button">
+                              <span className="material-icons material-icons-outlined">
+                                flag_circle
                               </span>
-                            </div>
-                            <div className="dropd-item-content">
-                              <h4 className="title">المسابقات</h4>
-                              <p className="text">قريبا</p>
-                            </div>
-                          </a>
-                        </Link>
+                            </span>
+                          </div>
+                          <div className="dropd-item-content">
+                            <h4 className="title">المسابقات</h4>
+                            <p className="text">قريبا</p>
+                          </div>
+                        </a>
+                        {/* </Link> */}
                       </li>
                       <li>
-                        <Link href={`/`}>
-                          <a className="dropd-item">
-                            <div className="dropd-item-img">
-                              <span className="icon-item link-circular-button">
-                                <span className="material-icons material-icons-outlined">
-                                  account_balance_wallet
-                                </span>
+                        {/* <Link href={`/`}> */}
+                        <a className="dropd-item">
+                          <div className="dropd-item-img">
+                            <span className="icon-item link-circular-button">
+                              <span className="material-icons material-icons-outlined">
+                                account_balance_wallet
                               </span>
-                            </div>
-                            <div className="dropd-item-content">
-                              <h4 className="title">المشاريع</h4>
-                              <p className="text">قريبا</p>
-                            </div>
-                          </a>
-                        </Link>
+                            </span>
+                          </div>
+                          <div className="dropd-item-content">
+                            <h4 className="title">المشاريع</h4>
+                            <p className="text">قريبا</p>
+                          </div>
+                        </a>
+                        {/* </Link> */}
                       </li>
                       <li>
-                        <Link href={`/`}>
-                          <a className="dropd-item">
-                            <div className="dropd-item-img">
-                              <span className="icon-item link-circular-button">
-                                <span className="material-icons material-icons-outlined">
-                                  photo_library
-                                </span>
+                        {/* <Link href={`/`}> */}
+                        <a className="dropd-item">
+                          <div className="dropd-item-img">
+                            <span className="icon-item link-circular-button">
+                              <span className="material-icons material-icons-outlined">
+                                photo_library
                               </span>
-                            </div>
-                            <div className="dropd-item-content">
-                              <h4 className="title">الاعمال</h4>
-                              <p className="text">قريبا</p>
-                            </div>
-                          </a>
-                        </Link>
+                            </span>
+                          </div>
+                          <div className="dropd-item-content">
+                            <h4 className="title">الاعمال</h4>
+                            <p className="text">قريبا</p>
+                          </div>
+                        </a>
+                        {/* </Link> */}
                       </li>
                       <li>
-                        <Link href={`/`}>
-                          <a className="dropd-item">
-                            <div className="dropd-item-img">
-                              <span className="icon-item link-circular-button">
-                                <RiUserSmileLine />
-                              </span>
-                            </div>
-                            <div className="dropd-item-content">
-                              <h4 className="title">مجتمع تيم وورك</h4>
-                              <p className="text">قريبا</p>
-                            </div>
-                          </a>
-                        </Link>
+                        {/* <Link href={`/`}> */}
+                        <a className="dropd-item">
+                          <div className="dropd-item-img">
+                            <span className="icon-item link-circular-button">
+                              <RiUserSmileLine />
+                            </span>
+                          </div>
+                          <div className="dropd-item-content">
+                            <h4 className="title">مجتمع تيم وورك</h4>
+                            <p className="text">قريبا</p>
+                          </div>
+                        </a>
+                        {/* </Link> */}
                       </li>
 
                       <li>
@@ -221,17 +224,17 @@ const MobileMenu = ({ postsList }) => {
               <>
                 <li className="circular-newitem">
                   <Link href={"/cart"}>
-                    <MdOutlineShoppingCart />
+                    <MdOutlineShoppingCart onClick={onClose} />
                   </Link>
                 </li>
                 <li className="circular-newitem">
                   <Link href="/conversations">
-                    <MdOutlineMailOutline />
+                    <MdOutlineMailOutline onClick={onClose} />
                   </Link>
                 </li>
                 <li className="circular-newitem">
                   <Link href="/notifications">
-                    <MdNotificationsNone />
+                    <MdNotificationsNone onClick={onClose} />
                   </Link>
                 </li>
                 <li className="circular-newitem">

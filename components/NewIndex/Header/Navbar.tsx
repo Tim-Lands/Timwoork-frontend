@@ -294,11 +294,11 @@ function Navbar({ dark = false }) {
         <div className="app-new-logo d-flex">
           {!visible ? (
             <Link href="/">
-              <img src="logo6.png" alt="" style={{ cursor: "pointer" }} />
+              <img src="/logo6.png" alt="" style={{ cursor: "pointer" }} />
             </Link>
           ) : (
             <Link href="/">
-              <img src="logo7.png" alt="" style={{ cursor: "pointer" }} />
+              <img src="/logo7.png" alt="" style={{ cursor: "pointer" }} />
             </Link>
           )}
           {!visible && (

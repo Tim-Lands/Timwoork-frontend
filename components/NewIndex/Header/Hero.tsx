@@ -14,6 +14,7 @@ import Link from "next/link";
 
 function Hero() {
   const [index, setIndex] = useState(1);
+
   return (
     <div
       className={
@@ -153,10 +154,8 @@ function Hero() {
 }
 function whichColor(num) {
   switch (num) {
-    // case 0:
     default:
       return "hero-orange";
-    //   return "hero-red";
     case 1:
       return "hero-green";
     case 2:
@@ -165,8 +164,8 @@ function whichColor(num) {
       return "hero-red";
     case 4:
       return "hero-orange";
-    // case 5:
-    //   return "hero-green";
+    case 5:
+      return "hero-green";
   }
 }
 export default Hero;

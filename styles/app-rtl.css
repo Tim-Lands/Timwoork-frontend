@@ -3936,7 +3936,7 @@ h3 {
   display: block;
   font-size: 12px;
   margin: 0 4px;
-  color: #333;
+  color: white;
   padding: 5px 9px;
   background-color: #f1f1f1;
   border-radius: 5px;
@@ -3946,7 +3946,7 @@ h3 {
 
 .timlands-hero .timlands-hero-inner .timlands-hero-search .popular-searchs-list .popular-item a:hover {
   background-color: #ddd;
-  color: #000;
+  color: #ffd000;
 }
 
 .search-loading {
@@ -11302,17 +11302,19 @@ h3 {
   color: #fff;
 }
 
-.hero-container-search .popular-search > li.pop-item {
+.hero-container-search .popular-search > li.pop-item a {
   border-radius: 30px;
   color: #fff;
   border: 1px solid #fff;
   padding: 4px 7px;
   margin: 0 3px;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
 }
 
-.hero-container-search .popular-search > li.pop-item:hover {
+.hero-container-search .popular-search > li.pop-item a:hover {
   background-color: #fff;
-  color: #000;
+  color: #997d00;
 }
 
 .video-section {
