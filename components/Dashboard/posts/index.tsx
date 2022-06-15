@@ -10,7 +10,6 @@ import ReplyContactModal from '@/components/ReplyContactModal'
 import EmailModalCause from "@/components/EmailModalCause";
 import DisactiveProductCause from "@/components/DisactiveProductCause";
 import { generatecolumns } from "./PostsService";
-import { MdSignalCellular0Bar } from "react-icons/md";
 
 function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }: any): ReactElement {
     const router = useRouter()
