@@ -10,6 +10,7 @@ import ReplyContactModal from '@/components/ReplyContactModal'
 import EmailModalCause from "@/components/EmailModalCause";
 import DisactiveProductCause from "@/components/DisactiveProductCause";
 import { generatecolumns } from "./PostsService";
+import { MdSignalCellular0Bar } from "react-icons/md";
 
 function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }: any): ReactElement {
     const router = useRouter()
@@ -66,8 +67,12 @@ function index({ postsList = { last_page: 1, per_page: 10, data: [] }, status }:
     }
     async function disactiveProduct() {
         try {
-            await API.post(`dashboard/${selectedProductId}/disactive_product`)
+            await API.post(`dashboard/products/${selectedProductId}/disactive_product`, {cause},
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                })
             setIsDisactiveModalVisible(false);
+            router.reload()
         }
         catch (err) {
             console.log(err)

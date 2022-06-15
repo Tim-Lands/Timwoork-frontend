@@ -232,13 +232,13 @@ const generateButtonSet = ({ status, post, callbacks }) => {
             ) : (
                 ""
             )}
-            <button
+            {(post.status == 1) ? <button
                 title="تعطيل هذه الخدمة"
                 onClick={() => onDisactiveClick(post.id)}
                 className="btn butt-xs2 butt-orange"
             >
                 تعطيل
-            </button>
+            </button> : ''}
             {
                 status == "archieved" && <> <button
                     title="حذف هذه الخدمة"

@@ -20,18 +20,20 @@ function Footer() {
   const [categories, setCategories] = useState([]);
   const [blogPosts, setBlogPosts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
-
+  const [currency, setCurrency] = useState([]);
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const [categoriesRes, blogPostsRes, popularProductsRes] = await Promise.all(
+    const [categoriesRes, blogPostsRes, popularProductsRes, currencyRes] = await Promise.all(
       [
         API.get("api/top_main_categories"),
         API.get("https://timwoork.net/wp-json/wp/v2/posts?per_page=5"),
         API.get("api/filter?paginate=5&popular"),
+        API.get('api/currency')
       ]
     ).then((responses) => responses.map((res) => res?.data));
+    setCurrency(currencyRes?.data)
     setCategories(categoriesRes?.data);
     setBlogPosts(blogPostsRes);
     setPopularProducts(popularProductsRes?.data?.data);
@@ -39,7 +41,7 @@ function Footer() {
   return (
     <>
       {isCurrencyVisible && (
-        <Currency setIsConfirmText={setIsCurrencyVisible} />
+        <Currency currencies={currency} setIsConfirmText={setIsCurrencyVisible} />
       )}
       {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
