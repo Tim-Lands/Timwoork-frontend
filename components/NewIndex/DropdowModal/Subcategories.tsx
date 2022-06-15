@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-function Subcategories({ right = 0, postsList, categoryID }) {
+function Subcategories({ postsList, categoryID }) {
   const [list, setList] = useState({ subcategories: [] });
   useEffect(() => {
     postsList.forEach((posts) => {
@@ -16,7 +16,6 @@ function Subcategories({ right = 0, postsList, categoryID }) {
       initial={{ y: -70, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className="nav-subcategories-list"
-      style={{ right }}
     >
       <div className="nav-subcategories-list-content">
         <ul className="list-subcategories-withicons ">
@@ -38,7 +37,6 @@ function Subcategories({ right = 0, postsList, categoryID }) {
   );
 }
 Subcategories.propTypes = {
-  right: PropTypes.number,
   postsList: PropTypes.array,
   categoryID: PropTypes.number,
 };

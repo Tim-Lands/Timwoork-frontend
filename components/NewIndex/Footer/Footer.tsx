@@ -76,7 +76,7 @@ function Footer() {
           <div className="footer-item">
             <h3 className="title">التصنيفات النشطة</h3>
             <ul className="footerlist">
-              {categories.slice(0, 8).map((category) => {
+              {categories.map((category) => {
                 return (
                   <li key={category.id}>
                     <Link href={`/products?categoryID=${category?.id}`}>
@@ -92,15 +92,9 @@ function Footer() {
             <ul className="footerlist">
               {popularProducts.map((product) => {
                 return (
-                  <li key={product.id}>
+                  <li key={product.id} style={{ width: 350 }}>
                     <Link href={`/p/${product.slug}`}>
-                      {product.title.length > 30 ? (
-                        <a className="text-truncate">
-                          {product.title.slice(0, 30)}...
-                        </a>
-                      ) : (
-                        <a className="text-truncate">{product.title}</a>
-                      )}
+                      <a className="text-truncate">{product.title}</a>
                     </Link>
                   </li>
                 );
@@ -111,15 +105,9 @@ function Footer() {
             <h3 className="title">المدونة</h3>
             <ul className="footerlist">
               {blogPosts.map((post) => (
-                <li key={post.id}>
+                <li key={post.id} style={{ width: 350 }}>
                   <Link href={`/blog/${post.slug}`}>
-                    {post.title.rendered.length > 30 ? (
-                      <a className="text-truncate">
-                        {post.title.rendered.slice(0, 30)}...
-                      </a>
-                    ) : (
-                      <a className="text-truncate">{post.title.rendered}</a>
-                    )}
+                    <a className="text-truncate">{post.title.rendered}</a>
                   </Link>
                 </li>
               ))}
@@ -132,14 +120,26 @@ function Footer() {
               <Tooltip title="الماستر كارد">
                 <img src="/png2.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title="الوايز">
-                <img src="/png3.png" alt="" height={30} className="mx-1" />
-              </Tooltip>
               <Tooltip title="البايبال">
                 <img src="/png4.png" alt="" height={38} className="mx-1" />
               </Tooltip>
+            </div>
+            <div className="payments-me mt-2">
+              <h4 className="title">وسائل السحب</h4>
+              <Tooltip title="ويستر يونيون">
+                <img src="/western.png" alt="" height={38} className="mx-1" />
+              </Tooltip>
+              <Tooltip title="الوايز">
+                <img src="/png3.png" alt="" height={30} className="mx-1" />
+              </Tooltip>
               <Tooltip title="بريد الجزائر">
                 <img src="/ccp.png" alt="" height={30} className="mx-1" />
+              </Tooltip>
+              <Tooltip title="حوالة بنكية">
+                <img src="/bank.png" alt="" height={30} className="mx-1" />
+              </Tooltip>
+              <Tooltip title="حوالة مالية">
+                <img src="/cash.png" alt="" height={30} className="mx-1" />
               </Tooltip>
             </div>
           </div>
@@ -155,52 +155,70 @@ function Footer() {
             <div className="left-footer">
               <ul className="currency">
                 <li>
-                  <button
-                    type="button"
-                    className="rounded-button"
-                    onClick={() => setIsLanguageVisible(true)}
-                  >
+                  <button type="button" className="rounded-button">
                     <FaGlobe /> العربية
                   </button>
                 </li>
-                <li>
-                  <button
-                    type="button"
-                    className="rounded-button"
-                    onClick={() => setIsCurrencyVisible(true)}
-                  >
-                    <FaDollarSign /> الدولار
-                  </button>
+                <li className="rounded-button">
+                  <Link href="/user/personalInformations">
+                    <a className="rounded-button">
+                      <FaDollarSign /> الدولار
+                    </a>
+                  </Link>
                 </li>
               </ul>
               <ul className="socials">
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.tiktok.com/@timwoorkdotcom"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaTiktok />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.facebook.com/timWorkDotCom"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaFacebook />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.youtube.com/channel/UC9SRbfwKagfcaG5TYzi5Acg"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaYoutube />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://www.instagram.com/timwoorkdotcom/"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaInstagram />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://twitter.com/timwoorkDotCom"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaTwitter />
                   </a>
                 </li>
                 <li>
-                  <a href="" rel="noreferrer" target="_blank">
+                  <a
+                    href="https://t.me/timwoork"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
                     <FaTelegram />
                   </a>
                 </li>

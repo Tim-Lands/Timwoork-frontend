@@ -1023,7 +1023,7 @@ h3 {
             display: block;
             font-size: 12px;
             margin: 0 4px;
-            color: #333;
+            color: white;
             padding: 5px 9px;
             background-color: #f1f1f1;
             border-radius: 5px;
@@ -1031,7 +1031,7 @@ h3 {
 
             &:hover {
               background-color: #ddd;
-              color: #000;
+              color: $primary2;
             }
           }
         }
@@ -7108,32 +7108,45 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 .timland-hero {
   height: 100vh;
   transition: background 0.3s linear;
+  width: 100%;
   max-height: 750px;
   position: relative;
+  &.hero-orange {
+    background-image: linear-gradient(to left, #ea7707, lighten(#ea7707, 10%));
+  }
+  &.hero-red {
+    background-image: linear-gradient(to left, #7d1010, lighten(#7d1010, 10%));
+  }
+  &.hero-green {
+    background-image: linear-gradient(to left, #013914, lighten(#013914, 10%));
+  }
+  &.hero-pink {
+    background-image: linear-gradient(to left, #b64663, lighten(#b64663, 10%));
+  }
   .timlands-hero-carousel {
     height: 100%;
+    width: 100%;
     @media (max-width: 900px) {
       display: none !important;
     }
     .timlands-hero-img {
       height: 100%;
-
+      width: 100%;
+      display: flex;
+      justify-content: end;
       max-height: 750px;
       background-size: cover;
       background-position: center;
+      align-items: end;
+      padding-left: 15px;
       background-repeat: no-repeat;
       background-attachment: fixed;
       @media (max-width: 1200px) {
         background-position: 0% 0% !important;
       }
-      &.hero-dark {
-        background-image: linear-gradient(#111, #222);
-      }
-      &.hero-red {
-        background-image: linear-gradient(#7d1010, #641010);
-      }
-      &.hero-green {
-        background-image: linear-gradient(#186d3f, #155633);
+      img {
+        transition: all 0.3s linear;
+        height: 500px;
       }
     }
     .timlands-hero-text {
@@ -7187,15 +7200,21 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   z-index: 9000;
   position: fixed;
   inset: 0px 0px auto 0px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  width: 100%;
+  flex-direction: column;
   .app-new-navbar {
+    max-width: 1400px;
     transition: all 0.4s linear;
     // padding-inline: 0 110px;
     padding: 20px 0px;
+    width: 100%;
     align-items: center;
     display: flex;
     // padding-right: 120px;
     padding-inline: 50px;
-
     @media (max-width: 600px) {
       justify-content: space-between;
       padding-inline: 20px;
@@ -7208,9 +7227,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         display: none;
       }
     }
-    &.dr {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+    // &.dr {
+    //   background-color: lighten($primary, 40%);
+    // }
     .app-new-logo {
       align-items: center;
       display: flex;
@@ -7254,7 +7273,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
             border-radius: 6px;
             font-size: 13px;
             text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.555);
-
+            font-weight: bold;
             .material-icons {
               font-size: 16px;
               margin-left: 4px;
@@ -7269,7 +7288,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
             display: none;
           }
         }
-
         &.circular-newitem {
           .link-circular-button {
             width: 33px;
@@ -7425,6 +7443,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
               color: #000;
               background-color: #f8f8f8;
               opacity: 0.7;
+
               &:hover {
                 background-color: #f3f3f3;
                 opacity: 1;
@@ -7646,15 +7665,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       }
 
       &.pop-item {
-        border-radius: 30px;
-        color: #fff;
-        border: 1px solid #fff;
-        padding: 4px 7px;
-        margin: 0 3px;
-
-        &:hover {
-          background-color: #fff;
-          color: #000;
+        a {
+          border-radius: 30px;
+          color: #fff;
+          border: 1px solid #fff;
+          padding: 4px 7px;
+          margin: 0 3px;
+          transition: all 0.3s linear;
+          &:hover {
+            background-color: #fff;
+            color: darken($primary2, 20%);
+          }
         }
       }
     }
@@ -7763,7 +7784,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 // Footer
 .footer-inner {
   overflow-x: hidden;
-  padding: 120px 0;
+  padding: 70px 0;
   background-color: #fff;
   border-top: 2px solid #ddd;
   .footer-cont {
@@ -7772,8 +7793,17 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 20px;
     padding: 0px 50px;
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
+    @media (max-width: 700px) {
+      padding: 0px 30px;
+    }
+    @media (max-width: 400px) {
+      padding: 0px 8px;
+    }
   }
   .footer-item {
     .title {
@@ -7785,11 +7815,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       padding-right: 6px;
       li {
         padding: 7px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         a {
           font-size: 14px;
           font-weight: 300;
           color: #666;
-          line-height: 26px;
           &:hover {
             color: $primary3;
           }
@@ -7826,6 +7858,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .right-footer {
       margin-left: auto;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       img {
         height: 25px;
@@ -7843,6 +7876,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       margin-right: auto;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       .currency {
         display: flex;
         list-style: none;
@@ -8094,6 +8128,8 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   opacity: 0;
   transform-style: preserve-3d;
   margin-top: 0;
+  width: 100%;
+  max-width: 1400px;
 
   transform: rotateX(-90deg);
   &.show {
@@ -8200,11 +8236,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
 }
 .nav-subcategories-list {
-  position: absolute;
-  width: 650px;
+  width: 600px;
   z-index: 2000;
   background-color: #fff;
-  top: 37px;
   border-radius: 7px;
   box-shadow: 2px 4px 17px rgba(0, 0, 0, 0.041);
   overflow: hidden;
@@ -8224,6 +8258,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         font-weight: 200;
         display: block;
         padding: 10px 0;
+        transition: all 0.3s linear;
+        &:hover {
+          color: $primary2;
+        }
       }
     }
   }

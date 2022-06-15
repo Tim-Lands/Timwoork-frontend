@@ -37,7 +37,7 @@ const personalInformations = () => {
       });
     });
     if (!token) {
-      router.push("/");
+      router.push("/login");
     }
   }, [token]);
   // Return statement.

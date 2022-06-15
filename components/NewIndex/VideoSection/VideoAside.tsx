@@ -18,7 +18,7 @@ function VideoAside(): ReactElement {
           <div className="col-lg-6">
             <div className="video-section-content">
               <div className="video-section-header">
-                <h3 className="title">ميزات تيم وورك</h3>
+                <h3 className="title">مميزات تيم وورك</h3>
               </div>
               <div className="video-section-body">
                 <ul className="video-section-list">
