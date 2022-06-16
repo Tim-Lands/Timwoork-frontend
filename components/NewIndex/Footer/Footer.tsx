@@ -21,36 +21,43 @@ function Footer() {
   const [categories, setCategories] = useState([]);
   const [blogPosts, setBlogPosts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
-  const [currency, setCurrency]: any = useState({ name: "Dollar", symbol: "$" });
+  const [currency, setCurrency]: any = useState({
+    name: "Dollar",
+    symbol: "$",
+  });
 
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
     const token = Cookies.get("token") || localStorage.getItem("token");
-
-    const [categoriesRes, blogPostsRes, popularProductsRes, userInfoRes] = await Promise.all(
+    API.get("api/me", {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        setCurrency(res?.data?.user_details?.profile?.currency);
+      })
+      .catch(() => {});
+    const [categoriesRes, blogPostsRes, popularProductsRes] = await Promise.all(
       [
         API.get("api/top_main_categories"),
         API.get("https://timwoork.net/wp-json/wp/v2/posts?per_page=5"),
         API.get("api/filter?paginate=5&popular"),
-        API.get('api/me', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
       ]
     ).then((responses) => responses.map((res) => res?.data));
     setCategories(categoriesRes?.data);
     setBlogPosts(blogPostsRes);
     setPopularProducts(popularProductsRes?.data?.data);
-    setCurrency(userInfoRes?.user_details?.profile?.currency);
-    console.log(userInfoRes)
   };
   return (
     <>
       {isCurrencyVisible && (
-        <Currency currencies={currency} setIsConfirmText={setIsCurrencyVisible} />
+        <Currency
+          currencies={currency}
+          setIsConfirmText={setIsCurrencyVisible}
+        />
       )}
       {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />

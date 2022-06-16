@@ -102,8 +102,6 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 </Link>
               </div>
               <Swiper
-                slidesPerView={1}
-                spaceBetween={0}
                 pagination={{
                   type: "progressbar",
                 }}
@@ -111,14 +109,18 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 modules={[Pagination, Navigation]}
                 breakpoints={{
                   1000: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 15,
                   },
                   770: {
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                     spaceBetween: 15,
                   },
                   600: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                  },
+                  100: {
                     slidesPerView: 1,
                     spaceBetween: 15,
                   },
@@ -161,8 +163,6 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 </Link>
               </div>
               <Swiper
-                slidesPerView={1}
-                spaceBetween={0}
                 pagination={{
                   type: "progressbar",
                 }}
@@ -170,19 +170,20 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 modules={[Pagination, Navigation]}
                 breakpoints={{
                   1000: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 15,
                   },
                   770: {
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                     spaceBetween: 15,
                   },
                   600: {
-                    slidesPerView: 1,
+                    slidesPerView: 2,
                     spaceBetween: 15,
                   },
                   100: {
-                    spaceBetween: 7,
+                    slidesPerView: 1,
+                    spaceBetween: 15,
                   },
                 }}
                 className="mySwiper"
@@ -223,8 +224,6 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 </button>
               </div>
               <Swiper
-                slidesPerView={1}
-                spaceBetween={0}
                 pagination={{
                   type: "progressbar",
                 }}
@@ -232,14 +231,18 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 modules={[Pagination, Navigation]}
                 breakpoints={{
                   1000: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 15,
                   },
                   770: {
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                     spaceBetween: 15,
                   },
                   600: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                  },
+                  100: {
                     slidesPerView: 1,
                     spaceBetween: 15,
                   },

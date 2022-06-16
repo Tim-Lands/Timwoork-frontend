@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import useSWR from "swr";
 import { useOutsideAlerter } from "../../useOutsideAlerter";
 import Community from "./Community";
-import LoginForm from "@/components/NewIndex/LoginForm";
+// import LoginForm from "@/components/NewIndex/LoginForm";
 import { FaSearch } from "react-icons/fa";
 import Subnavbar from "./Subnavbar";
 import Cookies from "js-cookie";
@@ -37,7 +37,7 @@ function Navbar({ dark = false }) {
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
   const [isShowProfileMenu, setIsShowProfileMenu] = useState(false);
-  const [isShowLoginForm, setIsShowLoginForm] = useState(false);
+  // const [isShowLoginForm, setIsShowLoginForm] = useState(false);
   // const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
   const [visible, setVisible] = useState(true);
   const [notifications, setNotifications] = useState([]);
@@ -283,7 +283,7 @@ function Navbar({ dark = false }) {
       {/* {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
       )} */}
-      {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />}
+      {/* {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />} */}
       <div
         className={
           `app-new-navbar ${dark ? "" : "dr"}` +
@@ -435,23 +435,27 @@ function Navbar({ dark = false }) {
               </li>
               <li
                 className="mobAuthBtn"
-                onClick={() => setIsShowLoginForm(true)}
+                // onClick={() => setIsShowLoginForm(true)}
               >
-                <button>الدخول</button>
+                <Link href="login">
+                  <button>الدخول</button>
+                </Link>
               </li>
               <li className="authBtn">
-                <a
-                  style={{ fontWeight: "bold" }}
-                  className={`btn butt-xs flex-center ${
-                    !visible ? " butt-primary2-out" : " butt-white-out"
-                  }`}
-                  onClick={() => setIsShowLoginForm(true)}
-                >
-                  <span className="material-icons material-icons-outlined">
-                    person
-                  </span>{" "}
-                  تسجيل الدخول
-                </a>
+                <Link href="login">
+                  <a
+                    style={{ fontWeight: "bold" }}
+                    className={`btn butt-xs flex-center ${
+                      !visible ? " butt-primary2-out" : " butt-white-out"
+                    }`}
+                    // onClick={() => setIsShowLoginForm(true)}
+                  >
+                    <span className="material-icons material-icons-outlined">
+                      person
+                    </span>{" "}
+                    تسجيل الدخول
+                  </a>
+                </Link>
               </li>
             </>
           )}

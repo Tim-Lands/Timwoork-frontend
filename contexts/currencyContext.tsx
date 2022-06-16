@@ -13,7 +13,6 @@ export const CurrencyProvider = (props) => {
       })
       .catch(() => {});
   });
-  console.log(currencyValues);
   function getSpecCurrency(codeID: "USD") {
     const oneCurrency = [];
     currencyValues.forEach((currency) => {

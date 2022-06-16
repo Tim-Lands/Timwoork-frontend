@@ -26,16 +26,20 @@ const personalInformations = () => {
   }
   // Redirect to user home route if user is authenticated.
   useEffect(() => {
-    API.get("/api/phone_codes").then((data) => {
-      setCodes(() => {
-        return data.data.data;
-      });
-    });
-    API.get("/api/currency").then((data) => {
-      setCurrencies(() => {
-        return data.data.data;
-      });
-    });
+    API.get("/api/phone_codes")
+      .then((data) => {
+        setCodes(() => {
+          return data.data.data;
+        });
+      })
+      .catch(() => {});
+    API.get("/api/currency")
+      .then((data) => {
+        setCurrencies(() => {
+          return data.data.data;
+        });
+      })
+      .catch(() => {});
     if (!token) {
       router.push("/login");
     }
@@ -74,8 +78,7 @@ const personalInformations = () => {
                       parseInt(userInfo.user_details.profile.country_id) || "",
                     phone: userInfo.user_details.phone || "",
                     currency_id:
-                      userInfo.user_details.profile.currency?.id ||
-                      "",
+                      userInfo.user_details.profile.currency?.id || "",
                     code_phone: userInfo.user_details.code_phone || "",
                   }}
                   //validationSchema={SignupSchema}
@@ -452,10 +455,7 @@ const personalInformations = () => {
                                   <option value="">الافتراضية</option>
 
                                   {currencies.map((e: any) => (
-                                    <option
-                                      key={e?.id}
-                                      value={e?.id}
-                                    >
+                                    <option key={e?.id} value={e?.id}>
                                       {e?.code}
                                     </option>
                                   ))}
