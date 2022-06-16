@@ -97,7 +97,7 @@ function index() {
       dataIndex: "",
       render: (e: any) => (
 
-         <Link key={e.id} href={`/u/${e.id}`}>
+        <Link key={e.id} href={`/u/${e.id}`}>
           <a className="flex-center">
             <Image src={`${e.profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
@@ -106,7 +106,7 @@ function index() {
                 : e.profile.full_name}
             </span>
           </a>
-        </Link> 
+        </Link>
       ),
 
       sorter: {
@@ -191,7 +191,10 @@ function index() {
             <button
               title="إرسال إشعار"
               className="btn butt-xs2 butt-green"
-              onClick={() => setIsEmailModalVisible(true)}
+              onClick={() => {
+                setSelectedUserID(item.id)
+                setIsEmailModalVisible(true)
+              }}
             >
               إرسال إشعار
             </button>
@@ -225,7 +228,20 @@ function index() {
       setIsLoading(false);
     }
   };
-
+  const sendNotification = async () => {
+    try {
+      await API.post(`dashboard/users/${selectedUserID}/send_notification`, {cause}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      notification.success({ message: 'تم إرسال الإشعار للمُستخدم بنجاح' })
+    }
+    catch (err) {
+      console.log(err)
+      notification.warning({message:'حدث خطأ'})
+    }
+  }
   // Return statement.
   return (
     <>
@@ -241,10 +257,10 @@ function index() {
         {isEmailModalVisible && (
           <EmailModalCause
             setIsConfirmText={setIsEmailModalVisible}
-            handleFunc={() => console.log("test")}
+            handleFunc={() => sendNotification()}
             title="إشعار للمستخدم"
             msg={cause}
-            setMsg={(e) => setCause(e.target.value)}
+            setMsg={(e) => setCause(e)}
           />
         )}
         {isNotifyModalVisible && (

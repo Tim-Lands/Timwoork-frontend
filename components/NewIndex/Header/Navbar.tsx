@@ -250,7 +250,7 @@ function Navbar({ dark = false }) {
   }, [notificationPusher, userInfo, sentinel]);
   const fetchData = async () => {
     try {
-      const notificationsData = await API.get("api/notifications?page=4", {
+      const notificationsData = await API.get("api/notifications?page=1", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

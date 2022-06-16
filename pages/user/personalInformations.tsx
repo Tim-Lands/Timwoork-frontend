@@ -73,10 +73,10 @@ const personalInformations = () => {
                     country_id:
                       parseInt(userInfo.user_details.profile.country_id) || "",
                     phone: userInfo.user_details.phone || "",
-                    currency:
-                      userInfo.user_details.profile.currency?.symbol_native ||
+                    currency_id:
+                      userInfo.user_details.profile.currency?.id ||
                       "",
-                    code: userInfo.user_details.code_phone || "",
+                    code_phone: userInfo.user_details.code_phone || "",
                   }}
                   //validationSchema={SignupSchema}
                   onSubmit={async (values) => {
@@ -85,7 +85,7 @@ const personalInformations = () => {
                     try {
                       const res = await API.post(
                         "api/profiles/step_one",
-                        { ...values, code_phone: values.code },
+                        { ...values },
                         {
                           headers: {
                             Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ const personalInformations = () => {
                       // Authentication was successful.
                       if (res.status === 200) {
                         message.success("لقد تم التحديث بنجاح");
-                        router.reload();
+                        //router.reload();
                       }
                     } catch (error: any) {
                       if (
@@ -395,7 +395,7 @@ const personalInformations = () => {
                                     <Field
                                       as="select"
                                       id="code"
-                                      name="code"
+                                      name="code_phone"
                                       style={{ border: "none", width: 100 }}
                                       className={"timlands-inputs "}
                                     >
@@ -441,7 +441,7 @@ const personalInformations = () => {
                                 <Field
                                   as="select"
                                   id="currency"
-                                  name="currency"
+                                  name="currency_id"
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -454,7 +454,7 @@ const personalInformations = () => {
                                   {currencies.map((e: any) => (
                                     <option
                                       key={e?.id}
-                                      value={e?.symbol_native}
+                                      value={e?.id}
                                     >
                                       {e?.code}
                                     </option>
