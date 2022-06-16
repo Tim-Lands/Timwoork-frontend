@@ -8500,3 +8500,38 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
 }
+.registerPhone {
+  display: flex;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 8px 20px;
+  font-size: 13px;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+  justify-content: space-between;
+  &:hover {
+    border: 1px solid #ccc;
+  }
+  &:disabled {
+    opacity: 0.3;
+  }
+  &:focus {
+    border: 1px solid $primary;
+  }
+  input {
+    border: none;
+    &:focus {
+      outline: none;
+      padding: 0;
+    }
+  }
+  select {
+    border: none;
+    height: 100%;
+    &:focus {
+      outline: none;
+      padding: 0;
+    }
+  }
+}

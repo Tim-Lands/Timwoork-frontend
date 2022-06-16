@@ -143,9 +143,13 @@ function PostInner({
                   </Link>
                 </li>
                 <li className="post-meta-rate">
-                  {showStars().map((e: any) => (
-                    <span key={e.id}>{e.name}</span>
-                  ))}
+                  {showStars().map((e: any) => {
+                    return (
+                      <span style={{ height: 16 }} key={e.id}>
+                        {e.name}
+                      </span>
+                    );
+                  })}
                 </li>
               </ul>
             </div>

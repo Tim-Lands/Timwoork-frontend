@@ -269,9 +269,11 @@ function Profile() {
                             <h3 className="text-label">رقم الهاتف</h3>
                             <p className="text-value">
                               {userInfo.user_details.phone
-                                ? userInfo.user_details.code_phone +
-                                  userInfo.user_details.phone
+                                ? userInfo.user_details.code_phone?.split(
+                                    "+"
+                                  )[1] + userInfo.user_details.phone
                                 : "غير مكتمل"}
+                              {userInfo.user_details.phone && "+"}
                             </p>
                           </div>
                         </div>

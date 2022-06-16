@@ -111,6 +111,13 @@
         }
 
         &.post-meta-user {
+          &.blog {
+            p {
+              @media (min-width: 1400px) {
+                font-size: 13px;
+              }
+            }
+          }
           a {
             display: flex;
             height: 100%;
@@ -415,6 +422,9 @@
     .post-meta {
       padding: 0;
       transition: all 0.3s;
+      align-items: center;
+      display: flex;
+      flex-wrap: nowrap;
       li {
         padding: 0 6px;
         display: flex;
@@ -445,6 +455,10 @@
 
             span {
               margin-right: 5px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 100%;
             }
           }
         }

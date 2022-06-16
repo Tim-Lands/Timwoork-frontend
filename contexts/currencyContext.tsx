@@ -4,7 +4,13 @@ import API from "../config";
 export const CurrencyContext = createContext(null);
 export const CurrencyProvider = (props) => {
   const [, , currencyPusher] = useContext(PusherContext);
-  currencyPusher.bind("SendCurrency", (data) => {});
+  currencyPusher.bind("currency", () => {
+    API.get("api/currency_values")
+      .then((data) => {
+        setCurrencyValues(data.data.data);
+      })
+      .catch(() => {});
+  });
   const [currencyValues, setCurrencyValues] = useState([]);
   useEffect(() => {
     API.get("api/currency_values")

@@ -260,13 +260,7 @@ const Register = (): ReactElement => {
                             }
                             autoComplete="off"
                           />
-                          <Field
-                            as="select"
-                            id="code_phone"
-                            name="code_phone"
-                            style={{ border: "none", width: 100 }}
-                            className={"timlands-inputs "}
-                          >
+                          <Field as="select" id="code_phone" name="code_phone">
                             <option value="">كود</option>
                             {codes.map((e: any) => (
                               <option key={e.id} value={e.code_phone}>

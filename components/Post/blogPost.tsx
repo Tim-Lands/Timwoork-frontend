@@ -30,7 +30,7 @@ function Post({ title, thumbnail, size, slug, excerpt }): ReactElement {
         </h3>
         <ul className="nav post-meta">
           <li
-            className="post-meta-user"
+            className="post-meta-user blog"
             style={{ borderLeft: "none" }}
             dangerouslySetInnerHTML={{ __html: excerpt }}
           ></li>
