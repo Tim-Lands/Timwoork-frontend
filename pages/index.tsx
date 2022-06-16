@@ -4,6 +4,7 @@ import Hero from "@/components/NewIndex/Header/Hero";
 import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
 import Head from "next/head";
 import React, { ReactElement } from "react";
+import Link from "next/link";
 import router from "next/router";
 import Categories from "@/components/Categories";
 import LayoutHome from "@/components/NewIndex/Layout/LayoutHome";
@@ -92,12 +93,14 @@ function index({ products, latestProducts, categories, popularProducts }) {
         latestProducts.length !== 0 && (
           <>
             <div className="container ">
-              <h6
-                className="title me-auto mb-5 fw-bold"
-                style={{ fontSize: 19 }}
-              >
-                الخدمات الأحدث
-              </h6>
+              <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
+                <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
+                  الخدمات الأحدث
+                </h6>
+                <Link href="/products/latest">
+                  <button>المزيد...</button>
+                </Link>
+              </div>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={0}
@@ -149,12 +152,14 @@ function index({ products, latestProducts, categories, popularProducts }) {
               </Swiper>
             </div>
             <div className="container " style={{ marginBlock: 90 }}>
-              <h6
-                className="title me-auto mb-5 fw-bold"
-                style={{ fontSize: 19 }}
-              >
-                الخدمات الأكثر مبيعًا
-              </h6>
+              <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
+                <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
+                  الخدمات الأكثر مبيعًا
+                </h6>
+                <Link href="/products/best-seller">
+                  <button>المزيد...</button>
+                </Link>
+              </div>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={0}
@@ -209,12 +214,14 @@ function index({ products, latestProducts, categories, popularProducts }) {
               </Swiper>
             </div>
             <div className="container ">
-              <h6
-                className="title me-auto mb-5 fw-bold"
-                style={{ fontSize: 19 }}
-              >
-                الخدمات الأكثر شعبية
-              </h6>
+              <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
+                <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
+                  الخدمات الأكثر شعبية
+                </h6>
+                <button>
+                  <Link href="/products/popular">المزيد...</Link>
+                </button>
+              </div>
               <Swiper
                 slidesPerView={1}
                 spaceBetween={0}

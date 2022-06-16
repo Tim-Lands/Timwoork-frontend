@@ -1,6 +1,8 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
+import useSWR from "swr";
 import PropTypes from "prop-types";
 import Link from "next/link";
+import { CurrencyContext } from "../../contexts/currencyContext";
 import Image from "next/image";
 
 function Post({
@@ -16,6 +18,12 @@ function Post({
   slug,
   rate = 2,
 }): ReactElement {
+  const { data: userInfo }: any = useSWR("api/me");
+  const [, getCurrency] = useContext(CurrencyContext);
+  const specCurrency = getCurrency(
+    userInfo?.user_details?.profile?.currency?.code
+  )?.value;
+  const symbol = userInfo?.user_details?.profile?.currency?.symbol_native;
   const thumbnailUrl = `url(${thumbnail})`;
   const sizeClass = () => {
     switch (size) {
@@ -107,7 +115,8 @@ function Post({
   return (
     <div className={"timlands-post-item" + sizeClass()}>
       <Link href={`/p/${slug}`}>
-        <a href={`/p/${slug}`}
+        <a
+          href={`/p/${slug}`}
           className="post-item-img"
           style={{ backgroundImage: thumbnailUrl }}
         ></a>
@@ -115,17 +124,17 @@ function Post({
       <div className="post-item-content">
         <Link href={`/u/${username}`}>
           <a className="user-mata-post">
-              <div className="user-mata-post-img">
-                <Image src={avatar} width={30} height={30} alt={author} />
-              </div>
-              <div className="user-mata-post-content">
-                <p className="text-user">
-                  <span className="text">{author}</span>
-                </p>
-                <p className="text-meta">
-                  <span className="text">{level}</span>
-                </p>
-              </div>
+            <div className="user-mata-post-img">
+              <Image src={avatar} width={30} height={30} alt={author} />
+            </div>
+            <div className="user-mata-post-content">
+              <p className="text-user">
+                <span className="text">{author}</span>
+              </p>
+              <p className="text-meta">
+                <span className="text">{level}</span>
+              </p>
+            </div>
           </a>
         </Link>
         <h3 className="title">
@@ -140,7 +149,10 @@ function Post({
         </ul>
       </div>
       <div className="post-item-footer">
-        <p className="post-meta-price">السعر من: {price}$</p>
+        <p className="post-meta-price">
+          السعر من: {price}$ <br />
+          {specCurrency && Math.round(price * specCurrency) + symbol}
+        </p>
         <p className="post-meta-bayer">
           {(buyers == 0 ? buyers : buyers + " اشتروا هذا") || "اشتري الآن"}
         </p>

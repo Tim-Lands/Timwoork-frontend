@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
+import { CurrencyContext } from "../../contexts/currencyContext";
 import Comments from "../../components/Comments";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useContext } from "react";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -56,8 +57,14 @@ function Single({ query, stars, errorFetch }) {
   const { data: ProductData, errorLoad }: any = useSWR(
     `api/product/${query.product}`
   );
+
   const { data: userInfo }: any = useSWR("api/me");
-  console.log(userInfo)
+  const symbol = userInfo?.user_details?.profile?.currency?.symbol_native;
+  const [, getCurrency] = useContext(CurrencyContext);
+  const specCurrency = getCurrency(
+    userInfo?.user_details?.profile?.currency?.code
+  )?.value;
+
   const [quantutyCount, setQuantutyCount] = useState(1);
   const [isLoadingCart, setIsLoadingCart] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -188,7 +195,8 @@ function Single({ query, stars, errorFetch }) {
     setCreateConversationLoading(true);
     try {
       const res = await API.post(
-        `api/product/${ProductData && ProductData.data.id
+        `api/product/${
+          ProductData && ProductData.data.id
         }/conversations/create`,
         {
           initial_message: message,
@@ -453,8 +461,9 @@ function Single({ query, stars, errorFetch }) {
                         <span style={{ marginInline: 5 }}>||</span>
                         <small>
                           <Link
-                            href={`/category/${ProductData && ProductData.data.subcategory.id
-                              }`}
+                            href={`/category/${
+                              ProductData && ProductData.data.subcategory.id
+                            }`}
                           >
                             <a
                               style={{ marginInline: 5 }}
@@ -596,19 +605,19 @@ function Single({ query, stars, errorFetch }) {
                                   </span>{" "}
                                   {ProductData &&
                                     ProductData.data.profile_seller.level !==
-                                    null &&
+                                      null &&
                                     ProductData.data.profile_seller.level
                                       .name_ar}
                                 </li>
                                 {ProductData.data.profile_seller.profile
                                   .country !== null && (
-                                    <li>
-                                      <span className="material-icons material-icons-outlined">
-                                        place
-                                      </span>{" "}
-                                      الجزائر
-                                    </li>
-                                  )}
+                                  <li>
+                                    <span className="material-icons material-icons-outlined">
+                                      place
+                                    </span>{" "}
+                                    الجزائر
+                                  </li>
+                                )}
                               </ul>
                               <div className="seller-info-butts d-flex">
                                 <Link
@@ -629,7 +638,11 @@ function Single({ query, stars, errorFetch }) {
                                   <button
                                     className="btn butt-green butt-sm flex-center"
                                     disabled={createConversationLoading}
-                                    onClick={() => userInfo ? setIsModalVisible(true) : router.push('/login')}
+                                    onClick={() =>
+                                      userInfo
+                                        ? setIsModalVisible(true)
+                                        : router.push("/login")
+                                    }
                                   >
                                     <i className="material-icons material-icons-outlined">
                                       email
@@ -663,7 +676,14 @@ function Single({ query, stars, errorFetch }) {
                           </div>
                         </div>
                         <div className="single-comments-body">
-                          <Comments canReply={userInfo && userInfo.user_details.profile.id == ProductData.data.profile_seller.id} comments={ProductData.data.ratings} />
+                          <Comments
+                            canReply={
+                              userInfo &&
+                              userInfo.user_details.profile.id ==
+                                ProductData.data.profile_seller.id
+                            }
+                            comments={ProductData.data.ratings}
+                          />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">لاتوجد آراء المشتريين</p>
@@ -778,7 +798,7 @@ function Single({ query, stars, errorFetch }) {
                                     id={"flexCheckDefault-id" + e.id}
                                     value={e.id}
                                     onChange={handleOnChangeAddID}
-                                    {..._totalPrice()}
+                                    // {..._totalPrice()}
                                   />
                                   <label
                                     className="form-check-label"
@@ -788,6 +808,10 @@ function Single({ query, stars, errorFetch }) {
                                     <p className="price-duration">
                                       ستكون المدة {DevdurationFunc(e.duration)}{" "}
                                       بمبلغ {e.price}$
+                                      {specCurrency &&
+                                        " | " +
+                                          Math.round(e?.price * specCurrency) +
+                                          symbol}
                                     </p>
                                   </label>
                                 </div>
@@ -807,9 +831,14 @@ function Single({ query, stars, errorFetch }) {
                             <span className="count">
                               {ProductData && ProductData.data.count_buying}{" "}
                             </span>
+
                             <span className="text"> اشتروا هذا</span>
                           </p>
                         </div>
+                      </div>
+                      <div className="ms-auto" style={{ width: "fit-content" }}>
+                        {specCurrency &&
+                          Math.round(_totalPrice() * specCurrency) + symbol}
                       </div>
                       <div className="aside-footer-addtocart mt-3">
                         <button

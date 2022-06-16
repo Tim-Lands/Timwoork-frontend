@@ -74,7 +74,8 @@ function Footer() {
           <div className="footer-item">
             <h3 className="title">التصنيفات النشطة</h3>
             <ul className="footerlist">
-              {categories.map((category) => {
+              {categories.map((category, index) => {
+                if (index > 7) return;
                 return (
                   <li key={category.id}>
                     <Link href={`/products?categoryID=${category?.id}`}>

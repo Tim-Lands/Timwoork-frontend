@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
+import Pagination from "react-js-pagination";
 import Loading from "@/components/Loading";
 import useSWR from "swr";
 import { Menu, Result } from "antd";
@@ -9,11 +10,12 @@ import API from "../../config";
 function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
   const [postsMediaTable, setPostsMediaTable] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
   const { data: getCategories }: any = useSWR(
     "https://timwoork.net/wp-json/wp/v2/categories"
   );
   const { data: getPosts }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/posts${categories}`
+    `https://timwoork.net/wp-json/wp/v2/posts?per_page=9&page=${pageNumber}&${categories}`
   );
 
   const fetchImage = (img_id) => {
@@ -50,7 +52,7 @@ function Category(): JSX.Element {
             getCategories.map((item: any) => (
               <Menu.Item
                 key={item.id}
-                onClick={() => setCategories(`?categories=${item.id}`)}
+                onClick={() => setCategories(`categories=${item.id}`)}
               >
                 {item.name}
               </Menu.Item>
@@ -93,6 +95,18 @@ function Category(): JSX.Element {
             subTitle="ليس هناك مقالات لعرضها"
           />
         )}
+        <Pagination
+          itemClass="page-item"
+          linkClass="page-link"
+          activePage={pageNumber}
+          itemsCountPerPage={9}
+          totalItemsCount={20}
+          hideFirstLastPages={true}
+          pageRangeDisplayed={3}
+          onChange={(number) => {
+            setPageNumber(number);
+          }}
+        />
       </div>
     </div>
   );

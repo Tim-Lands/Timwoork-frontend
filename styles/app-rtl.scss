@@ -7812,7 +7812,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
     .footerlist {
       list-style: none;
-      padding-right: 6px;
+      padding: 0;
       li {
         padding: 7px 0;
         white-space: nowrap;
@@ -8484,6 +8484,19 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         background-color: rgba(0, 0, 0, 0.1);
         color: rgba(0, 0, 0, 0.8);
       }
+    }
+  }
+}
+.index-product-header {
+  button {
+    border: none;
+    border-radius: 8px;
+    padding: 0.7em 1em;
+    background-color: rgba(0, 102, 255, 0.05);
+    color: #0066ff;
+    transition: all 0.3s linear;
+    &:hover {
+      background-color: rgba(0, 102, 255, 0.01);
     }
   }
 }

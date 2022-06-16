@@ -63,7 +63,7 @@ const MySelect = (props: any) => {
 function Category({ products, categories, url_params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
-  console.log(categories)
+  console.log(categories);
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
 
@@ -86,8 +86,8 @@ function Category({ products, categories, url_params }) {
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
   /**----------------------------------------------------------**/
   useEffect(() => {
-    setGetProducts(products)
-  }, [products])
+    setGetProducts(products);
+  }, [products]);
 
   useEffect(() => {
     fetchData();
@@ -157,14 +157,15 @@ function Category({ products, categories, url_params }) {
       const params = {
         paginate: 12,
         page: pageNumber,
-        like: `title,${query ? query : url_params.query ? url_params.query : ""
-          }`,
+        like: `title,${
+          query ? query : url_params.query ? url_params.query : ""
+        }`,
         between: delevring ? `duration,${delevring}` : null,
         category: url_params.categoryID,
         tags: tags_filtered.length == 0 ? null : tags_filtered.join(","),
         ratings_avg: ratting,
         seller_level,
-        subcategories: url_params.subcategoryID
+        subcategories: url_params.subcategoryID,
       };
       const res = await API.get(
         `api/filter?${url_params.type}&between=price,${minprice},${maxprice}`,
@@ -235,7 +236,6 @@ function Category({ products, categories, url_params }) {
     formik.setFieldValue("maxprice", -1 * newValue[0]);
     formik.setFieldValue("minprice", -1 * newValue[1]);
   };
-
 
   //const { data: categories }: any = useSWR('api/get_categories')
   const formik = useFormik({
@@ -478,7 +478,7 @@ function Category({ products, categories, url_params }) {
                         <div
                           className="list-cat-item"
                           onClick={() => {
-                            router.push({ pathname: '/products' })
+                            router.push({ pathname: "/products" });
                           }}
                         >
                           <span className="item-cat-label">
@@ -494,8 +494,9 @@ function Category({ products, categories, url_params }) {
                           <>
                             <div className="list-inner" key={e.id}>
                               <div
-                                className={`list-cat-item ${subCategoryDisplay[e.id]
-                                  }ed`}
+                                className={`list-cat-item ${
+                                  subCategoryDisplay[e.id]
+                                }ed`}
                                 onClick={() => toggleCateogryDisplay(e.id)}
                               >
                                 <span className="item-cat-label">
@@ -507,17 +508,16 @@ function Category({ products, categories, url_params }) {
                               </div>
 
                               <div
-                                className={`filter-subcategories-list d-${subCategoryDisplay[e.id]
-                                  }`}
+                                className={`filter-subcategories-list d-${
+                                  subCategoryDisplay[e.id]
+                                }`}
                               >
                                 <div
                                   className="list-subcat-item"
-                                  onClick={() => {
-
-                                  }}
+                                  onClick={() => {}}
                                 >
                                   <Link href={`/products?categoryID=${e.id}`}>
-                                    <a className='item-cat-label text-black'>
+                                    <a className="item-cat-label text-black">
                                       الجميع
                                     </a>
                                   </Link>
@@ -525,13 +525,12 @@ function Category({ products, categories, url_params }) {
                                 {subcategories[e.id]?.map((sub_category) => (
                                   <div
                                     key={sub_category.id}
-
                                     className="list-subcat-item"
                                   >
-                                    <Link href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}>
-                                      <a>
-                                        {sub_category.name_ar}
-                                      </a>
+                                    <Link
+                                      href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}
+                                    >
+                                      <a>{sub_category.name_ar}</a>
                                     </Link>
                                   </div>
                                 ))}
@@ -910,7 +909,6 @@ function Category({ products, categories, url_params }) {
           <div className="col-md-9">
             <div className="page-header flex-center" style={{ paddingTop: 0 }}>
               <h4 className="title me-auto">
-
                 {products_type.current[url_params.type] || "جميع الخدمات"}
               </h4>
               <div className="tool-right ml-auto">
@@ -934,7 +932,10 @@ function Category({ products, categories, url_params }) {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            router.push({ pathname: '/products', query: { ...url_params, type: 'popular' } })
+                            router.push({
+                              pathname: "/products",
+                              query: { ...url_params, type: "popular" },
+                            });
                           }}
                         >
                           الأكثر شعبية
@@ -945,8 +946,10 @@ function Category({ products, categories, url_params }) {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            router.push({ pathname: '/products', query: { ...url_params, type: 'most_selling' } })
-
+                            router.push({
+                              pathname: "/products",
+                              query: { ...url_params, type: "most_selling" },
+                            });
                           }}
                         >
                           الأكثر مبيعا
@@ -957,8 +960,10 @@ function Category({ products, categories, url_params }) {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            router.push({ pathname: '/products', query: { ...url_params, type: 'most_recent' } })
-
+                            router.push({
+                              pathname: "/products",
+                              query: { ...url_params, type: "most_recent" },
+                            });
                           }}
                         >
                           المضافة حديثا
@@ -969,8 +974,10 @@ function Category({ products, categories, url_params }) {
                           type="button"
                           className="btn-item"
                           onClick={() => {
-                            router.push({ pathname: '/products', query: { ...url_params, type: null } })
-
+                            router.push({
+                              pathname: "/products",
+                              query: { ...url_params, type: null },
+                            });
                           }}
                         >
                           بدون ترتيب
@@ -1005,7 +1012,7 @@ function Category({ products, categories, url_params }) {
                   }
                   totalItemsCount={getProducts.total ? getProducts.total : 0}
                   onChange={(pageNumber) => {
-                    fetchData(pageNumber)
+                    fetchData(pageNumber);
                   }}
                   pageRangeDisplayed={paginationSize}
                   itemClass="page-item"
@@ -1023,30 +1030,26 @@ function Category({ products, categories, url_params }) {
   );
 }
 export async function getServerSideProps(context) {
-  console.log('begin server side')
-  const token = cookies(context).token || ""
+  console.log("begin server side");
+  const token = cookies(context).token || "";
   const { query } = context;
-  console.log(query)
-  console.log('in server side');
   try {
     const query_params = {
       paginate: 12,
       page: query.pageNumber,
       category: query.categoryID,
       subcategories: query.subcategoryID,
-      query: query.query
+      query: query.query,
     };
 
-    const [productsRes, categoriesRes] = await Promise.all([API.get(
-      `api/filter?${query.type}`,
-      {
+    const [productsRes, categoriesRes] = await Promise.all([
+      API.get(`api/filter?${query.type}`, {
         params: query_params,
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
-    ),
-    API.get(`api/get_categories`)
+      }),
+      API.get(`api/get_categories`),
     ]);
 
     return {
@@ -1057,14 +1060,13 @@ export async function getServerSideProps(context) {
         errorFetch: false,
       },
     };
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return {
       props: {
         errorFetch: true,
       },
-    }
+    };
   }
 }
 Category.getLayout = function getLayout(page: any): ReactElement {
@@ -1075,5 +1077,5 @@ Category.propTypes = {
   query: PropTypes.any,
   products: PropTypes.any,
   categories: PropTypes.any,
-  url_params: PropTypes.any
+  url_params: PropTypes.any,
 };
