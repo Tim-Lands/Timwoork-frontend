@@ -18,7 +18,7 @@ export const CurrencyProvider = (props) => {
         setCurrencyValues(data.data.data);
       })
       .catch(() => {});
-  });
+  }, []);
   function getSpecCurrency(codeID: "USD") {
     const oneCurrency = [];
     currencyValues.forEach((currency) => {
