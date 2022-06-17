@@ -19,7 +19,7 @@ const personalInformations = () => {
   const [codes, setCodes] = useState([]);
   const [currencies, setCurrencies] = useState([]);
   const { data: userInfo }: any = useSWR("api/me");
-  const { data: Countries }: any = useSWR("dashboard/countries");
+  const { data: Countries }: any = useSWR("api/get_countries");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
@@ -447,7 +447,7 @@ const personalInformations = () => {
                                       " has-error")
                                   }
                                 >
-                                  <option value="">الافتراضية</option>
+                                  <option value={currencies?.find(e=>e.code=="USD")?.id}>الافتراضية</option>
 
                                   {currencies.map((e: any) => (
                                     <option key={e?.id} value={e?.id}>
