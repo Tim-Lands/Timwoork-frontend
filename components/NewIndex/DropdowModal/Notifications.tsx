@@ -8,7 +8,9 @@ import PropTypes from "prop-types";
 
 function Notifications({ notifications, refs, setShowNotificationsMenu }) {
   function switchNotifyType(notification) {
-    const { type, to, item_id, slug } = notification?.data;
+    console.log(notification)
+    const { type, to, item_id, slug, content } = notification?.data;
+    console.log(type)
     switch (type) {
       case "order":
         if (to == "seller") {
@@ -22,7 +24,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
         return `/p/${slug}`;
 
       case "system":
-        return ``;
+        return content?.product_id ? `/p/${content?.product_id}:` : ''
 
       default:
         return `/mysales/${item_id}`;
@@ -74,7 +76,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
                     <a className="new-popup-item" style={{ marginRight: 0 }}>
                       <div className="new-popup-item-image">
                         <Image
-                          src={notification?.data?.user_sender?.avatar_path}
+                          src={notification?.data?.user_sender?.avatar_url ? notification?.data?.user_sender?.avatar_url : '/logo.png'}
                           width={50}
                           height={50}
                           alt={``}
