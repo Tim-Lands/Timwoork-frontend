@@ -15,7 +15,7 @@ import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
 import { PusherContext } from "../../../contexts/pusherContext";
 import API from "../../../config";
-import { notification } from "antd";
+import { Badge, notification } from "antd";
 import LastSeen from "@/components/LastSeen";
 import MobileMenu from "./mobileMenus";
 import router from "next/router";
@@ -88,7 +88,7 @@ function Navbar({ dark = false }) {
       .then((res) => {
         setPostsList(res.data.data);
       })
-      .catch(() => {});
+      .catch(() => { });
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
@@ -202,9 +202,8 @@ function Navbar({ dark = false }) {
 
       notificationPusher.bind("notification.sent", (data) => {
         const today = new Date();
-        const date = `${today.getFullYear()}_${
-          today.getMonth() + 1
-        }-${today.getDate()}`;
+        const date = `${today.getFullYear()}_${today.getMonth() + 1
+          }-${today.getDate()}`;
         setNotifications([{ created_at: date, data }, ...notifications]);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
@@ -265,7 +264,7 @@ function Navbar({ dark = false }) {
       setNotifications(notificationsData?.data?.data?.data);
       setSentinel({ ...sentinel });
     } catch {
-      () => {};
+      () => { };
     }
   };
 
@@ -373,23 +372,27 @@ function Navbar({ dark = false }) {
                 )}
               </li>
               <li className="circular-newitem">
-                <Link href={"/cart"}>
-                  <a className="link-circular-button">
-                    <span className="material-icons material-icons-outlined">
-                      shopping_cart
-                    </span>
-                  </a>
-                </Link>
+                <Badge count={0} style={{ fontSize: 10 }} size="small">
+                  <Link href={"/cart"}>
+                    <a className="link-circular-button">
+                      <span className="material-icons material-icons-outlined">
+                        shopping_cart
+                      </span>
+                    </a>
+                  </Link>
+                </Badge>
               </li>
               <li className="circular-newitem" ref={messagesBtn}>
-                <a
-                  className="link-circular-button"
-                  onClick={() => setShowMessagesMenu(!showMessagesMenu)}
-                >
-                  <span className="material-icons material-icons-outlined">
-                    mail
-                  </span>
-                </a>
+                <Badge count={0} style={{ fontSize: 10 }} size="small">
+                  <a
+                    className="link-circular-button"
+                    onClick={() => setShowMessagesMenu(!showMessagesMenu)}
+                  >
+                    <span className="material-icons material-icons-outlined">
+                      mail
+                    </span>
+                  </a>
+                </Badge>
                 {showMessagesMenu && (
                   <Messages
                     refs={messagesRef}
@@ -399,16 +402,18 @@ function Navbar({ dark = false }) {
                 )}
               </li>
               <li className="circular-newitem" ref={notificationsBtn}>
-                <a
-                  className="link-circular-button"
-                  onClick={() =>
-                    setShowNotificationsMenu(!showNotificationsMenu)
-                  }
-                >
-                  <span className="material-icons material-icons-outlined">
-                    notifications
-                  </span>
-                </a>
+                <Badge count={0} style={{ fontSize: 10 }} size="small">
+                  <a
+                    className="link-circular-button"
+                    onClick={() =>
+                      setShowNotificationsMenu(!showNotificationsMenu)
+                    }
+                  >
+                    <span className="material-icons material-icons-outlined">
+                      notifications
+                    </span>
+                  </a>
+                </Badge>
                 {showNotificationsMenu && (
                   <Notifications
                     notifications={notifications}
@@ -435,7 +440,7 @@ function Navbar({ dark = false }) {
               </li>
               <li
                 className="mobAuthBtn"
-                // onClick={() => setIsShowLoginForm(true)}
+              // onClick={() => setIsShowLoginForm(true)}
               >
                 <Link href="login">
                   <button>الدخول</button>
@@ -445,10 +450,9 @@ function Navbar({ dark = false }) {
                 <Link href="login">
                   <a
                     style={{ fontWeight: "bold" }}
-                    className={`btn butt-xs flex-center ${
-                      !visible ? " butt-primary2-out" : " butt-white-out"
-                    }`}
-                    // onClick={() => setIsShowLoginForm(true)}
+                    className={`btn butt-xs flex-center ${!visible ? " butt-primary2-out" : " butt-white-out"
+                      }`}
+                  // onClick={() => setIsShowLoginForm(true)}
                   >
                     <span className="material-icons material-icons-outlined">
                       person
@@ -463,7 +467,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem">
             <a
               className="link-circular-button"
-              // onClick={() => setIsLanguageVisible(true)}
+            // onClick={() => setIsLanguageVisible(true)}
             >
               <span className="material-icons material-icons-outlined">
                 language

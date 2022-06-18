@@ -1,0 +1,51 @@
+.redirect {
+  h4 {
+    margin-block: 1em;
+  }
+  .warnings {
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 40px;
+    .list {
+      li {
+        margin-block: 10px;
+      }
+    }
+    .controllers {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      button {
+        background-color: $primary;
+        color: white;
+        border: none;
+        font-weight: 400;
+        transition: all 0.3s linear;
+        padding: 5px 10px;
+        a {
+          color: white;
+        }
+        &:hover {
+          background-color: darken($primary, 10%);
+        }
+        &:first-child {
+          a {
+            color: black;
+          }
+          border: 1px solid rgba(0, 0, 0, 0.2) !important;
+          background-color: #f0f0f0;
+          color: black;
+          &:hover {
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
+}
