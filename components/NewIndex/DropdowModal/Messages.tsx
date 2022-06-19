@@ -115,7 +115,7 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
           </div>
         </div>
         <div className="popup-dropdown-footer">
-          <Link href={`/`}>
+          <Link href={`/conversations`}>
             <a
               className="nav-see-more"
               style={{ marginRight: 0, borderRadius: 6 }}

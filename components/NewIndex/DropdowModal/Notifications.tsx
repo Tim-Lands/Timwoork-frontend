@@ -9,7 +9,8 @@ import PropTypes from "prop-types";
 function Notifications({ notifications, refs, setShowNotificationsMenu }) {
   function switchNotifyType(notification) {
     console.log(notification)
-    const { type, to, item_id, slug, content } = notification?.data;
+    const { type, to, slug, content } = notification?.data;
+    const { item_id } = content;
     console.log(type)
     switch (type) {
       case "order":
