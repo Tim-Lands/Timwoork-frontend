@@ -1,0 +1,191 @@
+{
+  "Home": { "ar": "الرئيسية", "fr": "Accueil", "en": "Home" },
+  "Buy_chat_sell": {
+    "ar": "اشتري. دردش .بيع",
+    "fr": "Achetez, Discutez et vendez",
+    "en": "Buy, chat, sell"
+  },
+  "Discover_Timwoork’s_most": {
+    "ar": "اكتشف سوق تيم ورك للخدمات الالكترونية الأكثر تطورا وراحة",
+    "fr": "Découvrez le marché Timwoork pour les e-services le plus sophistiqué et confortable",
+    "en": "Discover Timwoork’s most sophisticated and comfortable e-services marketplace"
+  },
+  "Search_in_Timwoork": {
+    "ar": "البحث في تيم وورك...",
+    "fr": "Rechercher dans Timwoork …",
+    "en": "Search in Timwoork …"
+  },
+  "Search": { "ar": "بحث", "en": "Search", "fr": "chercher" },
+  "Business": { "ar": "أعمال", "fr": "Affaires", "en": "Business" },
+  "Programming_and_development": {
+    "en": "Programming and development",
+    "fr": "Programmation et développement",
+    "ar": "برمجة وتطوير"
+  },
+  "E_marketing": {
+    "en": "E-marketing",
+    "fr": "E-marketing",
+    "ar": "تسويق الكتروني"
+  },
+  "Learning_online": {
+    "en": "Learning online",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+  "Video_design": {
+    "en": "Video design",
+    "fr": "Conception de vidéo",
+    "ar": "تصميم فيديو"
+  },
+  "General_design": {
+    "en": "General design",
+    "fr": "Conception générale",
+    "ar": "تصميم عام"
+  },
+  "Audio": {
+    "en": "Audio",
+    "fr": "Audio",
+    "ar": "صوتيات"
+  },
+  "Writing_and_translation": {
+    "en": "Writing and translation",
+    "fr": "Rédaction et traduction",
+    "ar": "كتابة وترجمة"
+  },
+  "Housewives’_services": {
+    "en": "Housewives’ services",
+    "fr": "Services de femmes au foyer",
+    "ar": "خدمات ربات البيوت"
+  },
+  "Consulting_and_advice": {
+    "en": "Consulting and advice",
+    "fr": "Consultation et conseils",
+    "ar": "استشارات ونصائح"
+  },
+  "Technology": {
+    "en": "Technology",
+    "fr": "Technologie",
+    "ar": "تقنية"
+  },
+  "Financial_services": {
+    "en": "Financial services",
+    "fr": "Services financiers",
+    "ar": "خدمات مالية"
+  },
+  "Most_popular_services": {
+    "en": "Most popular services",
+    "fr": "Services les plus populairess",
+    "ar": "الخدمات الأكثر شعبية"
+  },
+  "More": {
+    "en": "More …",
+    "fr": "Plus …",
+    "ar": "المزيد ..."
+  },
+  "Newly_added_services": {
+    "en": "Newly added services",
+    "fr": "Services récents",
+    "ar": "الخدمات الأحدث"
+  },
+  "Top_selling_services": {
+    "en": "Top selling services",
+    "fr": "Services les plus vendus",
+    "ar": "الخدمات الأكثر مبيعا"
+  },
+  "Blog": {
+    "en": "Blog",
+    "fr": "Blog",
+    "ar": "المدونة"
+  },
+  "Websites’_links": {
+    "en": "Websites’ links",
+    "fr": "Liens des sites",
+    "ar": "روابط المواقع"
+  },
+  "Privacy_policy": {
+    "en": "Privacy policy",
+    "fr": "Politique de confidentialité",
+    "ar": "سياسة الخصوصية"
+  },
+  "Terms_of_use": {
+    "en": "Terms of service",
+    "fr": "Conditions d’utilisation",
+    "ar": "شروط الاستخدام"
+  },
+  "About_website": {
+    "en": "About_website",
+    "fr": "A propos du site",
+    "ar": "حول الموقع"
+  },
+  "Contact_us": {
+    "en": "Contact us",
+    "fr": "Contactez-nous",
+    "ar": "اتصل بنا"
+  },
+  "Working_online_for": {
+    "en": "Working online for beginners… Top 3 areas of profit",
+    "fr": "Travail en ligne pour les débutants… 3 domaines pour gagner",
+    "ar": "العمل عبر الإنترنت للمبتدئين.. وأهم 3 مجالات للربح منهم"
+  },
+  "Besides_your_business ": {
+    "en": "Besides your business 5 easy ideas helping you to earn money online",
+    "fr": "En plus de votre travail, 5 idées faciles qui vous aident à gagner l’argent sur Internet",
+    "ar": "5 أفكار سهلة تساعدك في ربح المال من الإنترنت بجانب عملك"
+  },
+  "What_are_the": {
+    "en": "What are the basic elements of a resume?",
+    "fr": "Quels sont les principaux éléments d’un CV ?",
+    "ar": "ما هي العناصر الأساسية للسيرة الذاتية؟"
+  },
+  "Writing_a_professional": {
+    "en": "Writing a professional resume",
+    "fr": "Rédaction d’un CV professionnel",
+    "ar": "كتابة سيرة ذاتية احترافية"
+  },
+  "Resume_mistakes": {
+    "en": "Resume mistakes",
+    "fr": "Les erreurs de CV",
+    "ar": "أخطاء السيرة الذاتية"
+  },
+  "Developing_a_store": {
+    "en": "Developing a store using Laravel framework",
+    "fr": "Développement d’un magasin en ligne avec la plateforme Laravel",
+    "ar": "تطوير متجر إلكتروني باستخدام إطار العمل لارفال laravel"
+  },
+  "Professional_voicing_over": {
+    "en": "Professional voicing over with distinctive voice and in record time",
+    "fr": "Commentaire audio professionnel avec une voix distinctive et en temps record ",
+    "ar": "تعليق صوتي احترافي بخامة صوتية مميزة وبوقت قياسي"
+  },
+  "Personal _CV_Review": {
+    "en": "Personal CV (Resume) Review",
+    "fr": "Examen du CV personnel",
+    "ar": ""
+  },
+  "Penetration_test_report": {
+    "en": "Penetration test report about web application",
+    "fr": "Rapport de test d’intrusion sur l’application Web",
+    "ar": ""
+  },
+  "Professional_website_design": {
+    "en": "Professional website design on Wix at a competitive price",
+    "fr": "Conception d’un site Web professionnel sur la plateforme Wix à un prix imbattable",
+    "ar": "تصميم موقع احترافي على منصة ويكس Wix وبسعر منافس"
+  },
+
+  "All_rights_reserved": {
+    "en": "All rights reserved",
+    "fr": "Tous droits sont réservés",
+    "ar": "جميع الحقوق محفوظة"
+  },
+  "WhatsApp": {
+    "en": "WhatsApp",
+    "fr": "WhatsApp",
+    "ar": "واتساب"
+  },
+  "Telegram": {
+    "en": "Telegram",
+    "fr": "Telegram",
+    "ar": "تيليجرام"
+  }
+}

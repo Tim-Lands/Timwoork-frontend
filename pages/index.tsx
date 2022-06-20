@@ -3,7 +3,8 @@ import { PRIMARY } from "../styles/variables";
 import Hero from "@/components/NewIndex/Header/Hero";
 import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
 import Head from "next/head";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
+import { LanguageContext } from "../contexts/languageContext/context";
 import Link from "next/link";
 import router from "next/router";
 import Categories from "@/components/Categories";
@@ -44,6 +45,8 @@ const menu = (
   </Menu>
 );
 function index({ products, latestProducts, categories, popularProducts }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
   return (
     <>
       <Head>
@@ -95,10 +98,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
             <div className="container ">
               <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
                 <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
-                  الخدمات الأحدث
+                  {getLanguage("Newly_added_services")}
                 </h6>
                 <Link href="/products/latest">
-                  <button>المزيد...</button>
+                  <button>{getLanguage("More")}</button>
                 </Link>
               </div>
               <Swiper
@@ -156,10 +159,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
             <div className="container " style={{ marginBlock: 90 }}>
               <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
                 <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
-                  الخدمات الأكثر مبيعًا
+                  {getLanguage("Top_selling_services")}
                 </h6>
                 <Link href="/products/best-seller">
-                  <button>المزيد...</button>
+                  <button>{getLanguage("More")}</button>
                 </Link>
               </div>
               <Swiper
@@ -217,10 +220,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
             <div className="container ">
               <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
                 <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
-                  الخدمات الأكثر شعبية
+                  {getLanguage("Most_popular_services")}
                 </h6>
                 <button>
-                  <Link href="/products/popular">المزيد...</Link>
+                  <Link href="/products/popular">{getLanguage("More")}</Link>
                 </button>
               </div>
               <Swiper

@@ -6919,6 +6919,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 // Button Circular
 .link-circular-button {
   display: flex;
+  position: relative;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
@@ -7289,8 +7290,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
           }
         }
         &.circular-newitem {
+          position: relative;
           .link-circular-button {
             width: 33px;
+            position: relative;
             height: 33px;
             color: #fff;
 
@@ -7439,8 +7442,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
           }
 
           &.circular-newitem {
+            position: relative;
             .link-circular-button {
               color: #000;
+              position: relative;
               background-color: #f8f8f8;
               opacity: 0.7;
 
@@ -8533,5 +8538,43 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       outline: none;
       padding: 0;
     }
+  }
+}
+.languageMenuDropDown {
+  background-color: white;
+  padding: 2px;
+  list-style-type: none;
+  display: flex;
+  top: 50px;
+  left: 0;
+  position: absolute;
+  flex-direction: column;
+  z-index: 2000;
+  transition: all 0.4s linear;
+  gap: 1px;
+  border-radius: 6px;
+  opacity: 0;
+  li {
+    border-radius: 6px;
+    padding: 6px 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    &.selectedLanguage {
+      transition: all 0.3s linear;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  &.showLanguage {
+    animation: showLanguage .4s linear both;
+  }
+}
+@keyframes showLanguage{
+  100%{
+    top: 40px;
+    opacity: 1;
   }
 }

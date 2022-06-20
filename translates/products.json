@@ -1,0 +1,92 @@
+{
+  "All_services": {
+    "en": "All services",
+    "fr": "Tous les services",
+    "ar": "جميع الخدمات"
+  },
+  "Services_filter": {
+    "en": "Services filter",
+    "fr": "Filtre de services",
+    "ar": "فلترة الخدمات"
+  },
+  "Type_your_search": {
+    "en": "Type your search word",
+    "fr": "Taper le mo de recherche",
+    "ar": "اكتب كلمة البحث..."
+  },
+  "Price": {
+    "en": "Price",
+    "fr": "Prix",
+    "ar": "السعر"
+  },
+  "Categories": {
+    "en": "Categories",
+    "fr": "Catégories",
+    "ar": "التصنيفات"
+  },
+  "Skills": {
+    "en": "Skills",
+    "fr": "Compétences",
+    "ar": "المهارات"
+  },
+  "Evaluation": {
+    "en": "Evaluation",
+    "fr": "Evaluation",
+    "ar": "التقييم"
+  },
+  "Delivery_term": {
+    "en": "Delivery term",
+    "fr": "Délai de livraison",
+    "ar": "مدة التسليم"
+  },
+  "Seller": {
+    "en": "Seller",
+    "fr": "Vendeur",
+    "ar": "البائع"
+  },
+  "Select": {
+    "en": "Select",
+    "fr": "Sélectionner",
+    "ar": ".............."
+  },
+  "No_options": {
+    "en": "No options",
+    "fr": "Aucune option",
+    "ar": "………………"
+  },
+  "Less_than_a": {
+    "en": "Less than a week",
+    "fr": "Moins d’une semaine",
+    "ar": "أقل من أسبوع"
+  },
+  "From_1_to": {
+    "en": "From 1 to 2 weeks",
+    "fr": "De 1 à 2 semaines",
+    "ar": "من 1 إلى 2 أسابيع"
+  },
+  "From_2_weeks": {
+    "en": "From 2 weeks to 1 month",
+    "fr": "De 2 semaines à 1 mois",
+    "ar": "من 2  أسابيع إلى شهر"
+  },
+  "From_1_month": {
+    "en": "From 1 month to 3 months",
+    "fr": "D’un mois à 3 mois",
+    "ar": "من شهر إلى 3 أشهر"
+  },
+  "More_than_3": {
+    "en": "More than 3 months",
+    "fr": "Plus que 3 mois",
+    "ar": "أكثر من 3 أشهر"
+  },
+  "Featured_seller": {
+    "en": "Featured seller",
+    "fr": "Vendeur vedette",
+    "ar": "بائع مميز"
+  },
+  "VIP_seller": {
+    "en": "VIP seller",
+    "fr": "Vendeur VIP",
+    "ar": "بائع VIP"
+  }
+}

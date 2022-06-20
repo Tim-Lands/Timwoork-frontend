@@ -11,6 +11,7 @@ import type { AppProps } from "next/app";
 import { ConfigProvider } from "antd";
 import { PusherProvider } from "../contexts/pusherContext";
 import { CurrencyProvider } from "../contexts/currencyContext";
+import { LanguageProvider } from "../contexts/languageContext/context";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
 };
@@ -26,7 +27,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <ConfigProvider direction="rtl">
           <PusherProvider>
             <CurrencyProvider>
-              {getLayout(<Component {...pageProps} />)}
+              <LanguageProvider>
+                {getLayout(<Component {...pageProps} />)}
+              </LanguageProvider>
             </CurrencyProvider>
           </PusherProvider>
         </ConfigProvider>

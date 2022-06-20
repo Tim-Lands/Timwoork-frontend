@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState, useContext, useRef } from "react";
 import useSWR from "swr";
 import { useOutsideAlerter } from "../../useOutsideAlerter";
+import { useOutSide } from "../../useOutSide";
 import Community from "./Community";
 // import LoginForm from "@/components/NewIndex/LoginForm";
 import { FaSearch } from "react-icons/fa";
@@ -11,6 +12,7 @@ import Notifications from "../DropdowModal/Notifications";
 import PropTypes from "prop-types";
 import Messages from "../DropdowModal/Messages";
 // import Language from "../DropdowModal/Language";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
 import { PusherContext } from "../../../contexts/pusherContext";
@@ -29,10 +31,12 @@ import {
 import { lighten } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
+  const { language, setLanguage } = useContext(LanguageContext);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
-  // const [isLanguageVisible, setIsLanguageVisible] = useState(false);
+
+  const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [showCommunityMenu, setShowCommunityMenu] = useState(false);
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
@@ -54,7 +58,9 @@ function Navbar({ dark = false }) {
     setShowNotificationsMenu(false);
     setShowCommunityMenu(false);
     setIsShowProfileMenu(false);
+    setIsLanguageVisible(false);
   };
+  const languageRef = useRef(null);
   const messagesRef = useRef(null);
   const notificationsRef = useRef(null);
   const profileRef = useRef(null);
@@ -75,11 +81,14 @@ function Navbar({ dark = false }) {
   const hideProfile = () => {
     setIsShowProfileMenu(false);
   };
+  const hideLanguage = () => {
+    setIsLanguageVisible(false);
+  };
 
   useOutsideAlerter(messagesRef, hideMessages, messagesBtn);
 
   useOutsideAlerter(notificationsRef, hideNotifications, notificationsBtn);
-
+  useOutSide(languageRef, hideLanguage);
   useOutsideAlerter(communityRef, hideCommunity, communityBtn);
   useOutsideAlerter(profileRef, hideProfile, profileBtn);
 
@@ -88,7 +97,7 @@ function Navbar({ dark = false }) {
       .then((res) => {
         setPostsList(res.data.data);
       })
-      .catch(() => { });
+      .catch(() => {});
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
@@ -97,7 +106,6 @@ function Navbar({ dark = false }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
@@ -202,8 +210,9 @@ function Navbar({ dark = false }) {
 
       notificationPusher.bind("notification.sent", (data) => {
         const today = new Date();
-        const date = `${today.getFullYear()}_${today.getMonth() + 1
-          }-${today.getDate()}`;
+        const date = `${today.getFullYear()}_${
+          today.getMonth() + 1
+        }-${today.getDate()}`;
         setNotifications([{ created_at: date, data }, ...notifications]);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
@@ -264,10 +273,46 @@ function Navbar({ dark = false }) {
       setNotifications(notificationsData?.data?.data?.data);
       setSentinel({ ...sentinel });
     } catch {
-      () => { };
+      () => {};
     }
   };
-
+  const LanguageMenu = () => {
+    return (
+      <ul
+        className={`languageMenuDropDown ${
+          isLanguageVisible ? " showLanguage" : ""
+        }`}
+      >
+        <li
+          className={language === "ar" ? "selectedLanguage" : ""}
+          onClick={() => {
+            setLanguage("ar");
+            hideLanguage();
+          }}
+        >
+          العربية
+        </li>
+        <li
+          className={language === "en" ? "selectedLanguage" : ""}
+          onClick={() => {
+            setLanguage("en");
+            hideLanguage();
+          }}
+        >
+          English
+        </li>
+        <li
+          className={language === "fr" ? "selectedLanguage" : ""}
+          onClick={() => {
+            setLanguage("fr");
+            hideLanguage();
+          }}
+        >
+          Français
+        </li>
+      </ul>
+    );
+  };
   return (
     <nav
       className="app-new-navbar-cont"
@@ -440,7 +485,7 @@ function Navbar({ dark = false }) {
               </li>
               <li
                 className="mobAuthBtn"
-              // onClick={() => setIsShowLoginForm(true)}
+                // onClick={() => setIsShowLoginForm(true)}
               >
                 <Link href="login">
                   <button>الدخول</button>
@@ -450,9 +495,10 @@ function Navbar({ dark = false }) {
                 <Link href="login">
                   <a
                     style={{ fontWeight: "bold" }}
-                    className={`btn butt-xs flex-center ${!visible ? " butt-primary2-out" : " butt-white-out"
-                      }`}
-                  // onClick={() => setIsShowLoginForm(true)}
+                    className={`btn butt-xs flex-center ${
+                      !visible ? " butt-primary2-out" : " butt-white-out"
+                    }`}
+                    // onClick={() => setIsShowLoginForm(true)}
                   >
                     <span className="material-icons material-icons-outlined">
                       person
@@ -464,15 +510,16 @@ function Navbar({ dark = false }) {
             </>
           )}
 
-          <li className="circular-newitem">
+          <li className="circular-newitem" ref={languageRef}>
             <a
-              className="link-circular-button"
-            // onClick={() => setIsLanguageVisible(true)}
+              className="link-circular-button "
+              onClick={() => setIsLanguageVisible(false)}
             >
               <span className="material-icons material-icons-outlined">
                 language
               </span>
             </a>
+            {isLanguageVisible ? <LanguageMenu /> : <></>}
           </li>
         </ul>
       </div>
@@ -480,6 +527,7 @@ function Navbar({ dark = false }) {
     </nav>
   );
 }
+
 Navbar.propTypes = {
   dark: PropTypes.string,
 };

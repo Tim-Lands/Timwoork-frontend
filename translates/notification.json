@@ -1,0 +1,22 @@
+{
+  "Notifications": {
+    "en": "Notifications",
+    "fr": "Notifications",
+    "ar": "الإشعارات"
+  },
+  "You_have_no": {
+    "en": "You have no notifications",
+    "fr": "Vous n’avez pas de notifications",
+    "ar": "لا يوجد لديك إشعارات"
+  },
+  "First_page": {
+    "en": "First page",
+    "fr": "Première page",
+    "ar": "الصفحة الأولى"
+  },
+  "Last_page": {
+    "en": "Last page",
+    "fr": "Dernière page",
+    "ar": "الصفحة الأخيرة"
+  }
+}

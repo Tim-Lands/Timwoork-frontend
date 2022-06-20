@@ -1,0 +1,263 @@
+{
+  "Add_new_service": {
+    "en": "Add new service",
+    "fr": "Ajouter un nouveau service",
+    "ar": "إضافة خدمة جديدة"
+  },
+  "Super!_You_have": {
+    "en": "Super! You have reached your last step to join Timwoork’s sellers’ team",
+    "fr": "Parfait ! Vous êtes à la dernière étape pour rejoindre l’équipe des vendeurs de Timwoork",
+    "ar": "رائع ! لقد وصلت إلى خطوتك الأخيرة لتنضم إلى فريق بائعي تيموورك"
+  },
+  "Add_a_service": {
+    "en": "Add a service",
+    "fr": "Ajouter un service",
+    "ar": "إضافة خدمة"
+  },
+  "General information": {
+    "en": "General information",
+    "fr": "Informations générales",
+    "ar": "معلومات عامة"
+  },
+  "Title": {
+    "en": "Title",
+    "fr": "Titre",
+    "ar": "العنوان "
+  },
+  "Choose_the_principal": {
+    "en": "Choose the principal category",
+    "fr": "Choisissez la catégorie principale",
+    "ar": "اختر التصنيف الرئيسي"
+  },
+  "Choose_a_subcategory": {
+    "en": "Choose a subcategory",
+    "fr": "Choisissez la catégorie secondaire",
+    "ar": "اختر التصنيف الفرعي"
+  },
+  "Key_words": {
+    "en": "Key-words",
+    "fr": "Les mots-clés",
+    "ar": "الوسوم/ التاج"
+  },
+  "Newt_step": {
+    "en": "Newt step",
+    "fr": "Etape suivante",
+    "ar": "المرحلة التالية"
+  },
+  "Service_title_is": {
+    "en": "Service title is required",
+    "fr": "Le titre du service est nécessaire",
+    "ar": "عنوان الخدمة مطلوب"
+  },
+  "Subcategory_is_required": {
+    "en": "Subcategory is required",
+    "fr": "LA catégorie secondaire est nécessaire",
+    "ar": "التصنيف الفرعي مطلوب"
+  },
+  "Choose": {
+    "en": "Choose",
+    "fr": "Choisissez",
+    "ar": "اختر"
+  },
+  "You_should_enter_one": {
+    "en": "You should enter at least one key-word",
+    "fr": "Vous devez entrer au moins un mot-clé",
+    "ar": "يجب عليك وضع على أقل وسم"
+  },
+  "Upgrads_price": {
+    "en": "Upgrads price",
+    "fr": "Prix des mises à jours",
+    "ar": "السعر والتطويرات"
+  },
+  "Service_price": {
+    "en": "Service price",
+    "fr": "Prix du service",
+    "ar": "سعر الخدمة"
+  },
+  "Delivery_terme": {
+    "en": "Delivery terme",
+    "fr": "Délai de livraison",
+    "ar": "مدة التسليم"
+  },
+  "In_Days": {
+    "en": "In Days",
+    "fr": "En Jours",
+    "ar": "بالأيام"
+  },
+  "Choose_a_suitable": {
+    "en": "Choose a suitable delivery term. The buyer can cancel the service directly in case of delay in delivering the service on the specified date",
+    "fr": "Déterminez un délai de livraison qui vous convient. L’acheteur peut annuler directement le service en cas de retard de livraison.",
+    "ar": "حدد مدة تسليم مناسبة لك. يستطيع المشتري إلغاء الخدمة مباشرة في حال التأخر بتسليم الخدمة في الموعد المحدد"
+  },
+  "Upgrades": {
+    "en": "Upgrades",
+    "fr": "Les mises à jour ",
+    "ar": "التطويرات"
+  },
+  "The_profile_picture": {
+    "en": "The profile picture must be clear and  high quality that reflects the content of the service. It is better if its dimensions are 750 * 450",
+    "fr": "La photo de profil doit être claire et de bonne qualité qui reflète le contenu du service Il est préférable qu’elle soit de dimensions : 750 * 450",
+    "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة من الأفضل أن تكون الأبعاد 750*450"
+  },
+  "Service_upgrades_are": {
+    "en": "Service upgrades are optional, so you can’t oblige the buyer to request them. Know how to use them properly",
+    "fr": "Les mises à jour du service sont facultatives, vous ne pouvez pas exiger à l’acheteur de les utiliser. Savoir comment les utiliser correctement.",
+    "ar": "تطويرات الخدمة المقدمة اختيارية فقط ولا يمكن أن تجبر المشتري على طلبها. اعرف طريقة استخدامها بشكل صحيح"
+  },
+  "Click_to_add": {
+    "en": "Click to add an upgrad",
+    "fr": "Cliquez pour ajouter une mise à jour",
+    "ar": "اضغط لإضافة تطوير للخدمة"
+  },
+  "Previous_step": {
+    "en": "Previous step",
+    "fr": "Etape précédente",
+    "ar": "المرحلة السابقة"
+  },
+  "Next_step": {
+    "en": "Next step",
+    "fr": "Etape suivante",
+    "ar": "Etape suivante"
+  },
+  "Service_price_is": {
+    "en": "Service price is required",
+    "fr": "Le prix du service est nécessaire",
+    "ar": "سعر الخدمة مطلوب"
+  },
+  "You_should_enter": {
+    "en": "You should enter the duration",
+    "fr": "Vous devez entrer la durée",
+    "ar": "يجب عليك إدخال المدة"
+  },
+  "Description_and_instructions": {
+    "en": "Description and instructions to the buyer",
+    "fr": "Description et instructions à l’acheteur",
+    "ar": "الوصف وتعليمات المشتري"
+  },
+  "Service_description": {
+    "en": "Service description",
+    "fr": "Description du service",
+    "ar": "وصف الخدمة"
+  },
+  "Enter_an_accurate": {
+    "en": "Enter an accurate service description that includes all information and conditions. It is forbidden to put email, phone number or other contact information.",
+    "fr": "Entrez une description de service précise qui inclut toutes les informations et conditions. Il est interdit de mettre un courriel, un numéro de téléphone ou d'autres informations de contact.",
+    "ar": "أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط. يمنع وضع البريد الالكتروني، رقم الهاتف أو معلومات اتصال أخرى."
+  },
+  "Instructions_to_the": {
+    "en": "Instructions to the buyer",
+    "fr": "Instructions à l’acheteur",
+    "ar": "تعليمات للمشتري"
+  },
+  "They_are_information": {
+    "en": "They are information you need from the buyer to implement the service. This information appears only after purchasing the service.",
+    "fr": "Ce ses informations dont vous avez besoin de la part de l'acheteur pour mettre en œuvre le service. Ces informations n’apparaîtront qu'après l'achat du service.",
+    "ar": "المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة. تظهر هذه المعلومات بعد شراء الخدمة فقط."
+  },
+  "The_content_shouldn’t": {
+    "en": "The content shouldn’t be less than 80 characters",
+    "fr": "Le contenu ne doit pas être inférieur à 80 caractères",
+    "ar": "يجب أن لا يقل المحتوى عن 80 حرف"
+  },
+  "Gallery_and_folders": {
+    "en": "Gallery and folders",
+    "fr": "Galerie et dossiers",
+    "ar": "مكتبة الصور والملفات"
+  },
+  "Profil_picture": {
+    "en": "Profil picture",
+    "fr": "Photo de profil",
+    "ar": "الصورة البارزة"
+  },
+
+  "Gallery": {
+    "en": "Gallery",
+    "fr": "Galerie photos",
+    "ar": "معرض الصور"
+  },
+  "You_can_choose": {
+    "en": "You can choose from your device",
+    "fr": "Vous pouvez choisir sur cet appareil",
+    "ar": "يمكنك الاختيار من جهازك"
+  },
+  "You_must_choose": {
+    "en": "You must choose a photo in the service gallery. The pictures must be suitable to the service",
+    "fr": "Vous devez choisir une photo dans la galerie du service. Les photos doivent convenir au service",
+    "ar": "يجب أن تختار صورة في معرض الخدمة ويجب أن تكون الصور مناسبة من الخدمة"
+  },
+  "Service_introduction_video": {
+    "en": "Service introduction video (optional)",
+    "fr": "Vidéo de présentation du service (facultatif)",
+    "ar": "فيديو تعريفي للخدمة (اختياري)"
+  },
+  "Video_link": {
+    "en": "Video link",
+    "fr": "Lien de la vidéo",
+    "ar": "رابط الفيديو"
+  },
+  "An_error_occurred": {
+    "en": "An error occurred. Please put at least one picture in the gallery",
+    "fr": "Une erreur s’est produite, veuillez mettre au moins une photo dans la galerie",
+    "ar": "حدث خطأ يرجى وضع صورة على الأقل في المعرض"
+  },
+  "The_service_has": {
+    "en": "The service has been added successfully",
+    "fr": "LE service a bien été ajouté",
+    "ar": "تمت إضافة الخدمة بنجاح"
+  },
+  "Congratulations_Now_you": {
+    "en": "Congratulations! Now, you can publish your service and share it on social media after approval by the administration",
+    "fr": "Félicitation ! Maintenant vous pouvez publier votre service et le partager sur les réseaux sociaux après qu'il est approuvé par l'administration",
+    "ar": "تهانينا. يمكنك الآن نشر خدمتك ومشاركتها عبر مواقع التواصل الاجتماعي بعد الموافقة عليها من طرف الإدارة"
+  },
+  "Publish_service": {
+    "en": "Publish service",
+    "fr": "Publier le service",
+    "ar": "نشر الخدمة"
+  },
+  "Modify_the_service": {
+    "en": "Modify the service",
+    "fr": "Modifier le service",
+    "ar": "تعديل الخدمة"
+  },
+  "Delete_the_service": {
+    "en": "Delete the service",
+    "fr": "Supprimer le service",
+    "ar": "حذف الخدمة"
+  },
+  "No_upgrades_in": {
+    "en": "No upgrades in this service",
+    "fr": "Ce service ne contient pas de mises à jour",
+    "ar": "هذه الخدمة لا توجد فيها تطويرات"
+  },
+  "Are_you_sure?": {
+    "en": "Are you sure?",
+    "fr": "Êtes-vous sûr ?",
+    "ar": "هل أنت متأكد؟"
+  },
+  "Are_you_sure": {
+    "en": "Are you sure you want to delete this?",
+    "fr": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+    "ar": "هل أنت متأكد أنك تريد حذف هذا العنصر؟"
+  },
+  "No": {
+    "en": "No",
+    "fr": "Non",
+    "ar": "لا"
+  },
+  "Yes_I_want": {
+    "en": "Yes, I want to delete it.",
+    "fr": "Oui, je veux le supprimer.",
+    "ar": "نعم. أريد الحذف"
+  },
+  "Deleted": {
+    "en": "Deleted!",
+    "fr": "Supprimé !",
+    "ar": "تم الحذف !"
+  },
+  "It_has_been": {
+    "en": "It has been deleted successfully",
+    "fr": "Suppression réussie !",
+    "ar": "لقد تم حذف هذه الخدمة بنجاح"
+  }
+}

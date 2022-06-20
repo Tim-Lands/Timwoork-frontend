@@ -7129,6 +7129,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   .timlands-hero-carousel {
     height: 100%;
     width: 100%;
+    max-width: 1400px;
     @media (max-width: 900px) {
       display: none !important;
     }
