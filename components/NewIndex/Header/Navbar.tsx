@@ -383,7 +383,7 @@ function Navbar({ dark = false }) {
                 </Badge>
               </li>
               <li className="circular-newitem" ref={messagesBtn}>
-                <Badge count={0} style={{ fontSize: 10 }} size="small">
+                <Badge count={userInfo?.unread_messages_count} style={{ fontSize: 10 }} size="small">
                   <a
                     className="link-circular-button"
                     onClick={() => setShowMessagesMenu(!showMessagesMenu)}
@@ -402,7 +402,7 @@ function Navbar({ dark = false }) {
                 )}
               </li>
               <li className="circular-newitem" ref={notificationsBtn}>
-                <Badge count={0} style={{ fontSize: 10 }} size="small">
+                <Badge count={userInfo?.unread_notifications_count} style={{ fontSize: 10 }} size="small">
                   <a
                     className="link-circular-button"
                     onClick={() =>
