@@ -109,12 +109,12 @@
     "fr": "Cliquez pour ajouter une mise à jour",
     "ar": "اضغط لإضافة تطوير للخدمة"
   },
-  "Previous step": {
+  "Previous_step": {
     "en": "Previous step",
     "fr": "Etape précédente",
     "ar": "المرحلة السابقة"
   },
-  "Next step": {
+  "Next_step": {
     "en": "Next step",
     "fr": "Etape suivante",
     "ar": "Etape suivante"
@@ -245,12 +245,12 @@
     "fr": "Non",
     "ar": "لا"
   },
-  "Yes,_I_want": {
+  "Yes_I_want": {
     "en": "Yes, I want to delete it.",
     "fr": "Oui, je veux le supprimer.",
     "ar": "نعم. أريد الحذف"
   },
-  "Deleted!": {
+  "Deleted": {
     "en": "Deleted!",
     "fr": "Supprimé !",
     "ar": "تم الحذف !"

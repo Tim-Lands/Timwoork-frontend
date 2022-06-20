@@ -26,7 +26,7 @@ function Hero() {
         transition: "all .3s linear",
       }}
     >
-      <div className="timlands-hero-carousel" style={{ maxWidth: 1400 }}>
+      <div className="timlands-hero-carousel">
         <Swiper
           modules={[
             Navigation,

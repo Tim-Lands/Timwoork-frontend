@@ -259,7 +259,7 @@
     "fr": "Dessins animés",
     "ar": "رسوم كرتونية"
   },
-  "Flyers,_brochure_et": {
+  "Flyers_brochure_et": {
     "en": "Flyers, brochure et roll up",
     "fr": "Flyers, brochure et roll up",
     "ar": "فلاير وبروشور ورول اب"
@@ -503,11 +503,6 @@
     "en": "Embroidery services",
     "fr": "Embroidery services",
     "ar": "خدمات التطريز"
-  },
-  "Creative writing": {
-    "en": "Creative writing",
-    "fr": "La rédaction créative",
-    "ar": "الكتابة الإبداعية"
   },
   "Transcription_three": {
     "en": "Transcription",
