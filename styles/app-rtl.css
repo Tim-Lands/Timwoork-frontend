@@ -10342,6 +10342,7 @@ h3 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   border-radius: 50%;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -10862,8 +10863,13 @@ h3 {
   }
 }
 
+.app-new-navbar-cont .app-new-navbar .app-new-nav > li.circular-newitem {
+  position: relative;
+}
+
 .app-new-navbar-cont .app-new-navbar .app-new-nav > li.circular-newitem .link-circular-button {
   width: 33px;
+  position: relative;
   height: 33px;
   color: #fff;
 }
@@ -11015,8 +11021,13 @@ h3 {
   background-color: rgba(0, 0, 0, 0.09);
 }
 
+.app-new-navbar-cont .app-new-navbar.is-fixed-nav .app-new-nav > li.circular-newitem {
+  position: relative;
+}
+
 .app-new-navbar-cont .app-new-navbar.is-fixed-nav .app-new-nav > li.circular-newitem .link-circular-button {
   color: #000;
+  position: relative;
   background-color: #f8f8f8;
   opacity: 0.7;
 }
@@ -12453,5 +12464,65 @@ h3 {
 .registerPhone select:focus {
   outline: none;
   padding: 0;
+}
+
+.languageMenuDropDown {
+  background-color: white;
+  padding: 2px;
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: 50px;
+  left: 0;
+  position: absolute;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  z-index: 2000;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+  gap: 1px;
+  border-radius: 6px;
+  opacity: 0;
+}
+
+.languageMenuDropDown li {
+  border-radius: 6px;
+  padding: 6px 17px;
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+.languageMenuDropDown li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.languageMenuDropDown li.selectedLanguage {
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.languageMenuDropDown.showLanguage {
+  -webkit-animation: showLanguage .4s linear both;
+          animation: showLanguage .4s linear both;
+}
+
+@-webkit-keyframes showLanguage {
+  100% {
+    top: 40px;
+    opacity: 1;
+  }
+}
+
+@keyframes showLanguage {
+  100% {
+    top: 40px;
+    opacity: 1;
+  }
 }
 /*# sourceMappingURL=app-rtl.css.map */

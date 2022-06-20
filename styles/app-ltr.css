@@ -12449,4 +12449,8 @@ h3 {
   outline: none;
   padding: 0;
 }
+
+.languageMenuDropDown {
+  background-color: white;
+}
 /*# sourceMappingURL=app-ltr.css.map */

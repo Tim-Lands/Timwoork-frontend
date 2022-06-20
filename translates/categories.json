@@ -1,0 +1,522 @@
+{
+  "Categories": {
+    "en": "Categories",
+    "fr": "Catégories",
+    "ar": "التصنيفات"
+  },
+  "Business": {
+    "en": "Business",
+    "fr": "Affaires",
+    "ar": "أعمال"
+  },
+  "Programming_and_development": {
+    "en": "Programming and development",
+    "fr": "Programmation et développement",
+    "ar": "برمجة وتطوير"
+  },
+  "E_marketing": {
+    "en": "E-marketing",
+    "fr": "E-marketing",
+    "ar": "تسويق الكتروني"
+  },
+  "Online_training": {
+    "en": "Online training",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+  "Video_design": {
+    "en": "Video design",
+    "fr": "Conception de vidéo",
+    "ar": "تصميم فيديو"
+  },
+  "General_design": {
+    "en": "General design",
+    "fr": "Conception générale",
+    "ar": "تصميم عام"
+  },
+  "Audio": {
+    "en": "Audio",
+    "fr": "Audio",
+    "ar": "صوتيات"
+  },
+  "See_all_categories": {
+    "en": "See all categories…",
+    "fr": "Voire toutes les catégories…",
+    "ar": "مشاهدة كل التصنيفات…"
+  },
+  "Audio_book_production": {
+    "en": "Audio book production",
+    "fr": "Réalisation de livres audio",
+    "ar": "إنتاج كتب صوتية"
+  },
+  "Acoustic_treatment": {
+    "en": "Acoustic treatment",
+    "fr": "traitement acoustique",
+    "ar": "المعالجة الصوتية"
+  },
+  "Edit_a_podcast": {
+    "en": "Edit a podcast",
+    "fr": "Editer un podcast",
+    "ar": "تحرير بودكاست"
+  },
+  "Voice_off": {
+    "en": "Voice off",
+    "fr": "Commentaire audio/ Voix off",
+    "ar": "تعليق صوتي"
+  },
+  "Other": {
+    "en": "Other",
+    "fr": "Autre",
+    "ar": "أخرى"
+  },
+  "Animation_design": {
+    "en": "Animation design",
+    "fr": "Conception d’animation",
+    "ar": "تصميم صور متحركة"
+  },
+  "Video’s_intro_design": {
+    "en": "Video’s intro design",
+    "fr": "Conception d’intro de vidéo",
+    "ar": "تصميم مقدمات فيديو"
+  },
+  "Motion_graphics": {
+    "en": "Motion graphics",
+    "fr": "Animation graphique/ motion graphics",
+    "ar": "موشن جرافيك"
+  },
+  "Video_editing": {
+    "en": "Video editing",
+    "fr": "Montage de vidéo",
+    "ar": "مونتاج فيديو"
+  },
+  "White_board": {
+    "en": "White board",
+    "fr": "Tableau blanc",
+    "ar": "وايت بورد"
+  },
+  "Transcription_one": {
+    "en": "Transcription",
+    "fr": "Transcription",
+    "ar": "إدخال بيانات"
+  },
+  "Consulting_and_business": {
+    "en": "Consulting and business",
+    "fr": "Consultation et affaires",
+    "ar": "استشارات أعمال"
+  },
+  "E_commerce": {
+    "en": "E-commerce",
+    "fr": "E-commerce",
+    "ar": "تجارة الكترونية"
+  },
+  "Legal_services": {
+    "en": "Legal services",
+    "fr": "Services juridiques",
+    "ar": "خدمات قانونية"
+  },
+  "Studies_and_researches": {
+    "en": "Studies and researches",
+    "fr": "Etudes et recherches",
+    "ar": "دراسات وأبحاث"
+  },
+  "Virtual_assistant": {
+    "en": "Virtual assistant",
+    "fr": "Assistant virtuel",
+    "ar": "مساعد افتراضي"
+  },
+  "Legal_consulting": {
+    "en": "Legal consulting",
+    "fr": "Consultation juridique",
+    "ar": "استشارات قانونية"
+  },
+  "Commercial_consulting": {
+    "en": "Commercial consulting",
+    "fr": "Consultation commerciale",
+    "ar": "استشارات تسويقية"
+  },
+  "Financial_consulting": {
+    "en": "Financial consulting",
+    "fr": "Consultation financière",
+    "ar": "استشارات مالية"
+  },
+  "Tourism_and_travel": {
+    "en": "Tourism and travel tips",
+    "fr": "Conseils tourisme et voyage",
+    "ar": "نصائح سياحة وسفر"
+  },
+  "Personal_consulting_one": {
+    "en": "Personal consulting",
+    "fr": "Consultation personnelle",
+    "ar": "استشارات شخصية"
+  },
+  "Linguistic_consulting": {
+    "en": "Linguistic consulting",
+    "fr": "Consultation linguistique",
+    "ar": "استشارات لغوية"
+  },
+  "Android_services": {
+    "en": "Android services",
+    "fr": "Services Android",
+    "ar": "خدمات اندرويد"
+  },
+  "iPhone_services": {
+    "en": "iPhone services",
+    "fr": "Services iPhone",
+    "ar": "خدمات آيفون"
+  },
+  "Windows_problem_solving": {
+    "en": "Windows problem solving",
+    "fr": "Résolution des problème Windows",
+    "ar": "حل مشاكل ويندوز"
+  },
+  "Servers_and_Linux": {
+    "en": "Servers and Linux",
+    "fr": "Servers et Linux",
+    "ar": "السيرفرات ولينيكس"
+  },
+  "Data_entry": {
+    "en": "Data entry",
+    "fr": "Saisie de données",
+    "ar": "إدخال بيانات"
+  },
+  "Trial_tests": {
+    "en": "Trial tests",
+    "fr": "Tests d’essai",
+    "ar": "اختبارات تجريبية"
+  },
+  "Skribbl": {
+    "en": "Skribbl",
+    "fr": "Skribbl",
+    "ar": "سكربل"
+  },
+  "Payoneer": {
+    "en": "Payoneer",
+    "fr": "Payoneer",
+    "ar": "بايونير"
+  },
+  "PayPal": {
+    "en": "PayPal",
+    "fr": "PayPal",
+    "ar": "بايبال"
+  },
+  "Payeer": {
+    "en": "Payeer",
+    "fr": "Payeer",
+    "ar": "بايير"
+  },
+  "Mobile_credits": {
+    "en": "Mobile credits",
+    "fr": "Crédits mobiles",
+    "ar": "أرصدة جوالات"
+  },
+  "Charge_games": {
+    "en": "Charge games",
+    "fr": "Charger jeux",
+    "ar": "شحن العاب"
+  },
+  "Book_and_magazine": {
+    "en": "Book and magazine covers",
+    "fr": "Couverture de livres et revues",
+    "ar": "أغلفة كتب ومجلات"
+  },
+  "Advertising_banner_design": {
+    "en": "Advertising banner design",
+    "fr": "Conception de bannière publicitaire",
+    "ar": "تصميم بانرات إعلانية"
+  },
+  "Business_card_design": {
+    "en": "Business card design",
+    "fr": "Conception de carte de visite",
+    "ar": "تصميم بطاقات أعمال"
+  },
+  "T_shirt_design": {
+    "en": "T-shirt design",
+    "fr": "Conception T-shirt",
+    "ar": "تصميم تيشرتات"
+  },
+  "Logo_design": {
+    "en": "Logo design",
+    "fr": "Conception de logo",
+    "ar": "تصميم شعار"
+  },
+  "Presentation_design": {
+    "en": "Presentation design",
+    "fr": "Conception de présentation",
+    "ar": "تصميم عروض تقديمية"
+  },
+  "Architectural_design_and": {
+    "en": "Architectural design and decoration",
+    "fr": "Conception architecturale et décor",
+    "ar": "تصميم معماري وديكور"
+  },
+  "Photo_editing_services": {
+    "en": "Photo editing services",
+    "fr": "Services d’édition de photos",
+    "ar": "خدمات تعديل الصور"
+  },
+  "Cartoons": {
+    "en": "Cartoons",
+    "fr": "Dessins animés",
+    "ar": "رسوم كرتونية"
+  },
+  "Flyers,_brochure_et": {
+    "en": "Flyers, brochure et roll up",
+    "fr": "Flyers, brochure et roll up",
+    "ar": "فلاير وبروشور ورول اب"
+  },
+  "Creative_writing": {
+    "en": "Creative writing",
+    "fr": "Rédaction créative",
+    "ar": "الكتابة الإبداعية"
+  },
+  "Transcription_tow": {
+    "en": "Transcription",
+    "fr": "Transcription",
+    "ar": "تفريغ نصوص"
+  },
+  "Proofreading_services": {
+    "en": "Proofreading services",
+    "fr": "Relectures et correction",
+    "ar": "خدمات تدقيق لغوي"
+  },
+  "Translation_services": {
+    "en": "Translation services",
+    "fr": "Services de traduction",
+    "ar": "خدمات ترجمة"
+  },
+  " Summery_services": {
+    "en": " Summery services",
+    "fr": "Service de synthèse/ résumé",
+    "ar": "خدمات تلخيص"
+  },
+  "CV_writing": {
+    "en": "CV writing",
+    "fr": "Rédaction de CV",
+    "ar": "كتابة السيرة الذاتية"
+  },
+  "Writing_ad_texts": {
+    "en": "Writing ad texts",
+    "fr": "Rédaction d’annonce publicitaire",
+    "ar": "كتابة النصوص الإعلانية"
+  },
+  "Script_writing": {
+    "en": "Script writing",
+    "fr": "Rédaction de scénario",
+    "ar": "كتابة سيناريو"
+  },
+  "Writing_specialized_content": {
+    "en": "Writing specialized content",
+    "fr": "Rédaction de contenu spécialisé",
+    "ar": "كتابة محتوى متخصص"
+  },
+  "Writing_Websites_content": {
+    "en": "Writing Websites content",
+    "fr": "Rédaction de contenu pour site Web",
+    "ar": "كتابة محتوى مواقع"
+  },
+  "Writing_articles_and": {
+    "en": "Writing articles and reviews ",
+    "fr": "Rédactions d’articles et critiques",
+    "ar": "كتابة مقالات ومراجعات"
+  },
+  "Learning_online ": {
+    "en": "Learning online ",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+  "Personal_consulting_tow": {
+    "en": "Personal consulting",
+    "fr": "Consultation personnelle",
+    "ar": "استشارات شخصية"
+  },
+  "Health_and_fitness": {
+    "en": "Health and fitness",
+    "fr": "Santé et aptitude physique",
+    "ar": "الصحة واللياقة البدنية"
+  },
+  "Learn_programing": {
+    "en": "Learn programing",
+    "fr": "Apprendre la programmation",
+    "ar": "تعلم البرمجة"
+  },
+  "Learn_e_marketing": {
+    "en": "Learn e-marketing",
+    "fr": "Apprendre le e-marketing",
+    "ar": "تعلم التسويق الالكتروني"
+  },
+  "Design_learning": {
+    "en": "Design learning",
+    "fr": "Apprendre le design",
+    "ar": "تعلم التصميم"
+  },
+  "Languages_learning": {
+    "en": "Languages learning",
+    "fr": "Apprendre les langues",
+    "ar": "تعلم اللغات"
+  },
+  "Learn_English": {
+    "en": "Learn English",
+    "fr": "Apprendre l’Anglais",
+    "ar": "تعلم اللغة الإنجليزية"
+  },
+  "Learn_French": {
+    "en": "Learn French",
+    "fr": "Apprendre le Français",
+    "ar": "تعلم اللغة الفرنسية"
+  },
+  "Art_and_professions": {
+    "en": "Art and professions",
+    "fr": "Arts et métiers",
+    "ar": "فنون وحرف"
+  },
+  "Help_with_homework": {
+    "en": "Help with homework",
+    "fr": "Aide aux devoirs",
+    "ar": "مساعدة بحل الواجبات"
+  },
+  "Content_management_systems": {
+    "en": "Content management systems",
+    "fr": "Systèmes de gestion de contenu",
+    "ar": "أنظمة إدارة المحتوى"
+  },
+  "Programming_CSS_and": {
+    "en": "Programming CSS and HTML",
+    "fr": "Programmation CSS et HTML",
+    "ar": "برمجة CSS و HTML "
+  },
+  "Programming_Java_and": {
+    "en": "Programming Java and NET.",
+    "fr": "Programmation Java et NET.",
+    "ar": "برمجة  Java و .NET"
+  },
+  "Programming_PHP": {
+    "en": "Programming PHP",
+    "fr": "Programmation PHP",
+    "ar": "برمجة PHP"
+  },
+  "Programming_Python": {
+    "en": "Programming Python",
+    "fr": "Programmation Python",
+    "ar": "برمجة بايثون"
+  },
+  "Programming_phone_Apps": {
+    "en": "Programming phone Apps",
+    "fr": "Programmation des applications mobiles",
+    "ar": "برمجة تطبيقات الجوال"
+  },
+  "Desktop_Apps": {
+    "en": "Desktop Apps",
+    "fr": "Application bureau",
+    "ar": "تطبيقات سطح المكتب"
+  },
+  "Online_store_developement": {
+    "en": "Online store developement",
+    "fr": "Développement boutique en ligne",
+    "ar": "تطوير متاجر الكترونية"
+  },
+  "Blogger_blogging_services": {
+    "en": "Blogger blogging services",
+    "fr": "Services de blogs sur Blogger",
+    "ar": "خدمات مدونات بلوجر"
+  },
+  "Wordpress_services": {
+    "en": "Wordpress services",
+    "fr": "Services Wordpress",
+    "ar": "خدمات ووردبريس"
+  },
+  "Technical_support": {
+    "en": "Technical support",
+    "fr": "Assistance technique",
+    "ar": "دعم فني تقني"
+  },
+  "Websites_Ads": {
+    "en": "Websites Ads",
+    "fr": "Annonces des sites",
+    "ar": "إعلانات المواقع"
+  },
+  "Mobile_Ads_and": {
+    "en": "Mobile Ads and marketing",
+    "fr": "Annonces publicitaires et marketing sur mobile",
+    "ar": "الإعلانات والتسويق على الجوال"
+  },
+  "Content_marketing": {
+    "en": "Content marketing",
+    "fr": "Marketing de contenu",
+    "ar": "التسويق بالمحتوى"
+  },
+  "Marketing_via_e_mail": {
+    "en": "Marketing via e-mail",
+    "fr": "Marketing par e-mail",
+    "ar": "التسويق عبر البريد الالكتروني"
+  },
+  "Marketing_on_Instagram": {
+    "en": "Marketing on Instagram",
+    "fr": "Marketing sur Instagram",
+    "ar": "التسويق عبر انستقرام"
+  },
+  "Marketing_on_Tik": {
+    "en": "Marketing on Tik Tok",
+    "fr": "Marketing sur Tik Tok",
+    "ar": "التسويق عبر تيك توك"
+  },
+  "Search_engine_marketing": {
+    "en": "Search engine marketing via SEM",
+    "fr": "Marketing via moteur de recherche SEM",
+    "ar": "التسويق عبر محركات البحث SEM"
+  },
+  "Marketing_on_Twitter": {
+    "en": "Marketing on Twitter",
+    "fr": "Marketing sur Twitter",
+    "ar": "التسويق على تويتر"
+  },
+  "Marketing_on_Snapchat": {
+    "en": "Marketing on Snapchat",
+    "fr": "Marketing sur Snap Chat",
+    "ar": "التسويق على سناب شات"
+  },
+  "Marketing_on_Facebook": {
+    "en": "Marketing on Facebook",
+    "fr": "Marketing sur Facebook",
+    "ar": "التسويق على فيسبوك"
+  },
+  "Marketing_on_YouTube": {
+    "en": "Marketing on YouTube",
+    "fr": "Marketing sur YouTube",
+    "ar": "التسويق على يوتيوب"
+  },
+  "Website_analytics": {
+    "en": "Website analytics",
+    "fr": "Analyse de sites Web",
+    "ar": "تحليلات المواقع"
+  },
+  "SEO_services": {
+    "en": "SEO services",
+    "fr": "Services SEO",
+    "ar": "خدمات SEO"
+  },
+  "Design_services": {
+    "en": "Design services",
+    "fr": "Services de conception",
+    "ar": "خدمات التصميم"
+  },
+  "Embroidery_services": {
+    "en": "Embroidery services",
+    "fr": "Embroidery services",
+    "ar": "خدمات التطريز"
+  },
+  "Creative writing": {
+    "en": "Creative writing",
+    "fr": "La rédaction créative",
+    "ar": "الكتابة الإبداعية"
+  },
+  "Transcription_three": {
+    "en": "Transcription",
+    "fr": "Transcription",
+    "ar": "تفريغ نصوص"
+  },
+  "Writing_CV": {
+    "en": "Writing CV",
+    "fr": "Rédaction de CV",
+    "ar": "كتابة السيرة الذاتية"
+  }
+}

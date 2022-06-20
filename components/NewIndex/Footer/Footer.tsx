@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   FaTiktok,
   FaFacebook,
@@ -12,6 +12,7 @@ import {
 import Currency from "@/components/NewIndex/DropdowModal/Currency";
 import Language from "@/components/NewIndex/DropdowModal/Language";
 import { Tooltip } from "antd";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 import API from "../../../config";
 import Cookies from "js-cookie";
 
@@ -25,7 +26,8 @@ function Footer() {
     name: "Dollar",
     symbol: "$",
   });
-
+  const { language, getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
   useEffect(() => {
     fetchData();
   }, []);
@@ -69,22 +71,22 @@ function Footer() {
             <ul className="footerlist">
               <li>
                 <Link href="/privacy">
-                  <a>سياسة الخصوصية</a>
+                  <a>{getLanguage("Privacy_policy")}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/terms">
-                  <a>شروط الإستخدام</a>
+                  <a>{getLanguage("Terms_of_use")}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/about-us">
-                  <a>حول الموقع</a>
+                  <a>{getLanguage("About_website")}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/contactus">
-                  <a>اتصل بنا</a>
+                  <a>{getLanguage("Contact_us")}</a>
                 </Link>
               </li>
             </ul>
@@ -97,7 +99,7 @@ function Footer() {
                 return (
                   <li key={category.id}>
                     <Link href={`/products?categoryID=${category?.id}`}>
-                      {category.name_ar}
+                      {category[which(language)]}
                     </Link>
                   </li>
                 );
@@ -167,7 +169,9 @@ function Footer() {
           <div className="footer-bottom-inner">
             <div className="right-footer">
               <img src="img/logofoot.png" alt="" />
-              <p className="text">© 2021-2022 Timlands جميع الحقوق محفوظة</p>
+              <p className="text">
+                © 2021-2022 Timlands {getLanguage("All_rights_reserved")}
+              </p>
             </div>
             <div className="left-footer">
               <ul className="currency">
@@ -244,141 +248,17 @@ function Footer() {
           </div>
         </div>
       </div>
-      {/* <div className="col-lg-3 col-sm-6 p-0">
-          <div className="footer-item">
-            <h3 className="title">التصنيفات</h3>
-            <ul className="footerlist">
-              <li>
-                <Link href={"/"}>
-                  <a>التصنيف الأول</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>التصنيف الثاني</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>التصنيف الثالث</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>التصنيف الرابع</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>التصنيف الخامس</a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="col-lg-3 col-sm-6 p-0">
-          <div className="footer-item">
-            <h3 className="title">المدونة</h3>
-            <ul className="footerlist">
-              <li>
-                <Link href={"/"}>
-                  <a>هذا النص هو مثال لنص يمكن أن يستبدل في نفس..</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>المساحة، لقد تم توليد هذا النص من...</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>توليد هذا النص من مولد النص العربى، حيث...</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>على المصمم أن يضع نصوصا مؤقتة على التصميم</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>أن يستبدل في نفس المساحة، لقد تم توليد هذا النص</a>
-                </Link>
-              </li>
-              <li>
-                <Link href={"/"}>
-                  <a>يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا </a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div> */}
-      {/* <div className="footer-bottom">
-        <div className="container">
-          <div className="footer-bottom-inner">
-            <div className="right-footer">
-              <img src="/logofoot.png" alt="" />
-              <p className="text">© 2021-2022 Timwoork جميع الحقوق محفوظة</p>
-            </div>
-            <div className="left-footer">
-              <ul className="currency">
-                <li>
-                  <button
-                    type="button"
-                    className="rounded-button"
-                    onClick={() => setIsLanguageVisible(true)}
-                  >
-                    <FaGlobe /> العربية
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="rounded-button"
-                    onClick={() => setIsCurrencyVisible(true)}
-                  >
-                    <FaDollarSign /> الدولار
-                  </button>
-                </li>
-              </ul>
-              <ul className="socials">
-                <li>
-                  <a href="" rel="noreferrer" target="_blank">
-                    <FaTiktok />
-                  </a>
-                </li>
-                <li>
-                  <a href="" rel="noreferrer" target="_blank">
-                    <FaFacebook />
-                  </a>
-                </li>
-                <li>
-                  <a href="" rel="noreferrer" target="_blank">
-                    <FaYoutube />
-                  </a>
-                </li>
-                <li>
-                  <a href="" rel="noreferrer" target="_blank">
-                    <FaInstagram />
-                  </a>
-                </li>
-                <li>
-                  <a href="" rel="noreferrer" target="_blank">
-                    <FaTwitter />
-                  </a>
-                </li>
-                <li>
-                  <a href="" rel="noreferrer" target="_blank">
-                    <FaTelegram />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 }
-
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 export default Footer;

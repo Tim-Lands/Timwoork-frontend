@@ -1,0 +1,27 @@
+{
+  "Soon": {
+    "en": "Soon",
+    "fr": "Prochainement",
+    "ar": "قريبا"
+  },
+  "Competitions": {
+    "en": "Competitions",
+    "fr": "Compétitions",
+    "ar": "المسابقات"
+  },
+  "Projects": {
+    "en": "Projects",
+    "fr": "Projets",
+    "ar": "المشاريع"
+  },
+  "Business": {
+    "en": "Business",
+    "fr": "Affaires",
+    "ar": "الأعمال"
+  },
+  "Freelancers": {
+    "en": "Freelancers",
+    "fr": "Freelancer",
+    "ar": "المستقلين"
+  }
+}

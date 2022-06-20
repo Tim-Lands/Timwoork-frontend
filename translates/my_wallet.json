@@ -1,0 +1,207 @@
+{
+  "My_portfolio": {
+    "en": "My portfolio",
+    "fr": "Mon portefeuille",
+    "ar": "محفظتي"
+  },
+  "Pending_balance": {
+    "en": "Pending balance",
+    "fr": "Solde en attente",
+    "ar": "الرصيد المعلق"
+  },
+  "Withdrawable_balance": {
+    "en": "Withdrawable balance",
+    "fr": "Solde retirable",
+    "ar": "الرصيد القابل للسحب"
+  },
+  "Total_balance": {
+    "en": "Total balance",
+    "fr": "Sold total",
+    "ar": "الرصيد الكلي"
+  },
+  "Your_earnings_are": {
+    "en": "Your earnings are held for 3 days before you can use them",
+    "fr": "Vos gains sont conservés en attente pendant 3 jours avant que vous puissiez l’utiliser",
+    "ar": "يتم تعليق الأرباح لمدة 3 أيام قبل أن تتمكن من استخدامها"
+  },
+  "The_mount_you": {
+    "en": "The amount you made from selling services and that you can withdraw",
+    "fr": "La somme que vous avez gagné et que vous pouvez retirer",
+    "ar": "المبلغ الذي حققته من بيع الخدمات يمكنك سحبه"
+  },
+  "The_entire_balance": {
+    "en": "The entire balance in your account now includes profits and the pending balance as well.",
+    "fr": "Le solde existant sur votre compte comprend aussi bien les gains que le solde en attente",
+    "ar": "كامل الرصيد الموجود في حسابك الآن يضمن الأرباح والرصيد المعلق أيضا"
+  },
+  "You_cannot_request": {
+    "en": "You cannot request a withdrawal of funds, your balance is less than 10$.",
+    "fr": "Vous ne pouvez pas demander un retrait de fonds, votre solde disponible est inférieur à 10$.",
+    "ar": "لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار"
+  },
+  "Financial_transactions": {
+    "en": "Financial transactions",
+    "fr": "Les transactions financières",
+    "ar": "المعاملات المالية"
+  },
+  "Operation_title": {
+    "en": "Operation title",
+    "fr": "Titre de l’opération",
+    "ar": "عنوان العملية"
+  },
+  "Operation_method": {
+    "en": "Operation method",
+    "fr": "Méthode de l’opération",
+    "ar": "طريقة العملية"
+  },
+  "Date": {
+    "en": "Date",
+    "fr": "Date",
+    "ar": "التاريخ"
+  },
+  "No_data": {
+    "en": "No data",
+    "fr": "Pas de données",
+    "ar": "ليس هناك معطيات/ معلومات"
+  },
+  "Level": {
+    "en": "Level",
+    "fr": "Niveau",
+    "ar": "المستوى"
+  },
+  "Key_words": {
+    "en": "Key words",
+    "fr": "Mots clés",
+    "ar": "الوسوم"
+  },
+  "About_Seller": {
+    "en": "About Seller",
+    "fr": "A propos du vendeur",
+    "ar": "حول البائع"
+  },
+  "Profil_one": {
+    "en": "Profil",
+    "fr": "Profil",
+    "ar": "الملف الشخصي"
+  },
+  "Contact_seller_one": {
+    "en": "Contact seller",
+    "fr": "Contactez le vendeur",
+    "ar": "مراسلة البائع"
+  },
+  "Customer_reviews": {
+    "en": "Customer reviews",
+    "fr": "Avis des clients",
+    "ar": "آراء المشترين"
+  },
+  "Number_of_purchases": {
+    "en": "Number of purchases",
+    "fr": "Nombre d’achats",
+    "ar": "عدد مرات الشراء"
+  },
+  "Available_upgrades": {
+    "en": "Available upgrades",
+    "fr": "Les mises à jour disponibles",
+    "ar": "التطويرات المتوفرة"
+  },
+  "Share_service": {
+    "en": "Share service",
+    "fr": "Partager le service",
+    "ar": "مشاركة الخدمة"
+  },
+  "Total": {
+    "en": "Total",
+    "fr": "Total",
+    "ar": "المجموع"
+  },
+  "Add_to_cart": {
+    "en": "Add to cart",
+    "fr": "Ajouter au panier",
+    "ar": "إضافة إلى السلة"
+  },
+  "4_boght_this": {
+    "en": "4 bought this",
+    "fr": "4 ont acheté ça",
+    "ar": "4 اشتروا هذا"
+  },
+  "Brief_about_me": {
+    "en": "Brief about me",
+    "fr": "Bref sur moi",
+    "ar": "نبذة عني"
+  },
+  "Copy_my_profil ‘s": {
+    "en": "Copy my profil ‘s link",
+    "fr": "Copier le lien de mon profil",
+    "ar": "نسخ رابط بروفايلي"
+  },
+  "Personal_informations_one": {
+    "en": "Personal informations",
+    "fr": "Informations personnelles",
+    "ar": "المعلومات الشخصية"
+  },
+  "First_name": {
+    "en": "First name",
+    "fr": "Prénom",
+    "ar": "الاسم الأول"
+  },
+  "Last_name": {
+    "en": "Last name",
+    "fr": "Nom",
+    "ar": "الاسم الأخير"
+  },
+  "Country": {
+    "en": "Country",
+    "fr": "Pays",
+    "ar": "البلد"
+  },
+  "Gender": {
+    "en": "Gender",
+    "fr": "Sexe",
+    "ar": "الجنس"
+  },
+  "Services": {
+    "en": "Services",
+    "fr": "Services",
+    "ar": "الخدمات"
+  },
+  "Profil": {
+    "en": "Profil",
+    "fr": "Profil",
+    "ar": "الملف الشخصي"
+  },
+  "Copy_my_profile ‘s": {
+    "en": "Copy my profile ‘s link",
+    "fr": "Copier le lien de mon profil",
+    "ar": "نسخ رابط بروفايلي"
+  },
+  "Personal_informations": {
+    "en": "Personal informations",
+    "fr": "Informations personnelles",
+    "ar": "المعلومات الشخصية"
+  },
+  "Contact_seller": {
+    "en": "Contact seller",
+    "fr": "Contactez le vendeur",
+    "ar": "مراسلة البائع"
+  },
+  "Create_a_conversation": {
+    "en": "Create a conversation",
+    "fr": "Créer une conversation",
+    "ar": "إنشاء محادثة"
+  },
+  "Write_an_initial": {
+    "en": "Write an initial message to the seller",
+    "fr": "Ecrire un premier message au vendeur",
+    "ar": "اكتب رسالة ابتدائية للبائع"
+  },
+  "Cancel": {
+    "en": "Cancel",
+    "fr": "Annuler",
+    "ar": "إلغاء الأمر"
+  },
+  "Start_a_conversation": {
+    "en": "Start a conversation",
+    "fr": "Démarrer la conversation",
+    "ar": "بدء المحادثة"
+  }
+}

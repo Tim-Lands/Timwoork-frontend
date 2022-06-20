@@ -1,0 +1,72 @@
+{
+  "Contact_us": {
+    "en": "Contact us",
+    "fr": "Contactez-nous",
+    "ar": "اتصل بنا"
+  },
+  "Object": {
+    "en": "Object",
+    "fr": "Objet",
+    "ar": "عنوان الرسالة"
+  },
+  "Email": {
+    "en": "Email",
+    "fr": "E-mail",
+    "ar": "البريد الالكتروني"
+  },
+  "Complete_name": {
+    "en": "Complete name",
+    "fr": "Nom et prénom",
+    "ar": "الاسم الكامل"
+  },
+  "Message": {
+    "en": "Message",
+    "fr": "Message",
+    "ar": "نص الرسالة"
+  },
+  "Choose_the_message": {
+    "en": "Choose the message type",
+    "fr": "Choisissez le type de message",
+    "ar": "اختر نوع الرسالة"
+  },
+  "Complaint": {
+    "en": "Complaint",
+    "fr": "Réclamation",
+    "ar": "شكوى"
+  },
+  "Inquiry": {
+    "en": "Inquiry",
+    "fr": "Demande d’information",
+    "ar": "استفسار"
+  },
+  "File_link": {
+    "en": "File link",
+    "fr": "Lien du fichier",
+    "ar": "رابط الملف"
+  },
+  "Send_information": {
+    "en": "Send information",
+    "fr": "Envoyer les informations",
+    "ar": "إرسال المعلومات"
+  },
+  "You_must_type_one": {
+    "en": "You must type the object",
+    "fr": "Vous devez saisir l’objet du message",
+    "ar": "يجب عليك إدخال موضوع الرسالة"
+  },
+  "You_must_type_tow": {
+    "en": "You must type your email",
+    "fr": "Vous devez saisir l’e-mail",
+    "ar": "يجب عليك إدخال الاميل"
+  },
+  "You_must_type_three": {
+    "en": "You must type your complete name",
+    "fr": "Vous devez saisir le nom et prénom",
+    "ar": "يجب عليك إدخال الاسم الكامل"
+  },
+  "You_must_type_four": {
+    "en": "You must type the message",
+    "fr": "Vous devez saisir le message",
+    "ar": "يجب عليك إدخال نص الرسالة"
+  }
+}

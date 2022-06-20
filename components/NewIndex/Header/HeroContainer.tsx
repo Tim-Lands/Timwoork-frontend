@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import API from '../../../config';
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import API from "../../../config";
 import HeroSearchContent from "./HeroSearchContent";
 
 function HeroContainer() {
-  const [topCategories, setTopCaegories] = useState([])
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
+  const [topCategories, setTopCaegories] = useState([]);
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
   const fetchData = async () => {
-    const res = await API.get('api/top_categories')
+    const res = await API.get("api/top_categories");
     setTopCaegories(res?.data);
-  }
+  };
   return (
     <div className="hero-container">
       <div className="inner">
-        <h1 className="main-title">اشتري. دردش .بيع</h1>
-        <h1 className="sub-title">
-          اكتشف سوق تيم ورك للخدمات الالكترونية الأكثر تطورا وراحة
-        </h1>
+        <h1 className="main-title">{getLanguage("Buy_chat_sell")}</h1>
+        <h1 className="sub-title">{getLanguage("Discover_Timwoork’s_most")}</h1>
         <div className="hero-container-search">
-          <HeroSearchContent />
+          <HeroSearchContent getLanguage={getLanguage} />
           <ul className="popular-search">
-            {topCategories.slice(0, 4).map(category => (
+            {topCategories.slice(0, 4).map((category) => (
               <li key={category} className="pop-item ">
-                <Link  href={`/products?categoryID=${category.parent_id}&subcategoryID=${category.id}`}>
-                  <a className="">
-                    {category.name_ar}
-                  </a>
+                <Link
+                  href={`/products?categoryID=${category.parent_id}&subcategoryID=${category.id}`}
+                >
+                  <a className="">{category.name_ar}</a>
                 </Link>
               </li>
-
             ))}
           </ul>
         </div>

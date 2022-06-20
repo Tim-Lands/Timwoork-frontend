@@ -1,0 +1,67 @@
+{
+  "Earn_online": {
+    "en": "Earn online",
+    "fr": "Gagner l’argent sur Internet",
+    "ar": "الربح من الأنترنيت"
+  },
+  "Technology": {
+    "en": "Technology",
+    "fr": "Technologie",
+    "ar": "تكلنولوجيا"
+  },
+  "About_Timwoork": {
+    "en": "About Timwoork",
+    "fr": "A propos de Timwoork",
+    "ar": "حول تيم ورك"
+  },
+  "How_to-have ": {
+    "en": "How to have a job ",
+    "fr": "Méthodes pour avoir du travail",
+    "ar": "طرق الحصول على العمل"
+  },
+  "Unclassified": {
+    "en": "Unclassified",
+    "fr": "Non classé",
+    "ar": "غير مصنف"
+  },
+  "No_article": {
+    "en": "No article",
+    "fr": "Aucun article",
+    "ar": "لا يوجد مقالات"
+  },
+  "There_is_no": {
+    "en": "There is no article to display",
+    "fr": "Il n’ay pas d’articles à afficher",
+    "ar": "ليس هناك مقالات لعرضها"
+  },
+  "Related_articles": {
+    "en": "Related articles",
+    "fr": "Articles similaires",
+    "ar": "مقالات ذات صلة"
+  },
+  "Read_more": {
+    "en": "Read more",
+    "fr": "Lire plus",
+    "ar": "قراءة المزيد"
+  },
+  "Read_also": {
+    "en": "Read also",
+    "fr": "Lire aussi",
+    "ar": "اقرأ أيضا"
+  },
+  "See_also": {
+    "en": "See also",
+    "fr": "Voir aussi",
+    "ar": "شاهد أيضا"
+  },
+  "Here": {
+    "en": "Here",
+    "fr": "Ici",
+    "ar": "من هنا"
+  },
+  "This_may_interest": {
+    "en": "This may interest you",
+    "fr": "Ça peut vous intéresser",
+    "ar": "قد يهمك"
+  }
+}

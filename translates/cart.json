@@ -1,0 +1,12 @@
+{
+  "Cart": {
+    "en": "Cart",
+    "fr": "Panier",
+    "ar": "السلة فارغة"
+  },
+  "No_services_in": {
+    "en": "No services in the cart",
+    "fr": "Aucun service dans votre panier",
+    "ar": "لا توجد خدمات في سلة المشتريات"
+  }
+}
