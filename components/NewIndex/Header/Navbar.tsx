@@ -12,7 +12,7 @@ import Notifications from "../DropdowModal/Notifications";
 import PropTypes from "prop-types";
 import Messages from "../DropdowModal/Messages";
 // import Language from "../DropdowModal/Language";
-// import { LanguageContext } from "../../../contexts/languageContext/context";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
 import { PusherContext } from "../../../contexts/pusherContext";
@@ -31,7 +31,7 @@ import {
 import { lighten } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
-  // const { language, setLanguage } = useContext(LanguageContext);
+  const { language, setLanguage } = useContext(LanguageContext);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -276,43 +276,43 @@ function Navbar({ dark = false }) {
       () => {};
     }
   };
-  // const LanguageMenu = () => {
-  //   return (
-  //     <ul
-  //       className={`languageMenuDropDown ${
-  //         isLanguageVisible ? " showLanguage" : ""
-  //       }`}
-  //     >
-  //       <li
-  //         className={language === "ar" ? "selectedLanguage" : ""}
-  //         onClick={() => {
-  //           setLanguage("ar");
-  //           hideLanguage();
-  //         }}
-  //       >
-  //         العربية
-  //       </li>
-  //       <li
-  //         className={language === "en" ? "selectedLanguage" : ""}
-  //         onClick={() => {
-  //           setLanguage("en");
-  //           hideLanguage();
-  //         }}
-  //       >
-  //         English
-  //       </li>
-  //       <li
-  //         className={language === "fr" ? "selectedLanguage" : ""}
-  //         onClick={() => {
-  //           setLanguage("fr");
-  //           hideLanguage();
-  //         }}
-  //       >
-  //         Français
-  //       </li>
-  //     </ul>
-  //   );
-  // };
+  const LanguageMenu = () => {
+    return (
+      <ul
+        className={`languageMenuDropDown ${
+          isLanguageVisible ? " showLanguage" : ""
+        }`}
+      >
+        <li
+          className={language === "ar" ? "selectedLanguage" : ""}
+          onClick={() => {
+            setLanguage("ar");
+            hideLanguage();
+          }}
+        >
+          العربية
+        </li>
+        <li
+          className={language === "en" ? "selectedLanguage" : ""}
+          onClick={() => {
+            setLanguage("en");
+            hideLanguage();
+          }}
+        >
+          English
+        </li>
+        <li
+          className={language === "fr" ? "selectedLanguage" : ""}
+          onClick={() => {
+            setLanguage("fr");
+            hideLanguage();
+          }}
+        >
+          Français
+        </li>
+      </ul>
+    );
+  };
   return (
     <nav
       className="app-new-navbar-cont"
@@ -513,13 +513,13 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(!isLanguageVisible)}
+              onClick={() => setIsLanguageVisible(false)}
             >
               <span className="material-icons material-icons-outlined">
                 language
               </span>
             </a>
-            {/* {false ? <LanguageMenu /> : <></>} */}
+            {isLanguageVisible ? <LanguageMenu /> : <></>}
           </li>
         </ul>
       </div>
