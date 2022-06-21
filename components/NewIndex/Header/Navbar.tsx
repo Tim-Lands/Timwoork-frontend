@@ -31,7 +31,9 @@ import {
 import { lighten } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
-  const { language, setLanguage } = useContext(LanguageContext);
+  const { language, setLanguage, getSectionLanguage } =
+    useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -357,14 +359,14 @@ function Navbar({ dark = false }) {
                     e.keyCode === 13 && router.push(`/products?query=${query}`)
                   }
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="البحث في الموقع..."
+                  placeholder={getLanguage("Search_in_Timwoork")}
                   className="form-serach-nav"
                 />
                 <button
                   className="btn butt-xs butt-primary2"
                   onClick={() => router.push(`/products?query=${query}`)}
                 >
-                  البحث
+                  {getLanguage("Search")}
                 </button>
               </div>
             </div>
@@ -376,7 +378,7 @@ function Navbar({ dark = false }) {
               <span className="material-icons material-icons-outlined">
                 backup_table
               </span>{" "}
-              اقسام تيم وورك
+              {getLanguage("Timwoork_sections")}
               <span className="material-icons material-icons-outlined expand-more">
                 expand_more
               </span>
@@ -389,7 +391,7 @@ function Navbar({ dark = false }) {
                 <span className="material-icons material-icons-outlined">
                   shopping_cart
                 </span>{" "}
-                تصفح الخدمات
+                {getLanguage("Browsing_services")}
               </a>
             </Link>
           </li>

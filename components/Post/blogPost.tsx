@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 
-function Post({ title, thumbnail, size, slug, excerpt }): ReactElement {
+function Post({ title, thumbnail, size, slug, excerpt, more }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   const sizeClass = () => {
     switch (size) {
@@ -40,7 +40,7 @@ function Post({ title, thumbnail, size, slug, excerpt }): ReactElement {
         <p className="post-meta-bayer">
           <Link href={`/blog/${slug}`}>
             <a href={`/blog/${slug}`} className="btn butt-xs butt-primary">
-              قراءة المزيد
+              {more}
             </a>
           </Link>
         </p>
@@ -53,6 +53,7 @@ Post.propTypes = {
   thumbnail: PropTypes.string,
   slug: PropTypes.string,
   size: PropTypes.string,
+  more: PropTypes.string,
   excerpt: PropTypes.string,
 };
 

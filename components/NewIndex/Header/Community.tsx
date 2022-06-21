@@ -1,10 +1,13 @@
 import Link from "next/link";
-import React from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 
 const Community = ({ refs }) => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("soon");
   return (
     <motion.div
       ref={refs}
@@ -24,8 +27,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">المسابقات</h4>
-                <p className="text">قريبا</p>
+                <h4 className="title">{getLanguage("Competitions")}</h4>
+                <p className="text">{getLanguage("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -41,8 +44,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">المشاريع</h4>
-                <p className="text">قريبا</p>
+                <h4 className="title">{getLanguage("Projects")}</h4>
+                <p className="text">{getLanguage("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -58,8 +61,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">الاعمال</h4>
-                <p className="text">قريبا</p>
+                <h4 className="title">{getLanguage("Business")}</h4>
+                <p className="text">{getLanguage("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -73,8 +76,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">مجتمع تيم وورك</h4>
-                <p className="text">قريبا</p>
+                <h4 className="title">{getLanguage("Timwoork_community")}</h4>
+                <p className="text">{getLanguage("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -90,8 +93,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">المدونة</h4>
-                <p className="text">معلومات عامة ومفيدة</p>
+                <h4 className="title">{getLanguage("Blog")}</h4>
+                <p className="text">{getLanguage("general_information")}</p>
               </div>
             </a>
           </Link>

@@ -15,6 +15,11 @@
     "fr": "Rechercher dans Timwoork …",
     "en": "Search in Timwoork …"
   },
+  "Timwoork_sections": {
+    "en": "Timwoork’s’ sections",
+    "fr": "Sections de Timwoork",
+    "ar": "أقسام تييم وررك"
+  },
   "Search": { "ar": "بحث", "en": "Search", "fr": "chercher" },
   "Business": { "ar": "أعمال", "fr": "Affaires", "en": "Business" },
   "Programming_and_development": {
@@ -46,6 +51,11 @@
     "en": "Audio",
     "fr": "Audio",
     "ar": "صوتيات"
+  },
+  "Active_Categories": {
+    "en": "Active Categories",
+    "ar": "التصنيفات النشطة",
+    "fr": "Catégories actives"
   },
   "Writing_and_translation": {
     "en": "Writing and translation",
@@ -187,5 +197,60 @@
     "en": "Telegram",
     "fr": "Telegram",
     "ar": "تيليجرام"
+  },
+  "Browsing_services": {
+    "en": "Browsing services",
+    "ar": "تصفح الخدمات",
+    "fr": "Explorer les services"
+  },
+  "Payment_methods": {
+    "en": "Payment methods",
+    "ar": "وسائل الدفع",
+    "fr": "Moyens de paiement"
+  },
+  "Visa": {
+    "en": "Visa",
+    "ar": "فيزا",
+    "fr": "Visa"
+  },
+  "Withdrawl_methods": {
+    "en": "Withdrawl methods",
+    "ar": "وسائل السحب",
+    "fr": "Moyens de retrait"
+  },
+  "Wise": {
+    "en": "Wise",
+    "ar": "الوايز",
+    "fr": "Wise"
+  },
+  "Western_Union": {
+    "en": "Western Union",
+    "ar": "ويسترن يونيون",
+    "fr": "Western Union"
+  },
+  "Algery_Post": {
+    "en": "Algerian Post",
+    "ar": "بريد الجزائر",
+    "fr": "Poste algérienne"
+  },
+  "PayPal": {
+    "en": "PayPal",
+    "ar": "بايبال",
+    "fr": "PayPal"
+  },
+  "Bank_transfer": {
+    "en": "Bank transfer",
+    "ar": "حوالة بنكية",
+    "fr": "Virement bancaire"
+  },
+  "Money_order": {
+    "en": "Money order",
+    "ar": "حوالة مالية",
+    "fr": "Mandat"
+  },
+  "Mastercard": {
+    "en": "Mastercard",
+    "ar": "ماستر كارد",
+    "fr": "Mastercard"
   }
 }

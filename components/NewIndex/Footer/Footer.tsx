@@ -7,7 +7,6 @@ import {
   FaTwitter,
   FaInstagram,
   FaTelegram,
-  FaGlobe,
 } from "react-icons/fa";
 import Currency from "@/components/NewIndex/DropdowModal/Currency";
 import Language from "@/components/NewIndex/DropdowModal/Language";
@@ -67,7 +66,7 @@ function Footer() {
       <div className="footer-inner">
         <div className=" footer-cont">
           <div className="footer-item">
-            <h3 className="title">روابط الموقع</h3>
+            <h3 className="title">{getLanguage("Websites’_links")}</h3>
             <ul className="footerlist">
               <li>
                 <Link href="/privacy">
@@ -92,7 +91,7 @@ function Footer() {
             </ul>
           </div>
           <div className="footer-item">
-            <h3 className="title">التصنيفات النشطة</h3>
+            <h3 className="title">{getLanguage("Active_Categories")}</h3>
             <ul className="footerlist">
               {categories.map((category, index) => {
                 if (index > 7) return;
@@ -107,7 +106,7 @@ function Footer() {
             </ul>
           </div>
           <div className="footer-item">
-            <h3 className="title">الخدمات الأكثر شعبية</h3>
+            <h3 className="title">{getLanguage("Most_popular_services")}</h3>
             <ul className="footerlist">
               {popularProducts.map((product) => {
                 return (
@@ -121,7 +120,7 @@ function Footer() {
             </ul>
           </div>
           <div className="footer-item">
-            <h3 className="title">المدونة</h3>
+            <h3 className="title">{getLanguage("Blog")}</h3>
             <ul className="footerlist">
               {blogPosts.map((post) => (
                 <li key={post.id} style={{ width: 350 }}>
@@ -132,32 +131,32 @@ function Footer() {
               ))}
             </ul>
             <div className="payments-me">
-              <h4 className="title">وسائل الدفع</h4>
-              <Tooltip title="الفيزا كارد">
+              <h4 className="title">{getLanguage("Payment_methods")}</h4>
+              <Tooltip title={getLanguage("Visa")}>
                 <img src="/png1.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title="الماستر كارد">
+              <Tooltip title={getLanguage("Mastercard")}>
                 <img src="/png2.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title="البايبال">
+              <Tooltip title={getLanguage("PayPal")}>
                 <img src="/png4.png" alt="" height={38} className="mx-1" />
               </Tooltip>
             </div>
             <div className="payments-me mt-2">
-              <h4 className="title">وسائل السحب</h4>
-              <Tooltip title="ويستر يونيون">
+              <h4 className="title">{getLanguage("Withdrawl_methods")}</h4>
+              <Tooltip title={getLanguage("Western_Union")}>
                 <img src="/western.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title="الوايز">
+              <Tooltip title={getLanguage("Wise")}>
                 <img src="/png3.png" alt="" height={30} className="mx-1" />
               </Tooltip>
-              <Tooltip title="بريد الجزائر">
+              <Tooltip title={getLanguage("Algery_Post")}>
                 <img src="/ccp.png" alt="" height={30} className="mx-1" />
               </Tooltip>
-              <Tooltip title="حوالة بنكية">
+              <Tooltip title={getLanguage("Bank_transfer")}>
                 <img src="/bank.png" alt="" height={30} className="mx-1" />
               </Tooltip>
-              <Tooltip title="حوالة مالية">
+              <Tooltip title={getLanguage("Money_order")}>
                 <img src="/cash.png" alt="" height={30} className="mx-1" />
               </Tooltip>
             </div>
@@ -175,11 +174,11 @@ function Footer() {
             </div>
             <div className="left-footer">
               <ul className="currency">
-                <li>
+                {/* <li>
                   <button type="button" className="rounded-button">
                     <FaGlobe /> العربية
                   </button>
-                </li>
+                </li> */}
                 <li className="rounded-button">
                   <Link href="/user/personalInformations">
                     <a className="rounded-button">
