@@ -7126,6 +7126,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
   .timlands-hero-carousel {
     height: 100%;
+    max-width: 1400px !important;
     width: 100%;
     @media (max-width: 900px) {
       display: none !important;
@@ -8569,11 +8570,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
   &.showLanguage {
-    animation: showLanguage .4s linear both;
+    animation: showLanguage 0.4s linear both;
   }
 }
-@keyframes showLanguage{
-  100%{
+@keyframes showLanguage {
+  100% {
     top: 40px;
     opacity: 1;
   }

@@ -52,7 +52,8 @@ function VideoAside(): ReactElement {
                   <li>
                     <h4 className="title">
                       <span className="material-icons">check_circle</span>
-                      عمولة الموقع قد تصل إلى 11%
+                      <span> عمولة الموقع قد تصل إلى</span>
+                      <span style={{ fontFamily: "Arial" }}> 11% </span>
                     </h4>
                     <p className="text">
                       تعتبر عمولة منصة تيم ورك من اقل العمولات المفروضة على

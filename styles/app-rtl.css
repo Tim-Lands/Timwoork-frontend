@@ -10620,6 +10620,7 @@ h3 {
 
 .timland-hero .timlands-hero-carousel {
   height: 100%;
+  max-width: 1400px !important;
   width: 100%;
 }
 
@@ -12508,8 +12509,8 @@ h3 {
 }
 
 .languageMenuDropDown.showLanguage {
-  -webkit-animation: showLanguage .4s linear both;
-          animation: showLanguage .4s linear both;
+  -webkit-animation: showLanguage 0.4s linear both;
+          animation: showLanguage 0.4s linear both;
 }
 
 @-webkit-keyframes showLanguage {
