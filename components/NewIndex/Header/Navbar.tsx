@@ -108,6 +108,7 @@ function Navbar({ dark = false }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
+  console.log(userInfo) 
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
@@ -400,7 +401,12 @@ function Navbar({ dark = false }) {
               <li className="circular-newitem avatar" ref={profileBtn}>
                 <a
                   className="link-circular-button"
-                  onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}
+                  onClick={() => {
+                    if(userInfo.user_details.profile.is_completed==1)
+                      setIsShowProfileMenu(!isShowProfileMenu)
+                    else
+                      router.push('/user/personalInformations')
+                    }}
                 >
                   <Image
                     src={userInfo?.user_details?.profile?.avatar_path}
@@ -429,6 +435,7 @@ function Navbar({ dark = false }) {
                   </Link>
                 </Badge>
               </li>
+              {userInfo.user_details.profile.is_completed==1&&<>
               <li className="circular-newitem" ref={messagesBtn}>
                 <Badge count={userInfo?.unread_messages_count} style={{ fontSize: 10 }} size="small">
                   <a
@@ -469,6 +476,8 @@ function Navbar({ dark = false }) {
                   />
                 )}
               </li>
+              </>
+}
             </>
           ) : (
             <>
