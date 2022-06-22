@@ -58,7 +58,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
         router.reload();
       }
     } catch (error) {
-      () => {};
+      () => { };
     }
   };
   return (
@@ -87,66 +87,71 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
       </Link>
       <div className="nav-profile-list-content">
         <ul className="list-profile-withicons">
-          <li onClick={() => setIsShowProfileMenu(false)}>
-            <Link href={"/add-new"}>
-              <a>
-                <span className="circul-icon">
-                  <IoIosAddCircleOutline />
-                </span>
-                إضافة خدمة جديدة
-              </a>
-            </Link>
-          </li>
-          <li onClick={() => setIsShowProfileMenu(false)}>
-            <Link href={`/mywallet`}>
-              <a>
-                <span className="circul-icon">
-                  <MdOutlineAccountBalanceWallet />
-                </span>
-                محفظتي
-              </a>
-            </Link>
-          </li>
-          <li onClick={() => setIsShowProfileMenu(false)}>
-            <Link href={`/myproducts`}>
-              <a>
-                <span className="circul-icon">
-                  <MdOutlineInventory2 />
-                </span>
-                خدماتي
-              </a>
-            </Link>
-          </li>
-          <li onClick={() => setIsShowProfileMenu(false)}>
-            <Link href={`/mypurchases`}>
-              <a>
-                <span className="circul-icon">
-                  <MdOutlineShoppingCart />
-                </span>
-                مشترياتي
-              </a>
-            </Link>
-          </li>
-          <li onClick={() => setIsShowProfileMenu(false)}>
-            <Link href={`/mysales`}>
-              <a>
-                <span className="circul-icon">
-                  <MdOutlineShop2 />
-                </span>
-                مبيعاتي
-              </a>
-            </Link>
-          </li>
-          <li onClick={() => setIsShowProfileMenu(false)}>
-            <Link href={`/user/personalInformations`}>
-              <a>
-                <span className="circul-icon">
-                  <FiSettings />
-                </span>
-                الإعدادات
-              </a>
-            </Link>
-          </li>
+          {user_details.profile.is_completed == 1 &&
+            <>
+              <li onClick={() => setIsShowProfileMenu(false)}>
+                <Link href={"/add-new"}>
+                  <a>
+                    <span className="circul-icon">
+                      <IoIosAddCircleOutline />
+                    </span>
+                    إضافة خدمة جديدة
+                  </a>
+                </Link>
+              </li>
+              <li onClick={() => setIsShowProfileMenu(false)}>
+                <Link href={`/mywallet`}>
+                  <a>
+                    <span className="circul-icon">
+                      <MdOutlineAccountBalanceWallet />
+                    </span>
+                    محفظتي
+                  </a>
+                </Link>
+              </li>
+              <li onClick={() => setIsShowProfileMenu(false)}>
+                <Link href={`/myproducts`}>
+                  <a>
+                    <span className="circul-icon">
+                      <MdOutlineInventory2 />
+                    </span>
+                    خدماتي
+                  </a>
+                </Link>
+              </li>
+              <li onClick={() => setIsShowProfileMenu(false)}>
+                <Link href={`/mypurchases`}>
+                  <a>
+                    <span className="circul-icon">
+                      <MdOutlineShoppingCart />
+                    </span>
+                    مشترياتي
+                  </a>
+                </Link>
+              </li>
+              <li onClick={() => setIsShowProfileMenu(false)}>
+                <Link href={`/mysales`}>
+                  <a>
+                    <span className="circul-icon">
+                      <MdOutlineShop2 />
+                    </span>
+                    مبيعاتي
+                  </a>
+                </Link>
+              </li>
+             
+            </>
+          }
+           <li onClick={() => setIsShowProfileMenu(false)}>
+                <Link href={`/user/personalInformations`}>
+                  <a>
+                    <span className="circul-icon">
+                      <FiSettings />
+                    </span>
+                    الإعدادات
+                  </a>
+                </Link>
+              </li>
           <li
             onClick={() => {
               setIsShowProfileMenu(false);

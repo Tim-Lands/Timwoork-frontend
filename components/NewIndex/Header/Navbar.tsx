@@ -402,10 +402,8 @@ function Navbar({ dark = false }) {
                 <a
                   className="link-circular-button"
                   onClick={() => {
-                    if(userInfo.user_details.profile.is_completed==1)
                       setIsShowProfileMenu(!isShowProfileMenu)
-                    else
-                      router.push('/user/personalInformations')
+
                     }}
                 >
                   <Image
