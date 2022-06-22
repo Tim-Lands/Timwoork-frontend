@@ -10624,6 +10624,7 @@ h3 {
 .timland-hero .timlands-hero-carousel {
   height: 100%;
   width: 100%;
+  max-width: 1400px !important;
 }
 
 @media (max-width: 900px) {
@@ -10635,6 +10636,7 @@ h3 {
 .timland-hero .timlands-hero-carousel .timlands-hero-img {
   height: 100%;
   width: 100%;
+  max-width: 1500px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -12448,9 +12450,5 @@ h3 {
 .registerPhone select:focus {
   outline: none;
   padding: 0;
-}
-
-.languageMenuDropDown {
-  background-color: white;
 }
 /*# sourceMappingURL=app-ltr.css.map */
