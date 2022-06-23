@@ -35,16 +35,16 @@ const properties = {
   infinite: true,
   prevArrow: (
     <div
-      className="arrow-navigations"
-      style={{ width: "30px", marginRight: "-30px" }}
+      className="arrow-navigations right"
+      style={{ width: "30px" }}
     >
       <span className="material-icons-outlined">chevron_left</span>
     </div>
   ),
   nextArrow: (
     <div
-      className="arrow-navigations"
-      style={{ width: "30px", marginLeft: "-30px" }}
+      className="arrow-navigations left"
+      style={{ width: "30px" }}
     >
       <span className="material-icons-outlined">chevron_right</span>
     </div>

@@ -31,7 +31,6 @@
     align-content: center;
   }
   .logo-nav {
-    padding-left: 6px;
     display: flex;
 
     img {
@@ -93,12 +92,10 @@
           cursor: pointer;
           align-content: center;
           .fa-angle-down {
-            margin-right: 6px;
             margin-top: 2px;
           }
           .material-icons {
             font-size: 17px;
-            margin-left: 6px;
           }
         }
         position: relative;
@@ -110,7 +107,6 @@
         .timlands-explores {
           position: absolute;
           width: 960px;
-          right: 0;
           background-color: #fff;
           border-radius: 0 0 6px 6px;
           top: 56px;
@@ -144,7 +140,6 @@
                     font-size: 12px;
                   }
                   .material-icons {
-                    margin-left: 5px;
                     font-size: 20px;
                     margin-top: -2px;
                   }
@@ -193,9 +188,6 @@
                 font-size: 19px;
                 color: #444;
                 margin: 0;
-                .material-icons {
-                  margin-left: 6px;
-                }
               }
             }
             .main-item-category-body {
@@ -293,7 +285,6 @@
           border-radius: 50%;
           display: inline-block;
           margin: 1px 6px;
-          margin-right: 10px;
         }
         .text {
           margin-inline: 6px;
@@ -301,9 +292,6 @@
         @media (max-width: 580px) {
           .text {
             display: none;
-          }
-          img {
-            margin-left: 4px;
           }
         }
       }
@@ -339,9 +327,7 @@
           }
           > .material-icons {
             font-size: 17px;
-            margin-left: 5px;
             @media (max-width: 1000px) {
-              margin-left: 2px;
               font-size: 13px;
             }
           }
@@ -413,7 +399,6 @@
 .nav-auth {
   .language-nav-butt {
     margin-top: 10px;
-    margin-left: 4px;
     color: #777 !important;
     &:hover {
       background-color: #fff !important;
@@ -449,8 +434,6 @@
           height: 3px;
           position: absolute;
           bottom: 0;
-          right: 0;
-          left: 100%;
           transition: all 0.3s;
         }
         &:hover {
@@ -458,7 +441,6 @@
           transition: all 0.3s;
           &::after {
             transition: all 0.3s;
-            left: 0;
           }
         }
       }
@@ -467,7 +449,6 @@
           color: #000;
           font-weight: 700;
           &::after {
-            left: 0;
             transition: all 0.3s;
           }
         }
@@ -487,9 +468,7 @@
     display: none;
     &.except {
       display: block;
-      margin-left: -2px;
       height: 20px !important;
-      margin-right: 10px;
       width: 1px !important;
     }
   }
@@ -506,12 +485,8 @@
     outline: none;
     display: flex;
     align-items: center;
-    svg {
-      margin-left: 4px;
-    }
     .material-icons {
       font-size: 17px;
-      margin-right: 2px;
     }
     &:hover {
       color: #000;
@@ -530,7 +505,6 @@
   z-index: 2000;
   .langs-item {
     display: flex;
-    right: 0;
     width: 100%;
     border: 0;
     background-color: #fff;
@@ -541,9 +515,6 @@
     &:hover {
       background-color: #f3f3f3;
       color: #000;
-    }
-    span {
-      margin-right: 4px;
     }
   }
 }
@@ -590,7 +561,6 @@
           background-color: red;
           position: absolute;
           top: 10px;
-          left: 10px;
         }
         p {
           width: 75%;
@@ -682,6 +652,5 @@
     transform: scale(0.8);
     position: absolute;
     top: -20px;
-    left: -50px;
   }
 }

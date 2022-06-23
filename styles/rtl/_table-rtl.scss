@@ -1,0 +1,36 @@
+.timlands-table {
+  .table {
+    tr {
+      td,
+      th {
+        .material-icons {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+  .spinner-loader {
+    left: 0;
+    right: 0;
+  }
+}
+.table-del {
+  margin-left: 4px;
+}
+/*
+------------------------------------------------------------------------------------------------------
+    Filter content
+------------------------------------------------------------------------------------------------------
+*/
+.timlands-table-filter {
+  .filter-form {
+    .form-container {
+      padding-left: 6px;
+    }
+    &:last-of-type {
+      .form-container {
+        padding-left: 0;
+      }
+    }
+  }
+}

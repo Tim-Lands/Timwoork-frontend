@@ -1,0 +1,11 @@
+.timlands-alert {
+    .text {
+        .material-icons {
+            margin-left: 7px;
+        }
+    }
+    &.timlands-alert-fixed {
+        left: 0;
+        right: 0;
+    }
+}

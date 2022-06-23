@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/antd.css";
-import "../styles/app-rtl.css";
+import "../styles/app.css";
+import "../styles/app-ltr.css";
 import store from "@/store/store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
@@ -24,7 +25,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <div>
       <Provider store={store}>
-        <ConfigProvider direction="rtl">
+        <ConfigProvider direction="ltr">
           <PusherProvider>
             <CurrencyProvider>
               <LanguageProvider>

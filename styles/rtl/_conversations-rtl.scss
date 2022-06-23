@@ -1,0 +1,30 @@
+
+.conversations-sidebar {
+  .conversations-items {
+    .conversations-items-list {
+      li {
+        a {
+
+          .conv-item-inner {
+
+            .conv-item-head {
+              img {
+                margin-left: 6px;
+              }
+            }
+          }
+        }
+
+        &.is-readed {
+          a {
+
+            .msg-count {
+              left: 15px;
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
