@@ -1,5 +1,6 @@
 import { Drawer } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 import useSWR from "swr";
@@ -17,7 +18,10 @@ import Link from "next/link";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 const MobileMenu = ({ postsList }) => {
+  const { language, getSectionLanguage } = useContext(LanguageContext);
   const [visible, setVisible] = useState(false);
+  const getLanguage = getSectionLanguage("main");
+  const getLanguageSoon = getSectionLanguage("soon");
   const { data: userInfo }: any = useSWR("api/me");
   const [size, setSize] = useState("70%");
   const [query, setQuery] = useState("");
@@ -71,7 +75,7 @@ const MobileMenu = ({ postsList }) => {
                   e.keyCode === 13 && router.push(`/products?query=${query}`)
                 }
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="البحث في الموقع..."
+                placeholder={getLanguage("Search_in_Timwoork")}
                 className="form-serach-nav"
               />
               <button
@@ -81,21 +85,21 @@ const MobileMenu = ({ postsList }) => {
                   onClose();
                 }}
               >
-                البحث
+                {getLanguage("Search")}
               </button>
             </div>
           </div>
           <Link href={"/products"}>
             <div className="products" onClick={onClose}>
               <MdOutlineShoppingCart />
-              تصفح الخدمات
+              {getLanguage("Browsing_services")}
             </div>
           </Link>
           <div className="collapses">
             <div className="society">
               <Collapse>
                 <Panel
-                  header="أقسام تيم وورك"
+                  header={getLanguage("Timwoork_sections")}
                   key="1"
                   extra={<MdBackupTable style={{ marginLeft: 20 }} />}
                 >
@@ -112,8 +116,10 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">المسابقات</h4>
-                            <p className="text">قريبا</p>
+                            <h4 className="title">
+                              {getLanguageSoon("Competitions")}
+                            </h4>
+                            <p className="text">{getLanguageSoon("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -129,8 +135,10 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">المشاريع</h4>
-                            <p className="text">قريبا</p>
+                            <h4 className="title">
+                              {getLanguageSoon("Projects")}
+                            </h4>
+                            <p className="text">{getLanguageSoon("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -146,8 +154,10 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">الاعمال</h4>
-                            <p className="text">قريبا</p>
+                            <h4 className="title">
+                              {getLanguageSoon("Business")}
+                            </h4>
+                            <p className="text">{getLanguageSoon("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -161,8 +171,10 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">مجتمع تيم وورك</h4>
-                            <p className="text">قريبا</p>
+                            <h4 className="title">
+                              {getLanguageSoon("Timwoork_community")}
+                            </h4>
+                            <p className="text">{getLanguageSoon("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -179,8 +191,12 @@ const MobileMenu = ({ postsList }) => {
                               </span>
                             </div>
                             <div className="dropd-item-content">
-                              <h4 className="title">المدونة</h4>
-                              <p className="text">معلومات عامة ومفيدة</p>
+                              <h4 className="title">
+                                {getLanguageSoon("Blog")}
+                              </h4>
+                              <p className="text">
+                                {getLanguageSoon("general_information")}
+                              </p>
                             </div>
                           </a>
                         </Link>
@@ -200,7 +216,7 @@ const MobileMenu = ({ postsList }) => {
                       borderBottom: 0,
                     }}
                   >
-                    <Panel header={post.name_ar} key={post.id}>
+                    <Panel header={post[which(language)]} key={post.id}>
                       {post.subcategories.map((category) => {
                         return (
                           <a
@@ -209,7 +225,7 @@ const MobileMenu = ({ postsList }) => {
                             className="sideSubCat"
                             onClick={() => setVisible(false)}
                           >
-                            {category.name_ar}
+                            {category[which(language)]}
                           </a>
                         );
                       })}
@@ -254,6 +270,16 @@ function whichSize(width) {
   else if (width < 350) return "90%";
   else return "80%";
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 MobileMenu.propTypes = {
   postsList: PropTypes.array,
 };

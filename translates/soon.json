@@ -4,6 +4,16 @@
     "fr": "Prochainement",
     "ar": "قريبا"
   },
+  "Timwoork_community": {
+    "en": "Timwoork community",
+    "fr": "Communauté Timwoork",
+    "ar": "مجتمع تيم وورك"
+  },
+  "Browsing_services": {
+    "en": "Browsing services",
+    "fr": "Explorer les services",
+    "ar": "تصفح الخدمات"
+  },
   "Competitions": {
     "en": "Competitions",
     "fr": "Compétitions",
@@ -23,5 +33,11 @@
     "en": "Freelancers",
     "fr": "Freelancer",
     "ar": "المستقلين"
+  },
+  "Blog": { "en": "Blog", "fr": "Blog", "ar": "المدونة" },
+  "general_information": {
+    "en": "general information",
+    "fr": "Informations générales",
+    "ar": "معلومات عامة ومفيدة"
   }
 }

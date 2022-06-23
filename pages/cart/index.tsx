@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import PostsAside from "@/components/PostsAside";
 import API from "../../config";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import useSWR, { mutate } from "swr";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
@@ -11,6 +12,9 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import router from "next/router";
 
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("cart");
+  const getLanguageMain = getSectionLanguage("main");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -105,11 +109,8 @@ function index() {
                     />
                   </div>
                   <div className="cart-nothing-content">
-                    <h1 className="title">السلة فارغة</h1>
-                    <p className="text">
-                      لاتوجد خدمات في سلة المشتريات يمكنك الذهاب إلى تصفح
-                      الخدمات
-                    </p>
+                    <h1 className="title">{getLanguage("Cart")}</h1>
+                    <p className="text">{getLanguage("No_services_in")}</p>
                   </div>
                 </div>
               </div>
@@ -198,9 +199,10 @@ function index() {
       </div>
       <div className="container">
         <PostsAside
-          title="الخدمات الأكثر شعبية "
+          title={getLanguageMain("Most_popular_services")}
           PostData={popularProducts && popularProducts.data.data}
           isError={popularError}
+          more={getLanguageMain("More")}
           linkURL="/products/popular"
         />
       </div>

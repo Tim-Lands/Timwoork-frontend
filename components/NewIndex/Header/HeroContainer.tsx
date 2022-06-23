@@ -5,7 +5,7 @@ import API from "../../../config";
 import HeroSearchContent from "./HeroSearchContent";
 
 function HeroContainer() {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { language, getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
   const [topCategories, setTopCaegories] = useState([]);
   useEffect(() => {
@@ -28,7 +28,7 @@ function HeroContainer() {
                 <Link
                   href={`/products?categoryID=${category.parent_id}&subcategoryID=${category.id}`}
                 >
-                  <a className="">{category.name_ar}</a>
+                  <a className="">{category[which(language)]}</a>
                 </Link>
               </li>
             ))}
@@ -38,5 +38,14 @@ function HeroContainer() {
     </div>
   );
 }
-
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 export default HeroContainer;

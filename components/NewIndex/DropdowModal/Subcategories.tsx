@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 function Subcategories({ postsList, categoryID }) {
   const [list, setList] = useState({ subcategories: [] });
+  const { language } = useContext(LanguageContext);
   useEffect(() => {
     postsList.forEach((posts) => {
       if (posts.id === categoryID) {
@@ -26,7 +28,7 @@ function Subcategories({ postsList, categoryID }) {
                   className="sub"
                   href={`/products?categoryID=${categoryID}&subcategoryID=${item.id}`}
                 >
-                  {item.name_ar}
+                  {item[which(language)]}
                 </a>
               </li>
             );
@@ -36,6 +38,16 @@ function Subcategories({ postsList, categoryID }) {
     </motion.div>
   );
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 Subcategories.propTypes = {
   postsList: PropTypes.array,
   categoryID: PropTypes.number,

@@ -83,8 +83,6 @@ function Categories({ categories, onClickCategory, href }) {
           <div className="row">
             {categories &&
               categories.data.map((e: any) => {
-                console.log(e);
-
                 return (
                   <div
                     onClick={() => onClickCategory(e.id)}

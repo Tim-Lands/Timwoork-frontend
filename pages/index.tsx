@@ -20,33 +20,34 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import PostInner from "@/components/Post/PostInner";
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://wa.me/+905519951407"
-      >
-        <i className="fab fa-whatsapp fa-fw"></i>
-        واتساب
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://t.me/timwoorkDotCom"
-      >
-        <i className="fab fa-telegram fa-fw"></i>
-        تيليجرام
-      </a>
-    </Menu.Item>
-  </Menu>
-);
+
 function index({ products, latestProducts, categories, popularProducts }) {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://wa.me/+905519951407"
+        >
+          <i className="fab fa-whatsapp fa-fw"></i>
+          {getLanguage("WhatsApp")}
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://t.me/timwoorkDotCom"
+        >
+          <i className="fab fa-telegram fa-fw"></i>
+          {getLanguage("Telegram")}
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <>
       <Head>

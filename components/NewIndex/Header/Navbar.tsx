@@ -31,7 +31,9 @@ import {
 import { lighten } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
-  const { language, setLanguage } = useContext(LanguageContext);
+  const { language, setLanguage, getSectionLanguage } =
+    useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -106,6 +108,7 @@ function Navbar({ dark = false }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
+  console.log(userInfo) 
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
@@ -357,14 +360,14 @@ function Navbar({ dark = false }) {
                     e.keyCode === 13 && router.push(`/products?query=${query}`)
                   }
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="البحث في الموقع..."
+                  placeholder={getLanguage("Search_in_Timwoork")}
                   className="form-serach-nav"
                 />
                 <button
                   className="btn butt-xs butt-primary2"
                   onClick={() => router.push(`/products?query=${query}`)}
                 >
-                  البحث
+                  {getLanguage("Search")}
                 </button>
               </div>
             </div>
@@ -376,7 +379,7 @@ function Navbar({ dark = false }) {
               <span className="material-icons material-icons-outlined">
                 backup_table
               </span>{" "}
-              اقسام تيم وورك
+              {getLanguage("Timwoork_sections")}
               <span className="material-icons material-icons-outlined expand-more">
                 expand_more
               </span>
@@ -389,7 +392,7 @@ function Navbar({ dark = false }) {
                 <span className="material-icons material-icons-outlined">
                   shopping_cart
                 </span>{" "}
-                تصفح الخدمات
+                {getLanguage("Browsing_services")}
               </a>
             </Link>
           </li>
@@ -398,7 +401,10 @@ function Navbar({ dark = false }) {
               <li className="circular-newitem avatar" ref={profileBtn}>
                 <a
                   className="link-circular-button"
-                  onClick={() => setIsShowProfileMenu(!isShowProfileMenu)}
+                  onClick={() => {
+                      setIsShowProfileMenu(!isShowProfileMenu)
+
+                    }}
                 >
                   <Image
                     src={userInfo?.user_details?.profile?.avatar_path}
@@ -427,6 +433,7 @@ function Navbar({ dark = false }) {
                   </Link>
                 </Badge>
               </li>
+              {userInfo.user_details.profile.is_completed==1&&<>
               <li className="circular-newitem" ref={messagesBtn}>
                 <Badge count={userInfo?.unread_messages_count} style={{ fontSize: 10 }} size="small">
                   <a
@@ -467,6 +474,8 @@ function Navbar({ dark = false }) {
                   />
                 )}
               </li>
+              </>
+}
             </>
           ) : (
             <>

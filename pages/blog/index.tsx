@@ -1,6 +1,7 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import Pagination from "react-js-pagination";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import Loading from "@/components/Loading";
 import useSWR from "swr";
 import { Menu, Result } from "antd";
@@ -9,6 +10,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import API from "../../config";
 function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("blog");
   const [postsMediaTable, setPostsMediaTable] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const { data: getCategories }: any = useSWR(
@@ -36,6 +39,7 @@ function Category(): JSX.Element {
   useEffect(() => {
     if (getPosts) fetch();
   }, [getPosts]);
+  console.log(getCategories);
   return (
     <div>
       <MetaTags
@@ -73,6 +77,7 @@ function Category(): JSX.Element {
                   <Post
                     title={item.title.rendered}
                     thumbnail={postsMediaTable[item.featured_media]}
+                    more={getLanguage("Read_more")}
                     size={""}
                     slug={item.slug}
                     excerpt={
@@ -91,8 +96,8 @@ function Category(): JSX.Element {
         {getPosts && getPosts.length == 0 && (
           <Result
             status="404"
-            title="لا يوجد مقالات"
-            subTitle="ليس هناك مقالات لعرضها"
+            title={getLanguage("No_article")}
+            subTitle={getLanguage("There_is_no")}
           />
         )}
         <Pagination

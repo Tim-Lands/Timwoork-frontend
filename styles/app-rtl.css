@@ -1193,6 +1193,10 @@ body {
   background-image: linear-gradient(to right, #b64663, #c66a81);
 }
 
+.timland-hero .timlands-hero-carousel {
+  max-width: 1400px !important;
+}
+
 .timland-hero .timlands-hero-carousel .timlands-hero-img {
   -webkit-box-align: start;
       -ms-flex-align: start;

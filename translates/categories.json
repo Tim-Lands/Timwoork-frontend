@@ -1,4 +1,9 @@
 {
+  "All_services": {
+    "en": "All services",
+    "fr": "Tous les services",
+    "ar": "جميع الخدمات"
+  },
   "Categories": {
     "en": "Categories",
     "fr": "Catégories",

@@ -18,6 +18,7 @@ function PostsAside({
   colNumber,
   isError,
   linkURL,
+  more,
 }): ReactElement {
   if (isError)
     return (
@@ -85,7 +86,7 @@ function PostsAside({
             <h1 className="title me-auto">{title}</h1>
             <Link href={linkURL}>
               <a className="btn flex-center butt-md butt-light ml-auto">
-                المزيد...
+                {more}
               </a>
             </Link>
           </div>
@@ -140,16 +141,19 @@ function PostsAside({
                   <div className="post-resposive-with-desktop">
                     <PostInner
                       title={e.title}
-                      avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+                      avatar={
+                        e.profile_seller && e.profile_seller.profile.avatar_path
+                      }
                       author={
                         e.profile_seller &&
                         e.profile_seller.profile.first_name +
-                        " " +
-                        e.profile_seller.profile.last_name
+                          " " +
+                          e.profile_seller.profile.last_name
                       }
                       rate={e.ratings_avg_rating}
                       username={
-                        e.profile_seller && e.profile_seller.profile.user.username
+                        e.profile_seller &&
+                        e.profile_seller.profile.user.username
                       }
                       price={e.price}
                       slug={e.slug}
@@ -160,18 +164,21 @@ function PostsAside({
                   <div className="post-resposive-with-smart">
                     <Post
                       size="small"
-                      avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+                      avatar={
+                        e.profile_seller && e.profile_seller.profile.avatar_path
+                      }
                       title={e.title}
                       level={e.profile_seller && e.profile_seller.level.name_ar}
                       author={
                         e.profile_seller &&
                         e.profile_seller.profile.first_name +
-                        " " +
-                        e.profile_seller.profile.last_name
+                          " " +
+                          e.profile_seller.profile.last_name
                       }
                       rate={e.ratings_avg_rating}
                       username={
-                        e.profile_seller && e.profile_seller.profile.user.username
+                        e.profile_seller &&
+                        e.profile_seller.profile.user.username
                       }
                       price={e.price}
                       slug={e.slug}
@@ -195,4 +202,5 @@ PostsAside.propTypes = {
   PostData: PropTypes.array,
   colNumber: PropTypes.number,
   isError: PropTypes.any,
+  more: PropTypes.string,
 };

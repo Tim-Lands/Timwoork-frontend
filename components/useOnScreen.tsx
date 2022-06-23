@@ -7,7 +7,7 @@ export default function useOnScreen(ref, setShow) {
       setShow(!entry.isIntersecting);
     },
     {
-      threshold: 0.9,
+      threshold: 0.99,
     }
   );
 
