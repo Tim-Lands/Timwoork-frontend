@@ -1,4 +1,5 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import Layout from "@/components/Layout/HomeLayout";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
@@ -7,7 +8,7 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index() {
   const { data: categories }: any = useSWR(`api/categories`);
-
+  const { language } = useContext(LanguageContext);
   categories &&
     categories.data.sort((a, b) => {
       if (a.subcategories.length < b.subcategories.length) {
@@ -51,7 +52,7 @@ function index() {
                                 <Link
                                   href={`products?categoryID=${item.parent_id}&subcategoryID=${item.id}`}
                                 >
-                                  {item.name_ar}
+                                  {item[which(language)]}
                                 </Link>
                               </li>
                             );
@@ -67,6 +68,16 @@ function index() {
     </div>
   );
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

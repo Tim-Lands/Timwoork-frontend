@@ -1,4 +1,5 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useContext } from "react";
+import { LanguageContext } from "../contexts/languageContext/context";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
@@ -7,6 +8,8 @@ import API from "../config";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function Overview() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("contact_us");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const formik = useFormik({
     initialValues: {
@@ -56,18 +59,18 @@ function Overview() {
             >
               <div className="timlands-content-form">
                 <div className="page-header">
-                  <h2 className="title">اتصل بنا</h2>
+                  <h2 className="title">{getLanguage("Contact_us")}</h2>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-subject">
-                        عنوان الرسالة
+                        {getLanguage("Object")}
                       </label>
                       <input
                         id="input-subject"
                         name="subject"
-                        placeholder="عنوان الرسالة..."
+                        placeholder={getLanguage("Object")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -96,12 +99,12 @@ function Overview() {
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-email">
-                        البريد الإلكتروني
+                        {getLanguage("Email")}
                       </label>
                       <input
                         id="input-email"
                         name="email"
-                        placeholder="البريد الإلكتروني..."
+                        placeholder={getLanguage("Email")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -142,12 +145,12 @@ function Overview() {
                   <div className="col-md-7">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-full_name">
-                        الاسم الكامل
+                        {getLanguage("Complete_name")}
                       </label>
                       <input
                         id="input-full_name"
                         name="full_name"
-                        placeholder="الاسم الكامل..."
+                        placeholder={getLanguage("Complete_name")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -179,7 +182,7 @@ function Overview() {
                         className="label-block"
                         htmlFor="input-type_message"
                       >
-                        اختر نوع الرسالة
+                        {getLanguage("Choose_the_message")}
                       </label>
                       <select
                         id="input-type_message"
@@ -194,9 +197,12 @@ function Overview() {
                         onChange={formik.handleChange}
                         value={formik.values.type_message}
                       >
-                        <option value="">اختر نوع الرسالة</option>
-                        <option value="0">شكوى</option>
-                        <option value="1">استفسار</option>
+                        <option value="">
+                          {" "}
+                          {getLanguage("Choose_the_message")}
+                        </option>
+                        <option value="0">{getLanguage("Complaint")}</option>
+                        <option value="1">{getLanguage("Inquiry")}</option>
                       </select>
                       {validationsErrors && validationsErrors.type_message && (
                         <div style={{ overflow: "hidden" }}>
@@ -216,14 +222,14 @@ function Overview() {
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-message">
-                        نص الرسالة
+                        {getLanguage("Message")}
                       </label>
                       <textarea
                         id="input-message"
                         name="message"
                         onChange={formik.handleChange}
                         value={formik.values.message}
-                        placeholder="نص الرسالة..."
+                        placeholder={getLanguage("Message")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -251,7 +257,7 @@ function Overview() {
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-url">
-                        رابط الملف *
+                        {getLanguage("File_link")}*
                       </label>
                       <input
                         id="input-url"
@@ -288,7 +294,9 @@ function Overview() {
                         disabled={formik.isSubmitting}
                         className="btn flex-center butt-green mr-auto butt-sm"
                       >
-                        <span className="text">إرسال المعلومات</span>
+                        <span className="text">
+                          {getLanguage("Send_information")}
+                        </span>
                         <span className="material-icons-outlined">
                           chevron_left
                         </span>

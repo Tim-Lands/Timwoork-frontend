@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/Conversations/Sidebar";
@@ -7,6 +8,8 @@ import { Empty } from "antd";
 import router from "next/router";
 import useSWR from "swr";
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("conversion");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -28,7 +31,7 @@ function index() {
         <div className=" my-3" style={{ maxWidth: 1300, marginInline: "auto" }}>
           <div className="row">
             <div className="col-lg-4">
-              <Sidebar />
+              <Sidebar getLanguage={getLanguage} />
             </div>
             <div className="col-lg-8">
               <div
@@ -43,7 +46,7 @@ function index() {
                 }}
               >
                 <div className="conversations-form">
-                  <Empty description={"اختر أحد المحادثات لعرض رسائلها"} />
+                  <Empty description={getLanguage("Choose_a_conversation")} />
                 </div>
               </div>
             </div>

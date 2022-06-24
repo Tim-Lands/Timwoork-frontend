@@ -79,7 +79,7 @@
     "fr": "A propos du vendeur",
     "ar": "حول البائع"
   },
-  "Profile_one": {
+  "Profile": {
     "en": "Profile",
     "fr": "Profile",
     "ar": "الملف الشخصي"
@@ -163,11 +163,6 @@
     "en": "Services",
     "fr": "Services",
     "ar": "الخدمات"
-  },
-  "Profil": {
-    "en": "Profil",
-    "fr": "Profil",
-    "ar": "الملف الشخصي"
   },
   "Copy_my_profile ‘s": {
     "en": "Copy my profile ‘s link",

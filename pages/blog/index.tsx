@@ -39,7 +39,6 @@ function Category(): JSX.Element {
   useEffect(() => {
     if (getPosts) fetch();
   }, [getPosts]);
-  console.log(getCategories);
   return (
     <div>
       <MetaTags
