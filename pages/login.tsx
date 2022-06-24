@@ -78,7 +78,7 @@ const Login = (): ReactElement => {
     }
   };
 
-  const onLoginFailure = () => {};
+  const onLoginFailure = () => { };
 
   // The router object used for redirecting after login.
   const router = useRouter();
@@ -122,6 +122,7 @@ const Login = (): ReactElement => {
             }
           } catch (error: any) {
             if (
+
               error.response &&
               error.response.data &&
               error.response.data.errors
@@ -139,8 +140,8 @@ const Login = (): ReactElement => {
             <div className="row justify-content-md-center">
               <div className="col-lg-5 p-0" style={{ maxWidth: 900 }}>
                 <div className="login-panel">
-                  {validationsGeneral.msg && (
-                    <Alert type="error">{validationsGeneral.msg}</Alert>
+                  {(validationsGeneral.msg||validationsGeneral.message) && (
+                    <Alert type="error">{validationsGeneral.msg || validationsGeneral.message}</Alert>
                   )}
                   <div
                     className={
