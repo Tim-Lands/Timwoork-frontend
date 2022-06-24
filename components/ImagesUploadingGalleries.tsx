@@ -8,6 +8,7 @@ function ImagesUploadingGalleries({
   setGalleryMedia,
   setIsChanged,
   callback,
+  getLanguage,
 }): ReactElement {
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
@@ -31,7 +32,7 @@ function ImagesUploadingGalleries({
           <div className="images-list-uploading align-center">
             <div className="page-header">
               <h4 className="title" style={{ fontSize: 20 }}>
-                معرض الصور
+                {getLanguage("Gallery")}
               </h4>
             </div>
 
@@ -63,7 +64,7 @@ function ImagesUploadingGalleries({
                           onClick={onImageUpload}
                           {...dragProps}
                         >
-                          يمكنك الاختيار من جهازك
+                          {getLanguage("You_can_choose")}
                         </button>
                       )}
                       &nbsp;
@@ -73,8 +74,7 @@ function ImagesUploadingGalleries({
                       <div className="nothing-images">
                         <h4 className="nothing-title">اختر صور من جهازك</h4>
                         <p className="nothing-text">
-                          يجب أن تختار على الأقل صورة في معرض الخدمة ويجب ان
-                          تكون الصور مناسبة من الخدمة
+                          {getLanguage("You_must_choose")}
                         </p>
                       </div>
                     )}
@@ -122,4 +122,5 @@ ImagesUploadingGalleries.propTypes = {
   setGalleryMedia: PropTypes.func,
   setIsChanged: PropTypes.func,
   callback: PropTypes.func,
+  getLanguage: PropTypes.func,
 };

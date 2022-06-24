@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { ReactElement, useEffect, useState, useRef } from "react";
+import { ReactElement, useEffect, useState, useRef, useContext } from "react";
 import useSWR from "swr";
 // import { useEditor, EditorContent } from "@tiptap/react";
 // import StarterKit from "@tiptap/starter-kit";
@@ -116,6 +117,8 @@ import { useFormik } from "formik";
 //   );
 // };
 function Description({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
@@ -249,7 +252,7 @@ function Description({ query }) {
                                 collections_bookmark
                               </span>
                             </span>
-                            معلومات عامة
+                            {getLanguage("General_information")}
                           </h4>
                         </div>
                         <div className="timlands-step-item">
@@ -259,7 +262,7 @@ function Description({ query }) {
                                 payments
                               </span>
                             </span>
-                            السعر والتطويرات
+                            {getLanguage("Upgrades_price")}
                           </h4>
                         </div>
                         <div
@@ -272,7 +275,7 @@ function Description({ query }) {
                                 description
                               </span>
                             </span>
-                            الوصف وتعليمات المشتري
+                            {getLanguage("Description_and_instructions")}
                           </h4>
                         </div>
                         <div className="timlands-step-item">
@@ -282,7 +285,7 @@ function Description({ query }) {
                                 mms
                               </span>
                             </span>
-                            مكتبة الصور والملفات
+                            {getLanguage("Gallery_and_folders")}
                           </h3>
                         </div>
                         <div className="timlands-step-item">
@@ -292,7 +295,7 @@ function Description({ query }) {
                                 publish
                               </span>
                             </span>
-                            نشر الخدمة
+                            {getLanguage("Publish_service")}
                           </h3>
                         </div>
                       </div>
@@ -306,7 +309,7 @@ function Description({ query }) {
                               className="label-block"
                               htmlFor="input-content"
                             >
-                              وصف الخدمة
+                              {getLanguage("Service_description")}
                             </label>
                             <div className="app-content-editor">
                               <textarea
@@ -329,9 +332,7 @@ function Description({ query }) {
                               className="timlands-form-note"
                             >
                               <p className="text">
-                                أدخل وصف الخدمة بدقة يتضمن جميع المعلومات
-                                والشروط . يمنع وضع البريد الالكتروني، رقم الهاتف
-                                أو أي معلومات اتصال أخرى.
+                                {getLanguage("Enter_an_accurate")}
                               </p>
                             </motion.div>
                             {validationsErrors && validationsErrors.content && (
@@ -355,7 +356,7 @@ function Description({ query }) {
                               className="label-block"
                               htmlFor="input-buyer_instruct"
                             >
-                              تعليمات المشتري
+                              {getLanguage("Instructions_to_the")}
                             </label>
                             <div className="app-content-editor">
                               <textarea
@@ -377,8 +378,7 @@ function Description({ query }) {
                               className="timlands-form-note"
                             >
                               <p className="text">
-                                المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة.
-                                تظهر هذه المعلومات بعد شراء الخدمة فقط
+                                {getLanguage("They_are_information")}
                               </p>
                             </motion.div>
                             {validationsErrors &&
@@ -407,7 +407,9 @@ function Description({ query }) {
                               <span className="material-icons-outlined">
                                 chevron_right
                               </span>
-                              <span className="text">المرحلة السابقة</span>
+                              <span className="text">
+                                {getLanguage("Previous_step")}
+                              </span>
                             </button>
                             <button
                               type="submit"
@@ -417,7 +419,9 @@ function Description({ query }) {
                               }
                               className="btn flex-center butt-green ml-auto butt-sm"
                             >
-                              <span className="text">المرحلة التالية</span>
+                              <span className="text">
+                                {getLanguage("Next_step")}
+                              </span>
                               <span className="material-icons-outlined">
                                 chevron_left
                               </span>

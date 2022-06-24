@@ -7,6 +7,7 @@ function FeaturedUploadingGalleries({
   full_path_thumbnail,
   setImage,
   setIsChanged,
+  getLanguage,
 }): ReactElement {
   const [featuredImages, setFeaturedImages]: any = useState([
     {
@@ -27,7 +28,7 @@ function FeaturedUploadingGalleries({
           <div className="images-list-uploading align-center">
             <div className="page-header">
               <h4 className="title" style={{ fontSize: 20 }}>
-                الصورة البارزة
+                {getLanguage("Profil_picture")}
               </h4>
             </div>
             <p
@@ -86,8 +87,7 @@ function FeaturedUploadingGalleries({
                       <div className="nothing-images">
                         <h4 className="nothing-title">اختر الصورة البارزة</h4>
                         <p className="nothing-text">
-                          يجب أن تختار الصورة البارزة للخدمة ويجب ان تكون الصورة
-                          متناسقة مع محتوى الخدمة
+                          {getLanguage("You_must_choose")}
                         </p>
                       </div>
                     )}
@@ -107,4 +107,5 @@ FeaturedUploadingGalleries.propTypes = {
   full_path_thumbnail: PropTypes.any,
   setImage: PropTypes.func,
   setIsChanged: PropTypes.func,
+  getLanguage: PropTypes.func,
 };
