@@ -7,7 +7,7 @@ import store from "@/store/store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
 //import useSWR from "swr";
-import { ReactNode, useContext } from "react";
+import { ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { PusherProvider } from "../contexts/pusherContext";

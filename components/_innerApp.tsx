@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ConfigProvider } from "antd";
 import PropTypes from "prop-types";
+
 import { LanguageContext } from "../contexts/languageContext/context";
 const App = ({ innerApp }) => {
   const { language } = useContext(LanguageContext);
@@ -11,7 +12,7 @@ const App = ({ innerApp }) => {
     </ConfigProvider>
   );
 };
-App.prototype = {
+App.propTypes = {
   innerApp: PropTypes.func,
 };
 export default App;
