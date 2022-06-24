@@ -2,6 +2,7 @@ import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import { CurrencyContext } from "../../contexts/currencyContext";
 import Comments from "../../components/Comments";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import { ReactElement, useEffect, useState, useContext } from "react";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
@@ -34,24 +35,20 @@ const properties = {
   transitionDuration: 500,
   infinite: true,
   prevArrow: (
-    <div
-      className="arrow-navigations right"
-      style={{ width: "30px" }}
-    >
+    <div className="arrow-navigations right" style={{ width: "30px" }}>
       <span className="material-icons-outlined">chevron_left</span>
     </div>
   ),
   nextArrow: (
-    <div
-      className="arrow-navigations left"
-      style={{ width: "30px" }}
-    >
+    <div className="arrow-navigations left" style={{ width: "30px" }}>
       <span className="material-icons-outlined">chevron_right</span>
     </div>
   ),
 };
 function Single({ query, stars, errorFetch }) {
   let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("my_wallet");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: ProductData, errorLoad }: any = useSWR(
@@ -539,7 +536,7 @@ function Single({ query, stars, errorFetch }) {
                     {ProductData.data.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
-                          <li className="title">الوسوم:</li>
+                          <li className="title">{getLanguage("Key_words")}:</li>
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -564,7 +561,9 @@ function Single({ query, stars, errorFetch }) {
                     {ProductData.data.profile_seller && (
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
-                          <h4 className="title">حول البائع</h4>
+                          <h4 className="title">
+                            {getLanguage("About_Seller")}
+                          </h4>
                         </div>
                         <div className="seller-info-container">
                           <div className="d-flex">
@@ -631,7 +630,7 @@ function Single({ query, stars, errorFetch }) {
                                     <i className="material-icons material-icons-outlined">
                                       account_circle
                                     </i>{" "}
-                                    الملف الشخصي
+                                    {getLanguage("Profile")}
                                   </a>
                                 </Link>
                                 {!hasConversation && (
@@ -647,7 +646,7 @@ function Single({ query, stars, errorFetch }) {
                                     <i className="material-icons material-icons-outlined">
                                       email
                                     </i>{" "}
-                                    مراسلة البائع{" "}
+                                    {getLanguage("Contact_seller_one")}
                                     {createConversationLoading && (
                                       <span
                                         className="spinner-border spinner-border-sm"
@@ -671,7 +670,7 @@ function Single({ query, stars, errorFetch }) {
                               <span className="material-icons material-icons-outlined">
                                 question_answer
                               </span>
-                              آراء المشتريين
+                              {getLanguage("Customer_reviews")}
                             </h4>
                           </div>
                         </div>
@@ -714,7 +713,7 @@ function Single({ query, stars, errorFetch }) {
                               <span className="material-icons material-icons-outlined">
                                 share
                               </span>{" "}
-                              مشاركة الخدمة
+                              {getLanguage("Share_service")}
                             </span>
                           </Dropdown>
                         </li>
@@ -724,7 +723,7 @@ function Single({ query, stars, errorFetch }) {
                       <div className="col-7">
                         <p className="text-quatity">
                           {" "}
-                          عدد مرات الشراء:
+                          {getLanguage("Number_of_purchases")}:
                           <span className="me-auto">
                             <Popover content={noteContent} trigger="hover">
                               <Badge
@@ -778,7 +777,9 @@ function Single({ query, stars, errorFetch }) {
                     {ProductData.data.developments && (
                       <div className="panel-aside-body">
                         <div className="add-devloppers-header">
-                          <h4 className="title">التطويرات المتوفرة</h4>
+                          <h4 className="title">
+                            {getLanguage("Available_upgrades")}
+                          </h4>
                         </div>
                         {ProductData.data.developments.length == 0 && (
                           <div className="nothing-note">
@@ -824,7 +825,8 @@ function Single({ query, stars, errorFetch }) {
                     <div className="panel-aside-footer">
                       <div className="aside-footer-total-price">
                         <h4 className="price-total me-auto">
-                          <strong>المجموع </strong> {_totalPrice()}$
+                          <strong>{getLanguage("Total")} </strong>{" "}
+                          {_totalPrice()}$
                         </h4>
                         <div className="bayers-count">
                           <p className="num">
@@ -832,7 +834,10 @@ function Single({ query, stars, errorFetch }) {
                               {ProductData && ProductData.data.count_buying}{" "}
                             </span>
 
-                            <span className="text"> اشتروا هذا</span>
+                            <span className="text">
+                              {" "}
+                              {getLanguage("boght_this")}
+                            </span>
                           </p>
                         </div>
                       </div>
@@ -848,7 +853,7 @@ function Single({ query, stars, errorFetch }) {
                           <span className="material-icons material-icons-outlined">
                             add_shopping_cart
                           </span>
-                          إضافة إلى السلة
+                          {getLanguage("Add_to_cart")}
                         </button>
                       </div>
                     </div>

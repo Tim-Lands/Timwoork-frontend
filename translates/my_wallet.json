@@ -119,10 +119,10 @@
     "fr": "Ajouter au panier",
     "ar": "إضافة إلى السلة"
   },
-  "4_boght_this": {
-    "en": "4 bought this",
-    "fr": "4 ont acheté ça",
-    "ar": "4 اشتروا هذا"
+  "boght_this": {
+    "en": "bought this",
+    "fr": "ont acheté ça",
+    "ar": "اشتروا هذا"
   },
   "Brief_about_me": {
     "en": "Brief about me",
