@@ -1,0 +1,29 @@
+.btn {
+    &.butt-xs2 {
+        .material-icons {
+            margin-right: 3px;
+        }
+    }
+    &.butt-xs {
+        .material-icons {
+            margin-left: 4px;
+        }
+    }
+    &.butt-sm {
+        .material-icons {
+            margin-left: 5px;
+        }
+    }
+    &.butt-md {
+        .material-icons {
+            margin-left: 6px;
+        }
+    }
+    &.butt-lg {
+        .material-icons {
+            margin-left: 7px;
+        }
+    }
+
+
+}

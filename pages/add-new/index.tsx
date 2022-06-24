@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useContext } from "react";
 //import withAuth from '../../services/withAuth'
+import { LanguageContext } from "../../contexts/languageContext/context";
 import { Spin } from "antd";
 import { Alert } from "antd";
 import useSWR from "swr";
@@ -12,7 +13,9 @@ import router from "next/router";
 import API from "../../config";
 
 function index() {
-  let token = Cookies.get("token")
+  let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -21,7 +24,7 @@ function index() {
   const [isLoading, setIsLoading]: any = useState(false);
 
   const addNewProduct = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const res = await API.get("api/product/store", {
         headers: {
@@ -31,7 +34,7 @@ function index() {
       // If Activate Network
       // Authentication was successful.
       if (res.status === 200) {
-        setIsLoading(false)
+        setIsLoading(false);
         router.push({
           pathname: `/add-new/overview`,
           query: {
@@ -40,11 +43,10 @@ function index() {
         });
       }
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       if (error.response && error.response.data) {
         setValidationsGeneral(error.response.data);
       }
-
     }
   };
   useEffect(() => {
@@ -60,9 +62,9 @@ function index() {
   return (
     <>
       <MetaTags
-        title="إضافة خدمة جديدة"
-        metaDescription="إضافة خدمة جديدة"
-        ogDescription="إضافة خدمة جديدة"
+        title={getLanguage("Add_new_service")}
+        metaDescription={getLanguage("Add_new_service")}
+        ogDescription={getLanguage("Add_new_service")}
       />
       <div className="container">
         {token && veriedEmail && (
@@ -71,7 +73,7 @@ function index() {
               <Spin spinning={isLoading}>
                 <div className="timlands-add-new">
                   {validationsGeneral.msg && (
-                    <div style={{ textAlign: 'right', marginBottom: 16 }}>
+                    <div style={{ textAlign: "right", marginBottom: 16 }}>
                       <Alert
                         message="حدث خطأ"
                         description={validationsGeneral.msg}
@@ -83,10 +85,8 @@ function index() {
                   )}
                   <img src="/img/g10.png" alt="" className="add-new-image" />
                   <div className="timlands-add-new-body mt-3">
-                    <h3 className="title">إضافة خدمة جديدة</h3>
-                    <p className="text">
-                      رائع ! وصلت الى خطوتك الأخيرة لتنظم الى فريق بائعي تيموورك
-                    </p>
+                    <h3 className="title">{getLanguage("Add_new_service")}</h3>
+                    <p className="text">{getLanguage("Super!_You_have")}</p>
                     {!userData && (
                       <div className="add-butts">
                         <button
@@ -106,7 +106,7 @@ function index() {
                           className="btn butt-md butt-primary2"
                           onClick={addNewProduct}
                         >
-                          إضافة خدمة
+                          {getLanguage("Add_a_service")}
                         </button>
                       </div>
                     )}
@@ -124,4 +124,4 @@ index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 
-export default index
+export default index;

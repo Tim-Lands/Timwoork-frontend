@@ -1,7 +1,8 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useRef } from "react";
+import { ReactElement, useEffect, useState, useRef, useContext } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 import { message, notification, Progress, Spin } from "antd";
@@ -16,7 +17,8 @@ import { Alert } from "@/components/Alert/Alert";
 import { CloseCircleOutlined } from "@ant-design/icons";
 function Medias({ query, stars }) {
   const stepsView = useRef(null);
-
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -232,7 +234,7 @@ function Medias({ query, stars }) {
                           collections_bookmark
                         </span>
                       </span>
-                      معلومات عامة
+                      {getLanguage("General_information")}
                     </h3>
                   </div>
                   <div className="timlands-step-item">
@@ -242,7 +244,7 @@ function Medias({ query, stars }) {
                           payments
                         </span>
                       </span>
-                      السعر والتطويرات
+                      {getLanguage("Upgrades_price")}
                     </h3>
                   </div>
                   <div className="timlands-step-item">
@@ -252,7 +254,7 @@ function Medias({ query, stars }) {
                           description
                         </span>
                       </span>
-                      الوصف وتعليمات المشتري
+                      {getLanguage("Description_and_instructions")}
                     </h3>
                   </div>
                   <div className="timlands-step-item active" ref={stepsView}>
@@ -262,7 +264,7 @@ function Medias({ query, stars }) {
                           mms
                         </span>
                       </span>
-                      مكتبة الصور والملفات
+                      {getLanguage("Gallery_and_folders")}
                     </h3>
                   </div>
                   <div className="timlands-step-item">
@@ -272,7 +274,7 @@ function Medias({ query, stars }) {
                           publish
                         </span>
                       </span>
-                      نشر الخدمة
+                      {getLanguage("Publish_service")}
                     </h3>
                   </div>
                 </div>
@@ -290,7 +292,9 @@ function Medias({ query, stars }) {
                       <div className="col-md-12 align-center">
                         <div className="images-list-uploading">
                           <div className="page-header">
-                            <h4 className="title">الصورة البارزة</h4>
+                            <h4 className="title">
+                              {getLanguage("Profil_picture")}
+                            </h4>
                           </div>
                           <p
                             className="text-note mt-3"
@@ -395,7 +399,7 @@ function Medias({ query, stars }) {
                       <div className="col-md-12 align-center">
                         <div className="images-list-uploading">
                           <div className="page-header">
-                            <h4 className="title">معرض الصور</h4>
+                            <h4 className="title">{getLanguage("Gallery")}</h4>
                           </div>
                           <ImageUploading
                             multiple
@@ -432,7 +436,7 @@ function Medias({ query, stars }) {
                                       onClick={onImageUpload}
                                       {...dragProps}
                                     >
-                                      يمكنك الاختيار من جهازك
+                                      {getLanguage("You_can_choose")}
                                     </button>
                                     &nbsp;
                                     <button
@@ -450,9 +454,7 @@ function Medias({ query, stars }) {
                                         اختر صور من جهازك
                                       </h4>
                                       <p className="nothing-text">
-                                        يجب أن تختار على الأقل صورة في معرض
-                                        الخدمة ويجب ان تكون الصور مناسبة من
-                                        الخدمة
+                                        {getLanguage("You_must_choose")}
                                       </p>
                                     </div>
                                   )}
@@ -526,11 +528,11 @@ function Medias({ query, stars }) {
               <div className="timlands-content-form">
                 <div className="choose-images-file">
                   <h4 className="timlands-content-form-subtitle">
-                    فيديو تعريفي للخدمة (اختياري)
+                    {getLanguage("Service_introduction_video")}
                   </h4>
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-videourl">
-                      رابط الفيديو
+                      {getLanguage("Video_link")}
                     </label>
                     <input
                       type="text"
@@ -568,7 +570,7 @@ function Medias({ query, stars }) {
                     <span className="material-icons-outlined">
                       chevron_right
                     </span>
-                    <span className="text">المرحلة السابقة</span>
+                    <span className="text">{getLanguage("Previous_step")}</span>
                     <div
                       className="spinner-border spinner-border-sm text-white"
                       role="status"
@@ -580,7 +582,7 @@ function Medias({ query, stars }) {
                     onClick={loadImagesHandle}
                     className="btn flex-center butt-green ml-auto butt-sm"
                   >
-                    <span className="text">المرحلة التالية</span>
+                    <span className="text"> {getLanguage("Next_step")}</span>
                     <span className="material-icons-outlined">
                       chevron_left
                     </span>

@@ -108,7 +108,7 @@ function Navbar({ dark = false }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-  console.log(userInfo) 
+  console.log(userInfo);
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
@@ -402,9 +402,8 @@ function Navbar({ dark = false }) {
                 <a
                   className="link-circular-button"
                   onClick={() => {
-                      setIsShowProfileMenu(!isShowProfileMenu)
-
-                    }}
+                    setIsShowProfileMenu(!isShowProfileMenu);
+                  }}
                 >
                   <Image
                     src={userInfo?.user_details?.profile?.avatar_path}
@@ -433,49 +432,58 @@ function Navbar({ dark = false }) {
                   </Link>
                 </Badge>
               </li>
-              {userInfo.user_details.profile.is_completed==1&&<>
-              <li className="circular-newitem" ref={messagesBtn}>
-                <Badge count={userInfo?.unread_messages_count} style={{ fontSize: 10 }} size="small">
-                  <a
-                    className="link-circular-button"
-                    onClick={() => setShowMessagesMenu(!showMessagesMenu)}
-                  >
-                    <span className="material-icons material-icons-outlined">
-                      mail
-                    </span>
-                  </a>
-                </Badge>
-                {showMessagesMenu && (
-                  <Messages
-                    refs={messagesRef}
-                    messages={messages}
-                    setShowMessagesMenu={setShowMessagesMenu}
-                  />
-                )}
-              </li>
-              <li className="circular-newitem" ref={notificationsBtn}>
-                <Badge count={userInfo?.unread_notifications_count} style={{ fontSize: 10 }} size="small">
-                  <a
-                    className="link-circular-button"
-                    onClick={() =>
-                      setShowNotificationsMenu(!showNotificationsMenu)
-                    }
-                  >
-                    <span className="material-icons material-icons-outlined">
-                      notifications
-                    </span>
-                  </a>
-                </Badge>
-                {showNotificationsMenu && (
-                  <Notifications
-                    notifications={notifications}
-                    setShowNotificationsMenu={setShowNotificationsMenu}
-                    refs={notificationsRef}
-                  />
-                )}
-              </li>
-              </>
-}
+              {userInfo.user_details.profile.is_completed == 1 && (
+                <>
+                  <li className="circular-newitem" ref={messagesBtn}>
+                    <Badge
+                      count={userInfo?.unread_messages_count}
+                      style={{ fontSize: 10 }}
+                      size="small"
+                    >
+                      <a
+                        className="link-circular-button"
+                        onClick={() => setShowMessagesMenu(!showMessagesMenu)}
+                      >
+                        <span className="material-icons material-icons-outlined">
+                          mail
+                        </span>
+                      </a>
+                    </Badge>
+                    {showMessagesMenu && (
+                      <Messages
+                        refs={messagesRef}
+                        messages={messages}
+                        setShowMessagesMenu={setShowMessagesMenu}
+                      />
+                    )}
+                  </li>
+                  <li className="circular-newitem" ref={notificationsBtn}>
+                    <Badge
+                      count={userInfo?.unread_notifications_count}
+                      style={{ fontSize: 10 }}
+                      size="small"
+                    >
+                      <a
+                        className="link-circular-button"
+                        onClick={() =>
+                          setShowNotificationsMenu(!showNotificationsMenu)
+                        }
+                      >
+                        <span className="material-icons material-icons-outlined">
+                          notifications
+                        </span>
+                      </a>
+                    </Badge>
+                    {showNotificationsMenu && (
+                      <Notifications
+                        notifications={notifications}
+                        setShowNotificationsMenu={setShowNotificationsMenu}
+                        refs={notificationsRef}
+                      />
+                    )}
+                  </li>
+                </>
+              )}
             </>
           ) : (
             <>

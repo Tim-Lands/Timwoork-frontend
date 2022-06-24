@@ -14,7 +14,7 @@
     "fr": "Ajouter un service",
     "ar": "إضافة خدمة"
   },
-  "General information": {
+  "General_information": {
     "en": "General information",
     "fr": "Informations générales",
     "ar": "معلومات عامة"
@@ -39,11 +39,6 @@
     "fr": "Les mots-clés",
     "ar": "الوسوم/ التاج"
   },
-  "Newt_step": {
-    "en": "Newt step",
-    "fr": "Etape suivante",
-    "ar": "المرحلة التالية"
-  },
   "Service_title_is": {
     "en": "Service title is required",
     "fr": "Le titre du service est nécessaire",
@@ -64,8 +59,8 @@
     "fr": "Vous devez entrer au moins un mot-clé",
     "ar": "يجب عليك وضع على أقل وسم"
   },
-  "Upgrads_price": {
-    "en": "Upgrads price",
+  "Upgrades_price": {
+    "en": "Upgrades price",
     "fr": "Prix des mises à jours",
     "ar": "السعر والتطويرات"
   },
@@ -117,7 +112,7 @@
   "Next_step": {
     "en": "Next step",
     "fr": "Etape suivante",
-    "ar": "Etape suivante"
+    "ar": "المرحلة التالية"
   },
   "Service_price_is": {
     "en": "Service price is required",
