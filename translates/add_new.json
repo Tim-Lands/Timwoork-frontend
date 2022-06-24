@@ -70,7 +70,7 @@
     "ar": "سعر الخدمة"
   },
   "Delivery_terme": {
-    "en": "Delivery terme",
+    "en": "Delivery term",
     "fr": "Délai de livraison",
     "ar": "مدة التسليم"
   },
@@ -92,7 +92,7 @@
   "The_profile_picture": {
     "en": "The profile picture must be clear and  high quality that reflects the content of the service. It is better if its dimensions are 750 * 450",
     "fr": "La photo de profil doit être claire et de bonne qualité qui reflète le contenu du service Il est préférable qu’elle soit de dimensions : 750 * 450",
-    "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة من الأفضل أن تكون الأبعاد 750*450"
+    "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة عالية تعكس محتوى الخدمة من الأفضل أن تكون الأبعاد 750*450"
   },
   "Service_upgrades_are": {
     "en": "Service upgrades are optional, so you can’t oblige the buyer to request them. Know how to use them properly",

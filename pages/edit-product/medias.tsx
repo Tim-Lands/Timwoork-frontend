@@ -1,7 +1,8 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState, useContext } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import router from "next/router";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
@@ -18,6 +19,8 @@ import Link from "next/link";
 
 function Medias({ query, stars }) {
   const stepsView = useRef(null);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail
@@ -130,7 +133,7 @@ function Medias({ query, stars }) {
       );
       return res;
     } catch (e) {
-      () => { };
+      () => {};
     }
   };
   const loadImagesHandle = async () => {
@@ -138,11 +141,11 @@ function Medias({ query, stars }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (isGalleryChanged && galleryMedia.size <= 0) {
@@ -310,7 +313,7 @@ function Medias({ query, stars }) {
                               collections_bookmark
                             </span>
                           </span>
-                          معلومات عامة
+                          {getLanguage("General_information")}
                         </a>
                       </Link>
                     </h3>
@@ -324,7 +327,7 @@ function Medias({ query, stars }) {
                               payments
                             </span>
                           </span>
-                          السعر والتطويرات
+                          {getLanguage("Upgrades_price")}
                         </a>
                       </Link>
                     </h3>
@@ -338,7 +341,7 @@ function Medias({ query, stars }) {
                               description
                             </span>
                           </span>
-                          الوصف وتعليمات المشتري
+                          {getLanguage("Description_and_instructions")}
                         </a>
                       </Link>
                     </h3>
@@ -352,7 +355,7 @@ function Medias({ query, stars }) {
                               mms
                             </span>
                           </span>
-                          مكتبة الصور والملفات
+                          {getLanguage("Gallery_and_folders")}
                         </a>
                       </Link>
                     </h3>
@@ -366,7 +369,7 @@ function Medias({ query, stars }) {
                               publish
                             </span>
                           </span>
-                          نشر الخدمة
+                          {getLanguage("Publish_service")}
                         </a>
                       </Link>
                     </h3>
@@ -392,11 +395,11 @@ function Medias({ query, stars }) {
                   <div className="timlands-content-form mt-2">
                     <div className="choose-images-file">
                       <h4 className="timlands-content-form-subtitle">
-                        فيديو تعريفي للخدمة (اختياري)
+                        {getLanguage("Service_introduction_video")}
                       </h4>
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="input-videourl">
-                          رابط الفيديو
+                          {getLanguage("Video_link")}
                         </label>
                         <input
                           type="text"
@@ -435,7 +438,7 @@ function Medias({ query, stars }) {
                     <span className="material-icons-outlined">
                       chevron_right
                     </span>
-                    <span className="text">المرحلة السابقة</span>
+                    <span className="text">{getLanguage("Previous_step")}</span>
                     <div
                       className="spinner-border spinner-border-sm text-white"
                       role="status"
@@ -447,7 +450,7 @@ function Medias({ query, stars }) {
                     onClick={loadImagesHandle}
                     className="btn flex-center butt-green ml-auto butt-sm"
                   >
-                    <span className="text">المرحلة التالية</span>
+                    <span className="text">{getLanguage("Next_step")}</span>
                     <span className="material-icons-outlined">
                       chevron_left
                     </span>

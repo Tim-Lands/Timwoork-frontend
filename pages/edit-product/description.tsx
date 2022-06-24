@@ -1,13 +1,14 @@
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import router from "next/router";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { ReactElement, useEffect, useState, useRef } from "react";
+import { ReactElement, useEffect, useState, useRef, useContext } from "react";
 import useSWR from "swr";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -117,6 +118,8 @@ const Tiptap = (props: any) => {
 };
 function Description({ query, stars }) {
   const stepsView = useRef(null);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
 
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
@@ -244,14 +247,15 @@ function Description({ query, stars }) {
                                   collections_bookmark
                                 </span>
                               </span>
-                              معلومات عامة
+                              {getLanguage("General_information")}
                             </a>
                           </Link>
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${getProduct?.data.current_step < 1 && "pe-none"
-                          }`}
+                        className={`timlands-step-item ${
+                          getProduct?.data.current_step < 1 && "pe-none"
+                        }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/prices?id=${id}`}>
@@ -261,14 +265,15 @@ function Description({ query, stars }) {
                                   payments
                                 </span>
                               </span>
-                              السعر والتطويرات
+                              {getLanguage("Upgrades_price")}
                             </a>
                           </Link>
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item active ${getProduct?.data.current_step < 2 && "pe-none"
-                          }`}
+                        className={`timlands-step-item active ${
+                          getProduct?.data.current_step < 2 && "pe-none"
+                        }`}
                         ref={stepsView}
                       >
                         <h3 className="text">
@@ -279,14 +284,15 @@ function Description({ query, stars }) {
                                   description
                                 </span>
                               </span>
-                              الوصف وتعليمات المشتري
+                              {getLanguage("Description_and_instructions")}
                             </a>
                           </Link>
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${getProduct?.data.current_step < 3 && "pe-none"
-                          }`}
+                        className={`timlands-step-item ${
+                          getProduct?.data.current_step < 3 && "pe-none"
+                        }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/medias?id=${id}`}>
@@ -296,8 +302,8 @@ function Description({ query, stars }) {
                                   mms
                                 </span>
                               </span>
-                              مكتبة الصور والملفات
                             </a>
+                            {getLanguage("Gallery_and_folders")}
                           </Link>
                         </h3>
                       </div>
@@ -312,7 +318,7 @@ function Description({ query, stars }) {
                                   publish
                                 </span>
                               </span>
-                              نشر الخدمة
+                              {getLanguage("Publish_service")}
                             </a>
                           </Link>
                         </h3>
@@ -325,7 +331,7 @@ function Description({ query, stars }) {
                         <span className="material-icons material-icons-outlined">
                           description
                         </span>
-                        الوصف وتعليمات المشتري
+                        {getLanguage("Description_and_instructions")}
                       </h2>
                     </div>
                   </div>
@@ -337,7 +343,7 @@ function Description({ query, stars }) {
                             className="label-block"
                             htmlFor="input-content"
                           >
-                            وصف الخدمة
+                            {getLanguage("Service_description")}
                           </label>
                           <div className="app-content-editor">
                             <MenuBar editor={editor} />
@@ -353,9 +359,7 @@ function Description({ query, stars }) {
                             className="timlands-form-note"
                           >
                             <p className="text">
-                              أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط
-                              . يمنع وضع البريد الالكتروني، رقم الهاتف أو أي
-                              معلومات اتصال أخرى.
+                              {getLanguage("Enter_an_accurate")}
                             </p>
                           </motion.div>
                           {validationsErrors && validationsErrors.content && (
@@ -379,7 +383,7 @@ function Description({ query, stars }) {
                             className="label-block"
                             htmlFor="input-buyer_instruct"
                           >
-                            تعليمات المشتري
+                            {getLanguage("Instructions_to_the")}
                           </label>
                           <div className="app-content-editor">
                             <MenuBar editor={buyerInstruct} />
@@ -395,8 +399,7 @@ function Description({ query, stars }) {
                             className="timlands-form-note"
                           >
                             <p className="text">
-                              المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة.
-                              تظهر هذه المعلومات بعد شراء الخدمة فقط
+                              {getLanguage("They_are_information")}
                             </p>
                           </motion.div>
                           {validationsErrors &&
@@ -425,7 +428,10 @@ function Description({ query, stars }) {
                             <span className="material-icons-outlined">
                               chevron_right
                             </span>
-                            <span className="text">المرحلة السابقة</span>
+                            <span className="text">
+                              {" "}
+                              {getLanguage("Previous_step")}
+                            </span>
                             <div
                               className="spinner-border spinner-border-sm text-white"
                               role="status"

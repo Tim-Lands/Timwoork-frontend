@@ -1,10 +1,11 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Cookies from "js-cookie";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import API from "../../config";
 import useSWR from "swr";
 import PropTypes from "prop-types";
@@ -14,6 +15,7 @@ import Link from "next/link";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
+
   const [isLoadingTags, setIsLoadingTags] = useState(false);
   const getdataTags = async (tag: string) => {
     setIsLoadingTags(true);
@@ -59,6 +61,8 @@ const MySelect = (props: any) => {
 };
 function Overview({ query }) {
   const id = query.id;
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -179,14 +183,15 @@ function Overview({ query }) {
                                   collections_bookmark
                                 </span>
                               </span>
-                              معلومات عامة
+                              {getLanguage("General_information")}
                             </a>
                           </Link>
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${getProduct?.data.current_step < 1 && "pe-none"
-                          }`}
+                        className={`timlands-step-item ${
+                          getProduct?.data.current_step < 1 && "pe-none"
+                        }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/prices?id=${id}`}>
@@ -196,14 +201,15 @@ function Overview({ query }) {
                                   payments
                                 </span>
                               </span>
-                              السعر والتطويرات
+                              {getLanguage("Upgrades_price")}
                             </a>
                           </Link>
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${getProduct?.data.current_step < 2 && "pe-none"
-                          }`}
+                        className={`timlands-step-item ${
+                          getProduct?.data.current_step < 2 && "pe-none"
+                        }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/description?id=${id}`}>
@@ -213,14 +219,15 @@ function Overview({ query }) {
                                   description
                                 </span>
                               </span>
-                              الوصف وتعليمات المشتري
+                              {getLanguage("Description_and_instructions")}
                             </a>
                           </Link>
                         </h3>
                       </div>
                       <div
-                        className={`timlands-step-item ${getProduct?.data.current_step < 3 && "pe-none"
-                          }`}
+                        className={`timlands-step-item ${
+                          getProduct?.data.current_step < 3 && "pe-none"
+                        }`}
                       >
                         <h3 className="text">
                           <Link href={`/edit-product/medias?id=${id}`}>
@@ -230,7 +237,7 @@ function Overview({ query }) {
                                   mms
                                 </span>
                               </span>
-                              مكتبة الصور والملفات
+                              {getLanguage("Gallery_and_folders")}
                             </a>
                           </Link>
                         </h3>
@@ -243,7 +250,7 @@ function Overview({ query }) {
                             <a>
                               <span className="icon-circular">
                                 <span className="material-icons material-icons-outlined">
-                                  publish
+                                  {getLanguage("Publish_service")}
                                 </span>
                               </span>
                               نشر الخدمة
@@ -303,7 +310,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-catetory"
                           >
-                            اختر التصنيف الرئيسي
+                            {getLanguage("Choose_the_principal")}
                           </label>
                           {categoriesError && "حدث خطأ"}
                           <select
@@ -314,9 +321,12 @@ function Overview({ query }) {
                             autoComplete="off"
                             onChange={formik.handleChange}
                             value={formik.values.catetory}
-                          //onChange={() => setmainCat(values.catetory)}
+                            //onChange={() => setmainCat(values.catetory)}
                           >
-                            <option value="">اختر التصنيف الرئيسي</option>
+                            <option value="">
+                              {" "}
+                              {getLanguage("Choose_the_principal")}
+                            </option>
                             {!categories && (
                               <option value="">يرجى الانتظار...</option>
                             )}
@@ -335,7 +345,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-subcategory"
                           >
-                            اختر التصنيف الفرعي
+                            {getLanguage("Choose_a_subcategory")}
                           </label>
                           <select
                             id="input-subcategory"
@@ -351,7 +361,10 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.subcategory}
                           >
-                            <option value={0}>اختر التصنيف الفرعي</option>
+                            <option value={0}>
+                              {" "}
+                              {getLanguage("Choose_a_subcategory")}
+                            </option>
                             {subCategoriesError && (
                               <option value="">حدث خطأ</option>
                             )}

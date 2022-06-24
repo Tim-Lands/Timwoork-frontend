@@ -1,6 +1,7 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, useEffect, useRef, useContext } from "react";
 import { message } from "antd";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import router from "next/router";
 import Cookies from "js-cookie";
 import useSWR from "swr";
@@ -12,6 +13,8 @@ import Link from "next/link";
 
 function Complete({ query }) {
   let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -101,7 +104,7 @@ function Complete({ query }) {
                               collections_bookmark
                             </span>
                           </span>
-                          معلومات عامة
+                          {getLanguage("General_information")}
                         </a>
                       </Link>
                     </h3>
@@ -117,7 +120,7 @@ function Complete({ query }) {
                               payments
                             </span>
                           </span>
-                          السعر والتطويرات
+                          {getLanguage("Upgrades_price")}
                         </a>
                       </Link>
                     </h3>
@@ -133,7 +136,7 @@ function Complete({ query }) {
                               description
                             </span>
                           </span>
-                          الوصف وتعليمات المشتري
+                          {getLanguage("Description_and_instructions")}
                         </a>
                       </Link>
                     </h3>
@@ -149,7 +152,7 @@ function Complete({ query }) {
                               mms
                             </span>
                           </span>
-                          مكتبة الصور والملفات
+                          {getLanguage("Gallery_and_folders")}
                         </a>
                       </Link>
                     </h3>
@@ -165,7 +168,7 @@ function Complete({ query }) {
                               publish
                             </span>
                           </span>
-                          نشر الخدمة
+                          {getLanguage("Publish_service")}
                         </a>
                       </Link>
                     </h3>
@@ -179,10 +182,9 @@ function Complete({ query }) {
                   </span>
                 </div>
                 <div className="timlands-add-new-body">
-                  <h4 className="title">تمت إضافة الخدمة بنجاح</h4>
+                  <h4 className="title">{getLanguage("The_service_has")}</h4>
                   <p className="text">
-                    تهانينا, يمكنك الآن نشر خدمتك ومشاركتها عبر مواقع التواصل
-                    الاجتماعي بعد الموافقة عليها من طرف الإدارة
+                    {getLanguage("Congratulations_Now_you")}
                   </p>
                   <div className="add-butts">
                     <button
@@ -193,13 +195,16 @@ function Complete({ query }) {
                       <span className="material-icons-outlined">
                         chevron_right
                       </span>
-                      <span className="text">المرحلة السابقة</span>
+                      <span className="text">
+                        {" "}
+                        {getLanguage("Previous_step")}
+                      </span>
                     </button>
                     <button
                       onClick={stepFive}
                       className="btn butt-md butt-primary2 mx-1"
                     >
-                      نشر الخدمة
+                      {getLanguage("Publish_service")}
                     </button>
                   </div>
                 </div>

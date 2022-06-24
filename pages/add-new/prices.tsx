@@ -271,7 +271,6 @@ function Prices({ query }) {
                                   </p>
                                 </div>
                               </div>
-
                               <motion.div
                                 initial={{ y: -70, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
