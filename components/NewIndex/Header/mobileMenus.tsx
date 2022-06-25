@@ -219,14 +219,18 @@ const MobileMenu = ({ postsList }) => {
                     <Panel header={post[which(language)]} key={post.id}>
                       {post.subcategories.map((category) => {
                         return (
-                          <a
+                          <Link
                             key={category.id}
                             href={`products?categoryID=${post.id}&subcategoryID=${category.id}`}
-                            className="sideSubCat"
-                            onClick={() => setVisible(false)}
+
                           >
-                            {category[which(language)]}
-                          </a>
+                            <a
+                              onClick={() => setVisible(false)}
+                              className="sideSubCat"
+                            >
+                              {category[which(language)]}
+                            </a>
+                          </Link>
                         );
                       })}
                     </Panel>

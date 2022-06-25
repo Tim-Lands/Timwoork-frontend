@@ -25,6 +25,7 @@ function Footer() {
     name: "Dollar",
     symbol: "$",
   });
+  const [isLogged, setIsLogged] = useState(false)
   const { language, getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
   useEffect(() => {
@@ -38,9 +39,10 @@ function Footer() {
       },
     })
       .then((res) => {
+        setIsLogged(true)
         setCurrency(res?.data?.user_details?.profile?.currency);
       })
-      .catch(() => {});
+      .catch(() => { });
     const [categoriesRes, blogPostsRes, popularProductsRes] = await Promise.all(
       [
         API.get("api/top_main_categories"),
@@ -180,7 +182,7 @@ function Footer() {
                   </button>
                 </li> */}
                 <li className="rounded-button">
-                  <Link href="/user/personalInformations">
+                  <Link href={isLogged ? `/user/personalInformations` : '/login'}>
                     <a className="rounded-button">
                       {currency?.name + "   " + currency?.symbol}
                     </a>

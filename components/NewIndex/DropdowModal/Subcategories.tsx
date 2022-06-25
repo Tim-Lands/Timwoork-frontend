@@ -3,6 +3,7 @@ import { LanguageContext } from "../../../contexts/languageContext/context";
 
 import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 function Subcategories({ postsList, categoryID }) {
   const [list, setList] = useState({ subcategories: [] });
   const { language } = useContext(LanguageContext);
@@ -24,12 +25,13 @@ function Subcategories({ postsList, categoryID }) {
           {list?.subcategories?.map((item) => {
             return (
               <li key={item.id} className="">
-                <a
-                  className="sub"
+                <Link
                   href={`/products?categoryID=${categoryID}&subcategoryID=${item.id}`}
                 >
-                  {item[which(language)]}
-                </a>
+                  <a className="sub">
+                    {item[which(language)]}
+                  </a>
+                </Link>
               </li>
             );
           })}

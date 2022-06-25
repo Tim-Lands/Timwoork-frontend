@@ -5,6 +5,7 @@ import Subcategories from "../DropdowModal/Subcategories";
 import useOnScreen from "../../useOnScreen";
 import { Dropdown } from "antd";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Link from "next/link";
 function Subnavbar({ visible, postsList }) {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("categories");
@@ -111,9 +112,11 @@ function Subnavbar({ visible, postsList }) {
                     }
                   }}
                 >
-                  <a href={e.to} style={{ fontWeight: "bold" }}>
-                    {e.name_ar}
-                  </a>
+                  <Link href={e.to}>
+                    <a style={{ fontWeight: "bold" }}>
+                      {e.name_ar}
+                    </a>
+                  </Link>
                 </li>
               ) : (
                 <Dropdown
