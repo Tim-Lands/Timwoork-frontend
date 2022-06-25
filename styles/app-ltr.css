@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap");
 .ltr {
   /*
 ------------------------------------------------------------------------------------------------------
@@ -5,6 +6,7 @@
 ------------------------------------------------------------------------------------------------------
 */
   direction: ltr;
+  font-family: "Roboto Slab", serif;
   /*
   -------------------------------------------------------------------------------------------
       Login Panel
@@ -2966,6 +2968,11 @@
   text-align: right;
 }
 
+.ltr .scale-ltr {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
 @media (max-width: 600px) {
   .ltr .timwoork-nanny-home .nanny-home-image {
     margin-left: -50px;
@@ -3414,8 +3421,12 @@
   right: 22px;
 }
 
-.ltr .rel-form .timlands-form-label {
+.ltr .rel-form input {
   border-radius: 5px 0 0 5px;
+}
+
+.ltr .rel-form .timlands-form-label {
+  border-radius: 0 5px 5px 0;
 }
 
 .ltr .category-item .category-item-title .title .material-icons {
@@ -3776,6 +3787,7 @@
 
 .ltr .new-search-bar .new-search-bar-form input {
   padding-left: 34px;
+  border-radius: 5px 0 0 5px;
 }
 
 .ltr .container-search-form .container-search-form-input .input-icon-search {
@@ -3889,5 +3901,9 @@
 
 .ltr .timlands-post-inner .post-meta-user img {
   margin-right: 4px;
+}
+
+.ltr .shadow {
+  left: 2rem;
 }
 /*# sourceMappingURL=app-ltr.css.map */

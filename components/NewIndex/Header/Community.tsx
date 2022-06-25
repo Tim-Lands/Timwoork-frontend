@@ -83,7 +83,7 @@ const Community = ({ refs }) => {
           </Link>
         </li>
         <li>
-          <Link href={`blog`}>
+          <Link href={`/blog`}>
             <a className="dropd-item">
               <div className="dropd-item-img">
                 <span className="icon-item link-circular-button">

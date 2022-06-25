@@ -62,7 +62,7 @@ const MySelect = (props: any) => {
 
 function Overview({ query }) {
   const id = query.id;
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -411,9 +411,15 @@ function Overview({ query }) {
                             <span className="text">
                               {getLanguage("Next_step")}
                             </span>
-                            <span className="material-icons-outlined">
-                              chevron_left
-                            </span>
+                            {language === "ar" ? (
+                              <span className="material-icons-outlined">
+                                chevron_left
+                              </span>
+                            ) : (
+                              <span className="material-icons-outlined">
+                                chevron_right
+                              </span>
+                            )}
                           </button>
                         </div>
                       </div>

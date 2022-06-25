@@ -13,7 +13,7 @@ import API from "../../config";
 
 function Complete({ query }) {
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
@@ -167,9 +167,15 @@ function Complete({ query }) {
                       type="button"
                       className="btn flex-center butt-primary2-out mx-1 butt-md"
                     >
-                      <span className="material-icons-outlined">
-                        chevron_right
-                      </span>
+                      {language === "ar" ? (
+                        <span className="material-icons-outlined">
+                          chevron_right
+                        </span>
+                      ) : (
+                        <span className="material-icons-outlined">
+                          chevron_left
+                        </span>
+                      )}
                       <span className="text">
                         {getLanguage("Previous_step")}
                       </span>

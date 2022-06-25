@@ -28,7 +28,7 @@ import {
   CloseCircleOutlined,
   BellOutlined,
 } from "@ant-design/icons";
-import { lighten } from "@mui/material";
+import { darken } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
   const { language, setLanguage, getSectionLanguage } =
@@ -322,7 +322,7 @@ function Navbar({ dark = false }) {
       style={{
         backgroundColor: visible
           ? !dark
-            ? lighten(PRIMARY, 0.4)
+            ? darken(PRIMARY, 0.4)
             : "transparent"
           : "white",
       }}

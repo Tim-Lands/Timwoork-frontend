@@ -19,7 +19,7 @@ import RemoveImageModal from "@/components/removeImageModal";
 
 function Medias({ query, stars }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail
@@ -437,9 +437,15 @@ function Medias({ query, stars }) {
                         type="button"
                         className="btn flex-center butt-primary2-out me-auto butt-md"
                       >
-                        <span className="material-icons-outlined">
-                          chevron_right
-                        </span>
+                        {language === "ar" ? (
+                          <span className="material-icons-outlined">
+                            chevron_right
+                          </span>
+                        ) : (
+                          <span className="material-icons-outlined">
+                            chevron_left
+                          </span>
+                        )}
                         <span className="text">
                           {getLanguage("Previous_step")}
                         </span>
@@ -451,9 +457,15 @@ function Medias({ query, stars }) {
                         className="btn flex-center butt-green ml-auto butt-sm"
                       >
                         <span className="text">{getLanguage("Next_step")}</span>
-                        <span className="material-icons-outlined">
-                          chevron_left
-                        </span>
+                        {language === "ar" ? (
+                          <span className="material-icons-outlined">
+                            chevron_left
+                          </span>
+                        ) : (
+                          <span className="material-icons-outlined">
+                            chevron_right
+                          </span>
+                        )}
                       </button>
                     </div>
                   </div>

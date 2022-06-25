@@ -55,6 +55,7 @@ function Hero() {
               <img
                 src="/img/1.png"
                 alt=""
+                className="scale-ltr"
                 // style={{ opacity: index === 1 ? 1 : 0, height: 500 }}
               />
             </div>
@@ -78,6 +79,7 @@ function Hero() {
               <img
                 src="/img/2.png"
                 alt=""
+                className="scale-ltr"
                 // style={{ opacity: index === 2 ? 1 : 0, height: 500 }}
               />
             </div>
@@ -101,6 +103,7 @@ function Hero() {
               <img
                 src="/img/3.png"
                 alt=""
+                className="scale-ltr"
                 // style={{ opacity: index === 3 ? 1 : 0, height: 500 }}
               />
             </div>
@@ -125,6 +128,7 @@ function Hero() {
               <img
                 src="/img/4.png"
                 alt=""
+                className="scale-ltr"
                 // style={{ opacity: index === 4 ? 1 : 0, height: 500 }}
               />
             </div>

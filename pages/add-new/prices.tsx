@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 
 function Prices({ query }) {
   const stepsView = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -570,9 +570,15 @@ function Prices({ query }) {
                                 type="button"
                                 className="btn flex-center butt-primary2-out me-auto butt-md"
                               >
-                                <span className="material-icons-outlined">
-                                  chevron_right
-                                </span>
+                                {language === "ar" ? (
+                                  <span className="material-icons-outlined">
+                                    chevron_right
+                                  </span>
+                                ) : (
+                                  <span className="material-icons-outlined">
+                                    chevron_left
+                                  </span>
+                                )}
                                 <span className="text">
                                   {getLanguage("Previous_step")}
                                 </span>
@@ -587,9 +593,15 @@ function Prices({ query }) {
                                 <span className="text">
                                   {getLanguage("Next_step")}
                                 </span>
-                                <span className="material-icons-outlined">
-                                  chevron_left
-                                </span>
+                                {language === "ar" ? (
+                                  <span className="material-icons-outlined">
+                                    chevron_left
+                                  </span>
+                                ) : (
+                                  <span className="material-icons-outlined">
+                                    chevron_right
+                                  </span>
+                                )}
                               </button>
                             </div>
                           </div>

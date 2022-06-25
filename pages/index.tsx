@@ -286,7 +286,6 @@ function index({ products, latestProducts, categories, popularProducts }) {
         style={{
           position: "fixed",
           bottom: "2rem",
-          right: "2rem",
           borderRadius: "50%",
           zIndex: 999,
         }}
