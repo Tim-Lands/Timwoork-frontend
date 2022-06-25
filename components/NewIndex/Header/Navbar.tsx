@@ -108,7 +108,6 @@ function Navbar({ dark = false }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-  console.log(userInfo);
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
@@ -284,7 +283,7 @@ function Navbar({ dark = false }) {
       <ul
         className={`languageMenuDropDown ${
           isLanguageVisible ? " showLanguage" : ""
-        }`}
+        } ${language === "ar" ? "ar" : "en"}`}
       >
         <li
           className={language === "ar" ? "selectedLanguage" : ""}

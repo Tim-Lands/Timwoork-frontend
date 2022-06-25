@@ -11929,6 +11929,14 @@ h3 {
   opacity: 0;
 }
 
+.languageMenuDropDown.en {
+  right: 0 !important;
+}
+
+.languageMenuDropDown.ar {
+  left: 0 !important;
+}
+
 .languageMenuDropDown li {
   border-radius: 6px;
   padding: 6px 17px;

@@ -47,7 +47,7 @@ const properties = {
 };
 function Single({ query, stars, errorFetch }) {
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { language, getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("my_wallet");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -454,7 +454,9 @@ function Single({ query, stars, errorFetch }) {
                           label
                         </span>
                         {ProductData &&
-                          ProductData.data.subcategory.category.name_ar}
+                          ProductData.data.subcategory.category[
+                            which(language)
+                          ]}
                         <span style={{ marginInline: 5 }}>||</span>
                         <small>
                           <Link
@@ -467,7 +469,7 @@ function Single({ query, stars, errorFetch }) {
                               className="category-link"
                             >
                               {ProductData &&
-                                ProductData.data.subcategory.name_ar}
+                                ProductData.data.subcategory[which(language)]}
                             </a>
                           </Link>
                         </small>
@@ -705,7 +707,7 @@ function Single({ query, stars, errorFetch }) {
                           <span className="material-icons material-icons-outlined">
                             timer
                           </span>{" "}
-                          مدة التسليم: {durationFunc()}
+                          {getLanguage("Delivery_term")}: {durationFunc()}
                         </li>
                         <li className="cat-post ml-auto">
                           <Dropdown overlay={menu}>
@@ -784,7 +786,7 @@ function Single({ query, stars, errorFetch }) {
                         {ProductData.data.developments.length == 0 && (
                           <div className="nothing-note">
                             <p className="text">
-                              هذه الخدمة لاتوجد فيها تطويرات
+                              {getLanguage("No_upgrades_in")}
                             </p>
                           </div>
                         )}
@@ -886,6 +888,16 @@ export async function getServerSideProps({ query }) {
     return { props: { stars: null, query, errorFetch: true } };
   }
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 Single.propTypes = {
   query: PropTypes.any,
   stars: PropTypes.any,

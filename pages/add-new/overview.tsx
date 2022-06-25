@@ -62,7 +62,11 @@ const MySelect = (props: any) => {
 
 function Overview({ query }) {
   const id = query.id;
+<<<<<<< HEAD
   const { getSectionLanguage, language } = useContext(LanguageContext);
+=======
+  const { language, getSectionLanguage } = useContext(LanguageContext);
+>>>>>>> 0a23d903c9ba1d245107eee4c94d43d16371baa9
   const getLanguage = getSectionLanguage("add_new");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -311,7 +315,7 @@ function Overview({ query }) {
                             {categories &&
                               categories.data.map((e: any) => (
                                 <option value={e.id} key={e.id}>
-                                  {e.name_ar}
+                                  {e[which(language)]}
                                 </option>
                               ))}
                           </select>
@@ -351,7 +355,7 @@ function Overview({ query }) {
                             {subCategories &&
                               subCategories.data.subcategories.map((e: any) => (
                                 <option value={e.id} key={e.id}>
-                                  {e.name_ar}
+                                  {e[which(language)]}
                                 </option>
                               ))}
                           </select>
@@ -438,7 +442,16 @@ Overview.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Overview;
-
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 Overview.getInitialProps = ({ query }) => {
   return { query };
 };

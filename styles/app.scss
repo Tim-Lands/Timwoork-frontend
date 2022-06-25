@@ -8138,6 +8138,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   transition: all 0.4s linear;
   gap: 1px;
   border-radius: 6px;
+  &.en {
+    right: 0 !important;
+  }
+  &.ar {
+    left: 0 !important;
+  }
   opacity: 0;
   li {
     border-radius: 6px;

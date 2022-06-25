@@ -28,14 +28,12 @@ function Layout(props: any) {
     <SWRConfig
       value={{
         fetcher: async (url: string) => {
-          console.log(url);
           return await API.get(url, {
             headers: { Authorization: `Bearer ${token}` },
           })
             .then((r: any) => r.data)
             .catch(() => {
               if (url == "api/me" && token) {
-                console.log("error in me api and cookies will be removed");
                 Cookies.remove("token");
                 if (typeof window !== undefined) {
                   localStorage.removeItem("token");

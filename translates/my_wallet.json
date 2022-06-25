@@ -99,6 +99,11 @@
     "fr": "Nombre d’achats",
     "ar": "عدد مرات الشراء"
   },
+  "Delivery_term": {
+    "en": "Delivery term",
+    "fr": "Délai de livraison",
+    "ar": "مدة التسليم"
+  },
   "Available_upgrades": {
     "en": "Available upgrades",
     "fr": "Les mises à jour disponibles",
@@ -108,6 +113,11 @@
     "en": "Share service",
     "fr": "Partager le service",
     "ar": "مشاركة الخدمة"
+  },
+  "No_upgrades_in": {
+    "en": "No upgrades in this service",
+    "fr": "Ce service ne contient pas de mises à jour",
+    "ar": "هذه الخدمة لا توجد فيها تطويرات"
   },
   "Total": {
     "en": "Total",
