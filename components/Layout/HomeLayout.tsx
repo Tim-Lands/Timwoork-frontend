@@ -1,8 +1,9 @@
 import Navbar from "@/components/NewIndex/Header/Navbar";
 import { Spin } from "antd";
 import router from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Footer from "../NewIndex/Footer/Footer";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
 import { SWRConfig } from "swr";
@@ -12,6 +13,8 @@ import Cookies from "js-cookie";
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   useEffect(() => {
@@ -47,7 +50,7 @@ function Layout(props: any) {
     >
       <div className="pt-5 mainHomeIndex">
         <Navbar />
-        <Spin tip="يرجى الإنتظار..." spinning={loading}>
+        <Spin tip={getLanguage("Loading")} spinning={loading}>
           {props.children}
         </Spin>
 

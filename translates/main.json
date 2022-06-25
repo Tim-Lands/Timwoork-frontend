@@ -62,6 +62,11 @@
     "fr": "Rédaction et traduction",
     "ar": "كتابة وترجمة"
   },
+  "Loading": {
+    "en": "Loading...",
+    "ar": "يرجي الانتظار...",
+    "fr": "S'il vous plaît, attendez..."
+  },
   "Housewives’_services": {
     "en": "Housewives’ services",
     "fr": "Services de femmes au foyer",
