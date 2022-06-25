@@ -1,4 +1,11 @@
-import React, { ReactElement, useEffect, useState, useRef } from "react";
+import React, {
+  ReactElement,
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+} from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { useFormik } from "formik";
@@ -63,6 +70,8 @@ const MySelect = (props: any) => {
 function Category({ products, categories, url_params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
+  const { language, getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("products");
   console.log(categories);
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
@@ -369,7 +378,7 @@ function Category({ products, categories, url_params }) {
           <div className="col-md-3">
             <div className="filter-search-sidebar">
               <div className="filter-sidebar-title">
-                <h4 className="title">فلترة الخدمات</h4>
+                <h4 className="title">{getLanguage("Services_filter")}</h4>
               </div>
               {validationsGeneral.msg && (
                 <Alert type="error">{validationsGeneral.msg}</Alert>
@@ -379,7 +388,7 @@ function Category({ products, categories, url_params }) {
                 <input
                   id="input-query"
                   name="query"
-                  placeholder="أكتب كلمة البحث..."
+                  placeholder={getLanguage("Type_your_search")}
                   className={"timlands-inputs"}
                   autoComplete="off"
                   onKeyPress={(e) => {
@@ -400,7 +409,7 @@ function Category({ products, categories, url_params }) {
                 expandIconPosition="right"
               >
                 <Panel
-                  header="السعر"
+                  header={getLanguage("Price")}
                   key="1"
                   style={{
                     backgroundColor: "#fff",
@@ -464,7 +473,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header="التصنيفات"
+                  header={getLanguage("Categories")}
                   key="2"
                   style={{
                     backgroundColor: "#fff",
@@ -503,7 +512,7 @@ function Category({ products, categories, url_params }) {
                                   <span className="material-icons material-icons-outlined">
                                     {e.icon}
                                   </span>
-                                  {e.name_ar}
+                                  {e[which(language)]}
                                 </span>
                               </div>
 
@@ -530,7 +539,7 @@ function Category({ products, categories, url_params }) {
                                     <Link
                                       href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}
                                     >
-                                      <a>{sub_category.name_ar}</a>
+                                      <a>{sub_category[which(language)]}</a>
                                     </Link>
                                   </div>
                                 ))}
@@ -561,7 +570,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header="التقييم"
+                  header={getLanguage("Evaluation")}
                   key="3"
                   style={{
                     backgroundColor: "#fff",
@@ -707,7 +716,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header="مدة التسليم"
+                  header={getLanguage("Delivery_term")}
                   key="4"
                   style={{
                     backgroundColor: "#fff",
@@ -744,7 +753,7 @@ function Category({ products, categories, url_params }) {
                         id="delevring-1"
                       />
                       <label className="form-check-label" htmlFor="delevring-1">
-                        أقل من أسبوع
+                        {getLanguage("Less_than_a")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -761,7 +770,7 @@ function Category({ products, categories, url_params }) {
                         checked={formik.values.delevring == "7,14"}
                       />
                       <label className="form-check-label" htmlFor="delevring-2">
-                        من 1 إلى 2 أسابيع
+                        {getLanguage("From_1_to")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -778,7 +787,7 @@ function Category({ products, categories, url_params }) {
                         checked={formik.values.delevring == "14,30"}
                       />
                       <label className="form-check-label" htmlFor="delevring-3">
-                        من 2 أسابيع إلى شهر
+                        {getLanguage("From_2_weeks")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -795,7 +804,7 @@ function Category({ products, categories, url_params }) {
                         id="delevring-4"
                       />
                       <label className="form-check-label" htmlFor="delevring-4">
-                        من شهر إلى 3 أشهر
+                        {getLanguage("From_1_month")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -812,7 +821,7 @@ function Category({ products, categories, url_params }) {
                         id="delevring-5"
                       />
                       <label className="form-check-label" htmlFor="delevring-5">
-                        أكثر من 3 أشهر
+                        {getLanguage("More_than_3")}
                       </label>
                     </div>
                   </div>
@@ -858,7 +867,7 @@ function Category({ products, categories, url_params }) {
                         className="form-check-label"
                         htmlFor="sellerBadge-1"
                       >
-                        بائع مميز
+                        {getLanguage("Featured_seller")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -878,7 +887,7 @@ function Category({ products, categories, url_params }) {
                         className="form-check-label"
                         htmlFor="sellerBadge-2"
                       >
-                        بائع VIP
+                        {getLanguage("VIP_seller")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -909,7 +918,8 @@ function Category({ products, categories, url_params }) {
           <div className="col-md-9">
             <div className="page-header flex-center" style={{ paddingTop: 0 }}>
               <h4 className="title me-auto">
-                {products_type.current[url_params.type] || "جميع الخدمات"}
+                {products_type.current[url_params.type] ||
+                  getLanguage("All_services")}
               </h4>
               <div className="tool-right ml-auto">
                 <button
@@ -1018,8 +1028,8 @@ function Category({ products, categories, url_params }) {
                   itemClass="page-item"
                   linkClass="page-link"
                   className="productPagination"
-                  firstPageText={"الصفحة الأولى"}
-                  lastPageText={"الصفحة الأخيرة"}
+                  firstPageText={getLanguage("First_page")}
+                  lastPageText={getLanguage("Last_page")}
                 />
               </div>
             )}
@@ -1073,6 +1083,16 @@ Category.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Category;
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 Category.propTypes = {
   query: PropTypes.any,
   products: PropTypes.any,

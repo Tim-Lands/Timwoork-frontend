@@ -9,6 +9,31 @@
     "fr": "Filtre de services",
     "ar": "فلترة الخدمات"
   },
+  "First_page": {
+    "en": "First page",
+    "fr": "Première page",
+    "ar": "الصفحة الأولى"
+  },
+  "Top_selling_services": {
+    "en": "Top selling services",
+    "fr": "Services les plus vendus",
+    "ar": "الخدمات الأكثر مبيعا"
+  },
+  "Newly_added_services": {
+    "en": "Newly added services",
+    "fr": "Services récents",
+    "ar": "الخدمات الأحدث"
+  },
+  "Most_popular_services": {
+    "en": "Most popular services",
+    "fr": "Services les plus populairess",
+    "ar": "الخدمات الأكثر شعبية"
+  },
+  "Last_page": {
+    "en": "Last page",
+    "fr": "Dernière page",
+    "ar": "الصفحة الأخيرة"
+  },
   "Type_your_search": {
     "en": "Type your search word",
     "fr": "Taper le mo de recherche",

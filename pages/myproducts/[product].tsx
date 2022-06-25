@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useContext } from "react";
+import { LanguageContext } from "contexts/languageContext/context";
 import Comments from "../../components/Comments";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
@@ -41,6 +42,7 @@ let token = Cookies.get("token");
 if (!token && typeof window !== "undefined")
   token = localStorage.getItem("token");
 function Single({ query, stars }) {
+  const { language } = useContext(LanguageContext);
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
 
   const { data: userInfo }: any = useSWR("api/me");
@@ -121,7 +123,7 @@ function Single({ query, stars }) {
               );
             }
           } catch (error) {
-            () => { };
+            () => {};
           }
         }
       });
@@ -316,7 +318,7 @@ function Single({ query, stars }) {
               <Alert type="warning">
                 هذه الخدمة غير كامة تنقصها بعض التعديلات يمكنك{" "}
                 <Link href={`/edit-product/overview?id=${ProductData.data.id}`}>
-                  <a >التعديل</a>
+                  <a>التعديل</a>
                 </Link>
               </Alert>
             </div>
@@ -344,21 +346,24 @@ function Single({ query, stars }) {
                       </li>
                       <li className="category-item">
                         <Link
-                          href={`/category/${ProductData && ProductData.data.subcategory.id
-                            }`}
+                          href={`/category/${
+                            ProductData && ProductData.data.subcategory.id
+                          }`}
                         >
                           <a className="category-link">
                             <span className="material-icons material-icons-outlined">
                               label
                             </span>
                             {ProductData &&
-                              ProductData.data.subcategory.name_ar}
+                              ProductData.data.subcategory[which(language)]}
                           </a>
                         </Link>{" "}
                         <span style={{ marginInline: 5 }}>|</span>
                         <small style={{ marginInline: 5 }}>
                           {ProductData &&
-                            ProductData.data.subcategory.category.name_ar}
+                            ProductData.data.subcategory.category[
+                              which(language)
+                            ]}
                         </small>
                       </li>
                     </ul>
@@ -378,7 +383,9 @@ function Single({ query, stars }) {
                         <span className="value-level">
                           {ProductData &&
                             ProductData.data.profile_seller.level !== null &&
-                            ProductData.data.profile_seller.level.name_ar}
+                            ProductData.data.profile_seller.level[
+                              which(language)
+                            ]}
                         </span>
                       </li>
                     </ul>
@@ -436,7 +443,10 @@ function Single({ query, stars }) {
                           </div>
                         </div>
                         <div className="single-comments-body">
-                          <Comments canReply={true} comments={ProductData.data.ratings} />
+                          <Comments
+                            canReply={true}
+                            comments={ProductData.data.ratings}
+                          />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">لاتوجد آراء المشتريين</p>
@@ -446,9 +456,7 @@ function Single({ query, stars }) {
                       </div>
                     </div>
                   </div>
-
                 </div>
-
               </div>
             </div>
             <div className="col-lg-4">
@@ -557,7 +565,7 @@ function Single({ query, stars }) {
                   {ProductData.data.status !== null && (
                     <Spin spinning={isProductActive}>
                       {ProductData.data.is_active == 0 &&
-                        ProductData.data.is_completed == 1 ? (
+                      ProductData.data.is_completed == 1 ? (
                         <button
                           disabled={isProductActive}
                           onClick={() =>
@@ -592,6 +600,16 @@ function Single({ query, stars }) {
 }
 Single.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
+};
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
 };
 export default Single;
 export async function getServerSideProps({ query }) {

@@ -1,4 +1,6 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
+
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { Form, Formik } from "formik";
@@ -11,6 +13,8 @@ import API from "../../config";
 function Latest() {
   /**----------------------------------------------------------**/
   let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("products");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const [size, setSize] = useState(3);
@@ -85,9 +89,9 @@ function Latest() {
   return (
     <div className="containerProductsPagePopular py-5">
       <MetaTags
-        title={"الخدمات التي أضيفت حديثا"}
-        metaDescription={"الخدمات التي أضيفت حديثا"}
-        ogDescription={"الخدمات التي أضيفت حديثا"}
+        title={getLanguage("Newly_added_services")}
+        metaDescription={getLanguage("Newly_added_services")}
+        ogDescription={getLanguage("Newly_added_services")}
       />
       <Formik
         isInitialValid={true}
@@ -100,7 +104,7 @@ function Latest() {
           <div className="row">
             <div className="col-md-12">
               <div className="page-header">
-                <h4 className="title">الخدمات التي أضيفت حديثا</h4>
+                <h4 className="title">{getLanguage("Newly_added_services")}</h4>
               </div>
               {!getProducts && <Loading />}
               <FilterContent
@@ -124,8 +128,8 @@ function Latest() {
                     pageRangeDisplayed={paginationSize}
                     itemClass="page-item"
                     linkClass="page-link"
-                    firstPageText={"الصفحة الأولى"}
-                    lastPageText={"الصفحة الأخيرة"}
+                    firstPageText={getLanguage("First_page")}
+                    lastPageText={getLanguage("Last_page")}
                   />
                 </div>
               )}

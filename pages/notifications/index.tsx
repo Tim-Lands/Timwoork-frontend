@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Loading";
 import Notification from "@/components/Notification";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import useSWR, { useSWRConfig } from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
@@ -12,6 +13,8 @@ import Pagination from "react-js-pagination";
 
 function index() {
   let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("notification");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();
@@ -109,21 +112,21 @@ function index() {
   return (
     <div className="my-2 py-4">
       <MetaTags
-        title="الإشعارات"
-        metaDescription="الإشعارات"
-        ogDescription={"الإشعارات" + size}
+        title={getLanguage("Notifications")}
+        metaDescription={getLanguage("Notifications")}
+        ogDescription={getLanguage("Notifications") + size}
       />
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="app-bill">
             <div className="app-bill-header">
-              <h3 className="title">الإشعارات</h3>
+              <h3 className="title">{getLanguage("Notifications")}</h3>
             </div>
             {!notifications && <Loading />}
             {notifications && notifications.data.data.length == 0 && (
               <Result
                 status="404"
-                title="لا يوجد لديك اشعارات"
+                title={getLanguage("You_have_no")}
                 subTitle="ليس لديك اشعارات لعرضها"
               />
             )}
@@ -165,8 +168,8 @@ function index() {
             itemClass="page-item"
             linkClass="page-link"
             className="productPagination"
-            firstPageText={"الصفحة الأولى"}
-            lastPageText={"الصفحة الأخيرة"}
+            firstPageText={getLanguage("First_page")}
+            lastPageText={getLanguage("Last_page")}
           />
         </div>
       </div>

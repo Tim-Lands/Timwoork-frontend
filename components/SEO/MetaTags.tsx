@@ -10,49 +10,56 @@
 */
 import Head from "next/head";
 import PropTypes from "prop-types";
-import { ReactElement } from "react";
-
+import { ReactElement, useContext } from "react";
+import { LanguageContext } from "contexts/languageContext/context";
 export function MetaTags({
-    title,
-    metaDescription,
-    keywords,
-    ogDescription,
-    ogImage,
-    ogUrl,
+  title,
+  metaDescription,
+  keywords,
+  ogDescription,
+  ogImage,
+  ogUrl,
 }): ReactElement {
-    return (
-        <>
-            <Head>
-                <meta name="description" content={metaDescription} key="description" />
-                <meta property="og:type" content="website" />
-                <meta property="og:title" content={title} key="title" />
-                <meta property="og:site_name" content="موقع تيم ورك" />
-                <meta property="og:locale" content="ar" />
-                <meta property="og:locale:alternate" content="ar" />
-                <meta property="og:description" content={ogDescription} />
-                {keywords && <meta name="keywords" content={keywords.map((keyword: any) => (
-                    keyword.name + ', '
-                ))} />}
-                {/* Twitter cards */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:site" content="@timwoorkDotCom" />
-                <meta name="twitter:creator" content="@timwoorkDotCom" />
-                <meta name="twitter:title" content={title} />
-                <meta name="twitter:description" content={ogDescription} />
-                <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-                <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <title>تيموورك | {title}</title>
-                {ogImage && <meta property="og:image" content={ogImage} key="image" />}
-                {ogUrl && <meta property="og:url" content={ogUrl} />}
-            </Head>
-        </>
-    );
+  const { language, getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("main");
+  return (
+    <>
+      <Head>
+        <meta name="description" content={metaDescription} key="description" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} key="title" />
+        <meta property="og:site_name" content="موقع تيم ورك" />
+        <meta property="og:locale" content="ar" />
+        <meta property="og:locale:alternate" content="ar" />
+        <meta property="og:description" content={ogDescription} />
+        {keywords && (
+          <meta
+            name="keywords"
+            content={keywords.map((keyword: any) => keyword.name + ", ")}
+          />
+        )}
+        {/* Twitter cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@timwoorkDotCom" />
+        <meta name="twitter:creator" content="@timwoorkDotCom" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={ogDescription} />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+          {getLanguage("Logo")} | {title}
+        </title>
+        {ogImage && <meta property="og:image" content={ogImage} key="image" />}
+        {ogUrl && <meta property="og:url" content={ogUrl} />}
+      </Head>
+    </>
+  );
 }
 MetaTags.propTypes = {
-    title: PropTypes.string.isRequired,
-    metaDescription: PropTypes.string.isRequired,
-    keywords: PropTypes.array,
-    ogDescription: PropTypes.string.isRequired,
-    ogImage: PropTypes.string,
-    ogUrl: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  metaDescription: PropTypes.string.isRequired,
+  keywords: PropTypes.array,
+  ogDescription: PropTypes.string.isRequired,
+  ogImage: PropTypes.string,
+  ogUrl: PropTypes.string,
 };

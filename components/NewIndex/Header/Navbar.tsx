@@ -529,7 +529,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(false)}
+              onClick={() => setIsLanguageVisible(!isLanguageVisible)}
             >
               <span className="material-icons material-icons-outlined">
                 language

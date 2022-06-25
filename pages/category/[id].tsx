@@ -1,4 +1,5 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 import Layout from "@/components/Layout/HomeLayout";
 import PropTypes from "prop-types";
 import useSWR from "swr";
@@ -8,6 +9,7 @@ import Post from "@/components/Post/Post";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index({ query }) {
+  const { language } = useContext(LanguageContext);
   const { data: popularProducts }: any = useSWR(
     `api/get_products_subcategory/${query.id}`
   );
@@ -15,9 +17,9 @@ function index({ query }) {
   return (
     <div className="row py-4 justify-content-center">
       <MetaTags
-        title={subCategories && subCategories.data.name_ar}
-        metaDescription={subCategories && subCategories.data.name_ar}
-        ogDescription={subCategories && subCategories.data.name_ar}
+        title={subCategories && subCategories.data[which(language)]}
+        metaDescription={subCategories && subCategories.data[which(language)]}
+        ogDescription={subCategories && subCategories.data[which(language)]}
       />
       <div className="col-md-10 ">
         <div
@@ -31,7 +33,7 @@ function index({ query }) {
                   {subCategories.data.icon}
                 </span>
                 <span style={{ fontWeight: 200 }}> خدمات:</span>{" "}
-                <strong> {subCategories.data.name_ar} </strong>
+                <strong> {subCategories.data[which(language)]} </strong>
               </h3>
             </div>
           )}
@@ -84,6 +86,16 @@ index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default index;
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
 index.propTypes = {
   query: PropTypes.any,
 };
