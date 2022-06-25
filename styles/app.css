@@ -11902,6 +11902,14 @@ h3 {
   opacity: 0;
 }
 
+.languageMenuDropDown.en {
+  right: 0 !important;
+}
+
+.languageMenuDropDown.ar {
+  left: 0 !important;
+}
+
 .languageMenuDropDown li {
   border-radius: 6px;
   padding: 6px 17px;
@@ -11922,8 +11930,8 @@ h3 {
 }
 
 .languageMenuDropDown.showLanguage {
-  -webkit-animation: showLanguage .4s linear both;
-          animation: showLanguage .4s linear both;
+  -webkit-animation: showLanguage 0.4s linear both;
+          animation: showLanguage 0.4s linear both;
 }
 
 @-webkit-keyframes showLanguage {

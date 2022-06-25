@@ -727,7 +727,6 @@ h3 {
     margin-top: 25px;
 
     li {
-
       .ext-butt {
         border: 1px solid #f1f1f1 !important;
         background-color: #f7f7f7 !important;
@@ -888,7 +887,6 @@ h3 {
   padding: 43px 0;
 
   @media (max-width: 580px) {
-
     img {
       width: 100%;
     }
@@ -1722,7 +1720,6 @@ h3 {
           }
 
           .devloppers-price {
-
             .price-number {
               font-weight: bold;
               margin: 0;
@@ -2970,7 +2967,6 @@ h3 {
     padding: 17px 12px;
     border-top: 1px solid #ddd;
     background-color: #f7f7f7;
-
   }
 }
 
@@ -3953,7 +3949,6 @@ h3 {
           }
 
           .devloppers-price {
-
             .price-number {
               font-weight: bold;
               margin: 0;
@@ -4537,7 +4532,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .stars input[type="radio"]:first-child + label {
-
   .material-icons {
     font-size: 36px;
   }
@@ -4747,7 +4741,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     border: 1px solid #ddd;
     top: 6px;
   }
-
 }
 
 .meta-note {
@@ -5285,7 +5278,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       background-color: #fff;
       color: #222;
     }
-
   }
 
   .attach-items {
@@ -5839,7 +5831,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 }
 
 .pagination {
-
   .page-item {
     .page-link {
       font-size: 14px;
@@ -8141,6 +8132,12 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   transition: all 0.4s linear;
   gap: 1px;
   border-radius: 6px;
+  &.en {
+    right: 0 !important;
+  }
+  &.ar {
+    left: 0 !important;
+  }
   opacity: 0;
   li {
     border-radius: 6px;
@@ -8157,11 +8154,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     }
   }
   &.showLanguage {
-    animation: showLanguage .4s linear both;
+    animation: showLanguage 0.4s linear both;
   }
 }
-@keyframes showLanguage{
-  100%{
+@keyframes showLanguage {
+  100% {
     top: 40px;
     opacity: 1;
   }

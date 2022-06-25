@@ -283,7 +283,7 @@ function Navbar({ dark = false }) {
       <ul
         className={`languageMenuDropDown ${
           isLanguageVisible ? " showLanguage" : ""
-        }`}
+        } ${language === "ar" ? "ar" : "en"}`}
       >
         <li
           className={language === "ar" ? "selectedLanguage" : ""}
@@ -529,7 +529,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(!isLanguageVisible)}
+              onClick={() => setIsLanguageVisible(false)}
             >
               <span className="material-icons material-icons-outlined">
                 language
