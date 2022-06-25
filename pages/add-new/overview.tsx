@@ -62,11 +62,7 @@ const MySelect = (props: any) => {
 
 function Overview({ query }) {
   const id = query.id;
-<<<<<<< HEAD
   const { getSectionLanguage, language } = useContext(LanguageContext);
-=======
-  const { language, getSectionLanguage } = useContext(LanguageContext);
->>>>>>> 0a23d903c9ba1d245107eee4c94d43d16371baa9
   const getLanguage = getSectionLanguage("add_new");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
