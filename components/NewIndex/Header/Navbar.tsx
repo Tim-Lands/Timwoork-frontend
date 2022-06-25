@@ -108,7 +108,6 @@ function Navbar({ dark = false }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-  console.log(userInfo);
   useEffect(() => {
     if (userInfo) {
       chatPusher.bind("message.sent", (data) => {
@@ -530,7 +529,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(false)}
+              onClick={() => setIsLanguageVisible(!isLanguageVisible)}
             >
               <span className="material-icons material-icons-outlined">
                 language
