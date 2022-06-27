@@ -436,6 +436,7 @@ function Navbar({ dark = false }) {
                   <li className="circular-newitem" ref={messagesBtn}>
                     <Badge
                       count={userInfo?.unread_messages_count}
+                      offset={[5, 5]}
                       style={{ fontSize: 10 }}
                       size="small"
                     >
@@ -459,6 +460,7 @@ function Navbar({ dark = false }) {
                   <li className="circular-newitem" ref={notificationsBtn}>
                     <Badge
                       count={userInfo?.unread_notifications_count}
+                      offset={[5, 5]}
                       style={{ fontSize: 10 }}
                       size="small"
                     >

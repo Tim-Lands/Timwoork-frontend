@@ -3801,6 +3801,7 @@
 
 .ltr .container-search-form .container-search-form-input button {
   border-radius: 0 7px 7px 0;
+  font-size: 100%;
 }
 
 .ltr .video-section .video-section-content .video-section-body .video-section-list li .text {

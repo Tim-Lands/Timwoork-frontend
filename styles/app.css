@@ -10758,10 +10758,6 @@ h3 {
   border: 1px solid #ffd000;
 }
 
-.container-search-form .container-search-form-input .btn {
-  width: 20%;
-}
-
 @media (max-width: 650px) {
   .hero-container-search {
     width: 80vw;

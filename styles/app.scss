@@ -7224,6 +7224,7 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 
     input {
       width: 80%;
+
       padding: 8px 20px;
       border: 1px solid rgba(255, 255, 255, 0.459);
       background-color: #fff;
@@ -7240,9 +7241,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       }
     }
 
-    .btn {
-      width: 20%;
-    }
+    // .btn {
+    //   width: 20%;
+    // }
   }
 }
 
