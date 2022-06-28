@@ -4,6 +4,8 @@ import API from "../../config";
 import React, { ReactElement, useEffect, useState, useContext } from "react";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import useSWR, { mutate } from "swr";
+import { CurrencyContext } from "../../contexts/currencyContext";
+
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
 import CartPost from "@/components/Cart/CartPost";
@@ -12,9 +14,17 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import router from "next/router";
 
 function index() {
+  const { data: userInfo }: any = useSWR("api/me");
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("cart");
   const getLanguageMain = getSectionLanguage("main");
+  const [, getCurrency] = useContext(CurrencyContext);
+  const specCurrency = getCurrency(
+    userInfo?.user_details?.profile?.currency?.code
+  )?.value;
+  const symbol =
+    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -23,7 +33,6 @@ function index() {
   );
   const [isLoading, setIsLoading]: any = useState(false);
   const { data: cartList }: any = useSWR("api/cart");
-  //const { data: userInfo }: any = useSWR('api/me')
 
   const deleteItem = async (id: any) => {
     setIsLoading(true);
@@ -162,19 +171,24 @@ function index() {
                               >
                                 <li style={{ fontSize: 13, color: "#777" }}>
                                   <strong>المجموع: </strong>
-                                  {cartList &&
-                                    cartList.data !== null &&
-                                    cartList.data.total_price}
-                                  $
+                                  {specCurrency
+                                    ? Math.round(
+                                        cartList?.data?.total_price *
+                                          specCurrency
+                                      )
+                                    : cartList?.data?.total_price}
+                                  {symbol}
                                 </li>
                               </ul>
                             </div>
                             <div className="cart-item-price ml-auto">
                               <h4 className="price-title-total">
-                                $
-                                {cartList &&
-                                  cartList.data !== null &&
-                                  cartList.data.total_price}
+                                {specCurrency
+                                  ? Math.round(
+                                      cartList?.data?.total_price * specCurrency
+                                    )
+                                  : cartList?.data?.total_price}
+                                {symbol}
                               </h4>
                             </div>
                           </div>

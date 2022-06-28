@@ -56,7 +56,8 @@ function Single({ query, stars, errorFetch }) {
   );
 
   const { data: userInfo }: any = useSWR("api/me");
-  const symbol = userInfo?.user_details?.profile?.currency?.symbol_native;
+  const symbol =
+    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
   const [, getCurrency] = useContext(CurrencyContext);
   const specCurrency = getCurrency(
     userInfo?.user_details?.profile?.currency?.code
@@ -408,7 +409,10 @@ function Single({ query, stars, errorFetch }) {
               onChange={(e: any) => setMessageConv(e.target.value)}
             ></textarea>
           </Modal>
-          <div className="row" style={{ maxWidth: 1300, marginInline: "auto" }}>
+          <div
+            className="row"
+            style={{ maxWidth: 1300, marginInline: "auto", marginTop: 10 }}
+          >
             <div className="col-lg-8">
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">
@@ -727,7 +731,11 @@ function Single({ query, stars, errorFetch }) {
                           {" "}
                           {getLanguage("Number_of_purchases")}:
                           <span className="me-auto">
-                            <Popover content={noteContent} trigger="hover">
+                            <Popover
+                              content={noteContent}
+                              trigger="hover"
+                              placement="bottom"
+                            >
                               <Badge
                                 style={{ color: "#52c41a " }}
                                 count={
@@ -810,11 +818,11 @@ function Single({ query, stars, errorFetch }) {
                                     {e.title}
                                     <p className="price-duration">
                                       ستكون المدة {DevdurationFunc(e.duration)}{" "}
-                                      بمبلغ {e.price}$
-                                      {specCurrency &&
-                                        " | " +
-                                          Math.round(e?.price * specCurrency) +
-                                          symbol}
+                                      بمبلغ{" "}
+                                      {specCurrency
+                                        ? Math.round(e?.price * specCurrency)
+                                        : e?.price}
+                                      {symbol}
                                     </p>
                                   </label>
                                 </div>
@@ -824,11 +832,14 @@ function Single({ query, stars, errorFetch }) {
                         </ul>
                       </div>
                     )}
-                    <div className="panel-aside-footer">
+                    <div className="panel-aside-footer ">
                       <div className="aside-footer-total-price">
                         <h4 className="price-total me-auto">
                           <strong>{getLanguage("Total")} </strong>{" "}
-                          {_totalPrice()}$
+                          {specCurrency
+                            ? Math.round(_totalPrice() * specCurrency)
+                            : _totalPrice()}
+                          {symbol}
                         </h4>
                         <div className="bayers-count">
                           <p className="num">
@@ -842,10 +853,6 @@ function Single({ query, stars, errorFetch }) {
                             </span>
                           </p>
                         </div>
-                      </div>
-                      <div className="ms-auto" style={{ width: "fit-content" }}>
-                        {specCurrency &&
-                          Math.round(_totalPrice() * specCurrency) + symbol}
                       </div>
                       <div className="aside-footer-addtocart mt-3">
                         <button

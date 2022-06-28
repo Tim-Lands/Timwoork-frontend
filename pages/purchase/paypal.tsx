@@ -1,5 +1,6 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
 import Layout from "@/components/Layout/HomeLayout";
+import { CurrencyContext } from "../../contexts/currencyContext";
 import Cookies from "js-cookie";
 import router from "next/router";
 import PropTypes from "prop-types";
@@ -17,6 +18,12 @@ function Paypal({ query }) {
   const [getBills, setGetBills]: any = useState({});
 
   const { data: userInfo }: any = useSWR("api/me");
+  const [, getCurrency] = useContext(CurrencyContext);
+  const specCurrency = getCurrency(
+    userInfo?.user_details?.profile?.currency?.code
+  )?.value;
+  const symbol =
+    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
   async function getBill() {
     setIsLoading(true);
@@ -71,22 +78,30 @@ function Paypal({ query }) {
                   <li className="list-group-item d-flex justify-content-between align-items-center">
                     السعر الكلي
                     <span className="">
-                      {getBills && getBills.cart && getBills.cart.total_price}$
+                      {specCurrency
+                        ? Math.round(getBills?.cart?.total_price * specCurrency)
+                        : getBills?.cart?.total_price}
+                      {symbol}
                     </span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center">
                     سعر التحويل
                     <span className="">
-                      {getBills && getBills.cart && getBills.cart.tax}$
+                      {specCurrency
+                        ? Math.round(getBills?.cart?.tax * specCurrency)
+                        : getBills?.cart?.tax}
+                      {symbol}
                     </span>
                   </li>
                   <li className="list-group-item total d-flex justify-content-between align-items-center">
                     المجموع الكلي
                     <span className="">
-                      {getBills &&
-                        getBills.cart &&
-                        getBills.cart.price_with_tax}
-                      $
+                      {specCurrency
+                        ? Math.round(
+                            getBills?.cart?.price_with_tax * specCurrency
+                          )
+                        : getBills?.cart?.price_with_tax}
+                      {symbol}
                     </span>
                   </li>
                 </ul>

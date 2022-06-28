@@ -1,10 +1,11 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { motion } from "framer-motion";
 import useSWR from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
 import API from "../../config";
+import { CurrencyContext } from "../../contexts/currencyContext";
 import Loading from "@/components/Loading";
 import { Badge, Result, Tooltip } from "antd";
 import {
@@ -110,6 +111,13 @@ function Bill() {
 
   const mybalance =
     userInfo && userInfo.user_details.profile.withdrawable_amount;
+  const [, getCurrency] = useContext(CurrencyContext);
+  const specCurrency = getCurrency(
+    userInfo?.user_details?.profile?.currency?.code
+  )?.value;
+  const symbol =
+    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
+
   async function getPaypal() {
     setIsLoading(true);
     setIsError(false);
@@ -237,21 +245,38 @@ function Bill() {
                                 />
                               </Tooltip>
                             </span>
-                            <span className="">{e.pivot.tax}</span>
+                            <span className="">
+                              {specCurrency
+                                ? Math.round(e.pivot.tax * specCurrency)
+                                : e.pivot.tax}
+                              {symbol}
+                            </span>
                           </li>
                           <li
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
                             المجموع بدون رسوم
-                            <span className="">{e.pivot.total}</span>
+                            <span className="">
+                              {specCurrency
+                                ? Math.round(e.pivot.total * specCurrency)
+                                : e.pivot.total}
+                              {symbol}
+                            </span>
                           </li>
                           <li
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
                             المجموع مع رسوم
-                            <span className="">{e.pivot.total_with_tax}</span>
+                            <span className="">
+                              {specCurrency
+                                ? Math.round(
+                                    e.pivot.total_with_tax * specCurrency
+                                  )
+                                : e.pivot.total_with_tax}
+                              {symbol}
+                            </span>
                           </li>
                         </ul>
                       )}
@@ -406,7 +431,13 @@ function Bill() {
                                       />{" "}
                                       شراء الآن (
                                       <span className="">
-                                        ${cartList && cartList.data.total_price}
+                                        {specCurrency
+                                          ? Math.round(
+                                              cartList?.data?.total_price *
+                                                specCurrency
+                                            )
+                                          : cartList?.data?.total_price}
+                                        {symbol}
                                       </span>
                                       )
                                     </>

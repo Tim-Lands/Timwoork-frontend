@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState, useContext, useRef } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { useOutsideAlerter } from "../../useOutsideAlerter";
 import { useOutSide } from "../../useOutSide";
 import Community from "./Community";
@@ -315,6 +315,25 @@ function Navbar({ dark = false }) {
       </ul>
     );
   };
+  async function markAllRead() {
+    try {
+      // const res =
+      await API.post(
+        `api/notifications/markAllAsRead`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      mutate("api/me");
+    } catch (error) {
+      () => {};
+    }
+
+    mutate("api/me");
+  }
   return (
     <nav
       className="app-new-navbar-cont"
@@ -421,7 +440,12 @@ function Navbar({ dark = false }) {
                 )}
               </li>
               <li className="circular-newitem">
-                <Badge count={0} style={{ fontSize: 10 }} size="small">
+                <Badge
+                  count={userInfo?.cart_items_count}
+                  style={{ fontSize: 10 }}
+                  size="small"
+                  offset={[5, 5]}
+                >
                   <Link href={"/cart"}>
                     <a className="link-circular-button">
                       <span className="material-icons material-icons-outlined">
@@ -457,7 +481,13 @@ function Navbar({ dark = false }) {
                       />
                     )}
                   </li>
-                  <li className="circular-newitem" ref={notificationsBtn}>
+                  <li
+                    className="circular-newitem"
+                    ref={notificationsBtn}
+                    onClick={() => {
+                      if (!showNotificationsMenu) markAllRead();
+                    }}
+                  >
                     <Badge
                       count={userInfo?.unread_notifications_count}
                       offset={[5, 5]}

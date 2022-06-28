@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
+import { CurrencyContext } from "../../contexts/currencyContext";
+import useSWR from "swr";
 import PropTypes from "prop-types";
 
 function CartPost({
@@ -11,6 +13,7 @@ function CartPost({
   developments,
   deleteItem,
 }): ReactElement {
+  const { data: userInfo }: any = useSWR("api/me");
   function DevdurationFunc(duration) {
     if (duration == 1) {
       return "يوم واحد";
@@ -25,6 +28,12 @@ function CartPost({
       return duration + " يوم ";
     }
   }
+  const [, getCurrency] = useContext(CurrencyContext);
+  const specCurrency = getCurrency(
+    userInfo?.user_details?.profile?.currency?.code
+  )?.value;
+  const symbol =
+    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
   return (
     <motion.li
       initial={{ y: 8, opacity: 0 }}
@@ -50,11 +59,15 @@ function CartPost({
               </li>
               <li style={{ fontSize: 13, color: "#777" }}>
                 <span>السعر: </span>
-                {price}$
+                {specCurrency
+                  ? Math.round(price * specCurrency) + symbol
+                  : price + symbol}
               </li>
               <li style={{ fontSize: 13, color: "#777" }}>
                 <strong>الإجمالي: </strong>
-                {itemTotal}$
+                {specCurrency
+                  ? Math.round(itemTotal * specCurrency) + symbol
+                  : price + symbol}
               </li>
             </ul>
             <h4
@@ -82,7 +95,9 @@ function CartPost({
                           {e.title}
                           <p className="price-duration">
                             ستكون المدة {DevdurationFunc(e.duration)} بمبلغ{" "}
-                            {e.price}$
+                            {specCurrency
+                              ? Math.round(e?.price * specCurrency) + symbol
+                              : e?.price + symbol}
                           </p>
                         </label>
                       </div>
