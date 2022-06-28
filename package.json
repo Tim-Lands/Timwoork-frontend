@@ -10,8 +10,7 @@
     "build": " next build",
     "start": "next start",
     "lint": "eslint --fix .",
-    "export": "next build && next export",
-    "install":"npm i --legacy-peer-deps"
+    "export": "next build && next export"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
