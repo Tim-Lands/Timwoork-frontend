@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "rm -rf node_modules && npm i --legacy-peer-deps && next build",
     "start": "next start",
     "lint": "eslint --fix .",
     "export": "next build && next export"
