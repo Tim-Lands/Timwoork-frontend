@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function WiseCart({ setIsShowBankTransfert, userInfo = {} }: any) {
   return (
-    <div className={"timlands-panel-cart"}>
+    <div className={"timlands-panel-cart"}> 
       <div className="py-4">
         <div className="timlands-panel-cart-header">
           <h3 className="title">تحويل الوايز Wise</h3>
