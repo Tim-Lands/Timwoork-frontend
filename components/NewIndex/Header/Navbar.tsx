@@ -209,9 +209,9 @@ function Navbar({ dark = false }) {
           });
         }
       });
-       console.log('pusher gonna bind')
+      console.log("pusher gonna bind");
       notificationPusher.bind("notification.sent", (data) => {
-        console.log(data)
+        console.log(data);
         const today = new Date();
         const date = `${today.getFullYear()}_${
           today.getMonth() + 1
@@ -562,7 +562,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(!isLanguageVisible)}
+              onClick={() => setIsLanguageVisible(false)}
             >
               <span className="material-icons material-icons-outlined">
                 language

@@ -20,7 +20,7 @@ export function MetaTags({
   ogImage,
   ogUrl,
 }): ReactElement {
-  const { language, getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
   return (
     <>
