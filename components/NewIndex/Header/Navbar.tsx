@@ -209,8 +209,9 @@ function Navbar({ dark = false }) {
           });
         }
       });
-
+       console.log('pusher gonna bind')
       notificationPusher.bind("notification.sent", (data) => {
+        console.log(data)
         const today = new Date();
         const date = `${today.getFullYear()}_${
           today.getMonth() + 1
@@ -257,7 +258,7 @@ function Navbar({ dark = false }) {
         });
       });
     }
-  }, [notificationPusher, userInfo, sentinel]);
+  }, [notificationPusher]);
   const fetchData = async () => {
     try {
       const notificationsData = await API.get("api/notifications?page=1", {
