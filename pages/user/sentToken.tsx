@@ -38,3 +38,4 @@ const SentToken = (): ReactElement => {
 };
 
 export default SentToken;
+ 
