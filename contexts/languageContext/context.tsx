@@ -4,7 +4,7 @@ import translates from "./allTranslates";
 export const LanguageContext = createContext(null);
 
 export const LanguageProvider = (props) => {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("ar");
   function getSectionLanguage(section) {
     return function getLanguage(name) {
       return translates[section][name][language];
