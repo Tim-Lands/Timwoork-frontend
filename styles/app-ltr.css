@@ -3907,4 +3907,32 @@
 .ltr .shadow {
   left: 2rem;
 }
+
+/*
+==========================================================================================
+*/
+.portfolios-slider .slider-item-portfolio .slider-item-portfolio-content .slider-item-portfolio-user .portfolio-user-avatar {
+  margin-right: 7px;
+}
+
+.slider-inner .slider-item-portfolio {
+  margin-right: 10px;
+}
+
+.slider-inner:last-of-type .slider-item-portfolio {
+  margin-right: 0;
+}
+
+.portfolio-single .portfolio-single-header .portfolio-single-header-aside {
+  margin-right: auto;
+}
+
+.portfolio-single .portfolio-single-header .portfolio-single-header-tool {
+  margin-left: auto;
+}
+
+.portfolio-sidebar .single-info-portfolio .table .skill-item,
+.portfolio-sidebar .single-info-portfolio .table .share-item {
+  margin-right: 5px;
+}
 /*# sourceMappingURL=app-ltr.css.map */
