@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
+import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import {
   FaFacebook,
@@ -12,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 function Index({ query }) {
-  console.log(query.slug);
+  console.log(query);
 
   return (
     <div className="container pt-4 mt-2">
@@ -212,7 +213,9 @@ Index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Index;
-
+Index.propTypes = {
+  query: PropTypes.any,
+};
 export async function getServerSideProps({ query }) {
   return { props: { query } };
 }

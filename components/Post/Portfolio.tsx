@@ -1,9 +1,9 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
-import { Fa500Px, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 function Portfolio({
   title,
@@ -12,7 +12,6 @@ function Portfolio({
   level,
   username,
   avatar,
-  heartCount,
   slug,
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
