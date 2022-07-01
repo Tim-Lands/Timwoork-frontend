@@ -345,7 +345,7 @@ function Navbar({ dark = false }) {
           : "white",
       }}
     >
-       {/* {isLanguageVisible && (
+      {/* {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
       )}  */}
       {/* {isShowLoginForm && <LoginForm setIsConfirmText={setIsShowLoginForm} />} */}
@@ -561,7 +561,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(!isLanguageVisible)}
+              onClick={() => setIsLanguageVisible(false)}
             >
               <span className="material-icons material-icons-outlined">
                 language
