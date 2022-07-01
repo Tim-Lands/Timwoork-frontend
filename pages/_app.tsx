@@ -23,7 +23,7 @@ type AppPropsWithLayout = AppProps & {
 };
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
-  const stopBuilding = "stop Building";
+  // const stopBuilding = "stop Building";
   return (
     <div>
       <Provider store={store}>

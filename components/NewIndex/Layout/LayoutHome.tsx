@@ -55,10 +55,15 @@ function LayoutHome(props: any) {
           <Navbar dark={props.dark} />
         </div>
       </div>
-      <Spin tip={getLanguage("Loading")} spinning={loading}>
-        <div className="mainHomeIndex pb-5">{props.children}</div>
-        <Footer />
-      </Spin>
+      <div className="mainHomeIndex pb-5">
+        {props.children}
+        {loading && (
+          <div className="loading">
+            <Spin tip={getLanguage("Loading")} spinning={true}></Spin>
+          </div>
+        )}
+      </div>
+      <Footer />
     </SWRConfig>
   );
 }

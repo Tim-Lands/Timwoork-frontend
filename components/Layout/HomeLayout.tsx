@@ -50,10 +50,12 @@ function Layout(props: any) {
     >
       <div className="pt-5 mainHomeIndex">
         <Navbar />
-        <Spin tip={getLanguage("Loading")} spinning={loading}>
-          {props.children}
-        </Spin>
-
+        {props.children}
+        {loading && (
+          <div className="loading">
+            <Spin tip={getLanguage("Loading")} spinning={true}></Spin>
+          </div>
+        )}
         <Footer />
       </div>
     </SWRConfig>

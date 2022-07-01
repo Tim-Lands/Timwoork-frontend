@@ -23,7 +23,8 @@ function Post({
   const specCurrency = getCurrency(
     userInfo?.user_details?.profile?.currency?.code
   )?.value;
-  const symbol = userInfo?.user_details?.profile?.currency?.symbol_native;
+  const symbol =
+    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
   const thumbnailUrl = `url(${thumbnail})`;
   const sizeClass = () => {
     switch (size) {
@@ -150,8 +151,8 @@ function Post({
       </div>
       <div className="post-item-footer">
         <p className="post-meta-price">
-          السعر من: {price}$ <br />
-          {specCurrency && Math.round(price * specCurrency) + symbol}
+          السعر من: {specCurrency ? Math.round(price * specCurrency) : price}
+          {symbol}
         </p>
         <p className="post-meta-bayer">
           {(buyers == 0 ? buyers : buyers + " اشتروا هذا") || "اشتري الآن"}

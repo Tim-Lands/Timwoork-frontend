@@ -41,9 +41,20 @@
   font-weight: 300;
   font-style: normal;
 }
-
+body {
+  position: relative;
+}
 .mainHomeIndex {
   background-image: linear-gradient(to top, lighten($primary, 55%), white);
+  .loading {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 1000000000000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 // Create Circular Center
@@ -1276,6 +1287,7 @@ h3 {
 
     .timwoork-single-content {
       .timwoork-single-content-body {
+        overflow-x: hidden;
         background-color: #fff;
         padding: 18px;
         border-radius: 5px;
@@ -3842,7 +3854,7 @@ h3 {
 
 .single-sidebar {
   position: sticky;
-  top: 65px;
+  top: 100px;
   padding: 20px 0;
 
   .single-panel-aside {

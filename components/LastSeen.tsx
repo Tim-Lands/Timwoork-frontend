@@ -9,14 +9,10 @@ import PropTypes from "prop-types";
 
 export default function LastSeen({ date }) {
   const { language } = useContext(LanguageContext);
-  const formatter = buildFormatter(which(language, ar, en, fr));
-  return (
-    <span>
-      <TimeAgo date={date} formatter={formatter} />
-    </span>
-  );
+  const formatter = buildFormatter(which(language));
+  return <span>{<TimeAgo date={date} formatter={formatter} />}</span>;
 }
-const which = (language, ar, en, fr) => {
+const which = (language) => {
   switch (language) {
     case "ar":
       return ar;

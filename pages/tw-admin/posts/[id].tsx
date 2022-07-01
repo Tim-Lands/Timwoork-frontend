@@ -12,6 +12,8 @@ import PropTypes from "prop-types";
 import router from "next/router";
 import Image from 'next/image'
 import Cookies from "js-cookie";
+import cookies from "next-cookies";
+
 const properties = {
     duration: 5000,
     transitionDuration: 500,
@@ -364,11 +366,17 @@ Id.getLayout = function getLayout(page: any): ReactElement {
     )
 }
 export default Id;
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps(ctx) {
+    const { query } = ctx
     try {
-        const uriString = encodeURI(`api/product/${query.id}`)
+        const token = cookies(ctx).token_dash || ""
+        const uriString = encodeURI(`dashboard/products/${query.id}`)
         // Fetch data from external API
-        const res = await API.get(uriString)
+        const res = await API.get(uriString, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
 
         // Pass data to the page via props
         return { props: { ProductData: res.data, query, errorFetch: false } }
