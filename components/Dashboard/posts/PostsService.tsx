@@ -122,17 +122,19 @@ async function restoreArchieved(id) {
             cancelButtonText: "لا",
             reverseButtons: true,
         })
-        .then((result) => {
+        .then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res: any = API.post(
+                    console.log('going delete')
+                    const res: any = await API.post(
                         `dashboard/products/${id}/restore_product_deleted`
                         , {}, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
                     });
-                    if (res) {
+
+                    if (res.status ==200) {
                         console.log('res success')
                         location.reload();
 
@@ -164,11 +166,11 @@ export const generatecolumns = ({ status, callbacks }) => [
         title: "العنوان",
         dataIndex: "",
         render: (profile: any) => (
-            status != 'archieved' ?
+          
                 <Link href={`/tw-admin/posts/${profile.slug}`}>
                     <a>{profile.title}</a>
                 </Link>
-                : <a>{profile.title}</a>
+                
         )
         ,
         width: 390,

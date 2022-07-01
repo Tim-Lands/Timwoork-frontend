@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout/DashboardLayout";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useContext, useEffect, useRef, useState } from "react";
 import API from "../../../../config";
 import router from "next/router";
 import { message, notification } from "antd";
@@ -13,6 +13,7 @@ import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
 import Link from "next/link";
+import { LanguageContext } from "contexts/languageContext/context";
 
 function Medias({ query, product, token }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -26,7 +27,8 @@ function Medias({ query, product, token }) {
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
   const [removedImages, setRemovedImages] = useState([]);
   const id = query.id;
-
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
 
   useEffect(() => {
     if (!token) {
@@ -353,11 +355,13 @@ function Medias({ query, product, token }) {
               <div className="row justify-content-md-center">
                 <div className="col-xl-10">
                   <FeaturedUploadingGalleries
+                    getLanguage={getLanguage}
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}
                     full_path_thumbnail={featuredMedia || "/seo.png"}
                   />
                   <ImagesUploadingGalleries
+                    getLanguage={getLanguage}
                     setIsChanged={setIsGalleryChanged}
                     setGalleryMedia={setGalleryMedia}
                     galaries={galleryMedia}

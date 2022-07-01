@@ -5,6 +5,7 @@ import Posts from '@/components/Dashboard/posts'
 import cookies from "next-cookies";
 function index({ postsData }): ReactElement {
   const [postsList, setPostsList] = useState(postsData)
+  console.log(postsList)
   useEffect(() => {
     setPostsList(postsData)
   }, [postsData])
