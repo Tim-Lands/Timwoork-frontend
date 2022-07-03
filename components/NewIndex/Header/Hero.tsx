@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
@@ -14,7 +14,7 @@ import Link from "next/link";
 
 function Hero() {
   const [index, setIndex] = useState(1);
-
+  const { language } = useContext(LanguageContext);
   return (
     <div
       className={
@@ -26,7 +26,10 @@ function Hero() {
         transition: "all .3s linear",
       }}
     >
-      <div className="timlands-hero-carousel">
+      <div
+        className={`timlands-hero-carousel ${language !== "ar" ? "en" : ""}`}
+        style={{ direction: "rtl" }}
+      >
         <Swiper
           modules={[
             Navigation,
@@ -48,14 +51,14 @@ function Hero() {
           // scrollbar={{ draggable: true }}
           onSlideChange={(i) => setIndex(i.activeIndex)}
           loop
-          style={{ maxHeight: 700, height: "100%" }}
+          style={{ maxHeight: 700, height: "100%", direction: "rtl" }}
         >
           <SwiperSlide>
-            <div className="timlands-hero-img ">
+            <div className="timlands-hero-img " style={{ direction: "rtl" }}>
               <img
                 src="/img/1.png"
                 alt=""
-                className="scale-ltr"
+                // className="scale-ltr"
                 // style={{ opacity: index === 1 ? 1 : 0, height: 500 }}
               />
             </div>
@@ -75,11 +78,11 @@ function Hero() {
             </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="timlands-hero-img ">
+            <div className="timlands-hero-img " style={{ direction: "rtl" }}>
               <img
                 src="/img/2.png"
                 alt=""
-                className="scale-ltr"
+                // className="scale-ltr"
                 // style={{ opacity: index === 2 ? 1 : 0, height: 500 }}
               />
             </div>
@@ -99,11 +102,11 @@ function Hero() {
             </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="timlands-hero-img ">
+            <div className="timlands-hero-img " style={{ direction: "rtl" }}>
               <img
                 src="/img/3.png"
                 alt=""
-                className="scale-ltr"
+                // className="scale-ltr"
                 // style={{ opacity: index === 3 ? 1 : 0, height: 500 }}
               />
             </div>
@@ -124,11 +127,11 @@ function Hero() {
             </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="timlands-hero-img ">
+            <div className="timlands-hero-img " style={{ direction: "rtl" }}>
               <img
                 src="/img/4.png"
                 alt=""
-                className="scale-ltr"
+                // className="scale-ltr"
                 // style={{ opacity: index === 4 ? 1 : 0, height: 500 }}
               />
             </div>

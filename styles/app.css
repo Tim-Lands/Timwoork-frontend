@@ -10210,6 +10210,17 @@ h3 {
   bottom: 0px;
 }
 
+.timland-hero .timlands-hero-carousel.en .timlands-hero-img {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.timland-hero .timlands-hero-carousel.en .timlands-hero-img img {
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+}
+
 .timland-hero .timlands-hero-carousel .timlands-hero-text {
   display: block;
   position: absolute;

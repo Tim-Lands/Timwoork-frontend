@@ -6795,6 +6795,14 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         bottom: 0px;
       }
     }
+    &.en {
+      .timlands-hero-img {
+        justify-content: flex-start;
+        img {
+          transform: scaleX(-1);
+        }
+      }
+    }
     .timlands-hero-text {
       display: block;
       position: absolute;
