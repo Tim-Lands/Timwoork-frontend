@@ -31,8 +31,7 @@ import {
 import { darken } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
-  const { language, setLanguage, getSectionLanguage } =
-    useContext(LanguageContext);
+  const {getSectionLanguage } =    useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -279,7 +278,7 @@ function Navbar({ dark = false }) {
       () => {};
     }
   };
-  const LanguageMenu = () => {
+/*   const LanguageMenu = () => {
     return (
       <ul
         className={`languageMenuDropDown ${
@@ -315,7 +314,7 @@ function Navbar({ dark = false }) {
         </li>
       </ul>
     );
-  };
+  }; */
   async function markAllRead() {
     try {
       // const res =
@@ -568,7 +567,7 @@ function Navbar({ dark = false }) {
                 language
               </span>
             </a>
-            {isLanguageVisible ? <LanguageMenu /> : <></>}
+            {/* {isLanguageVisible ? <LanguageMenu /> : <></>} */}
           </li>
         </ul>
       </div>
