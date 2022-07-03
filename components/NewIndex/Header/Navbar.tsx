@@ -103,6 +103,8 @@ function Navbar({ dark = false }) {
     if (token) fetchData();
   }, [token]);
   useEffect(() => {
+    console.log(isLanguageVisible);
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
