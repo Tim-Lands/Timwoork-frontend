@@ -12205,12 +12205,8 @@ h3 {
       -ms-flex-align: center;
           align-items: center;
   border-bottom: 1px solid #f7f7f7;
-  padding: 20px 10px;
+  padding: 20px 0;
   margin-bottom: 10px;
-}
-
-.portfolio-single .portfolio-single-header .portfolio-single-header-aside {
-  width: 70%;
 }
 
 .portfolio-single .portfolio-single-header .portfolio-single-header-aside .title {
@@ -12220,7 +12216,7 @@ h3 {
 }
 
 .portfolio-single .portfolio-single-content {
-  padding: 15px;
+  padding: 15px 25px;
 }
 
 .portfolio-single .portfolio-single-content img {

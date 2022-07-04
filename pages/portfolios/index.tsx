@@ -3,7 +3,8 @@ import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
-import PortfolioSlider from "@/components/Post/PortfolioSlider";
+import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
+import PortfolioSliders from "@/components/NewIndex/Portfolio/PortfolioSlider";
 
 function Index() {
   // const [isLoading, setIsLoading] = useState(false);
@@ -18,63 +19,9 @@ function Index() {
         metaDescription={"تصفح الخدمات"}
         ogDescription={"تصفح الخدمات"}
       />
-      <div className="portfolios-slider">
-        <div className="row">
-          <div className="col-6 col-xl-3 p-0 slider-inner">
-            <PortfolioSlider
-              thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
-              author={`Ahmed Yahya`}
-              level={`VIP Seller`}
-              username={`wjw`}
-              avatar={`/avatar2.jpg`}
-            />
-          </div>
-          <div className="col-6 col-xl-3 p-0 slider-inner">
-            <PortfolioSlider
-              thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
-              author={`Ahmed Yahya`}
-              level={`VIP Seller`}
-              username={`wjw`}
-              avatar={`/avatar2.jpg`}
-            />
-          </div>
-          <div className="col-6 col-xl-3 p-0 slider-inner">
-            <PortfolioSlider
-              thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
-              author={`Ahmed Yahya`}
-              level={`VIP Seller`}
-              username={`wjw`}
-              avatar={`/avatar2.jpg`}
-            />
-          </div>
-          <div className="col-6 col-xl-3 p-0 slider-inner">
-            <PortfolioSlider
-              thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
-              author={`Ahmed Yahya`}
-              level={`VIP Seller`}
-              username={`wjw`}
-              avatar={`/avatar2.jpg`}
-            />
-          </div>
-        </div>
-      </div>
+      <PortfolioSliders />
       <div className="portfolios-container">
-        <nav className="portfolios-nav">
-          <ul className="portfolios-nav-list">
-            <li className="active">
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-          </ul>
-        </nav>
+        <PortfolioNav />
         <div className="portfolios-content">
           <div className="row">
             <div className="col-sm-6 col-lg-3">
