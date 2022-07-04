@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -11,10 +11,11 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
 
 function Index({ query }) {
   console.log(query);
-
+  const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
@@ -22,6 +23,7 @@ function Index({ query }) {
         metaDescription={"تصفح الخدمات"}
         ogDescription={"تصفح الخدمات"}
       />
+      {isDeleteShowen && <DeleteConfirm setIsDeleteModal={setIsDeleteShowen} />}
       <div className="portfolios-container">
         <nav className="portfolios-nav">
           <ul className="portfolios-nav-list">
@@ -132,6 +134,7 @@ function Index({ query }) {
                   type="button"
                   className="btn butt-red flex-center butt-sm"
                   style={{ width: "100%", justifyContent: "center" }}
+                  onClick={() => setIsDeleteShowen(true)}
                 >
                   <span className="material-icons material-icons-outlined">
                     delete
