@@ -29,7 +29,7 @@ function Index({ query }) {
                   </a>
                 </Link>
               </li>
-              <li className="active">
+              <li>
                 <Link href={`/portfolios/user/dfdfd`}>
                   <a className="portfolio-item">
                     <FaImages /> معرض الأعمال
@@ -43,7 +43,7 @@ function Index({ query }) {
                   </a>
                 </Link>
               </li>
-              <li>
+              <li className="active">
                 <Link href={`/user/myfavorites`}>
                   <a className="portfolio-item">
                     <FaHeart /> مفضلاتي
@@ -54,6 +54,9 @@ function Index({ query }) {
           </nav>
         </div>
         <div className="portfolios-content">
+          <div className="page-header">
+            <div className="title">My Favotites</div>
+          </div>
           <div className="row">
             <div className="col-sm-6 col-lg-3">
               <Portfolio

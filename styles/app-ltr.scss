@@ -1514,3 +1514,32 @@
     }
   }
 }
+.portfolio-item-img {
+  .portfolio-item-img-buttons {
+    .btn {
+      svg {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+.portfolios-container {
+  .portfolios-nav {
+    .portfolios-nav-list {
+      li {
+        .portfolio-item {
+          svg {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.portfolio-item {
+  .counts {
+    right: -10px;
+  }
+}

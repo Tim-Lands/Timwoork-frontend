@@ -32,6 +32,7 @@ function Index() {
                 author={"Abdelhamid Boumegouas"}
                 level={`New Seller`}
                 avatar={`/avatar.png`}
+                views={3563}
                 username={`aboumegouass`}
               />
             </div>

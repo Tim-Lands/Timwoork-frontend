@@ -3935,4 +3935,16 @@
 .portfolio-sidebar .single-info-portfolio .table .share-item {
   margin-right: 5px;
 }
+
+.portfolio-item-img .portfolio-item-img-buttons .btn svg {
+  margin-right: 4px;
+}
+
+.portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item svg {
+  margin-right: 4px;
+}
+
+.portfolio-item .counts {
+  right: -10px;
+}
 /*# sourceMappingURL=app-ltr.css.map */

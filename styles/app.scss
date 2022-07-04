@@ -8203,6 +8203,20 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   margin-inline: 3px;
   color: #555;
   border: 1px solid #ddd;
+  position: relative;
+  .counts {
+    position: absolute;
+    display: flex;
+    top: -10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    background-color: #f53100;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
 }
 
 .portfolios-container {
@@ -8210,18 +8224,53 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     border-bottom: 1px solid #ddd;
     margin-bottom: 14px;
     padding: 18px 0;
+    overflow-y: auto;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    -ms-overflow-style: scroll;
+    position: relative;
+    &::-webkit-scrollbar {
+      height: 0;
+    }
+
+    &:hover {
+      scrollbar-color: #cbd1d8 #cbd1d8;
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 15px;
+      height: 0;
+      background-color: #cbd1d8;
+      transition: all 0.1s linear;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      border-radius: 15px;
+      height: 5px;
+      transition: all 0.1s linear;
+      background-color: #cbd1d8;
+    }
     .portfolios-nav-list {
       list-style: none;
       padding: 0;
       margin: 0;
       display: flex;
+      flex-wrap: nowrap;
       li {
         .portfolio-item {
           font-size: 13px;
           background-color: transparent;
-
+          display: flex;
           border: 1px solid #f1f1f1;
           transition: all 0.3s;
+          align-items: center;
+          flex-wrap: nowrap;
+          @media (max-width: 768px) {
+            font-size: 12px;
+          }
           &:hover {
             background-color: #fff;
             transition: all 0.3s;
@@ -8233,14 +8282,14 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
             font-weight: 600;
             color: #000;
             border: 1px solid #ccc;
-            background-color: #fff;
+
+            // Portfo   background-color: #fff;
           }
         }
       }
     }
   }
 }
-// Portfolio Post
 .timlands-portfolio-item {
   background-color: #fff;
   position: relative;
@@ -8248,18 +8297,61 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   overflow: hidden;
   border-radius: 7px;
   border: 1px solid #ddd;
+  height: 400px;
   transition: all 0.3s;
+
   .portfolio-item-img {
     position: relative;
     height: 200px;
     background-size: cover;
+    overflow: hidden;
     display: flex;
     margin: 8px;
     border-radius: 7px 7px 0 0;
+    align-items: center;
+    justify-content: center;
+    .portfolio-item-img-buttons {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+      backdrop-filter: blur(0);
+      background-color: rgba(0, 0, 0, 0);
+      transition: all 0.3s;
+      width: 100%;
+      flex-direction: column;
+      padding: 0 15px;
+      .btn {
+        width: 100%;
+        justify-content: center;
+        margin-inline: 3px;
+        margin-bottom: 10px;
+        transition: all 0.3s;
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+    &:hover {
+      .portfolio-item-img-buttons {
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.6);
+        transition: all 0.3s;
+        .btn {
+          transition: all 0.3s;
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    }
   }
   .portfolio-item-content {
     padding: 15px;
     padding-top: 10px;
+    .views-meta {
+      font-size: 12px;
+      font-weight: 200;
+      color: #666;
+    }
     .title {
       font-size: 17px;
       font-weight: 700;
@@ -8364,7 +8456,16 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     border-bottom: 1px solid #f7f7f7;
     padding: 20px 0;
     margin-bottom: 10px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
     .portfolio-single-header-aside {
+      width: 70%;
+      @media (max-width: 768px) {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+      }
       .title {
         font-size: 27px;
         font-weight: 700;
@@ -8374,6 +8475,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   }
   .portfolio-single-content {
     padding: 15px 25px;
+    @media (max-width: 768px) {
+      padding: 10px 0px;
+    }
     img {
       border-radius: 8px;
       margin-bottom: 15px;
@@ -8386,6 +8490,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       margin-top: 20px;
       padding: 15px 0;
       border-top: 1px solid #f7f7f7;
+      @media (max-width: 768px) {
+        text-align: center;
+      }
     }
   }
 }
@@ -8395,19 +8502,23 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   background-color: #fff;
   border: 0;
   padding: 6px 14px;
+  font-size: 13px;
+  margin: 0 3px;
   &:hover {
     background-color: #f3f3f3;
     color: #000;
   }
-  &.liked {
-    color: $primary;
+  &.active {
+    color: #000;
     background-color: #f9f9f9;
-    font-weight: 600;
+    font-weight: 300;
   }
 }
 
 .portfolio-sidebar {
   margin-bottom: 10px;
+  border: 1px solid #f1f1f1;
+  border-radius: 7px;
   .title {
     font-weight: 700;
     font-size: 18px;
@@ -8443,6 +8554,13 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       color: #444;
       margin: 0;
     }
+    .btns-follow {
+      padding: 10px 0;
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   }
   .single-info-portfolio {
     .table {
@@ -8466,6 +8584,86 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
         &:hover {
           background-color: #f2f2f2;
           color: #000;
+        }
+      }
+    }
+  }
+}
+.portfolio-another-posts {
+  .portfolio-another-posts-header {
+    border-bottom: 1px solid #f6f6f6;
+    padding: 15px 3px;
+    margin: 21px 0;
+    .title {
+      font-size: 19px;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+  .timlands-portfolio-item {
+    .user-mata-post {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px;
+      .user-mata-post-content {
+        .text-user {
+          .text {
+            font-weight: bold !important;
+            font-size: 14px !important;
+            margin: 0;
+            line-height: 2px;
+          }
+        }
+        .text-meta {
+          .text {
+            font-size: 11px;
+            line-height: 21px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.timlands-followers-users {
+  .follower-user-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f8f8f8;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #f7f7f7;
+    border-radius: 7px;
+    transition: all 0.3s;
+    &:hover {
+      background-color: #f8f8f8;
+      border: 1px solid #f1f1f1;
+      transition: all 0.3s;
+    }
+    .follower-user-item-aside {
+      display: flex;
+      .follower-user-item-img {
+        margin-left: 15px;
+        img {
+          border-radius: 50%;
+        }
+      }
+      .follower-user-item-content {
+        .title {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 0;
+          a {
+            color: #333;
+          }
+        }
+        .meta {
+          font-size: 13px;
+          font-weight: 200;
+          margin: 0;
+          color: #777;
         }
       }
     }

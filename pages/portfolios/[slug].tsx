@@ -7,15 +7,23 @@ import {
   FaHeart,
   FaLink,
   FaLinkedin,
+  FaRegHeart,
+  FaRegStar,
+  FaStar,
   FaTwitter,
 } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
+import Portfolio from "@/components/Post/Portfolio";
+import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
 
 function Index({ query }) {
   console.log(query);
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFavorated, setIsFavorated] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
@@ -25,34 +33,50 @@ function Index({ query }) {
       />
       {isDeleteShowen && <DeleteConfirm setIsDeleteModal={setIsDeleteShowen} />}
       <div className="portfolios-container">
-        <nav className="portfolios-nav">
-          <ul className="portfolios-nav-list">
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-            <li>
-              <button className="portfolio-item">Web Designs</button>
-            </li>
-          </ul>
-        </nav>
+        <PortfolioNav />
         <div className="row">
           <div className="col-xl-9">
             <div className="portfolio-single bg-white p-3">
               <div className="portfolio-single-header">
                 <div className="portfolio-single-header-aside">
                   <h2 className="title">
-                    Lorem ipsum dolor, sit adipisicing elit. Temporibus.
+                    Lorem ipsum dolor, sit adipisicing elit. Temporibus
+                    Temporibus.
                   </h2>
                 </div>
                 <div className="portfolio-single-header-tool">
-                  <button className="like-btn-portfolio" type="button">
-                    <FaHeart /> Like
+                  <button
+                    className={`like-btn-portfolio ${isLiked ? " active" : ""}`}
+                    type="button"
+                    onClick={() => setIsLiked(!isLiked)}
+                  >
+                    {!isLiked ? (
+                      <>
+                        <FaRegStar /> Like
+                      </>
+                    ) : (
+                      <>
+                        <FaStar /> Liked
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    className={`like-btn-portfolio ${
+                      isFavorated ? " active" : ""
+                    }`}
+                    type="button"
+                    onClick={() => setIsFavorated(!isFavorated)}
+                  >
+                    {!isFavorated ? (
+                      <>
+                        <FaRegHeart /> Add My Favorite
+                      </>
+                    ) : (
+                      <>
+                        <FaHeart /> Favorited
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -112,6 +136,49 @@ function Index({ query }) {
                     <FaLink /> Go to Website
                   </a>
                 </div>
+                <div className="portfolio-another-posts">
+                  <div className="portfolio-another-posts-header">
+                    <h2 className="title">أعمال لنفس المستخدم</h2>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-md-4">
+                      <Portfolio
+                        title="A very tasty and cool recipe for pilaf inside a huge"
+                        thumbnail={`https://cdn.dribbble.com/uploads/7999/original/71d0450f3b5282d9ae34f788ba3a04e2.jpg?1582829647`}
+                        slug={`dedej-djeded-wedw-wedwef-hgc`}
+                        author={"Abdelhamid Boumegouas"}
+                        level={`New Seller`}
+                        views={3642}
+                        avatar={`/avatar.png`}
+                        username={`aboumegouass`}
+                      />
+                    </div>
+                    <div className="col-sm-6 col-md-4">
+                      <Portfolio
+                        title="A very tasty and cool recipe for pilaf inside a huge"
+                        thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/7631ff94721811.5e85dc7bb7e11.png`}
+                        slug={`dedej-djeded-wedw-wedwef-hgc`}
+                        author={"Abdelhamid Boumegouas"}
+                        level={`New Seller`}
+                        avatar={`/avatar.png`}
+                        views={3642}
+                        username={`aboumegouass`}
+                      />
+                    </div>
+                    <div className="col-sm-6 col-md-4">
+                      <Portfolio
+                        title="A very tasty and cool recipe for pilaf inside a huge"
+                        thumbnail={`https://cdn.dribbble.com/users/2189268/screenshots/8028972/media/5ae2b122667ec785965a00a021b54eee.png?compress=1&resize=400x300`}
+                        slug={`dedej-djeded-wedw-wedwef-hgc`}
+                        author={"Abdelhamid Boumegouas"}
+                        level={`New Seller`}
+                        views={3642}
+                        avatar={`/avatar.png`}
+                        username={`aboumegouass`}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -159,9 +226,35 @@ function Index({ query }) {
                   blanditiis rem iure ab magnam consectetur laudantium
                   aspernatur dignissimos nulla fuga sapiente exercitationem.
                 </p>
+                <div className="btns-follow">
+                  {isFollowing && (
+                    <button
+                      type="button"
+                      className="btn butt-sm butt-green flex-center"
+                      onClick={() => setIsFollowing(!isFollowing)}
+                    >
+                      <span className="material-icons material-icons-outlined">
+                        person_add
+                      </span>
+                      Follow
+                    </button>
+                  )}
+                  {!isFollowing && (
+                    <button
+                      type="button"
+                      className="btn butt-sm butt-light flex-center"
+                      onClick={() => setIsFollowing(!isFollowing)}
+                    >
+                      <span className="material-icons material-icons-outlined">
+                        person_remove
+                      </span>
+                      Following
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-            <div className="p-3 bg-white portfolio-sidebar">
+            <div className="p-3 bg-white portfolio-sidebar single-info-portfolio-container">
               <h3 className="title">Post Info</h3>
               <div className="single-info-portfolio">
                 <table className="table table-borderles">

@@ -1393,4 +1393,16 @@
 .portfolio-sidebar .single-info-portfolio .table .share-item {
   margin-left: 5px;
 }
+
+.portfolio-item-img .portfolio-item-img-buttons .btn svg {
+  margin-left: 4px;
+}
+
+.portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item svg {
+  margin-left: 4px;
+}
+
+.portfolio-item .counts {
+  left: -10px;
+}
 /*# sourceMappingURL=app-rtl.css.map */
