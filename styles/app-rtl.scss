@@ -1445,80 +1445,84 @@
   .shadow {
     right: 2rem;
   }
-}
 
-/*
-==========================================================================================
-*/
+  /*
+  ==========================================================================================
+  */
 
-.portfolios-slider {
-  .slider-item-portfolio {
-    .slider-item-portfolio-content {
-      .slider-item-portfolio-user {
-        .portfolio-user-avatar {
-          margin-left: 7px;
-        }
-      }
-    }
-  }
-}
-.slider-inner {
-  .slider-item-portfolio {
-    margin-left: 10px;
-  }
-  &:last-of-type {
+  .portfolios-slider {
     .slider-item-portfolio {
-      margin-left: 0;
-    }
-  }
-}
-
-.portfolio-single {
-  .portfolio-single-header {
-    .portfolio-single-header-aside {
-      margin-left: auto;
-    }
-    .portfolio-single-header-tool {
-      margin-right: auto;
-    }
-  }
-}
-
-.portfolio-sidebar {
-  .single-info-portfolio {
-    .table {
-      .skill-item,
-      .share-item {
-        margin-left: 5px;
-      }
-    }
-  }
-}
-.portfolio-item-img {
-  .portfolio-item-img-buttons {
-    .btn {
-      svg {
-        margin-left: 4px;
-      }
-    }
-  }
-}
-.portfolios-container {
-  .portfolios-nav {
-    .portfolios-nav-list {
-      li {
-        .portfolio-item {
-          svg {
-            margin-left: 4px;
+      .slider-item-portfolio-content {
+        .slider-item-portfolio-user {
+          .portfolio-user-avatar {
+            margin-left: 7px;
           }
         }
       }
     }
   }
-}
+  .slider-inner {
+    .slider-item-portfolio {
+      margin-left: 10px;
+    }
+    &:last-of-type {
+      .slider-item-portfolio {
+        margin-left: 0;
+      }
+    }
+  }
 
-.portfolio-item {
-  .counts {
-    left: -10px;
+  .portfolio-single {
+    .portfolio-single-header {
+      .portfolio-single-header-aside {
+        margin-left: auto;
+      }
+      .portfolio-single-header-tool {
+        margin-right: auto;
+      }
+    }
+  }
+
+  .portfolio-sidebar {
+    .single-info-portfolio {
+      .table {
+        .skill-item,
+        .share-item {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .portfolio-item-img {
+    .portfolio-item-img-buttons {
+      .btn {
+        svg {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+  .portfolios-container {
+    .portfolios-nav {
+      .portfolios-nav-list {
+        li {
+          .portfolio-item {
+            svg {
+              margin-left: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .portfolio-item {
+    .counts {
+      left: -10px;
+    }
+  }
+
+  .user-mata-post-content {
+    margin-right: 5px;
   }
 }

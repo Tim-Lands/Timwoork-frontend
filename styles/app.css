@@ -12251,6 +12251,12 @@ h3 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: absolute;
+  bottom: 10px;
+}
+
+.timlands-portfolio-item .portfolio-item-content .user-mata-post .user-mata-post-img {
+  margin-top: 5px;
 }
 
 .timlands-portfolio-item .portfolio-item-content .user-mata-post .user-mata-post-img img {
@@ -12292,6 +12298,12 @@ h3 {
   height: 400px;
   border-radius: 7px;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .portfolios-slider .slider-item-portfolio {
+    margin-bottom: 15px;
+  }
 }
 
 .portfolios-slider .slider-item-portfolio .slider-item-portfolio-image {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaAngleDown, FaHeart } from "react-icons/fa";
 
@@ -20,10 +21,12 @@ function PortfolioNav() {
       </ul>
       <ul className="portfolios-nav-list ml-auto">
         <li>
-          <button className="portfolio-item">
-            <span className="counts">20+</span>
-            <FaHeart /> Go to My Favorites
-          </button>
+          <Link href={`/user/myfavorites`}>
+            <a className="portfolio-item">
+              <span className="counts">20+</span>
+              <FaHeart /> Go to My Favorites
+            </a>
+          </Link>
         </li>
         <li>
           <button className="portfolio-item">

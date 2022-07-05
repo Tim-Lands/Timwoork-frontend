@@ -8368,7 +8368,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       display: flex;
       margin-top: 7px;
       align-items: center;
+      position: absolute;
+      bottom: 10px;
       .user-mata-post-img {
+        margin-top: 5px;
         img {
           border-radius: 50%;
         }
@@ -8406,6 +8409,9 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     height: 400px;
     border-radius: 7px;
     overflow: hidden;
+    @media (max-width: 768px) {
+      margin-bottom: 15px;
+    }
     .slider-item-portfolio-image {
       position: absolute;
       left: 0;
