@@ -1,10 +1,10 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useRef, useState } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
 import API from "../../config";
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"; 
 import useFileUpload from "react-use-file-upload";
 import useSWR, { useSWRConfig } from "swr";
 import Sidebar from "@/components/Conversations/Sidebar";
@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import router from "next/router";
 import Loading from "@/components/Loading";
 import pusher from "../../config/pusher";
+import { LanguageContext } from "contexts/languageContext/context";
 function Conversation({ query }) {
   let token = Cookies.get("token");
 
@@ -21,7 +22,8 @@ function Conversation({ query }) {
   const { mutate } = useSWRConfig();
   const inputRefMsg: any = useRef();
   const messageCont = useRef(null);
-
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("conversion");
   const { data: conversationsSingle }: any = useSWR(
     `api/conversations/${query.id}`
   );
@@ -294,7 +296,7 @@ function Conversation({ query }) {
         {veriedEmail && (
           <div className="row">
             <div className="col-lg-4">
-              <Sidebar RouterId={query.id} />
+              <Sidebar RouterId={query.id} getLanguage={getLanguage}/>
             </div>
             <div className="col-lg-8">
               <div className="app-bill conv" ref={messageCont}>
