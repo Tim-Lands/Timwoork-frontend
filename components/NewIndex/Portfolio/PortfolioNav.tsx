@@ -7,16 +7,16 @@ function PortfolioNav() {
     <nav className="portfolios-nav d-flex">
       <ul className="portfolios-nav-list me-auto">
         <li>
-          <button className="portfolio-item">Web Designs</button>
+          <button className="portfolio-item">تصميم المواقع</button>
         </li>
         <li>
-          <button className="portfolio-item">Motions Graphic</button>
+          <button className="portfolio-item">التصميم الغرافيكي</button>
         </li>
         <li>
-          <button className="portfolio-item">Records</button>
+          <button className="portfolio-item">تسجيلات صوتية</button>
         </li>
         <li>
-          <button className="portfolio-item">UI/UX Designs</button>
+          <button className="portfolio-item">تصميم UI/UX</button>
         </li>
       </ul>
       <ul className="portfolios-nav-list ml-auto">
@@ -24,13 +24,13 @@ function PortfolioNav() {
           <Link href={`/user/myfavorites`}>
             <a className="portfolio-item">
               <span className="counts">20+</span>
-              <FaHeart /> Go to My Favorites
+              <FaHeart /> المفضلة
             </a>
           </Link>
         </li>
         <li>
           <button className="portfolio-item">
-            Settings <FaAngleDown />{" "}
+            الإعدادات <FaAngleDown />{" "}
           </button>
         </li>
       </ul>
