@@ -891,8 +891,12 @@
   left: 22px;
 }
 
-.rtl .rel-form .timlands-form-label {
+.rtl .rel-form input {
   border-radius: 0 5px 5px 0;
+}
+
+.rtl .rel-form .timlands-form-label {
+  border-radius: 5px 0 0 5px;
 }
 
 .rtl .category-item .category-item-title .title .material-icons {

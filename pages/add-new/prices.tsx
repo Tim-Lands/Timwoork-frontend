@@ -12,6 +12,8 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 import PropTypes from "prop-types";
+// import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+// import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 
 function Prices({ query }) {
   const stepsView = useRef(null);
@@ -322,6 +324,7 @@ function Prices({ query }) {
                                             >
                                               <div className="row">
                                                 <div className="col-sm-12">
+                                                  {/* <FormLangsCheck /> */}
                                                   <div className="timlands-form">
                                                     <label
                                                       className="label-block"
@@ -347,6 +350,7 @@ function Prices({ query }) {
                                                       }
                                                       name={`developments[${index}].title`}
                                                     />
+                                                    {/* <FormLangs /> */}
                                                     {validationsErrors &&
                                                       validationsErrors[
                                                         `developments.${index}.title`

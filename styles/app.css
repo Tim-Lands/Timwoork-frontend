@@ -12611,4 +12611,50 @@ h3 {
   margin: 0;
   color: #777;
 }
+
+.timlands-checked-items {
+  position: absolute;
+  z-index: 100;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  top: 48px;
+  left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.timlands-checked-items li a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 4px 6px;
+  color: #666 !important;
+  border-radius: 4px;
+  margin-inline: 3px;
+  background-color: #f5f5f5;
+  font-size: 11px;
+}
+
+.timlands-checked-items li.active a {
+  color: #fff !important;
+  background-color: #3bb361;
+}
+
+.timlands-checked-items li.active a:hover {
+  color: #fff;
+}
+
+.form-languages .form-check-label {
+  font-size: 13px !important;
+  color: #777;
+}
+
+.form-languages .title-lang {
+  font-size: 13px;
+  margin: 0;
+  color: #333;
+  font-weight: bold;
+}
 /*# sourceMappingURL=app.css.map */
