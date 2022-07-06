@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -31,8 +31,9 @@ function Layout(props: any) {
     <SWRConfig
       value={{
         fetcher: async (url: string) => {
+          console.log(url)
           return await API.get(url, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token}`,'X-LOCALIZATION':language},
           })
             .then((r: any) => r.data)
             .catch(() => {
