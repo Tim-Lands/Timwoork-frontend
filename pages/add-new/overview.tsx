@@ -12,6 +12,8 @@ import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
+// import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+// import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -243,6 +245,7 @@ function Overview({ query }) {
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">
+                        {/* <FormLangsCheck /> */}
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
                             عنوان الخدمة
@@ -263,6 +266,7 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
+                          {/* <FormLangs /> */}
                           <div className="note-form-text-sh">
                             <p className="text">
                               يجب أن لايحتوي عنوان الخدمة على رموز

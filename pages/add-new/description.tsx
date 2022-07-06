@@ -13,6 +13,8 @@ import useSWR from "swr";
 // import { useEditor, EditorContent } from "@tiptap/react";
 // import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
+// import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+// import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 // import cookies from "next-cookies";
 
 // export const MenuBar = ({ editor }) => {
@@ -304,6 +306,7 @@ function Description({ query }) {
                     <div className="timlands-content-form">
                       <div className="row">
                         <div className="col-md-12">
+                          {/* <FormLangsCheck /> */}
                           <div className="timlands-form">
                             <label
                               className="label-block"
@@ -319,6 +322,7 @@ function Description({ query }) {
                                 onChange={(e) => formik.handleChange(e)}
                                 // onChange={formik.setFieldValue}
                               ></textarea>
+                              {/* <FormLangs /> */}
                               {/* <MenuBar editor={editor} />
                               <Tiptap
                                 value={formik.values.content}
@@ -351,6 +355,7 @@ function Description({ query }) {
                           </div>
                         </div>
                         <div className="col-md-12">
+                          {/* <FormLangsCheck /> */}
                           <div className="timlands-form">
                             <label
                               className="label-block"
@@ -365,6 +370,7 @@ function Description({ query }) {
                                 id="buyer_instruct"
                                 onChange={(e) => formik.handleChange(e)}
                               ></textarea>
+                              {/* <FormLangs /> */}
                               {/* <MenuBar editor={buyerInstruct} />
                               <Tiptap
                                 value={formik.values.buyer_instruct}
