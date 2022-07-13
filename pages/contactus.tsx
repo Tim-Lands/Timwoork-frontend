@@ -11,6 +11,8 @@ function Overview() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("contact_us");
   const [validationsErrors, setValidationsErrors]: any = useState({});
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const formik = useFormik({
     initialValues: {
       subject: "",
@@ -29,7 +31,7 @@ function Overview() {
         const res = await API.post(`api/contactus`, values);
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getLogin("The_update_has"));
         }
       } catch (error: any) {
         if (
@@ -42,12 +44,13 @@ function Overview() {
       }
     },
   });
+
   return (
     <>
       <MetaTags
-        title="اتصل بنا"
-        metaDescription="اتصل بنا - تيموورك"
-        ogDescription="اتصل بنا - تيموورك"
+        title={getAll("Contact_us")}
+        metaDescription={getAll("Contact_us_Timwoork")}
+        ogDescription={getAll("Contact_us_Timwoork")}
       />
       <div className="row justify-content-md-center">
         <div className="col-md-7 pt-3 mb-3">
@@ -129,12 +132,12 @@ function Overview() {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-phone">
-                        رقم الهاتف *
+                        {getLogin("Phone_number")} *
                       </label>
                       <input
                         id="input-phone"
                         name="phoneNumber"
-                        placeholder="رقم الهاتف..."
+                        placeholder={getLogin("Phone_number")}
                         className={"timlands-inputs "}
                         autoComplete="off"
                         onChange={formik.handleChange}

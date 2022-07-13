@@ -13,6 +13,8 @@ import PropTypes from "prop-types";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -132,6 +134,9 @@ const EditSeller = () => {
       userInfo.user_details.profile.profile_seller &&
       userInfo.user_details.profile.profile_seller.bio,
   });
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const html = editor && editor.getHTML();
   const formik = useFormik({
     initialValues: {
@@ -153,7 +158,7 @@ const EditSeller = () => {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push("/user/profile");
         }
       } catch (error: any) {
@@ -176,9 +181,9 @@ const EditSeller = () => {
   return (
     <>
       <MetaTags
-        title="تعديل الملف الشخصي للبائع"
-        metaDescription="تعديل الملف الشخصي للبائع"
-        ogDescription="تعديل الملف الشخصي للبائع"
+        title={getLogin("Edit_the_sellers")}
+        metaDescription={getLogin("Edit_the_sellers")}
+        ogDescription={getLogin("Edit_the_sellers")}
       />
       {veriedEmail && (
         <>
@@ -257,7 +262,7 @@ const EditSeller = () => {
                             <div className="col-md-12">
                               <div className="timlands-form">
                                 <label className="label-block" htmlFor="bio">
-                                  نبذة عنك
+                                  {getLogin("Brief_me_about")}
                                 </label>
                                 <div className="app-content-editor">
                                   <MenuBar editor={editor} />
@@ -290,7 +295,7 @@ const EditSeller = () => {
                                 disabled={formik.isSubmitting}
                                 className="btn me-auto butt-primary butt-md"
                               >
-                                تحديث المعلومات
+                                {getLogin("Update_basic_information")}
                               </button>
                             </div>
                           </div>
