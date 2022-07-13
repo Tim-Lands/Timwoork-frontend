@@ -170,6 +170,44 @@ function Profile() {
                     </button>
                   </p>
                 </div>
+                {/* <div className="portfolios-container">
+                  <nav className="portfolios-nav d-flex">
+                    <ul className="portfolios-nav-list me-auto">
+                      <li className="active">
+                        <Link href={`/user/profile`}>
+                          <a className="portfolio-item">
+                            <FaUserCircle /> الملف الشخصي
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href={`/portfolios/user/${
+                            userInfo && userInfo.user_details.username
+                          }`}
+                        >
+                          <a className="portfolio-item">
+                            <FaImages /> معرض الأعمال
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/user/myfollowers`}>
+                          <a className="portfolio-item">
+                            <FaRss /> الأشخاص الذين أتابعهم
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href={`/user/myfavorites`}>
+                          <a className="portfolio-item">
+                            <FaHeart /> مفضلاتي
+                          </a>
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
+                </div> */}
               </div>
               <div className="row">
                 <Sidebar

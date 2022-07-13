@@ -541,7 +541,7 @@ function Navbar({ dark = false }) {
                 </Link>
               </li>
               <li className="authBtn">
-                <Link href="login">
+                <Link href="/login">
                   <a
                     style={{ fontWeight: "bold" }}
                     className={`btn butt-xs flex-center ${

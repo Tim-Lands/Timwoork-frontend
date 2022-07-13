@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
-import { FaHeart } from "react-icons/fa";
+import { FaEye, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
 
 function Portfolio({
   title,
@@ -12,30 +12,57 @@ function Portfolio({
   level,
   username,
   avatar,
+  views,
   slug,
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
+  const [isFavorated, setIsFavorated] = useState(false);
+
   return (
     <Badge.Ribbon
       color={"#475c80"}
       text={
         <>
-          <FaHeart />
+          <FaStar />
           <span style={{ marginInline: 4, fontSize: 14 }}>(12,365)</span>
         </>
       }
     >
       <div className={"timlands-portfolio-item"}>
-        <Link href={`/portfolios/${slug}`}>
-          <a
-            className="portfolio-item-img"
-            style={{ backgroundImage: thumbnailUrl }}
-          ></a>
-        </Link>
+        <div
+          className="portfolio-item-img"
+          style={{ backgroundImage: thumbnailUrl }}
+        >
+          <div className="portfolio-item-img-buttons">
+            <button
+              className="btn butt-xs butt-white flex-center"
+              type="button"
+              onClick={() => setIsFavorated(!isFavorated)}
+            >
+              {!isFavorated ? (
+                <>
+                  <FaRegHeart /> To Favorite
+                </>
+              ) : (
+                <>
+                  <FaHeart /> Favorited
+                </>
+              )}
+            </button>
+            <Link href={`/portfolios/${slug}`}>
+              <a className="btn butt-xs butt-white-out flex-center">
+                <FaEye /> View
+              </a>
+            </Link>
+          </div>
+        </div>
         <div className="portfolio-item-content">
           <h3 className="title">
             <a href={`/portfolios/${slug}`}>{title}</a>
           </h3>
+          <p className="views-meta">
+            <FaEye /> ({views})
+          </p>
           <Link href={`/u/${username}`}>
             <a className="user-mata-post">
               <div className="user-mata-post-img">
@@ -64,6 +91,7 @@ Portfolio.propTypes = {
   slug: PropTypes.string,
   username: PropTypes.string,
   heartCount: PropTypes.number,
+  views: PropTypes.number,
   level: PropTypes.string,
 };
 

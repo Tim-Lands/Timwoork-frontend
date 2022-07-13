@@ -62,6 +62,9 @@
   */
   /* TOGGLE STYLING */
   /*-------------------------------------------------------------------------------------*/
+  /*
+  ==========================================================================================
+  */
 }
 
 .ltr .timlands-alert {
@@ -3908,31 +3911,44 @@
   left: 2rem;
 }
 
-/*
-==========================================================================================
-*/
-.portfolios-slider .slider-item-portfolio .slider-item-portfolio-content .slider-item-portfolio-user .portfolio-user-avatar {
+.ltr .portfolios-slider .slider-item-portfolio .slider-item-portfolio-content .slider-item-portfolio-user .portfolio-user-avatar {
   margin-right: 7px;
 }
 
-.slider-inner .slider-item-portfolio {
+.ltr .slider-inner .slider-item-portfolio {
   margin-right: 10px;
 }
 
-.slider-inner:last-of-type .slider-item-portfolio {
+.ltr .slider-inner:last-of-type .slider-item-portfolio {
   margin-right: 0;
 }
 
-.portfolio-single .portfolio-single-header .portfolio-single-header-aside {
+.ltr .portfolio-single .portfolio-single-header .portfolio-single-header-aside {
   margin-right: auto;
 }
 
-.portfolio-single .portfolio-single-header .portfolio-single-header-tool {
+.ltr .portfolio-single .portfolio-single-header .portfolio-single-header-tool {
   margin-left: auto;
 }
 
-.portfolio-sidebar .single-info-portfolio .table .skill-item,
-.portfolio-sidebar .single-info-portfolio .table .share-item {
+.ltr .portfolio-sidebar .single-info-portfolio .table .skill-item,
+.ltr .portfolio-sidebar .single-info-portfolio .table .share-item {
   margin-right: 5px;
+}
+
+.ltr .portfolio-item-img .portfolio-item-img-buttons .btn svg {
+  margin-right: 4px;
+}
+
+.ltr .portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item svg {
+  margin-right: 4px;
+}
+
+.ltr .portfolio-item .counts {
+  right: -10px;
+}
+
+.ltr .user-mata-post-content {
+  margin-left: 5px;
 }
 /*# sourceMappingURL=app-ltr.css.map */
