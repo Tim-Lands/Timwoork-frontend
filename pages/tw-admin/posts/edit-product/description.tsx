@@ -12,7 +12,13 @@ import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import cookies from "next-cookies";
+import { LanguageContext } from "../../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
+const getAddNew = getSectionLanguage("add_new");
 export const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
@@ -115,7 +121,7 @@ const Tiptap = (props: any) => {
   );
 };
 function Description({ query, product }) {
-  console.log(product)
+  console.log(product);
   const token = useRef(Cookies.get("token_dash"));
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -135,7 +141,7 @@ function Description({ query, product }) {
       router.push("/tw-admin/login");
       return;
     }
-  }, [query.id])
+  }, [query.id]);
 
   const formik = useFormik({
     initialValues: {
@@ -159,7 +165,7 @@ function Description({ query, product }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getLogin("The_update_has"));
           router.push(`/tw-admin/posts/edit-product/medias?id=${product.id}`);
         }
       } catch (error: any) {
@@ -176,9 +182,9 @@ function Description({ query, product }) {
   return (
     <>
       <MetaTags
-        title="تعديل الخدمة - الوصف وتعليمات المشتري"
-        metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
-        ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
+        title={getLogin("Edit_service_Description")}
+        metaDescription={getAll("Add_new_service_Description")}
+        ogDescription={getAll("Add_new_service_Description")}
       />
       {token && (
         <div className="container-fluid">
@@ -193,55 +199,64 @@ function Description({ query, product }) {
                   <div className="timlands-steps">
                     <div className="timlands-step-item">
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/overview?id=${id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/overview?id=${id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 collections_bookmark
                               </span>
                             </span>
-                            معلومات عامة
+                            {getLogin("General_information")}
                           </a>
                         </Link>
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${product.current_step < 1 && "pe-none"
-                        }`}
+                      className={`timlands-step-item ${
+                        product.current_step < 1 && "pe-none"
+                      }`}
                     >
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/prices?id=${query.id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/prices?id=${query.id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 payments
                               </span>
                             </span>
-                            السعر والتطويرات
+                            {getLogin("Price_and_developments")}
                           </a>
                         </Link>
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item active ${product.current_step < 2 && "pe-none"
-                        }`}
+                      className={`timlands-step-item active ${
+                        product.current_step < 2 && "pe-none"
+                      }`}
                     >
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/description?id=${query.id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/description?id=${query.id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 description
                               </span>
                             </span>
-                            الوصف وتعليمات المشتري
+                            {getLogin("Desciprion_intrustions")}
                           </a>
                         </Link>
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${product.current_step < 3 && "pe-none"
-                        }`}
+                      className={`timlands-step-item ${
+                        product.current_step < 3 && "pe-none"
+                      }`}
                     >
                       <h3 className="text">
                         <Link href={`/edit-product/medias?id=${query.id}`}>
@@ -251,7 +266,7 @@ function Description({ query, product }) {
                                 mms
                               </span>
                             </span>
-                            مكتبة الصور والملفات
+                            {getLogin("Gallery_and_folders")}
                           </a>
                         </Link>
                       </h3>
@@ -279,7 +294,7 @@ function Description({ query, product }) {
                         <span className="material-icons material-icons-outlined">
                           description
                         </span>
-                        الوصف وتعليمات المشتري
+                        {getLogin("Desciprion_intrustions")}
                       </h2>
                     </div>
                   </div>
@@ -292,7 +307,7 @@ function Description({ query, product }) {
                             className="label-block"
                             htmlFor="input-content"
                           >
-                            وصف الخدمة
+                            {getAddNew("Service_description")}
                           </label>
                           <div className="app-content-editor">
                             <MenuBar editor={editor} />
@@ -308,9 +323,7 @@ function Description({ query, product }) {
                             className="timlands-form-note"
                           >
                             <p className="text">
-                              أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط
-                              . يمنع وضع البريد الالكتروني، رقم الهاتف أو أي
-                              معلومات اتصال أخرى.
+                              {getAddNew("Enter_an_accurate")}
                             </p>
                           </motion.div>
                           {validationsErrors && validationsErrors.content && (
@@ -334,7 +347,7 @@ function Description({ query, product }) {
                             className="label-block"
                             htmlFor="input-buyer_instruct"
                           >
-                            تعليمات المشتري
+                            {getAddNew("Instructions_to_the")}
                           </label>
                           <div className="app-content-editor">
                             <MenuBar editor={buyerInstruct} />
@@ -350,8 +363,7 @@ function Description({ query, product }) {
                             className="timlands-form-note"
                           >
                             <p className="text">
-                              المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة.
-                              تظهر هذه المعلومات بعد شراء الخدمة فقط
+                              {getAddNew("They_are_information")}
                             </p>
                           </motion.div>
                           {validationsErrors &&
@@ -380,17 +392,20 @@ function Description({ query, product }) {
                             <span className="material-icons-outlined">
                               chevron_right
                             </span>
-                            <span className="text">المرحلة السابقة</span>
+                            <span className="text">
+                              {getAddNew("Previous_step")}
+                            </span>
                           </button>
                           <button
                             type="submit"
                             disabled={
-                              (!product ? true : false) ||
-                              formik.isSubmitting
+                              (!product ? true : false) || formik.isSubmitting
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">حفظ التغييرات</span>
+                            <span className="text">
+                              {getLogin("Save_edits")}
+                            </span>
                           </button>
                         </div>
                       </div>
@@ -410,7 +425,7 @@ Description.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export async function getServerSideProps(ctx) {
-  console.log('serverside')
+  console.log("serverside");
   const token = cookies(ctx).token_dash || "";
   const uriString = `dashboard/products/${ctx.query.id}`;
   // Fetch data from external API

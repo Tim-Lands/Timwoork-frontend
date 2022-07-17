@@ -11,7 +11,13 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Unauthorized from "@/components/Unauthorized";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
+const getMain = getSectionLanguage("main");
 const sellerInformations = (): ReactElement => {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -19,12 +25,12 @@ const sellerInformations = (): ReactElement => {
   const { data: userInfo }: any = useSWR("api/me");
   // Redirect to user home route if user is authenticated.
   const SignupSchema = Yup.object().shape({
-    first_name: Yup.string().required("هذا الحقل إجباري"),
-    last_name: Yup.string().required("هذا الحقل إجباري"),
-    date_of_birth: Yup.string().required("هذا الحقل إجباري"),
-    gender: Yup.number().required("هذا الحقل إجباري"),
-    username: Yup.string().required("هذا الحقل إجباري"),
-    country_id: Yup.number().required("هذا الحقل إجباري"),
+    first_name: Yup.string().required(getLogin("This_field_is")),
+    last_name: Yup.string().required(getLogin("This_field_is")),
+    date_of_birth: Yup.string().required(getLogin("This_field_is")),
+    gender: Yup.number().required(getLogin("This_field_is")),
+    username: Yup.string().required(getLogin("This_field_is")),
+    country_id: Yup.number().required(getLogin("This_field_is")),
   });
   // Return statement.
   return (
@@ -34,9 +40,9 @@ const sellerInformations = (): ReactElement => {
       {userInfo && userInfo.profile && (
         <>
           <MetaTags
-            title={"تعديل الصفحة الشخصية"}
-            metaDescription={"تعديل الصفحة الشخصية"}
-            ogDescription={"تعديل الصفحة الشخصية"}
+            title={getLogin("Edit_profile")}
+            metaDescription={getLogin("Edit_profile")}
+            ogDescription={getLogin("Edit_profile")}
           />
           <Formik
             isInitialValid={true}
@@ -58,22 +64,22 @@ const sellerInformations = (): ReactElement => {
                 });
                 // Authentication was successful.
                 if (res.status === 200) {
-                  message.success("لقد تم التحديث بنجاح");
+                  message.success(getLogin("The_update_has"));
                 }
               } catch (error: any) {
                 if (error.response && error.response.status === 200) {
-                  message.success("لقد تم التحديث بنجاح");
+                  message.success(getLogin("The_update_has"));
                 }
                 if (error.response && error.response.status === 422) {
-                  message.error("يرجى تعبئة البيانات");
+                  message.error(getAll("Please_fill_in"));
                 }
                 if (error.response && error.response.status === 419) {
-                  message.error("العملية غير ناجحة");
+                  message.error(getAll("Failed_operation"));
                 }
                 if (error.response && error.response.status === 400) {
-                  message.error("حدث خطأ.. يرجى التأكد من البيانات");
+                  message.error(getLogin("An_error_occurred"));
                 } else {
-                  message.error("حدث خطأ غير متوقع");
+                  message.error(getLogin("An_unexpected_error"));
                 }
               }
             }}
@@ -90,10 +96,10 @@ const sellerInformations = (): ReactElement => {
                           </a>
                         </Link>
                       </div>
-                      <h1 className="login-title">تحديث المعلومات الشخصية</h1>
-                      <h3 className="login-text">
-                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                      </h3>
+                      <h1 className="login-title">
+                        {getLogin("Edit_personal_information")}
+                      </h1>
+                      <h3 className="login-text">{getLogin("This_text_is")}</h3>
                     </div>
                   </div>
                   <div className="col-lg-6 p-0">
@@ -126,12 +132,12 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="first_name"
                               >
-                                الاسم الأول
+                                {getLogin("First_name")}
                               </label>
                               <Field
                                 id="first_name"
                                 name="first_name"
-                                placeholder="الاسم الأول..."
+                                placeholder={getLogin("First_name")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -154,12 +160,12 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="last_name"
                               >
-                                الاسم الأخير
+                                {getLogin("Last_name")}{" "}
                               </label>
                               <Field
                                 id="last_name"
                                 name="last_name"
-                                placeholder="الاسم الأخير..."
+                                placeholder={getLogin("Last_name")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -179,12 +185,12 @@ const sellerInformations = (): ReactElement => {
                           <div className="col-md-6">
                             <div className="timlands-form">
                               <label className="label-block" htmlFor="username">
-                                اسم المستخدم
+                                {getLogin("Username")}
                               </label>
                               <Field
                                 id="username"
                                 name="username"
-                                placeholder="اسم المستخدم..."
+                                placeholder={getLogin("Username")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -207,13 +213,13 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="date_of_birth"
                               >
-                                تاريخ الميلاد
+                                {getLogin("Birthday")}
                               </label>
                               <Field
                                 type="date"
                                 id="date_of_birth"
                                 name="date_of_birth"
-                                placeholder="تاريخ الميلاد..."
+                                placeholder={getLogin("Birthday")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -235,7 +241,7 @@ const sellerInformations = (): ReactElement => {
                           <div className="col-md-6">
                             <div className="timlands-form">
                               <label className="label-block" htmlFor="gender">
-                                اختر الجنس
+                                {getLogin("Select_sexe")}
                               </label>
                               <Field
                                 as="select"
@@ -243,8 +249,8 @@ const sellerInformations = (): ReactElement => {
                                 name="gender"
                                 className="timlands-inputs"
                               >
-                                <option value={1}>ذكر</option>
-                                <option value={0}>أنثى</option>
+                                <option value={1}>{getLogin("Man")}</option>
+                                <option value={0}>{getLogin("woman")}</option>
                               </Field>
                               {errors.gender && touched.gender ? (
                                 <div style={{ overflow: "hidden" }}>
@@ -265,7 +271,7 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="country_id"
                               >
-                                اختر البلد
+                                {getLogin("Select_country")}
                               </label>
                               <Field
                                 as="select"
@@ -298,13 +304,13 @@ const sellerInformations = (): ReactElement => {
                           <div style={{ overflow: "hidden" }}>
                             <div className="timlands-form-note">
                               <p className="text">
-                                بمجرد قمت بالضغط على زر التسجيل فأنت توافق على{" "}
+                                {getLogin("If_your_press")}{" "}
                                 <Link href="/">
-                                  <a>شروط الاستخدام</a>
+                                  <a>{getMain("Terms_of_use")}</a>
                                 </Link>{" "}
                                 و{" "}
                                 <Link href="/">
-                                  <a>سياسة الخصوصية</a>
+                                  <a>{getAll("Privacy_policy")}</a>
                                 </Link>
                               </p>
                             </div>
@@ -317,7 +323,7 @@ const sellerInformations = (): ReactElement => {
                               disabled={isSubmitting}
                               className="btn me-auto butt-primary butt-md"
                             >
-                              تحديث المعلومات
+                              {getLogin("Edit_information")}
                             </button>
                           </div>
                         </div>

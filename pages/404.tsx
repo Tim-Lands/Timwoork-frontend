@@ -15,6 +15,7 @@ import Head from "next/head";
 import { connect } from "react-redux";
 import { LanguageContext } from "../contexts/languageContext/context";
 import { useContext } from "react";
+
 function FourOFour(props: any) {
   /**
    * Determine the link location that the link

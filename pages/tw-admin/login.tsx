@@ -7,7 +7,12 @@ import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import API from "../../config";
 import { Alert } from "@/components/Alert/Alert";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 const Login = (): ReactElement => {
   // The router object used for redirecting after login.
   const router = useRouter();
@@ -29,9 +34,9 @@ const Login = (): ReactElement => {
   return (
     <>
       <MetaTags
-        title={"تسجيل الدخول"}
-        metaDescription={"الصفحة الرئيسية"}
-        ogDescription={"الصفحة الرئيسية"}
+        title={getAll("Log_in")}
+        metaDescription={getLogin("Home")}
+        ogDescription={getLogin("Home")}
       />
       <Formik
         initialValues={{
@@ -97,17 +102,17 @@ const Login = (): ReactElement => {
                       </Link>
                     </div>
                     <div className="page-header">
-                      <h1 className="title">تسجيل الدخول</h1>
+                      <h1 className="title">{getLogin("Log_in")}</h1>
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="email">
-                        البريد الإلكتروني
+                        {getLogin("E_mail")}
                       </label>
                       <Field
                         id="email"
                         onKeyUp={setValidationsErrorsHandle}
                         name="email"
-                        placeholder="البريد الإلكتروني..."
+                        placeholder={getLogin("E_mail")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -129,14 +134,14 @@ const Login = (): ReactElement => {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
-                        كلمة المرور
+                        {getLogin("Password")}
                       </label>
                       <Field
                         type="password"
                         onKeyUp={setValidationsErrorsHandle}
                         id="password"
                         name="password"
-                        placeholder="كلمة المرور..."
+                        placeholder={getLogin("Password")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -166,7 +171,7 @@ const Login = (): ReactElement => {
                           disabled={isSubmitting}
                           className="btn me-auto butt-primary butt-md"
                         >
-                          تسجيل الدخول
+                          {getAll("Log_in")}
                         </button>
                       </div>
                     </div>

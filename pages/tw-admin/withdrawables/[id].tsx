@@ -9,6 +9,8 @@ import { message, Spin } from "antd";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Loading from "@/components/Loading";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function Id({ query }) {
   const token = Cookies.get("token_dash");
@@ -16,6 +18,9 @@ function Id({ query }) {
   const [isShowCause, setIsShowCause] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cause, setCause] = useState("");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const AcceptAmount = async (id: any) => {
     try {
       const res: any = await API.post(
@@ -29,7 +34,7 @@ function Id({ query }) {
         router.push("/tw-admin/withdrawables");
       }
     } catch (error) {
-      message.error("للأسف لم يتم القبول");
+      message.error(getLogin("Unfortunately_its_rejected"));
     }
   };
   const cancelAmount = async () => {
@@ -44,26 +49,26 @@ function Id({ query }) {
       );
       if (res.status === 200) {
         router.push("/tw-admin/withdrawables");
-        message.success("لقد تم الرفض بنجاح");
+        message.success(getLogin("Rejected_succesufully"));
         setIsLoading(false);
       }
     } catch (error) {
-      message.error("للأسف لم يتم الرفض");
+      message.error(getLogin("Unfortunately_it_was"));
       setIsLoading(false);
     }
   };
   function switchType() {
     switch (getData && getData.data.type) {
       case 3:
-        return "الحوالة المالية";
+        return getLogin("Money_transfer");
       case 2:
-        return "التحويل البنكي";
+        return getLogin("Bank_transfer");
       case 1:
-        return "تحويل الوايز";
+        return getAll("Wise");
       case 0:
-        return "تحويل بايبال";
+        return getLogin("PayPal_transfer");
       default:
-        return "تحويل الوايز";
+        return getAll("Wise");
     }
   }
   return (
@@ -76,12 +81,12 @@ function Id({ query }) {
             <Spin spinning={isLoading}>
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-title">
-                  أذكر سبب الرفض
+                  {getLogin("State_the_reason")}
                 </label>
                 <textarea
                   id="input-title"
                   name="title"
-                  placeholder="أذكر سبب الرفض..."
+                  placeholder={getLogin("State_the_reason")}
                   className={"timlands-inputs"}
                   onChange={(e) => setCause(e.target.value)}
                   value={cause}
@@ -92,13 +97,13 @@ function Id({ query }) {
                   className="btn butt-primary butt-sm mx-1"
                   onClick={cancelAmount}
                 >
-                  رفض
+                  {getLogin("Rejection")}
                 </button>
                 <button
                   className="btn butt-red butt-sm mx-1"
                   onClick={() => setIsShowCause(false)}
                 >
-                  إغلاق
+                  {getAll("Cancel_2")}
                 </button>
               </div>
             </Spin>
@@ -116,93 +121,95 @@ function Id({ query }) {
               className="btn butt-xs butt-red mx-1"
               onClick={() => setIsShowCause(true)}
             >
-              رفض هذا الطلب
+              {getLogin("Reject_this_request")}
             </button>
 
             <button
               className="btn butt-xs butt-green mx-1"
               onClick={() => AcceptAmount(getData && getData.data.id)}
             >
-              قبول هذا الطلب
+              {getLogin("Accept_this_request")}
             </button>
           </div>
         </div>
         <div className="row">
           <div className="col-lg-6">
             <div className="page-header">
-              <h4 className="title">معلومات المعاملة المالية</h4>
+              <h4 className="title">
+                {getLogin("Financial_transaction_information")}
+              </h4>
             </div>
             {getData && getData.data.type == 2 && (
               <table className="table">
                 <tbody>
                   <tr>
-                    <th>المبلغ المراد تحويله: </th>
+                    <th>{getLogin("Amount_to_transfer")}</th>
                     <td>{getData && getData.data.amount}$</td>
                   </tr>
                   <tr>
-                    <th>نوع السحب: </th>
+                    <th>{getLogin("Transfer_type")}</th>
                     <td>{switchType()}</td>
                   </tr>
                   <tr>
-                    <th>تاريخ السحب: </th>
+                    <th>{getLogin("Withdrawal_date")}</th>
                     <td>
                       <LastSeen date={getData && getData.data.created_at} />
                     </td>
                   </tr>
                   <tr>
-                    <th>العنوان الشخصي: </th>
+                    <th>{getLogin("Personnal_address")}</th>
                     <td>
                       {getData && getData.data.withdrawalable.address_line_one}
                     </td>
                   </tr>
                   <tr>
-                    <th>العنوان البنكي: </th>
+                    <th>{getLogin("Bank_address")}</th>
                     <td>
                       {getData &&
                         getData.data.withdrawalable.bank_adress_line_one}
                     </td>
                   </tr>
                   <tr>
-                    <th>الفرع البنكي: </th>
+                    <th>{getLogin("Bank_branch")}</th>
                     <td>
                       {getData && getData.data.withdrawalable.bank_branch}
                     </td>
                   </tr>
                   <tr>
-                    <th>رقم IBAN</th>
+                    <th>{getLogin("IBAN")}</th>
                     <td>{getData && getData.data.withdrawalable.bank_iban}</td>
                   </tr>
                   <tr>
-                    <th>اسم البنك: </th>
+                    <th>{getLogin("Bank_name")}</th>
                     <td>{getData && getData.data.withdrawalable.bank_name}</td>
                   </tr>
                   <tr>
-                    <th>الحساب البنكي: </th>
+                    <th>{getLogin("Bank_account")}</th>
                     <td>
                       {getData &&
                         getData.data.withdrawalable.bank_number_account}
                     </td>
                   </tr>
                   <tr>
-                    <th>كود السويفت SWIFT: </th>
+                    <th>{getLogin("Swift_code")}</th>
                     <td>{getData && getData.data.withdrawalable.bank_swift}</td>
                   </tr>
                   <tr>
-                    <th>المدينة: </th>
+                    <th>{getLogin("City")}</th>
                     <td>{getData && getData.data.withdrawalable.city}</td>
                   </tr>
                   <tr>
-                    <th>الرمز البريدي: </th>
+                    <th>{getLogin("Postal_code")}</th>
                     <td>
                       {getData && getData.data.withdrawalable.code_postal}
                     </td>
                   </tr>
                   <tr>
-                    <th>الاسم الكامل: </th>
+                    <th>{getLogin("Full_name")}</th>
                     <td>{getData && getData.data.withdrawalable.full_name}</td>
                   </tr>
                   <tr>
-                    <th>رقم الهاتف: </th>
+                    <th>{getLogin("Phone_number")}</th>
                     <td>
                       {getData &&
                         getData.data.withdrawalable.phone_number_without_code}
@@ -215,21 +222,21 @@ function Id({ query }) {
               <table className="table">
                 <tbody>
                   <tr>
-                    <th>المبلغ المراد تحويله: </th>
+                    <th>{getLogin("Amount_to_transfer")}</th>
                     <td>{getData && getData.data.amount}$</td>
                   </tr>
                   <tr>
-                    <th>نوع السحب: </th>
+                    <th>{getLogin("Transfer_type")}</th>
                     <td>{switchType()}</td>
                   </tr>
                   <tr>
-                    <th>تاريخ السحب: </th>
+                    <th>{getLogin("Withdrawal_date")}</th>
                     <td>
                       <LastSeen date={getData && getData.data.created_at} />
                     </td>
                   </tr>
                   <tr>
-                    <th>البريد الإلكتروني: </th>
+                    <th>{getLogin("E_mail")}</th>
                     <td>{getData && getData.data.withdrawalable.email}</td>
                   </tr>
                 </tbody>
@@ -239,15 +246,15 @@ function Id({ query }) {
               <table className="table">
                 <tbody>
                   <tr>
-                    <th>المبلغ المراد تحويله: </th>
+                    <th>{getLogin("Amount_to_transfer")}</th>
                     <td>{getData && getData.data.amount}$</td>
                   </tr>
                   <tr>
-                    <th>نوع السحب: </th>
+                    <th>{getLogin("Transfer_type")}</th>
                     <td>{switchType()}</td>
                   </tr>
                   <tr>
-                    <th>تاريخ السحب: </th>
+                    <th>{getLogin("Withdrawal_date")}</th>
                     <td>
                       <LastSeen date={getData && getData.data.created_at} />
                     </td>
@@ -262,12 +269,14 @@ function Id({ query }) {
           </div>
           <div className="col-lg-6">
             <div className="page-header">
-              <h4 className="title">معلومات طالب السحب</h4>
+              <h4 className="title">
+                {getLogin("Withdrawal_requester_information")}
+              </h4>
             </div>
             <table className="table">
               <tbody>
                 <tr>
-                  <th>الاسم الكامل: </th>
+                  <th>{getLogin("Full_name")}</th>
                   <td>
                     <Link
                       href={`/u/${
@@ -295,14 +304,14 @@ function Id({ query }) {
                   </td>
                 </tr>
                 <tr>
-                  <th>الرصيد القابل للسحب: </th>
+                  <th>{getLogin("Withdrawable_balance")}</th>
                   <td>
                     {getData &&
                       getData.data.withdrawalable.profile.withdrawable_amount}
                   </td>
                 </tr>
                 <tr>
-                  <th>مستواه: </th>
+                  <th>{getLogin("His_her_level")}</th>
                   <td>
                     {getData &&
                       getData.data.withdrawalable.profile.level &&
@@ -310,7 +319,7 @@ function Id({ query }) {
                   </td>
                 </tr>
                 <tr>
-                  <th>تاريخ الميلاد: </th>
+                  <th>{getLogin("Birthday")}</th>
                   <td>
                     {getData &&
                       getData.data.withdrawalable.profile.date_of_birth}{" "}

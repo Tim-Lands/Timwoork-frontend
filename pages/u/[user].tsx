@@ -189,7 +189,9 @@ const User = ({ query, stars }) => {
                       {User && User.profile.country !== null && (
                         <div className="col-sm-6">
                           <div className="content-text-item">
-                            <h3 className="text-label">البلد</h3>
+                            <h3 className="text-label">
+                              {getLogin("Country")}
+                            </h3>
                             <p className="text-value">
                               {User.profile.country.name_ar}
                             </p>

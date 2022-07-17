@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import FollowItem from "@/components/NewIndex/FollowItem";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function MyFollowers() {
   let token = Cookies.get("token");
@@ -19,6 +21,9 @@ function MyFollowers() {
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
   const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
 
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
@@ -34,11 +39,13 @@ function MyFollowers() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title="حسابك غير كامل"
-            subTitle="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
+            title={getLogin("Your_account_is_2")}
+            subTitle={getLogin("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
-                <a className="btn butt-primary butt-md">الذهاب إلى التعديل</a>
+                <a className="btn butt-primary butt-md">
+                  {getLogin("Go_to_Edit")}
+                </a>
               </Link>
             }
           />
@@ -54,19 +61,19 @@ function MyFollowers() {
           <>
             <MetaTags
               title={
-                "الملف الشخصي لـ " +
+                getLogin("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               metaDescription={
-                "الملف الشخصي لـ " +
+                getLogin("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               ogDescription={
-                "الملف الشخصي لـ " +
+                getLogin("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
@@ -105,7 +112,7 @@ function MyFollowers() {
                           <span className="material-icons material-icons-outlined">
                             edit
                           </span>{" "}
-                          تعديل الملف الشخصي
+                          {getLogin("Edit_profile")}
                         </a>
                       </Link>
                     </div>
@@ -122,7 +129,7 @@ function MyFollowers() {
                       <span className="material-icons material-icons-outlined">
                         copy
                       </span>{" "}
-                      نسخ رابط بروفايلي
+                      {getLogin("Copy_my_profiles")}
                     </button>
                   </p>
                 </div>
@@ -132,7 +139,7 @@ function MyFollowers() {
                       <li>
                         <Link href={`/user/profile`}>
                           <a className="portfolio-item">
-                            <FaUserCircle /> الملف الشخصي
+                            <FaUserCircle /> {getAll("Profile")}
                           </a>
                         </Link>
                       </li>
@@ -186,17 +193,17 @@ function MyFollowers() {
                         <FollowItem
                           avatar="/avatar3.jpg"
                           fullname="عبد الحميد بومقواس"
-                          level="بائع جديد"
+                          level={getAll("New_seller")}
                         />
                         <FollowItem
                           avatar="/avatar2.jpg"
                           fullname="أحمد يحيى"
-                          level="بائع جديد"
+                          level={getAll("New_seller")}
                         />
                         <FollowItem
                           avatar="/avatar3.jpg"
                           fullname="عبد الحميد بومقواس"
-                          level="بائع جديد"
+                          level={getAll("New_seller")}
                         />
                       </div>
                     </div>

@@ -89,7 +89,7 @@
     "fr": "2 jours",
     "ar": "يومين"
   },
-  "Days ": {
+  "Days": {
     "en": "Days ",
     "fr": "Jours",
     "ar": "أيام"
@@ -459,6 +459,11 @@
     "fr": "Veuillez patienter s’il vous plaît",
     "ar": " يرجى الانتظار"
   },
+  "Choose_a_subcategory": {
+    "en": "Choose a subcategory",
+    "fr": "Choisissez la catégorie secondaire",
+    "ar": "اختر التصنيف الفرعي"
+  },
   "Service_editing_Description": {
     "en": "Service editing- Description & instructions to the buyer",
     "fr": "Modification du service- Description et instructions à l’acheteur",
@@ -733,6 +738,16 @@
     "en": "There is no related articles now",
     "fr": "Aucun article lié maintenant",
     "ar": "لا يوجد مقالات ذات صلة الآن."
+  },
+  "Profile": {
+    "en": "Profile",
+    "fr": "Profile",
+    "ar": "الملف الشخصي"
+  },
+  "Wise": {
+    "en": "Wise",
+    "ar": "الوايز",
+    "fr": "Wise"
   },
   "Blog": {
     "en": "Blog",
@@ -1339,7 +1354,7 @@
     "fr": "Contactez-nous",
     "ar": "اتصل بنا"
   },
-  "Phone_number*": {
+  "Phone_number1": {
     "en": "Phone number*",
     "fr": "Téléphone*",
     "ar": "رقم الهاتف *"
@@ -2637,14 +2652,14 @@
   "The_duration_will_cost": {
     "en": "The duration will cost",
     "fr": "La durée coûtera",
-    "ar": "ستكون المدة س بمبلغ"
+    "ar": "ستكون المدة بمبلغ"
   },
   "Top-selling services": {
     "en": "Top-selling services",
     "fr": "Services les plus vendus",
     "ar": "الخدمات الأكثر مبيعا"
   },
-  "First-page": {
+  "First_page": {
     "en": "First page",
     "fr": "Première page",
     "ar": "الصفحة الأولى"

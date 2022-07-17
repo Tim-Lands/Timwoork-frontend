@@ -27,10 +27,14 @@ const SentToken = (): ReactElement => {
             <div className="panel-modal-footer">
               <div className="d-flex">
                 <Link href="/">
-                  <a className="btn butt-default butt-md">الذهاب للرئيسية</a>
+                  <a className="btn butt-default butt-md">
+                    {getLogin("Go_to_Home")}
+                  </a>
                 </Link>
                 <Link href="/login">
-                  <a className="btn butt-primary butt-md">تسجيل الدخول</a>
+                  <a className="btn butt-primary butt-md">
+                    {getLogin("Log_in")}
+                  </a>
                 </Link>
               </div>
             </div>

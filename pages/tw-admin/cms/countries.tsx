@@ -9,7 +9,12 @@ import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 function Countries(): ReactElement {
   const { data: GetData, error }: any = useSWR(`dashboard/countries?page=1`);
 
@@ -25,12 +30,12 @@ function Countries(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        title: getLogin("Are_you_sure1"),
+        text: getLogin("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
-        cancelButtonText: "لا",
+        confirmButtonText: getLogin("Yes"),
+        cancelButtonText: getLogin("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -41,8 +46,8 @@ function Countries(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            "تم الحذف!",
-            "لقد تم حذف هذا العنصر بنجاح",
+            getLogin("Deleted"),
+            getLogin("The_service_has"),
             "success"
           );
         }
@@ -70,8 +75,8 @@ function Countries(): ReactElement {
     <>
       <MetaTags
         title={" الإدارة العامة - البلدان"}
-        metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
-        ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+        metaDescription={getLogin("Home_General_administration")}
+        ogDescription={getLogin("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewCountry setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -80,7 +85,7 @@ function Countries(): ReactElement {
         <div className="timlands-panel-header d-flex align-items-center">
           <h2 className="title">
             <span className="material-icons material-icons-outlined">map</span>
-            البلدان
+            {getLogin("Countries")}
           </h2>
           <div className="header-butt">
             <button
@@ -90,7 +95,7 @@ function Countries(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              إضافة جديد
+              {getLogin("Add_new")}
             </button>
           </div>
         </div>
@@ -100,7 +105,7 @@ function Countries(): ReactElement {
               <tr>
                 <th> اسم الدولة</th>
                 <th> الرمز</th>
-                <th>الأدوات</th>
+                <th>{getLogin("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -139,8 +144,8 @@ function Countries(): ReactElement {
           {error && (
             <Alert type="error">
               <p className="text">
-                <span className="material-icons">warning_amber</span> حدث خطأ
-                غير متوقع
+                <span className="material-icons">warning_amber</span>{" "}
+                {getAll("An_unexpected_error_occurred")}
               </p>
             </Alert>
           )}

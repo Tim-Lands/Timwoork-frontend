@@ -4,7 +4,7 @@
     "fr": "Connecté avec succès",
     "ar": "تم تسجيل الدخول بنجاح"
   },
-  "Log in": {
+  "Log_in": {
     "en": "Log in",
     "fr": "Se connecter",
     "ar": "تسجيل الدخول"
@@ -159,6 +159,11 @@
     "fr": "Sélectionner le pays",
     "ar": "اختر البلد"
   },
+  "If_your_press": {
+    "en": "If your press Create an account, you agree to the terms of use and privacy policy.",
+    "fr": "En cliquant sur Créer un compte, vous acceptez les conditions d’utilisation et la politique de confidentialité",
+    "ar": "بمجرد قمت بالضغط على إنشاء حساب فأنت توافق على شروط الاستخدام وسياسة الخصوصية"
+  },
   "Province/_state": {
     "en": "Province/ state",
     "fr": "Région/ province",
@@ -303,6 +308,11 @@
     "en": "Go to Edit",
     "fr": "Allez à Modifier",
     "ar": "الذهاب إلى التعديل"
+  },
+  "Edit": {
+    "en": "Edit",
+    "fr": "Modifier",
+    "ar": "التعديل"
   },
   "The_password_has ": {
     "en": "The password has been changed successfully",
@@ -474,7 +484,7 @@
     "fr": "Devise",
     "ar": "العملة"
   },
-  "Are_you_sure?": {
+  "Are_you_sure1": {
     "en": "Are you sure?",
     "fr": "Êtes-vous sûr?",
     "ar": "هل أنت متأكد؟"
@@ -764,6 +774,16 @@
     "fr": "Acheteurs",
     "ar": "المشترين"
   },
+  "Buyer": {
+    "en": "Buyer",
+    "fr": "Acheteur",
+    "ar": "مشتري"
+  },
+  "Seller": {
+    "en": "Seller",
+    "fr": "Vendeur",
+    "ar": "بائع"
+  },
   "Sellers": {
     "en": "Sellers",
     "fr": "Vendeurs",
@@ -849,7 +869,7 @@
     "fr": "Toutes les notifications",
     "ar": "جميع الإشعارات"
   },
-  "Buyers_and_sellers’": {
+  "Buyers_and_sellers": {
     "en": "Buyers and sellers’ messages",
     "fr": "Messages d’acheteurs et de vendeurs",
     "ar": "رسائل البائعين والمشتريين"
@@ -924,7 +944,7 @@
     "fr": "Se connecter",
     "ar": "تسجيل الدخول"
   },
-  "Unfortunately,_it’s_rejected": {
+  "Unfortunately_its_rejected": {
     "en": "Unfortunately, it’s rejected",
     "fr": "Malheureusement, c’est refusé",
     "ar": "للأسف لم يتم القبول"
@@ -934,7 +954,7 @@
     "fr": "Refusé avec succès",
     "ar": "لقد تم الرفض بنجاح"
   },
-  "Unfortunately,_it_was": {
+  "Unfortunately_it_was": {
     "en": "Unfortunately, it was not rejected",
     "fr": "Malheureusement, ceci n’a pas été refusé",
     "ar": "للأسف لم يتم الرفض"
@@ -979,6 +999,11 @@
     "fr": "Montant à transférer",
     "ar": "المبلغ المراد تحويله"
   },
+  "Amount": {
+    "en": "Amount",
+    "fr": "Montant",
+    "ar": "المبلغ"
+  },
   "Transfer_type": {
     "en": "Transfer type",
     "fr": "Type de transfert",
@@ -1009,7 +1034,7 @@
     "fr": "Information du demandeur de transfert",
     "ar": "معلومات طالب السحب"
   },
-  "His/_her_level": {
+  "His_her_level": {
     "en": "His/ her level",
     "fr": "Son niveau",
     "ar": "مستواه"
@@ -1019,7 +1044,7 @@
     "fr": "Titulaire du retrait",
     "ar": "صاحب السحب"
   },
-  "His/_her_withdrawabal": {
+  "His_her_withdrawabal": {
     "en": "His/ her withdrawabal balance",
     "fr": "Son solde disponible",
     "ar": "رصيده القابل للسحب"
@@ -1034,7 +1059,7 @@
     "fr": "Aucune demande de retrait de fond",
     "ar": "لا يوجد طلبات سحب"
   },
-  "In_this_case ": {
+  "In_this_case": {
     "en": "In this case there is no withdrawal requests",
     "fr": "Dans ce cas il n’y a pas de demande de retrait de fonds",
     "ar": "في هذه الحالة لاتوجد طلبات سحب"
@@ -1047,7 +1072,7 @@
   "Nameless": {
     "en": "Nameless",
     "fr": "Sans nom",
-    "ar": "بدون"
+    "ar": "بدون اسم"
   },
   "Phone": {
     "en": "Phone",
@@ -1069,7 +1094,7 @@
     "fr": "Suspension définitive",
     "ar": "تعليق دائم"
   },
-  "Send_e-mail": {
+  "Send_e_mail": {
     "en": "Send e-mail",
     "fr": "Envoyer courriel",
     "ar": "إرسال إيميل"
@@ -1094,7 +1119,7 @@
     "fr": "Notification de l’utilisateur",
     "ar": "إشعار للمستخدم"
   },
-  "Send_e-mail_to": {
+  "Send_e_mail_to": {
     "en": "Send e-mail to the user",
     "fr": "Envoyer un courriel à l’utilisateur",
     "ar": "إرسال إيميل للمستخدم"
@@ -1203,6 +1228,11 @@
     "en": "Send now",
     "fr": "Envoyer maintenant",
     "ar": "أرسل الآن"
+  },
+  "Send": {
+    "en": "Send",
+    "fr": "Envoyer",
+    "ar": "أرسل"
   },
   "From": {
     "en": "From",
@@ -1424,10 +1454,20 @@
     "fr": "Prix et développements",
     "ar": "السعر والتطويرات"
   },
-  "Desciprion_&_intrustions": {
+  "Desciprion_intrustions": {
     "en": "Desciprion & intrustions to buyer",
     "fr": "Description & instruction à l’acheteur",
     "ar": "الوصف وتعليمات المشتري"
+  },
+  "Choose_the_principal": {
+    "en": "Choose the principal category",
+    "fr": "Choisissez la catégorie principale",
+    "ar": "اختر التصنيف الرئيسي"
+  },
+  "Gallery_and_folders": {
+    "en": "Gallery and folders",
+    "fr": "Galerie et dossiers",
+    "ar": "مكتبة الصور والملفات"
   },
   "The_gateaway_had": {
     "en": "The gateaway had been successfully added",
@@ -1474,7 +1514,7 @@
     "fr": "La passerelle a bien été activée",
     "ar": "تم تنشيط البوابة بنجاح"
   },
-  "Unfortunately,_the_gateway": {
+  "Unfortunately_the_gateway": {
     "en": "Unfortunately, the gateway is not activated",
     "fr": "Malheureusement, la paserelle n’a pas été active",
     "ar": "للأسف لم يتم تنشيط   البوابة"
@@ -1484,7 +1524,7 @@
     "fr": "La passerelle a bien été désactivée",
     "ar": "تم تعطيل البوابة بنجاح"
   },
-  "Unfortunately,_the_gateway_2": {
+  "Unfortunately_the_gateway_2": {
     "en": "Unfortunately, the gateway is not disabled",
     "fr": "Malheureusement, la passerelle n’a pas été désactivée",
     "ar": "للأسف لم يتم تعطيل البوابة"
@@ -1553,6 +1593,11 @@
     "en": "Message type",
     "fr": "Type de message",
     "ar": "نوع الرسالة"
+  },
+  "Object": {
+    "en": "Object",
+    "fr": "Objet",
+    "ar": "عنوان الرسالة"
   },
   "Messagelink": {
     "en": "Message link",
