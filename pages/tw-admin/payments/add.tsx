@@ -9,7 +9,6 @@ import { message } from "antd";
 import router from "next/router";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
-import Login from "pages/login";
 
 const { getSectionLanguage } = useContext(LanguageContext);
 const getLogin = getSectionLanguage("login");

@@ -13,7 +13,6 @@ import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
 const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
 const getLogin = getSectionLanguage("login");
 function Id({ query }) {
   const token = Cookies.get("token_dash");
