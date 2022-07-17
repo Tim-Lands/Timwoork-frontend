@@ -16,7 +16,6 @@ import { useFormik } from "formik";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
 export const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
