@@ -1,9 +1,10 @@
 import { Space } from "antd";
 import { motion } from "framer-motion";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
 
-function FormModal({ setIsConfirmText }): ReactElement {
+function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
+  const [subtitle, setSubtitle] = useState('')
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -24,13 +25,19 @@ function FormModal({ setIsConfirmText }): ReactElement {
               name="title"
               placeholder="عنوان الخدمة..."
               className={"timlands-inputs "}
+              value={subtitle}
+              onChange={e => setSubtitle(e.target.value)}
             />
           </div>
         </div>
 
         <div className="modal-conferm-footer">
           <Space>
-            <button className="btn butt-md butt-green" type="submit">
+            <button className="btn butt-md butt-green" type="button" 
+            onClick={() => {
+              onSubmit(subtitle)
+              setIsConfirmText(false)
+              }}>
               اختيار
             </button>
             <button
@@ -50,4 +57,5 @@ function FormModal({ setIsConfirmText }): ReactElement {
 export default FormModal;
 FormModal.propTypes = {
   setIsConfirmText: PropTypes.func,
+  onSubmit: PropTypes.func
 };
