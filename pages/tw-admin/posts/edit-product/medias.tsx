@@ -29,6 +29,8 @@ function Medias({ query, product, token }) {
   const id = query.id;
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
 
   useEffect(() => {
     if (!token) {
@@ -56,7 +58,7 @@ function Medias({ query, product, token }) {
     setValidationsGeneral({});
   }
   const loadFeatureImage: any = async () => {
-    console.log('load featured called')
+    console.log("load featured called");
     const imageFeature = new FormData();
     imageFeature.append("thumbnail", featuredMedia[0].file);
     imageFeature.append("url_video", url_video);
@@ -105,7 +107,7 @@ function Medias({ query, product, token }) {
       );
       return res;
     } catch (e) {
-      () => { };
+      () => {};
     }
   };
   const loadImagesHandle = async () => {
@@ -113,17 +115,17 @@ function Medias({ query, product, token }) {
     setValidationsErrorsHandle();
     const pattern = new RegExp(
       "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     if (isGalleryChanged && galleryMedia.size <= 0) {
       notification.open({
-        message: "حدث خطأ",
-        description: "برجاء وضع صورة على الأقل في المعرض",
+        message: getAll("An_error_occured"),
+        description: getAll("Please_add_at_2"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
       setLoading(false);
@@ -133,8 +135,8 @@ function Medias({ query, product, token }) {
 
     if (isFeaturedChanged && !(featuredMedia instanceof Array)) {
       notification.open({
-        message: "حدث خطأ",
-        description: "برجاء وضع صورة بارزة",
+        message: getAll("An_error_occured"),
+        description: getAll("Add_a_profil_picture"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
       setLoading(false);
@@ -143,8 +145,8 @@ function Medias({ query, product, token }) {
     }
     if (url_video.length > 0 && !pattern.test(url_video)) {
       notification.open({
-        message: "حدث خطأ",
-        description: "برجاء وضع عنوان صالح",
+        message: getAll("An_error_occured"),
+        description: getAll("Please_add_a"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
       setLoading(false);
@@ -169,7 +171,7 @@ function Medias({ query, product, token }) {
       }
       if (validationsErrors && validationsErrors.thumbnail) {
         notification.open({
-          message: "حدث خطأ",
+          message: getAll("An_error_occured"),
           description: validationsErrors.thumbnail[0],
           icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
         });
@@ -185,7 +187,7 @@ function Medias({ query, product, token }) {
     // Authentication was successful.
     if (res1.status === 200 && res2.status === 200) {
       setLoading(false);
-      message.success("لقد تم تحديث بنجاح");
+      message.success(getAll("The_update_has"));
     }
   };
   const uploadFeatured = async () => {
@@ -193,24 +195,23 @@ function Medias({ query, product, token }) {
     // Authentication was successful.
     if (res.status === 200) {
       setLoading(false);
-      message.success("لقد تم تحديث بنجاح");
+      message.success(getAll("The_update_has"));
     }
   };
   const uploadGallery = async () => {
-
     const [res] = await Promise.all([loadGalleryImages()]);
     await loadVideoUrl();
     // Authentication was successful.
     if (res.status === 200) {
       setLoading(false);
-      message.success("لقد تم تحديث بنجاح");
+      message.success(getAll("The_update_has"));
     }
   };
   const uploadVideoUrl = async () => {
     const res = await loadVideoUrl();
     if (res.status === 200) {
       setLoading(false);
-      message.success("لقد تم تحديث بنجاح");
+      message.success(getAll("The_update_has"));
     }
   };
 
@@ -246,7 +247,7 @@ function Medias({ query, product, token }) {
       await Promise.all(promises);
     } catch (error) {
       notification.open({
-        message: "حدث خطأ",
+        message: getAll("An_error_occured"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
     }
@@ -254,9 +255,9 @@ function Medias({ query, product, token }) {
   return (
     <div className="container-fluid">
       <MetaTags
-        title="إضافة خدمة جديدة - إضافة وسائط"
-        metaDescription="اتصل بنا - تيموورك"
-        ogDescription="اتصل بنا - تيموورك"
+        title={getAll("Add_a_new_service")}
+        metaDescription={getAll("Contact_us_Timwoork")}
+        ogDescription={getAll("Contact_us_Timwoork")}
       />
 
       {token && (
@@ -280,14 +281,16 @@ function Medias({ query, product, token }) {
               <div className="timlands-steps">
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/tw-admin/posts/edit-product/overview?id=${id}`}>
+                    <Link
+                      href={`/tw-admin/posts/edit-product/overview?id=${id}`}
+                    >
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
                             collections_bookmark
                           </span>
                         </span>
-                        معلومات عامة
+                        {getLogin("General_information")}
                       </a>
                     </Link>
                   </h3>
@@ -301,21 +304,23 @@ function Medias({ query, product, token }) {
                             payments
                           </span>
                         </span>
-                        السعر والتطويرات
+                        {getLogin("Price_and_developments")}
                       </a>
                     </Link>
                   </h3>
                 </div>
                 <div className="timlands-step-item">
                   <h3 className="text">
-                    <Link href={`/tw-admin/posts/edit-product/description?id=${id}`}>
+                    <Link
+                      href={`/tw-admin/posts/edit-product/description?id=${id}`}
+                    >
                       <a>
                         <span className="icon-circular">
                           <span className="material-icons material-icons-outlined">
                             description
                           </span>
                         </span>
-                        الوصف وتعليمات المشتري
+                        {getLogin("Desciprion_intrustions")}
                       </a>
                     </Link>
                   </h3>
@@ -329,7 +334,7 @@ function Medias({ query, product, token }) {
                             mms
                           </span>
                         </span>
-                        مكتبة الصور والملفات
+                        {getLogin("Gallery_and_folders")}
                       </a>
                     </Link>
                   </h3>
@@ -370,11 +375,11 @@ function Medias({ query, product, token }) {
                   <div className="timlands-content-form mt-2">
                     <div className="choose-images-file">
                       <h4 className="timlands-content-form-subtitle">
-                        فيديو تعريفي للخدمة (اختياري)
+                        {getLanguage("Service_introduction_video")}
                       </h4>
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="input-videourl">
-                          رابط الفيديو
+                          {getLanguage("Video_link")}
                         </label>
                         <input
                           type="text"
@@ -405,7 +410,6 @@ function Medias({ query, product, token }) {
 
               <div className="col-md-12">
                 <div className="py-4 d-flex">
-
                   <button
                     onClick={() => router.back()}
                     type="button"
@@ -414,7 +418,7 @@ function Medias({ query, product, token }) {
                     <span className="material-icons-outlined">
                       chevron_right
                     </span>
-                    <span className="text">المرحلة السابقة</span>
+                    <span className="text">{getLanguage("Previous_step")}</span>
                   </button>
                   <button
                     type="submit"
@@ -422,7 +426,7 @@ function Medias({ query, product, token }) {
                     onClick={loadImagesHandle}
                     className="btn flex-center butt-green ml-auto butt-sm"
                   >
-                    <span className="text">المرحلة التالية</span>
+                    <span className="text">{getLanguage("Next_step")}</span>
                     <span className="material-icons-outlined">
                       chevron_left
                     </span>
@@ -456,5 +460,5 @@ export default Medias;
 Medias.propTypes = {
   query: PropTypes.any,
   product: PropTypes.any,
-  token: PropTypes.string
+  token: PropTypes.string,
 };

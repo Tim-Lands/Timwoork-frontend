@@ -63,6 +63,8 @@ function Overview({ query }) {
   const id = query.id;
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -109,7 +111,7 @@ function Overview({ query }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push(`/edit-product/prices?id=${getProduct?.data?.id}`);
         }
       } catch (error: any) {
@@ -127,7 +129,7 @@ function Overview({ query }) {
     `api/get_categories_for_add_product/${formik.values.catetory}`
   );
 
-  if (!query) return message.error("حدث خطأ");
+  if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
     try {
       // const res: any =
@@ -157,13 +159,13 @@ function Overview({ query }) {
   return (
     <>
       <MetaTags
-        title="تعديل الخدمة - معلومات عامة"
-        metaDescription="تعديل الخدمة - معلومات عامة "
-        ogDescription="تعديل الخدمة - معلومات عامة"
+        title={getAll("Service_editing_General")}
+        metaDescription={getAll("Service_editing_General")}
+        ogDescription={getAll("Service_editing_General")}
       />
       {token && veriedEmail && (
         <div className="container-fluid">
-          {!getProduct && <div>يرجى الانتظار...</div>}
+          {!getProduct && <div>{getAll("Please_wait")}</div>}
           <div className="row justify-content-md-center my-3">
             <div className="col-md-7 pt-3">
               <form onSubmit={formik.handleSubmit}>
@@ -253,7 +255,7 @@ function Overview({ query }) {
                                   {getLanguage("Publish_service")}
                                 </span>
                               </span>
-                              نشر الخدمة
+                              {getAll("Publish_service")}
                             </a>
                           </Link>
                         </h3>
@@ -266,12 +268,12 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
-                            عنوان الخدمة
+                            {getAll("Service_title")}
                           </label>
                           <input
                             id="input-title"
                             name="title"
-                            placeholder="عنوان الخدمة..."
+                            placeholder={getAll("Service_title")}
                             className={
                               "timlands-inputs " +
                               (validationsErrors &&
@@ -286,7 +288,7 @@ function Overview({ query }) {
                           />
                           <div className="note-form-text-sh">
                             <p className="text">
-                              يجب أن لايحتوي عنوان الخدمة على رموز
+                              {getAll("The_service_title")}
                             </p>
                           </div>
                           {validationsErrors && validationsErrors.title && (
@@ -312,7 +314,7 @@ function Overview({ query }) {
                           >
                             {getLanguage("Choose_the_principal")}
                           </label>
-                          {categoriesError && "حدث خطأ"}
+                          {categoriesError && getAll("An_error_occured")}
                           <select
                             id="input-catetory"
                             name="catetory"
@@ -328,7 +330,7 @@ function Overview({ query }) {
                               {getLanguage("Choose_the_principal")}
                             </option>
                             {!categories && (
-                              <option value="">يرجى الانتظار...</option>
+                              <option value="">{getAll("Please_wait")}</option>
                             )}
                             {categories &&
                               categories.data.map((e: any) => (
@@ -366,10 +368,12 @@ function Overview({ query }) {
                               {getLanguage("Choose_a_subcategory")}
                             </option>
                             {subCategoriesError && (
-                              <option value="">حدث خطأ</option>
+                              <option value="">
+                                {getAll("An_error_occured")}
+                              </option>
                             )}
                             {!subCategories && (
-                              <option value="">يرجى الانتظار...</option>
+                              <option value="">{getAll("Please_wait")}</option>
                             )}
                             {subCategories &&
                               subCategories.data.subcategories.map((e: any) => (
@@ -410,7 +414,9 @@ function Overview({ query }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">حفظ التغييرات</span>
+                            <span className="text">
+                              {getLogin("Save_edits")}
+                            </span>
                           </button>
                         </div>
                       </div>

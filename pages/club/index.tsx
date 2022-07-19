@@ -9,9 +9,10 @@ import router from "next/router";
 function Home() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("club");
+  const getAll = getSectionLanguage("all");
   return (
     <>
-      <MetaTags title={"مجتمع تيموورك "} />
+      <MetaTags title={getAll("Timwoork_community")} />
       <Result
         icon={<SmileOutlined />}
         title={getLanguage("The_forum_will")}

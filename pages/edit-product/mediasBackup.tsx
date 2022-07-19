@@ -18,6 +18,8 @@ function Medias({ query, stars }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const id = query.id;
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -74,7 +76,7 @@ function Medias({ query, stars }) {
       // if (res.status === 200) {
       // }
     } catch (error: any) {
-      message.error("حدث خطأ غير متوقع");
+      message.error(getAll("An_unexpected_error_occurred"));
     }
   }
 
@@ -122,8 +124,8 @@ function Medias({ query, stars }) {
       );
       if (res.status === 200) {
         notification["success"]({
-          message: "إشعار",
-          description: "لقد تم رفع الصور بنجاح",
+          message: getAll("Notification"),
+          description: getAll("Pictures_has_veeen"),
         });
         seGalariesLoading(false);
         seGalariesSuccess(true);
@@ -157,8 +159,8 @@ function Medias({ query, stars }) {
       );
       if (res.status === 200) {
         notification["success"]({
-          message: "إشعار",
-          description: "لقد تم رفع الصور بنجاح",
+          message: getAll("Notification"),
+          description: getAll("Pictures_has_veeen"),
         });
         seFeaturedLoading(false);
         seFeaturedSuccess(true);
@@ -189,27 +191,27 @@ function Medias({ query, stars }) {
       // Authentication was successful.
       if (res.status === 200) {
         setLoading(false);
-        message.success("لقد تم التحديث بنجاح");
+        message.success(getLogin("The_update_has"));
         stepFive();
       }
     } catch (error: any) {
       setLoading(false);
       if (error.response && error.response.status === 200) {
-        message.success("لقد تم التحديث بنجاح");
+        message.success(getLogin("The_update_has"));
       }
       if (error.response && error.response.status === 422) {
-        message.error("يرجى تعبئة البيانات");
+        message.error(getLogin("Please_fill_the"));
       }
       if (error.response && error.response.status === 403) {
-        message.error("هناك خطأ ما حدث في قاعدة بيانات , يرجى التأكد من ذلك");
+        message.error(getAll("Something_went_wrong"));
       }
       if (error.response && error.response.status === 419) {
-        message.error("العملية غير ناجحة");
+        message.error(getLogin("Operation_failed"));
       }
       if (error.response && error.response.status === 400) {
-        message.error("حدث خطأ.. يرجى التأكد من البيانات");
+        message.error(getAll("An_error_occurred1"));
       } else {
-        message.error("حدث خطأ غير متوقع");
+        message.error(getAll("An_error_occurred"));
       }
     }
   };
@@ -217,9 +219,9 @@ function Medias({ query, stars }) {
   return (
     <div className="container-fluid">
       <MetaTags
-        title="تعديل الخدمة - الوسائط"
-        metaDescription="تعديل الخدمة - الوسائط"
-        ogDescription="تعديل الخدمة - الوسائط"
+        title={getAll("Add_a_new_service")}
+        metaDescription={getAll("Contact_us_Timwoork")}
+        ogDescription={getAll("Contact_us_Timwoork")}
       />
       {token && veriedEmail && (
         <div className="row justify-content-md-center my-3">
@@ -297,14 +299,15 @@ function Medias({ query, stars }) {
                       <div className="col-md-12 align-center">
                         <div className="images-list-uploading">
                           <div className="page-header">
-                            <h4 className="title">الصورة البارزة</h4>
+                            <h4 className="title">
+                              {getAll("Profile_picture")}
+                            </h4>
                           </div>
                           <p
                             className="text-note mt-3"
                             style={{ color: "#555", margin: 0, fontSize: 13 }}
                           >
-                            يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس
-                            محتوى الخدمة
+                            {getAll("You_should_choose")}
                           </p>
                           <p
                             className="text-resolotion"
@@ -315,7 +318,7 @@ function Medias({ query, stars }) {
                               fontWeight: "bold",
                             }}
                           >
-                            من الأفضل أن تكون الأبعاد: 755X418
+                            {getAll("It’s_better_that")}
                           </p>
                           <ImageUploading
                             value={featuredImages}
@@ -333,11 +336,11 @@ function Medias({ query, stars }) {
                                   {imageList.length == 0 && (
                                     <div className="nothing-images">
                                       <h4 className="nothing-title">
-                                        اختر الصورة البارزة
+                                        {getAll("Choose_a_profile")}
                                       </h4>
                                       <p className="nothing-text">
-                                        يجب أن تختار الصورة البارزة للخدمة ويجب
-                                        ان تكون الصورة متناسقة مع محتوى الخدمة
+                                        {getAll("It’s_better_that")}
+                                        {getAll("You_should_choose")}
                                       </p>
                                     </div>
                                   )}
@@ -347,7 +350,7 @@ function Medias({ query, stars }) {
                                         <div className="image-item featured-wrapper">
                                           <Image
                                             src={image["data_url"]}
-                                            alt="الصورة البارزة"
+                                            alt={getAll("Profile_picture")}
                                             width={755}
                                             height={418}
                                             quality={85}
@@ -381,7 +384,7 @@ function Medias({ query, stars }) {
                                     className="btn butt-lg butt-primary"
                                     onClick={uploadFeaturedHandle}
                                   >
-                                    رفع الصورة الآن
+                                    {getAll("Upload_the_picture")}
                                   </button>
                                 </div>
                               </Spin>
@@ -439,7 +442,7 @@ function Medias({ query, stars }) {
                                       onClick={onImageUpload}
                                       {...dragProps}
                                     >
-                                      يمكنك الاختيار من جهازك
+                                      {getAll("You_can_select")}
                                     </button>
                                     &nbsp;
                                     <button
@@ -448,13 +451,13 @@ function Medias({ query, stars }) {
                                       className="btn butt-red-out butt-sm"
                                       onClick={onImageRemoveAll}
                                     >
-                                      تفريغ الصور
+                                      {getAll("Unloading_pictures")}
                                     </button>
                                   </div>
                                   {imageList.length == 0 && (
                                     <div className="nothing-images">
                                       <h4 className="nothing-title">
-                                        اختر صور من جهازك
+                                        {getAll("Choose_a_picture")}
                                       </h4>
                                       <p className="nothing-text">
                                         {getLanguage("You_must_choose")}
@@ -468,7 +471,7 @@ function Medias({ query, stars }) {
                                           <div className="image-item">
                                             <Image
                                               src={image["data_url"]}
-                                              alt="الصورة البارزة"
+                                              alt={getAll("Profile_picture")}
                                               width={755}
                                               height={418}
                                               quality={85}
@@ -510,7 +513,7 @@ function Medias({ query, stars }) {
                                     className="btn butt-lg butt-primary"
                                     onClick={uploadGalleryHandle}
                                   >
-                                    رفع الصور الآن
+                                    {getAll("Upload_the_picture")}
                                   </button>
                                 </div>
                               </Spin>
@@ -566,7 +569,7 @@ function Medias({ query, stars }) {
                     onClick={loadImagesHandle}
                     className="btn flex-center butt-green ml-auto butt-sm"
                   >
-                    <span className="text">حفظ التعديلات</span>
+                    <span className="text">{getAll("Save_edits")}</span>
                   </button>
                 </div>
               </div>

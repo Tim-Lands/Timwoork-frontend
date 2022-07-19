@@ -5,6 +5,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 function Redirect() {
   const url = useRouter();
   const [go, setGo] = useState("");
@@ -17,34 +19,29 @@ function Redirect() {
     }
   });
   console.log(back);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
   return (
     <div className="py-4">
       <MetaTags title="أعادة توجيه" />
       <div className="container my-3">
         <div className="redirect">
-          <h4>انتبه جيدا. أنت على وشك الانتقال لموقع آخر خارج منصة تيم ورك</h4>
+          <h4>{getLogin("Pay_close_attention")}</h4>
           <div className="warnings">
             <ul className="list">
-              <li>
-                لا تدخل معلومات حسابك في تيم ورك أو بريدك الالكتروني في أي صفحة
-                خارجية
-              </li>
-              <li>
-                تأكد دائماً من رابط الصفحة التي أنت عليها قبل تسجيل الدخول
-                لحسابك في تيم ورك
-              </li>
-              <li>
-                لا تتعامل مع أي مستخدم خارج الموقع أو تحول مبالغ له، تيم ورك
-                يضمن حقوقك داخل الموقع فقط وليس خارجه
-              </li>
+              <li>{getLogin("Do_not_enter")}</li>
+              <li>{getLogin("Always_check_the")}</li>
+              <li>{getLogin("Do_not_deal")}</li>
             </ul>
             <div className="controllers">
               <button>
-                <Link href={back ? "/" + back : "/redirect/f"}>رجوع</Link>
+                <Link href={back ? "/" + back : "/redirect/f"}>
+                  {getLogin("Return")}
+                </Link>
               </button>
               <button>
                 <Link href={go ? go : "/redirect/f"}>
-                  الانتقال للموقع الخارجي
+                  {getLogin("Go_to_the")}
                 </Link>
               </button>
             </div>

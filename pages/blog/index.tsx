@@ -12,6 +12,7 @@ function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("blog");
+  const getAll = getSectionLanguage("all");
   const [postsMediaTable, setPostsMediaTable] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const { data: getCategories }: any = useSWR(
@@ -42,9 +43,9 @@ function Category(): JSX.Element {
   return (
     <div>
       <MetaTags
-        title={"المدونة"}
-        metaDescription={"المدونة"}
-        ogDescription={"المدونة"}
+        title={getAll("Blog")}
+        metaDescription={getAll("Blog")}
+        ogDescription={getAll("Blog")}
       />
       <span
         className="d-flex align-items-center w-100 justify-content-center"

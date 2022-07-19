@@ -11,6 +11,8 @@ import notification from "../../translates/notification.json";
 import products from "../../translates/products.json";
 import soon from "../../translates/soon.json";
 import contact_us from "../../translates/contact_us.json";
+import all from "../../translates/all.json";
+import login from "../../translates/login.json";
 
 const translates = {
   main,
@@ -26,5 +28,7 @@ const translates = {
   products,
   notification,
   my_wallet,
+  all,
+  login,
 };
 export default translates;

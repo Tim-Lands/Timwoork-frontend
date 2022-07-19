@@ -8,6 +8,8 @@ import { GoogleLogin } from "react-google-login";
 import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Badge, message, Tooltip } from "antd";
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
@@ -19,6 +21,9 @@ const Register = (): ReactElement => {
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const onLoginSuccess = async (res) => {
     //أرسل هذا الريسبونس الى الباكند
     try {
@@ -37,7 +42,7 @@ const Register = (): ReactElement => {
         Cookies.set("token", response.data.data.token);
         if (!Cookies.get("token"))
           localStorage.setItem("token", response.data.data.token);
-        message.success("تم تسجيل الدخول بنجاح");
+        message.success(getLogin("Logged_in_successfully"));
         switch (response.data.data.step) {
           case 0:
             router.push("/user/personalInformations");
@@ -53,7 +58,7 @@ const Register = (): ReactElement => {
         }
       }
     } catch (error: any) {
-      message.error("حدث خطأ غير متوقع");
+      message.error(getLanguage("An_unexpected_error"));
     }
   };
   /* Generate username from email and random 4 numbers
@@ -91,9 +96,9 @@ const Register = (): ReactElement => {
   return (
     <>
       <MetaTags
-        title={"التسجيل"}
-        metaDescription={"الصفحة الرئيسية"}
-        ogDescription={"الصفحة الرئيسية"}
+        title={getLanguage("Sign_up")}
+        metaDescription={getLogin("Home")}
+        ogDescription={getLogin("Home")}
       />
       <Formik
         initialValues={{
@@ -163,19 +168,19 @@ const Register = (): ReactElement => {
                     </Link>
                   </div>
                   <div className="page-header">
-                    <h1 className="title">التسجيل</h1>
+                    <h1 className="title">{getLanguage("Sign_up")}</h1>
                   </div>
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="username">
-                          اسم المستخدم
+                          {getLogin("Username")}
                         </label>
                         <Field
                           id="username"
                           name="username"
                           onKeyUp={clearValidationHandle}
-                          placeholder=" اسم المستخدم..."
+                          placeholder={getLogin("Username")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -202,13 +207,13 @@ const Register = (): ReactElement => {
                     <div className="col-lg-6">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="email">
-                          البريد الإلكتروني
+                          {getLogin("E_mail")}
                         </label>
                         <Field
                           id="email"
                           name="email"
                           onKeyUp={clearValidationHandle}
-                          placeholder="البريد الإلكتروني..."
+                          placeholder={getLogin("E_mail")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -233,7 +238,7 @@ const Register = (): ReactElement => {
                     <div className="col-lg-6">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="phone">
-                          رقم الهاتف
+                          {getLogin("Phone_number")}
                         </label>
                         <div
                           style={{
@@ -251,7 +256,7 @@ const Register = (): ReactElement => {
                             id="phone"
                             name="phone"
                             onKeyUp={clearValidationHandle}
-                            placeholder="رقم الهاتف..."
+                            placeholder={getLogin("Phone_number")}
                             className={
                               "innerPhone " +
                               (validationsErrors &&
@@ -295,8 +300,8 @@ const Register = (): ReactElement => {
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="password">
                           {" "}
-                          كلمة المرور{" "}
-                          <Tooltip title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام.">
+                          {getLogin("Password")}{" "}
+                          <Tooltip title={getLogin("The_password_must")}>
                             <Badge
                               style={{ color: "#52c41a " }}
                               count={
@@ -315,7 +320,7 @@ const Register = (): ReactElement => {
                           id="password"
                           name="password"
                           onKeyUp={clearValidationHandle}
-                          placeholder="كلمة المرور..."
+                          placeholder={getLogin("Password")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -363,8 +368,8 @@ const Register = (): ReactElement => {
                           className="label-block"
                           htmlFor="password_confirmation"
                         >
-                          إعادة كلمة المرور
-                          <Tooltip title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام.">
+                          {getLogin("Reset_password")}
+                          <Tooltip title={getLogin("The_password_must")}>
                             <Badge
                               style={{ color: "#52c41a " }}
                               count={
@@ -383,7 +388,7 @@ const Register = (): ReactElement => {
                           id="password_confirmation"
                           name="password_confirmation"
                           onKeyUp={clearValidationHandle}
-                          placeholder="إعادة كلمة المرور..."
+                          placeholder={getLogin("Reset_password")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -431,14 +436,15 @@ const Register = (): ReactElement => {
                     <div style={{ overflow: "hidden" }}>
                       <div className="timlands-form-note">
                         <p className="text">
-                          بمجرد قمت بالضغط على <strong>إنشاء حساب</strong> فأنت
+                          {getLanguage("If_your_press")}
+                          <strong>{getLogin("Create_an_account")}</strong> فأنت
                           توافق على{" "}
                           <Link href="/terms">
                             <a>شروط الاستخدام</a>
                           </Link>{" "}
                           و{" "}
                           <Link href="/privacy">
-                            <a>سياسة الخصوصية</a>
+                            <a>{getLanguage("Privacy_policy")}</a>
                           </Link>
                         </p>
                       </div>
@@ -451,14 +457,14 @@ const Register = (): ReactElement => {
                         disabled={registerLoading}
                         className="btn  butt-primary butt-md"
                       >
-                        إنشاء حساب
+                        {getLogin("Create_an_account")}
                       </button>
                       <div className="footer-text">
                         <p className="text" style={{ margin: 0 }}>
                           {" "}
-                          لديك حساب؟
+                          {getLogin("Do_you_have")}
                           <Link href="/login">
-                            <a>تسجيل الدخول</a>
+                            <a>{getLanguage("Login_in")}</a>
                           </Link>
                         </p>
                       </div>
@@ -466,7 +472,7 @@ const Register = (): ReactElement => {
                   </div>
                   <div className="panel-login-external">
                     <div className="login-external-header">
-                      <h4 className="title">أو التسجيل بواسطة</h4>
+                      <h4 className="title">{getLogin("Or_sign_up")}</h4>
                     </div>
                     <ul className="login-external-links nav justify-content-center">
                       {/* <li>
@@ -477,7 +483,7 @@ const Register = (): ReactElement => {
                       <li>
                         <GoogleLogin
                           clientId={clientId}
-                          buttonText="غوغل"
+                          buttonText={getLogin("Google")}
                           onSuccess={onLoginSuccess}
                           onFailure={onLoginFailure}
                           cookiePolicy={"single_host_origin"}

@@ -19,12 +19,12 @@
     "fr": "LE site web Timwoork",
     "ar": "موقع تيم ورك"
   },
-  "Choose_pictures_from ": {
+  "Choose_pictures_from": {
     "en": "Choose pictures from your device",
     "fr": "Choisir des photos à partir de votre appareil",
     "ar": "اختر صور من جهازك"
   },
-  "The_profile_picture ": {
+  "The_profile_picture": {
     "en": "The profile picture must be clear and high-quality that reflects the content of the service",
     "fr": "La photo de profil doit être claire, de bonne résolution et doit refléter le contenu du service",
     "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة"
@@ -53,6 +53,11 @@
     "en": "You don’t have the permission",
     "fr": "Vous n’avez pas d’autorisation",
     "ar": "ليس لديك الصلاحية"
+  },
+  "join_us": {
+    "en": "Join us!",
+    "fr": "Rejoignez-nous !",
+    "ar": "انضم إلينا"
   },
   "You_need_to": {
     "en": "You need to be a seller to add a service",
@@ -84,7 +89,7 @@
     "fr": "2 jours",
     "ar": "يومين"
   },
-  "Days ": {
+  "Days": {
     "en": "Days ",
     "fr": "Jours",
     "ar": "أيام"
@@ -167,7 +172,7 @@
   "Timwoork_guarantees_buyers": {
     "en": "Timwoork guarantees buyers and service providers their rights through strict policies that ensure the safety and reliability of service sales and purchases. You can always claim a refund if the service amount is not fully implemented as the seller offers in its service description. We work to help you solve any problem you may face and to answer any inquiry, with a 24/7 technical support team.",
     "fr": "Timwoork garantit aux acheteurs et aux fournisseurs de services leurs droits grâce à des politiques strictes qui garantissent la sécurité et la fiabilité des ventes et des achats de services. Vous pouvez toujours demander un remboursement si le montant du service, si ce dernier n’est pas entièrement exécuté comme décrit par le vendeur dans la description du service. Nous veillons à vous aider à résoudre tout problème auquel vous pourriez être confronté et à répondre à toute demande, avec une équipe de support technique 24/7.",
-    "ar": "يضمن تيم ورك لمشتري ومقدمي الخدمات حقوقهم عبر سياسات صارمة تكفل السلامة والموثوقية لعمليات بيع وشراء الخدمات. يمكنك المطالبة باسترداد مبلغ الخدمة دائما إن لم تنفذ بالكامل   وفقاً لما يعرضه البائع في وصف الخدمة الخاصة به. نحن نعمل لمساعدتك في حل أي مشكلة قد تواجهك وللإجابة عن أي استفسار، بفريق دعم فني متواجد ومتعاون على مدار 24 ساعة وطوال أيامالأسبوع."
+    "ar": "يضمن تيم ورك لمشتري ومقدمي الخدمات حقوقهم عبر سياسات صارمة تكفل السلامة والموثوقية لعمليات بيع وشراء الخدمات. يمكنك المطالبة باسترداد مبلغ الخدمة دائما إن لم تنفذ بالكامل وفقاً لما يعرضه البائع في وصف الخدمة الخاصة به. نحن نعمل لمساعدتك في حل أي مشكلة قد تواجهك وللإجابة عن أي استفسار، بفريق دعم فني متواجد ومتعاون على مدار 24 ساعة وطوال أيام الأسبوع."
   },
   "The_Website’s_commission": {
     "en": "The Website’s commission may be up to 11%",
@@ -444,7 +449,7 @@
     "fr": "Aucun service",
     "ar": "لا توجد خدمات"
   },
-  "Add_new_service-": {
+  "Add_new_service1": {
     "en": "Add new service- Publish the service",
     "fr": "Ajouter un nouveau service- Publier le service",
     "ar": " إضافة خدمة جديدة - نشر الخدمة"
@@ -453,6 +458,11 @@
     "en": "Please wait",
     "fr": "Veuillez patienter s’il vous plaît",
     "ar": " يرجى الانتظار"
+  },
+  "Choose_a_subcategory": {
+    "en": "Choose a subcategory",
+    "fr": "Choisissez la catégorie secondaire",
+    "ar": "اختر التصنيف الفرعي"
   },
   "Service_editing_Description": {
     "en": "Service editing- Description & instructions to the buyer",
@@ -510,7 +520,7 @@
     "ar": "إشعار"
   },
   "Pictures_has_veeen": {
-    "en": "Pictures has veeen uploaded successfully",
+    "en": "Pictures has been uploaded successfully",
     "fr": "Les images ont bien été téléchargées ",
     "ar": "لقد تم رفع الصور بنجاح"
   },
@@ -529,12 +539,12 @@
     "fr": "L’opération a échoué",
     "ar": "العملية غير ناجحة"
   },
-  "An_error_occurred...": {
+  "An_error_occurred1": {
     "en": "An error occurred.. Please check out the data",
     "fr": "Une erreur s’est produite.. veuillez vérifier les données",
     "ar": "حدث خطأ.. يرجى التأكد من البيانات"
   },
-  "An-unexpected_error": {
+  "An_unexpected_error": {
     "en": "An unexpected error occurred",
     "fr": "Une erreur inattendue s’est produite",
     "ar": "حدث خطأ غير متوقع"
@@ -729,6 +739,16 @@
     "fr": "Aucun article lié maintenant",
     "ar": "لا يوجد مقالات ذات صلة الآن."
   },
+  "Profile": {
+    "en": "Profile",
+    "fr": "Profile",
+    "ar": "الملف الشخصي"
+  },
+  "Wise": {
+    "en": "Wise",
+    "ar": "الوايز",
+    "fr": "Wise"
+  },
   "Blog": {
     "en": "Blog",
     "fr": "Blog",
@@ -848,11 +868,6 @@
     "en": "Pending receipt",
     "fr": "En attente de reception",
     "ar": "قيد الإستلام"
-  },
-  "Completed": {
-    "en": "Completed",
-    "fr": "Achevé",
-    "ar": "معلقة"
   },
   "Status_amendment_request": {
     "en": "Status amendment request",
@@ -1084,13 +1099,13 @@
     "fr": "Si vous avez trouvé une solution, vous pouvez réactiver le processus de nouveau",
     "ar": "إذا تواصلتما إلى حل يمكنك تحويل العملية إلى قيد التنفيذ مرة أخرى"
   },
-  "Operation details": {
+  "Operation_details": {
     "en": "Operation details",
     "fr": "Détails de l’opération",
     "ar": "تفاصيل العملية"
   },
-  "Opération_number": {
-    "en": "Opération number",
+  "Operation_number1": {
+    "en": "Operation number",
     "fr": "Numéro d’opération",
     "ar": "رقم العملية"
   },
@@ -1334,7 +1349,7 @@
     "fr": "Contactez-nous",
     "ar": "اتصل بنا"
   },
-  "Phone_number*": {
+  "Phone_number1": {
     "en": "Phone number*",
     "fr": "Téléphone*",
     "ar": "رقم الهاتف *"
@@ -1369,15 +1384,20 @@
     "fr": "Comment fonctionne le site Web Timwoork ?",
     "ar": "كيف يعمل موقع تيم ورك"
   },
-  "Micro-services_act": {
+  "Micro_services_act": {
     "en": "Micro-services act as an intermediary to exchange many services between the company and the service provider (seller) and employers (buyers) at a lower cost, in a shorter period and with a commission rate determined between the site and the service provider. Through Timwoork, you can make your services available to the client and sell them for $5 or buy services for that same price.",
     "fr": "Les micro-services agissent en tant qu’intermédiaire pour échanger de nombreux services entre l'entreprise et le prestataire de services (vendeur) et les employeurs (acheteurs) à moindre coût voire dans un délai plus court et avec un taux de commission déterminée entre le site et le prestataire de services. Grâce à Timwoork, vous pouvez mettre vos services à la disposition du client et les vendre pour 5 $, ou acheter des services pour ce même prix.",
     "ar": "الخدمات المصغرة تعمل كوسيط لتبادل العديد من الخدمــات بين مــقــدم الــعـمــل و الـخـدمـة ( البائع ) و أصحاب العمل ( المشتري ) بتكلفة اقل و وقت اقصر و بنسبة عــــمـــولة محددة بين الموقع ومقدم العمل.  يمكنك من خلال تيم ورك أن تقدم خدماتك وتبيعها مقابل 5 دولار، أو أن  تقوم بشراء خدمات مقابل هذا الثمن."
   },
-  "Carefully_read_the": {
-    "en": "Carefully read the terms of use of the site and the privacy policy.",
-    "fr": "Lisez attentivement les conditions d’utilisation du site et la politique de confidentialité.",
-    "ar": "اقرأ الموقع و بشكل جيد"
+  "Carefully_the": {
+    "en": "the terms of use of the site and the privacy policy.",
+    "fr": "attentivement les conditions d’utilisation du site et la politique de confidentialité.",
+    "ar": "الموقع و بشكل جيد"
+  },
+  "read": {
+    "en": "Read ",
+    "fr": "lisez ",
+    "ar": "اقرأ "
   },
   "Terms_of_use": {
     "en": "Terms of use",
@@ -1404,7 +1424,7 @@
     "fr": "Veuillez respecter les normes suivantes lors de l'ajout d'un nouveau service",
     "ar": "من فضلك الالتزام بالمعايير التالية عند إضافة خدمة جديدة"
   },
-  "Register_a_new:": {
+  "Register_a_new": {
     "en": "Register a new account:",
     "fr": "Inscription en créant un nouveau compte",
     "ar": "تسجيل حساب جديد"
@@ -1440,8 +1460,8 @@
     "ar": "حاول تقديم خدمات مبتكرة وجديدة غير مكررة."
   },
   "Write_your_service": {
-    "en": "Write your service in Standard Arabic, avoiding slang and spelling errors.",
-    "fr": "Ecrivez votre service en Arabe standard, en évitant les erreurs d'argot et d'orthographe",
+    "en": "Write your service in Standard English, avoiding slang and spelling errors.",
+    "fr": "Ecrivez votre service en anglaise standard, en évitant les erreurs d'argot et d'orthographe",
     "ar": "أكتب خدمتك باللغة العربية الفصحى، تجنب العامية والأخطاء الإملائية."
   },
   "Be_sincere_and": {
@@ -1514,7 +1534,7 @@
     "fr": "Lorsque vous recevez une commande de service, confirmez les détails de l'accord avec l'acheteur pour éviter des problèmes plus tard.",
     "ar": "عند استلامك لطلب شراء خدمة، قم بتأكيد تفاصيل الاتفاق مع المشتري  لتجنب حدوث مشاكل لاحقاً."
   },
-  "After_you_ave": {
+  "After_you_have": {
     "en": "After you have completed the task assigned to you. Send a message to the buyer that you have finished the work, and this means that you have executed the order and that you are waiting for the buyer to review what has been implemented. This status does not mean that the order has been completed and does not mean also that the profits will be transferred to your account.",
     "fr": "Après avoir terminé la tâche qui vous a été assignée, envoyez un message à l'acheteur indiquant que vous avez terminé le travail, ce qui signifie que vous avez exécuté la commande et que vous attendez qu’il examine ce qui a été mis en œuvre. Ce statut ne signifie pas que la commande est terminée et ne signifie pas aussi que les bénéfices seront transférés sur votre compte.",
     "ar": "بعد انتهائك من تنفيذ المهمة الموكلة إليك. قم بإرسال رسالة للمشتري بأنك انتهيت من العمل و هذا الأمر يعني أنك قد قمت بتنفيذ  الطلب وأنك بانتظار مراجعة المشتري لما تم تنفيذه. هذه الحالة لا تعني اكتمال الطلب ولا تعني أبداً نقل الأرباح لحسابك."
@@ -1537,7 +1557,7 @@
   "When_converting_the": {
     "en": "When converting the application to complete, you will get 85% to 90% of the sales value you have achieved while Timwoork gets 15% of the value of sales of services and 10% on services that exceed $500 in return for providing warranty and guarantee service on sales and purchases.",
     "fr": "Lors de la conversion de la commande en « Achevée », pour les fournisseurs/ prestataires de services vous obtiendrez un pourcentage de 85 % à 90 % de la valeur des ventes que vous avez réalisé. Cependant, Timwoork obtient 15 % de la valeur des ventes de services et 10 % sur les services qui dépassent 500 $ en échange de la fourniture d'une garantie et assurance sur transactions de vente et d’achat.",
-    "ar": " 85% إلى 90% من قيمة المبيعات الذي حققتها. حيث يحصل موقع تيم ورك على نسبة 15% من قيمة مبيعات الخدمات ونسبة 10% على الخدمات التي تتعدى مبلغ 500 دولار نظير تقديم خدمة الكفالة و الضمان على عمليات البيع  والشراء."
+    "ar": "عند تحويل الطلب إلى مكتمل لمقدمي الخدمة سوف تحصل على نسبة من 85% إلى 90% من قيمة المبيعات الذي حققتها. حيث يحصل موقع تيم ورك علي نسبة 15% من قيمة مبيعات الخدمات ونسبة 10% على الخدمات التي تتعدى مبلغ 500 دولار نظير تقديم خدمة الكفالة و الضمان على عمليات البيع والشراء."
   },
   "When_featured_service": {
     "en": "When featured service providers convert the application to complete (special cases - disabilities), you will get a percentage of 88% to 90% of the sales value achieved. While Timwoork gets 12% of the value of sales in return for providing warranty service and guarantee on sales and purchases.",
@@ -1587,7 +1607,7 @@
   "Click_on_the": {
     "en": "Click on the service you want to read, and then you can press the Add to Cart button. Then go to the cart and complete the payment process.",
     "fr": "Cliquez sur le service dont vous souhaitez lire l'explication, puis vous pouvez appuyer sur le bouton Ajouter au panier. Ensuite, allez dans le panier et terminez le processus de paiement.",
-    "ar": " اضغط على الخدمة التي تريدها لتقرأ الشرح وبعدها يمكنك الضغط على   زر أضف إلى سلة المشتريات. ثم الانتقال إلى سلة المشتريات وإكمال  عملية الدفع."
+    "ar": " اضغط على الخدمة التي تريدها لتقرأ الشرح وبعدها يمكنك الضغط على   زر أضف إلى سلة المشتريات. ثم الانتقال إلى سلة المشتريات وإكمال عملية الدفع."
   },
   "You_can_purchase": {
     "en": "You can purchase the service according to its price through your PayPal account, your Timwoork balance if you own it, or via a credit card. For every PayPal or card purchase, a processing fee of 5% or a minimum value of $1 is added to each order. These fees help us to manage the platform and provide 24/7 technical support.",
@@ -1684,7 +1704,7 @@
     "fr": "Respectez la description de la prestation demandée, ne demandez pas au vendeur une autre prestation différente de celle indiquée dans la description, par exemple : si vous souhaitez avoir un design, n'achetez pas de service de traduction auprès du vendeur. Autrement dit, ne demandez pas, par exemple, un service de rédaction d'articles en achetant un service de traduction. Un achat de ce type perd votre droit à la garantie du site Timwoork. Après avoir commandé le service, assurez-vous de clarifier à nouveau votre demande en détail, même si vous avez déjà contacté le vendeur avant d'acheter. Afin d'être en mesure d'obtenir la garantie de Timwoork, toutes les questions et accords qui ont eu lieu entre vous doivent être dans la page de conversation de la demande de service. Après avoir acheté le service, envoyez les informations dont le vendeur a besoin de votre part pour exécuter au mieux la commande achetée. Les informations seront répertoriées dans la section Instructions du vendeur au client, qui s'affichera après l'achat.",
     "ar": "التزم بوصف الخدمة المطلوبة لا تطلب من البائع خدمة أخرى مخالفة لما في الوصف، مثلا: إذا كنت تريد تنفيذ تصميم فلا تشتري من البائع خدمة  ترجمة. أي لاتقم مثلاً بطلب خدمة كتابة مقالات عن طريق شراء خدمة   ترجمة. عملية شراء من هذا النوع تفقدك حقك بالحصول على ضمان موقع تيمورك. بعد طلب الخدمة، تأكد من توضيح طلبك مجدداً وبالتفصيل الممل، حتى وإن كنت قد تواصلت مع البائع مسبقاً قبل الشراء. فلكي تتمكن من الحصول على ضمان موقع تيم ورك يجب أن تكون جميع الأمور والاتفاقات   التي جرت بينكما تمت ضمن صفحة المحادثة الخاصة بطلب الخدمة. بعد شراء  الخدمة، قم بإرسال المعلومات التي يحتاجها البائع منك لتنفيذ الطلب الذي تم شراؤه على أكمل وجه. المعلومات ستكون مذكورة في قسم تعليمات البائع لك والتي تظهر لك بعد الشراء."
   },
-  "After_sending_the ": {
+  "After_sending_the": {
     "en": "After sending the instructions and starting the implementation, try to resolve any disagreement or problem that you may have with the seller within the order conversation. If the seller hasn't asked you to turn the order into complete, the seller hasn't received the money yet. When the seller has completed the work assigned to him, he will convert the order to the status of Delivered. In this case, you as a buyer are asked to review the work that has been done and do one of two things. Either convert the status of the order to Completed, in which case this means that the seller has delivered the work to you completely and completed it to your satisfaction. Or you can convert the order to the status of Request for modifications and request the modifications you need. Communicate with the seller via Timwoork, do not adopt any external means of communication such as email, Facebook account or mobile, Timwoork will not be able to guarantee your rights if communication is done outside the website. Pay via Timwoork only, do not send money transfer outside Timwoork, this will waste your right. Unfortunately, no one will be able to get your money back if you do this. Adhere to the agreement between you and the seller. Do not refuse to receive the service and request additions that are not mentioned in the service description and have not been agreed upon. ",
     "fr": "Après avoir envoyé les instructions et commencé la mise en œuvre, essayez de résoudre tout désaccord ou problème que vous pourriez avoir avec le vendeur dans le cadre de la conversation de commande. Tant que le vendeur ne vous a pas demandé de transformer la commande en « Achevée », ceci signifie qu’il ne va pas encore recevoir l'argent. Lorsque le vendeur aura terminé le travail qui lui a été confié, il convertira la commande en statut livré. Dans ce cas, en tant qu'acheteur, vous êtes invité à examiner le travail qui a été effectué et à faire l'une des deux choses : soit convertir le statut de la commande en Achevée, auquel cas cela signifie que le vendeur vous a entièrement livré le travail et l'a terminé à votre satisfaction, ou vous pouvez passer la commande au statut Demande de modifications et demander les modifications que vous souhaitez apporter au vendeur. Communiquez avec le vendeur via Timwoork N'adoptez aucun moyen de communication externe tel que l’adresse électronique par exemple, un compte Facebook ou mobile, Timwoork ne pourra garantir vos droits si la communication se fait en dehors du site. Payez via Timwoork uniquement, n'envoyez pas d'argent en dehors de Timwoork, cela vous ferait perdre votre droit. Malheureusement, personne ne pourra récupérer votre argent si vous faites cela. Respectez l'accord entre vous et le vendeur, ne refusez pas de recevoir le service et ne demandez pas d'ajouts qui ne sont pas mentionnés dans la description du service et qui n'ont pas été convenus.",
     "ar": "بعد إرسال التعليمات وبدء التنفيذ، حاول حل أي خلاف أو مشكلة قد تحصل مع البائع ضمن محادثة الطلب. طالما أن البائع لم يطلب منك تحويل  الطلب لمكتمل فإن البائع لم يستلم المال بعد. عندما يتم البائع العمل   الموكل إليه سيقوم بتحويل الطلب إلى حالة تم التسليم في هذه الحالة يطلب منك كمشتري مراجعة العمل الذي تم إنجازه والقيام  بأحد أمرين. إما تحويل حالة الطلب إلى مكتمل، وفي هذه   الحالة ذلك يعني أن البائع سلمك العمل بشكل تام وأنجزه بالشكل الذي  يرضيك. أو أن تقوم بتحويل الطلب إلى حالة طلب تعديلات&quot; وطلب التعديلات التي ترغب بإجرائها من قبل البائع. تواصل مع البائع  عبر تيم ورك لا تعتمد أي وسيلة للتواصل الخارجي كالإيميل أو حساب الفيس بوك أو الجوال، موقع تيم ورك لن يتمكن من ضمان حقوقك في حال تم  التواصل خارج الموقع. ادفع عبر تيم ورك فقط لا ترسل تحويل مالي خارج  تيم ورك فهذا يضيع حقك. ولن يتمكن أحد للأسف من استعادة أموالك إذا قمت بذلك. التزم بالاتفاق بينك وبين البائع لا تقم برفض استلام  الخدمة وطلب إضافات غير مذكورة في وصف الخدمة ولم يتم الاتفاق عليها."
@@ -1694,7 +1714,7 @@
     "fr": "N'annulez pas un service que le vendeur vous a fourni tel que requis selon la description du service, cela peut entraîner la suspension permanente de votre compte sur Timwoork.",
     "ar": "لا تقم بإلغاء خدمة قام البائع بتسليمها لك بالشكل المطلوب وفقاً  للتوصيف الخاص بالخدمة. فعل ذلك قد يؤدي لإيقاف حسابك نهائياً في موقع تيم ورك."
   },
-  "Service_Provider ": {
+  "Service_Provider": {
     "en": "Service Provider (Seller)",
     "fr": "Le prestataire de services (Vendeur)",
     "ar": "مقدم الخدمات (البائع)"
@@ -1717,7 +1737,7 @@
   "It_does_not": {
     "en": "It does not require the buyer to communicate before purchasing to implement the service. The buyer has the right to request the service displayed on the website directly without prior communication, so make sure that your offer is clear in the service description. Send a receipt request after the service is fully implemented. Beware of sending a request to receive a service without implementing it fully and well, then follow up with the buyer until things are clear to him, the request for receipt without implementing the service exposes your account to suspension directly. One of the most important conditions for obtaining the Timwoork guarantee is that the purchase and payment process be completely within the website, all talks and agreements must take place between the seller and the buyer within the purchase order. This information is subject to change or update at any time. Please check this page periodically for any updates that may be added.",
     "fr": "L'acheteur n’est obligé de communiquer avec le prestataire de service avant l'achat du service. L'acheteur a le droit de demander directement le service affiché sur le site sans communication préalable, alors assurez-vous que votre offre est claire dans la description du service. Envoyez une demande de réception après la mise en place complète du service. Attention à envoyer une demande pour recevoir une prestation sans la mettre pleinement et bien en œuvre ainsi qu’être suivie avec l'acheteur jusqu'à ce que les choses soient claires pour lui, la demande de réception sans mise en place de la prestation expose votre compte directement à la suspension. L'une des conditions les plus importantes pour obtenir la garantie du site Timwoork est que le processus d'achat et de paiement soient entièrement effectués dans le site, toutes les discussions et tous les accords doivent avoir lieu entre le vendeur et l'acheteur dans la conversation de commande. Ces informations sont susceptibles d'être modifiées ou mises à jour à tout moment. Veuillez consulter régulièrement cette page pour toute mise à jour pouvant être ajoutée.",
-    "ar": "لا تشترط تواصل المشتري قبل الشراء لتنفيذ الخدمة. يحق للمشتري طلب    الخدمة المعروضة في الموقع مباشرة دون تواصل مُسبق لذا تأكد من وضوح   العرض الذي تقدمه في وصف الخدمة. أرسل طلب استلام بعد تنفيذ الخدمة   بشكل كامل احذر إرسال طلب استلام خدمة دون تنفيذها بشكل كامل وجيد والمتابعة مع المشتري حتى تكون الأمور واضحة بالنسبة له، طلب   الاستلام دون تنفيذ للخدمة يعرض حسابك للإيقاف مباشرة. من أهم شروط    الحصول على ضمان موقع تيم ورك هو أن تتم عملية الشراء والدفع ضمن   الموقع بشكل كامل، جميع المحادثات والإتفاقيات يجب أن تتم بين البائع   والمشتري ضمن طلب الشراء. هذه المعلومات قابلة للتعديل أو التحديث في   أي وقت. من فضلك متابعة هذه الصفحة بشكل دوري للإطلاع على أي تحديثات    قد يتم إضفتها."
+    "ar": "لا تشترط تواصل المشتري قبل الشراء لتنفيذ الخدمة. يحق للمشتري طلب    الخدمة المعروضة في الموقع مباشرة دون تواصل مُسبق لذا تأكد من وضوح   العرض الذي تقدمه في وصف الخدمة. أرسل طلب استلام بعد تنفيذ الخدمة   بشكل كامل احذر إرسال طلب استلام خدمة دون تنفيذها بشكل كامل وجيد والمتابعة مع المشتري حتى تكون الأمور واضحة بالنسبة له، طلب   الاستلام دون تنفيذ للخدمة يعرض حسابك للإيقاف مباشرة. من أهم شروط    الحصول على ضمان موقع تيم ورك هو أن تتم عملية الشراء والدفع ضمن   الموقع بشكل كامل، جميع المحادثات والإتفاقيات يجب أن تتم بين البائع   والمشتري ضمن طلب الشراء. هذه المعلومات قابلة للتعديل أو التحديث في   أي وقت. من فضلك متابعة هذه الصفحة بشكل دوري للإطلاع على أي تحديثات    قد يتم إضافتها."
   },
   "What_levels_are": {
     "en": "What levels are there in Timwoork?",
@@ -1764,7 +1784,7 @@
     "fr": "Il peut activer la fonctionnalité de services développés dans son compte, avec une limite de 8 mises à niveau et un prix maximal de 150 $ par développement/ mise à niveau",
     "ar": "تفعيل خاصية الخدمات المطورة في الحساب، بحد 8 تطويرات وبسعر أقصى 150 دولار للتطوير الواحد"
   },
-  "Can_add _a": {
+  "Can_add_a_brief": {
     "en": "Can add a brief about himself in his profile",
     "fr": "Il peut ajouter sa biographie dans son profil",
     "ar": "يمكنه إضافة نبذة شخصية في ملفه"
@@ -1820,8 +1840,8 @@
     "ar": "إمكانية إضافة خدمات بعدد غير محدود"
   },
   "Il_peut_aussi": {
-    "en": "Il peut aussi activer la fonctionnalité de services développés dans le compte, avec une limite de 12 mises à niveau et un prix maximal de 250 $ par développement/ mise à niveau",
-    "fr": "Activate the service upgrades in the account, with a limit of 12 upgrades and a maximum price of $250 per upgrade.",
+    "fr": "Il peut aussi activer la fonctionnalité de services développés dans le compte, avec une limite de 12 mises à niveau et un prix maximal de 250 $ par développement/ mise à niveau",
+    "en": "Activate the service upgrades in the account, with a limit of 12 upgrades and a maximum price of $250 per upgrade.",
     "ar": "تفعيل خاصية الخدمات المطورة في الحساب، بحد 12 تطويرات   وبسعر أقصى 250 دولار للتطوير الواحد"
   },
   "Add_a_trusted": {
@@ -1879,7 +1899,7 @@
     "fr": "Ce niveau est attribué manuellement à l'utilisateur par la modération, dans le cas où il s'agit d'un utilisateur avec d'excellentes mœurs d'acheteur, et qu'aucun problème n'est enregistré dans sa fiche au sein du site.",
     "ar": "يتم منح هذا المستوى للمستخدم بشكل يدوي من قبل الإشراف، وذلك في حال كونه مستخدم يتمتع بأخلاق المشتري الممتازة، وليس هنالك  أي مشاكل مسجلة في ملفه ضمن الموقع."
   },
-  "Currently,_the_user": {
+  "Currently_the_user": {
     "en": "Currently, the user level does not provide any advantages to the user other than introducing his productivity and work within our website. Perks will be awarded for each level later.",
     "fr": "Actuellement, le niveau utilisateur n'offre aucun avantage à l'utilisateur autre que l'introduction de sa productivité et de son travail au sein du site. Les avantages seront attribués pour chaque niveau plus tard.",
     "ar": "حالياً مستوى المستخدم لايقدم أي ميزات للمستخدم سوى التعريف  بإنتاجيته وأعماله ضمن الموقع. سيتم لاحقاً منح ميزات لكل مستوى من  المستويات."
@@ -1894,7 +1914,7 @@
     "fr": "Politique de confidentialité",
     "ar": "سياسة الخصوصية"
   },
-  "Arabic_text,_you": {
+  "Arabic_text_you": {
     "en": "Arabic text, you can generate such text or many other texts in addition to increasing the number of letters",
     "fr": "Le texte arabe, vous pouvez générer ce texte ou de nombreux autres textes en plus d’augmenter le nombre de lettres",
     "ar": "النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف"
@@ -1907,7 +1927,7 @@
   "Disclaimer_of_legal ": {
     "en": "Disclaimer of legal responsibility",
     "fr": "Absence de responsabilité légale",
-    "ar": "انتفاء المسؤولية القانونية"
+    "ar": "انتقاء المسؤولية القانونية"
   },
   "Cases_of_service": {
     "en": "Cases of service interruptions, omissions, and errors",
@@ -1919,7 +1939,7 @@
     "fr": "La direction du site fait de son mieux pour s’assurer que le site Web continue de fonctionner sans problème, mais il peut y avoir des erreurs, des omissions, des interruptions de service et des retards, et dans de tels cas, nous nous attendrons à ce que les utilisateurs soient patients jusqu’à ce que le service revienne à la normale.",
     "ar": "تبذل إدارة الموقع قصارى جهدها للحرص والحفاظ على استمرار عمل الموقع الإلكتروني بدون مشاكل، رغم ذلك قد تقع في أي وقت   أخطاء وحالات سهو وانقطاع للخدمة وتأخير لها، وفي مثل هذه الحالات سنتوقع من المستخدمين الصبر حتى تعود الخدمة إلى الحالة الطبيعية."
   },
-  "Subscriber’s_account,_password,": {
+  "Subscriber’s_account_password": {
     "en": "Subscriber’s account, password, and information security",
     "fr": "Compte abonné, mot de passe et sécurité de l’information",
     "ar": "حساب المشترك وكلمة السر وأمن المعلومات"
@@ -1945,8 +1965,8 @@
     "ar": "يلتزم المشترك بشروط الاستخدام، وبعدم نشر أي محتوى مخالف للشريعة الإسلامية أو استخدام الموقع لأغراض غير قانونية، على سبيل المثال لا الحصر، مثل: القرصنة ونشر وتوزيع مواد أو برامج منسوخة، أو الخداع والتزوير أو الاحتيال أو التهديد أو إزعاج أي شخص أو شركة أو جماعة أو نشر مواد إباحية أو جنسية أو نشر فيروسات أو ملفات تجسس أو وضع روابط إلى مواقع تحتوي على مثل هذه المخالفات"
   },
   "Il_est_interdit": {
-    "en": "Il est interdit de violer les droits de propriété intellectuelle, de discréditer une personne, une institution ou une entreprise ou de publier délibérément toute information qui cause un préjudice à une entreprise, une personne, un État ou un groupe, et le participant est entièrement responsable de tout ce qu’il fournit via son compte sur place.",
-    "fr": "It is prohibited to violate intellectual property rights, defame a person, institution, or company, or deliberately publish any information that causes harm to a company, person, country, or group, also the subscriber is fully responsible for everything he submits through his account on the Website.",
+    "fr": "Il est interdit de violer les droits de propriété intellectuelle, de discréditer une personne, une institution ou une entreprise ou de publier délibérément toute information qui cause un préjudice à une entreprise, une personne, un État ou un groupe, et le participant est entièrement responsable de tout ce qu’il fournit via son compte sur place.",
+    "en": "It is prohibited to violate intellectual property rights, defame a person, institution, or company, or deliberately publish any information that causes harm to a company, person, country, or group, also the subscriber is fully responsible for everything he submits through his account on the Website.",
     "ar": "يمنع انتهاك حقوق الملكية الفكرية أو تشويه سمعة شخص أو مؤسسة أو شركة أو تعمد نشر أي معلومات تسبب ضرراً لشركة أو شخص أو دولة أو جماعة، ويكون المشترك مسؤولاً مسؤولية كاملة عن كل ما يقدمه عبر حسابه في الموقع"
   },
   "It_is_strictly ": {
@@ -1994,7 +2014,7 @@
     "fr": "Les termes et conditions suivants constituent un contrat juridiquement contraignant (le présent « accord ») entre vous (« vous même » ou « votre ») et Timwoork (comme décrit ci-dessous) qui régit toutes vos utilisations de Timwoork / (le « site Web ») et les services qui y sont disponibles (en conjonction avec l’utilisation du site, « Services »). Les services sont fournis sous réserve de votre acceptation sans modifier tous les termes et conditions mentionnés ici. Nous avons également d’autres politiques et procédures, y compris, mais sans s’y limiter, l’expédition, la politique de retour, la politique de confidentialité, etc. Ces politiques contiennent des termes et conditions supplémentaires, qui s’appliquent aux services et font partie de cet accord. Votre utilisation du site constitue votre consentement et votre gré à cet accord. ",
     "ar": "تشكل الشروط والأحكام التالية عقدًا ملزمًا قانونًا (هذه الاتفاقية) بينك (أنت أو الخاص بك) و تيم ورك (كما هو موضح أدناه) والذي يحكم جميع استخداماتك   لـ تيم ورك / (موقع الويب) والخدمات المتوفرة على الموقع   أو عليه (بالاقتران مع استخدام الموقع ، الخدمات). يتم    تقديم الخدمات رهنا بقبولك دون تعديل جميع الشروط والأحكام المذكورة   هنا. لدينا أيضًا سياسات وإجراءات أخرى بما في ذلك ، على سبيل المثال  لا الحصر ، الشحن وسياسة الإرجاع وسياسة الخصوصية وغيرها. تحتوي هذه  السياسات على شروط وأحكام إضافية ، والتي تنطبق على الخدمات وتشكل  جزءًا من هذه الاتفاقية. يشكل استخدامك للموقع موافقتك على الالتزام  بهذه الاتفاقية وموافقتك عليها. علاوة على ذلك ، من خلال تقديم طلب لمنتجات أو خدمات من الموقع ، فإنك تقبل هذه الاتفاقية وتلتزم بها."
   },
-  "Furthermore,_by_applying": {
+  "Furthermore_by_applying": {
     "en": "Furthermore, by applying for products or services from the site, you accept and abide by this agreement. If you do not agree to this agreement, do not use the site or any of its services. If you use our services only for your personal use, you are considered user. If you use our services to meet requests or deliver products to third parties (including customers), you are considered  A seller. Regardless of whether you are a user or trader, Section 11 of this Agreement requires that all disputes (as described below) arising from or related to this agreement be resolved by arbitration on an individual basis, whether through a lawsuit or lawsuit. . Contrary to what is mentioned in Section 11.",
     "fr": "En outre, en demandant des produits ou des services sur le site, vous acceptez et respectez le présent accord. Si vous ne l’acceptez pas, n’accepterez pas le présent accord et n’utilisez pas le site ou tout autre service. Si vous n’utilisez nos services que pour votre usage personnel, vous êtes considéré comme un « utilisateur ». Si vous les utilisez pour répondre à des commandes ou livrer des produits à des tiers (y compris des clients), vous êtes considéré comme un « commerçant ». Que vous soyez un utilisateur ou un commerçant, l’article 11 du présent contrat exige que tous les litiges (tels que décrits ci-dessous) découlant de ou liés à cet accord soient résolus par arbitrage à titre individuel, que ce soit par le biais d’une poursuite. Contrairement à ce qui est mentionné à l’article 11.",
     "ar": " إذا كنت لا توافق على هذه الاتفاقية ، فلا تستخدم الموقع أو أي خدمات أخرى. إذا كنت تستخدم خدماتنا فقط لاستخدامك الشخصي ، فأنت تعتبر  مستخدمًا إذا كنت تستخدم خدماتنا لتلبية الطلبات أو  تسليم المنتجات إلى أطراف ثالثة (بما في ذلك العملاء) ، فأنت تعتبر   تاجرًا بغض النظر عما إذا كنت مستخدمًا أو تاجرًا ،  يتطلب القسم 11 من هذه الاتفاقية حل جميع النزاعات (كما هو موضح  أدناه) الناشئة عن هذه الاتفاقية أو المتعلقة بها عن طريق التحكيم على أساس فردي ، سواء عن طريق دعوى قضائية أو دعوى قضائية. . على عكس  ما هو مذكور في القسم 11. "
@@ -2014,7 +2034,7 @@
     "fr": "Pour compléter l’inscription, vous devez soumettre votre nom, prénom, adresse électronique et mot de passe. Vous ne pouvez jamais utiliser le compte Timwoork d’un autre utilisateur sans son autorisation. Vous êtes seul responsable de l’activité qui se produit sur votre compte et vous devez garder le mot de passe de votre compte sécurisé. Vous devez immédiatement informer Timwoork de toute violation de la sécurité ou de toute utilisation non autorisée de votre compte. Bien que Timwoork ne soit pas responsable de vos pertes et pertes de clients résultant de toute utilisation non autorisée de votre compte, vous pouvez être responsable de Timwoork et d’autres pertes dues à cette utilisation non autorisée.",
     "ar": "لإكمال التسجيل ، يجب عليك تقديم اسمك ولقبك وعنوان بريدك الإلكتروني وكلمة مرورك. لا يجوز لك أبدًا استخدام حساب تيم ورك الخاص بمستخدم    آخر دون إذن من هذا المستخدم. أنت وحدك المسؤول عن النشاط الذي يحدث   على حسابك ، ويجب عليك الحفاظ على أمان كلمة مرور حسابك. يجب عليك  إخطار تيم ورك على الفور بأي خرق للأمان أو الاستخدام غير المصرح به   لحسابك. على الرغم من أن تيم ورك لن تكون مسؤولة عن خسائرك وخسائر  العملاء الناتجة عن أي استخدام غير مصرح به لحسابك ، فقد تكون    مسؤولاً عن تيم ورك وخسائر أخرى بسبب هذا الاستخدام غير المصرح به."
   },
-  "Timwoork_may_change,": {
+  "Timwoork_may_change": {
     "en": "Timwoork may change, suspend, or suspend services, products, fees, or conditions at any time, including the availability of any feature or content, and Timwoork may restrict certain features and services or restrict user access to parts or all services without notice or liability. If you are an individual (not an institution or entity), you acknowledge that you are at least 18 years old, however, if you are an individual residing in Japan, you acknowledge that you are at least 20 years old. If you use the services on behalf of an organization or entity, you acknowledge that you are legally authorized and authorized to oblige this organization or entity to this agreement and to use the services. Despite the above, you agree to take full responsibility for your choice of services and use. This agreement is invalid as it is prohibited by law, and the right to access or use of services in these judicial authorities is revoked. In addition, none of that information will be exchanged, traded, or sold to any other party if it is within possible site management capabilities, and only qualified and professional persons who oversee teamwork's website will be allowed access to information.",
     "fr": "Timwoork peut modifier, arrêter ou suspendre des services, des produits, des frais, ou des conditions à tout moment, y compris la disponibilité de toute fonctionnalité ou contenu, de même, Timwoork peut restreindre certaines fonctionnalités et services ou restreindre l’accès des utilisateurs à des options à ou à tous les services sans préavis ni responsabilité. Si vous êtes une personne physique (et non une institution ou une entité), vous reconnaissez que vous avez au moins 18 ans, cependant, si vous êtes une personne physique résidant au Japon, vous reconnaissez que vous avez au moins 20 ans. Si vous utilisez les services au nom d’une organisation ou d’une entité, vous reconnaissez que vous êtes légalement autorisé et autorisé à obliger cette organisation ou entité à respecter le présent contrat et à utiliser les services. Malgré ce qui précède, vous acceptez d’assumer l’entière responsabilité de votre choix de services et de votre utilisation. Cet accord est considéré invalide lorsqu’il s’agit d’activité interdite par la loi, et le droit d’accès ou d’utilisation des services dans ces autorités judiciaires est révoqué. En outre, aucune de ces informations ne sera échangée, transmise ou vendue à une autre partie tant qu’elle est dans les limites des capacités de gestion du site, et seules les personnes qualifiées et professionnelles qui supervisent le site Web et l’équipe de travail seront autorisées à y accéder",
     "ar": "يجوز لـ تيم ورك تغيير أو تعليق أو إيقاف الخدمات أو المنتجات أو   الرسوم أو الرسوم أو الشروط في أي وقت ، بما في ذلك توفر أي ميزة أو    محتوى ، كما يجوز لـ تيم ورك فرض قيود على ميزات وخدمات معينة أو   تقييد وصول المستخدم إلى أجزاء أو كل الخدمات دون إشعار أو مسؤولية.  إذا كنت فردًا (وليس مؤسسة أو كيانًا) ، فأنت تقر بأن عمرك لا يقل عن  18 عامًا ، ومع ذلك ، إذا كنت فردًا مقيمًا في اليابان ، فأنت تقر   بأن عمرك لا يقل عن 20 عامًا . إذا كنت تستخدم الخدمات نيابة عن     مؤسسة أو كيان ، فإنك تقر بأنك مخول ومصرح له قانونًا بإلزام هذه   المنظمة أو الكيان بهذه الاتفاقية واستخدام الخدمات. بالرغم مما سبق، فإنك توافق على تحمل المسؤولية الكاملة عن اختيارك للخدمات واستخدامها. تعتبر هذه الاتفاقية باطلة حيث يحظرها القانون ، ويتم إلغاء الحق في الوصول إلى الخدمات أو استخدامها في هذه السلطات  القضائية. يضاف إلى ذلك، أنه لن يتم تبادل، أو تداول أي من تلك  المعلومات أو بيعها لأي طرف آخر طالما كان ذلك في حدود قدرات إدارة الموقع الممكنة، ولن يُسمح بالوصول إلى المعلومات إلا للأشخاص المؤهلين والمحترفين الذين يشرفون على موقع تيم ورك الإلكتروني."
@@ -2024,7 +2044,7 @@
     "fr": "L’utilisateur reconnaît qu’il est seul responsable de la nature de l’utilisation qu’il détermine pour le site Web Timwoork, et que l’administration du site, dans toute la mesure permise par la loi, sera libre de toute responsabilité pour toute perte, dommage, dépense ou dépense encourue par l’utilisateur ou toute autre partie à la suite de l’utilisation ou de l’incapacité d’utiliser le site Web Timwoork.",
     "ar": "يقر المُستخدِم بأنه المسؤول الوحيد عن طبيعة الاستخدام الذي يحدده للموقع الإلكتروني تيم ورك، وتخلي إدارة الموقع طرفها، إلى أقصى مدى  يجيزه القانون، من كامل المسؤولية عن أية خسائر أو أضرار أو نفقات أو   مصاريف يتكبدها المُستخدِم أو يتعرض لها هو أو أي طرف آخر من جراء  استخدام الموقع الإلكتروني تيم ورك أو العجز عن استخدامه."
   },
-  "On-site_service": {
+  "On_site_service": {
     "en": "On-site service interruptions, omissions and errors:",
     "fr": "Interruptions, omissions et erreurs de service sur site ",
     "ar": "حالات انقطاع الخدمة والسهو والخطأ في الموقع:"
@@ -2059,7 +2079,7 @@
     "fr": "Suspendre immédiatement votre utilisation des services.",
     "ar": "تعليق استخدامك للخدمات على الفور. "
   },
-  "Remove,_block,_and": {
+  "Remove_block_and": {
     "en": "Remove, block, and disable access to any content of your own that allegedly violates other’s intellectual property rights.",
     "fr": "Supprimer, bloquer et désactiver l’accès à tout contenu qui viole prétendument les droits de propriété intellectuelle d’autrui.",
     "ar": "إزالة وحظر وتعطيل الوصول إلى أي محتوى خاص بك يُزعم أنه ينتهك  حقوق الملكية الفكرية للآخرين"
@@ -2084,7 +2104,7 @@
     "fr": "Vous acceptez de ne pas utiliser les services :",
     "ar": "أنت توافق على عدم استخدام الخدمات:"
   },
-  "To_send,_receive,": {
+  "To_send_receive": {
     "en": "To send, receive, download, use or reuse any material that does not comply with this agreement.",
     "fr": "Pour envoyer, recevoir, télécharger, utiliser ou réutiliser tout matériel qui n’est pas conforme au présent contrat.",
     "ar": "لإرسال أو تلقي أو تحميل أو تنزيل أو استخدام أو إعادة استخدام أي مادة لا تتوافق مع هذه الاتفاقية ."
@@ -2094,7 +2114,7 @@
     "fr": "S’engager dans toute autre conduite qui restreint ou empêche quiconque d’utiliser ou de profiter des services, ou qui, comme nous le précisons, peut nuire à toute partie ou exposer l’une d’entre elles à la responsabilité. Vous acceptez que Timwoork se réserve le droit d’examiner nos plateformes (systèmes) pour assurer l’intégrité et le respect du présent contrat, à sa seule discrétion.",
     "ar": "للانخراط في أي سلوك آخر يقيد أو يمنع أي شخص من استخدام الخدمات أو التمتع بها ، أو الذي ، كما نحدده ، قد يضر بأي طرف مطبوع أو  يعرض أيًا منهم للمسؤولية. أنت توافق على أن تيم ورك تحتفظ بالحق   في مراجعة منصاتنا (الأنظمة) لضمان النزاهة والامتثال لهذه   الاتفاقية ، وفقًا لتقدير شركة تيم ورك وحدها."
   },
-  "Follow_the_brand's": {
+  "Follow_the_brands": {
     "en": "Follow the brand's guidelines. The name Timwoork, icons, expressions, logos and designs we use in relation to the products or services we provide are trademarks, service marks or business appearances of Timwoork in the United States, the European Union, and all other countries, which are used for ownership purposes at our own discretion. Except as expressly stipulated in this agreement, Timwoork does not give you any rights to use its trademarks, service marks or business appearance. Regarding the services or products provided by Timwoork you may say that Timwoork has provided such services or products. If you use any of our brands to refer to our products or services, you should include a statement attributing this brand to us.",
     "fr": "Suivez les directives de la marque. Le nom « Timwoork » et les icônes, expressions, logos et designs que nous utilisons en relation avec les produits ou services que nous fournissons sont des marques commerciales, des marques de service ou des apparences commerciales de Timwoork aux États-Unis, dans l’Union européenne et dans tous les autres pays, qui sont utilisées à des fins de propriété à notre propre discrétion. Sauf stipulation expresse dans le présent contrat, Timwoork ne vous donne aucun droit d’utiliser ses marques de service ou son apparence commerciale. Vous pouvez dire en ce qui concerne les services ou produits fournis par Timwoork que Timwoork a fourni ces services ou produits. Si vous utilisez l’une de nos marques pour faire référence à nos produits ou services, vous devez inclure une déclaration nous attribuant cette marque.",
     "ar": "اتبع إرشادات العلامة التجارية. إن الاسم تيم ورك  والأيقونات والعبارات والشعارات والتصميمات التي نستخدمها فيما يتعلق  بالمنتجات أو الخدمات التي نقدمها هي علامات تجارية أو علامات خدمة  أو مظهر تجاري لشركة تيم ورك في الولايات المتحدة والاتحاد الأوروبي وجميع البلدان الأخرى ، التي يتم استخدامها لأغراض الملكية وفقًا  لتقديرنا الخاص. باستثناء ما هو منصوص عليه صراحةً في هذه الاتفاقية، لا تمنحك تيم ورك أي حقوق لاستخدام علاماتها التجارية أو علامات   الخدمة أو المظهر التجاري. يجوز لك القول فيما يتعلق بالخدمات أو المنتجات التي تقدمها تيم ورك أن تيم ورك قدمت مثل هذه الخدمات أو   المنتجات. إذا كنت تستخدم أيًا من علاماتنا التجارية للإشارة إلى  منتجاتنا أو خدماتنا ، فيجب عليك تضمين بيان ينسب هذه العلامة التجارية إلينا."
@@ -2109,7 +2129,7 @@
     "fr": "Dans ou tout ou partie de vos marques",
     "ar": "في أو كل أو جزء من العلامات التجارية الخاصة بك"
   },
-  "For_activities,_products": {
+  "For_activities_products": {
     "en": "For activities, products or services that do not belong to us.",
     "fr": "Pour les activités, produits ou services qui ne nous appartiennent pas",
     "ar": "فيما يتعلق بالأنشطة أو المنتجات أو الخدمات التي لا تخصنا"
@@ -2174,7 +2194,7 @@
     "fr": "Les alertes et les notifications sont envoyées à l’adresse électronique de votre compte Timwoork. Timwoork s’engage à ne pas utiliser votre courrier électronique pour envoyer des messages de spam ou tout message sans but de vous informer des questions liées à votre activité sur le site, et dans le cadre de ce qu’il faut pour utiliser les options et les fonctionnalités du site.",
     "ar": " يتم إرسال تنبيهات وإشعارات إلى البريد الإلكتروني الخاص بحسابك في    موقع تيم ورك. يتعهد موقع تيم ورك بعدم إستخدام بريدك الإلكتروني   بهدف إرسال رسائل السبام أو أي رسائل بغير هدف تبليغك بأمور خاصة   بنشاطك في الموقع، وضمن ما يتطلبه إستخدامك لخصائص ومميزات الموقع."
   },
-  "Timwoork’s_account_suspension": {
+  "Timwoorks_account_suspension": {
     "en": "Timwoork’s account suspension reasons:",
     "fr": "Les motifs de suspension du compte sur Timwoork :",
     "ar": "أسباب تؤدي لإيقاف الحساب في موقع تيم ورك:"
@@ -2194,7 +2214,7 @@
     "fr": "Utiliser des blasphèmes, des insultes, directes ou indirectes, envers tout membre ou envers le site. Qu’il s’agisse d’une communication directe entre les membres, par le biais des pages de communication publique du site Web ou par le biais du support technique.",
     "ar": "استخدام ألفاظ نابية والشتم أو الإهانة سواء المباشرة أو غير   المباشرة لأي عضو أو تجاه الموقع. سواء كان ذلك ضمن وسائل التواصل   المباشر بين الأعضاء، أو عبر صفحات التواصل العامة في الموقع أو   عبر وسائل التواصل مع الدعم الفني."
   },
-  "Register on the": {
+  "Register_on_the": {
     "en": "Register on the site with a different username such as: phone number, email, location address, names that contain harmful names...",
     "fr": "S’inscrire sur le site en utilisant un nom différent tel que : numéro de téléphone, courriel, adresse de localisation, noms contenant des noms ou des noms nuisibles...",
     "ar": "التسجيل في الموقع باسم مستخدم مخالف مثل: رقم هاتف، بريد إلكتروني، عنوان موقع، الأسماء التي تحتوي على إسم أو أسماء  مؤذية..."
@@ -2204,9 +2224,9 @@
     "fr": "Utiliser la communication directe entre les membres ou les pages de communication publique sur le site pour faire de la publicité sur d’autres sites ou envoyer des annonces publicitaires, des messages et des commentaires de spam.",
     "ar": "استخدام وسائل التواصل المباشر بين الأعضاء، أو صفحات التواصل   أو رسائل وتعليقات سبام."
   },
-  "S’inscrire_avec_plus ": {
-    "en": "S’inscrire avec plus d’un compte sur le site, ce qui peut arrêter définitivement tous les comptes.",
-    "fr": "Register with more than one account on the Website, which may permanently stop all accounts.",
+  "Sinscrire_avec_plus ": {
+    "fr": "S’inscrire avec plus d’un compte sur le site, ce qui peut arrêter définitivement tous les comptes.",
+    "en": "Register with more than one account on the Website, which may permanently stop all accounts.",
     "ar": " التسجيل بأكثر من حساب في الموقع، حيث قد يؤدي ذلك لإيقاف جميع   الحسابات بشكل دائم."
   },
   "Write_spam_topics": {
@@ -2249,7 +2269,7 @@
     "fr": "La demande formuler par l’acheteur concernant des services contraires aux conditions d’utilisation du travail d’équipe et son acceptation par le vendeur, ceci soumet les deux comptes à la suspension.",
     "ar": "أن يطلب المشتري خدمات مخالفة لشروط إستخدام موقع تيم ورك وأن يقبل  البائع بذلك، ذلك يعرض الحسابين للإيقاف."
   },
-  "The_user's_choice": {
+  "The_users_choice": {
     "en": "The user's choice of a country other than the one where he/she resides on his profile.",
     "fr": "Le choix par l’utilisateur d’un pays autre que celui où il réside sur son profil.",
     "ar": "إختيار المستخدم لدولة غير دولته التي يقيم فيها في صفحته الشخصية."
@@ -2279,12 +2299,12 @@
     "fr": "L’acheteur ou le vendeur qui annule un service ou un nombre de services sans raison claire d’annulation.",
     "ar": "قيام المشتري أو البائع بإلغاء خدمة أو عدد من الخدمات دون وجود   سبب واضح للإلغاء."
   },
-  "In_some_cases,": {
+  "In_some_cases": {
     "en": "In some cases, it may be simply to send an alert (via email or alert system in the user's account) to the user to warn, advise or inform him/her of an offence, then not to repeat it. In this case, the account is not suspended.",
     "fr": "Dans certains cas, il peut s’agir simplement d’envoyer une alerte (par courriel ou système d’alerte dans le compte de l’utilisateur) à l’utilisateur pour l’avertir, l’informer d’une infraction et de lui demander de ne pas la répéter. Dans ce cas, le compte n’est pas arrêté.",
     "ar": "في بعض الحالات قد يصار إلى الإكتفاء بإرسال تنبيه (عبر البريد   الإلكتروني أو نظام التنبيهات في حساب المستخدم) إلى المستخدم   لتحذيره أو نصحه أو إبلاغه بإرتكاب مخالفة والتنبيه بعدم تكرارها. في   هذه الحالة لايصار إلى إيقاف الحساب."
   },
-  "If_a_user's": {
+  "If_a_users": {
     "en": "If a user's account is suspended and a credit legitimately acquired within that account is available, the user can then contact technical support on Timwoork website to make the withdrawal 45 days after the account is suspended.",
     "fr": "Si le compte d’un utilisateur est arrêté et qu’un crédit légitimement acquis dans ce compte est disponible, l’utilisateur peut alors contacter le support technique sur le site Web Timwoork pour effectuer le retrait 45 jours après la suspension du compte.",
     "ar": "في حالة إيقاف حساب مستخدم ما ووجود رصيد تم إكتسابه بشكل شرعي ضمن  ذلك الحساب، يمكن حينها للمستخدم التواصل مع الدعم الفني في موقع تيم   ورك للقيام بعملية سحب الأموال وذلك بعد مرور 45 يوم من تاريخ إيقاف  الحساب."
@@ -2309,7 +2329,7 @@
     "fr": "Ne pas offrir de mauvais service. Le service offert est tenu de fournir un intérêt de valeur unique et clair à l’acheteur, à un prix clair et bien déterminé, dans un délai très précis. Fournissez tous les services ou valeurs supplémentaires qui sont effectués à l’aide d’extensions dans le service, où jusqu’à 5 valeurs supplémentaires peuvent être ajoutées.",
     "ar": "عدم تقديم خدمة رديئة. حيث يشترط أن تقدم الخدمة المعروضة فائدة   ذات قيمة وحيدة وواضحة للمشتري، بثمن واضح ومحدد، وخلال زمن محدد   تماماً. تقديم أي خدمات أو قيم إضافية يتم عبر إستخدام الإضافات في الخدمة، حيث يمكن إضافة حتى 5 قيم إضافية."
   },
-  "Write_in_good ": {
+  "Write_in_good": {
     "en": "Write in good Arabic and commit to using classical Arabic.",
     "fr": "Écrire en bon arabe et engagez-vous à utiliser l’arabe classique.",
     "ar": "الكتابة بلغة عربية جيدة، والإلتزام بإستخدام اللغة العربية  الفصحى."
@@ -2339,7 +2359,7 @@
     "fr": "Ne répétez pas les phrases utilisées dans la description du service juste pour atteindre le nombre minimum de lettres de description.",
     "ar": "عدم تكرار العبارات المستخدمة في وصف الخدمة لمجرد الوصول إلى الحد الأدنى لعدد حروف الوصف."
   },
-  "For_services_such ": {
+  "For_services_such": {
     "en": "For services such as: I choose a name for your product or company, bring followers, increase likes, bring views... In these services, and in case of problem between the seller and the buyer with the seller's inability to provide a firm, explicit and clear proof of the full implementation of the service, then the purchase order will be cancelled, and the money will be returned to the buyer.",
     "fr": "Pour des services tels que : Je choisis un nom pour votre produit ou votre entreprise, j’apporte des followers, j’augmente les likes, j’apporte des vues... Dans ces services, en cas de problème entre le vendeur et l’acheteur et l’incapacité du vendeur à fournir une preuve ferme, explicite et claire de la mise en œuvre complète du service, le bon de commande est annulé et l’acheteur est remboursé.",
     "ar": "بالنسبة للخدمات من أمثال: أختار لك إسم لمنتجك أو شركتك، جلب  متابعين، زيادة لايكات، جلب مشاهدات ... في هذه الخدمات ، في حال    حدوث أي مشكلة بين البائع والمشتري وعدم تمكن البائع من تقديم إثبات مؤكد وصريح وواضح عن تنفيذ الخدمة على أكمل وجه، يصار حينها   لإلغاء طلب الشراء وإعادة المال للمشتري."
@@ -2498,7 +2518,7 @@
     "fr": "Ne pas demander certains services malgré leur présence sur le site, car ceci indique que le chercheur de service n’a pas d’abord recherché dans les services existants dans le site",
     "ar": "طلب خدمات معينة رغم وجودها في الموقع بما يدل على أن طالب الخدمة  لم يقم بالبحث ضمن خدمات الموقع أولاً"
   },
-  "Users’_protection :": {
+  "Users_protection :": {
     "en": "Users’ protection :",
     "fr": "Protéger les utilisateurs :",
     "ar": "حماية المستخدمين:"
@@ -2513,7 +2533,7 @@
     "fr": "Protéger tout utilisateur contre tout abus qui pourrait lui être dirigé par un autre utilisateur en veillant à prendre les mesures nécessaires contre l’utilisateur abusif dans le cas où cela se produirait.",
     "ar": "حماية أي مستخدم من أي إساءة قد يتم توجيهها له من قبل مستخدم آخر.  والعمل على إتخاذ الإجراءات اللازمة بحق المستخدم المسيء في حال  حدوث ذلك."
   },
-  "Follow_users’_activities,": {
+  "Follow_users_activities": {
     "en": "Follow users’ activities, whether sellers or buyers, to ensure that there are no frauds or embezzlement, as well as to ensure that all users are committed to the ethics and assets of dealing. This is in accordance with the current method of buying and selling used on Timwoork Website. This aims also stopping the account of any user who deals otherwise.",
     "fr": "Suivre les activités des utilisateurs, qu’il s’agisse de vendeurs ou d’acheteurs, pour s’assurer qu’il n’y a pas de fraude ou de contrefaçon, ainsi que pour s’assurer que tous les utilisateurs sont attachés à l’éthique. Ceci est conforme à la méthode actuelle d’achat et de vente utilisée sur le site Timwoork. Elle s’engage aussi à arrêter le compte de tout utilisateur qui traite autrement.",
     "ar": "متابعة أنشطة المستخدمين سواء باعة أو مشترين للتأكد من عدم حدوث عمليات نصب أو إحتيال، إضافة للتأكد من إلتزام جميع المستخدمين  بأخلاق وأصول التعامل. وذلك وفقاً لما هو متاح ضمن الأسلوب المتبع  حالياً في عمليات البيع والشراء المستخدمة في موقع تيم ورك. والعمل  على إيقاف حساب أي مستخدم يتعامل بغير ذلك."
@@ -2533,7 +2553,7 @@
     "fr": "La direction du site est obligée, dans les limites autorisées conformément à la loi, de ne divulguer aucune information personnelle sur l’utilisateur telle que l’adresse, le numéro de téléphone, l’adresse électronique, etc.",
     "ar": "تلتزم إدارة الموقع، في حدود المسموح لها وفق القانون المنظم، بعدم   كشف أي معلومات شخصية عن المشترك مثل العنوان أو رقم الهاتف أو   عنوان البريد الإلكتروني وغيرها."
   },
-  "Furthermore,_none_of": {
+  "Furthermore_none_of": {
     "en": "Furthermore, none of that information will be exchanged, traded, or sold to any other party if it is within the possible site management capabilities, and only qualified and professional people who oversee Timwoork's Website will be allowed access to information.",
     "fr": "En outre, aucune de ces informations ne sera échangée, transmise ou vendue à une autre partie tant qu’elle est dans les limites des capacités de gestion possibles du site, et seules les personnes qualifiées et professionnelles qui supervisent le site Web Timwoork seront autorisées à accéder à l’information.",
     "ar": "علاوة على ذلك، لن يتم تبادل، أو تداول أي من تلك المعلومات أو بيعها لأي طرف آخر طالما كان ذلك في حدود قدرات إدارة الموقع الممكنة، ولن     يُسمح بالوصول إلى المعلومات إلا للأشخاص المؤهلين والمحترفين الذين   يشرفون على موقع تيم ورك الإلكتروني."
@@ -2579,29 +2599,29 @@
     "fr": "Alerte",
     "ar": "تحذير"
   },
-  "From_5-100_Dollars": {
+  "From_5_100_Dollars": {
     "en": "From 5-100 Dollars Can buy a service until 10 times",
     "fr": "De 5-100 Dollar, il peut acheter le service jusqu’à 10 fois",
     "ar": "من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات"
   },
-  "From_101-500_Dollars": {
+  "From_101_500_Dollars": {
     "en": "From 101-500 Dollars Can buy a service until twice only",
     "fr": "De 101-500 Dollar, il peut acheter le service jusqu’à 2 fois seulement",
     "ar": "من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة"
   },
-  "From_501-1000_Can": {
+  "From_501_1000_Can": {
     "en": "From 501-1000 Can but the service at once",
     "fr": "De 501-1000 Dollar, il peut acheter le service en une seule fois",
     "ar": "من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط"
   },
-  "Buyer's_single_service": {
+  "Buyers_single_service": {
     "en": "Buyer's single service may not be purchased twice at the same time until receipt",
     "fr": "Le service ne peut pas être acheté deux fois en même temps jusqu’à ce qu’il soit réceptionné ",
     "ar": "لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام"
   },
   "Service": {
-    "en": "Service",
-    "fr": "Le service",
+    "en": " Service",
+    "fr": " Le service",
     "ar": " الخدمة"
   },
   "Start_conversation": {
@@ -2627,14 +2647,14 @@
   "The_duration_will_cost": {
     "en": "The duration will cost",
     "fr": "La durée coûtera",
-    "ar": "ستكون المدة س بمبلغ"
+    "ar": "ستكون المدة بمبلغ"
   },
-  "Top-selling services": {
+  "Top_selling_services": {
     "en": "Top-selling services",
     "fr": "Services les plus vendus",
     "ar": "الخدمات الأكثر مبيعا"
   },
-  "First-page": {
+  "First_page": {
     "en": "First page",
     "fr": "Première page",
     "ar": "الصفحة الأولى"
@@ -2734,7 +2754,7 @@
     "fr": "Le plus Populaire",
     "ar": "الأكثر شعبية"
   },
-  "Top-selling": {
+  "Top_selling": {
     "en": "Top-selling",
     "fr": "Le plus vendu",
     "ar": "الأكثر مبيعا"

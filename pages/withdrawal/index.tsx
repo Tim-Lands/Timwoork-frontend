@@ -19,6 +19,8 @@ import MoneyAccountCart from "@/components/Withdrawal/MoneyAccountCart";
 import PaypalCart from "@/components/Withdrawal/PaypalCart";
 import WiseCart from "@/components/Withdrawal/WiseCart";
 import API from "../../config";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 function Withdrawal() {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -39,6 +41,8 @@ function Withdrawal() {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [isPaymentAvailable, setIsPaymentAvailable]: any = useState({});
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
 
   const sendMoney = async () => {
     let url = "api/withdrawals/withdrawal_";
@@ -68,7 +72,7 @@ function Withdrawal() {
       );
       // Authentication was successful.
       if (res.status === 200) {
-        message.success("لقد تم ارسال طلب السحب إلى الإدارة");
+        message.success(getLogin("The_withdrawal_request"));
         router.push("/mywallet");
       }
     } catch (error: any) {
@@ -153,13 +157,17 @@ function Withdrawal() {
   return (
     <>
       <MetaTags
-        title="طلب السحب"
-        metaDescription="طلب السحب"
-        ogDescription="طلب السحب"
+        title={getLogin("Withdrawal_request")}
+        metaDescription={getLogin("Withdrawal_request")}
+        ogDescription={getLogin("Withdrawal_request")}
       />
       {!userInfo && <Loading />}
       <div className="container-fluid transition-all pt-5 pb-5">
-        <div className={`row transition-all ${(formik.values.withdrawal_type == 4) && ' justify-content-md-center'}`}>
+        <div
+          className={`row transition-all ${
+            formik.values.withdrawal_type == 4 && " justify-content-md-center"
+          }`}
+        >
           <div className="col-lg-4 transition-all">
             <div className="withdrawable-sidebar">
               <form onSubmit={formik.handleSubmit}>
@@ -170,17 +178,15 @@ function Withdrawal() {
                   <div className="">
                     <div className="timlands-form">
                       <label className="label-block lg" htmlFor="input-amount">
-                        المبلغ الذي تريد تحويله ($)
+                        {getLogin("Amount_to_withdraw")}($)
                       </label>
-                      <p className="label-note">
-                        يجب ان يكون المبلغ الذي تريد تحويل على الأقل 50$
-                      </p>
+                      <p className="label-note">{getLogin("The_amount_you")}</p>
                       <input
                         id="input-amount"
                         name="amount"
                         type="number"
                         onInput={allowOnlyNumericsOrDigits}
-                        placeholder="المبلغ الذي تريد تحويله ($)"
+                        placeholder={getLogin("Amount_to_withdraw")}
                         className={
                           "timlands-inputs lg " +
                           (validationsErrors &&
@@ -230,7 +236,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        تحويل بنكي
+                        {getLogin("Bank_transfer")}
                       </label>
                     </div>
                     <button
@@ -265,7 +271,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        الحوالة المالية
+                        {getLogin("Money_transfer")}
                       </label>
                     </div>
                     <button
@@ -337,7 +343,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        تحويل بايبال Paypal
+                        {getLogin("PayPal_transfer")}
                       </label>
                     </div>
                     <button
@@ -364,7 +370,7 @@ function Withdrawal() {
               </form>
             </div>
           </div>
-          {formik.values.withdrawal_type !== 4 &&
+          {formik.values.withdrawal_type !== 4 && (
             <div className="col-lg-8 transition-all">
               {formik.values.withdrawal_type == 1 && (
                 <>
@@ -438,7 +444,7 @@ function Withdrawal() {
                 </>
               )}
             </div>
-          }
+          )}
         </div>
       </div>
     </>

@@ -4,17 +4,21 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import useSWR from "swr";
 import { message } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function index(): ReactElement {
   const { data: postsList, categoriesError }: any = useSWR("dashboard");
-
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   // Return statement.
   return (
     <>
       <MetaTags
-        title={"الصفحة الرئيسية - الإدارة العامة"}
-        metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
-        ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+        title={getLogin("Home_General_administration")}
+        metaDescription={getLogin("Home_General_administration")}
+        ogDescription={getLogin("Home_General_administration")}
       />
       <div className="timlands-panel">
         <div className="timlands-panel-header">
@@ -22,10 +26,10 @@ function index(): ReactElement {
             <span className="material-icons material-icons-outlined">
               dashboard
             </span>
-            الرئيسية
+            {getAll("Home")}
           </h2>
         </div>
-        {categoriesError && message.error("حدث خطأ أثناء جلب البيانات")}
+        {categoriesError && message.error(getLogin("An_error_occurred_2"))}
         {!postsList ? (
           ""
         ) : (
@@ -41,7 +45,7 @@ function index(): ReactElement {
                     />
                   </div>
                   <div className="panel-content">
-                    <h1 className="price-text">الرصيد الإجمالي</h1>
+                    <h1 className="price-text">{getLogin("Total_balance")}</h1>
                     <h1 className="price-num">
                       <span className="num-val">0.00$</span>
                     </h1>
@@ -56,7 +60,7 @@ function index(): ReactElement {
                     <img src="/icons/002-money.png" className="mb-3" alt="" />
                   </div>
                   <div className="panel-content">
-                    <h1 className="price-text">الفوائد</h1>
+                    <h1 className="price-text">{getLogin("Benefits")}</h1>
                     <h1 className="price-num">
                       <span className="num-val">0.00$</span>
                     </h1>
@@ -67,14 +71,16 @@ function index(): ReactElement {
             <div className="col-md-4">
               <div className="timlands-panel-item center">
                 <div className="panel-item-header">
-                  <h4 className="title">المستخدمين</h4>
+                  <h4 className="title">{getLogin("Users")}</h4>
                 </div>
                 <div className="panel-item-body">
                   <ul className="details-items">
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">المشرفين والمدراء</p>
+                          <p className="text">
+                            {getLogin("Supervisors_and_managers")}
+                          </p>
                         </div>
                         <div className="det-val">
                           <p className="text">{postsList.data.admins}</p>
@@ -84,7 +90,7 @@ function index(): ReactElement {
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">المشترين</p>
+                          <p className="text">{getLogin("Buyers")}</p>
                         </div>
                         <div className="det-val">
                           <p className="text">0</p>
@@ -94,7 +100,7 @@ function index(): ReactElement {
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">البائعين</p>
+                          <p className="text">{getAll("Sellers")}</p>
                         </div>
                         <div className="det-val">
                           <p className="text">0</p>
@@ -104,7 +110,7 @@ function index(): ReactElement {
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">المجموع</p>
+                          <p className="text">{getLogin("Total")}</p>
                         </div>
                         <div className="det-val">
                           <p className="text">{postsList.data.users}</p>
@@ -115,7 +121,9 @@ function index(): ReactElement {
                 </div>
                 <div className="panel-item-footer">
                   <Link href="/">
-                    <a className="btn butt-dark butt-sm">تفاصيل أكثر...</a>
+                    <a className="btn butt-dark butt-sm">
+                      {getLogin("More_details")}
+                    </a>
                   </Link>
                 </div>
               </div>
@@ -123,14 +131,16 @@ function index(): ReactElement {
             <div className="col-md-4">
               <div className="timlands-panel-item center">
                 <div className="panel-item-header">
-                  <h4 className="title">الخدمات</h4>
+                  <h4 className="title">{getLogin("Services")}</h4>
                 </div>
                 <div className="panel-item-body">
                   <ul className="details-items">
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">في انتظار التفعيل</p>
+                          <p className="text">
+                            {getLogin("Wating_for_activation")}
+                          </p>
                         </div>
                         <div className="det-val">
                           <p className="text">
@@ -154,7 +164,7 @@ function index(): ReactElement {
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">النشطة</p>
+                          <p className="text">{getLogin("Active")}</p>
                         </div>
                         <div className="det-val">
                           <p className="text">
@@ -166,7 +176,7 @@ function index(): ReactElement {
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">المعطلة</p>
+                          <p className="text">{getLogin("Disabled")}</p>
                         </div>
                         <div className="det-val">
                           <p className="text">0</p>
@@ -176,7 +186,7 @@ function index(): ReactElement {
                     <li>
                       <div className="d-flex">
                         <div className="det-prop">
-                          <p className="text">المجموع</p>
+                          <p className="text">{getLogin("Total")}</p>
                         </div>
                         <div className="det-val">
                           <p className="text">
@@ -191,7 +201,9 @@ function index(): ReactElement {
                 </div>
                 <div className="panel-item-footer">
                   <Link href="/">
-                    <a className="btn butt-dark butt-sm">تفاصيل أكثر...</a>
+                    <a className="btn butt-dark butt-sm">
+                      {getLogin("More_details")}
+                    </a>
                   </Link>
                 </div>
               </div>
@@ -205,4 +217,4 @@ function index(): ReactElement {
 index.getLayout = function getLayout(page: any): ReactElement {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
-export default index
+export default index;
