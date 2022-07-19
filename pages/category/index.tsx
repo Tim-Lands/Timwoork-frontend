@@ -6,6 +6,8 @@ import Loading from "@/components/Loading";
 import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
 function index() {
   const { data: categories }: any = useSWR(`api/categories`);
   const { language } = useContext(LanguageContext);
@@ -18,14 +20,14 @@ function index() {
   return (
     <div className="row py-4 d-flex justify-content-center align-items-center">
       <MetaTags
-        title="التصنيفات"
-        metaDescription="التصنيفات"
-        ogDescription="التصنيفات"
+        title={getAll("Categories")}
+        metaDescription={getAll("Categories")}
+        ogDescription={getAll("Categories")}
       />
       <div className="col-md-9" style={{ maxWidth: 1300 }}>
         <div className="app-bill">
           <div className="app-bill-header">
-            <h3 className="title">صفحة التصنيفات</h3>
+            <h3 className="title">{getAll("Categories")}</h3>
           </div>
           <div className="app-bill-content">
             {!categories && <Loading />}

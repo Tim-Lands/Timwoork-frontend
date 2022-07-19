@@ -16,6 +16,7 @@ function index() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -75,7 +76,7 @@ function index() {
                   {validationsGeneral.msg && (
                     <div style={{ textAlign: "right", marginBottom: 16 }}>
                       <Alert
-                        message="حدث خطأ"
+                        message={getAll("An_error_occurred")}
                         description={validationsGeneral.msg}
                         type="error"
                         showIcon
@@ -95,7 +96,7 @@ function index() {
                           className="btn butt-md butt-white"
                           onClick={addNewProduct}
                         >
-                          يرجى الإنتظار...
+                          {getAll("Please_wait")}
                         </button>
                       </div>
                     )}

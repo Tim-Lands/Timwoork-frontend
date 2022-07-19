@@ -19,12 +19,12 @@
     "fr": "LE site web Timwoork",
     "ar": "موقع تيم ورك"
   },
-  "Choose_pictures_from ": {
+  "Choose_pictures_from": {
     "en": "Choose pictures from your device",
     "fr": "Choisir des photos à partir de votre appareil",
     "ar": "اختر صور من جهازك"
   },
-  "The_profile_picture ": {
+  "The_profile_picture": {
     "en": "The profile picture must be clear and high-quality that reflects the content of the service",
     "fr": "La photo de profil doit être claire, de bonne résolution et doit refléter le contenu du service",
     "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة"
@@ -449,7 +449,7 @@
     "fr": "Aucun service",
     "ar": "لا توجد خدمات"
   },
-  "Add_new_service-": {
+  "Add_new_service1": {
     "en": "Add new service- Publish the service",
     "fr": "Ajouter un nouveau service- Publier le service",
     "ar": " إضافة خدمة جديدة - نشر الخدمة"
@@ -520,7 +520,7 @@
     "ar": "إشعار"
   },
   "Pictures_has_veeen": {
-    "en": "Pictures has veeen uploaded successfully",
+    "en": "Pictures has been uploaded successfully",
     "fr": "Les images ont bien été téléchargées ",
     "ar": "لقد تم رفع الصور بنجاح"
   },
@@ -539,7 +539,7 @@
     "fr": "L’opération a échoué",
     "ar": "العملية غير ناجحة"
   },
-  "An_error_occurred...": {
+  "An_error_occurred1": {
     "en": "An error occurred.. Please check out the data",
     "fr": "Une erreur s’est produite.. veuillez vérifier les données",
     "ar": "حدث خطأ.. يرجى التأكد من البيانات"
@@ -869,11 +869,6 @@
     "fr": "En attente de reception",
     "ar": "قيد الإستلام"
   },
-  "Completed": {
-    "en": "Completed",
-    "fr": "Achevé",
-    "ar": "معلقة"
-  },
   "Status_amendment_request": {
     "en": "Status amendment request",
     "fr": "Demande de modification de statut",
@@ -1104,13 +1099,13 @@
     "fr": "Si vous avez trouvé une solution, vous pouvez réactiver le processus de nouveau",
     "ar": "إذا تواصلتما إلى حل يمكنك تحويل العملية إلى قيد التنفيذ مرة أخرى"
   },
-  "Operation details": {
+  "Operation_details": {
     "en": "Operation details",
     "fr": "Détails de l’opération",
     "ar": "تفاصيل العملية"
   },
-  "Opération_number": {
-    "en": "Opération number",
+  "Operation_number1": {
+    "en": "Operation number",
     "fr": "Numéro d’opération",
     "ar": "رقم العملية"
   },
@@ -2604,29 +2599,29 @@
     "fr": "Alerte",
     "ar": "تحذير"
   },
-  "From_5-100_Dollars": {
+  "From_5_100_Dollars": {
     "en": "From 5-100 Dollars Can buy a service until 10 times",
     "fr": "De 5-100 Dollar, il peut acheter le service jusqu’à 10 fois",
     "ar": "من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات"
   },
-  "From_101-500_Dollars": {
+  "From_101_500_Dollars": {
     "en": "From 101-500 Dollars Can buy a service until twice only",
     "fr": "De 101-500 Dollar, il peut acheter le service jusqu’à 2 fois seulement",
     "ar": "من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة"
   },
-  "From_501-1000_Can": {
+  "From_501_1000_Can": {
     "en": "From 501-1000 Can but the service at once",
     "fr": "De 501-1000 Dollar, il peut acheter le service en une seule fois",
     "ar": "من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط"
   },
-  "Buyer's_single_service": {
+  "Buyers_single_service": {
     "en": "Buyer's single service may not be purchased twice at the same time until receipt",
     "fr": "Le service ne peut pas être acheté deux fois en même temps jusqu’à ce qu’il soit réceptionné ",
     "ar": "لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام"
   },
   "Service": {
-    "en": "Service",
-    "fr": "Le service",
+    "en": " Service",
+    "fr": " Le service",
     "ar": " الخدمة"
   },
   "Start_conversation": {
@@ -2654,7 +2649,7 @@
     "fr": "La durée coûtera",
     "ar": "ستكون المدة بمبلغ"
   },
-  "Top-selling services": {
+  "Top_selling_services": {
     "en": "Top-selling services",
     "fr": "Services les plus vendus",
     "ar": "الخدمات الأكثر مبيعا"
@@ -2759,7 +2754,7 @@
     "fr": "Le plus Populaire",
     "ar": "الأكثر شعبية"
   },
-  "Top-selling": {
+  "Top_selling": {
     "en": "Top-selling",
     "fr": "Le plus vendu",
     "ar": "الأكثر مبيعا"

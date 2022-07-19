@@ -18,6 +18,7 @@ function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("cart");
   const getLanguageMain = getSectionLanguage("main");
+  const getAll = getSectionLanguage("all");
   const [, getCurrency] = useContext(CurrencyContext);
   const specCurrency = getCurrency(
     userInfo?.user_details?.profile?.currency?.code
@@ -83,7 +84,7 @@ function index() {
       (cartList && cartList.data == null) ||
       (cartList && cartList.data.price_with_tax == 0)
     ) {
-      message.error("لا يمكنك الشراء الآن لأن السلة فارغة");
+      message.error(getAll("You_can’t_buy"));
     } else {
       router.push("/purchase");
     }
@@ -96,9 +97,9 @@ function index() {
   return (
     <>
       <MetaTags
-        title={"سلة المشتريات"}
-        metaDescription={"سلة المشتريات - تيموورك"}
-        ogDescription={"سلة المشتريات - تيموورك"}
+        title={getAll("Purchases_cart")}
+        metaDescription={getAll("Timwoork’s_cart")}
+        ogDescription={getAll("Timwoork’s_cart")}
       />
       <div className="timwoork-single mt-4">
         <div
@@ -134,7 +135,7 @@ function index() {
                         <span className="material-icons material-icons-outlined">
                           shopping_cart
                         </span>{" "}
-                        سلة المشتريات
+                        {getAll("Purchases_cart")}
                       </h1>
                     </div>
                     <div className="cart-list">
@@ -170,7 +171,7 @@ function index() {
                                 }}
                               >
                                 <li style={{ fontSize: 13, color: "#777" }}>
-                                  <strong>المجموع: </strong>
+                                  <strong>{getAll("Total_2")}</strong>
                                   {specCurrency
                                     ? Math.round(
                                         cartList?.data?.total_price *
@@ -201,7 +202,7 @@ function index() {
                           onClick={buyNowBtn}
                           className="btn butt-primary butt-lg ml-0"
                         >
-                          اشتري الآن
+                          {getAll("Buy_now")}
                         </button>
                       </div>
                     )}

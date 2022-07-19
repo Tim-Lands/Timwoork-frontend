@@ -15,6 +15,8 @@ function Complete({ query }) {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -25,7 +27,7 @@ function Complete({ query }) {
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
 
   if (!token && !veriedEmail) return <Unauthorized />;
-  if (!query) return message.error("حدث خطأ");
+  if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
     try {
       // const res: any =
@@ -66,7 +68,7 @@ function Complete({ query }) {
       );
       // Authentication was successful.
       if (res.status === 200) {
-        message.success("لقد تم التحديث بنجاح");
+        message.success(getLogin("The_update_has"));
         router.push({
           pathname: "/myproducts",
           query: {
@@ -75,18 +77,18 @@ function Complete({ query }) {
         });
       }
     } catch (error: any) {
-      message.error("حدث خطأ غير متوقع");
+      message.error(getAll("An_unexpected_error_occurred"));
     }
   }
   return (
     <>
       <MetaTags
-        title="إضافة خدمة جديدة - نشر الخدمة"
-        metaDescription="إضافة خدمة جديدة - نشر الخدمة "
-        ogDescription="إضافة خدمة جديدة - نشر الخدمة"
+        title={getAll("Add_new_service1")}
+        metaDescription={getAll("Add_new_service1")}
+        ogDescription={getAll("Add_new_service1")}
       />
       <div className="container-fluid">
-        {!getProduct && <div>يرجى الانتظار...</div>}
+        {!getProduct && <div>{getAll("Please_wait")}</div>}
 
         <div className="row justify-content-md-center my-3">
           <div className="col-md-7 pt-3">

@@ -1435,7 +1435,7 @@
     "ar": "نعم, أريد الإستعادة"
   },
   "PEnding": {
-    "en": "PEnding",
+    "en": "Pending",
     "fr": "En attente",
     "ar": "قيد الإنتظار"
   },
@@ -1720,9 +1720,9 @@
     "ar": "عدد الخدمات"
   },
   "Transfer_fees_for": {
-    "en": "Transfer fees for X",
-    "fr": "Frais de transfert pour X",
-    "ar": "رسوم التحويل لـفلان"
+    "en": "Transfer fees for ",
+    "fr": "Frais de transfert pour ",
+    "ar": "رسوم التحويل ل"
   },
   "These_fees_cover": {
     "en": "These fees cover the costs of payment gateways and help us operate the site and provide you with technical support",
@@ -1784,7 +1784,7 @@
     "fr": "L’achat est effectué avec succès",
     "ar": "لقد تمت عملية الشراء بجاح"
   },
-  "Unfortunately,_the_purchase": {
+  "Unfortunately_the_purchase": {
     "en": "Unfortunately, the purchase failed, please try again",
     "fr": "Malheureusement l’achat a échoué, veuillez réessayer",
     "ar": "للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى"
