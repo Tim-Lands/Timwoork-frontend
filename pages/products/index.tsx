@@ -22,6 +22,9 @@ import Link from "next/link";
 import cookies from "next-cookies";
 import router from "next/router";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getLogin = getSectionLanguage("login");
+const getAll = getSectionLanguage("all");
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingTags, setIsLoadingTags] = useState(false);
@@ -88,9 +91,9 @@ function Category({ products, categories, url_params }) {
   const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({});
   const [activeKeys, setActiveKeys]: any = useState([]);
   const products_type = useRef({
-    most_recent: "الخدمات الأحدث",
-    most_selling: "الخدمات الأكثر مبيعًا",
-    popular: "الخدمات الأكثر شعبية",
+    most_recent: getAll("Recent_services"),
+    most_selling: getAll("Top_selling_services"),
+    popular: getAll("Most_popular_services"),
   });
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
   /**----------------------------------------------------------**/
@@ -369,9 +372,9 @@ function Category({ products, categories, url_params }) {
       }}
     >
       <MetaTags
-        title={"تصفح الخدمات"}
-        metaDescription={"تصفح الخدمات"}
-        ogDescription={"تصفح الخدمات"}
+        title={getAll("Explore_services")}
+        metaDescription={getAll("Explore_services")}
+        ogDescription={getAll("Explore_services")}
       />
       <form onSubmit={formik.handleChange}>
         <div className="row">
@@ -492,7 +495,7 @@ function Category({ products, categories, url_params }) {
                         >
                           <span className="item-cat-label">
                             <span className="material-icons material-icons-outlined"></span>
-                            جميع التصنيفات
+                            {getAll("All_categories")}
                           </span>
                         </div>
                       </div>
@@ -527,7 +530,7 @@ function Category({ products, categories, url_params }) {
                                 >
                                   <Link href={`/products?categoryID=${e.id}`}>
                                     <a className="item-cat-label text-black">
-                                      الجميع
+                                      {getAll("All")}
                                     </a>
                                   </Link>
                                 </div>
@@ -551,7 +554,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header="المهارات"
+                  header={getLogin("Skills")}
                   key="6"
                   style={{
                     backgroundColor: "#fff",
@@ -827,7 +830,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header="البائع"
+                  header={getAll("Seller")}
                   key="5"
                   style={{
                     backgroundColor: "#fff",
@@ -907,7 +910,7 @@ function Category({ products, categories, url_params }) {
                         className="form-check-label"
                         htmlFor="sellerBadge-3"
                       >
-                        بائع جديد
+                        {getAll("New_seller")}
                       </label>
                     </div>
                   </div>
@@ -948,7 +951,7 @@ function Category({ products, categories, url_params }) {
                             });
                           }}
                         >
-                          الأكثر شعبية
+                          {getAll("Most_popular")}
                         </button>
                       </li>
                       <li>
@@ -962,7 +965,7 @@ function Category({ products, categories, url_params }) {
                             });
                           }}
                         >
-                          الأكثر مبيعا
+                          {getAll("Top_selling")}
                         </button>
                       </li>
                       <li>
@@ -976,7 +979,7 @@ function Category({ products, categories, url_params }) {
                             });
                           }}
                         >
-                          المضافة حديثا
+                          {getAll("Recently_added")}
                         </button>
                       </li>
                       <li>
@@ -990,7 +993,7 @@ function Category({ products, categories, url_params }) {
                             });
                           }}
                         >
-                          بدون ترتيب
+                          {getAll("Not_classified")}
                         </button>
                       </li>
                     </ul>
@@ -1006,8 +1009,8 @@ function Category({ products, categories, url_params }) {
             {getProducts && getProducts.data == null && (
               <Result
                 status="404"
-                title="لاتوجد بيانات"
-                subTitle="لاتوجد خدمات في هذه الحالة يرجى اعادة المحاولة"
+                title={getAll("No_data")}
+                subTitle={getAll("There_are_no")}
               />
             )}
             {getProducts && (

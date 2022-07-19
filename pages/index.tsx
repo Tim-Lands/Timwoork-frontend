@@ -20,7 +20,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import PostInner from "@/components/Post/PostInner";
-
 function index({ products, latestProducts, categories, popularProducts }) {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
@@ -48,34 +47,27 @@ function index({ products, latestProducts, categories, popularProducts }) {
       </Menu.Item>
     </Menu>
   );
+  const getAll = getSectionLanguage("all");
   return (
     <>
       <Head>
-        <title>تيم ورك | لبيع وشراء الخدمات المصغرة</title>
+        <title>{getAll("Timwoork_l_For")}</title>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@timwoorkDotCom" />
         <meta name="twitter:creator" content="@timwoorkDotCom" />
-        <meta property="og:site_name" content="موقع تيم ورك" />
+        <meta property="og:site_name" content={getAll("Timwoork_website")} />
         <meta property="og:locale" content="ar" />
         <meta property="og:locale:alternate" content="ar" />
         <meta property="og:type" content="website" />
-        <meta
-          name="twitter:title"
-          content={"تيم ورك | لبيع وشراء الخدمات المصغرة"}
-        />
+        <meta name="twitter:title" content={getAll("Timwoork_l_For")} />
         <meta
           name="twitter:description"
-          content={
-            "بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. "
-          }
+          content={getAll("Timwoork’s_website")}
         />
-        <meta
-          property="og:title"
-          content="تيم ورك | لبيع وشراء الخدمات المصغرة"
-        />
+        <meta property="og:title" content={getAll("Timwoork_l_For")} />
         <meta
           property="og:description"
-          content="بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. "
+          content={getAll("Timwoork’s_website")}
         />
         <meta property="og:url" content="https://timwoork.com/" />
         <meta property="og:image" content="/seo.png" />

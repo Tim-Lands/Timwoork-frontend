@@ -9,6 +9,8 @@ import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import API from "../../config";
 import PostInner from "@/components/Post/PostInner";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 const User = ({ query, stars }) => {
   // Return statement.
@@ -26,6 +28,8 @@ const User = ({ query, stars }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
 
   useEffect(() => {
     setIsOverflow(
@@ -59,7 +63,9 @@ const User = ({ query, stars }) => {
               <div className="profile-content-header py-4">
                 <Badge
                   color={User.status == 0 ? "#ccc" : "green"}
-                  count={User.status == 0 ? "غير متصل" : "متصل"}
+                  count={
+                    User.status == 0 ? getLogin("Offline") : getLogin("Online")
+                  }
                   offset={[10, 10]}
                 >
                   <div className="profile-content-avatar">
@@ -105,7 +111,7 @@ const User = ({ query, stars }) => {
                     <span className="material-icons material-icons-outlined">
                       copy
                     </span>{" "}
-                    نسخ رابط بروفايلي
+                    {getLogin("Copy_my_profiles")}
                   </button>
                 </p>
                 {/* {User && User.profile.profile_seller && User.profile.profile_seller.portfolio &&
@@ -122,7 +128,7 @@ const User = ({ query, stars }) => {
                     User.profile.profile_seller &&
                     User.profile.profile_seller.bio && (
                       <div className="pb-1 mb-2">
-                        <Card title="نبذة عني">
+                        <Card title={getLogin("Brief_me_about")}>
                           <div
                             ref={detectHeight}
                             className={"user-bro " + (isLess ? "is-less" : "")}
@@ -140,7 +146,9 @@ const User = ({ query, stars }) => {
                                 "read-more-btn " + (isLess ? "is-less" : "")
                               }
                             >
-                              {isLess ? "قراءة المزيد..." : "قراءة أقل..."}
+                              {isLess
+                                ? getLogin("Read_more")
+                                : getLogin("Read_less")}
                             </button>
                           )}
                         </Card>
@@ -153,14 +161,16 @@ const User = ({ query, stars }) => {
                           <span className="material-icons material-icons-outlined">
                             account_circle
                           </span>
-                          المعلومات الشخصية
+                          {getLogin("Personal_information")}
                         </h3>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-sm-6">
                         <div className="content-text-item">
-                          <h3 className="text-label">الاسم الأول</h3>
+                          <h3 className="text-label">
+                            {getLogin("First_name")}
+                          </h3>
                           <p className="text-value">
                             {User.profile && User.profile.first_name}
                           </p>
@@ -168,7 +178,9 @@ const User = ({ query, stars }) => {
                       </div>
                       <div className="col-sm-6">
                         <div className="content-text-item">
-                          <h3 className="text-label">الاسم الأخير</h3>
+                          <h3 className="text-label">
+                            {getLogin("Last_name")}
+                          </h3>
                           <p className="text-value">
                             {User.profile && User.profile.last_name}
                           </p>
@@ -177,7 +189,9 @@ const User = ({ query, stars }) => {
                       {User && User.profile.country !== null && (
                         <div className="col-sm-6">
                           <div className="content-text-item">
-                            <h3 className="text-label">البلد</h3>
+                            <h3 className="text-label">
+                              {getLogin("Country")}
+                            </h3>
                             <p className="text-value">
                               {User.profile.country.name_ar}
                             </p>
@@ -186,12 +200,14 @@ const User = ({ query, stars }) => {
                       )}
                       <div className="col-sm-6">
                         <div className="content-text-item">
-                          <h3 className="text-label">الجنس</h3>
+                          <h3 className="text-label">{getLogin("Gender")}</h3>
                           <p className="text-value">
                             {User.profile && User.profile.gender == null
                               ? ""
                               : User.profile &&
-                                (User.profile.gender == 0 ? "أنثى" : "ذكر")}
+                                (User.profile.gender == 0
+                                  ? getLogin("woman")
+                                  : getLogin("Man"))}
                           </p>
                         </div>
                       </div>
@@ -209,7 +225,7 @@ const User = ({ query, stars }) => {
                     className="title me-auto"
                     style={{ fontWeight: "bold", fontSize: 26 }}
                   >
-                    الخدمات
+                    {getLogin("Services")}
                   </h1>
                 </div>
                 <div className="posts-aside-body">

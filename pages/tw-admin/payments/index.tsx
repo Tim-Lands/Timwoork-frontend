@@ -10,7 +10,12 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import Cookies from "js-cookie";
 import { message } from "antd";
 import router from "next/router";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 function Countries(): ReactElement {
   const { data: GetData, error }: any = useSWR(`dashboard/types_payments`);
 
@@ -26,12 +31,12 @@ function Countries(): ReactElement {
         })
 
         swalWithBootstrapButtons.fire({
-            title: 'هل أنت متأكد؟',
-            text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+            title: {getLogin("Are_you_sure")},
+            text: {getLogin("Are_you_sure")},
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'نعم, أريد الحذف',
-            cancelButtonText: 'لا',
+            confirmButtonText: {getLogin("Yes")}',
+            cancelButtonText: {getLogin("No")},
             reverseButtons: true
         }).then(async (result) => {
             if (result.isConfirmed) {
@@ -43,7 +48,7 @@ function Countries(): ReactElement {
 
                 }
                 swalWithBootstrapButtons.fire(
-                    'تم الحذف!',
+                    {getLogin("Deleted")},
                     'لقد تم حذف هذا العنصر بنجاح',
                     'success'
                 )
@@ -61,11 +66,11 @@ function Countries(): ReactElement {
         }
       );
       if (res.status === 200) {
-        message.success("تم تنشيط البوابة بنجاح");
+        message.success(getLogin("The_gateway_had"));
         router.reload();
       }
     } catch (error) {
-      message.success("للأسف لم يتم تنشيط   البوابة");
+      message.success(getLogin("Unfortunately_the_gateway"));
     }
   };
   const disactivateHandle = async (id: any) => {
@@ -78,11 +83,11 @@ function Countries(): ReactElement {
         }
       );
       if (res.status === 200) {
-        message.success("تم تعطيل البوابة بنجاح");
+        message.success(getLogin("The_gateway_has"));
         router.reload();
       }
     } catch (error) {
-      message.success("للأسف لم يتم تعطيل البوابة");
+      message.success(getLogin("Unfortunately_the_gateway_2"));
     }
   };
   const catVariants = {
@@ -99,9 +104,9 @@ function Countries(): ReactElement {
   return (
     <>
       <MetaTags
-        title={" الإدارة العامة - بوابات الدفع"}
-        metaDescription={"الصفحة الرئيسية - بوابات الدفع"}
-        ogDescription={"الصفحة الرئيسية - بوابات الدفع"}
+        title={getLogin("Genaral_administration_Payment")}
+        metaDescription={getLogin("Home_Payment_Gateways")}
+        ogDescription={getLogin("Home_Payment_Gateways")}
       />
       <div className="timlands-panel">
         <div className="timlands-panel-header d-flex align-items-center">
@@ -109,7 +114,7 @@ function Countries(): ReactElement {
             <span className="material-icons material-icons-outlined">
               payments
             </span>
-            بوابات الدفع
+            {getLogin("Payment_gateways")}
           </h2>
           <div className="header-butt">
             <Link href={`/tw-admin/payments/add`}>
@@ -117,7 +122,7 @@ function Countries(): ReactElement {
                 <span className="material-icons material-icons-outlined">
                   add_box
                 </span>{" "}
-                إضافة جديد
+                {getLogin("Add_new")}
               </a>
             </Link>
           </div>
@@ -126,10 +131,10 @@ function Countries(): ReactElement {
           <table className="table">
             <thead>
               <tr>
-                <th>اسم البوابة</th>
-                <th>نسبة الإقتطاع</th>
-                <th>الحالة</th>
-                <th>الأدوات</th>
+                <th>{getLogin("Gateway_name")}</th>
+                <th>{getLogin("Deduction_rate")}</th>
+                <th>{getLogin("Status")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -144,7 +149,11 @@ function Countries(): ReactElement {
                   >
                     <td>{e.name_ar}</td>
                     <td>{e.precent_of_payment}</td>
-                    <td>{e.status == 0 ? "معطلة" : "نشطة"}</td>
+                    <td>
+                      {e.status == 0
+                        ? getLogin("Disabled")
+                        : getLogin("Active")}
+                    </td>
                     <td className="tools-col">
                       <Link href={`/tw-admin/payments/edit/${e.id}`}>
                         <button className="btn butt-xs2 mx-1 butt-green">
@@ -157,14 +166,14 @@ function Countries(): ReactElement {
                           onClick={() => disactivateHandle(e.id)}
                           className="btn butt-xs2 mx-1 butt-orange"
                         >
-                          تعطيل
+                          {getLogin("Desactivation")}
                         </button>
                       ) : (
                         <button
                           onClick={() => activateHandle(e.id)}
                           className="btn butt-xs2 mx-1 butt-green"
                         >
-                          تنشيط
+                          {getLogin("Activation")}
                         </button>
                       )}
                     </td>
@@ -175,8 +184,8 @@ function Countries(): ReactElement {
           {error && (
             <Alert type="error">
               <p className="text">
-                <span className="material-icons">warning_amber</span> حدث خطأ
-                غير متوقع
+                <span className="material-icons">warning_amber</span>{" "}
+                {getLogin("An_unexpected_error")}
               </p>
             </Alert>
           )}

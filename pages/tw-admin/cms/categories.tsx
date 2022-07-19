@@ -9,7 +9,12 @@ import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 function Categories(): ReactElement {
   const { data: GetData, error }: any = useSWR(`dashboard/categories`);
 
@@ -26,12 +31,12 @@ function Categories(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        title: getLogin("Are_you_sure1"),
+        text: getLogin("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
-        cancelButtonText: "لا",
+        confirmButtonText: getLogin("Yes"),
+        cancelButtonText: getLogin("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -42,8 +47,8 @@ function Categories(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            "تم الحذف!",
-            "لقد تم حذف هذا العنصر بنجاح",
+            getLogin("Deleted"),
+            getLogin("The_service_has"),
             "success"
           );
         }
@@ -71,8 +76,8 @@ function Categories(): ReactElement {
     <>
       <MetaTags
         title={"الإدارة العامة - التصنيفات"}
-        metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
-        ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+        metaDescription={getLogin("Home_General_administration")}
+        ogDescription={getLogin("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewCategory setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -83,7 +88,7 @@ function Categories(): ReactElement {
             <span className="material-icons material-icons-outlined">
               chrome_reader_mode
             </span>
-            التصنيفات
+            {getAll("Categories")}
           </h2>
           <div className="header-butt">
             <button
@@ -93,7 +98,7 @@ function Categories(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              إضافة جديد
+              {getLogin("Add_new")}
             </button>
           </div>
         </div>
@@ -102,7 +107,7 @@ function Categories(): ReactElement {
             <thead>
               <tr>
                 <th> اسم الصنف</th>
-                <th>الأدوات</th>
+                <th>{getLogin("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -151,8 +156,8 @@ function Categories(): ReactElement {
           {error && (
             <Alert type="error">
               <p className="text">
-                <span className="material-icons">warning_amber</span> حدث خطأ
-                غير متوقع
+                <span className="material-icons">warning_amber</span>{" "}
+                {getAll("An_unexpected_error_occurred")}
               </p>
             </Alert>
           )}

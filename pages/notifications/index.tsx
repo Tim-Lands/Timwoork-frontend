@@ -15,6 +15,7 @@ function index() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("notification");
+  const getLogin = getSectionLanguage("login");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();
@@ -127,7 +128,7 @@ function index() {
               <Result
                 status="404"
                 title={getLanguage("You_have_no")}
-                subTitle="ليس لديك اشعارات لعرضها"
+                subTitle={getLogin("You_have_no_2")}
               />
             )}
             <div className="notifications-panel">

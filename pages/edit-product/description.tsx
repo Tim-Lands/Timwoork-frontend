@@ -120,6 +120,8 @@ function Description({ query, stars }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
 
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
@@ -177,7 +179,7 @@ function Description({ query, stars }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getLogin("The_update_has"));
           router.push(`/edit-product/medias?id=${getProduct?.data.id}`);
         }
       } catch (error: any) {
@@ -222,9 +224,9 @@ function Description({ query, stars }) {
   return (
     <>
       <MetaTags
-        title="تعديل الخدمة - الوصف وتعليمات المشتري"
-        metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
-        ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
+        title={getAll("Add_new_service_Description")}
+        metaDescription={getAll("Add_new_service_Description")}
+        ogDescription={getAll("Add_new_service_Description")}
       />
       {token && veriedEmail && (
         <div className="container-fluid">
@@ -445,7 +447,9 @@ function Description({ query, stars }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">حفظ التغييرات</span>
+                            <span className="text">
+                              {getLogin("Save_edits")}
+                            </span>
                           </button>
                         </div>
                       </div>

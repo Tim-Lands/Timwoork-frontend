@@ -3,7 +3,12 @@ import { ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
+import { LanguageContext } from "../../../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 export default function Id(): ReactElement {
   const router = useRouter();
   const id = router.query.id;
@@ -65,7 +70,7 @@ export default function Id(): ReactElement {
         res.status == 202 ||
         res.status == 203
       ) {
-        //alert('تمت الإضافة بنجاح')
+        //alert(getLogin("Added_successfully"))
         router.push("/tw-admin/cms/tags");
       } else {
         alert("Error");
@@ -81,7 +86,7 @@ export default function Id(): ReactElement {
         <div className="panel-modal-header">
           <h2 className="title">
             <span className="material-icons material-icons-outlined">edit</span>
-            التعديل
+            {getLogin("Edit")}
           </h2>
           <div className="panel-modal-left-tools">
             <button
@@ -95,7 +100,7 @@ export default function Id(): ReactElement {
           </div>
         </div>
         <form onSubmit={saveData}>
-          {isLoading && "يرجى الإنتظار..."}
+          {isLoading && getAll("Please_wait")}
           <div className={"panel-modal-body auto-height"}>
             <div className="row">
               <div className="col-sm-4">
@@ -157,10 +162,10 @@ export default function Id(): ReactElement {
               type="button"
               className="btn butt-red butt-sm"
             >
-              إغلاق
+              {getAll("Cancel_2")}
             </button>
             <button type="submit" className="btn butt-primary butt-sm">
-              حفظ التغييرات
+              {getLogin("Save_edits")}
             </button>
           </div>
         </form>

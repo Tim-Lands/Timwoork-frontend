@@ -10,6 +10,8 @@ import Image from "next/image";
 import { notification, Space, Table } from "antd";
 import SuspensionInfo from "@/components/SuspensionInfo";
 import Pagination from "react-js-pagination";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function suspondedstimer() {
   const [postsList, setPostsList] = useState({
@@ -57,9 +59,12 @@ function suspondedstimer() {
       });
     };
   }, []);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const columns: any = [
     {
-      title: "الاسم الكامل",
+      title: getLogin("Full_name"),
       dataIndex: ["profile"],
       render: (profile: any) => (
         <Link key={profile.id} href={`/u/${profile.id}`}>
@@ -67,7 +72,7 @@ function suspondedstimer() {
             <Image src={`${profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
               {!profile.full_name || profile.full_name == ""
-                ? "بدون اسم"
+                ? getLogin("Nameless")
                 : profile.full_name}
             </span>
           </a>
@@ -84,7 +89,7 @@ function suspondedstimer() {
       ellipsis: true,
     },
     {
-      title: "البريد الإلكتروني",
+      title: getLogin("E_mail"),
       //className: 'column-money',
       dataIndex: "email",
       key: "email",
@@ -96,7 +101,7 @@ function suspondedstimer() {
       ellipsis: true,
     },
     {
-      title: "تاريخ التسجيل",
+      title: getLogin("Registration_date"),
       //className: 'column-money',
       dataIndex: "created_at",
       key: "created_at",
@@ -108,7 +113,7 @@ function suspondedstimer() {
       ellipsis: true,
     },
     {
-      title: "الأدوات",
+      title: getAll("Tools"),
       dataIndex: "",
       render: (item) => (
         <>
@@ -119,7 +124,7 @@ function suspondedstimer() {
               type="button"
               onClick={() => unSuspend(item.id)}
             >
-              إلغاء التعليق
+              {getLogin("Stop_suspension")}
             </button>
             <button
               title={item.id}
@@ -130,7 +135,7 @@ function suspondedstimer() {
               className="btn butt-xs butt-green"
               type="button"
             >
-              معلومات التعليق
+              {getLogin("Suspension_information")}
             </button>
           </Space>
         </>
@@ -151,7 +156,7 @@ function suspondedstimer() {
       );
       if (res.status === 200) {
         notification.success({
-          message: "تم فك الحظر عن المستخدم بنجاح",
+          message: getLogin("The_user_has"),
         });
         setPostsList((posts) => ({
           ...posts,
@@ -200,7 +205,7 @@ function suspondedstimer() {
             <span className="material-icons material-icons-outlined">
               people
             </span>
-            الحسابات المعلقة مؤقتا
+            {getLogin("Accounts_temporary_suspended")}
           </h2>
         </div>
         {isShowSuspensionInfo && (
@@ -217,7 +222,7 @@ function suspondedstimer() {
                 <input
                   id="input-sQuery"
                   name="sQuery"
-                  placeholder="البحث في الجدول..."
+                  placeholder={getLogin("Search_in_table")}
                   className="timlands-inputs"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
@@ -247,15 +252,15 @@ function suspondedstimer() {
             itemClass="page-item"
             linkClass="page-link"
             className="productPagination"
-            firstPageText={"الصفحة الأولى"}
-            lastPageText={"الصفحة الأخيرة"}
+            firstPageText={getAll("First_page")}
+            lastPageText={getAll("Last_page")}
           />
         </div>
         {isError && (
           <Alert type="error">
             <p className="text">
-              <span className="material-icons">warning_amber</span> حدث خطأ غير
-              متوقع
+              <span className="material-icons">warning_amber</span>{" "}
+              {getAll("An_unexpected_error_occurred")}
             </p>
           </Alert>
         )}

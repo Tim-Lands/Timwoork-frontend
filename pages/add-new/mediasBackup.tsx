@@ -19,6 +19,7 @@ function Medias({ query, stars }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -107,8 +108,8 @@ function Medias({ query, stars }) {
       );
       if (res.status === 200) {
         notification["success"]({
-          message: "إشعار",
-          description: "لقد تم رفع الصور بنجاح",
+          message: getAll("Notification"),
+          description: getAll("Pictures_has_veeen"),
         });
         seGalariesLoading(false);
         seGalariesSuccess(true);
@@ -142,8 +143,8 @@ function Medias({ query, stars }) {
       );
       if (res.status === 200) {
         notification["success"]({
-          message: "إشعار",
-          description: "لقد تم رفع الصور بنجاح",
+          message: getAll("Notification"),
+          description: getAll("Pictures_has_veeen"),
         });
         seFeaturedLoading(false);
         seFeaturedSuccess(true);
@@ -179,7 +180,7 @@ function Medias({ query, stars }) {
       // Authentication was successful.
       if (res.status === 200) {
         setLoading(false);
-        message.success("لقد تم التحديث بنجاح");
+        message.success(getAll("Pictures_has_veeen"));
         router.push({
           pathname: "/add-new/complete",
           query: {
@@ -197,7 +198,7 @@ function Medias({ query, stars }) {
       }
       if (validationsErrors && validationsErrors.thumbnail) {
         notification.open({
-          message: "حدث خطأ",
+          message: getAll("An_error_occurred"),
           description: validationsErrors.thumbnail[0],
           icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
         });
@@ -208,9 +209,9 @@ function Medias({ query, stars }) {
   return (
     <div className="container-fluid">
       <MetaTags
-        title="إضافة خدمة جديدة - إضافة وسائط"
-        metaDescription="اتصل بنا - تيموورك"
-        ogDescription="اتصل بنا - تيموورك"
+        title={getAll("Add_a_new_service")}
+        metaDescription={getAll("Contact_us_Timwoork")}
+        ogDescription={getAll("Contact_us_Timwoork")}
       />
       {token && veriedEmail && (
         <div
@@ -300,8 +301,7 @@ function Medias({ query, stars }) {
                             className="text-note mt-3"
                             style={{ color: "#555", margin: 0, fontSize: 13 }}
                           >
-                            يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس
-                            محتوى الخدمة
+                            {getAll("The_profile_picture")}
                           </p>
                           <p
                             className="text-resolotion"
@@ -312,7 +312,7 @@ function Medias({ query, stars }) {
                               fontWeight: "bold",
                             }}
                           >
-                            من الأفضل أن تكون الأبعاد: 755X418
+                            {getAll("It’s_better_that")}
                           </p>
                           <ImageUploading
                             value={featuredImages}
@@ -330,11 +330,10 @@ function Medias({ query, stars }) {
                                   {imageList.length == 0 && (
                                     <div className="nothing-images">
                                       <h4 className="nothing-title">
-                                        اختر الصورة البارزة
+                                        {getAll("Choose_the_profile")}
                                       </h4>
                                       <p className="nothing-text">
-                                        يجب أن تختار الصورة البارزة للخدمة ويجب
-                                        ان تكون الصورة متناسقة مع محتوى الخدمة
+                                        {getAll("You_should_choose")}
                                       </p>
                                     </div>
                                   )}
@@ -344,7 +343,7 @@ function Medias({ query, stars }) {
                                         <div className="image-item featured-wrapper">
                                           <Image
                                             src={image["data_url"]}
-                                            alt="الصورة البارزة"
+                                            alt={getAll("Profile_picture")}
                                             width={755}
                                             height={418}
                                             quality={85}
@@ -378,7 +377,7 @@ function Medias({ query, stars }) {
                                     className="btn butt-lg butt-primary"
                                     onClick={uploadFeaturedHandle}
                                   >
-                                    رفع الصورة الآن
+                                    {getAll("Upload_the_picture")}
                                   </button>
                                 </div>
                               </Spin>
@@ -445,13 +444,13 @@ function Medias({ query, stars }) {
                                       className="btn butt-red-out butt-sm"
                                       onClick={onImageRemoveAll}
                                     >
-                                      تفريغ الصور
+                                      {getAll("Unloading_pictures")}
                                     </button>
                                   </div>
                                   {imageList.length == 0 && (
                                     <div className="nothing-images">
                                       <h4 className="nothing-title">
-                                        اختر صور من جهازك
+                                        {getAll("Choose_a_picture")}
                                       </h4>
                                       <p className="nothing-text">
                                         {getLanguage("You_must_choose")}
@@ -512,7 +511,7 @@ function Medias({ query, stars }) {
                                     className="btn butt-lg butt-primary"
                                     onClick={uploadGalleryHandle}
                                   >
-                                    رفع الصور الآن
+                                    {getAll("Upload_the_picture")}
                                   </button>
                                 </div>
                               </Spin>

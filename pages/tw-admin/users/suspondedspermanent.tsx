@@ -10,6 +10,8 @@ import Image from "next/image";
 import { notification, Space, Table } from "antd";
 import SuspensionInfo from "@/components/SuspensionInfo";
 import Pagination from "react-js-pagination";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function suspondedspermanent() {
   const [postsList, setPostsList] = useState({
@@ -27,6 +29,9 @@ function suspondedspermanent() {
   const [sentinel, setSentinel] = useState({ mount: true });
 
   const token = Cookies.get("token_dash");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
 
   useEffect(() => {
     refreshData();
@@ -72,7 +77,7 @@ function suspondedspermanent() {
       );
       if (res.status === 200) {
         notification.success({
-          message: "تم فك الحظر عن المستخدم بنجاح",
+          message: getLogin("The_user_has"),
         });
         setPostsList((posts) => ({
           ...posts,
@@ -86,7 +91,7 @@ function suspondedspermanent() {
 
   const columns: any = [
     {
-      title: "الاسم الكامل",
+      title: getLogin("Full_name"),
       dataIndex: ["profile"],
       render: (profile: any) => (
         <Link key={profile.id} href={`/u/${profile.id}`}>
@@ -94,7 +99,7 @@ function suspondedspermanent() {
             <Image src={`${profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
               {!profile.full_name || profile.full_name == ""
-                ? "بدون اسم"
+                ? getLogin("Nameless")
                 : profile.full_name}
             </span>
           </a>
@@ -111,7 +116,7 @@ function suspondedspermanent() {
       ellipsis: true,
     },
     {
-      title: "البريد الإلكتروني",
+      title: getLogin("E_mail"),
       //className: 'column-money',
       dataIndex: "email",
       key: "email",
@@ -123,7 +128,7 @@ function suspondedspermanent() {
       ellipsis: true,
     },
     {
-      title: "تاريخ التسجيل",
+      title: getLogin("Registration_date"),
       //className: 'column-money',
       dataIndex: "created_at",
       key: "created_at",
@@ -135,7 +140,7 @@ function suspondedspermanent() {
       ellipsis: true,
     },
     {
-      title: "الأدوات",
+      title: getAll("Tools"),
       dataIndex: "",
       render: (item) => (
         <>
@@ -146,7 +151,7 @@ function suspondedspermanent() {
               className="btn butt-xs butt-light"
               type="button"
             >
-              إيقاف التعليق
+              {getLogin("Stop_suspension")}
             </button>
             <button
               title={item.id}
@@ -157,7 +162,7 @@ function suspondedspermanent() {
               className="btn butt-xs butt-green"
               type="button"
             >
-              معلومات التعليق
+              {getLogin("Suspension_information")}
             </button>
           </Space>
         </>
@@ -202,7 +207,7 @@ function suspondedspermanent() {
             <span className="material-icons material-icons-outlined">
               people
             </span>
-            الحسابات المعلقة دائما
+            {getLogin("Accounts_permanently_suspended")}
           </h2>
         </div>
         {isShowSuspensionInfo && (
@@ -219,7 +224,7 @@ function suspondedspermanent() {
                 <input
                   id="input-sQuery"
                   name="sQuery"
-                  placeholder="البحث في الجدول..."
+                  placeholder={getLogin("Search_in_table")}
                   className="timlands-inputs"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
@@ -249,15 +254,15 @@ function suspondedspermanent() {
             itemClass="page-item"
             linkClass="page-link"
             className="productPagination"
-            firstPageText={"الصفحة الأولى"}
-            lastPageText={"الصفحة الأخيرة"}
+            firstPageText={getAll("First_page")}
+            lastPageText={getAll("Last_page")}
           />
         </div>
         {isError && (
           <Alert type="error">
             <p className="text">
-              <span className="material-icons">warning_amber</span> حدث خطأ غير
-              متوقع
+              <span className="material-icons">warning_amber</span>{" "}
+              {getAll("An_unexpected_error_occurred")}
             </p>
           </Alert>
         )}

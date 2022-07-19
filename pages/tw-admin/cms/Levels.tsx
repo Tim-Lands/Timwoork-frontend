@@ -8,7 +8,12 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 function Levels(): ReactElement {
   const { data: GetData, error }: any = useSWR(`dashboard/levels`);
 
@@ -24,12 +29,12 @@ function Levels(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        title: getLogin("Are_you_sure1"),
+        text: getLogin("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
-        cancelButtonText: "لا",
+        confirmButtonText: getLogin("Yes"),
+        cancelButtonText: getLogin("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -40,8 +45,8 @@ function Levels(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            "تم الحذف!",
-            "لقد تم حذف هذا العنصر بنجاح",
+            getLogin("Deleted"),
+            getLogin("The_service_has"),
             "success"
           );
         }
@@ -69,8 +74,8 @@ function Levels(): ReactElement {
     <>
       <MetaTags
         title={" المستويات - الإدارة العامة"}
-        metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
-        ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+        metaDescription={getLogin("Home_General_administration")}
+        ogDescription={getLogin("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewLevel setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -81,7 +86,7 @@ function Levels(): ReactElement {
             <span className="material-icons material-icons-outlined">
               badge
             </span>
-            المستويات
+            {getLogin("Levels")}
           </h2>
           <div className="header-butt">
             <button
@@ -91,7 +96,7 @@ function Levels(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              إضافة جديد
+              {getLogin("Add_new")}
             </button>
           </div>
         </div>
@@ -101,7 +106,7 @@ function Levels(): ReactElement {
               <tr>
                 <th>اسم المستوى</th>
                 <th>نوع المستوى</th>
-                <th>الأدوات</th>
+                <th>{getLogin("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -115,7 +120,9 @@ function Levels(): ReactElement {
                     key={e.id}
                   >
                     <td>{e.name_ar}</td>
-                    <td>{e.type !== 0 ? "مشتري" : "بائع"}</td>
+                    <td>
+                      {e.type !== 0 ? getLogin("Buyer") : getLogin("Seller")}
+                    </td>
                     <td className="tools-col">
                       <button className="table-del success">
                         <span className="material-icons material-icons-outlined">
@@ -138,8 +145,8 @@ function Levels(): ReactElement {
           {error && (
             <Alert type="error">
               <p className="text">
-                <span className="material-icons">warning_amber</span> حدث خطأ
-                غير متوقع
+                <span className="material-icons">warning_amber</span>{" "}
+                {getAll("An_unexpected_error_occurred")}
               </p>
             </Alert>
           )}

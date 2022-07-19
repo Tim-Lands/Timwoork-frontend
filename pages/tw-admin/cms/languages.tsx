@@ -9,7 +9,12 @@ import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 function Languages(): ReactElement {
   const { data: GetData, error }: any = useSWR(`dashboard/languages`);
   const deleteHandle = (id: any) => {
@@ -24,12 +29,12 @@ function Languages(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        title: getLogin("Are_you_sure1"),
+        text: getLogin("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
-        cancelButtonText: "لا",
+        confirmButtonText: getLogin("Yes"),
+        cancelButtonText: getLogin("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -40,8 +45,8 @@ function Languages(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            "تم الحذف!",
-            "لقد تم حذف هذا العنصر بنجاح",
+            getLogin("Deleted"),
+            getLogin("The_service_has"),
             "success"
           );
         }
@@ -69,8 +74,8 @@ function Languages(): ReactElement {
     <>
       <MetaTags
         title={"اللغات - الإدارة العامة"}
-        metaDescription={"الصفحة الرئيسية - الإدارة العامة"}
-        ogDescription={"الصفحة الرئيسية - الإدارة العامة"}
+        metaDescription={getLogin("Home_General_administration")}
+        ogDescription={getLogin("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewLanguage setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -81,7 +86,7 @@ function Languages(): ReactElement {
             <span className="material-icons material-icons-outlined">
               translate
             </span>
-            اللغات
+            {getLogin("Langueges")}
           </h2>
           <div className="header-butt">
             <button
@@ -91,7 +96,7 @@ function Languages(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              إضافة جديد
+              {getLogin("Add_new")}
             </button>
           </div>
         </div>
@@ -100,7 +105,7 @@ function Languages(): ReactElement {
             <thead>
               <tr>
                 <th> اسم اللغة</th>
-                <th>الأدوات</th>
+                <th>{getLogin("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -138,8 +143,8 @@ function Languages(): ReactElement {
           {error && (
             <Alert type="error">
               <p className="text">
-                <span className="material-icons">warning_amber</span> حدث خطأ
-                غير متوقع
+                <span className="material-icons">warning_amber</span>{" "}
+                {getAll("An_unexpected_error_occurred")}
               </p>
             </Alert>
           )}

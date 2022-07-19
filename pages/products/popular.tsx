@@ -21,7 +21,7 @@ function Popular() {
 
   const [getProducts, setGetProducts]: any = useState();
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
-  /**----------------------------------------------------------**/
+  /**---------------------------------------------------------**/
   const fetchData = async (pageNumber: number = 1) => {
     try {
       const res = await API.get(

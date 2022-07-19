@@ -10,7 +10,12 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import Link from "next/link";
+import { LanguageContext } from "../../../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingTags, setIsLoadingTags] = useState(false);
@@ -57,42 +62,38 @@ const MySelect = (props: any) => {
   );
 };
 function Overview({ query }) {
-  const [product, setProduct]: any = useState({})
-  const [categories, setCategories] = useState({})
-  const [subCategories, setSubCategories]: any = useState({})
-  const [isLoading, setIsLoading] = useState(true)
+  const [product, setProduct]: any = useState({});
+  const [categories, setCategories] = useState({});
+  const [subCategories, setSubCategories]: any = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const id = query.id;
   const token = useRef(Cookies.get("token_dash"));
 
-
-  useEffect(() => {
-    if (!token) {
-      router.push('/tw-admin/login')
-      return
-    }
-    fetchCategories()
-  }, [])
-  useEffect(() => {
-    if (Object.keys(categories).length > 0)
-      fetchSubCategories()
-  }, [categories])
   useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login");
       return;
     }
-    fetchData()
-  }, [query.id])
+    fetchCategories();
+  }, []);
+  useEffect(() => {
+    if (Object.keys(categories).length > 0) fetchSubCategories();
+  }, [categories]);
+  useEffect(() => {
+    if (!token) {
+      router.push("/tw-admin/login");
+      return;
+    }
+    fetchData();
+  }, [query.id]);
   const fetchCategories = async () => {
     try {
-      const res = await API.get(`api/get_categories`)
-      setCategories(res.data.data.reduce((a, v) => ({ ...a, [v.id]: v }), {}))
-
+      const res = await API.get(`api/get_categories`);
+      setCategories(res.data.data.reduce((a, v) => ({ ...a, [v.id]: v }), {}));
+    } catch (err) {
+      console.log(err);
     }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  };
   const fetchSubCategories = async () => {
     const promises = [];
     let temp_subCategories = {};
@@ -101,26 +102,30 @@ function Overview({ query }) {
     );
     const sub_categories = await Promise.all(promises);
     sub_categories.forEach((sub_category) => {
-      console.log(sub_category.data.data.sub_categories)
-      temp_subCategories = { ...temp_subCategories, ...sub_category.data.data.sub_categories.reduce((a, v) => ({ ...a, [v.id]: v }), {}) }
-
+      console.log(sub_category.data.data.sub_categories);
+      temp_subCategories = {
+        ...temp_subCategories,
+        ...sub_category.data.data.sub_categories.reduce(
+          (a, v) => ({ ...a, [v.id]: v }),
+          {}
+        ),
+      };
     });
-    setSubCategories(temp_subCategories)
+    setSubCategories(temp_subCategories);
   };
   const fetchData = async () => {
     try {
       const res = await API.get(`dashboard/products/${query.id}`, {
         headers: {
-          Authorization: `Bearer ${token.current}`
-        }
-      })
-      setProduct(res?.data?.data)
-      setIsLoading(false)
+          Authorization: `Bearer ${token.current}`,
+        },
+      });
+      setProduct(res?.data?.data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
-    catch (err) {
-      console.log(err)
-    }
-  }
+  };
 
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
@@ -129,13 +134,11 @@ function Overview({ query }) {
   const formik = useFormik({
     initialValues: {
       category:
-        product && subCategories &&
+        product &&
+        subCategories &&
         subCategories[product.category_id]?.parent_id,
       title: product && product.title,
-      subcategory:
-        product &&
-        product.subcategory &&
-        product.subcategory.id,
+      subcategory: product && product.subcategory && product.subcategory.id,
       tags: product && product.product_tag,
     },
     isInitialValid: true,
@@ -154,7 +157,7 @@ function Overview({ query }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push(`/tw-admin/posts/edit-product/prices?id=${product?.id}`);
         }
       } catch (error: any) {
@@ -168,18 +171,18 @@ function Overview({ query }) {
       }
     },
   });
-  if (!query) return message.error("حدث خطأ");
-  console.log(formik.values)
+  if (!query) return message.error(getAll("An_error_occured"));
+  console.log(formik.values);
   return (
     <>
       <MetaTags
-        title="تعديل الخدمة - معلومات عامة"
-        metaDescription="تعديل الخدمة - معلومات عامة "
-        ogDescription="تعديل الخدمة - معلومات عامة"
+        title={getAll("Service_editing_General")}
+        metaDescription={getAll("Service_editing_General")}
+        ogDescription={getAll("Service_editing_General")}
       />
       {token && (
         <div className="container-fluid">
-          {isLoading && <div>يرجى الانتظار...</div>}
+          {isLoading && <div>{getAll("Please_wait…")}</div>}
           <div className="row justify-content-md-center my-3">
             <div className="col-md-8 pt-3">
               <form onSubmit={formik.handleSubmit}>
@@ -191,65 +194,76 @@ function Overview({ query }) {
                   <div className="timlands-steps">
                     <div className="timlands-step-item active">
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/overview?id=${id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/overview?id=${id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 collections_bookmark
                               </span>
                             </span>
-                            معلومات عامة
+                            {getLogin("General_information")}
                           </a>
                         </Link>
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${product?.current_step < 1 && "pe-none"
-                        }`}
+                      className={`timlands-step-item ${
+                        product?.current_step < 1 && "pe-none"
+                      }`}
                     >
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/prices?id=${id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/prices?id=${id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 payments
                               </span>
                             </span>
-                            السعر والتطويرات
+                            {getLogin("Price_and_developments")}
                           </a>
                         </Link>
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${product?.current_step < 2 && "pe-none"
-                        }`}
+                      className={`timlands-step-item ${
+                        product?.current_step < 2 && "pe-none"
+                      }`}
                     >
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/description?id=${id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/description?id=${id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 description
                               </span>
                             </span>
-                            الوصف وتعليمات المشتري
+                            {getLogin("Desciprion_intrustions")}
                           </a>
                         </Link>
                       </h3>
                     </div>
                     <div
-                      className={`timlands-step-item ${product?.current_step < 3 && "pe-none"
-                        }`}
+                      className={`timlands-step-item ${
+                        product?.current_step < 3 && "pe-none"
+                      }`}
                     >
                       <h3 className="text">
-                        <Link href={`/tw-admin/posts/edit-product/medias?id=${id}`}>
+                        <Link
+                          href={`/tw-admin/posts/edit-product/medias?id=${id}`}
+                        >
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">
                                 mms
                               </span>
                             </span>
-                            مكتبة الصور والملفات
+                            {getLogin("Gallery_and_folders")}
                           </a>
                         </Link>
                       </h3>
@@ -265,7 +279,7 @@ function Overview({ query }) {
                                 publish
                               </span>
                             </span>
-                            نشر الخدمة
+                            {getAll("Publish_service")}
                           </a>
                         </Link>
                       </h3>
@@ -277,12 +291,12 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
-                            عنوان الخدمة
+                            {getAll("Service_title")}
                           </label>
                           <input
                             id="input-title"
                             name="title"
-                            placeholder="عنوان الخدمة..."
+                            placeholder={getAll("Service_title")}
                             className={
                               "timlands-inputs " +
                               (validationsErrors &&
@@ -295,10 +309,10 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
-                          
+
                           <div className="note-form-text-sh">
                             <p className="text">
-                              يجب أن لايحتوي عنوان الخدمة على رموز
+                              {getAll("The_service_title")}
                             </p>
                           </div>
                           {validationsErrors && validationsErrors.title && (
@@ -322,7 +336,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-catetory"
                           >
-                            اختر التصنيف الرئيسي
+                            {getLogin("Choose_the_principal")}
                           </label>
                           <select
                             id="input-catetory"
@@ -333,20 +347,23 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.category}
                             defaultValue={formik.values.category}
-                          //onChange={() => setmainCat(values.catetory)}
+                            //onChange={() => setmainCat(values.catetory)}
                           >
-                            <option value="">اختر التصنيف الرئيسي</option>
+                            <option value="">
+                              {getLogin("Choose_the_principal")}
+                            </option>
                             {!categories && (
-                              <option value="">يرجى الانتظار...</option>
+                              <option value="">{getAll("Please_wait")}</option>
                             )}
                             {categories &&
-                              Object.keys(categories).map((key: any) =>
-                              (
-                                <option value={categories[key].id} key={categories[key].id}>
+                              Object.keys(categories).map((key: any) => (
+                                <option
+                                  value={categories[key].id}
+                                  key={categories[key].id}
+                                >
                                   {categories[key].name_ar}
                                 </option>
-                              )
-                              )}
+                              ))}
                           </select>
                         </div>
                       </div>
@@ -356,7 +373,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-subcategory"
                           >
-                            اختر التصنيف الفرعي
+                            {getAll("Choose_a_subcategory")}
                           </label>
                           <select
                             id="input-subcategory"
@@ -372,15 +389,25 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.subcategory}
                           >
-                            <option value={0}>اختر التصنيف الفرعي</option>
+                            <option value={0}>
+                              {getAll("Choose_a_subcategory")}
+                            </option>
 
                             {!subCategories && (
-                              <option value="">يرجى الانتظار...</option>
+                              <option value="">{getAll("Please_wait")}</option>
                             )}
                             {subCategories &&
-                              Object.keys(subCategories).filter(key => subCategories[key].parent_id == formik.values.category)
+                              Object.keys(subCategories)
+                                .filter(
+                                  (key) =>
+                                    subCategories[key].parent_id ==
+                                    formik.values.category
+                                )
                                 .map((key: any) => (
-                                  <option value={subCategories[key].id} key={subCategories[key].id}>
+                                  <option
+                                    value={subCategories[key].id}
+                                    key={subCategories[key].id}
+                                  >
                                     {subCategories[key].name_ar}
                                   </option>
                                 ))}
@@ -412,12 +439,13 @@ function Overview({ query }) {
                           <button
                             type="submit"
                             disabled={
-                              (!product ? true : false) ||
-                              formik.isSubmitting
+                              (!product ? true : false) || formik.isSubmitting
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">حفظ التغييرات</span>
+                            <span className="text">
+                              {getLogin("Save_edits")}
+                            </span>
                           </button>
                         </div>
                       </div>

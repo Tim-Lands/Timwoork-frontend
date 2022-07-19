@@ -16,6 +16,8 @@ function Prices({ query }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -100,7 +102,7 @@ function Prices({ query }) {
                     );
                     // Authentication was successful.
                     if (res.status === 200) {
-                      message.success("لقد تم التحديث بنجاح");
+                      message.success(getLogin("The_update_has"));
                       router.push(
                         `/edit-product/description?id=${getProduct?.data.id}`
                       );
@@ -218,7 +220,7 @@ function Prices({ query }) {
                             <span className="material-icons material-icons-outlined">
                               payments
                             </span>
-                            إضافة السعر
+                            {getAll("Add_price")}
                           </h2>
                           <div
                             className={
@@ -350,11 +352,15 @@ function Prices({ query }) {
                                                         "input-name-" + index
                                                       }
                                                     >
-                                                      عنوان التطوير
+                                                      {getAll(
+                                                        "Development_title"
+                                                      )}
                                                     </label>
                                                     <Field
                                                       id={"input-name-" + index}
-                                                      placeholder="عنوان التطوير..."
+                                                      placeholder={getAll(
+                                                        "Development_title"
+                                                      )}
                                                       className={
                                                         "timlands-inputs " +
                                                         (validationsErrors &&
@@ -405,13 +411,17 @@ function Prices({ query }) {
                                                         "input-price-" + index
                                                       }
                                                     >
-                                                      سعر التطوير
+                                                      {getAll(
+                                                        "Development_price"
+                                                      )}
                                                     </label>
                                                     <Field
                                                       id={
                                                         "input-price-" + index
                                                       }
-                                                      placeholder="سعر التطوير..."
+                                                      placeholder={getAll(
+                                                        "Development_price"
+                                                      )}
                                                       className={
                                                         "timlands-inputs " +
                                                         (validationsErrors &&
@@ -463,7 +473,9 @@ function Prices({ query }) {
                                                         index
                                                       }
                                                     >
-                                                      مدة التطوير
+                                                      {getAll(
+                                                        "Development_duration"
+                                                      )}
                                                     </label>
                                                     <div className="rel-form">
                                                       <Field
@@ -601,7 +613,9 @@ function Prices({ query }) {
                                 }
                                 className="btn flex-center butt-green ml-auto butt-sm"
                               >
-                                <span className="text">حفظ التغييرات</span>
+                                <span className="text">
+                                  {getLogin("Save_edits")}
+                                </span>
                               </button>
                             </div>
                           </div>

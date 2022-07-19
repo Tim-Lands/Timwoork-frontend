@@ -13,6 +13,8 @@ import SuspensionPermanent from "@/components/SuspensionPermanent";
 import Pagination from "react-js-pagination";
 import EmailModalCause from "@/components/EmailModalCause";
 import SendNotification from "@/components/SendNotification";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function index() {
   const [postsList, setPostsList] = useState({
@@ -35,6 +37,9 @@ function index() {
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   console.log(postsList);
   useEffect(() => {
     refreshData();
@@ -80,29 +85,28 @@ function index() {
       );
       if (res.status === 200)
         notification.success({
-          message: "تم حظر المُستخدم بنجاح",
+          message: getLogin("User_successfully_blocked"),
         });
       setPostsList((posts) => ({
         ...posts,
         data: posts.data.filter((post) => post.id != selectedUserID),
       }));
     } catch (err) {
-      () => { };
+      () => {};
     }
   };
 
   const columns: any = [
     {
-      title: "الاسم الكامل",
+      title: getLogin("Full_name"),
       dataIndex: "",
       render: (e: any) => (
-
         <Link key={e.id} href={`/u/${e.id}`}>
           <a className="flex-center">
             <Image src={`${e.profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
               {!e.profile.full_name || e.profile.full_name == ""
-                ? "بدون اسم"
+                ? getLogin("Nameless")
                 : e.profile.full_name}
             </span>
           </a>
@@ -119,7 +123,7 @@ function index() {
       ellipsis: true,
     },
     {
-      title: "البريد الإلكتروني",
+      title: getLogin("E_mail"),
       //className: 'column-money',
       dataIndex: "email",
       key: "email",
@@ -131,7 +135,7 @@ function index() {
       ellipsis: true,
     },
     {
-      title: "الهاتف",
+      title: getLogin("Phone"),
       dataIndex: "phone",
       key: "phone",
       sorter: {
@@ -142,7 +146,7 @@ function index() {
       width: 120,
     },
     {
-      title: "تاريخ التسجيل",
+      title: getLogin("Registration_date"),
       //className: 'column-money',
       dataIndex: "created_at",
       key: "created_at",
@@ -155,7 +159,7 @@ function index() {
       width: 120,
     },
     {
-      title: "الأدوات",
+      title: getAll("Tools"),
       dataIndex: "",
       render: (item) => (
         <>
@@ -168,7 +172,7 @@ function index() {
               }}
               type="button"
             >
-              تعليق مؤقت
+              {getLogin("Temporary_suspension")}
             </button>
             <button
               title={item.id}
@@ -179,24 +183,24 @@ function index() {
               }}
               type="button"
             >
-              تعليق دائم{" "}
+              {getLogin("Permanent_suspension")}{" "}
             </button>
             <button
-              title="إرسال إيميل"
+              title={getLogin("Send_e_mail")}
               className="btn butt-xs2 butt-blue"
               onClick={() => setIsNotifyModalVisible(true)}
             >
-              إرسال إيميل
+              {getLogin("Send_e_mail")}
             </button>
             <button
-              title="إرسال إشعار"
+              title={getLogin("Send_notification")}
               className="btn butt-xs2 butt-green"
               onClick={() => {
-                setSelectedUserID(item.id)
-                setIsEmailModalVisible(true)
+                setSelectedUserID(item.id);
+                setIsEmailModalVisible(true);
               }}
             >
-              إرسال إشعار
+              {getLogin("Send_notification")}
             </button>
           </Space>
         </>
@@ -230,18 +234,21 @@ function index() {
   };
   const sendNotification = async () => {
     try {
-      await API.post(`dashboard/users/${selectedUserID}/send_notification`, {cause}, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      await API.post(
+        `dashboard/users/${selectedUserID}/send_notification`,
+        { cause },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      notification.success({ message: 'تم إرسال الإشعار للمُستخدم بنجاح' })
+      );
+      notification.success({ message: getLogin("The_notification_was") });
+    } catch (err) {
+      console.log(err);
+      notification.warning({ message: getAll("An_error_occured") });
     }
-    catch (err) {
-      console.log(err)
-      notification.warning({message:'حدث خطأ'})
-    }
-  }
+  };
   // Return statement.
   return (
     <>
@@ -251,14 +258,14 @@ function index() {
             <span className="material-icons material-icons-outlined">
               people
             </span>
-            إدارة الأعضاء
+            {getLogin("Members_management")}
           </h2>
         </div>
         {isEmailModalVisible && (
           <EmailModalCause
             setIsConfirmText={setIsEmailModalVisible}
             handleFunc={() => sendNotification()}
-            title="إشعار للمستخدم"
+            title={getLogin("User_notification")}
             msg={cause}
             setMsg={(e) => setCause(e)}
           />
@@ -266,7 +273,7 @@ function index() {
         {isNotifyModalVisible && (
           <SendNotification
             setIsConfirmText={setIsNotifyModalVisible}
-            title="إرسال إيميل للمستخدم"
+            title={getLogin("Send_e_mail_to")}
           />
         )}
         {isShowSuspensionTimer && (
@@ -293,7 +300,7 @@ function index() {
                 <input
                   id="input-sQuery"
                   name="sQuery"
-                  placeholder="البحث في الجدول..."
+                  placeholder={getLogin("Search_in_table")}
                   className="timlands-inputs"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
@@ -325,15 +332,15 @@ function index() {
             itemClass="page-item"
             linkClass="page-link"
             className="productPagination"
-            firstPageText={"الصفحة الأولى"}
-            lastPageText={"الصفحة الأخيرة"}
+            firstPageText={getAll("First_page")}
+            lastPageText={getAll("Last_page")}
           />
         </div>
         {isError && (
           <Alert type="error">
             <p className="text">
-              <span className="material-icons">warning_amber</span> حدث خطأ غير
-              متوقع
+              <span className="material-icons">warning_amber</span>{" "}
+              {getAll("An_unexpected_error_occurred")}
             </p>
           </Alert>
         )}

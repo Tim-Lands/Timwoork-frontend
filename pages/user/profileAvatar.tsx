@@ -11,6 +11,8 @@ import withAuth from "../../services/withAuth";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from "swr";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 const profileAvatar = (): ReactElement => {
   const { data: userInfo }: any = useSWR("api/me");
@@ -19,6 +21,9 @@ const profileAvatar = (): ReactElement => {
   const SignupSchema = Yup.object().shape({
     avatar: Yup.mixed().required(),
   });
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   // Return statement.
   return (
     <>
@@ -46,22 +51,22 @@ const profileAvatar = (): ReactElement => {
               });
               // Authentication was successful.
               if (res.status === 200) {
-                message.success("لقد تم التحديث بنجاح");
+                message.success(getLogin("The_update_has"));
               }
             } catch (error: any) {
               if (error.response && error.response.status === 200) {
-                message.success("لقد تم التحديث بنجاح");
+                message.success(getLogin("The_update_has"));
               }
               if (error.response && error.response.status === 422) {
-                message.error("يرجى تعبئة البيانات");
+                message.error(getLanguage("Please_fill_in"));
               }
               if (error.response && error.response.status === 419) {
-                message.error("العملية غير ناجحة");
+                message.error(getLogin("Operation_failed"));
               }
               if (error.response && error.response.status === 400) {
-                message.error("حدث خطأ.. يرجى التأكد من البيانات");
+                message.error(getLogin("An_error_occurred"));
               } else {
-                message.error("حدث خطأ غير متوقع");
+                message.error(getLogin("An_unexpected_error"));
               }
             }
           }}
@@ -85,10 +90,10 @@ const profileAvatar = (): ReactElement => {
                         </a>
                       </Link>
                     </div>
-                    <h1 className="login-title">تحديث الصورة الشخصية</h1>
-                    <h3 className="login-text">
-                      هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                    </h3>
+                    <h1 className="login-title">
+                      {getLogin("Update_profile_picture")}
+                    </h1>
+                    <h3 className="login-text">{getLogin("This_text_is")}</h3>
                   </div>
                 </div>
                 <div className="col-lg-6 p-0">
@@ -121,7 +126,7 @@ const profileAvatar = (): ReactElement => {
                           />
                           <div className="timlands-form">
                             <label className="label-block" htmlFor="avatar">
-                              اختر الصورة الشخصية
+                              {getLogin("Choose_profile_picture")}
                             </label>
                             <input
                               id="avatar"
@@ -156,7 +161,7 @@ const profileAvatar = (): ReactElement => {
                             disabled={isSubmitting}
                             className="btn me-auto butt-primary butt-md"
                           >
-                            تحديث المعلومات
+                            {getLogin("Update_basic_information")}
                           </button>
                         </div>
                       </div>

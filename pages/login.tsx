@@ -9,6 +9,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import { GoogleLogin } from "react-google-login";
 import { message } from "antd";
 import { Alert } from "@/components/Alert/Alert";
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
@@ -37,6 +39,9 @@ const Login = (): ReactElement => {
   // Login with Google
 
   // Login with Google
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const onLoginSuccess = async (res) => {
     setValidationsErrorsHandle();
     //أرسل هذا الريسبونس الى الباكند
@@ -58,7 +63,7 @@ const Login = (): ReactElement => {
         }
         // Cookies.set('username', );
         // Cookies.set('userID', )
-        message.success("تم تسجيل الدخول بنجاح");
+        message.success(getLogin("Logged_in_successfully"));
         switch (response.data.data.step) {
           case 0:
             router.push("/user/personalInformations");
@@ -74,11 +79,11 @@ const Login = (): ReactElement => {
         }
       }
     } catch (error: any) {
-      message.error("حدث خطأ غير متوقع");
+      message.error(getLanguage("An_unexpected_error_occurred"));
     }
   };
 
-  const onLoginFailure = () => { };
+  const onLoginFailure = () => {};
 
   // The router object used for redirecting after login.
   const router = useRouter();
@@ -97,9 +102,9 @@ const Login = (): ReactElement => {
   return (
     <>
       <MetaTags
-        title={"تسجيل الدخول"}
-        metaDescription={"الصفحة الرئيسية"}
-        ogDescription={"الصفحة الرئيسية"}
+        title={getLanguage("Login_in")}
+        metaDescription={getLogin("Home")}
+        ogDescription={getLogin("Home")}
       />
       <Formik
         initialValues={{
@@ -122,7 +127,6 @@ const Login = (): ReactElement => {
             }
           } catch (error: any) {
             if (
-
               error.response &&
               error.response.data &&
               error.response.data.errors
@@ -140,8 +144,10 @@ const Login = (): ReactElement => {
             <div className="row justify-content-md-center">
               <div className="col-lg-5 p-0" style={{ maxWidth: 900 }}>
                 <div className="login-panel">
-                  {(validationsGeneral.msg||validationsGeneral.message) && (
-                    <Alert type="error">{validationsGeneral.msg || validationsGeneral.message}</Alert>
+                  {(validationsGeneral.msg || validationsGeneral.message) && (
+                    <Alert type="error">
+                      {validationsGeneral.msg || validationsGeneral.message}
+                    </Alert>
                   )}
                   <div
                     className={
@@ -170,17 +176,17 @@ const Login = (): ReactElement => {
                       </Link>
                     </div>
                     <div className="page-header">
-                      <h1 className="title">تسجيل الدخول</h1>
+                      <h1 className="title">{getLanguage("Login_in")}</h1>
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="email">
-                        البريد الإلكتروني
+                        {getLogin("E_mail")}
                       </label>
                       <Field
                         id="email"
                         name="username"
                         onKeyUp={setValidationsErrorsHandle}
-                        placeholder="البريد الإلكتروني..."
+                        placeholder={getLogin("E_mail")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -204,13 +210,13 @@ const Login = (): ReactElement => {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
-                        كلمة المرور
+                        {getLogin("Password")}
                       </label>
                       <Field
                         type={passVisibled ? "text" : "password"}
                         id="password"
                         name="password"
-                        placeholder="كلمة المرور..."
+                        placeholder={getLogin("Password")}
                         onKeyUp={setValidationsErrorsHandle}
                         className={
                           "timlands-inputs " +
@@ -264,12 +270,12 @@ const Login = (): ReactElement => {
                             className="form-check-label"
                             htmlFor="defaultCheck1"
                           >
-                            تذكرني
+                            {getLogin("Remember_me")}
                           </label>
                         </div>
                         <p className="text">
                           <Link href="/user/forgetPass">
-                            <a>نسيت كلمة المرور؟</a>
+                            <a>{getLogin("Forgotten_password")}</a>
                           </Link>
                         </p>
                       </div>
@@ -281,13 +287,13 @@ const Login = (): ReactElement => {
                           disabled={isSubmitting}
                           className="btn  butt-primary butt-md"
                         >
-                          تسجيل الدخول
+                          {getLanguage("Login_in")}
                         </button>
                         <div className="footer-text">
                           <p className="text" style={{ margin: 0 }}>
-                            ليس لديك حساب؟
+                            {getLogin("Have_you_already")}
                             <Link href="/register">
-                              <a>انضم إلينا!</a>
+                              <a>{getLanguage("join_us")}</a>
                             </Link>
                           </p>
                         </div>
@@ -295,7 +301,7 @@ const Login = (): ReactElement => {
                     </div>
                     <div className="panel-login-external">
                       <div className="login-external-header">
-                        <h4 className="title">أو تسجيل الدخول بواسطة</h4>
+                        <h4 className="title">{getLogin("Or_log_in")}</h4>
                       </div>
                       <ul className="login-external-links nav justify-content-center">
                         {/* <li>
@@ -306,7 +312,7 @@ const Login = (): ReactElement => {
                         <li>
                           <GoogleLogin
                             clientId={clientId}
-                            buttonText="غوغل"
+                            buttonText={getLogin("Google")}
                             onSuccess={onLoginSuccess}
                             onFailure={onLoginFailure}
                             cookiePolicy={"single_host_origin"}

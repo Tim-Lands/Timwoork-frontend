@@ -4,7 +4,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Field, Form, Formik } from "formik";
 import API from "../../config";
 import { motion } from "framer-motion";
-import { message } from "antd"; 
+import { message } from "antd";
 
 import useSWR from "swr";
 import Loading from "@/components/Loading";
@@ -12,6 +12,8 @@ import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import ChangePass from "@/components/ChangePass";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 const personalInformations = () => {
   let token = Cookies.get("token");
@@ -22,6 +24,8 @@ const personalInformations = () => {
   const { data: userInfo }: any = useSWR("api/me");
   const { data: Countries }: any = useSWR("api/get_countries");
   const [validationsErrors, setValidationsErrors]: any = useState({});
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }
@@ -50,9 +54,9 @@ const personalInformations = () => {
   return (
     <>
       <MetaTags
-        title="تعديل الملف الشخصي"
-        metaDescription="تعديل الملف الشخصي"
-        ogDescription="تعديل الملف الشخصي"
+        title={getLogin("Profile_editing")}
+        metaDescription={getLogin("Profile_editing")}
+        ogDescription={getLogin("Profile_editing")}
       />
       {!userInfo && <Loading />}
       <div className="container py-4">
@@ -98,7 +102,7 @@ const personalInformations = () => {
                       );
                       // Authentication was successful.
                       if (res.status === 200) {
-                        message.success("لقد تم التحديث بنجاح");
+                        message.success(getLogin("The_update_has"));
                         //router.reload();
                       }
                     } catch (error: any) {
@@ -137,7 +141,9 @@ const personalInformations = () => {
                             </motion.div>
                           )}
                           <div className="update-form-header">
-                            <h1 className="title">تعديل المعلومات الشخصية</h1>
+                            <h1 className="title">
+                              {getLogin("Edit_personal_information")}
+                            </h1>
                           </div>
                           <div className="row">
                             <div className="col-md-6">
@@ -146,13 +152,13 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="first_name"
                                 >
-                                  الاسم الأول
+                                  {getLogin("First_name")}
                                 </label>
                                 <Field
                                   id="first_name"
                                   name="first_name"
                                   onKeyUp={setValidationsErrorsHandle}
-                                  placeholder="الاسم الأول..."
+                                  placeholder={getLogin("First_name")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -183,12 +189,12 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="last_name"
                                 >
-                                  الاسم الأخير
+                                  {getLogin("Last_name")}
                                 </label>
                                 <Field
                                   id="last_name"
                                   name="last_name"
-                                  placeholder="الاسم الأخير..."
+                                  placeholder={getLogin("Last_name")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -220,13 +226,13 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="username"
                                 >
-                                  اسم المستخدم
+                                  {getLogin("Username")}
                                 </label>
                                 <Field
                                   id="username"
                                   name="username"
                                   onKeyUp={setValidationsErrorsHandle}
-                                  placeholder="اسم المستخدم..."
+                                  placeholder={getLogin("Username")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -254,7 +260,7 @@ const personalInformations = () => {
                             <div className="col-md-6">
                               <div className="timlands-form">
                                 <label className="label-block" htmlFor="gender">
-                                  اختر الجنس
+                                  {getLogin("Select_sexe")}
                                 </label>
                                 <Field
                                   as="select"
@@ -267,9 +273,11 @@ const personalInformations = () => {
                                       " has-error")
                                   }
                                 >
-                                  <option value="">اختر الجنس</option>
-                                  <option value="0">أنثى</option>
-                                  <option value="1">ذكر</option>
+                                  <option value="">
+                                    {getLogin("Select_sexe")}
+                                  </option>
+                                  <option value="0">{getLogin("woman")}</option>
+                                  <option value="1">{getLogin("Man")}</option>
                                 </Field>
                                 {validationsErrors && validationsErrors.gender && (
                                   <div style={{ overflow: "hidden" }}>
@@ -292,14 +300,14 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="date_of_birth"
                                 >
-                                  تاريخ الميلاد
+                                  {getLogin("Birthday")}
                                 </label>
                                 <Field
                                   type="date"
                                   id="date_of_birth"
                                   name="date_of_birth"
                                   onKeyUp={setValidationsErrorsHandle}
-                                  placeholder="تاريخ الميلاد..."
+                                  placeholder={getLogin("Birthday")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -330,7 +338,7 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="country_id"
                                 >
-                                  اختر البلد
+                                  {getLogin("Select_country")}
                                 </label>
                                 <Field
                                   as="select"
@@ -343,7 +351,9 @@ const personalInformations = () => {
                                       " has-error")
                                   }
                                 >
-                                  <option value="">اختر البلد...</option>
+                                  <option value="">
+                                    {getLogin("Select_country")}
+                                  </option>
                                   {Countries &&
                                     Countries.data.map((e: any) => (
                                       <option key={e.id} value={e.id}>
@@ -371,7 +381,7 @@ const personalInformations = () => {
                             <div className="col-md-6">
                               <div className="timlands-form">
                                 <label className="label-block" htmlFor="phone">
-                                  رقم الهاتف
+                                  {getLogin("Phone_number")}
                                 </label>
                                 <div
                                   style={{
@@ -389,7 +399,7 @@ const personalInformations = () => {
                                     id="phone"
                                     name="phone"
                                     onKeyUp={setValidationsErrorsHandle}
-                                    placeholder="رقم الهاتف..."
+                                    placeholder={getLogin("Phone_number")}
                                     // className={"timlands-inputs "}
                                     autoComplete="off"
                                   />
@@ -399,7 +409,7 @@ const personalInformations = () => {
                                     name="code_phone"
                                     // className={"timlands-inputs "}
                                   >
-                                    <option value="">كود</option>
+                                    <option value="">{getLogin("Code")}</option>
                                     {codes.map((e: any) => (
                                       <option key={e.id} value={e.code_phone}>
                                         {e.code_phone}
@@ -435,7 +445,7 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="currency"
                                 >
-                                  اختر عملة
+                                  {getLogin("Select_currency")}
                                 </label>
                                 <Field
                                   as="select"
@@ -448,7 +458,14 @@ const personalInformations = () => {
                                       " has-error")
                                   }
                                 >
-                                  <option value={currencies?.find(e=>e.code=="USD")?.id}>الافتراضية</option>
+                                  <option
+                                    value={
+                                      currencies?.find((e) => e.code == "USD")
+                                        ?.id
+                                    }
+                                  >
+                                    {getLogin("Virtual")}
+                                  </option>
 
                                   {currencies.map((e: any) => (
                                     <option key={e?.id} value={e?.id}>
@@ -481,7 +498,7 @@ const personalInformations = () => {
                                 disabled={isSubmitting}
                                 className="btn me-auto butt-primary butt-md"
                               >
-                                تحديث المعلومات اﻷساسية
+                                {getLogin("Update_basic_information")}
                               </button>
                             </div>
                           </div>

@@ -12,6 +12,8 @@ import Sidebar from "@/components/Profile/Sidebar";
 import MyProducts from "@/components/Profile/MyProducts";
 import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function Profile() {
   let token = Cookies.get("token");
@@ -19,6 +21,9 @@ function Profile() {
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
   const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
 
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
@@ -45,7 +50,7 @@ function Profile() {
         router.push("/user/editSeller");
       }
     } catch (error: any) {
-      message.error("حدث خطأ غير متوقع");
+      message.error(getAll("An_unexpected_error"));
       setIsLoadingSeler(false);
     }
   };
@@ -71,11 +76,13 @@ function Profile() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title="حسابك غير كامل"
-            subTitle="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
+            title={getLogin("Your_account_is_2")}
+            subTitle={getLogin("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
-                <a className="btn butt-primary butt-md">الذهاب إلى التعديل</a>
+                <a className="btn butt-primary butt-md">
+                  {getLogin("Go_to_Edit")}
+                </a>
               </Link>
             }
           />
@@ -91,19 +98,19 @@ function Profile() {
           <>
             <MetaTags
               title={
-                "الملف الشخصي لـ " +
+                getLogin("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               metaDescription={
-                "الملف الشخصي لـ " +
+                getLogin("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               ogDescription={
-                "الملف الشخصي لـ " +
+                getLogin("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
@@ -142,7 +149,7 @@ function Profile() {
                           <span className="material-icons material-icons-outlined">
                             edit
                           </span>{" "}
-                          تعديل الملف الشخصي
+                          {getLogin("Profile_editing")}
                         </a>
                       </Link>
                     </div>
@@ -159,7 +166,7 @@ function Profile() {
                       <span className="material-icons material-icons-outlined">
                         copy
                       </span>{" "}
-                      نسخ رابط بروفايلي
+                      {getLogin("Copy_my_profile’s")}
                     </button>
                   </p>
                 </div>
@@ -217,10 +224,8 @@ function Profile() {
                   <div className="timlands-profile-content">
                     {!userInfo.user_details.profile.profile_seller && (
                       <div className="be-seller-aside mb-2">
-                        <h3 className="title">كن بائعا</h3>
-                        <p className="text">
-                          هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!
-                        </p>
+                        <h3 className="title">{getAll("Become_a_seller")}</h3>
+                        <p className="text">{getLogin("Do_you_ant")}</p>
                         <button
                           onClick={beseller}
                           disabled={isLoadingSeler}
@@ -235,7 +240,7 @@ function Profile() {
                       <>
                         <div className="pb-1 mb-2">
                           <Card
-                            title="نبذة عني"
+                            title={getLogin("Brief_me_about")}
                             extra={
                               <Link href="/user/editSeller">
                                 <a className="edit-button flex-center">
@@ -267,7 +272,9 @@ function Profile() {
                                   "read-more-btn " + (isLess ? "is-less" : "")
                                 }
                               >
-                                {isLess ? "قراءة المزيد..." : "قراءة أقل..."}
+                                {isLess
+                                  ? getLogin("Read_more")
+                                  : getLogin("Read_less")}
                               </button>
                             )}
                           </Card>
@@ -281,14 +288,16 @@ function Profile() {
                             <span className="material-icons material-icons-outlined">
                               account_circle
                             </span>
-                            المعلومات الشخصية
+                            {getLogin("Personal_information")}
                           </h3>
                         </div>
                       </div>
                       <div className="row">
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">الاسم الأول</h3>
+                            <h3 className="text-label">
+                              {getLogin("First_name")}
+                            </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.first_name}
                             </p>
@@ -296,7 +305,9 @@ function Profile() {
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">الاسم الأخير</h3>
+                            <h3 className="text-label">
+                              {getLogin("Last_name")}
+                            </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.last_name}
                             </p>
@@ -304,7 +315,9 @@ function Profile() {
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">رقم الهاتف</h3>
+                            <h3 className="text-label">
+                              {getLogin("Phone_number")}
+                            </h3>
                             <p className="text-value">
                               {userInfo.user_details.phone
                                 ? userInfo.user_details.code_phone?.split(
@@ -317,7 +330,9 @@ function Profile() {
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">العملة</h3>
+                            <h3 className="text-label">
+                              {getLogin("Currency")}
+                            </h3>
                             <p className="text-value">
                               {
                                 userInfo.user_details.profile.currency
@@ -329,7 +344,9 @@ function Profile() {
                         {userInfo.user_details.profile.country !== null && (
                           <div className="col-sm-4">
                             <div className="content-text-item">
-                              <h3 className="text-label">البلد</h3>
+                              <h3 className="text-label">
+                                {getLogin("Country")}
+                              </h3>
                               <p className="text-value">
                                 {userInfo.user_details.profile.country.name_ar}
                               </p>
@@ -338,21 +355,23 @@ function Profile() {
                         )}
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">الجنس</h3>
+                            <h3 className="text-label">{getLogin("Gender")}</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile &&
                               userInfo.user_details.profile.gender == null
                                 ? ""
                                 : userInfo.user_details.profile &&
                                   (userInfo.user_details.profile.gender == 0
-                                    ? "أنثى"
-                                    : "ذكر")}
+                                    ? getLogin("woman")
+                                    : getLogin("Man"))}
                             </p>
                           </div>
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">تاريخ الميلاد</h3>
+                            <h3 className="text-label">
+                              {getLogin("Birthday")}
+                            </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.date_of_birth ==
                               null

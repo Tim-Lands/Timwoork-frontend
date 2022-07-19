@@ -19,7 +19,7 @@ function BestSeller() {
     token = localStorage.getItem("token");
 
   const [getProducts, setGetProducts]: any = useState();
-  /**----------------------------------------------------------**/
+  /**---------------------------------------------------------**/
   const fetchData = async (pageNumber: number = 1) => {
     try {
       const res = await API.get(

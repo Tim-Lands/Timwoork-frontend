@@ -17,7 +17,12 @@ import Link from "next/link";
 import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
 import Portfolio from "@/components/Post/Portfolio";
 import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
+const { getSectionLanguage } = useContext(LanguageContext);
+const getAll = getSectionLanguage("all");
+const getLogin = getSectionLanguage("login");
 function Index({ query }) {
   console.log(query);
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
@@ -27,9 +32,9 @@ function Index({ query }) {
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
-        title={"تصفح الخدمات"}
-        metaDescription={"تصفح الخدمات"}
-        ogDescription={"تصفح الخدمات"}
+        title={getAll("Explore_services")}
+        metaDescription={getAll("Explore_services")}
+        ogDescription={getAll("Explore_services")}
       />
       {isDeleteShowen && <DeleteConfirm setIsDeleteModal={setIsDeleteShowen} />}
       <div className="portfolios-container">
@@ -39,9 +44,7 @@ function Index({ query }) {
             <div className="portfolio-single bg-white p-3">
               <div className="portfolio-single-header">
                 <div className="portfolio-single-header-aside">
-                  <h2 className="title">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لق
-                  </h2>
+                  <h2 className="title">{getLogin("This_text_is")}</h2>
                 </div>
                 <div className="portfolio-single-header-tool">
                   <button
@@ -73,7 +76,7 @@ function Index({ query }) {
                       </>
                     ) : (
                       <>
-                        <FaHeart /> تمت الإضافة
+                        <FaHeart /> {getLogin("Added_successfully")}
                       </>
                     )}
                   </button>
@@ -105,33 +108,9 @@ function Index({ query }) {
                   />
                 </div>
                 <p className="text">
-                  هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم
-                  توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-                  النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
-                  التى يولدها التطبيق. إذا كنت تحتاج إلى عدد أكبر من الفقرات
-                  يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن
-                  يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي
-                  المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن
-                  يطلع على صورة حقيقية لتصميم الموقع. ومن هنا وجب على المصمم أن
-                  يضع نصوصا مؤقتة على التصميم ليظهر للعميل الشكل كاملاً،دور مولد
-                  النص العربى أن يوفر على المصمم عناء البحث عن نص بديل لا علاقة
-                  له بالموضوع الذى يتحدث عنه التصميم فيظهر بشكل لا يليق. هذا
-                  النص يمكن أن يتم تركيبه على أي تصميم دون مشكلة فلن يبدو وكأنه
-                  نص منسوخ، غير منظم، غير منسق، أو حتى غير مفهوم. لأنه مازال
-                  نصاً بديلاً ومؤقتاً.هذا النص هو مثال لنص يمكن أن يستبدل في نفس
-                  المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك
-                  أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى
-                  زيادة عدد الحروف التى يولدها التطبيق. إذا كنت تحتاج إلى عدد
-                  أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما
-                  تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص
-                  العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى
-                  كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع. ومن هنا
-                  وجب على المصمم أن يضع نصوصا مؤقتة على التصميم ليظهر للعميل
-                  الشكل كاملاً،دور مولد النص العربى أن يوفر على المصمم عناء
-                  البحث عن نص بديل لا علاقة له بالموضوع الذى يتحدث عنه التصميم
-                  فيظهر بشكل لا يليق. هذا النص يمكن أن يتم تركيبه على أي تصميم
-                  دون مشكلة فلن يبدو وكأنه نص منسوخ، غير منظم، غير منسق، أو حتى
-                  غير مفهوم. لأنه مازال نصاً بديلاً ومؤقتاً.
+                  {getLogin("This_text_is_2")}
+                  {getLogin("If_you_need")}
+                  {getLogin("This_text_is")}
                 </p>
                 <div className="buttons-link">
                   <a
@@ -149,7 +128,7 @@ function Index({ query }) {
                   <div className="row">
                     <div className="col-sm-6 col-md-4">
                       <Portfolio
-                        title="إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى"
+                        title={getLogin("If_you_need")}
                         thumbnail={`https://cdn.dribbble.com/uploads/7999/original/71d0450f3b5282d9ae34f788ba3a04e2.jpg?1582829647`}
                         slug={`dedej-djeded-wedw-wedwef-hgc`}
                         author={"طارق عروي"}
@@ -173,7 +152,7 @@ function Index({ query }) {
                     </div>
                     <div className="col-sm-6 col-md-4">
                       <Portfolio
-                        title="هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة"
+                        title={getLogin("This_text_is")}
                         thumbnail={`https://cdn.dribbble.com/users/2189268/screenshots/8028972/media/5ae2b122667ec785965a00a021b54eee.png?compress=1&resize=400x300`}
                         slug={`dedej-djeded-wedw-wedwef-hgc`}
                         author={"أحمد يحيى"}
@@ -226,15 +205,7 @@ function Index({ query }) {
                   </Link>
                 </h3>
                 <p className="meta">بائع محترف</p>
-                <p className="text">
-                  هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم
-                  توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-                  النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
-                  التى يولدها التطبيق. إذا كنت تحتاج إلى عدد أكبر من الفقرات
-                  يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن
-                  يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي
-                  المواقع
-                </p>
+                <p className="text">{getLogin("This_text_is")}</p>
                 <div className="btns-follow">
                   {isFollowing && (
                     <button
