@@ -1,14 +1,10 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
 export default class CustomDocument extends Document {
   render() {
-    const { getSectionLanguage } = useContext(LanguageContext);
-    const getAll = getSectionLanguage("all");
     return (
       <Html lang="ar">
         <Head>
-          <title>{getAll("Timwoork")}</title>
+          {/* <title>تيموورك</title> */}
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
