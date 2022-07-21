@@ -8,10 +8,10 @@ import Loading from "@/components/Loading";
 import Post from "@/components/Post/Post";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 function index({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { language } = useContext(LanguageContext);
   const { data: popularProducts }: any = useSWR(
     `api/get_products_subcategory/${query.id}`

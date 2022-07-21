@@ -2,9 +2,9 @@ import React from "react";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
 function SidebarAdvices() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <div className="add-product-advices">
       <img className="advice-img" src="/1999310.png" alt="" />

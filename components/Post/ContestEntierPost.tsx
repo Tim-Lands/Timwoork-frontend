@@ -1,9 +1,8 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Image from "next/image";
-import { Badge } from "antd";
-import { FaEye, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 function ContestEntierPost({
   thumbnail,
@@ -11,11 +10,11 @@ function ContestEntierPost({
   level,
   username,
   avatar,
-  views,
+  // views,
   slug,
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
-  const [isFavorated, setIsFavorated] = useState(false);
+  // const [isFavorated, setIsFavorated] = useState(false);
 
   return (
     <div className={"timlands-contest-entier-post"}>

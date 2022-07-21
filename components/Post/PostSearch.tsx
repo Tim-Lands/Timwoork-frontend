@@ -1,6 +1,8 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function PostSearch({
   title,
@@ -92,18 +94,21 @@ function PostSearch({
   };
   function durationFunc() {
     if (period == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (period == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (period > 2 && period < 11) {
-      return period + " أيام ";
+      return period + getAll("Days");
     }
     if (period >= 11) {
-      return period + " يوم ";
+      return period + getAll("Day");
     }
   }
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   return (
     <div className="timlands-post-item post-item-search">
       <div className="d-flex">
@@ -115,9 +120,13 @@ function PostSearch({
         </Link>
         <div className="post-item-content">
           <ul className="nav post-meta">
-            <li className="post-meta-price">السعر: {price}.00$</li>
+            <li className="post-meta-price">
+              {getAll("Price")}
+              {price}.00$
+            </li>
             <li className="post-meta-bayer">
-              {(buyers == 1 ? "مشتريين" : "مشتري") && "اشتري الآن"}
+              {(buyers == 1 ? getAll("Buyers") : getLogin("Buyer")) &&
+                getAll("Buy_now")}
             </li>
           </ul>
           <h3 className="title">
@@ -142,7 +151,10 @@ function PostSearch({
               ))}
             </li>
 
-            <li className="post-meta-delay">مدة التسليم: {durationFunc()}</li>
+            <li className="post-meta-delay">
+              {getLogin("Delivery_duration")}
+              {durationFunc()}
+            </li>
           </ul>
         </div>
       </div>

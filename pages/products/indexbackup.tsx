@@ -15,12 +15,12 @@ import Cookies from "js-cookie";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
-const getAll = getSectionLanguage("all");
 function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   const [size, setSize] = useState(4);
   const [paginationSize, setPaginationSize] = useState(8);
   let token = Cookies.get("token");

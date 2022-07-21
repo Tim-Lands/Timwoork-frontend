@@ -20,15 +20,15 @@ import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 function Index({ query }) {
-  console.log(query);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFavorated, setIsFavorated] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  console.log(query);
   return (
     <div className="container pt-4 mt-2">
       <MetaTags

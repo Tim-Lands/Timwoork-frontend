@@ -31,9 +31,12 @@ function Layout(props: any) {
     <SWRConfig
       value={{
         fetcher: async (url: string) => {
-          console.log(url)
+          console.log(url);
           return await API.get(url, {
-            headers: { Authorization: `Bearer ${token}`,'X-LOCALIZATION':language},
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-LOCALIZATION": language,
+            },
           })
             .then((r: any) => r.data)
             .catch(() => {

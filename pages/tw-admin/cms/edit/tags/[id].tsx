@@ -5,11 +5,10 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
 import { LanguageContext } from "../../../../../contexts/languageContext/context";
 import { useContext } from "react";
-
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 export default function Id(): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const router = useRouter();
   const id = router.query.id;
 

@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
 export default function ProductHeader({
   title,
@@ -92,6 +94,8 @@ export default function ProductHeader({
       return yut.concat(yut2);
     }
   };
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <div className="timwoork-single-header">
       <h1 className="title">{title}</h1>
@@ -135,7 +139,7 @@ export default function ProductHeader({
             <span className="stars-count">({ratings_count})</span>
           </li>
           <li className="level-item">
-            <span className="text-level">المستوى:</span>
+            <span className="text-level">{getAll("Level")}</span>
             <span className="value-level">{level.name_ar}</span>
           </li>
         </ul>

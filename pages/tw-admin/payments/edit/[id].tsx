@@ -12,9 +12,9 @@ import PropTypes from "prop-types";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
 function Id({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
   const token = Cookies.get("token_dash");
   const { data: GetData }: any = useSWR(`dashboard/types_payments/${query.id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});

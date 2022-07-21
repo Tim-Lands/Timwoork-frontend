@@ -22,13 +22,14 @@ export function MetaTags({
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage("all");
   return (
     <>
       <Head>
         <meta name="description" content={metaDescription} key="description" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} key="title" />
-        <meta property="og:site_name" content="موقع تيم ورك" />
+        <meta property="og:site_name" content={getAll("Timwoork_website")} />
         <meta property="og:locale" content="ar" />
         <meta property="og:locale:alternate" content="ar" />
         <meta property="og:description" content={ogDescription} />

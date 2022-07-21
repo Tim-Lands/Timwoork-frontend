@@ -10,6 +10,7 @@ import useSWR from "swr";
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("conversion");
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -23,9 +24,9 @@ function index() {
   return (
     <>
       <MetaTags
-        title={"المحادثات"}
-        metaDescription={"مبيعاتي - تيموورك"}
-        ogDescription={"مبيعاتي - تيموورك"}
+        title={getAll("Conversations")}
+        metaDescription={getAll("My_sells_Timwoork")}
+        ogDescription={getAll("My_sells_Timwoork")}
       />
       {veriedEmail && (
         <div className=" my-3" style={{ maxWidth: 1300, marginInline: "auto" }}>

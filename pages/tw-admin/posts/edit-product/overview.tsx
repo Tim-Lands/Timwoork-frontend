@@ -13,9 +13,6 @@ import Link from "next/link";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingTags, setIsLoadingTags] = useState(false);
@@ -62,6 +59,9 @@ const MySelect = (props: any) => {
   );
 };
 function Overview({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const [product, setProduct]: any = useState({});
   const [categories, setCategories] = useState({});
   const [subCategories, setSubCategories]: any = useState({});

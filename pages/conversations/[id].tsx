@@ -1,10 +1,16 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
 import API from "../../config";
-import Cookies from "js-cookie"; 
+import Cookies from "js-cookie";
 import useFileUpload from "react-use-file-upload";
 import useSWR, { useSWRConfig } from "swr";
 import Sidebar from "@/components/Conversations/Sidebar";
@@ -14,6 +20,7 @@ import router from "next/router";
 import Loading from "@/components/Loading";
 import pusher from "../../config/pusher";
 import { LanguageContext } from "contexts/languageContext/context";
+
 function Conversation({ query }) {
   let token = Cookies.get("token");
 
@@ -27,6 +34,8 @@ function Conversation({ query }) {
   const { data: conversationsSingle }: any = useSWR(
     `api/conversations/${query.id}`
   );
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: profileInfo }: any = useSWR(`api/me`);
   const channelChat = `presence-receiver.${
     profileInfo && profileInfo.user_details.id
@@ -283,11 +292,11 @@ function Conversation({ query }) {
   return (
     <>
       <MetaTags
-        title={`المحادثات - ${
+        title={`${getAll("Conversations")} - ${
           conversationsSingle && conversationsSingle.data.title
         }`}
-        metaDescription={"مبيعاتي - تيموورك"}
-        ogDescription={"مبيعاتي - تيموورك"}
+        metaDescription={getAll("My_sells_Timwoork")}
+        ogDescription={getAll("My_sells_Timwoork")}
       />
       <div
         className="timwoork-single my-3"
@@ -296,7 +305,7 @@ function Conversation({ query }) {
         {veriedEmail && (
           <div className="row">
             <div className="col-lg-4">
-              <Sidebar RouterId={query.id} getLanguage={getLanguage}/>
+              <Sidebar RouterId={query.id} getLanguage={getLanguage} />
             </div>
             <div className="col-lg-8">
               <div className="app-bill conv" ref={messageCont}>
@@ -359,7 +368,7 @@ function Conversation({ query }) {
                                   marginBottom: 5,
                                 }}
                               >
-                                تعليمات
+                                {getAll("Instructions")}
                               </span>
                             )}
                             {item.type == 2 && (
@@ -373,7 +382,7 @@ function Conversation({ query }) {
                                   marginBottom: 5,
                                 }}
                               >
-                                سبب إلغاء
+                                {getAll("Cancellation_reason")}
                               </span>
                             )}
                             <p className="text" style={{ margin: 0 }}>
@@ -405,8 +414,9 @@ function Conversation({ query }) {
                                       rel="noreferrer"
                                       target="_blank"
                                     >
-                                      {switchFileTypes(att.mime_type)} تحميل
-                                      الملف {i + 1}#
+                                      {switchFileTypes(att.mime_type)}{" "}
+                                      {getAll("Upload_file")}
+                                      {i + 1}#
                                     </a>
                                   </div>
                                 ))}
@@ -454,7 +464,7 @@ function Conversation({ query }) {
                 <form onSubmit={sendMessageHandle}>
                   <div className="timlands-form">
                     <label htmlFor="message_type" className="form-text">
-                      اختر نوع الرسالة
+                      {getAll("Choose_message_type")}
                     </label>
                     <div className="py-1 d-flex">
                       <select
@@ -464,9 +474,11 @@ function Conversation({ query }) {
                         id="message_type"
                         onChange={(e: any) => setMessageType(e.target.value)}
                       >
-                        <option value="0">نص عادي</option>
-                        <option value="1">تعليمات</option>
-                        <option value="2">سبب الإلغاء</option>
+                        <option value="0">{getAll("Plain_text")}</option>
+                        <option value="1">{getAll("Instructions")}</option>
+                        <option value="2">
+                          {getAll("Cancellation_reason")}
+                        </option>
                       </select>
                       <button
                         type="button"
@@ -478,7 +490,7 @@ function Conversation({ query }) {
                         <span className="material-icons material-icons-outlined">
                           attach_file
                         </span>{" "}
-                        إرفاق ملفات
+                        {getAll("Attach_file")}
                       </button>
                     </div>
                     <div className="send-attachments">
@@ -536,7 +548,7 @@ function Conversation({ query }) {
                             }}
                           >
                             <li>
-                              <strong>الحجم الكلي: </strong>
+                              <strong>{getAll("Overall_size")}</strong>
                               {totalSizeMsg}
                             </li>
                           </ul>
@@ -560,7 +572,7 @@ function Conversation({ query }) {
                         onKeyUp={() => {
                           setMessageErrors({});
                         }}
-                        placeholder="نص الرسالة..."
+                        placeholder={getLogin("Message_text")}
                         className={
                           "timlands-inputs " +
                           (messageErrors &&
@@ -591,7 +603,7 @@ function Conversation({ query }) {
                         <span className="material-icons material-icons-outlined">
                           send
                         </span>
-                        إرسال
+                        {getAll("Send")}
                       </button>
                     </div>
                     {messageErrors && messageErrors.message && (

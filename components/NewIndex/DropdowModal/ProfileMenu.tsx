@@ -15,10 +15,14 @@ import PropTypes from "prop-types";
 import API from "../../../config";
 import Cookies from "js-cookie";
 import router from "next/router";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 import { message, notification } from "antd";
 
 function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
   let token = Cookies.get("token");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
 
@@ -34,11 +38,11 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
         }
       );
       if (res.status == 200) {
-        message.success("لقد تم تسجيل الخروج بنجاح");
+        message.success(getAll("Successfully_signed_out"));
       }
     } catch (error) {
       notification.open({
-        message: "حدث خطأ",
+        message: getAll("An_error_occurred"),
       });
     }
   };
@@ -58,7 +62,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
         router.reload();
       }
     } catch (error) {
-      () => { };
+      () => {};
     }
   };
   return (
@@ -87,7 +91,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
       </Link>
       <div className="nav-profile-list-content">
         <ul className="list-profile-withicons">
-          {user_details.profile.is_completed == 1 &&
+          {user_details.profile.is_completed == 1 && (
             <>
               <li onClick={() => setIsShowProfileMenu(false)}>
                 <Link href={"/add-new"}>
@@ -95,7 +99,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
                     <span className="circul-icon">
                       <IoIosAddCircleOutline />
                     </span>
-                    إضافة خدمة جديدة
+                    {getAll("Add_new_service")}
                   </a>
                 </Link>
               </li>
@@ -105,7 +109,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
                     <span className="circul-icon">
                       <MdOutlineAccountBalanceWallet />
                     </span>
-                    محفظتي
+                    {getAll("My_portfolio")}
                   </a>
                 </Link>
               </li>
@@ -115,7 +119,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
                     <span className="circul-icon">
                       <MdOutlineInventory2 />
                     </span>
-                    خدماتي
+                    {getAll("My_services")}
                   </a>
                 </Link>
               </li>
@@ -125,7 +129,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
                     <span className="circul-icon">
                       <MdOutlineShoppingCart />
                     </span>
-                    مشترياتي
+                    {getAll("My_purchases")}
                   </a>
                 </Link>
               </li>
@@ -135,23 +139,22 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
                     <span className="circul-icon">
                       <MdOutlineShop2 />
                     </span>
-                    مبيعاتي
+                    {getAll("My_sells")}
                   </a>
                 </Link>
               </li>
-             
             </>
-          }
-           <li onClick={() => setIsShowProfileMenu(false)}>
-                <Link href={`/user/personalInformations`}>
-                  <a>
-                    <span className="circul-icon">
-                      <FiSettings />
-                    </span>
-                    الإعدادات
-                  </a>
-                </Link>
-              </li>
+          )}
+          <li onClick={() => setIsShowProfileMenu(false)}>
+            <Link href={`/user/personalInformations`}>
+              <a>
+                <span className="circul-icon">
+                  <FiSettings />
+                </span>
+                {getAll("Settings")}
+              </a>
+            </Link>
+          </li>
           <li
             onClick={() => {
               setIsShowProfileMenu(false);
@@ -162,7 +165,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
               <span className="circul-icon">
                 <MdLogout />
               </span>
-              تسجيل الخروج
+              {getAll("Log_out")}
             </a>
           </li>
           <li
@@ -175,7 +178,7 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
               <span className="circul-icon">
                 <MdLogout />
               </span>
-              الخروج من جميع الأجهزة
+              {getAll("Log_out_of")}
             </a>
           </li>
         </ul>

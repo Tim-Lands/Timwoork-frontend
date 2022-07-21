@@ -14,7 +14,8 @@ import Link from "next/link";
 
 function Hero() {
   const [index, setIndex] = useState(1);
-  const { language } = useContext(LanguageContext);
+  const { language, getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <div
       className={
@@ -71,9 +72,8 @@ function Hero() {
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
                 </h4>
-                <h4 className="text">
-                  حسام, <strong>معلق صوتي</strong>
-                </h4>
+                <h4 className="text"></h4>
+                {getAll("Hussam_voiceover_agent")}
               </a>
             </Link>
           </SwiperSlide>
@@ -95,9 +95,7 @@ function Hero() {
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
                 </h4>
-                <h4 className="text">
-                  أيات, <strong>معلق صوتي</strong>
-                </h4>
+                <h4 className="text">{getAll("Ayat_voiceover_agent")}</h4>
               </a>
             </Link>
           </SwiperSlide>
@@ -120,9 +118,7 @@ function Hero() {
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
                 </h4>
-                <h4 className="text">
-                  فوزي, <strong>صوتيات</strong>
-                </h4>
+                <h4 className="text">{getAll("Faouzi_Audios")}</h4>
               </a>
             </Link>
           </SwiperSlide>
@@ -145,9 +141,7 @@ function Hero() {
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>
                 </h4>
-                <h4 className="text">
-                  رحمة, <strong>كتابة وترجمة</strong>
-                </h4>
+                <h4 className="text">{getAll("Rahma_writing_and")}</h4>
               </a>
             </Link>
           </SwiperSlide>

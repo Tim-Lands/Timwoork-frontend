@@ -17,10 +17,10 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 //import { pusher } from "../../config/pusher";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 const User = ({ query }) => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

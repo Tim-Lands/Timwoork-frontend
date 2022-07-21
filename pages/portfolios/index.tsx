@@ -8,9 +8,9 @@ import PortfolioSliders from "@/components/NewIndex/Portfolio/PortfolioSlider";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
 function Index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   // const [isLoading, setIsLoading] = useState(false);
   // const [isSettings, setIsSettings] = useState(false);
   // const { language, getSectionLanguage } = useContext(LanguageContext);

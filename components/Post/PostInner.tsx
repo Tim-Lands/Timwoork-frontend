@@ -4,6 +4,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
 import { CurrencyContext } from "../../contexts/currencyContext";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
 function PostInner({
   title,
@@ -112,6 +113,8 @@ function PostInner({
       return yut.concat(yut2);
     }
   };
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <div className={"timlands-post-inner" + sizeClass()}>
       <Link href={`/p/${slug}`}>
@@ -159,11 +162,12 @@ function PostInner({
       </div>
       <div className="post-item-footer">
         <p className="post-meta-price">
-          السعر من:
+          {getAll("Price_from")}
           {specCurrency ? Math.round(price * specCurrency) + symbol : price}
         </p>
         <p className="post-meta-bayer">
-          {(buyers == 0 ? buyers : buyers + " اشتروا هذا") || "اشتري الآن"}
+          {(buyers == 0 ? buyers : buyers + getAll("Have_bought_this")) ||
+            getAll("Buy_now")}
         </p>
       </div>
     </div>

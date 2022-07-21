@@ -5,8 +5,12 @@ import React from "react";
 import { FaClock, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function Messages({ messages, refs, setShowMessagesMenu }) {
+  const { lang, getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <motion.div
       initial={{ y: -70, opacity: 0 }}
@@ -17,7 +21,7 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
       <div className="popup-dropdown-inner">
         <div className="popup-dropdown-header">
           <h4 className="title">
-            <FaEnvelope /> الرسائل
+            <FaEnvelope /> {getAll("Messages")}
           </h4>
         </div>
         <div className="popup-dropdown-body">
@@ -43,8 +47,10 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
                         </div>
                         <div className="new-popup-item-content">
                           <p className="text">
-                            قام {message?.members[0].username} بالتعليق على
-                            خدمتك <strong>{message?.title}</strong>
+                            {lang === "ar" && " قام"}{" "}
+                            {message?.members[0].username}{" "}
+                            {getAll("have_commented")}
+                            <strong>{message?.title}</strong>
                           </p>
                           <p className="meta">
                             <FaClock />{" "}
@@ -120,7 +126,7 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
               className="nav-see-more"
               style={{ marginRight: 0, borderRadius: 6 }}
             >
-              مشاهدة جميع الرسائل
+              {getAll("View_all_messages")}
             </a>
           </Link>
         </div>

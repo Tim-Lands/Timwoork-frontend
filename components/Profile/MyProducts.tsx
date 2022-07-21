@@ -13,8 +13,14 @@ import {
 import router from "next/router";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 export default function MyProducts({ setStatusType, postsList, refresh }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
+  const getAuth = getSectionLanguage("auth");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -31,12 +37,12 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
 
     swalWithBootstrapButtons
       .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        title: getLogin("Are_you_sure1"),
+        text: getLogin("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
-        cancelButtonText: "لا",
+        confirmButtonText: getLogin("Yes"),
+        cancelButtonText: getLogin("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -53,14 +59,14 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
             );
             if (res.status === 200) {
               swalWithBootstrapButtons.fire(
-                "تم الحذف!",
-                "لقد تم حذف هذه الخدمة بنجاح",
+                getLogin("Deleted"),
+                getLogin("The_service_has"),
                 "success"
               );
               refresh();
             }
           } catch (error) {
-            () => { };
+            () => {};
           }
         }
       });
@@ -88,16 +94,16 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       );
       if (res.status === 200) {
         swalWithBootstrapButtons.fire(
-          "تم التعطيل!",
-          "لقد تم تعطيل هذه الخدمة بنجاح",
+          getLogin("Disabled1"),
+          getLogin("The_service_has_2"),
           "success"
         );
         refresh();
       }
     } catch (error) {
       notification["error"]({
-        message: "رسالة خطأ",
-        description: "للأسف لم يتم تعطيل هذه الخدمة",
+        message: getLogin("Error_message"),
+        description: getLogin("Unfortunately_this_service"),
       });
     }
   };
@@ -119,29 +125,29 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       });
       if (res.status === 200) {
         swalWithBootstrapButtons.fire(
-          "تم التنشيط!",
-          "لقد تم تنشسط هذه الخدمة بنجاح",
+          getLogin("Abled1"),
+          getLogin("This_service_has"),
           "success"
         );
         refresh();
       }
     } catch (error) {
       notification["error"]({
-        message: "رسالة خطأ",
-        description: "للأسف لم يتم تنشيط هذه الخدمة",
+        message: getLogin("Error_message"),
+        description: getLogin("Unfortunately_this_service_2"),
       });
     }
   };
   function statusProduct(status: any) {
     switch (status) {
       case null:
-        return <span className="badge bg-info">في الإنتظار...</span>;
+        return <span className="badge bg-info">{getLogin("Pending")}</span>;
       case 0:
-        return <span className="badge bg-danger">مرفوظة</span>;
+        return <span className="badge bg-danger">{getLogin("Rejected")}</span>;
       case 1:
-        return <span className="badge bg-success">مقبولة</span>;
+        return <span className="badge bg-success">{getLogin("Rejected")}</span>;
       default:
-        return <span className="badge bg-info">في الإنتظار...</span>;
+        return <span className="badge bg-info">{getLogin("Pending")}</span>;
     }
   }
 
@@ -176,44 +182,46 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
   return (
     <div className="profile-content-body">
       <div className="page-header">
-        <h3 className="title">خدماتي</h3>
+        <h3 className="title">{getAll("My_services")}</h3>
         <Link href={"/add-new"}>
           <a className="add-new-product">
             <span className="material-icons material-icons-outlined">
               add_circle_outline
             </span>{" "}
-            إضافة خدمة جديدة
+            {getAll("Add_new_service")}
           </a>
         </Link>
       </div>
       <Menu mode="horizontal">
         <Menu.Item key="all" onClick={() => setStatusType("")}>
-          الكل
+          {getLogin("All")}
         </Menu.Item>
         <Menu.Item key="mail" onClick={() => setStatusType("/published")}>
-          النشطة
+          {getLogin("Active")}
         </Menu.Item>
         <Menu.Item key="app" onClick={() => setStatusType("/rejected")}>
-          المرفوضة
+          {getLogin("Rejected")}
         </Menu.Item>
         <Menu.Item key="waiting" onClick={() => setStatusType("/pending")}>
-          قيد الإنتظار
+          {getLogin("PEnding")}
         </Menu.Item>
         <Menu.Item key="drafts" onClick={() => setStatusType("/drafts")}>
-          المسودات
+          {getLogin("Draft")}
         </Menu.Item>
         <Menu.Item key="alipay" onClick={() => setStatusType("/paused")}>
-          المعطلة
+          {getLogin("Disabled")}
         </Menu.Item>
       </Menu>
       {postsList && postsList.data.length == 0 ? (
         <Result
           status="404"
-          title="لا يوجد لديك خدمات"
-          subTitle="يمكنك إضافة خدمة في أي وقت "
+          title={getLogin("You_have_no")}
+          subTitle={getLogin("You_can_add")}
           extra={
             <Link href="/add-new">
-              <a className="btn butt-sm butt-primary">إضافة خدمة جديدة</a>
+              <a className="btn butt-sm butt-primary">
+                {getAll("Add_new_service")}
+              </a>
             </Link>
           }
         />
@@ -222,12 +230,12 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
           <table className="table">
             <thead>
               <tr>
-                <th>العنوان</th>
-                <th>مكتملة</th>
-                <th>عدد المشتريين</th>
-                <th>حالة التفعيل</th>
-                <th>حالة القبول</th>
-                <th>الأدوات</th>
+                <th>{getAll("Title")}</th>
+                <th>{getLogin("Completed")}</th>
+                <th>{getLogin("Buyers_number")}</th>
+                <th>{getLogin("Activation_status")}</th>
+                <th>{getLogin("Admission_status")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -235,31 +243,40 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                 postsList.data.map((e: any) => (
                   <tr key={e.id}>
                     <td>
-                      {e.is_completed == 1 ?
+                      {e.is_completed == 1 ? (
                         <Link href={`/myproducts/${e.slug}`}>
                           <a>{e.title}</a>
                         </Link>
-                        : <p>{e.title}</p>
-                      }
+                      ) : (
+                        <p>{e.title}</p>
+                      )}
                     </td>
                     <td>
                       {e.is_completed == 0 ? (
-                        <span className="badge bg-danger">لا</span>
+                        <span className="badge bg-danger">
+                          {getLogin("No")}
+                        </span>
                       ) : (
-                        <span className="badge bg-success">نعم</span>
+                        <span className="badge bg-success">
+                          {getAuth("Yes")}
+                        </span>
                       )}
                     </td>
                     <td>{e.count_buying}</td>
                     <td>
                       {e.is_active == 0 ? (
-                        <span className="badge bg-danger">معطلة</span>
+                        <span className="badge bg-danger">
+                          {getLogin("Disabled")}
+                        </span>
                       ) : (
-                        <span className="badge bg-success">مفعلة</span>
+                        <span className="badge bg-success">
+                          {getLogin("Abled")}
+                        </span>
                       )}
                     </td>
                     <td>{statusProduct(e.status)}</td>
                     <td>
-                      <Tooltip title="حذف هذه الخدمة">
+                      <Tooltip title={getLogin("Delete_this_service")}>
                         <Button
                           danger
                           type="primary"
@@ -273,7 +290,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                       {e.status !== null && (
                         <>
                           {e.is_active == 0 && e.is_completed == 1 ? (
-                            <Tooltip title="تفعيل هذه الخدمة">
+                            <Tooltip title={getLogin("Able_this_service")}>
                               <Button
                                 type="primary"
                                 color="orange"
@@ -288,7 +305,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                               />
                             </Tooltip>
                           ) : (
-                            <Tooltip title="تعطيل هذه الخدمة">
+                            <Tooltip title={getLogin("Disable_this_service")}>
                               <Button
                                 type="primary"
                                 color="orange"
@@ -305,7 +322,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                           )}
                         </>
                       )}
-                      <Tooltip title="تعديل الخدمة">
+                      <Tooltip title={getLogin("Service_editing")}>
                         <Button
                           type="default"
                           color="orange"

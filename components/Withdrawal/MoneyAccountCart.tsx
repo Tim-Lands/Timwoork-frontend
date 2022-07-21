@@ -1,19 +1,23 @@
 import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function MoneyAccountCart({ setIsShowBankTransfert, userInfo = {} }: any) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
   return (
     <div className={"timlands-panel-cart"}>
       <div className="py-4">
         <div className="timlands-panel-cart-header">
-          <h3 className="title">تحويل البنكي</h3>
+          <h3 className="title">{getLogin("Bank_transfer")}</h3>
         </div>
         <div className="timlands-panel-cart-body">
           <div className="row">
             <div className="col-6">
               <div className="cart-item">
-                <h4 className="cart-title">الاسم الكامل</h4>
+                <h4 className="cart-title">{getLogin("Full_name")}</h4>
                 <h4 className="cart-text">
                   {(userInfo && userInfo.full_name) || ""}
                 </h4>
@@ -21,7 +25,7 @@ function MoneyAccountCart({ setIsShowBankTransfert, userInfo = {} }: any) {
             </div>
             <div className="col-6">
               <div className="cart-item">
-                <h4 className="cart-title">رقم الإيبان</h4>
+                <h4 className="cart-title">{getLogin("IBAN")}</h4>
                 <h4 className="cart-text">
                   {(userInfo && userInfo.bank_iban) || ""}
                 </h4>
@@ -29,7 +33,7 @@ function MoneyAccountCart({ setIsShowBankTransfert, userInfo = {} }: any) {
             </div>
             <div className="col-6">
               <div className="cart-item">
-                <h4 className="cart-title">عنوان البنك</h4>
+                <h4 className="cart-title">{getLogin("Bank_address")}</h4>
                 <h4 className="cart-text">
                   {userInfo
                     ? `${userInfo.bank_adress_line_one || ""} ${
@@ -41,7 +45,7 @@ function MoneyAccountCart({ setIsShowBankTransfert, userInfo = {} }: any) {
             </div>
             <div className="col-6">
               <div className="cart-item">
-                <h4 className="cart-title">اسم البنك</h4>
+                <h4 className="cart-title">{getLogin("Bank_name")}</h4>
                 <h4 className="cart-text">
                   {(userInfo && userInfo.bank_name) || ""}
                 </h4>
@@ -55,7 +59,7 @@ function MoneyAccountCart({ setIsShowBankTransfert, userInfo = {} }: any) {
             onClick={() => setIsShowBankTransfert(true)}
             className="btn flex-center butt-green ml-auto butt-sm"
           >
-            <span className="text">تعديل المعلومات</span>
+            <span className="text">{getLogin("Edit_information")}</span>
           </button>
         </div>
       </div>

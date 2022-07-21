@@ -1,13 +1,13 @@
-import { message, Space } from 'antd'
-import React, { ReactElement, useState } from 'react'
+import { message, Space } from "antd";
+import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { FormInput } from './Forms/Forms';
-import { useFormik } from 'formik';
+import { FormInput } from "./Forms/Forms";
+import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import API from "../../config";
 import { GoogleLogin } from "react-google-login";
-import router from 'next/router';
+import router from "next/router";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
@@ -15,7 +15,7 @@ const clientId =
 function LoginForm({ setIsConfirmText }): ReactElement {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
-  const [isShowenPass, setIsShowenPass] = useState(false)
+  const [isShowenPass, setIsShowenPass] = useState(false);
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
     setValidationsGeneral({});
@@ -69,7 +69,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
       message.error("حدث خطأ غير متوقع");
     }
   };
-  const onLoginFailure = () => { };
+  const onLoginFailure = () => {};
 
   const formik = useFormik({
     initialValues: {
@@ -79,7 +79,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
     isInitialValid: true,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      console.log('submittung')
+      console.log("submittung");
       setValidationsErrors({});
       try {
         const res = await API.post("api/login", values);
@@ -109,38 +109,53 @@ function LoginForm({ setIsConfirmText }): ReactElement {
     },
   });
   return (
-    <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className='modal-conferm'>
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="modal-conferm"
+    >
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head">
-          <h3 className="title">
-            تسجيل الدخول
-          </h3>
+          <h3 className="title">تسجيل الدخول</h3>
         </div>
         <div className="modal-conferm-body">
           <form onSubmit={formik.handleSubmit}>
             <FormInput
               name="username"
               value={formik.values.username}
-              size='small'
+              size="small"
               title="البريد الإلكتروني أو اسم المستخدم"
               handleChange={formik.handleChange}
-              validationsErrors={validationsErrors && validationsErrors.username && validationsErrors.username[0]}
+              validationsErrors={
+                validationsErrors &&
+                validationsErrors.username &&
+                validationsErrors.username[0]
+              }
             />
             <FormInput
-              type={!isShowenPass ? 'password' : 'text'}
-              name='password'
+              type={!isShowenPass ? "password" : "text"}
+              name="password"
               isVisibleBtn={true}
-              size='small'
+              size="small"
               setIsShowenPass={setIsShowenPass}
               isShowenPass={isShowenPass}
               value={formik.values.password}
               title="كلمة المرور"
               handleChange={formik.handleChange}
-              validationsErrors={validationsErrors && validationsErrors.password && validationsErrors.password[0]}
+              validationsErrors={
+                validationsErrors &&
+                validationsErrors.password &&
+                validationsErrors.password[0]
+              }
             />
             <div className="new-form-forget">
               <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="remember_me" />
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="remember_me"
+                />
                 <label className="form-check-label" htmlFor="remember_me">
                   تذكرني
                 </label>
@@ -150,9 +165,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
               </div>
             </div>
             <div className="external-login-modal">
-              <h5 className="title">
-                أو التسجيل بواسطة غوغل
-              </h5>
+              <h5 className="title">أو التسجيل بواسطة غوغل</h5>
               <GoogleLogin
                 clientId={clientId}
                 buttonText="غوغل"
@@ -164,22 +177,32 @@ function LoginForm({ setIsConfirmText }): ReactElement {
               />
             </div>
 
-            <button className='btn butt-md butt-green submit-button-modal' type='submit'>تسجيل الدخول</button>
+            <button
+              className="btn butt-md butt-green submit-button-modal"
+              type="submit"
+            >
+              تسجيل الدخول
+            </button>
           </form>
-
         </div>
 
         <div className="modal-conferm-footer">
           <Space>
-            <button className='btn butt-sm butt-red-text' type='button' onClick={() => setIsConfirmText(false)}>إلغاء الأمر</button>
+            <button
+              className="btn butt-sm butt-red-text"
+              type="button"
+              onClick={() => setIsConfirmText(false)}
+            >
+              إلغاء الأمر
+            </button>
           </Space>
         </div>
       </div>
-    </motion.div >
-  )
+    </motion.div>
+  );
 }
 
-export default LoginForm
+export default LoginForm;
 LoginForm.propTypes = {
   setIsConfirmText: PropTypes.func,
   handleChange: PropTypes.func,
