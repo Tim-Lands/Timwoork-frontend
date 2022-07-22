@@ -19,7 +19,7 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
         <div className="modal-conferm-head">
           <h3 className="title">إضافة حقل لغة جديد</h3>
         </div>
-        <div className="modal-conferm-body">
+        <div className="modal-conferm-body"> 
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-title">
               {getAll("Service_title")}
