@@ -24,7 +24,7 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
             <label className="label-block" htmlFor="input-title">
               {getAll("Service_title")}
             </label>
-            <input
+            <input 
               id="input-title"
               name="title"
               placeholder={getAll("Service_title")}
