@@ -21,6 +21,7 @@ function Medias({ query, stars }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail
   );
@@ -141,8 +142,8 @@ function Medias({ query, stars }) {
     );
     if (galleryMedia.length <= 0) {
       notification.open({
-        message: "حدث خطأ",
-        description: "برجاء وضع صورة على الأقل في المعرض",
+        message: getAll("An_error_occurred"),
+        description: getAll("Please_add_at_2"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
       setLoading(false);
@@ -155,8 +156,8 @@ function Medias({ query, stars }) {
       featuredMedia.split("/")[5].length <= 0
     ) {
       notification.open({
-        message: "حدث خطأ",
-        description: "برجاء وضع صورة بارزة",
+        message: getAll("An_error_occurred"),
+        description: getAll("Add_a_profil_picture"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
       setLoading(false);
@@ -166,8 +167,8 @@ function Medias({ query, stars }) {
 
     if (url_video.length > 0 && !pattern.test(url_video)) {
       notification.open({
-        message: "حدث خطأ",
-        description: "برجاء وضع عنوان صالح",
+        message: getAll("An_error_occurred"),
+        description: getAll("Please_enter_a"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
       setLoading(false);
@@ -185,7 +186,7 @@ function Medias({ query, stars }) {
         if (res1.status === 200 && res2.status === 200) {
           await loadVideoUrl();
           setLoading(false);
-          message.success("لقد تم تحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push({
             pathname: "/add-new/complete",
             query: {
@@ -199,7 +200,7 @@ function Medias({ query, stars }) {
         if (res.status === 200) {
           await loadVideoUrl();
           setLoading(false);
-          message.success("لقد تم تحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push({
             pathname: "/add-new/complete",
             query: {
@@ -214,7 +215,7 @@ function Medias({ query, stars }) {
         if (res.status === 200) {
           setLoading(false);
           await loadVideoUrl();
-          message.success("لقد تم تحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push({
             pathname: "/add-new/complete",
             query: {
@@ -224,7 +225,7 @@ function Medias({ query, stars }) {
         }
       } else {
         setLoading(false);
-        message.success("لقد تم تحديث بنجاح");
+        message.success(getAll("The_update_has"));
         router.push({
           pathname: "/add-new/complete",
           query: {
@@ -243,7 +244,7 @@ function Medias({ query, stars }) {
       }
       if (validationsErrors && validationsErrors.thumbnail) {
         notification.open({
-          message: "حدث خطأ",
+          message: getAll("An_error_occurred"),
           description: validationsErrors.thumbnail[0],
           icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
         });
@@ -282,7 +283,7 @@ function Medias({ query, stars }) {
       await Promise.all(promises);
     } catch (error) {
       notification.open({
-        message: "حدث خطأ",
+        message: getAll("An_error_occurred"),
         icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
       });
     }
@@ -290,9 +291,9 @@ function Medias({ query, stars }) {
   return (
     <>
       <MetaTags
-        title="إضافة خدمة جديدة - إضافة وسائط"
-        metaDescription="اتصل بنا - تيموورك"
-        ogDescription="اتصل بنا - تيموورك"
+        title={getAll("Add_a_new_service")}
+        metaDescription={getAll("Contact_us_Timwoork")}
+        ogDescription={getAll("Contact_us_Timwoork")}
       />
       {token && veriedEmail && (
         <>

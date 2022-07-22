@@ -3,6 +3,7 @@ import React, { ReactElement, useContext } from "react";
 import { CurrencyContext } from "../../contexts/currencyContext";
 import useSWR from "swr";
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
 function CartPost({
   id,
@@ -13,19 +14,21 @@ function CartPost({
   developments,
   deleteItem,
 }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   const { data: userInfo }: any = useSWR("api/me");
   function DevdurationFunc(duration) {
     if (duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (duration == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (duration > 2 && duration < 11) {
-      return duration + " أيام ";
+      return duration + getAll("Days");
     }
     if (duration >= 11) {
-      return duration + " يوم ";
+      return duration + getAll("Day");
     }
   }
   const [, getCurrency] = useContext(CurrencyContext);
@@ -54,17 +57,17 @@ function CartPost({
               }}
             >
               <li style={{ fontSize: 13, color: "#777" }}>
-                <span>عدد المرات: </span>
+                <span>{getAll("Number_of_times")}</span>
                 {quantity}
               </li>
               <li style={{ fontSize: 13, color: "#777" }}>
-                <span>السعر: </span>
+                <span>{getAll("Price_2")}</span>
                 {specCurrency
                   ? Math.round(price * specCurrency) + symbol
                   : price + symbol}
               </li>
               <li style={{ fontSize: 13, color: "#777" }}>
-                <strong>الإجمالي: </strong>
+                <strong>{getAll("Total")}</strong>
                 {specCurrency
                   ? Math.round(itemTotal * specCurrency) + symbol
                   : price + symbol}
@@ -94,7 +97,8 @@ function CartPost({
                         >
                           {e.title}
                           <p className="price-duration">
-                            ستكون المدة {DevdurationFunc(e.duration)} بمبلغ{" "}
+                            {getAll("The_duration_will_cost")}
+                            {DevdurationFunc(e.duration)}{" "}
                             {specCurrency
                               ? Math.round(e?.price * specCurrency) + symbol
                               : e?.price + symbol}
@@ -124,7 +128,7 @@ function CartPost({
                   whileTap={{ scale: 0.9 }}
                   transition={{ duration: 0.2 }}
                   className="removequantity"
-                  title="إزالة من السلة"
+                  title={getAll("Delete_from_cart")}
                   style={{
                     display: "flex",
                     width: 30,

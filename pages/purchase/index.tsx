@@ -17,8 +17,9 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
-const CheckoutForm = () => {
+const CheckoutForm = (getLogin: any) => {
   const stripe = useStripe();
   const elements = useElements();
   let token = Cookies.get("token");
@@ -72,7 +73,7 @@ const CheckoutForm = () => {
           className="btn butt-md purchace-by-stripe-btn butt-primary mt-2"
           disabled={!stripe || !elements}
         >
-          <span>شراء الآن</span>
+          <span>{getLogin("Buy_now")}</span>
           {isLoading && (
             <span
               className="spinner-border spinner-border-sm mx-1"
@@ -90,6 +91,9 @@ const stripePromise = loadStripe(
 );
 
 function Bill() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -183,12 +187,13 @@ function Bill() {
     }
   }
   const onBillPaymentChange = (e) => setBillPayment(e.target.value);
+
   return (
     <>
       <MetaTags
-        title="عملية الشراء"
-        metaDescription="عملية الشراء"
-        ogDescription="عملية الشراء"
+        title={getLogin("Purchase_operation")}
+        metaDescription={getLogin("Purchase_operation")}
+        ogDescription={getLogin("Purchase_operation")}
       />
       {veriedEmail && (
         <div style={{ maxWidth: 1350, marginInline: "auto" }}>
@@ -197,8 +202,8 @@ function Bill() {
               <div className="col-md-5">
                 <Result
                   status="warning"
-                  title="حدث خطأ "
-                  subTitle="حدث خطأ أثناء التحضير لعملية الشراء  "
+                  title={getAll("An_unexpected_error")}
+                  subTitle={getLogin("An_error_occurred_3")}
                 />
               </div>
             </div>
@@ -207,7 +212,7 @@ function Bill() {
             <div className="col-md-3">
               <div className="app-bill">
                 <div className="app-bill-header">
-                  <h3 className="title">الفاتورة النهائية</h3>
+                  <h3 className="title">{getLogin("Finale_bill")}</h3>
                 </div>
                 {!cartList && <Loading />}
                 {cartList &&
@@ -220,7 +225,7 @@ function Bill() {
                       {e.pivot.type_payment_id == billPayment && (
                         <ul className="list-group">
                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            عدد الخدمات
+                            {getLogin("Services_number")}
                             <span className="">
                               {cartList && cartList.data.cart_items_count}
                             </span>
@@ -229,9 +234,10 @@ function Bill() {
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
-                            رسوم التحويل لـ {e.name_ar}{" "}
+                            {getLogin("Transfer_fees_for")}
+                            {e.name_ar}{" "}
                             <span className="me-auto">
-                              <Tooltip title="هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك.">
+                              <Tooltip title={getLogin("These_fees_cover")}>
                                 <Badge
                                   style={{ color: "#52c41a " }}
                                   count={
@@ -256,7 +262,7 @@ function Bill() {
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
-                            المجموع بدون رسوم
+                            {getLogin("Total_without_fees")}
                             <span className="">
                               {specCurrency
                                 ? Math.round(e.pivot.total * specCurrency)
@@ -268,7 +274,7 @@ function Bill() {
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
-                            المجموع مع رسوم
+                            {getLogin("Total_with_fees")}
                             <span className="">
                               {specCurrency
                                 ? Math.round(
@@ -287,7 +293,7 @@ function Bill() {
             <div className="col-md-5">
               <div className="app-bill">
                 <div className="app-bill-header">
-                  <h3 className="title">اختيار طريقة الدفع</h3>
+                  <h3 className="title">{getLogin("Choose_payment_method")}</h3>
                 </div>
                 {cartList && cartList.data !== null && (
                   <div className="app-bill-payment">
@@ -306,7 +312,7 @@ function Bill() {
                         className="form-check-label"
                         htmlFor="billPayment-strap"
                       >
-                        الدفع عن طريق البطاقات البنكية
+                        {getLogin("Payment_by_bank")}
                       </label>
                     </div>
                     <div style={{ overflow: "hidden" }}>
@@ -317,7 +323,7 @@ function Bill() {
                           animate={{ y: 0, opacity: 1 }}
                         >
                           <Elements stripe={stripePromise}>
-                            <CheckoutForm />
+                            <CheckoutForm getLogin={getLogin} />
                           </Elements>
                         </motion.div>
                       ) : null}
@@ -337,7 +343,7 @@ function Bill() {
                         className="form-check-label"
                         htmlFor="billPayment-paypal"
                       >
-                        الدفع عن طريق البايبال Paypal
+                        {getLogin("Payment_via_PayPal")}
                       </label>
                     </div>
                     <div style={{ overflow: "hidden" }}>
@@ -359,8 +365,8 @@ function Bill() {
                             {!isLoading && (
                               <>
                                 {" "}
-                                <i className="fab fa-paypal"></i> | عن طريق
-                                Paypal
+                                <i className="fab fa-paypal"></i> |{" "}
+                                {getLogin("Payment_via_PayPal")}
                               </>
                             )}
                           </a>
@@ -371,8 +377,7 @@ function Bill() {
                     Number(cartList && cartList.data.price_with_tax) ? (
                       <>
                         <Alert type="primary">
-                          لا يمكنك الشراء بواسطة المحفظة . المبلغ الإجمالي اكبر
-                          من رصيدك
+                          {getLogin("You_cannot_buy")}
                         </Alert>
                       </>
                     ) : (
@@ -392,7 +397,7 @@ function Bill() {
                             className="form-check-label"
                             htmlFor="billPayment-wallet"
                           >
-                            الدفع عن طريق المحفظة
+                            {getLogin("Payment_via_wallet")}
                           </label>
                         </div>
                         <div style={{ overflow: "hidden" }}>
@@ -408,8 +413,7 @@ function Bill() {
                               )}
                               <div className="purchase-by-wallet">
                                 <p className="purchase-text">
-                                  أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا
-                                  من وجود رصيد في محفظتك
+                                  {getLogin("Or_you_can")}
                                 </p>
                                 <button
                                   onClick={chargeWallet}
@@ -429,7 +433,7 @@ function Bill() {
                                         width={15}
                                         height={17}
                                       />{" "}
-                                      شراء الآن (
+                                      {getLogin("Buy_now")} (
                                       <span className="">
                                         {specCurrency
                                           ? Math.round(

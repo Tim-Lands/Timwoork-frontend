@@ -12,11 +12,10 @@ import PropTypes from "prop-types";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-
 function Category({ query }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: GetData, error }: any = useSWR(
     `dashboard/categories/${query.id}`
   );

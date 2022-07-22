@@ -8,8 +8,12 @@ import Loading from "@/components/Loading";
 import Post from "@/components/Post/blogPost";
 import { Divider } from "antd";
 import { Image } from "antd";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 const User = ({ query }) => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   const [postsMediaTable, setPostsMediaTable] = useState([]);
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`
@@ -89,7 +93,7 @@ const User = ({ query }) => {
                     }}
                   ></div>
                   <Divider />
-                  <h3>مقالات ذات صلة:</h3>
+                  <h3>{getAll("Relating_articles")}</h3>
                   {!getSamePosts && <Loading />}
                   <div className="row">
                     {getSamePosts &&
@@ -112,7 +116,7 @@ const User = ({ query }) => {
                       ))}
                   </div>
                   {getSamePosts && getSamePosts.length == 0 && (
-                    <p>لا يوجد مقالات ذات صلة الآن.</p>
+                    <p>{getAll("There_is_no")}</p>
                   )}
                 </div>
 

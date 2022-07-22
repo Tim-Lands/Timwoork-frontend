@@ -222,7 +222,6 @@ const MobileMenu = ({ postsList }) => {
                           <Link
                             key={category.id}
                             href={`products?categoryID=${post.id}&subcategoryID=${category.id}`}
-
                           >
                             <a
                               onClick={() => setVisible(false)}

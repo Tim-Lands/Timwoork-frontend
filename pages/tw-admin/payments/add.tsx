@@ -10,9 +10,9 @@ import router from "next/router";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
 function Countries(): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
   const token = Cookies.get("token_dash");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {

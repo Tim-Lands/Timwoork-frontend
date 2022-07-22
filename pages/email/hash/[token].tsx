@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 //  import cookies from 'next-cookies'
 import API from "../../../config";
 import PropTypes from "prop-types";
-import { message, Result } from 'antd';
-import Link from 'next/link'
-import { motion } from 'framer-motion';
-import { Field, Form, Formik } from 'formik';
-import Loading from '@/components/Loading';
+import { message, Result } from "antd";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Field, Form, Formik } from "formik";
+import Loading from "@/components/Loading";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
+
 function Token({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,11 +59,11 @@ function Token({ query }) {
       {isError && !isSuccess && (
         <Result
           status="warning"
-          title="خطأ"
+          title={getAll("Error")}
           subTitle={tokenError && tokenError.msg && tokenError.msg}
           extra={
             <Link href="/">
-              <a className="btn butt-primary butt-md">الذهاب للرئيسية</a>
+              <a className="btn butt-primary butt-md">{getAll("Go_Home")}</a>
             </Link>
           }
         />
@@ -84,7 +90,7 @@ function Token({ query }) {
                   });
                   // Authentication was successful.
                   if (res.status === 200) {
-                    message.success("لقد تم التحديث بنجاح");
+                    message.success(getLogin("The_update_has"));
                     //router.push('/')
                   }
                 } catch (error: any) {
@@ -123,25 +129,27 @@ function Token({ query }) {
                           className="is-loading"
                         >
                           <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">
+                              {getAll("Loading")}
+                            </span>
                           </div>
                         </motion.div>
                       )}
                       <div className="update-form-header">
-                        <h1 className="title">إعادة تعيين كلمة المرور</h1>
+                        <h1 className="title">{getAll("Reset_password")}</h1>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="timlands-form">
                             <label className="label-block" htmlFor="password">
-                              كلمة المرور الجديدة
+                              {getAll("New_password")}
                             </label>
                             <Field
                               type="password"
                               id="password"
                               name="password"
                               onKeyUp={setValidationsErrorsHandle}
-                              placeholder="كلمة المرور الجديدة"
+                              placeholder={getAll("New_password")}
                               className={
                                 "timlands-inputs " +
                                 (validationsErrors &&
@@ -171,14 +179,14 @@ function Token({ query }) {
                               className="label-block"
                               htmlFor="password_confirmation"
                             >
-                              إعادة كلمة المرور الجديدة
+                              {getAll("Confirm_new_password")}
                             </label>
                             <Field
                               type="password"
                               id="password_confirmation"
                               name="password_confirmation"
                               onKeyUp={setValidationsErrorsHandle}
-                              placeholder="إعادة كلمة المرور الجديدة"
+                              placeholder={getAll("Confirm_new_password")}
                               className={
                                 "timlands-inputs " +
                                 (validationsErrors &&

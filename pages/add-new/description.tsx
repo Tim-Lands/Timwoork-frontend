@@ -134,6 +134,8 @@ function Description({ query }) {
 
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
@@ -218,7 +220,7 @@ function Description({ query }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getLogin("The_update_has"));
           router.push({
             pathname: "/add-new/medias",
             query: {
@@ -271,9 +273,9 @@ function Description({ query }) {
   return (
     <>
       <MetaTags
-        title="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
-        metaDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
-        ogDescription="إضافة خدمة جديدة - الوصف وتعليمات المشتري"
+        title={getAll("Add_new_service_Description")}
+        metaDescription={getAll("Add_new_service_Description")}
+        ogDescription={getAll("Add_new_service_Description")}
       />
       {token && (
         <div className="container-fluid">

@@ -7,17 +7,12 @@ import * as Yup from "yup";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-const SignupSchema = Yup.object().shape({
-  name_ar: Yup.string().required(getLogin("This_field_is")),
-  name_en: Yup.string().required(getLogin("This_field_is")),
-  name_fr: Yup.string().required(getLogin("This_field_is")),
-});
 export default function AddNewSkill({
   setIsModalHiddenHandle,
 }: any): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -43,7 +38,11 @@ export default function AddNewSkill({
             name_en: "",
             name_fr: "",
           }}
-          validationSchema={SignupSchema}
+          validationSchema={Yup.object().shape({
+            name_ar: Yup.string().required(getLogin("This_field_is")),
+            name_en: Yup.string().required(getLogin("This_field_is")),
+            name_fr: Yup.string().required(getLogin("This_field_is")),
+          })}
           onSubmit={async (values) => {
             try {
               const res = await API.post("dashboard/skills/store", values);

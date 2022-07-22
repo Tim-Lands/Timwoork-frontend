@@ -12,10 +12,15 @@ import Tags from "@/components/Tags";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Pagination from "react-js-pagination";
 import Cookies from "js-cookie";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   const [size, setSize] = useState(4);
   const [paginationSize, setPaginationSize] = useState(8);
   let token = Cookies.get("token");
@@ -170,9 +175,9 @@ function Category() {
   return (
     <div className="containerProductsPage py-5">
       <MetaTags
-        title={"تصفح الخدمات"}
-        metaDescription={"تصفح الخدمات"}
-        ogDescription={"تصفح الخدمات"}
+        title={getAll("Explore_services")}
+        metaDescription={getAll("Explore_services")}
+        ogDescription={getAll("Explore_services")}
       />
       <Formik
         isInitialValid={true}
@@ -186,10 +191,10 @@ function Category() {
             <div className="col-md-3">
               <div className="filter-search-sidebar">
                 <div className="filter-sidebar-title">
-                  <h4 className="title">فلترة الخدمات</h4>
+                  <h4 className="title">{getAll("Services_filter")}</h4>
                 </div>
                 <div className="filter-sidebar-panel">
-                  <h4 className="title">السعر</h4>
+                  <h4 className="title">{getAll("Price_2")}</h4>
                   <div className="timlands-form">
                     {
                       <Slider
@@ -211,7 +216,7 @@ function Category() {
                   <Tags
                     values={setValue}
                     labels={setLabel}
-                    placeholder="جميع التصنيفات"
+                    placeholder={getAll("All_categories")}
                     selected={(selectedTags) => setSelectedTags(selectedTags)}
                   />
                 </div>
@@ -221,14 +226,14 @@ function Category() {
                     className="btn butt-primary butt-sm"
                     onClick={filterData}
                   >
-                    فلترة النتائج
+                    {getAll("Services_filter")}
                   </button>
                 </div>
               </div>
             </div>
             <div className="col-md-9">
               <div className="page-header">
-                <h4 className="title">جميع الخدمات</h4>
+                <h4 className="title">{getLogin("All_services")}</h4>
               </div>
               <FilterContent
                 products={getProducts && getProducts.data}
@@ -254,8 +259,8 @@ function Category() {
                     itemClass="page-item"
                     linkClass="page-link"
                     className="productPagination"
-                    firstPageText={"الصفحة الأولى"}
-                    lastPageText={"الصفحة الأخيرة"}
+                    firstPageText={getAll("First_page")}
+                    lastPageText={getAll("Last_page")}
                   />
                 </div>
               )}

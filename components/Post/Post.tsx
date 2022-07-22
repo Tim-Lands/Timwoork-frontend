@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { CurrencyContext } from "../../contexts/currencyContext";
 import Image from "next/image";
-
+import { LanguageContext } from "../../contexts/languageContext/context";
 function Post({
   title,
   thumbnail,
@@ -113,6 +113,8 @@ function Post({
       return yut.concat(yut2);
     }
   };
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <div className={"timlands-post-item" + sizeClass()}>
       <Link href={`/p/${slug}`}>
@@ -151,11 +153,13 @@ function Post({
       </div>
       <div className="post-item-footer">
         <p className="post-meta-price">
-          السعر من: {specCurrency ? Math.round(price * specCurrency) : price}
+          {getAll("Price_from")}
+          {specCurrency ? Math.round(price * specCurrency) : price}
           {symbol}
         </p>
         <p className="post-meta-bayer">
-          {(buyers == 0 ? buyers : buyers + " اشتروا هذا") || "اشتري الآن"}
+          {(buyers == 0 ? buyers : buyers + getAll("Have_bought_this")) ||
+            getAll("Buy_now")}
         </p>
       </div>
     </div>

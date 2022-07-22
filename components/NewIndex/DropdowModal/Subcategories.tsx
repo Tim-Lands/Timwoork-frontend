@@ -28,9 +28,7 @@ function Subcategories({ postsList, categoryID }) {
                 <Link
                   href={`/products?categoryID=${categoryID}&subcategoryID=${item.id}`}
                 >
-                  <a className="sub">
-                    {item[which(language)]}
-                  </a>
+                  <a className="sub">{item[which(language)]}</a>
                 </Link>
               </li>
             );

@@ -164,12 +164,12 @@
     "fr": "En cliquant sur Créer un compte, vous acceptez les conditions d’utilisation et la politique de confidentialité",
     "ar": "بمجرد قمت بالضغط على إنشاء حساب فأنت توافق على شروط الاستخدام وسياسة الخصوصية"
   },
-  "Province/_state": {
+  "Province_state": {
     "en": "Province/ state",
     "fr": "Région/ province",
     "ar": "المحافظة/الولاية"
   },
-  "City/_Municipality": {
+  "City_Municipality": {
     "en": "City/ Municipality",
     "fr": "Ville/ Municipalité",
     "ar": "المدينة/البلدية"
@@ -184,8 +184,8 @@
     "fr": "Code du pays",
     "ar": "كود الدولة"
   },
-  "County’s_phone_code": {
-    "en": "County’s phone code",
+  "Countys_phone_code": {
+    "en": "Counrty’s phone code",
     "fr": "Indicatif téléphonique du pays",
     "ar": "كود هاتف الدولة"
   },
@@ -514,7 +514,7 @@
     "fr": "Le service a bien été supprimé",
     "ar": "لقد تم حذف هذه الخدمة بنجاح"
   },
-  "Disabled ": {
+  "Disabled1": {
     "en": "Disabled ",
     "fr": "Désactivé",
     "ar": "تم التعطيل"
@@ -529,12 +529,12 @@
     "fr": "Message d’erreur",
     "ar": "رسالة خطأ"
   },
-  "Unfortunately,_this_service": {
+  "Unfortunately_this_service": {
     "en": "Unfortunately, this service is not disabled",
     "fr": "Malheureusement ce service n’a pas été désactivé",
     "ar": "للأسف لم يتم تعطيل هذه الخدمة"
   },
-  "Abled!": {
+  "Abled1": {
     "en": "Abled!",
     "fr": "Activé!",
     "ar": "تم التنشيط!"
@@ -542,9 +542,9 @@
   "This_service_has": {
     "en": "This service has been successfully abled",
     "fr": "Ce service a bien été activé",
-    "ar": "لقد تم تنشسط هذه الخدمة بنجاح"
+    "ar": "لقد تم تمشيط هذه الخدمة بنجاح"
   },
-  "Unfortunately,_this_service_2": {
+  "Unfortunately_this_service_2": {
     "en": "Unfortunately, this service is not abled",
     "fr": "Malheureusement, ce service n’a pas été éctivé",
     "ar": "للأسف لم يتم تنشيط هذه الخدمة"
@@ -664,12 +664,12 @@
     "fr": "Solde disponible",
     "ar": "الرصيد القابل للسحب"
   },
-  "Unfortunately,_you_already": {
+  "Unfortunately_you_already": {
     "en": "Unfortunately, you already have a withdrawal request in processing",
     "fr": "Malheureusement, vous avez déjà une demande de retrait en cours de traitement",
     "ar": "للأسف لديك طلب سحب أموال في المعالجة"
   },
-  "Unfortunately,_you_cannot": {
+  "Unfortunately_you_cannot": {
     "en": "Unfortunately, you cannot request a withdrawal of funds. Your withdrawable balance is less than $10",
     "fr": "Malheureusement, vous ne pouvez pas demander de retrait de fonds. Votre solde disponible est inférieur à 10 $.",
     "ar": "للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار"
@@ -1435,7 +1435,7 @@
     "ar": "نعم, أريد الإستعادة"
   },
   "PEnding": {
-    "en": "PEnding",
+    "en": "Pending",
     "fr": "En attente",
     "ar": "قيد الإنتظار"
   },
@@ -1720,9 +1720,9 @@
     "ar": "عدد الخدمات"
   },
   "Transfer_fees_for": {
-    "en": "Transfer fees for X",
-    "fr": "Frais de transfert pour X",
-    "ar": "رسوم التحويل لـفلان"
+    "en": "Transfer fees for ",
+    "fr": "Frais de transfert pour ",
+    "ar": "رسوم التحويل ل"
   },
   "These_fees_cover": {
     "en": "These fees cover the costs of payment gateways and help us operate the site and provide you with technical support",
@@ -1784,7 +1784,7 @@
     "fr": "L’achat est effectué avec succès",
     "ar": "لقد تمت عملية الشراء بجاح"
   },
-  "Unfortunately,_the_purchase": {
+  "Unfortunately_the_purchase": {
     "en": "Unfortunately, the purchase failed, please try again",
     "fr": "Malheureusement l’achat a échoué, veuillez réessayer",
     "ar": "للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى"

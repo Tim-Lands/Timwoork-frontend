@@ -64,11 +64,11 @@ function Id({ query }) {
       case 2:
         return getLogin("Bank_transfer");
       case 1:
-        return getAll("Wise");
+        return getLogin("Wise_transfer");
       case 0:
         return getLogin("PayPal_transfer");
       default:
-        return getAll("Wise");
+        return getLogin("Wise_transfer");
     }
   }
   return (

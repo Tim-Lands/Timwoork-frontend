@@ -10,10 +10,10 @@ import { Alert } from "@/components/Alert/Alert";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 const Login = (): ReactElement => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   // The router object used for redirecting after login.
   const router = useRouter();
   // Redirect to user home route if user is authenticated.

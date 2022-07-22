@@ -4,6 +4,8 @@ import { message, Progress } from "antd";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import router from "next/router";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 export default function UploadPicture({ token, avatarPicture }) {
   const [picture, setPicture] = useState(null);
@@ -37,11 +39,14 @@ export default function UploadPicture({ token, avatarPicture }) {
     fd.append("steps", 2);
     API.post("https://api.timwoork.com/api/profiles/step_two", fd, config)
       .then(() => {
-        message.success("لقد تم تحديث صورة البروفايل بنجاح");
+        message.success(getLogin("The_profile_picture"));
         router.reload();
       })
       .catch(() => {});
   };
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
 
   return (
     <div className="login-panel update-form">
@@ -66,7 +71,7 @@ export default function UploadPicture({ token, avatarPicture }) {
               className="btn butt-md butt-primary"
               onClick={onUploadPicture}
             >
-              رفع الآن
+              {getAll("Upload")}
             </button>
           </motion.div>
         )}
@@ -79,8 +84,7 @@ export default function UploadPicture({ token, avatarPicture }) {
             marginTop: 10,
           }}
         >
-          يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2
-          ميجابايت
+          {getAll("profile_photo")}
         </p>
       </div>
     </div>

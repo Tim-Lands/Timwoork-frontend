@@ -5,8 +5,12 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
 import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
 import PortfolioSliders from "@/components/NewIndex/Portfolio/PortfolioSlider";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function Index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   // const [isLoading, setIsLoading] = useState(false);
   // const [isSettings, setIsSettings] = useState(false);
   // const { language, getSectionLanguage } = useContext(LanguageContext);
@@ -15,9 +19,9 @@ function Index() {
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
-        title={"تصفح الخدمات"}
-        metaDescription={"تصفح الخدمات"}
-        ogDescription={"تصفح الخدمات"}
+        title={getAll("Explore_services")}
+        metaDescription={getAll("Explore_services")}
+        ogDescription={getAll("Explore_services")}
       />
       <PortfolioSliders />
       <div className="portfolios-container">
@@ -30,7 +34,7 @@ function Index() {
                 thumbnail={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyBCwIVaaXgBU_spXezU8RZr-MGrzWMBCA5A&usqp=CAU`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"أحمد يحيى"}
-                level={`بائع جديد`}
+                level={getAll("New_seller")}
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}
@@ -66,7 +70,7 @@ function Index() {
                 thumbnail={`https://gdj-inr5u0ip5pewom.stackpathdns.com/wp-content/uploads/2012/08/big-typography-design-27.jpg`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"ثامر بن العمري"}
-                level={`بائع نشيط`}
+                level={getAll("Active_seller")}
                 avatar={`/avatar3.jpg`}
                 views={3563}
                 username={`aboumegouass`}
@@ -78,7 +82,7 @@ function Index() {
                 thumbnail={`https://www.designandpaper.com/wp-content/uploads/2020/04/Pawel_Nolbert_adobe_dream_1920-1920x1266-1-1600x1055.jpg`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"شكراري محمد"}
-                level={`بائع جديد`}
+                level={getAll("New_seller")}
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}
@@ -102,7 +106,7 @@ function Index() {
                 thumbnail={`https://www.digitalartsonline.co.uk/cmsdata/slideshow/3594658/final-1.jpg`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"جمال عبد القادر"}
-                level={`بائع نشيط`}
+                level={getAll("Active_seller")}
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}

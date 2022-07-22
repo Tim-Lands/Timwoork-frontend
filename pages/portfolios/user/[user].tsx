@@ -6,10 +6,13 @@ import PropTypes from "prop-types";
 import PortfolioProfileHeader from "@/components/NewIndex/Portfolio/PortfolioProfileHeader";
 import Link from "next/link";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
-
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 function Index({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   console.log(query);
-
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
@@ -25,7 +28,7 @@ function Index({ query }) {
               <li>
                 <Link href={`/user/profile`}>
                   <a className="portfolio-item">
-                    <FaUserCircle /> الملف الشخصي
+                    <FaUserCircle /> {getAll("Profile")}
                   </a>
                 </Link>
               </li>
@@ -57,11 +60,11 @@ function Index({ query }) {
           <div className="row">
             <div className="col-sm-6 col-lg-3">
               <Portfolio
-                title="هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لق"
+                title={getLogin("This_text_is")}
                 thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/1400/165af265485593.5af5bf8eae575.jpg`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"أحمد يحيى"}
-                level={`بائع جديد`}
+                level={getAll("New_seller")}
                 avatar={`/avatar.png`}
                 views={72868}
                 username={`aboumegouass`}
@@ -97,7 +100,7 @@ function Index({ query }) {
                 thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/7631ff94721811.5e85dc7bb7e11.png`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"طارق عروي"}
-                level={`بائع نشيط`}
+                level={getAll("Active_seller")}
                 views={72868}
                 avatar={`/avatar.png`}
                 username={`aboumegouass`}

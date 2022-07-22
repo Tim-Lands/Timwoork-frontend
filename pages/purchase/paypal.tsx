@@ -8,8 +8,12 @@ import { Alert } from "@/components/Alert/Alert";
 import API from "../../config";
 import Loading from "@/components/Loading";
 import useSWR from "swr";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
 function Paypal({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -62,21 +66,21 @@ function Paypal({ query }) {
         <div className="col-md-5">
           <div className="app-bill">
             <div className="app-bill-header">
-              <h3 className="title">نتيجة عملية الشراء</h3>
+              <h3 className="title">{getLogin("The_result_of")}</h3>
             </div>
             {isLoading && <Loading />}
             {query.return == 1 && !isError ? (
-              <Alert type="success">لقد تمت عملية الشراء بجاح</Alert>
+              <Alert type="success">{getLogin("The_purchase_is")}</Alert>
             ) : (
               <Alert type="error">
-                للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى
+                {getLogin("Unfortunately_the_purchase")}
               </Alert>
             )}
             <div className="app-bill-content">
               {!isError && getBills && (
                 <ul className="list-group">
                   <li className="list-group-item d-flex justify-content-between align-items-center">
-                    السعر الكلي
+                    {getAll("Total_price")}
                     <span className="">
                       {specCurrency
                         ? Math.round(getBills?.cart?.total_price * specCurrency)
@@ -94,7 +98,7 @@ function Paypal({ query }) {
                     </span>
                   </li>
                   <li className="list-group-item total d-flex justify-content-between align-items-center">
-                    المجموع الكلي
+                    {getAll("Total_2")}
                     <span className="">
                       {specCurrency
                         ? Math.round(

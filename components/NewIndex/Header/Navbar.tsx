@@ -34,6 +34,7 @@ function Navbar({ dark = false }) {
   const { language, setLanguage, getSectionLanguage } =
     useContext(LanguageContext);
   const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -124,7 +125,7 @@ function Navbar({ dark = false }) {
         effect.play();
         if (data.message.type == 0) {
           notification.open({
-            message: "لديك رسالة جديدة",
+            message: getAll("You_havea"),
             description: (
               <div className="msg-notification">
                 <a
@@ -138,7 +139,7 @@ function Navbar({ dark = false }) {
                 </a>
                 <p className="text">
                   <small className="ml-1">
-                    <strong>من طرف: </strong>
+                    <strong>{getAll("From")}</strong>
                   </small>
                   <Link href={`/u/${data.message.user.username}`}>
                     <a style={{ color: "#666", fontWeight: 300 }}>
@@ -156,7 +157,7 @@ function Navbar({ dark = false }) {
         }
         if (data.message.type == 1) {
           notification["info"]({
-            message: "لديك تعليمة جديدة",
+            message: getAll("You_have_a_new"),
             description: (
               <div className="msg-notification">
                 <p className="meta">
@@ -165,7 +166,7 @@ function Navbar({ dark = false }) {
                 <h4 className="title">{data.message.message}</h4>
                 <p className="text">
                   <small className="ml-1">
-                    <strong>من طرف: </strong>
+                    <strong>{getAll("From")}</strong>
                   </small>
                   <Link href={`/u/${data.message.user.username}`}>
                     <a style={{ color: "#666", fontWeight: 300 }}>
@@ -183,7 +184,7 @@ function Navbar({ dark = false }) {
         }
         if (data.message.type == 2) {
           notification["error"]({
-            message: "لديك سبب إلغاء",
+            message: getAll("You_have_a_cancellation"),
             description: (
               <div className="msg-notification">
                 <p className="meta">
@@ -192,7 +193,7 @@ function Navbar({ dark = false }) {
                 <h4 className="title">{data.message.message}</h4>
                 <p className="text">
                   <small className="ml-1">
-                    <strong>من طرف: </strong>
+                    <strong>{getAll("From")}</strong>
                   </small>
                   <Link href={`/u/${data.message.user.username}`}>
                     <a style={{ color: "#666", fontWeight: 300 }}>
@@ -220,7 +221,7 @@ function Navbar({ dark = false }) {
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
         notification.open({
-          message: "لديك اشعار جديد",
+          message: getAll("You_have_a_new_alert"),
           description: (
             <div className="msg-notification">
               {data.to == "seller" && (
@@ -241,7 +242,7 @@ function Navbar({ dark = false }) {
               )}
               <p className="text">
                 <small className="ml-1">
-                  <strong>من طرف: </strong>
+                  <strong>{getAll("From")}</strong>
                 </small>
                 <Link href={`/u/${data.user_sender.username}`}>
                   <a style={{ color: "#666", fontWeight: 300 }}>
@@ -528,7 +529,7 @@ function Navbar({ dark = false }) {
                     <span className="material-icons material-icons-outlined">
                       person_add
                     </span>{" "}
-                    التسجيل
+                    {getAll("Sign_up")}
                   </a>
                 </Link>
               </li>
@@ -537,7 +538,7 @@ function Navbar({ dark = false }) {
                 // onClick={() => setIsShowLoginForm(true)}
               >
                 <Link href="login">
-                  <button>الدخول</button>
+                  <button>{getAll("Login")}</button>
                 </Link>
               </li>
               <li className="authBtn">
@@ -552,7 +553,7 @@ function Navbar({ dark = false }) {
                     <span className="material-icons material-icons-outlined">
                       person
                     </span>{" "}
-                    تسجيل الدخول
+                    {getAll("Log_in")}
                   </a>
                 </Link>
               </li>

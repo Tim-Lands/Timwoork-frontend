@@ -73,6 +73,7 @@ function Overview({ query }) {
   const id = query.id;
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -140,7 +141,7 @@ function Overview({ query }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم التحديث بنجاح");
+          message.success(getAll("The_update_has"));
           router.push({
             pathname: "/add-new/prices",
             query: {
@@ -163,7 +164,7 @@ function Overview({ query }) {
     `api/get_categories_for_add_product/${formik.values.catetory}`
   );
 
-  if (!query) return message.error("حدث خطأ");
+  if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
     try {
       // const res: any =
@@ -195,13 +196,13 @@ function Overview({ query }) {
   return (
     <>
       <MetaTags
-        title="إضافة خدمة جديدة - معلومات عامة"
-        metaDescription="إضافة خدمة جديدة - معلومات عامة "
-        ogDescription="إضافة خدمة جديدة - معلومات عامة"
+        title={getAll("Service_editing_General")}
+        metaDescription={getAll("Service_editing_General")}
+        ogDescription={getAll("Service_editing_General")}
       />
       {token && veriedEmail && (
         <div className="container-fluid">
-          {!getProduct && <div>يرجى الانتظار...</div>}
+          {!getProduct && <div>{getAll("Please_wait")}</div>}
           <div
             className="row my-3"
             style={{ maxWidth: 1300, marginInline: "auto" }}
@@ -281,12 +282,12 @@ function Overview({ query }) {
                         }} />
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
-                            عنوان الخدمة
+                            {getAll("Service_title")}
                           </label>
                           <input
                             id="input-title"
                             name="title"
-                            placeholder="عنوان الخدمة..."
+                            placeholder={getAll("Service_title")}
                             disabled={!getProduct ? true : false}
                             className={
                               "timlands-inputs " +
@@ -305,7 +306,7 @@ function Overview({ query }) {
                           }} checkedLangs={checkedLangs} default_lang={userInfo?.user_details?.profile?.lang} />
                           <div className="note-form-text-sh">
                             <p className="text">
-                              يجب أن لايحتوي عنوان الخدمة على رموز
+                              {getAll("The_service_title")}
                             </p>
                           </div>
                           {validationsErrors && validationsErrors.title && (
@@ -331,7 +332,7 @@ function Overview({ query }) {
                           >
                             {getLanguage("Choose_the_principal")}
                           </label>
-                          {categoriesError && "حدث خطأ"}
+                          {categoriesError && getAll("An_error_occured")}
                           <select
                             id="input-catetory"
                             name="catetory"
@@ -346,7 +347,7 @@ function Overview({ query }) {
                               {getLanguage("Choose_the_principal")}
                             </option>
                             {!categories && (
-                              <option value="">يرجى الانتظار...</option>
+                              <option value="">{getAll("Please_wait")}</option>
                             )}
                             {categories &&
                               categories.data.map((e: any) => (
@@ -383,10 +384,12 @@ function Overview({ query }) {
                               {getLanguage("Choose_a_subcategory")}
                             </option>
                             {subCategoriesError && (
-                              <option value="">حدث خطأ</option>
+                              <option value="">
+                                {getAll("An_error_occured")}
+                              </option>
                             )}
                             {!subCategories && (
-                              <option value="">يرجى الانتظار...</option>
+                              <option value="">{getAll("Please_wait")}</option>
                             )}
                             {subCategories &&
                               subCategories.data.subcategories.map((e: any) => (

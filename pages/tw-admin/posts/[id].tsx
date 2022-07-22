@@ -191,7 +191,7 @@ function Id({ ProductData, errorFetch }: any) {
       {!ProductData && <Loading />}
       {!errorFetch && (
         <MetaTags
-          title={ProductData.data.title + " - تيموورك"}
+          title={ProductData.data.title + ` - ${getAll("Timwoork")}`}
           metaDescription={ProductData.data.content}
           ogDescription={ProductData.data.content}
           ogImage={ProductData.data.full_path_thumbnail}

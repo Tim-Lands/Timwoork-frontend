@@ -8,8 +8,13 @@ import API from "../../config";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function CommentPost(props: any): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [isShowCommentForm, setIsShowCommentForm]: any = useState(false);
   let token = Cookies.get("token");
@@ -31,7 +36,7 @@ function CommentPost(props: any): ReactElement {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم إضافة الرد بنجاح");
+          message.success(getLogin("The_gateaway_had"));
           setIsShowCommentForm(false);
         }
       } catch (error: any) {
@@ -134,7 +139,7 @@ function CommentPost(props: any): ReactElement {
           >
             reply
           </span>{" "}
-          الرد
+          {getAll("reply")}
         </button>
       )}
       {isShowCommentForm && (
@@ -146,7 +151,7 @@ function CommentPost(props: any): ReactElement {
             className="single-comments-modal"
           >
             <div className="modal-title">
-              <h4 className="title">إضافة رد</h4>
+              <h4 className="title">{getAll("Add_reply")}</h4>
               <button
                 className="btn-close"
                 type="button"
@@ -157,12 +162,12 @@ function CommentPost(props: any): ReactElement {
               <form>
                 <div className="timlands-form">
                   <label className="label-block" htmlFor="input-title">
-                    نص الرد
+                    {getAll("Reply_text")}
                   </label>
                   <textarea
                     id="input-title"
                     name="comment"
-                    placeholder="نص الرد..."
+                    placeholder={getAll("Reply_text")}
                     className={
                       "timlands-inputs " +
                       (validationsErrors &&
@@ -187,14 +192,14 @@ function CommentPost(props: any): ReactElement {
                 </div>
                 <hr />
                 <button className="btn butt-primary butt-sm mx-1" type="submit">
-                  إضافة الرد
+                  {getAll("Add_reply")}
                 </button>
                 <button
                   className="btn butt-red-text butt-sm mx-1"
                   onClick={() => setIsShowCommentForm(false)}
                   type="button"
                 >
-                  إغلاق
+                  {getAll("Cancel_2")}
                 </button>
               </form>
             </div>

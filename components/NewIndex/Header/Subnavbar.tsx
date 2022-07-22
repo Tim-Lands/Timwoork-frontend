@@ -113,9 +113,7 @@ function Subnavbar({ visible, postsList }) {
                   }}
                 >
                   <Link href={e.to}>
-                    <a style={{ fontWeight: "bold" }}>
-                      {e.name_ar}
-                    </a>
+                    <a style={{ fontWeight: "bold" }}>{e.name_ar}</a>
                   </Link>
                 </li>
               ) : (

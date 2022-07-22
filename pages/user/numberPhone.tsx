@@ -10,10 +10,10 @@ import useSWR from "swr";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 const NumberPhone = (): ReactElement => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: userInfo }: any = useSWR("api/me");
   // Redirect to user home route if user is authenticated.
   const SignupSchema = Yup.object().shape({

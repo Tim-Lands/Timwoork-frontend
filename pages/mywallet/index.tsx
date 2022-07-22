@@ -17,6 +17,8 @@ function index() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("my_wallet");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -50,23 +52,23 @@ function index() {
   }
   const columns: any = [
     {
-      title: "المبلغ",
+      title: getLogin("Amount"),
       dataIndex: "",
       render: (e: any) => <>{switchType(e.status, e.amount)}</>,
     },
     {
-      title: "عنوان العملية",
+      title: getAll("Operation_title"),
       dataIndex: "",
       width: 230,
       render: (e: any) => <>{e.payload.title}</>,
     },
     {
-      title: "طريقة العملية",
+      title: getAll("All_title"),
       dataIndex: "",
       render: (e: any) => <>{e.payload.payment_method}</>,
     },
     {
-      title: "التاريخ",
+      title: getAll("Date"),
       dataIndex: "created_at",
       render: (created_at: any) => <LastSeen date={created_at} />,
     },
@@ -80,9 +82,9 @@ function index() {
       {userInfo && userInfo.user_details.profile && (
         <>
           <MetaTags
-            title={"محفظتي"}
-            metaDescription={"الصفحة الرئيسية"}
-            ogDescription={"الصفحة الرئيسية"}
+            title={getAll("My_portfolio")}
+            metaDescription={getLogin("Home")}
+            ogDescription={getLogin("Home")}
           />
           {veriedEmail && (
             <div className="container">
@@ -184,15 +186,12 @@ function index() {
                                   .is_withdrawable == true ? (
                                   <Link href={"/withdrawal"}>
                                     <a className="btn butt-green butt-md px-5">
-                                      طلب سحب الأموال
+                                      {getAll("Withdrawal_request")}
                                     </a>
                                   </Link>
                                 ) : (
                                   <Alert type="error">
-                                    <strong>
-                                      {" "}
-                                      لديك طلب سحب أموال في المعالجة
-                                    </strong>
+                                    <strong> {getAll("You_have_a")}</strong>
                                   </Alert>
                                 )}
                               </>

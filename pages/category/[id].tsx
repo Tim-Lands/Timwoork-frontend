@@ -9,6 +9,9 @@ import Post from "@/components/Post/Post";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { language } = useContext(LanguageContext);
   const { data: popularProducts }: any = useSWR(
     `api/get_products_subcategory/${query.id}`
@@ -32,7 +35,7 @@ function index({ query }) {
                 <span className={"material-icons material-icons-outlined"}>
                   {subCategories.data.icon}
                 </span>
-                <span style={{ fontWeight: 200 }}> خدمات:</span>{" "}
+                <span style={{ fontWeight: 200 }}> {getLogin("Services")}</span>{" "}
                 <strong> {subCategories.data[which(language)]} </strong>
               </h3>
             </div>
@@ -42,8 +45,8 @@ function index({ query }) {
             {popularProducts && popularProducts.data.products.length == 0 && (
               <Result
                 status="404"
-                title="لا توجد خدمات"
-                subTitle="لا توجد خدمات لعرضها في هذا الصنف"
+                title={getAll("No_services")}
+                subTitle={getAll("No_services_to")}
               />
             )}
             <div className="row">

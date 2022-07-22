@@ -7,28 +7,13 @@ import * as Yup from "yup";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-const SignupSchema = Yup.object().shape({
-  name_ar: Yup.string().required(getLogin("This_field_is")),
-  name_en: Yup.string().required(getLogin("This_field_is")),
-  name_fr: Yup.string().required(getLogin("This_field_is")),
-  description_ar: Yup.string()
-    .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
-    .required(getLogin("This_field_is")),
-  description_en: Yup.string()
-    .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
-    .required(getLogin("This_field_is")),
-  description_fr: Yup.string()
-    .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
-    .required(getLogin("This_field_is")),
-  icon: Yup.string().required(getLogin("This_field_is")),
-});
 export default function AddNewSubCategory({
   setIsModalHiddenHandle,
   CatId,
 }: any): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   //const [iconPrev, setIconPrev] = useState('')
   //const iconPreviewHandle = (e) => {
   //    setIconPrev(e.target.value)
@@ -63,7 +48,21 @@ export default function AddNewSubCategory({
             icon: "",
             parent_id: CatId,
           }}
-          validationSchema={SignupSchema}
+          validationSchema={Yup.object().shape({
+            name_ar: Yup.string().required(getLogin("This_field_is")),
+            name_en: Yup.string().required(getLogin("This_field_is")),
+            name_fr: Yup.string().required(getLogin("This_field_is")),
+            description_ar: Yup.string()
+              .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
+              .required(getLogin("This_field_is")),
+            description_en: Yup.string()
+              .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
+              .required(getLogin("This_field_is")),
+            description_fr: Yup.string()
+              .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
+              .required(getLogin("This_field_is")),
+            icon: Yup.string().required(getLogin("This_field_is")),
+          })}
           onSubmit={async (values) => {
             try {
               const res = await API.post(

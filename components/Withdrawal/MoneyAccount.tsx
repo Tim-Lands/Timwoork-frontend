@@ -8,6 +8,8 @@ import PropTypes from "prop-types";
 import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import router from "next/router";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function MoneyAccount({ token, create, setIsShowBankTransfert }) {
   const { data: Countries }: any = useSWR("api/withdrawals/countries");
@@ -26,7 +28,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
       });
       // Authentication was successful.
       if (res.status === 200) {
-        message.success("لقد تم حفظ البيانات بنجاح");
+        message.success(getLogin("The_data_has"));
       }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -111,7 +113,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success("لقد تم ارسال طلب السحب إلى الإدارة");
+          message.success(getLogin("The_withdrawal_request"));
           router.push("/mywallet");
         }
       } catch (error: any) {
@@ -137,13 +139,16 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
   //         </ul>
   //     </div>
   // );
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   return (
     <form onSubmit={formik.handleSubmit}>
       <div
         className={"timlands-panel" + (formik.isSubmitting ? " is-loader" : "")}
       >
         <div className="page-header d-flex">
-          <h4 className="title me-auto">تحويل البنكي</h4>
+          <h4 className="title me-auto">{getLogin("Bank_transfer")}</h4>
           {/* <button
             type="button"
             onClick={() => setIsShowBankTransfert(false)}
@@ -158,12 +163,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-full_name">
-                  الاسم الكامل
+                  {getLogin("Full_name")}
                 </label>
                 <input
                   id="input-full_name"
                   name="full_name"
-                  placeholder="الاسم الكامل..."
+                  placeholder={getLogin("Full_name")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -191,12 +196,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_name">
-                  اسم البنك
+                  {getLogin("Bank_name")}
                 </label>
                 <input
                   id="input-bank_name"
                   name="bank_name"
-                  placeholder="اسم البنك..."
+                  placeholder={getLogin("Bank_name")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -224,12 +229,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_swift">
-                  كود SWIFT
+                  {getLogin("SWIFT_code")}
                 </label>
                 <input
                   id="input-bank_swift"
                   name="bank_swift"
-                  placeholder="كود SWIFT..."
+                  placeholder={getLogin("SWIFT_code")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -257,12 +262,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_iban">
-                  رقم الإيبان IBAN
+                  {getLogin("IBAN")}
                 </label>
                 <input
                   id="input-bank_iban"
                   name="bank_iban"
-                  placeholder="رقم الإيبان IBAN..."
+                  placeholder={getLogin("IBAN")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -293,12 +298,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   className="label-block"
                   htmlFor="input-bank_number_account"
                 >
-                  الحساب البنكي
+                  {getLogin("Bank_account")}
                 </label>
                 <input
                   id="input-bank_number_account"
                   name="bank_number_account"
-                  placeholder="الحساب البنكي..."
+                  placeholder={getLogin("Bank_account")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -328,12 +333,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_branch">
-                  الفرع البنكي
+                  {getLogin("Bank_branch")}
                 </label>
                 <input
                   id="input-bank_branch"
                   name="bank_branch"
-                  placeholder="الفرع البنكي..."
+                  placeholder={getLogin("Bank_branch")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -361,7 +366,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-wise_country_id">
-                  اختر البلد
+                  {getLogin("Select_country")}
                 </label>
                 <select
                   id="input-wise_country_id"
@@ -376,8 +381,10 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   onChange={formik.handleChange}
                   value={formik.values.wise_country_id}
                 >
-                  <option value="">اختر البلد</option>
-                  {!Countries && <option value="">يرجى الانتظار...</option>}
+                  <option value="">{getLogin("Select_country")}</option>
+                  {!Countries && (
+                    <option value="">{getAll("Please_wait")}</option>
+                  )}
                   {Countries &&
                     Countries.data.map((e: any) => (
                       <option value={e.id} key={e.id}>
@@ -403,12 +410,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-state">
-                  المحافظة/الولاية
+                  {getLogin("Province_state")}
                 </label>
                 <input
                   id="input-state"
                   name="state"
-                  placeholder="المحافظة/الولاية"
+                  placeholder={getLogin("Province_state")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -436,12 +443,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-city">
-                  المدينة/البلدية
+                  {getLogin("City_Municipality")}
                 </label>
                 <input
                   id="input-city"
                   name="city"
-                  placeholder="المدينة/البلدية"
+                  placeholder={getLogin("City_Municipality")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -472,12 +479,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   className="label-block"
                   htmlFor="input-bank_adress_line_one"
                 >
-                  العنوان البنكي
+                  {getLogin("Bank_address")}
                 </label>
                 <input
                   id="input-bank_adress_line_one"
                   name="bank_adress_line_one"
-                  placeholder="العنوان البنكي"
+                  placeholder={getLogin("Bank_address")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -507,12 +514,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-8">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-address_line_one">
-                  العنوان الشخصي
+                  {getLogin("Personal_address")}
                 </label>
                 <input
                   id="input-address_line_one"
                   name="address_line_one"
-                  placeholder="العنوان الشخصي"
+                  placeholder={getLogin("Personal_address")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -542,12 +549,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-4">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-code_postal">
-                  الرمز البريدي
+                  {getLogin("Postal_code")}
                 </label>
                 <input
                   id="input-code_postal"
                   name="code_postal"
-                  placeholder="الرمز البريدي"
+                  placeholder={getLogin("Postal_code")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -579,12 +586,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   className="label-block"
                   htmlFor="input-phone_number_without_code"
                 >
-                  رقم هاتف المستلم
+                  {getLogin("Recipient’s_phone_number")}
                 </label>
                 <input
                   id="input-phone_number_without_code"
                   name="phone_number_without_code"
-                  placeholder="رقم هاتف المستلم"
+                  placeholder={getLogin("Recipient’s_phone_number")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -620,14 +627,14 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   onClick={() => UpdateMoney(formik.values)}
                   className="btn flex-center butt-green me-auto butt-lg"
                 >
-                  <span className="text">حفظ التغييرات</span>
+                  <span className="text">{getLogin("Save_edits")}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsShowBankTransfert(false)}
                   className="btn flex-center butt-red ml-auto butt-lg"
                 >
-                  <span className="text">إخفاء التعديل</span>
+                  <span className="text">{getLogin("Hide_edit")}</span>
                 </button>
               </div>
             </div>

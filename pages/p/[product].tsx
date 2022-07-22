@@ -49,6 +49,8 @@ function Single({ query, stars, errorFetch }) {
   let token = Cookies.get("token");
   const { language, getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("my_wallet");
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: ProductData, errorLoad }: any = useSWR(
@@ -169,7 +171,7 @@ function Single({ query, stars, errorFetch }) {
             rel="noreferrer"
             href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.data.slug}&display=popup&ref=plugin&src=share_button`}
           >
-            المشاركة على الفيسبووك
+            {getLogin("Share_on_Facebook")}
           </a>
         </Menu.Item>
       )}
@@ -180,7 +182,7 @@ function Single({ query, stars, errorFetch }) {
             rel="noreferrer"
             href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.data.slug}&text=`}
           >
-            المشاركة على التويتر
+            {getAll("Share_on_Twitter")}
           </a>
         </Menu.Item>
       )}
@@ -251,13 +253,13 @@ function Single({ query, stars, errorFetch }) {
               }}
               className="btn butt-sm butt-primary"
             >
-              الذهاب إلى السلة
+              {getAll("Go_to_cart")}
             </button>
           );
 
           notification.open({
-            message: "إشعار",
-            description: "لقد تم إضافة هذه الخدمة إلى السلة",
+            message: getAll("Notification"),
+            description: getAll("This_service_was"),
             placement: "topLeft",
             btn,
             key,
@@ -269,25 +271,25 @@ function Single({ query, stars, errorFetch }) {
         setIsLoadingCart(false);
         if (error.response && error.response.data && error.response.data.msg) {
           notification.warning({
-            message: `تحذير`,
+            message: getAll("Alert"),
             description: error.response.data.msg,
             placement: "topLeft",
           });
         } else {
           /*  if (error.response && error.response.status === 400) {
            notification.warning({
-             message: `تحذير`,
+             message: getAll("Alert"),
              description: 'لا يمكنك شراء خدمتك!',
              placement: 'topLeft'
            });
          } else if (error.response && error.response.status === 404) {
            notification.warning({
-             message: `تحذير`,
+             message: getAll("Alert"),
              description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
              placement: 'topLeft'
            });
          } */
-          message.error("حدث خطأ غير متوقع");
+          message.error(getLogin("An_unexpected_error"));
         }
       }
     } else {
@@ -296,30 +298,30 @@ function Single({ query, stars, errorFetch }) {
   };
   function durationFunc() {
     if (ProductData.data.duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (ProductData.data.duration == 2) {
-      return "يومين";
+      return getAll("Two_days");
     }
     if (ProductData.data.duration > 2 && ProductData.data.duration < 11) {
-      return ProductData.data.duration + " أيام ";
+      return ProductData.data.duration + getAll("Days");
     }
     if (ProductData.data.duration >= 11) {
-      return ProductData.data.duration + " يوم ";
+      return ProductData.data.duration + getAll("Day");
     }
   }
   function DevdurationFunc(duration) {
     if (duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (duration == 2) {
-      return "يومين";
+      return getAll("Two_days");
     }
     if (duration > 2 && duration < 11) {
-      return duration + " أيام ";
+      return duration + getAll("Days");
     }
     if (duration >= 11) {
-      return duration + " يوم ";
+      return duration + getAll("Day");
     }
   }
   const APIURL2 =
@@ -362,15 +364,13 @@ function Single({ query, stars, errorFetch }) {
   const noteContent = (
     <div>
       <ul>
-        <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
-        <li>
-          من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة{" "}
-        </li>
-        <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
+        <li>{getAll("From_5_100_Dollars")}</li>
+        <li>{getAll("From_101_500_Dollars")} </li>
+        <li>{getAll("From_501_1000_Can")}</li>
       </ul>
       <Text type="danger">
-        لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام
-        الخدمة
+        {getAll("Buyers_single_service")}
+        {getAll("Service")}
       </Text>
     </div>
   );
@@ -391,18 +391,18 @@ function Single({ query, stars, errorFetch }) {
       {ProductData && (
         <div className="timwoork-single">
           <Modal
-            title="إنشاء محادثة"
+            title={getLanguage("Create_a_conversation")}
             visible={isModalVisible}
             confirmLoading={createConversationLoading}
             onOk={() => startConversation(messageConv)}
-            cancelText="إلغاء الامر"
-            okText="بدء المحادثة"
+            cancelText={getAll("Cancel")}
+            okText={getAll("Start_conversation")}
             onCancel={() => setIsModalVisible(false)}
           >
             <textarea
               name="messageConv"
               className="timlands-inputs"
-              placeholder="أكتب رسالة ابتدائية للبائع"
+              placeholder={getAll("Write_an_initial")}
               style={{ height: 180 }}
               disabled={createConversationLoading}
               value={messageConv}
@@ -491,7 +491,7 @@ function Single({ query, stars, errorFetch }) {
                         </span>
                       </li>
                       <li className="level-item">
-                        <span className="text-level">المستوى:</span>
+                        <span className="text-level">{getAll("Level")}:</span>
                         <span className="value-level">
                           {ProductData &&
                             ProductData.data.profile_seller.level !== null &&
@@ -691,7 +691,7 @@ function Single({ query, stars, errorFetch }) {
                           />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
-                              <p className="text">لاتوجد آراء المشتريين</p>
+                              <p className="text">{getAll("There_is_no_2")}</p>
                             </Alert>
                           )}
                         </div>
@@ -817,8 +817,8 @@ function Single({ query, stars, errorFetch }) {
                                   >
                                     {e.title}
                                     <p className="price-duration">
-                                      ستكون المدة {DevdurationFunc(e.duration)}{" "}
-                                      بمبلغ{" "}
+                                      {getAll("The_duration_will_cost")}
+                                      {DevdurationFunc(e.duration)}{" "}
                                       {specCurrency
                                         ? Math.round(e?.price * specCurrency)
                                         : e?.price}

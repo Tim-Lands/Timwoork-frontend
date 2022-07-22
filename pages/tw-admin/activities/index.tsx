@@ -8,10 +8,7 @@ import Pagination from "react-js-pagination";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-const ActivityData = (activity) => {
+const ActivityData = (activity, getAll) => {
   switch (activity.data.type) {
     case "order":
       return (
@@ -54,6 +51,9 @@ const ActivityData = (activity) => {
   }
 };
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const [pageNumber, setPagenNumber]: any = useState(1);
   const [activities, setActivities]: any = useState({
     data: [],
@@ -149,7 +149,7 @@ function index() {
                         />
                       </div>
                       <div className="activity-item">
-                        {ActivityData(activity)}
+                        {ActivityData(activity, getAll)}
                         <span className="meta">
                           <span className="material-icons material-icons-outlined">
                             schedule

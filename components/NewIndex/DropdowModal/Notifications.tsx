@@ -5,13 +5,16 @@ import React from "react";
 import { FaBell, FaClock } from "react-icons/fa";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 function Notifications({ notifications, refs, setShowNotificationsMenu }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   function switchNotifyType(notification) {
-    console.log(notification)
+    console.log(notification);
     const { type, to, slug, content } = notification?.data;
     const { item_id } = content;
-    console.log(type)
+    console.log(type);
     switch (type) {
       case "order":
         if (to == "seller") {
@@ -25,7 +28,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
         return `/p/${slug}`;
 
       case "system":
-        return content?.product_id ? `/p/${content?.product_id}:` : ''
+        return content?.product_id ? `/p/${content?.product_id}:` : "";
 
       default:
         return `/mysales/${item_id}`;
@@ -62,7 +65,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
       <div className="popup-dropdown-inner">
         <div className="popup-dropdown-header">
           <h4 className="title">
-            <FaBell /> الإشعارات
+            <FaBell /> {getAll("Notifications")}
           </h4>
         </div>
         <div className="popup-dropdown-body">
@@ -77,7 +80,11 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
                     <a className="new-popup-item" style={{ marginRight: 0 }}>
                       <div className="new-popup-item-image">
                         <Image
-                          src={notification?.data?.user_sender?.avatar_url ? notification?.data?.user_sender?.avatar_url : '/logo.png'}
+                          src={
+                            notification?.data?.user_sender?.avatar_url
+                              ? notification?.data?.user_sender?.avatar_url
+                              : "/logo.png"
+                          }
                           width={50}
                           height={50}
                           alt={``}
@@ -105,7 +112,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
               className="nav-see-more"
               style={{ marginRight: 0, borderRadius: 6 }}
             >
-              مشاهدة جميع الإشعارات
+              {getAll("View_all_notifications")}
             </a>
           </Link>
         </div>

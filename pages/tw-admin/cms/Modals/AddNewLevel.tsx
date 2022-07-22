@@ -7,24 +7,12 @@ import * as Yup from "yup";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-const SignupSchema = Yup.object().shape({
-  name_ar: Yup.string().required(getLogin("This_field_is")),
-  name_en: Yup.string().required(getLogin("This_field_is")),
-  name_fr: Yup.string().required(getLogin("This_field_is")),
-  type: Yup.number().required(getLogin("This_field_is")),
-  number_developments: Yup.number()
-    .lessThan(127, "عدد التطويرات لا يتعدى 127")
-    .required(getLogin("This_field_is")),
-  price_developments: Yup.number().required(getLogin("This_field_is")),
-  number_sales: Yup.number().required(getLogin("This_field_is")),
-  value_bayer: Yup.number().required(getLogin("This_field_is")),
-});
 export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -55,7 +43,20 @@ export default function AddNewUser({
             number_sales: "",
             value_bayer: "",
           }}
-          validationSchema={SignupSchema}
+          validationSchema={Yup.object().shape({
+            name_ar: Yup.string().required(getLogin("This_field_is")),
+            name_en: Yup.string().required(getLogin("This_field_is")),
+            name_fr: Yup.string().required(getLogin("This_field_is")),
+            type: Yup.number().required(getLogin("This_field_is")),
+            number_developments: Yup.number()
+              .lessThan(127, "عدد التطويرات لا يتعدى 127")
+              .required(getLogin("This_field_is")),
+            price_developments: Yup.number().required(
+              getLogin("This_field_is")
+            ),
+            number_sales: Yup.number().required(getLogin("This_field_is")),
+            value_bayer: Yup.number().required(getLogin("This_field_is")),
+          })}
           onSubmit={async (values) => {
             try {
               const res = await API.post("dashboard/levels/store", values);

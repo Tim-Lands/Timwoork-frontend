@@ -14,17 +14,27 @@
     "fr": "Se connecter",
     "ar": "تسجيل الدخول"
   },
+  "Login": {
+    "en": "Log",
+    "fr": "Entrée",
+    "ar": "الدخول"
+  },
   "Timwoork_website": {
     "en": "Timwoork website ",
     "fr": "LE site web Timwoork",
     "ar": "موقع تيم ورك"
   },
-  "Choose_pictures_from ": {
+  "Timwoork": {
+    "en": "Timwoork",
+    "fr": "Timwoork",
+    "ar": "تيموورك"
+  },
+  "Choose_pictures_from": {
     "en": "Choose pictures from your device",
     "fr": "Choisir des photos à partir de votre appareil",
     "ar": "اختر صور من جهازك"
   },
-  "The_profile_picture ": {
+  "The_profile_picture": {
     "en": "The profile picture must be clear and high-quality that reflects the content of the service",
     "fr": "La photo de profil doit être claire, de bonne résolution et doit refléter le contenu du service",
     "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة"
@@ -74,7 +84,7 @@
     "fr": "Télechargement (composante)",
     "ar": "تحميل (عنصر)"
   },
-  "Loading...": {
+  "Loading": {
     "en": "Loading...",
     "fr": "Téléchargement en cours …",
     "ar": "جاري التحميل..."
@@ -129,22 +139,22 @@
     "fr": "Héro",
     "ar": "بطل"
   },
-  "Hussam,_voiceover_agent": {
+  "Hussam_voiceover_agent": {
     "en": "Hussam, voiceover agent",
     "fr": "Hussam, agent de voix off",
     "ar": "حسام, معلق صوتي"
   },
-  "Ayat,_voiceover_agent": {
+  "Ayat_voiceover_agent": {
     "en": "Ayat, voiceover agent",
     "fr": "Ayat, agent voix off",
     "ar": "أيات, معلق صوتي"
   },
-  "Faouzi,_Audios": {
+  "Faouzi_Audios": {
     "en": "Faouzi, Audios",
     "fr": "Faouzi, Audios",
     "ar": "فوزي, صوتيات"
   },
-  "Rahma,_writing_and": {
+  "Rahma_writing_and": {
     "en": "Rahma, writing and translation",
     "fr": "Rahman, Rédaction et traduction",
     "ar": "رحمة, كتابة وترجمة"
@@ -154,7 +164,7 @@
     "fr": "Avantages de Timwoork",
     "ar": "مميزات تيم وورك"
   },
-  "The_duration_of ": {
+  "The_duration_of": {
     "en": "The duration of profit suspension is only 3 days with various means of withdrawing funds",
     "fr": "La durée de la suspension des bénéfices n’est que de 3 jours avec différents moyens de retrait de fonds possibles.",
     "ar": "مدة تعليق الإرباح فقط 3 أيام ووسائل سحب الأموال المتنوعة"
@@ -164,7 +174,7 @@
     "fr": "Timwoork se distingue d’autres plates-formes par une durée maximale de trois jours comme durée de suspension des bénéfices, de même que par l’existence de divers moyens de retrait tels que PayPal, Wise, Envois de fonds, Virement bancaire et CCP pour les Algériens.",
     "ar": "تمتاز منصة تيم ورك بأفضلية عن المنصات الأخرى بمدة تعليق الإرباح لا تتجاوز ثلاثة أيام ووسائل السحب المتنوعة مثل بايبال ووايس والحوالة المالية والتحويل البنكي وعبر CCP للجزائريين"
   },
-  "Full_guarantee_of ": {
+  "Full_guarantee_of": {
     "en": "Full guarantee of your rights and outstanding technical support 24h/24",
     "fr": "Une protection intégrée de vos droits accompagnée d’un support technique exceptionnel 24h/24",
     "ar": "ضمان كامل لحقوقك ودعم فني متميز وعلى مدار الساعة"
@@ -339,10 +349,10 @@
     "fr": "Messages",
     "ar": "الرسائل"
   },
-  "X_have_commented": {
-    "en": "X have commented your service",
-    "fr": "X a commenté votre service",
-    "ar": "قام فلان بالتعليق على خدمتك"
+  "have_commented": {
+    "en": " have commented your service",
+    "fr": " a commenté votre service",
+    "ar": "  بالتعليق على خدمتك"
   },
   "View_all_messages": {
     "en": "View all messages",
@@ -380,11 +390,11 @@
     "ar": "اشتري الان"
   },
   "Have_bought_this": {
-    "en": "Have bought this",
-    "fr": "Ont acheté ceci",
+    "en": "Buy this",
+    "fr": "Achète ça",
     "ar": "اشتروا هذا"
   },
-  "No_services_to display": {
+  "No_services_to_display": {
     "en": "No services to display",
     "fr": "Aucun service à afficher",
     "ar": "لا توجد خدمات لعرضها"
@@ -419,6 +429,11 @@
     "fr": "Ajouter une réponse",
     "ar": "إضافة الرد"
   },
+  "reply": {
+    "en": "Reply",
+    "fr": "réponse",
+    "ar": "إضافة الرد"
+  },
   "Cancel_2": {
     "en": "Cancel",
     "fr": "Fermer",
@@ -449,7 +464,7 @@
     "fr": "Aucun service",
     "ar": "لا توجد خدمات"
   },
-  "Add_new_service-": {
+  "Add_new_service1": {
     "en": "Add new service- Publish the service",
     "fr": "Ajouter un nouveau service- Publier le service",
     "ar": " إضافة خدمة جديدة - نشر الخدمة"
@@ -520,7 +535,7 @@
     "ar": "إشعار"
   },
   "Pictures_has_veeen": {
-    "en": "Pictures has veeen uploaded successfully",
+    "en": "Pictures has been uploaded successfully",
     "fr": "Les images ont bien été téléchargées ",
     "ar": "لقد تم رفع الصور بنجاح"
   },
@@ -539,7 +554,7 @@
     "fr": "L’opération a échoué",
     "ar": "العملية غير ناجحة"
   },
-  "An_error_occurred...": {
+  "An_error_occurred1": {
     "en": "An error occurred.. Please check out the data",
     "fr": "Une erreur s’est produite.. veuillez vérifier les données",
     "ar": "حدث خطأ.. يرجى التأكد من البيانات"
@@ -584,10 +599,20 @@
     "fr": "Photo de profile",
     "ar": "الصورة البارزة"
   },
-  "Upload_the_picture ": {
+  "Upload_the_picture": {
     "en": "Upload the picture now",
     "fr": "Importer la photo maintenant",
     "ar": "رفع الصورة الآن"
+  },
+  "Upload": {
+    "en": "Upload now",
+    "fr": "Importer maintenant",
+    "ar": "رفع الآن"
+  },
+  "profile_photo": {
+    "en": "Profile photo must be the same height and width, and no larger than 2MB",
+    "fr": "La photo de profil doit avoir la même hauteur et la même largeur, et pas plus de 2 Mégaoctet",
+    "ar": "يجب ان يكون ارتفاع صورة البروفايل وعرضها متساوي وان لا يزيد حجمها عن 2 ميجابايت"
   },
   "You_can_select": {
     "en": "You can select from your device",
@@ -749,6 +774,11 @@
     "ar": "الوايز",
     "fr": "Wise"
   },
+  "Wise_account": {
+    "en": "Wise account",
+    "ar": "حساب الوايز Wise",
+    "fr": "Compte Wise"
+  },
   "Blog": {
     "en": "Blog",
     "fr": "Blog",
@@ -784,7 +814,7 @@
     "fr": "Le site web Timwoork Certaines parties du site ne sont accessibles qu'aux abonnés inscrits après avoir fourni certaines informations personnelles les concernant. L'abonné s'engage lors de son inscription sur le site à ce que les informations saisies soient complètes et exactes, et s'engage à ne pas s'inscrire sur le site ou tenter de s'y inscrire sous le nom d'un autre abonné ainsi qu’à ne pas utiliser un nom que l'administration pourrait juger inappropriés, tels que des numéros de téléphone, des noms de personnalités célèbres et des liens vers des sites, des noms incompréhensibles, etc. Il est également tenu de ne pas enregistrer plus d'un compte sur le site Timwoork, et lorsqu'une même personne utilise plus d'un compte, il expose tous ses comptes pour suspension définitive.",
     "ar": "بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. "
   },
-  "E-mail_ctivation": {
+  "E_mail_ctivation": {
     "en": "E-mail activation",
     "fr": "Activation de l’adresse électronique",
     "ar": "تفعيل البريد الإلكتروني"
@@ -804,7 +834,7 @@
     "fr": "Renvoyer le code",
     "ar": "إعادة إرسال كود التفعيل"
   },
-  "Confirm_e-mail": {
+  "Confirm_e_mail": {
     "en": "Confirm e-mail",
     "fr": "Confirmer l’adresse électronique",
     "ar": " تأكيد البريد الإلكتروني"
@@ -868,11 +898,6 @@
     "en": "Pending receipt",
     "fr": "En attente de reception",
     "ar": "قيد الإستلام"
-  },
-  "Completed": {
-    "en": "Completed",
-    "fr": "Achevé",
-    "ar": "معلقة"
   },
   "Status_amendment_request": {
     "en": "Status amendment request",
@@ -1104,13 +1129,13 @@
     "fr": "Si vous avez trouvé une solution, vous pouvez réactiver le processus de nouveau",
     "ar": "إذا تواصلتما إلى حل يمكنك تحويل العملية إلى قيد التنفيذ مرة أخرى"
   },
-  "Operation details": {
+  "Operation_details": {
     "en": "Operation details",
     "fr": "Détails de l’opération",
     "ar": "تفاصيل العملية"
   },
-  "Opération_number": {
-    "en": "Opération number",
+  "Operation_number1": {
+    "en": "Operation number",
     "fr": "Numéro d’opération",
     "ar": "رقم العملية"
   },
@@ -1187,7 +1212,7 @@
   "Add_comment": {
     "en": "Add comment",
     "fr": "Ajouter un commentaire",
-    "ar": "إضافة رد"
+    "ar": "إضافة تعليق"
   },
   "Choose_a_review": {
     "en": "Choose a review",
@@ -2604,29 +2629,29 @@
     "fr": "Alerte",
     "ar": "تحذير"
   },
-  "From_5-100_Dollars": {
+  "From_5_100_Dollars": {
     "en": "From 5-100 Dollars Can buy a service until 10 times",
     "fr": "De 5-100 Dollar, il peut acheter le service jusqu’à 10 fois",
     "ar": "من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات"
   },
-  "From_101-500_Dollars": {
+  "From_101_500_Dollars": {
     "en": "From 101-500 Dollars Can buy a service until twice only",
     "fr": "De 101-500 Dollar, il peut acheter le service jusqu’à 2 fois seulement",
     "ar": "من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة"
   },
-  "From_501-1000_Can": {
+  "From_501_1000_Can": {
     "en": "From 501-1000 Can but the service at once",
     "fr": "De 501-1000 Dollar, il peut acheter le service en une seule fois",
     "ar": "من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط"
   },
-  "Buyer's_single_service": {
+  "Buyers_single_service": {
     "en": "Buyer's single service may not be purchased twice at the same time until receipt",
     "fr": "Le service ne peut pas être acheté deux fois en même temps jusqu’à ce qu’il soit réceptionné ",
     "ar": "لا يجوز تكرار شراء الخدمة الواحدة للمشتري مرتين في نفس الوقت حتى استلام"
   },
   "Service": {
-    "en": "Service",
-    "fr": "Le service",
+    "en": " Service",
+    "fr": " Le service",
     "ar": " الخدمة"
   },
   "Start_conversation": {
@@ -2654,7 +2679,7 @@
     "fr": "La durée coûtera",
     "ar": "ستكون المدة بمبلغ"
   },
-  "Top-selling services": {
+  "Top_selling_services": {
     "en": "Top-selling services",
     "fr": "Services les plus vendus",
     "ar": "الخدمات الأكثر مبيعا"
@@ -2759,7 +2784,7 @@
     "fr": "Le plus Populaire",
     "ar": "الأكثر شعبية"
   },
-  "Top-selling": {
+  "Top_selling": {
     "en": "Top-selling",
     "fr": "Le plus vendu",
     "ar": "الأكثر مبيعا"
