@@ -18,6 +18,7 @@ function Category(): JSX.Element {
   const { data: getCategories }: any = useSWR(
     "https://timwoork.net/wp-json/wp/v2/categories"
   );
+  console.log(getCategories)
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts?per_page=9&page=${pageNumber}&${categories}`
   );
