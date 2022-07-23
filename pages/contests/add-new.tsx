@@ -553,15 +553,9 @@ function AddNew() {
                           name="winners"
                           className="timlands-inputs select"
                         >
-                          <option value="1">5 أيام</option>
-                          <option value="2">6 أيام</option>
-                          <option value="3">7 أيام</option>
-                          <option value="3">8 أيام</option>
-                          <option value="3">9 أيام</option>
-                          <option value="3">10 أيام</option>
-                          <option value="3">11 اليوم</option>
-                          <option value="3">12 اليوم</option>
-                          <option value="3">13 اليوم</option>
+                          <option value="1">اختيار الاسماء</option>
+                          <option value="3">تصميم غرافيكي</option>
+                          <option value="3">13</option>
                           <option value="3">14 اليوم</option>
                           <option value="3">15 اليوم</option>
                           <option value="3">16 اليوم</option>

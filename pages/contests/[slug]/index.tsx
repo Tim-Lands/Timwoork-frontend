@@ -9,7 +9,6 @@ import { AiFillLike, AiOutlineComment, AiOutlineLike } from "react-icons/ai";
 import {
   BsCheckCircle,
   BsCheckCircleFill,
-  BsPlug,
   BsPlus,
 } from "react-icons/bs";
 
@@ -43,9 +42,6 @@ function Index({ query }) {
               <Link href={`/contests/slug-test-text/posts`}>
                 <a className="portfolio-item"> المشاركات</a>
               </Link>
-            </li>
-            <li>
-              <button className="portfolio-item">الفائزين</button>
             </li>
           </ul>
           <ul className="portfolios-nav-list ml-auto">
