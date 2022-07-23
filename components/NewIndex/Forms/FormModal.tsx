@@ -43,8 +43,6 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
                 setIsConfirmText(false)
               }}>
               {getAll("Choose")}
-
-              اختيار
             </button>
             <button
               className="btn butt-sm butt-red-text"
