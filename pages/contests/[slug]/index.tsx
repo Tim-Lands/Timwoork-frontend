@@ -39,9 +39,6 @@ function Index({ query }) {
                 <a className="portfolio-item"> المشاركات</a>
               </Link>
             </li>
-            <li>
-              <button className="portfolio-item">الفائزين</button>
-            </li>
           </ul>
           <ul className="portfolios-nav-list ml-auto">
             <li>

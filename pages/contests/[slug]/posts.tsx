@@ -39,9 +39,6 @@ function Index({ query }) {
                 <a className="portfolio-item"> المشاركات</a>
               </Link>
             </li>
-            <li>
-              <button className="portfolio-item">الفائزين</button>
-            </li>
           </ul>
           <ul className="portfolios-nav-list ml-auto">
             <li>
@@ -122,7 +119,7 @@ function Index({ query }) {
                   </div>
                 </div>
                 <div className="portfolio-single-content">
-                  <h4 className="title">شروط المسابقة</h4>
+                  <h4 className="title">مشاركات المسابقة</h4>
                   <div className="row">
                     <div className="col-md-4">
                       <ContestEntierPost
@@ -132,7 +129,74 @@ function Index({ query }) {
                         level={`بائع محترف`}
                         username={`tarekaroui`}
                         heartCount={1203}
+                        isWin={true}
                         slug={`test-slug-text`}
+                        id={12}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <ContestEntierPost
+                        thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
+                        avatar={`/avatar.png`}
+                        author={`طارق عروي`}
+                        level={`بائع محترف`}
+                        username={`tarekaroui`}
+                        heartCount={1203}
+                        isWin={false}
+                        slug={`test-slug-text`}
+                        id={12}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <ContestEntierPost
+                        thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
+                        avatar={`/avatar.png`}
+                        author={`طارق عروي`}
+                        level={`بائع محترف`}
+                        username={`tarekaroui`}
+                        heartCount={1203}
+                        isWin={false}
+                        slug={`test-slug-text`}
+                        id={12}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <ContestEntierPost
+                        thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
+                        avatar={`/avatar.png`}
+                        author={`طارق عروي`}
+                        level={`بائع محترف`}
+                        username={`tarekaroui`}
+                        heartCount={1203}
+                        isWin={false}
+                        slug={`test-slug-text`}
+                        id={12}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <ContestEntierPost
+                        thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
+                        avatar={`/avatar.png`}
+                        author={`طارق عروي`}
+                        level={`بائع محترف`}
+                        username={`tarekaroui`}
+                        heartCount={1203}
+                        isWin={false}
+                        slug={`test-slug-text`}
+                        id={12}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <ContestEntierPost
+                        thumbnail={`/JuliaQ49-201801121901090270None.jpg`}
+                        avatar={`/avatar.png`}
+                        author={`طارق عروي`}
+                        level={`بائع محترف`}
+                        username={`tarekaroui`}
+                        heartCount={1203}
+                        isWin={false}
+                        slug={`test-slug-text`}
+                        id={12}
                       />
                     </div>
                   </div>
