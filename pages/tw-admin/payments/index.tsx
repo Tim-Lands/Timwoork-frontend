@@ -13,10 +13,10 @@ import router from "next/router";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 function Countries(): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: GetData, error }: any = useSWR(`dashboard/types_payments`);
 
   const token = Cookies.get("token_dash");

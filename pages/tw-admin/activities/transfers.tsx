@@ -9,9 +9,6 @@ import Pagination from "react-js-pagination";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 const Amount = ({ transfer }: any) => {
   switch (transfer.status) {
     case 0:
@@ -50,6 +47,9 @@ Amount.propTypes = {
   transfer: PropTypes.object,
 };
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const [pageNumber, setPageNumber]: any = useState(1);
   const [transfers, setTransfers]: any = useState({
     data: [],

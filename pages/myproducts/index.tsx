@@ -12,6 +12,9 @@ import router from "next/router";
 import MyProducts from "@/components/Profile/MyProducts";
 
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { language } = useContext(LanguageContext);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -36,11 +39,13 @@ function index() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
-            subTitle="حسابك غير كامل يرجى إكمال الصفحة الشخصية الخاصة بك"
+            title={getLogin("Your_account_is")}
+            subTitle={getLogin("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
-                <a className="btn butt-primary butt-md">الذهاب إلى التعديل</a>
+                <a className="btn butt-primary butt-md">
+                  {getLogin("Go_to_Edit")}
+                </a>
               </Link>
             }
           />
@@ -56,14 +61,18 @@ function index() {
       {userInfo && userInfo.user_details.profile && (
         <>
           <MetaTags
-            title={"خدماتي"}
-            metaDescription={"الصفحة الرئيسية"}
-            ogDescription={"الصفحة الرئيسية"}
+            title={getAll("My_services")}
+            metaDescription={getLogin("Home")}
+            ogDescription={getLogin("Home")}
           />
           <div className="container">
             <div className="timlands-profile-content">
               <div className="profile-content-header">
-                <Badge color={"green"} count="متصل" offset={[10, 10]}>
+                <Badge
+                  color={"green"}
+                  count={getLogin("Online")}
+                  offset={[10, 10]}
+                >
                   <div className="profile-content-avatar">
                     {userInfo.user_details.profile.avatar_path ==
                     "avatar.png" ? (

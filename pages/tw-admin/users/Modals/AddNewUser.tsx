@@ -10,32 +10,12 @@ import { useContext } from "react";
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-
-const SignupSchema = Yup.object().shape({
-  password: Yup.string().required(getLogin("This_field_is")),
-  repassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], getLogin("Passwords_are_not"))
-    .required(getLogin("This_field_is")),
-  username: Yup.string()
-    .min(4, getLogin("This_fiels_is"))
-    .max(30, getLogin("This_field_is_2"))
-    .required(getLogin("This_field_is")),
-  name: Yup.string()
-    .min(4, getLogin("This_fiels_is"))
-    .max(35, getLogin("This_field_is_2"))
-    .required(getLogin("This_field_is")),
-  email: Yup.string()
-    .email(getLogin("Please_enter_a"))
-    .max(60, getLogin("This_field_is_2"))
-    .required(getLogin("This_field_is")),
-  phone: Yup.string().matches(phoneRegExp, getLogin("This_is_not")),
-});
 export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -68,7 +48,25 @@ export default function AddNewUser({
               state: "",
             },
           }}
-          validationSchema={SignupSchema}
+          validationSchema={Yup.object().shape({
+            password: Yup.string().required(getLogin("This_field_is")),
+            repassword: Yup.string()
+              .oneOf([Yup.ref("password"), null], getLogin("Passwords_are_not"))
+              .required(getLogin("This_field_is")),
+            username: Yup.string()
+              .min(4, getLogin("This_fiels_is"))
+              .max(30, getLogin("This_field_is_2"))
+              .required(getLogin("This_field_is")),
+            name: Yup.string()
+              .min(4, getLogin("This_fiels_is"))
+              .max(35, getLogin("This_field_is_2"))
+              .required(getLogin("This_field_is")),
+            email: Yup.string()
+              .email(getLogin("Please_enter_a"))
+              .max(60, getLogin("This_field_is_2"))
+              .required(getLogin("This_field_is")),
+            phone: Yup.string().matches(phoneRegExp, getLogin("This_is_not")),
+          })}
           onSubmit={async (values) => {
             try {
               const res = await axios.post(

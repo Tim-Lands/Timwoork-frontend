@@ -6,6 +6,8 @@ import { useState } from "react";
 import router from "next/router";
 import { mutate } from "swr";
 import API from "../../config";
+import { useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
 export default function AsideBox({
   title,
@@ -15,6 +17,10 @@ export default function AsideBox({
   duration,
   developments,
 }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
+  const getWallet = getSectionLanguage("my_wallet");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -25,30 +31,30 @@ export default function AsideBox({
 
   function durationFunc() {
     if (duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (duration == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (duration > 2 && duration < 11) {
-      return duration + " أيام ";
+      return duration + getAll("Days");
     }
     if (duration >= 11) {
-      return duration + " يوم ";
+      return duration + getAll("Day");
     }
   }
   function DevdurationFunc(duration) {
     if (duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (duration == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (duration > 2 && duration < 11) {
-      return duration + " أيام ";
+      return duration + getAll("Days");
     }
     if (duration >= 11) {
-      return duration + " يوم ";
+      return duration + getAll("Day");
     }
   }
   const addToCart = async () => {
@@ -76,13 +82,13 @@ export default function AsideBox({
             onClick={() => router.push("/cart")}
             className="btn butt-sm butt-primary"
           >
-            الذهاب إلى السلة
+            {getAll("Go_to_cart")}
           </button>
         );
 
         notification.open({
           message: "رسالة توضيحية",
-          description: "لقد تم إضافة هذه الخدمة إلى السلة",
+          description: getAll("This_service_was"),
           btn,
           key,
           onClose: close,
@@ -93,12 +99,12 @@ export default function AsideBox({
       setIsLoadingCart(false);
       if (error.response && error.response.status === 400) {
         notification.open({
-          message: "رسالة خطأ",
+          message: getLogin("Error_message"),
           description: "لا يمكن شراء خدمتك",
           onClose: close,
         });
       } else {
-        message.error("حدث خطأ غير متوقع");
+        message.error(getLogin("An_unexpected_error"));
       }
     }
   };
@@ -123,6 +129,7 @@ export default function AsideBox({
 
     const total_price =
       (parseInt(price) + __checkedDevelopments_sum) * quantutyCount;
+
     return Math.abs(total_price);
   }
   const handleOnChangeAddID = (event) => {
@@ -141,7 +148,7 @@ export default function AsideBox({
           rel="noreferrer"
           href={`https://www.facebook.com/sharer/sharer.php?u=https://timwoork.com/p/${title}`}
         >
-          المشاركة على الفيسبووك
+          {getAll("Share_on_Facebook")}
         </a>
       </Menu.Item>
       <Menu.Item key="2" icon={<i className="fa fa-facebook"></i>}>
@@ -150,7 +157,7 @@ export default function AsideBox({
           rel="noreferrer"
           href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${title}&text=`}
         >
-          المشاركة على التويتر
+          {getLogin("Share_on_Twitter")}
         </a>
       </Menu.Item>
     </Menu>
@@ -165,7 +172,8 @@ export default function AsideBox({
                 <span className="material-icons material-icons-outlined">
                   timer
                 </span>{" "}
-                مدة التسليم: {durationFunc()}
+                {getLogin("Delivery_duration")}
+                {durationFunc()}
               </li>
               <li className="cat-post ml-auto">
                 <Dropdown overlay={menuShare}>
@@ -173,7 +181,7 @@ export default function AsideBox({
                     <span className="material-icons material-icons-outlined">
                       share
                     </span>{" "}
-                    مشاركة الخدمة
+                    {getLogin("Share_service")}
                   </a>
                 </Dropdown>
               </li>
@@ -182,7 +190,9 @@ export default function AsideBox({
           {token && (
             <div className="row mx-auto py-2">
               <div className="col-7">
-                <p className="text-quatity">عدد مرات الشراء: </p>
+                <p className="text-quatity">
+                  {getWallet("Number_of_purchases")}
+                </p>
               </div>
               <div className="col-5">
                 <input
@@ -197,7 +207,7 @@ export default function AsideBox({
           )}
           <div className="panel-aside-body">
             <div className="add-devloppers-header">
-              <h3 className="title">التطويرات المتوفرة</h3>
+              <h3 className="title">{getLogin("Available_developments")}</h3>
             </div>
             <ul className="add-devloppers-nav">
               {developments &&
@@ -219,8 +229,8 @@ export default function AsideBox({
                         >
                           {e.title}
                           <p className="price-duration">
-                            ستكون المدة {DevdurationFunc(e.duration)} بمبلغ{" "}
-                            {e.price}$
+                            {getAll("The_duration_will_cost")}
+                            {DevdurationFunc(e.duration)} {e.price}$
                           </p>
                         </label>
                       </div>
@@ -232,12 +242,12 @@ export default function AsideBox({
           <div className="panel-aside-footer">
             <div className="aside-footer-total-price">
               <h1 className="price-total me-auto">
-                <strong>المجموع </strong> {_totalPrice()}$
+                <strong>{getLogin("Total")} </strong> {_totalPrice()}$
               </h1>
               <div className="bayers-count">
                 <p className="num">
                   <span className="count">{count_buying} </span>
-                  <span className="text"> اشتروا هذا</span>
+                  <span className="text"> {getAll("Have_bought_this")}</span>
                 </p>
               </div>
             </div>
@@ -255,7 +265,7 @@ export default function AsideBox({
                   <span className="material-icons material-icons-outlined">
                     add_shopping_cart
                   </span>
-                  إضافة إلى السلة
+                  {getWallet("Add_to_cart")}
                 </button>
               </div>
             )}

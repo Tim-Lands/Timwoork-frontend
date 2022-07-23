@@ -42,6 +42,11 @@ let token = Cookies.get("token");
 if (!token && typeof window !== "undefined")
   token = localStorage.getItem("token");
 function Single({ query, stars }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
+  const getWallet = getSectionLanguage("my_wallet");
+  const getNew = getSectionLanguage("add_new");
   const { language } = useContext(LanguageContext);
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
 
@@ -69,16 +74,16 @@ function Single({ query, stars }) {
       );
       if (res.status === 200) {
         swalWithBootstrapButtons.fire(
-          "تم التعطيل!",
-          "لقد تم تعطيل هذه الخدمة بنجاح",
+          getLogin("Disabled1"),
+          getLogin("The_service_has_2"),
           "success"
         );
         router.reload();
       }
     } catch (error) {
       notification["error"]({
-        message: "رسالة خطأ",
-        description: "للأسف لم يتم تعطيل هذه الخدمة",
+        message: getLogin("Error_message"),
+        description: getLogin("Unfortunately_this_service"),
       });
     }
   };
@@ -95,11 +100,11 @@ function Single({ query, stars }) {
 
     swalWithBootstrapButtons
       .fire({
-        title: "هل أنت متأكد؟",
-        text: "هل انت متأكد أنك تريد حذف هذا العنصر",
+        title: getLogin("Are_you_sure1"),
+        text: getLogin("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "نعم, أريد الحذف",
+        confirmButtonText: getLogin("Yes"),
         cancelButtonText: "لا",
         reverseButtons: true,
       })
@@ -117,8 +122,8 @@ function Single({ query, stars }) {
             );
             if (res.status === 200) {
               swalWithBootstrapButtons.fire(
-                "تم الحذف!",
-                "لقد تم حذف هذه الخدمة بنجاح",
+                getLogin("Deleted"),
+                getLogin("The_service_has"),
                 "success"
               );
             }
@@ -149,8 +154,8 @@ function Single({ query, stars }) {
       if (res.status === 200) {
         setIsProductActive(false);
         swalWithBootstrapButtons.fire(
-          "تم التنشيط!",
-          "لقد تم تنشسط هذه الخدمة بنجاح",
+          getLogin("Abled1"),
+          getLogin("This_service_has"),
           "success"
         );
         router.reload();
@@ -158,8 +163,8 @@ function Single({ query, stars }) {
     } catch (error) {
       setIsProductActive(false);
       notification["error"]({
-        message: "رسالة خطأ",
-        description: "للأسف لم يتم تنشيط هذه الخدمة",
+        message: getLogin("Error_message"),
+        description: getLogin("Unfortunately_this_service_2"),
       });
     }
   };
@@ -253,30 +258,30 @@ function Single({ query, stars }) {
 
   function durationFunc() {
     if (ProductData.data.duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (ProductData.data.duration == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (ProductData.data.duration > 2 && ProductData.data.duration < 11) {
-      return ProductData.data.duration + " أيام ";
+      return ProductData.data.duration + getAll("Days");
     }
     if (ProductData.data.duration >= 11) {
-      return ProductData.data.duration + " يوم ";
+      return ProductData.data.duration + getAll("Day");
     }
   }
   function DevdurationFunc(duration) {
     if (duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (duration == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (duration > 2 && duration < 11) {
-      return duration + " أيام ";
+      return duration + getAll("Days");
     }
     if (duration >= 11) {
-      return duration + " يوم ";
+      return duration + getAll("Day");
     }
   }
 
@@ -305,7 +310,7 @@ function Single({ query, stars }) {
   return (
     <>
       <MetaTags
-        title={stars.data.title + " - تيموورك"}
+        title={stars.data.title + ` - ${getAll("Timwoork")}`}
         metaDescription={stars.data.content}
         ogDescription={stars.data.content}
         ogImage={stars.data.full_path_thumbnail}
@@ -318,7 +323,7 @@ function Single({ query, stars }) {
               <Alert type="warning">
                 هذه الخدمة غير كامة تنقصها بعض التعديلات يمكنك{" "}
                 <Link href={`/edit-product/overview?id=${ProductData.data.id}`}>
-                  <a>التعديل</a>
+                  <a>{getLogin("Edit")}</a>
                 </Link>
               </Alert>
             </div>
@@ -379,7 +384,7 @@ function Single({ query, stars }) {
                         </span>
                       </li>
                       <li className="level-item">
-                        <span className="text-level">المستوى:</span>
+                        <span className="text-level">{getAll("Level")}</span>
                         <span className="value-level">
                           {ProductData &&
                             ProductData.data.profile_seller.level !== null &&
@@ -421,7 +426,7 @@ function Single({ query, stars }) {
                     {ProductData.data.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
-                          <li className="title">الوسوم:</li>
+                          <li className="title">{getLogin("Tags")}</li>
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -438,7 +443,7 @@ function Single({ query, stars }) {
                               <span className="material-icons material-icons-outlined">
                                 question_answer
                               </span>
-                              آراء المشتريين
+                              {getWallet("Customer_reviews")}
                             </h4>
                           </div>
                         </div>
@@ -449,7 +454,7 @@ function Single({ query, stars }) {
                           />
                           {ProductData.data.ratings.length == 0 && (
                             <Alert type="primary">
-                              <p className="text">لاتوجد آراء المشتريين</p>
+                              <p className="text">{getAll("There_is_no_2")}</p>
                             </Alert>
                           )}
                         </div>
@@ -470,7 +475,7 @@ function Single({ query, stars }) {
                         <span className="material-icons material-icons-outlined">
                           create
                         </span>{" "}
-                        تعديل الخدمة
+                        {getLogin("Service_editing")}
                       </a>
                     </Link>
                     <button
@@ -480,7 +485,7 @@ function Single({ query, stars }) {
                       <span className="material-icons material-icons-outlined">
                         delete
                       </span>{" "}
-                      حذف الخدمة
+                      {getNew("Delete_the_service")}
                     </button>
                   </div>
                 )}
@@ -510,18 +515,23 @@ function Single({ query, stars }) {
                         <span className="material-icons material-icons-outlined">
                           timer
                         </span>{" "}
-                        مدة التسليم: {durationFunc()}
+                        {getNew("Delivery_terme")}
+                        {durationFunc()}
                       </li>
                     </ul>
                   </div>
                   {ProductData.data.developments && (
                     <div className="panel-aside-body">
                       <div className="add-devloppers-header">
-                        <h4 className="title">التطويرات المتوفرة</h4>
+                        <h4 className="title">
+                          {getLogin("Available_developments")}
+                        </h4>
                       </div>
                       {ProductData.data.developments.length == 0 && (
                         <div className="nothing-note">
-                          <p className="text">هذه الخدمة لاتوجد فيها تطويرات</p>
+                          <p className="text">
+                            {getLogin("This_service_contains")}
+                          </p>
                         </div>
                       )}
                       <ul className="add-devloppers-nav">
@@ -535,8 +545,8 @@ function Single({ query, stars }) {
                                 >
                                   {e.title}
                                   <p className="price-duration">
-                                    ستكون المدة {DevdurationFunc(e.duration)}{" "}
-                                    بمبلغ {e.price}$
+                                    {getAll("The_duration_will_cost")}
+                                    {DevdurationFunc(e.duration)} {e.price}$
                                   </p>
                                 </label>
                               </div>
@@ -549,7 +559,7 @@ function Single({ query, stars }) {
                   <div className="panel-aside-footer">
                     <div className="aside-footer-total-price">
                       <h4 className="price-total me-auto">
-                        <strong>سعر الخدمة </strong>{" "}
+                        <strong>{getLogin("Service_price")}</strong>{" "}
                         {ProductData && ProductData.data.price}$
                       </h4>
                       <div className="bayers-count">
@@ -557,7 +567,10 @@ function Single({ query, stars }) {
                           <span className="count">
                             {ProductData && ProductData.data.count_buying}{" "}
                           </span>
-                          <span className="text"> اشتروا هذا</span>
+                          <span className="text">
+                            {" "}
+                            {getAll("Have_bought_this")}
+                          </span>
                         </p>
                       </div>
                     </div>
@@ -584,7 +597,7 @@ function Single({ query, stars }) {
                           }
                           className="btn butt-sm butt-red"
                         >
-                          تعطيل هذه الخدمة
+                          {getLogin("Disable_this_service")}
                         </button>
                       )}
                     </Spin>

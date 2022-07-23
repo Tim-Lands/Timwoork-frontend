@@ -12,12 +12,15 @@ import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
+import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
+import FormModal from "@/components/NewIndex/Forms/FormModal";
+
 // import FormLangs from "@/components/NewIndex/Forms/FormLangs";
 // import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
-
   const [isLoadingTags, setIsLoadingTags] = useState(false);
   const getdataTags = async (tag: string) => {
     setIsLoadingTags(true);
@@ -63,6 +66,10 @@ const MySelect = (props: any) => {
 };
 
 function Overview({ query }) {
+  const [isShowenModal, setIsShowenModal] = useState(false);
+  const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
+  const [selectedLang, setSelectedLang] = useState('');
+  const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
   const id = query.id;
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
@@ -82,6 +89,23 @@ function Overview({ query }) {
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
+
+  const addSubtitle = (subtitle) => {
+    console.log(subtitle)
+    console.log(selectedLang)
+    switch (selectedLang) {
+      case 'ar':
+        setSubtitles({ ...subtitles, ar: subtitle });
+        break;
+      case 'en':
+        setSubtitles({ ...subtitles, en: subtitle });
+        break;
+      case 'fr':
+        setSubtitles({ ...subtitles, fr: subtitle });
+        break;
+    }
+  }
+
   const formik = useFormik({
     initialValues: {
       content: "ejrferjgh erfkerh whgferg",
@@ -102,9 +126,13 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
+        const body:any = {...values}
+        if(subtitles['ar'])body.title_ar = subtitles['ar'];
+        if(subtitles['en'])body.title_en = subtitles['en'];
+        if(subtitles['fr'])body.title_fr = subtitles['fr'];
         const res = await API.post(
           `api/product/${id}/product-step-one`,
-          values,
+          body,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -163,7 +191,8 @@ function Overview({ query }) {
     }
     getProductId();
   }, []);
-
+  console.log(checkedLangs)
+  console.log(subtitles)
   return (
     <>
       <MetaTags
@@ -182,6 +211,7 @@ function Overview({ query }) {
               <SidebarAdvices />
             </div>
             <div className="col-md-8 pt-3">
+              {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -246,7 +276,10 @@ function Overview({ query }) {
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">
-                        {/* <FormLangsCheck /> */}
+                        <FormLangsCheck id={1} default_lang={userInfo?.user_details?.profile?.lang} onChange={(e) => {
+                          setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
+                          if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
+                        }} />
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
                             {getAll("Service_title")}
@@ -267,7 +300,10 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
-                          {/* <FormLangs /> */}
+                          <FormLangs onClick={(lang) => {
+                            setIsShowenModal(true);
+                            setSelectedLang(lang);
+                          }} checkedLangs={checkedLangs} default_lang={userInfo?.user_details?.profile?.lang} />
                           <div className="note-form-text-sh">
                             <p className="text">
                               {getAll("The_service_title")}
@@ -305,7 +341,7 @@ function Overview({ query }) {
                             disabled={!getProduct ? true : false}
                             onChange={formik.handleChange}
                             value={formik.values.catetory}
-                            //onChange={() => setmainCat(values.catetory)}
+                          //onChange={() => setmainCat(values.catetory)}
                           >
                             <option value="">
                               {getLanguage("Choose_the_principal")}

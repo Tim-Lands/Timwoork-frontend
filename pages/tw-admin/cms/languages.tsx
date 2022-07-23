@@ -12,10 +12,10 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 function Languages(): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: GetData, error }: any = useSWR(`dashboard/languages`);
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);

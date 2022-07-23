@@ -6,9 +6,9 @@ import Loading from "@/components/Loading";
 import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   const { data: categories }: any = useSWR(`api/categories`);
   const { language } = useContext(LanguageContext);
   categories &&

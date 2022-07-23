@@ -12,10 +12,10 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 function Categories(): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   const { data: GetData, error }: any = useSWR(`dashboard/categories`);
 
   const deleteHandle = (id: any) => {

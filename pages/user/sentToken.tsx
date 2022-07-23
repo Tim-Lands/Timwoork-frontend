@@ -4,9 +4,9 @@ import { Result } from "antd";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
 const SentToken = (): ReactElement => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
   return (
     <div className="row justify-content-md-center pt-5">
       <div className="col-lg-6 p-0">

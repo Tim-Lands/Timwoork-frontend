@@ -2,9 +2,13 @@ import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { message, Result } from "antd";
 import Post from "../Post/Post";
+import { useContext } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
 
 function index({ products, isError, isLoading, size }): ReactElement {
-  if (isError) message.error("حدث خطأ أثناء جلب الخدمات");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  if (isError) message.error(getAll("An_error_occurred_while"));
   if (isLoading)
     return (
       <div className="posts-aside loading" style={{ minHeight: 1450 }}>
@@ -64,13 +68,16 @@ function index({ products, isError, isLoading, size }): ReactElement {
             <div className={"col-md-" + size} key={e.id}>
               <Post
                 size="small"
-                avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+                avatar={
+                  e.profile_seller && e.profile_seller.profile.avatar_path
+                }
                 title={e.title}
                 level={e.profile_seller && e.profile_seller.level.name_ar}
                 author={
                   e.profile_seller &&
-                  e.profile_seller.profile.first_name + " " +
-                  e.profile_seller.profile.last_name
+                  e.profile_seller.profile.first_name +
+                    " " +
+                    e.profile_seller.profile.last_name
                 }
                 rate={e.ratings_avg_rating}
                 price={e.price}
@@ -87,8 +94,8 @@ function index({ products, isError, isLoading, size }): ReactElement {
       {products && products.length == 0 && (
         <Result
           status="404"
-          title="لا توجد خدمات"
-          subTitle="لا توجد خدمات لعرضها"
+          title={getAll("No_services")}
+          subTitle={getAll("No_services_to_display")}
         />
       )}
     </>

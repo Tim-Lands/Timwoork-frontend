@@ -9,13 +9,22 @@
 */
 
 import PropTypes from "prop-types";
-import {ReactElement} from "react";
+import { ReactElement } from "react";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 export function SmallSpinner(props: any): ReactElement {
-    return props.show ? 
-        <div className="spinner-border spinner-border-sm text-light" role="status"> <span className="visually-hidden">Loading...</span> </div>
-    : <span></span>;
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  return props.show ? (
+    <div className="spinner-border spinner-border-sm text-light" role="status">
+      {" "}
+      <span className="visually-hidden">{getAll("Loading")}</span>{" "}
+    </div>
+  ) : (
+    <span></span>
+  );
 }
 SmallSpinner.propTypes = {
-    show: PropTypes.bool.isRequired,
+  show: PropTypes.bool.isRequired,
 };

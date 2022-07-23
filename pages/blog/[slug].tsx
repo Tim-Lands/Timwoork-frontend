@@ -11,9 +11,9 @@ import { Image } from "antd";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
 const User = ({ query }) => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   const [postsMediaTable, setPostsMediaTable] = useState([]);
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`

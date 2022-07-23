@@ -19,10 +19,7 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
 import { LanguageContext } from "../../contexts/languageContext/context";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
-const getAll = getSectionLanguage("all");
-const CheckoutForm = () => {
+const CheckoutForm = (getLogin: any) => {
   const stripe = useStripe();
   const elements = useElements();
   let token = Cookies.get("token");
@@ -94,6 +91,9 @@ const stripePromise = loadStripe(
 );
 
 function Bill() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -187,6 +187,7 @@ function Bill() {
     }
   }
   const onBillPaymentChange = (e) => setBillPayment(e.target.value);
+
   return (
     <>
       <MetaTags
@@ -322,7 +323,7 @@ function Bill() {
                           animate={{ y: 0, opacity: 1 }}
                         >
                           <Elements stripe={stripePromise}>
-                            <CheckoutForm />
+                            <CheckoutForm getLogin={getLogin} />
                           </Elements>
                         </motion.div>
                       ) : null}

@@ -13,9 +13,11 @@ function ContestEntierPost({
   level,
   username,
   avatar,
+  // views,
   slug,
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
+  // const [isFavorated, setIsFavorated] = useState(false);
 
   return (
     <Badge.Ribbon color={'orange'} text="الفائز الأول" style={{ display: isWin ? "block" : "none" }}>

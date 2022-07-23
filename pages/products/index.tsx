@@ -22,9 +22,6 @@ import Link from "next/link";
 import cookies from "next-cookies";
 import router from "next/router";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
-const getAll = getSectionLanguage("all");
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingTags, setIsLoadingTags] = useState(false);
@@ -75,7 +72,8 @@ function Category({ products, categories, url_params }) {
   const [isSettings, setIsSettings] = useState(false);
   const { language, getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("products");
-  console.log(categories);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
 

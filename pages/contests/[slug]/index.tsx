@@ -6,11 +6,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Image from "next/image";
 import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
 import { AiFillLike, AiOutlineComment, AiOutlineLike } from "react-icons/ai";
-import {
-  BsCheckCircle,
-  BsCheckCircleFill,
-  BsPlus,
-} from "react-icons/bs";
+import { BsCheckCircle, BsCheckCircleFill, BsPlus } from "react-icons/bs";
 
 import ContestComments from "@/components/NewIndex/Contests/ContestComments";
 import AuthorCard from "@/components/NewIndex/AuthorCard";

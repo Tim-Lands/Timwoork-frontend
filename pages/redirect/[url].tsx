@@ -18,7 +18,6 @@ function Redirect() {
       setBack(links[1]);
     }
   });
-  console.log(back);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLogin = getSectionLanguage("login");
   return (

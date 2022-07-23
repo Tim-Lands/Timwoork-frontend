@@ -7,8 +7,13 @@ import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
 import Cookies from "js-cookie";
 import router from "next/router";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function index() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -25,51 +30,79 @@ function index() {
   const statusLabel = (status: any) => {
     switch (status) {
       case 0:
-        return <span className="badge bg-secondary">قيد الانتظار...</span>;
+        return (
+          <span className="badge bg-secondary">{getLogin("PEnding")}</span>
+        );
 
       case 1:
-        return <span className="badge bg-warning">ملغية من طرف المشتري</span>;
+        return (
+          <span className="badge bg-warning">{getAll("Cancelled_by_the")}</span>
+        );
 
       case 2:
-        return <span className="badge bg-danger">مرفوضة من طرف البائع</span>;
+        return (
+          <span className="badge bg-danger">{getAll("Refused_by_the")}</span>
+        );
 
       case 3:
-        return <span className="badge bg-info text-dark">قيد التنفيذ...</span>;
+        return (
+          <span className="badge bg-info text-dark">
+            {getAll("In_progress")}
+          </span>
+        );
 
       case 4:
         return (
-          <span className="badge bg-warning">طلب إلغاء من طرف المشتري</span>
+          <span className="badge bg-warning">
+            {getAll("Buyer_cancellation_request")}
+          </span>
         );
 
       case 5:
-        return <span className="badge bg-warning">ملغية من طرف البائع</span>;
+        return (
+          <span className="badge bg-warning">{getAll("Refused_by_the")}</span>
+        );
 
       case 6:
-        return <span className="badge bg-primary">قيد الإستلام</span>;
+        return (
+          <span className="badge bg-primary">{getAll("Pending_receipt")}</span>
+        );
 
       case 7:
-        return <span className="badge bg-success text-light">مكتملة</span>;
+        return (
+          <span className="badge bg-success text-light">
+            {getLogin("Completed")}
+          </span>
+        );
 
       case 8:
-        return <span className="badge bg-red text-light">معلقة</span>;
+        return (
+          <span className="badge bg-red text-light">{getAll("Suspended")}</span>
+        );
 
       case 9:
-        return <span className="badge bg-light text-dark">حالة تعديل</span>;
+        return (
+          <span className="badge bg-light text-dark">
+            {getAll("Amendment_request_status")}
+          </span>
+        );
 
       case 10:
         return (
           <span className="badge bg-danger text-light">
-            معلقة بسبب رفض التعديل
+            {getAll("Suspended_due_to")}
           </span>
         );
 
       default:
-        return <span className="badge bg-info text-dark">قيد الانتظار...</span>;
+        return (
+          <span className="badge bg-info text-dark">{getLogin("PEnding")}</span>
+        );
     }
   };
   const columns: any = [
     {
-      title: "العنوان",
+      title: getAll("Title"),
       dataIndex: "",
       render: (e: any) => (
         <Link href={`/mypurchases/${e.id}`}>
@@ -78,12 +111,12 @@ function index() {
       ),
     },
     {
-      title: "السعر الكلي",
+      title: getAll("Total_price"),
       dataIndex: "price_product",
       render: (status: any) => <>{status}$</>,
     },
     {
-      title: "البائع",
+      title: getAll("Seller"),
       dataIndex: "",
       render: (e: any) => (
         <p className="m-0 is-hover-primary">
@@ -100,12 +133,12 @@ function index() {
       ),
     },
     {
-      title: "الحالة",
+      title: getLogin("Status"),
       dataIndex: "status",
       render: (e: any) => <>{statusLabel(e)}</>,
     },
     {
-      title: "التاريخ",
+      title: getAll("Date"),
       dataIndex: "created_at",
       render: (created_at: any) => <LastSeen date={created_at} />,
     },
@@ -115,9 +148,9 @@ function index() {
   return (
     <>
       <MetaTags
-        title={"مشترياتي"}
-        metaDescription={"مشترياتي"}
-        ogDescription={"مشترياتي"}
+        title={getAll("My_purchases")}
+        metaDescription={getAll("My_purchases")}
+        ogDescription={getAll("My_purchases")}
       />
       {veriedEmail && (
         <div className="timwoork-single">
@@ -125,7 +158,7 @@ function index() {
             <div className="col-lg-10">
               <div className="app-bill">
                 <div className="app-bill-header">
-                  <h3 className="title">مشترياتي</h3>
+                  <h3 className="title">{getAll("My_purchases")}</h3>
                 </div>
                 <div className="myPurchasesTable">
                   <Table

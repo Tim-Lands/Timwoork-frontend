@@ -1,9 +1,14 @@
 import { Space } from "antd";
 import { motion } from "framer-motion";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
-function FormModal({ setIsConfirmText }): ReactElement {
+function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
+  const [subtitle, setSubtitle] = useState('')
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -14,23 +19,31 @@ function FormModal({ setIsConfirmText }): ReactElement {
         <div className="modal-conferm-head">
           <h3 className="title">إضافة حقل لغة جديد</h3>
         </div>
-        <div className="modal-conferm-body">
+        <div className="modal-conferm-body"> 
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-title">
-              عنوان الخدمة
+              {getAll("Service_title")}
             </label>
-            <input
+            <input 
               id="input-title"
               name="title"
-              placeholder="عنوان الخدمة..."
+              placeholder={getAll("Service_title")}
               className={"timlands-inputs "}
+              value={subtitle}
+              onChange={e => setSubtitle(e.target.value)}
             />
           </div>
         </div>
 
         <div className="modal-conferm-footer">
           <Space>
-            <button className="btn butt-md butt-green" type="submit">
+            <button className="btn butt-md butt-green" type="button"
+              onClick={() => {
+                onSubmit(subtitle)
+                setIsConfirmText(false)
+              }}>
+              {getAll("Choose")}
+
               اختيار
             </button>
             <button
@@ -38,7 +51,7 @@ function FormModal({ setIsConfirmText }): ReactElement {
               type="button"
               onClick={() => setIsConfirmText(false)}
             >
-              إلغاء الأمر
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>
@@ -50,4 +63,5 @@ function FormModal({ setIsConfirmText }): ReactElement {
 export default FormModal;
 FormModal.propTypes = {
   setIsConfirmText: PropTypes.func,
+  onSubmit: PropTypes.func
 };

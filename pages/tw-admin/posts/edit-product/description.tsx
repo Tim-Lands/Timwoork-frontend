@@ -15,10 +15,6 @@ import cookies from "next-cookies";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-const getAddNew = getSectionLanguage("add_new");
 export const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
@@ -121,7 +117,10 @@ const Tiptap = (props: any) => {
   );
 };
 function Description({ query, product }) {
-  console.log(product);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
+  const getAddNew = getSectionLanguage("add_new");
   const token = useRef(Cookies.get("token_dash"));
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});

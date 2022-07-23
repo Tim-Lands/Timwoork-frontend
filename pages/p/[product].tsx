@@ -51,7 +51,6 @@ function Single({ query, stars, errorFetch }) {
   const getLanguage = getSectionLanguage("my_wallet");
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
-  const getWallet = getSectionLanguage("my_wallet");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: ProductData, errorLoad }: any = useSWR(
@@ -392,7 +391,7 @@ function Single({ query, stars, errorFetch }) {
       {ProductData && (
         <div className="timwoork-single">
           <Modal
-            title={getWallet("Create_a_conversation")}
+            title={getLanguage("Create_a_conversation")}
             visible={isModalVisible}
             confirmLoading={createConversationLoading}
             onOk={() => startConversation(messageConv)}

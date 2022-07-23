@@ -13,10 +13,10 @@ import Loading from "@/components/Loading";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getLogin = getSectionLanguage("login");
-const getAll = getSectionLanguage("all");
 function ResetPassword({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

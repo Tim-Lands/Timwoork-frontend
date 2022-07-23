@@ -7,20 +7,13 @@ import * as Yup from "yup";
 import { LanguageContext } from "../../../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
-const SignupSchema = Yup.object().shape({
-  name_ar: Yup.string().required(getLogin("This_field_is")),
-  name_en: Yup.string().required(getLogin("This_field_is")),
-  name_fr: Yup.string().required(getLogin("This_field_is")),
-  precent_deducation: Yup.number()
-    .lessThan(101, "النسبة المئوية يجب أن تكون أقل من 100")
-    .required(getLogin("This_field_is")),
-});
+// const SignupSchema =
 export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -47,7 +40,14 @@ export default function AddNewUser({
             name_fr: "",
             precent_deducation: 1,
           }}
-          validationSchema={SignupSchema}
+          validationSchema={Yup.object().shape({
+            name_ar: Yup.string().required(getLogin("This_field_is")),
+            name_en: Yup.string().required(getLogin("This_field_is")),
+            name_fr: Yup.string().required(getLogin("This_field_is")),
+            precent_deducation: Yup.number()
+              .lessThan(101, "النسبة المئوية يجب أن تكون أقل من 100")
+              .required(getLogin("This_field_is")),
+          })}
           onSubmit={async (values) => {
             await API.post("dashboard/badges/store", values);
             setIsModalHiddenHandle();

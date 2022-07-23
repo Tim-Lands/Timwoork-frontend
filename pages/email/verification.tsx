@@ -9,8 +9,12 @@ import { message } from "antd";
 import Cookies from "js-cookie";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function EmailConfig() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -28,9 +32,9 @@ function EmailConfig() {
   return (
     <div className="row justify-content-md-center">
       <MetaTags
-        title="تفعيل البريد الإلكتروني"
-        metaDescription="تفعيل البريد الإلكتروني"
-        ogDescription="تفعيل البريد الإلكتروني"
+        title={getAll("E_mail_ctivation")}
+        metaDescription={getAll("E_mail_ctivation")}
+        ogDescription={getAll("E_mail_ctivation")}
       />
       <div className="col-lg-6 p-0">
         <Formik
@@ -78,13 +82,15 @@ function EmailConfig() {
                       </div>
                     </motion.div>
                   )}
-                  <h1 className="login-title-form">تفعيل البريد الإلكتروني</h1>
+                  <h1 className="login-title-form">
+                    {getAll("E_mail_ctivation")}
+                  </h1>
                   <p className="login-text-form">
-                    تحقق من بريدك الإلكتروني هل وصلك كود تفعيل يتكون من 6 أرقام
+                    {getAll("Please_check_out")}
                   </p>
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="code">
-                      كود التفعيل
+                      {getAll("Activation_code")}
                     </label>
                     <Field
                       id="code"
@@ -151,7 +157,7 @@ function EmailConfig() {
                       <span className="material-icons material-icons-outlined">
                         replay
                       </span>{" "}
-                      إعادة إرسال كود التفعيل
+                      {getAll("Send_the_code")}
                     </button>
                   </div>
                   <div className="timlands-form confirm d-flex ">
@@ -163,14 +169,14 @@ function EmailConfig() {
                       <span className="material-icons material-icons-outlined">
                         check_circle_outline
                       </span>{" "}
-                      تأكيد البريد الإلكتروني
+                      {getAll("Confirm_e_mail")}
                     </button>
                     <Link href="/">
                       <a className="btn flex-center butt-md ml-auto">
                         <span className="material-icons material-icons-outlined">
                           home
                         </span>{" "}
-                        العودة للرئيسية
+                        {getAll("Back_to_Home")}
                       </a>
                     </Link>
                   </div>

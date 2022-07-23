@@ -8,13 +8,11 @@ import Link from "next/link";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
-
-const { getSectionLanguage } = useContext(LanguageContext);
-const getAll = getSectionLanguage("all");
-const getLogin = getSectionLanguage("login");
 function Index({ query }) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   console.log(query);
-
   return (
     <div className="container pt-4 mt-2">
       <MetaTags

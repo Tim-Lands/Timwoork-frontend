@@ -14,7 +14,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
+
 const Order = ({ query }) => {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  const getLogin = getSectionLanguage("login");
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -430,71 +436,102 @@ const Order = ({ query }) => {
   const statusLabel = (status: any) => {
     switch (status) {
       case 0:
-        return <span className="badge bg-secondary">قيد الانتظار...</span>;
+        return (
+          <span className="badge bg-secondary">{getLogin("PEnding")}</span>
+        );
 
       case 1:
-        return <span className="badge bg-warning">ملغية من طرف المشتري</span>;
+        return (
+          <span className="badge bg-warning">{getAll("Cancelled_by_the")}</span>
+        );
 
       case 2:
-        return <span className="badge bg-danger">مرفوضة من طرف البائع</span>;
+        return (
+          <span className="badge bg-danger">{getAll("Refused_by_the")}</span>
+        );
 
       case 3:
-        return <span className="badge bg-info text-dark">قيد التنفيذ...</span>;
+        return (
+          <span className="badge bg-info text-dark">
+            {getAll("In_progress")}
+          </span>
+        );
 
       case 4:
         return (
-          <span className="badge bg-warning">طلب إلغاء من طرف المشتري</span>
+          <span className="badge bg-warning">
+            {getAll("Buyer_cancellation_request")}
+          </span>
         );
 
       case 5:
-        return <span className="badge bg-warning">ملغية من طرف البائع</span>;
+        return (
+          <span className="badge bg-warning">
+            {getAll("Cancelled_by_the_seller")}
+          </span>
+        );
 
       case 6:
-        return <span className="badge bg-primary">قيد الإستلام</span>;
+        return <span className="badge bg-primary">{getAll("In_receipt")}</span>;
 
       case 7:
-        return <span className="badge bg-success text-light">مكتملة</span>;
+        return (
+          <span className="badge bg-success text-light">
+            {getLogin("Completed")}
+          </span>
+        );
 
       case 8:
-        return <span className="badge bg-red text-light">معلقة</span>;
+        return (
+          <span className="badge bg-red text-light">{getAll("Suspended")}</span>
+        );
 
       case 9:
-        return <span className="badge bg-light text-dark">حالة تعديل</span>;
+        return (
+          <span className="badge bg-light text-dark">
+            {getAll("Amendment_request_status")}
+          </span>
+        );
 
       case 10:
         return (
           <span className="badge bg-danger text-light">
-            معلقة بسبب رفض التعديل
+            {getAll("Suspended_due_to")}
           </span>
         );
 
       default:
-        return <span className="badge bg-info text-dark">قيد الانتظار...</span>;
+        return (
+          <span className="badge bg-info text-dark">{getLogin("PEnding")}</span>
+        );
     }
   };
   function durationFunc() {
     if (ShowItem.data.duration == 1) {
-      return "يوم واحد";
+      return getAll("One_day");
     }
     if (ShowItem.data.duration == 2) {
-      return "يومين";
+      return getAll("2_days");
     }
     if (ShowItem.data.duration > 2 && ShowItem.data.duration < 11) {
-      return ShowItem.data.duration + " أيام ";
+      return ShowItem.data.duration + getAll("Days");
     }
     if (ShowItem.data.duration >= 11) {
-      return ShowItem.data.duration + " يوم ";
+      return ShowItem.data.duration + getAll("Day");
     }
   }
   return (
     <div style={{ backgroundColor: "#f6f6f6" }}>
       <MetaTags
-        title={"عرض الطلبية"}
-        metaDescription={"عرض الطلبية"}
-        ogDescription={"عرض الطلبية"}
+        title={getAll("View_order")}
+        metaDescription={getAll("View_order")}
+        ogDescription={getAll("View_order")}
       />
       {errorItem && !ShowItem.data && (
-        <Result status="warning" title="حدث خطأ غير متوقع" />
+        <Result
+          status="warning"
+          title={getAll("An_unexpected_error_occurred")}
+        />
       )}
       {!ShowItem && <Loading />}
       {ShowItem && veriedEmail && (
@@ -511,7 +548,7 @@ const Order = ({ query }) => {
                     }}
                   >
                     <div className="aside-header">
-                      <h3 className="title">المشتري</h3>
+                      <h3 className="title">{getAll("Buyer")}</h3>
                     </div>
                     <Link
                       href={`/u/${
@@ -555,7 +592,7 @@ const Order = ({ query }) => {
                     }}
                   >
                     <div className="aside-header">
-                      <h3 className="title">البائع</h3>
+                      <h3 className="title">{getAll("Seller")}</h3>
                     </div>
                     <Link
                       href={`/u/${
@@ -596,7 +633,9 @@ const Order = ({ query }) => {
                     <>
                       <div style={{ backgroundColor: "#fff", padding: 9 }}>
                         <div className="aside-header">
-                          <h3 className="title">مرفقات المشروع</h3>
+                          <h3 className="title">
+                            {getAll("Project_attachments")}
+                          </h3>
                         </div>
                         <div className="aside-attachments">
                           <Timeline>
@@ -610,7 +649,8 @@ const Order = ({ query }) => {
                                   rel="noreferrer"
                                   target="_blank"
                                 >
-                                  تحميل الملف {i + 1}#
+                                  {getAll("Upload_file")}
+                                  {i + 1}#
                                 </a>
                               </Timeline.Item>
                             ))}
@@ -622,25 +662,16 @@ const Order = ({ query }) => {
 
                   <div style={{ backgroundColor: "#fff", marginTop: 10 }}>
                     <div className="order-notes p-1">
-                      <h3 className="title">ملاحظات هامة لحماية حسابك</h3>
+                      <h3 className="title">{getAll("Important_notes_to")}</h3>
                       <ul className="order-notes-list">
                         <li>
-                          لا تتواصل مع أي مستخدم آخر خارج الموقع. موقع تيموورك
-                          يحميك ببقاء تواصلك داخل الموقع فقط.
+                          {getAll("Do_not_communicate")}
+                          {getAll("Timwoork_protects_you")}.
                         </li>
-                        <li>لا تزود أي مستخدم تحت أي ظرف بأي معلومات حساسة</li>
-                        <li>
-                          لا تعطي معلومات الدخول الخاصة ببريدك الالكتروني أو
-                          حسابك في PayPal أو حساباتك على الشبكات الاجتماعية
-                        </li>
-                        <li>
-                          تزويدك لأي مستخدم بمعلومات دخول لموقعك، جهازك الشخصي
-                          أو أي شيء آخر يتم على مسؤوليتك الشخصية
-                        </li>
-                        <li>
-                          الرسائل مخصصة للاستفسار حول الخدمة فقط ولا يجب البدء
-                          في تنفيذ خدمة أو تسليمها عبر الرسائل قبل شرائها
-                        </li>
+                        <li>{getAll("Never_provide_under")}</li>
+                        <li>{getAll("Do_not_provide")}</li>
+                        <li>{getAll("Providing_other_users")}</li>
+                        <li>{getAll("The_messages_are")}</li>
                       </ul>
                     </div>
                   </div>
@@ -658,7 +689,7 @@ const Order = ({ query }) => {
                               className="single-comments-modal"
                             >
                               <div className="modal-title">
-                                <h4 className="title">إضافة رد</h4>
+                                <h4 className="title">{getAll("Reply")}</h4>
                                 <button
                                   className="btn-close"
                                   type="button"
@@ -678,7 +709,7 @@ const Order = ({ query }) => {
                                       htmlFor="message_rating"
                                       className="form-text"
                                     >
-                                      اختر تقييما
+                                      {getAll("Choose_a_review")}
                                     </label>
 
                                     <Rate
@@ -704,7 +735,7 @@ const Order = ({ query }) => {
                                       htmlFor="message_type"
                                       className="form-text"
                                     >
-                                      أكتب نص التعليق
+                                      {getAll("Write_the_comment")}
                                     </label>
                                     <div
                                       className="relative-form d-flex"
@@ -716,7 +747,9 @@ const Order = ({ query }) => {
                                       <textarea
                                         id="input-buyer_instruct"
                                         name="buyer_instruct"
-                                        placeholder="أكتب نص التعليق..."
+                                        placeholder={getAll(
+                                          "Write_the_comment"
+                                        )}
                                         className={"timlands-inputs"}
                                         autoComplete="off"
                                         value={rattingState}
@@ -750,14 +783,14 @@ const Order = ({ query }) => {
                                     rattingHandle(ShowItem && ShowItem.data.id)
                                   }
                                 >
-                                  إضافة التعليق
+                                  {getAll("Add_comment")}
                                 </button>
                                 <button
                                   className="btn butt-red-text butt-sm mx-1"
                                   onClick={() => setModalVisibleRatting(false)}
                                   type="button"
                                 >
-                                  إغلاق
+                                  {getAll("Cancel_2")}
                                 </button>
                               </div>
                             </motion.div>
@@ -775,17 +808,14 @@ const Order = ({ query }) => {
                         textAlign: "center",
                       }}
                     >
-                      <p className="text">
-                        أصبح بإمكانك تقييم الخدمة الآن. إن لم تنل إعجابك، جرب
-                        التواصل مع البائع أولاً
-                      </p>
+                      <p className="text">{getAll("You_can_now")}</p>
                       <button
                         className="btn butt-sm butt-primary"
                         style={{ width: "40%", margin: "auto" }}
                         type="button"
                         onClick={() => setModalVisibleRatting(true)}
                       >
-                        إضافة تقييم الآن
+                        {getAll("Add_a_review")}
                       </button>
                     </div>
                   )}
@@ -794,7 +824,7 @@ const Order = ({ query }) => {
                   </div>
                   <div style={{ backgroundColor: "#fff", padding: 9 }}>
                     <div className="aside-header">
-                      <h3 className="title">تعليمات للمشتري</h3>
+                      <h3 className="title">{getAll("Instructions_to_the")}</h3>
                     </div>
                     <div className="seller-info">
                       <div
@@ -811,7 +841,7 @@ const Order = ({ query }) => {
                   {ShowItem && ShowItem.data.conversation && (
                     <>
                       <div className="aside-header">
-                        <h3 className="title">المحادثة</h3>
+                        <h3 className="title">{getAll("Conversation")}</h3>
                       </div>
 
                       <div className="conversations-list">
@@ -870,7 +900,7 @@ const Order = ({ query }) => {
                                         marginBottom: 5,
                                       }}
                                     >
-                                      تعليمة
+                                      {getAll("Educational")}
                                     </span>
                                   )}
                                   {item.type == 2 && (
@@ -884,7 +914,7 @@ const Order = ({ query }) => {
                                         marginBottom: 5,
                                       }}
                                     >
-                                      سبب إلغاء
+                                      {getAll("Cancellation_reason")}
                                     </span>
                                   )}
                                   <p className="text" style={{ margin: 0 }}>
@@ -921,7 +951,8 @@ const Order = ({ query }) => {
                                               target="_blank"
                                             >
                                               {switchFileTypes(att.mime_type)}{" "}
-                                              تحميل الملف {i + 1}#
+                                              {getAll("Upload_file")}
+                                              {i + 1}#
                                             </a>
                                           </div>
                                         )
@@ -964,7 +995,7 @@ const Order = ({ query }) => {
                         <form onSubmit={sendMessageHandle}>
                           <div className="timlands-form">
                             <label htmlFor="message_type" className="form-text">
-                              اختر نوع الرسالة
+                              {getAll("Choose_message_type")}
                             </label>
                             <div className="py-1 d-flex">
                               <select
@@ -976,9 +1007,15 @@ const Order = ({ query }) => {
                                   setMessageType(e.target.value)
                                 }
                               >
-                                <option value="0">نص عادي</option>
-                                <option value="1">تعليمات</option>
-                                <option value="2">سبب إلغاء</option>
+                                <option value="0">
+                                  {getAll("Plain_text")}
+                                </option>
+                                <option value="1">
+                                  {getAll("Instructions")}
+                                </option>
+                                <option value="2">
+                                  {getAll("Cancellation_reason")}
+                                </option>
                               </select>
                               <button
                                 type="button"
@@ -990,7 +1027,7 @@ const Order = ({ query }) => {
                                 <span className="material-icons material-icons-outlined">
                                   attach_file
                                 </span>{" "}
-                                إرفاق ملفات
+                                {getAll("Attach_file")}
                               </button>
                             </div>
                             <div className="send-attachments">
@@ -1048,7 +1085,7 @@ const Order = ({ query }) => {
                                     }}
                                   >
                                     <li>
-                                      <strong>الحجم الكلي: </strong>
+                                      <strong>{getAll("Overall_size")}</strong>
                                       {totalSizeMsg}
                                     </li>
                                   </ul>
@@ -1072,7 +1109,7 @@ const Order = ({ query }) => {
                                 onKeyUp={() => {
                                   setMessageErrors({});
                                 }}
-                                placeholder="نص الرسالة..."
+                                placeholder={getAll("Message")}
                                 className={
                                   "timlands-inputs " +
                                   (messageErrors &&
@@ -1105,7 +1142,7 @@ const Order = ({ query }) => {
                                 <span className="material-icons material-icons-outlined">
                                   send
                                 </span>
-                                إرسال
+                                {getAll("Send")}
                               </button>
                             </div>
                             {messageErrors && messageErrors.message && (
@@ -1132,14 +1169,12 @@ const Order = ({ query }) => {
                             forum
                           </span>
                         </div>
-                        <h3 className="title">تواصل مع البائع</h3>
-                        <p className="text">
-                          حاول ان تتفق مع البائع قبل البدء في تنفيذ العملية
-                        </p>
+                        <h3 className="title">{getAll("Contact_buyer")}</h3>
+                        <p className="text">{getAll("Try_to_agree")}</p>
                         <textarea
                           id="input-initial_message"
                           name="initial_message"
-                          placeholder="نص الرسالة..."
+                          placeholder={getAll("Message")}
                           className={"timlands-inputs mt-2"}
                           autoComplete="off"
                           style={{ minHeight: 80 }}
@@ -1154,7 +1189,7 @@ const Order = ({ query }) => {
                             }
                             className="btn butt-lg butt-primary"
                           >
-                            إنشاء المحادثة
+                            {getAll("Create_a_conversation")}
                           </button>
                         </div>
                       </div>
@@ -1170,7 +1205,7 @@ const Order = ({ query }) => {
                     }}
                   >
                     <div className="aside-header">
-                      <h3 className="title">الأدوات</h3>
+                      <h3 className="title">{getLogin("Tools")}</h3>
                     </div>
                     <div className="d-grid gap-2">
                       {ShowItem && ShowItem.data.status == 0 && (
@@ -1184,17 +1219,17 @@ const Order = ({ query }) => {
                           <span className="material-icons material-icons-outlined">
                             highlight_off
                           </span>{" "}
-                          إلغاء عملية الشراء
+                          {getAll("Cancel_your_purchase")}
                         </button>
                       )}
                       {ShowItem && ShowItem.data.status == 1 && (
                         <span className="badge bg-success">
-                          تم الإلغاء من طرفك
+                          {getAll("You’ve_cancelled_it")}
                         </span>
                       )}
                       {ShowItem && ShowItem.data.status == 2 && (
                         <span className="badge bg-warning">
-                          هذه الطلبية مرفوضة من طرف البائع
+                          {getAll("This_order_was")}
                         </span>
                       )}
                       {ShowItem && ShowItem.data.status == 3 && (
@@ -1208,21 +1243,21 @@ const Order = ({ query }) => {
                           <span className="material-icons material-icons-outlined">
                             highlight_off
                           </span>{" "}
-                          طلب الإلغاء{" "}
+                          {getAll("Cancellation_request")}{" "}
                         </button>
                       )}
                       {ShowItem && ShowItem.data.status == 4 && (
                         <>
                           {ShowItem.data.item_rejected.status == 0 && (
                             <p className="note-text">
-                              في انتظار قبول طلبك من طرف البائع
+                              {getAll("Waiting_for_your")}
                             </p>
                           )}
                         </>
                       )}
                       {ShowItem && ShowItem.data.status == 5 && (
                         <span className="badge bg-warning">
-                          ملغية من طرف البائع
+                          {getAll("Cancelled_by_the_seller")}
                         </span>
                       )}
                       {ShowItem && ShowItem.data.status == 6 && (
@@ -1237,7 +1272,7 @@ const Order = ({ query }) => {
                             <span className="material-icons material-icons-outlined">
                               check_circle_outline
                             </span>{" "}
-                            قبول الإستلام{" "}
+                            {getAll("Receipt_accept")}{" "}
                           </button>
                           <button
                             disabled={requestModifiedBuyerLoading}
@@ -1249,22 +1284,24 @@ const Order = ({ query }) => {
                             <span className="material-icons material-icons-outlined">
                               edit
                             </span>{" "}
-                            طلب تعديل{" "}
+                            {getLogin("Edit")}{" "}
                           </button>
                         </>
                       )}
                       {ShowItem && ShowItem.data.status == 7 && (
                         <span className="badge bg-success text-light">
-                          مكتملة
+                          {getLogin("Completed")}
                         </span>
                       )}
                       {ShowItem && ShowItem.data.status == 8 && (
                         <>
                           <p className="note-text">
-                            لقد تم رفض طلبك الإلغاء من طرف البائع
+                            {getAll("The_seller_has")}
                           </p>
                           <div className="box-note red">
-                            <p className="text">في انتظار حل النزاع بينكما</p>
+                            <p className="text">
+                              {getAll("Waiting_for_your_2")}
+                            </p>
                           </div>
                         </>
                       )}
@@ -1275,7 +1312,7 @@ const Order = ({ query }) => {
                             <>
                               <div className="box-note warning">
                                 <p className="text">
-                                  في انتظار قبول البائع لطلب التعديل
+                                  {getAll("Waiting_for_the")}
                                 </p>
                               </div>
                             </>
@@ -1285,35 +1322,31 @@ const Order = ({ query }) => {
 
                       {ShowItem && ShowItem.data.status == 10 && (
                         <div className="box-note warning">
-                          <p className="text">
-                            لقد تم رفض التعديل من طرف البائع في انتظار حل النزاع
-                            بينك وبين البائع . خلال 48 ساعة وإلا سيتم تصعيد
-                            المشكلة إلى خدمة العملاء
-                          </p>
+                          <p className="text">{getAll("The_amendment_has")}</p>
                         </div>
                       )}
                     </div>
                   </div>
                   <div style={{ backgroundColor: "#fff", padding: 9 }}>
                     <div className="aside-header">
-                      <h3 className="title">تفاصيل العملية</h3>
+                      <h3 className="title">{getAll("Operation_details")}</h3>
                     </div>
                     <table className="table table-borderless">
                       <tbody>
                         <tr>
-                          <th>رقم العملية</th>
+                          <th>{getAll("Operation_number1")}</th>
                         </tr>
                         <tr>
                           <td>{ShowItem.data.uuid}</td>
                         </tr>
                         <tr>
-                          <th>حالة العملية</th>
+                          <th>{getAll("Operation_status")}</th>
                         </tr>
                         <tr>
                           <td>{statusLabel(ShowItem.data.status)}</td>
                         </tr>
                         <tr>
-                          <th>تاريخ العملية</th>
+                          <th>{getAll("Date_of_operation")}</th>
                         </tr>
                         <tr>
                           <td>
@@ -1321,13 +1354,13 @@ const Order = ({ query }) => {
                           </td>
                         </tr>
                         <tr>
-                          <th>مدة الإنجاز</th>
+                          <th>{getAll("Completion_time")}</th>
                         </tr>
                         <tr>
                           <td>{durationFunc()}</td>
                         </tr>
                         <tr>
-                          <th>سعر الطلبية</th>
+                          <th>{getAll("Order_price")}</th>
                         </tr>
                         <tr>
                           <td>${ShowItem.data.price_product}</td>
