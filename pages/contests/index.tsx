@@ -19,6 +19,7 @@ function Index() {
         metaDescription={"تصفح الخدمات"}
         ogDescription={"تصفح الخدمات"}
       />
+
       <div className="contests-container">
         <div className="row">
           <div className="col-lg-3">

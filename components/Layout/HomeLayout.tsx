@@ -32,7 +32,23 @@ function Layout(props: any) {
       value={{
         fetcher: async (url: string) => {
           console.log(url);
-          return await API.get(url, {
+          return url.includes('wp-json')? await API.get(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((r: any) => r.data)
+            .catch(() => {
+              if (url == "api/me" && token) {
+                Cookies.remove("token");
+                if (typeof window !== undefined) {
+                  localStorage.removeItem("token");
+                  return;
+                }
+                router.reload();
+              }
+            })
+          : await API.get(url, {
             headers: {
               Authorization: `Bearer ${token}`,
               "X-LOCALIZATION": language,

@@ -1,19 +1,24 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-function FormLangs() {
+function FormLangs({checkedLangs, default_lang, onClick}) {
   return (
     <ul className="timlands-checked-items">
-      <li>
+      <li className={default_lang=='ar'?"active":''} onClick={()=>checkedLangs['ar']?onClick('ar'):null}>
         <a>AR</a>
       </li>
-      <li className="active">
+      <li className={default_lang=='en'?"active":''} onClick={()=>checkedLangs['en']?onClick('en'):null}>
         <a>EN</a>
       </li>
-      <li>
+      <li className={default_lang=='fr'?"active":''} onClick={()=>checkedLangs['fr']?onClick('fr'):null}>
         <a>FR</a>
       </li>
     </ul>
   );
 }
-
+FormLangs.propTypes = {
+  onClick: PropTypes.func,
+  default_lang: PropTypes.string,
+  checkedLangs: PropTypes.object
+}
 export default FormLangs;

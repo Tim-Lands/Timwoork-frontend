@@ -13409,10 +13409,74 @@ h3 {
   border: 1px solid #f2f2f2;
   border-radius: 8px;
   overflow: hidden;
+  margin-bottom: 9px;
 }
 
 .timlands-contest-entier-post .contest-item-img {
   height: 210px;
   background-size: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.timlands-contest-entier-post .contest-item-content .progress .progress-bar {
+  background-color: #475c80;
+}
+
+.timlands-contest-entier-post .user-mata-post {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-top: 1px solid #f7f7f7;
+  padding-top: 10px;
+  margin-top: 6px;
+}
+
+.timlands-contest-entier-post .user-mata-post .user-mata-post-img {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 4px;
+}
+
+.timlands-contest-entier-post .user-mata-post .user-mata-post-img img {
+  border-radius: 50%;
+}
+
+.timlands-contest-entier-post .user-mata-post .user-mata-post-content .text-user {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.timlands-contest-entier-post .user-mata-post .user-mata-post-content .text-meta {
+  font-size: 11px;
+  font-weight: 200;
+  margin: 0;
+  color: #666;
+}
+
+.public-vote {
+  font-size: 13px;
+  margin: 0;
+  margin-bottom: 6px;
+}
+
+.public-vote small {
+  font-weight: 200;
 }
 /*# sourceMappingURL=app.css.map */

@@ -141,6 +141,7 @@ function Description({ query, stars }) {
     extensions: [StarterKit],
     content: stars && stars.data.buyer_instruct,
   });
+  console.log(stars);
   const html = editor && editor.getHTML();
   const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML();
   /* async function stepFive() {
@@ -266,8 +267,9 @@ function Description({ query, stars }) {
                                 <span className="material-icons material-icons-outlined">
                                   payments
                                 </span>
+                                {getLanguage("Upgrades_price")}
+
                               </span>
-                              {getLanguage("Upgrades_price")}
                             </a>
                           </Link>
                         </h3>
@@ -304,8 +306,9 @@ function Description({ query, stars }) {
                                   mms
                                 </span>
                               </span>
+                              {getLanguage("Gallery_and_folders")}
+
                             </a>
-                            {getLanguage("Gallery_and_folders")}
                           </Link>
                         </h3>
                       </div>
