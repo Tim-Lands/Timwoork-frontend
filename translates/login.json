@@ -977,7 +977,7 @@
   "Cancel": {
     "en": "Cancel",
     "fr": "Fermer",
-    "ar": "Fermer"
+    "ar": "الغاء الامر"
   },
   "Reject_this_request": {
     "en": "Reject this request",
@@ -1099,6 +1099,11 @@
     "fr": "Envoyer courriel",
     "ar": "إرسال إيميل"
   },
+  "Send": {
+    "en": "Send",
+    "fr": "Envoyer",
+    "ar": "إرسال"
+  },
   "Send_notification": {
     "en": "Send notification",
     "fr": "Envoyer une notification",
@@ -1129,7 +1134,7 @@
     "fr": "Rechercher dans le tableau",
     "ar": "البحث في الجدول"
   },
-  "Suspension_{of_the": {
+  "Suspension_of_the": {
     "en": "Suspension of the account of this person",
     "fr": "Suspension du compte de la personne",
     "ar": "تعليق الحساب للشخص"
@@ -1229,11 +1234,6 @@
     "fr": "Envoyer maintenant",
     "ar": "أرسل الآن"
   },
-  "Send": {
-    "en": "Send",
-    "fr": "Envoyer",
-    "ar": "أرسل"
-  },
   "From": {
     "en": "From",
     "fr": "De",
@@ -1278,6 +1278,11 @@
     "en": "Suspension reason",
     "fr": "Motif de suspension",
     "ar": "سبب التعليق"
+  },
+  "Day": {
+    "en": "Day",
+    "fr": "Jour",
+    "ar": "يوم"
   },
   "Tasks_suspended": {
     "en": "Tasks suspended",
@@ -1798,5 +1803,10 @@
     "en": "You have no notification to display",
     "fr": "Vous n’avez aucune notification à afficher",
     "ar": "ليس لديك اشعارات لعرضها"
+  },
+  "Cancel_2": {
+    "en": "Cancel",
+    "fr": "Fermer",
+    "ar": "إغلاق"
   }
 }
