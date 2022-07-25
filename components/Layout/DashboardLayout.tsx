@@ -24,7 +24,6 @@ function DashboardLayout(props: any) {
     <SWRConfig
       value={{
         fetcher: async (url: string) => {
-          console.log(url);
           return await API.get(url, {
             headers: { Authorization: `Bearer ${token}` },
           }).then((r: any) => r.data);

@@ -19,73 +19,6 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
 import { LanguageContext } from "../../contexts/languageContext/context";
 
-const CheckoutForm = (getLogin: any) => {
-  const stripe = useStripe();
-  const elements = useElements();
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const [validationsGeneral, setValidationsGeneral]: any = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (elements == null) {
-      return;
-    }
-    const { paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-    });
-    setIsLoading(true);
-    try {
-      const res: any = await API.post(
-        `api/purchase/stripe/charge`,
-        { payment_method_id: paymentMethod.id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.push("/mypurchases");
-      }
-    } catch (error) {
-      setIsLoading(false);
-
-      if (error.response && error.response.data) {
-        setValidationsGeneral(error.response.data);
-      }
-    }
-  };
-
-  return (
-    <>
-      <form onSubmit={handleSubmit}>
-        {validationsGeneral.msg && (
-          <Alert type="error">{validationsGeneral.msg}</Alert>
-        )}
-        <CardElement />
-        <button
-          type="submit"
-          onClick={() => setIsLoading(true)}
-          className="btn butt-md purchace-by-stripe-btn butt-primary mt-2"
-          disabled={!stripe || !elements}
-        >
-          <span>{getLogin("Buy_now")}</span>
-          {isLoading && (
-            <span
-              className="spinner-border spinner-border-sm mx-1"
-              role="status"
-              aria-hidden="true"
-            ></span>
-          )}
-        </button>
-      </form>
-    </>
-  );
-};
 const stripePromise = loadStripe(
   "pk_live_51KVxMmKZiLP53MTnv5FYIaUkHebKN8foIJRwcHoOwfsMJq8wgNFZZcqx7UIXfpfsgS25WpCSO4orGz5m0TFLa0pC00CrKR1Vp8"
 );
@@ -94,6 +27,73 @@ function Bill() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLogin = getSectionLanguage("login");
   const getAll = getSectionLanguage("all");
+  const CheckoutForm = () => {
+    const stripe = useStripe();
+    const elements = useElements();
+    let token = Cookies.get("token");
+    if (!token && typeof window !== "undefined")
+      token = localStorage.getItem("token");
+    const [validationsGeneral, setValidationsGeneral]: any = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      if (elements == null) {
+        return;
+      }
+      const { paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+      setIsLoading(true);
+      try {
+        const res: any = await API.post(
+          `api/purchase/stripe/charge`,
+          { payment_method_id: paymentMethod.id },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          router.push("/mypurchases");
+        }
+      } catch (error) {
+        setIsLoading(false);
+
+        if (error.response && error.response.data) {
+          setValidationsGeneral(error.response.data);
+        }
+      }
+    };
+
+    return (
+      <>
+        <form onSubmit={handleSubmit}>
+          {validationsGeneral.msg && (
+            <Alert type="error">{validationsGeneral.msg}</Alert>
+          )}
+          <CardElement />
+          <button
+            type="submit"
+            onClick={() => setIsLoading(true)}
+            className="btn butt-md purchace-by-stripe-btn butt-primary mt-2"
+            disabled={!stripe || !elements}
+          >
+            <span>{getLogin("Buy_now")}</span>
+            {isLoading && (
+              <span
+                className="spinner-border spinner-border-sm mx-1"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            )}
+          </button>
+        </form>
+      </>
+    );
+  };
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -323,7 +323,7 @@ function Bill() {
                           animate={{ y: 0, opacity: 1 }}
                         >
                           <Elements stripe={stripePromise}>
-                            <CheckoutForm getLogin={getLogin} />
+                            <CheckoutForm />
                           </Elements>
                         </motion.div>
                       ) : null}
