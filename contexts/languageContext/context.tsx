@@ -8,15 +8,16 @@ export const LanguageProvider = (props) => {
   const lang = Cookies.get("lang");
 
   const [language, setLanguage] = useState(lang || "ar");
+
   function getSectionLanguage(section) {
     return function getLanguage(name) {
       if (translates[section][name]) {
         return translates[section][name][language];
       } else {
-        console.log(name);
       }
     };
   }
+
   useEffect(() => {
     Cookies.set("lang", language);
   }, [language]);

@@ -1,25 +1,26 @@
-import { Result } from 'antd'
-import Link from 'next/link'
-
+import { Result } from "antd";
+import Link from "next/link";
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 function Unauthorized() {
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-md-5">
-                <Result
-                    status="warning"
-                    title="ليس لديك الصلاحية"
-                    subTitle="ليس لديك الصلاحية لدخول هذه الصفحة"
-                    extra={
-                        <Link href="/login">
-                            <a className="btn butt-primary butt-md">
-                                تسجيل الدخول
-                            </a>
-                        </Link>
-                    }
-                />
-            </div>
-        </div>
-    )
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  return (
+    <div className="row justify-content-md-center">
+      <div className="col-md-5">
+        <Result
+          status="warning"
+          title={getAll("You_don’t_have")}
+          subTitle={getAll("You_don’t_have_the")}
+          extra={
+            <Link href="/login">
+              <a className="btn butt-primary butt-md">{getAll("Login_in")}</a>
+            </Link>
+          }
+        />
+      </div>
+    </div>
+  );
 }
 
-export default Unauthorized
+export default Unauthorized;

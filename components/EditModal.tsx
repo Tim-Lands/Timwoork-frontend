@@ -1,5 +1,7 @@
 import { Space } from "antd";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useContext } from "react";
+import { LanguageContext } from "../contexts/languageContext/context";
+
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 function EditModal({
@@ -11,6 +13,8 @@ function EditModal({
 }): ReactElement {
   const [msg, setMsg] = useState(msgValues);
   const [reason, setReason] = useState("");
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getLog = getSectionLanguage("login");
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -25,12 +29,12 @@ function EditModal({
           {text && <p className="text">{text}</p>}
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-msg">
-              نص الرسالة
+              {getLog("Message_text")}
             </label>
             <textarea
               id="input-msg"
               name="msg"
-              placeholder="نص الرسالة..."
+              placeholder={getLog("Message_text") + "..."}
               className={"timlands-inputs"}
               onChange={(e) => setMsg(e.target.value)}
               value={msg}
@@ -63,7 +67,7 @@ function EditModal({
               className="btn butt-sm butt-red-text"
               onClick={() => setIsConfirmText(false)}
             >
-              إلغاء الأمر
+              {getLog("Cancel")}
             </button>
           </Space>
         </div>

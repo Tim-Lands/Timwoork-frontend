@@ -499,6 +499,11 @@
     "fr": "Ajouter au moins une image à la gallerie",
     "ar": "الرجاء وضع صورة على الأقل في المعرض"
   },
+  "See_all_categories": {
+    "en": "See all categories…",
+    "fr": "Voire toutes les catégories…",
+    "ar": "مشاهدة كل التصنيفات…"
+  },
   "Add_a_profil_picture": {
     "en": "Add a profil picture",
     "fr": "Ajouter une photo de profil",
@@ -2818,5 +2823,15 @@
     "en": "Most popular services",
     "fr": "Services les plus populaires",
     "ar": "الخدمات الأكثر شعبية"
+  },
+  "Yes": {
+    "en": "Yes",
+    "fr": "Oui",
+    "ar": "نعم"
+  },
+  "No": {
+    "en": "No",
+    "fr": "Non",
+    "ar": "لا"
   }
 }

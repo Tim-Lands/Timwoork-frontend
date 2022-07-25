@@ -1,8 +1,9 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useContext } from "react";
 
 import { Spin } from "antd";
 import PropTypes from "prop-types";
 import ImageUploading from "react-images-uploading";
+import { LanguageContext } from "../contexts/languageContext/context";
 
 function FeaturedUploadingGalleries({
   full_path_thumbnail,
@@ -10,6 +11,8 @@ function FeaturedUploadingGalleries({
   setIsChanged,
   getLanguage,
 }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   const [featuredImages, setFeaturedImages]: any = useState([
     {
       data_url: full_path_thumbnail,
@@ -36,7 +39,7 @@ function FeaturedUploadingGalleries({
               className="text-note mt-3"
               style={{ color: "#555", margin: 0, fontSize: 13 }}
             >
-              يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة
+              {getAll("The_profile_picture")}
             </p>
             <p
               className="text-resolotion"
@@ -47,7 +50,7 @@ function FeaturedUploadingGalleries({
                 fontWeight: "bold",
               }}
             >
-              من الأفضل أن تكون الأبعاد: 750X450
+              {getAll("It’s_better_that")}
             </p>
             <ImageUploading
               value={featuredImages}
@@ -86,7 +89,9 @@ function FeaturedUploadingGalleries({
                     {/* {featuredProgress !== 0 && <Progress percent={featuredProgress} />} */}
                     {imageList.length == 0 && (
                       <div className="nothing-images">
-                        <h4 className="nothing-title">اختر الصورة البارزة</h4>
+                        <h4 className="nothing-title">
+                          {getAll("Choose_a_profile")}
+                        </h4>
                         <p className="nothing-text">
                           {getLanguage("You_must_choose")}
                         </p>

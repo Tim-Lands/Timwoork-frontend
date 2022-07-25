@@ -2,10 +2,12 @@ import React from "react";
 import Select from "react-select";
 import Loading from "./Loading";
 import PropTypes from "prop-types";
-
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 const Tags = ({ placeholder, values, labels, selected }) => {
   let checked = [""];
-
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   if (!values) return <Loading />;
 
   let newArrayofObjects = [];
@@ -21,7 +23,7 @@ const Tags = ({ placeholder, values, labels, selected }) => {
       {values !== null && values.length !== 0 && (
         <Select
           isMulti
-          notFoundContent="لاتوجد بيانات"
+          notFoundContent={getAll("No_data")}
           style={{ width: "100%" }}
           //className="timlands-inputs select"
           placeholder={placeholder}

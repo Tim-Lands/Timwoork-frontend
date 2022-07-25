@@ -1,4 +1,5 @@
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement, useState, useEffect, useContext } from "react";
+import { LanguageContext } from "../contexts/languageContext/context";
 import { Spin } from "antd";
 import PropTypes from "prop-types";
 import ImageUploading from "react-images-uploading";
@@ -12,6 +13,8 @@ function ImagesUploadingGalleries({
 }): ReactElement {
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   useEffect(() => {
     setImages(galaries);
   }, [galaries]);
@@ -72,7 +75,9 @@ function ImagesUploadingGalleries({
                     </div>
                     {imageList.length == 0 && (
                       <div className="nothing-images">
-                        <h4 className="nothing-title">اختر صور من جهازك</h4>
+                        <h4 className="nothing-title">
+                          {getAll("Choose_pictures_from")}
+                        </h4>
                         <p className="nothing-text">
                           {getLanguage("You_must_choose")}
                         </p>
@@ -89,11 +94,6 @@ function ImagesUploadingGalleries({
                           }}
                         >
                           <div className="image-item__btn-wrapper">
-                            {/*    <button
-                                                                        type='button'
-                                                                        onClick={() => onImageUpdate(index)}>
-                                                                        <span className="material-icons-outlined">edit</span>
-                                                                    </button> */}
                             <button
                               type="button"
                               onClick={() => removeImage(image, index)}
