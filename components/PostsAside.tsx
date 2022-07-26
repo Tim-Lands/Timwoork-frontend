@@ -35,7 +35,7 @@ function PostsAside({
     );
   return (
     <>
-      {!PostData && (
+      {/* {!PostData && (
         <div className="posts-aside loading">
           <div className="posts-aside-header">
             <h1 className="title">
@@ -81,7 +81,7 @@ function PostsAside({
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {PostData && PostData.length !== 0 && (
         <div className="posts-aside">
           <div className="posts-aside-header">
