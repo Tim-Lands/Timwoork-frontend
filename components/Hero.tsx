@@ -247,30 +247,6 @@ function Hero() {
                 </div>
               </motion.div>
             )}
-            {/*
-                        <ul className="popular-searchs-list nav">
-                            <li className="popular-title">الأكثر بحثا: </li>
-                            <li className="popular-item">
-                                <Link href="dd">
-                                    <a className="popular-link">تصميم المواقع</a>
-                                </Link>
-                            </li>
-                            <li className="popular-item">
-                                <Link href="dd">
-                                    <a className="popular-link">ترمجة المقالات</a>
-                                </Link>
-                            </li>
-                            <li className="popular-item">
-                                <Link href="dd">
-                                    <a className="popular-link">فوتوشوب</a>
-                                </Link>
-                            </li>
-                            <li className="popular-item">
-                                <Link href="dd">
-                                    <a className="popular-link">غرافيك</a>
-                                </Link>
-                            </li>
-                        </ul>*/}
           </div>
         </div>
       </div>

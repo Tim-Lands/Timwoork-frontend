@@ -233,7 +233,7 @@ const EditSeller = () => {
             userInfo.user_details.profile &&
             userInfo.user_details.profile.profile_seller !== null && (
               <>
-                <div className="row justify-content-md-center">
+                <div className="row justify-content-md-center mt-3">
                   <div className="col-lg-7">
                     {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
 

@@ -360,13 +360,11 @@ function Medias({ query, product, token }) {
               <div className="row justify-content-md-center">
                 <div className="col-xl-10">
                   <FeaturedUploadingGalleries
-                    getLanguage={getLanguage}
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}
                     full_path_thumbnail={featuredMedia || "/seo.png"}
                   />
                   <ImagesUploadingGalleries
-                    getLanguage={getLanguage}
                     setIsChanged={setIsGalleryChanged}
                     setGalleryMedia={setGalleryMedia}
                     galaries={galleryMedia}

@@ -13,7 +13,7 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      className="modal-conferm"
+      className="modal-conferm lg"
     >
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head">
@@ -24,7 +24,7 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
             <label className="label-block" htmlFor="input-title">
               {getAll("Service_title")}
             </label>
-            <input 
+            <input
               id="input-title"
               name="title"
               placeholder={getAll("Service_title")}

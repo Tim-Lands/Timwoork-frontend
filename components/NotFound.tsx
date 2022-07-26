@@ -1,25 +1,26 @@
-import { Result } from 'antd'
-import Link from 'next/link'
-
+import { Result } from "antd";
+import Link from "next/link";
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 function NotFound() {
-    return (
-        <div className="row justify-content-md-center">
-            <div className="col-md-5">
-                <Result
-                    status="warning"
-                    title="هذه الصفحة غير موجودة"
-                    subTitle="يرجى التأكد من كتابة الرابط"
-                    extra={
-                        <Link href="/">
-                            <a className="btn butt-primary butt-md">
-                                الرئيسية
-                            </a>
-                        </Link>
-                    }
-                />
-            </div>
-        </div>
-    )
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
+  return (
+    <div className="row justify-content-md-center">
+      <div className="col-md-5">
+        <Result
+          status="warning"
+          title={getAll("Page_not_found")}
+          subTitle={getAll("Please_make_sure")}
+          extra={
+            <Link href="/">
+              <a className="btn butt-primary butt-md">{getAll("Home")}</a>
+            </Link>
+          }
+        />
+      </div>
+    </div>
+  );
 }
 
-export default NotFound
+export default NotFound;

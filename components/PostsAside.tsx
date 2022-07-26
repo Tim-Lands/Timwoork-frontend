@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useContext } from "react";
 import PropTypes from "prop-types";
 import { Alert } from "./Alert/Alert";
 import Link from "next/link";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-
+import { LanguageContext } from "../contexts/languageContext/context";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -15,25 +15,27 @@ import Post from "./Post/Post";
 function PostsAside({
   PostData,
   title,
-  colNumber,
+  // colNumber,
   isError,
   linkURL,
   more,
 }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   if (isError)
     return (
       <div className="posts-aside error">
         <div className="posts-aside-header">
-          <h1 className="title">حدث خطأ</h1>
+          <h1 className="title">{getAll("An_error_occurred")}</h1>
         </div>
         <div className="posts-aside-body">
-          <Alert type="error">لا توجد خدمات لعرضها</Alert>
+          <Alert type="error">{getAll("No_services_to")}</Alert>
         </div>
       </div>
     );
   return (
     <>
-      {!PostData && (
+      {/* {!PostData && (
         <div className="posts-aside loading">
           <div className="posts-aside-header">
             <h1 className="title">
@@ -79,7 +81,7 @@ function PostsAside({
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {PostData && PostData.length !== 0 && (
         <div className="posts-aside">
           <div className="posts-aside-header">
@@ -116,23 +118,6 @@ function PostsAside({
                   slidesPerView: 1,
                   spaceBetween: 15,
                 },
-                // "@0.00": {
-                //   slidesPerView: 2,
-                //   spaceBetween: 30,
-                // },
-
-                // "@1.50": {
-                //   slidesPerView: 4,
-                //   spaceBetween: 15,
-                // },
-                // // "@1.00": {
-                // //   slidesPerView: 3,
-                // //   spaceBetween: 3,
-                // // },
-                // // "@1.50": {
-                // //   slidesPerView: 4,
-                // //   spaceBetween: 15,
-                // // },
               }}
               className="mySwiper"
             >
@@ -200,7 +185,7 @@ PostsAside.propTypes = {
   title: PropTypes.string,
   linkURL: PropTypes.string,
   PostData: PropTypes.array,
-  colNumber: PropTypes.number,
+  // colNumber: PropTypes.number,
   isError: PropTypes.any,
   more: PropTypes.string,
 };

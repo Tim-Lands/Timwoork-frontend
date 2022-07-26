@@ -11,51 +11,52 @@ function index({ products, isError, isLoading, size }): ReactElement {
   if (isError) message.error(getAll("An_error_occurred_while"));
   if (isLoading)
     return (
-      <div className="posts-aside loading" style={{ minHeight: 1450 }}>
-        <div className="posts-aside-header">
-          <h1 className="title">
-            <div className="loading-title"></div>
-          </h1>
-        </div>
-        <div className="posts-aside-body">
-          <div className="loading-container">
-            <div className="row">
-              <div className={"col-md-" + size}>
-                <div className="loading-container-item">
-                  <div className="container-item-img"></div>
-                  <div className="container-item-title"></div>
-                  <div className="container-item-title2"></div>
-                  <div className="container-item-meta"></div>
-                </div>
-              </div>
-              <div className={"col-md-" + size}>
-                <div className="loading-container-item">
-                  <div className="container-item-img"></div>
-                  <div className="container-item-title"></div>
-                  <div className="container-item-title2"></div>
-                  <div className="container-item-meta"></div>
-                </div>
-              </div>
-              <div className={"col-md-" + size}>
-                <div className="loading-container-item">
-                  <div className="container-item-img"></div>
-                  <div className="container-item-title"></div>
-                  <div className="container-item-title2"></div>
-                  <div className="container-item-meta"></div>
-                </div>
-              </div>
-              <div className={"col-md-" + size}>
-                <div className="loading-container-item">
-                  <div className="container-item-img"></div>
-                  <div className="container-item-title"></div>
-                  <div className="container-item-title2"></div>
-                  <div className="container-item-meta"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <></>
+      // <div className="posts-aside loading" style={{ minHeight: 1450 }}>
+      //   <div className="posts-aside-header">
+      //     <h1 className="title">
+      //       <div className="loading-title"></div>
+      //     </h1>
+      //   </div>
+      //   <div className="posts-aside-body">
+      //     <div className="loading-container">
+      //       <div className="row">
+      //         <div className={"col-md-" + size}>
+      //           <div className="loading-container-item">
+      //             <div className="container-item-img"></div>
+      //             <div className="container-item-title"></div>
+      //             <div className="container-item-title2"></div>
+      //             <div className="container-item-meta"></div>
+      //           </div>
+      //         </div>
+      //         <div className={"col-md-" + size}>
+      //           <div className="loading-container-item">
+      //             <div className="container-item-img"></div>
+      //             <div className="container-item-title"></div>
+      //             <div className="container-item-title2"></div>
+      //             <div className="container-item-meta"></div>
+      //           </div>
+      //         </div>
+      //         <div className={"col-md-" + size}>
+      //           <div className="loading-container-item">
+      //             <div className="container-item-img"></div>
+      //             <div className="container-item-title"></div>
+      //             <div className="container-item-title2"></div>
+      //             <div className="container-item-meta"></div>
+      //           </div>
+      //         </div>
+      //         <div className={"col-md-" + size}>
+      //           <div className="loading-container-item">
+      //             <div className="container-item-img"></div>
+      //             <div className="container-item-title"></div>
+      //             <div className="container-item-title2"></div>
+      //             <div className="container-item-meta"></div>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </div>
     );
   return (
     <>

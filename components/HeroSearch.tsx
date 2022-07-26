@@ -9,6 +9,7 @@ function HeroSearch() {
           placeholder="Search in Wazzfny..."
           className="timlands-inputs"
         />
+
         <button className="search-btn">
           <span className="material-icons material-icons-outlined">search</span>
         </button>

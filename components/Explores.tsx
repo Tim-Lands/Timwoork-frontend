@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import API from "../config";
 import useSWR from "swr";
+import { LanguageContext } from "../contexts/languageContext/context";
+
 import { Spin } from "antd";
 import Loading from "./Loading";
 
 function Explores() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage("all");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [postsList, setPostsList]: any = useState([]);
@@ -56,7 +60,7 @@ function Explores() {
   };
   !categories && <Loading />;
   !postsList && <Loading />;
-  categoriesError && <div>حدث خطأ</div>;
+  categoriesError && <div>{getAll("An_error_occurred")}</div>;
   return (
     <div className="row">
       <div className="col-md-4 p-0">
@@ -82,13 +86,13 @@ function Explores() {
                 </motion.li>
               ))}
             <li className="main-item-category">
-              <a href="/category">مشاهدة كل التصنيفات...</a>
+              <a href="/category">{getAll("See_all_categories")}</a>
             </li>
           </ul>
         </div>
       </div>
       <div className="col-md-8 p-0">
-        {isError && <div>حدث خطأ</div>}
+        {isError && <div>{getAll("An_error_occurred")}</div>}
         <Spin spinning={isLoading}>
           {postsList && (
             <div className="main-explores-container">
