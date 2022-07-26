@@ -379,13 +379,11 @@ function Medias({ query, stars }) {
                   <div className="row justify-content-md-center">
                     <div className="">
                       <FeaturedUploadingGalleries
-                        getLanguage={getLanguage}
                         setIsChanged={setIsFeaturedChanged}
                         setImage={setFeaturedImages}
                         full_path_thumbnail={featuredMedia || "/seo.png"}
                       />
                       <ImagesUploadingGalleries
-                        getLanguage={getLanguage}
                         callback={removeImage}
                         setIsChanged={setIsGalleryChanged}
                         setGalleryMedia={setGalleryMedia}

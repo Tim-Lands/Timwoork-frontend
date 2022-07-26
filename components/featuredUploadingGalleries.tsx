@@ -9,9 +9,9 @@ function FeaturedUploadingGalleries({
   full_path_thumbnail,
   setImage,
   setIsChanged,
-  getLanguage,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
+  const getLanguage = getSectionLanguage("add_new");
   const getAll = getSectionLanguage("all");
   const [featuredImages, setFeaturedImages]: any = useState([
     {
@@ -113,5 +113,4 @@ FeaturedUploadingGalleries.propTypes = {
   full_path_thumbnail: PropTypes.any,
   setImage: PropTypes.func,
   setIsChanged: PropTypes.func,
-  getLanguage: PropTypes.func,
 };

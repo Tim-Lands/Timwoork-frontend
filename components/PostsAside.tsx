@@ -15,7 +15,7 @@ import Post from "./Post/Post";
 function PostsAside({
   PostData,
   title,
-  colNumber,
+  // colNumber,
   isError,
   linkURL,
   more,
@@ -185,7 +185,7 @@ PostsAside.propTypes = {
   title: PropTypes.string,
   linkURL: PropTypes.string,
   PostData: PropTypes.array,
-  colNumber: PropTypes.number,
+  // colNumber: PropTypes.number,
   isError: PropTypes.any,
   more: PropTypes.string,
 };

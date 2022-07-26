@@ -9,12 +9,12 @@ function ImagesUploadingGalleries({
   setGalleryMedia,
   setIsChanged,
   callback,
-  getLanguage,
 }): ReactElement {
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage("all");
+  const getLanguage = getSectionLanguage("add_new");
   useEffect(() => {
     setImages(galaries);
   }, [galaries]);
@@ -122,5 +122,4 @@ ImagesUploadingGalleries.propTypes = {
   setGalleryMedia: PropTypes.func,
   setIsChanged: PropTypes.func,
   callback: PropTypes.func,
-  getLanguage: PropTypes.func,
 };
