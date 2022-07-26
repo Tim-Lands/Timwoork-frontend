@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout/HomeLayout";
-import React, { ReactElement, useEffect, useState, useContext } from "react";
+import React, { ReactElement, useEffect, useState, useContext, useRef } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
@@ -64,16 +64,20 @@ const MySelect = (props: any) => {
     </div>
   );
 };
+let testTime;
 
 function Overview({ query }) {
+  const { data: userInfo }: any = useSWR("api/me");
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
   const [selectedLang, setSelectedLang] = useState('');
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
+  const [userLang, setUserLang] = useState();
   const id = query.id;
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
   const getAll = getSectionLanguage("all");
+  const timeoutFunc:any = useRef();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -83,7 +87,6 @@ function Overview({ query }) {
   const { data: categories, categoriesError }: any = useSWR(
     "api/get_categories_for_add_product"
   );
-  const { data: userInfo }: any = useSWR("api/me");
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
@@ -189,10 +192,16 @@ function Overview({ query }) {
       router.push("/login");
       return;
     }
+    timeoutFunc.current = setTimeout(()=>console.log('test time out '),3000);
     getProductId();
   }, []);
-  console.log(checkedLangs)
-  console.log(subtitles)
+  
+  const detectLang =async (txt)=>{
+
+    const res = await API.post(`/api/detectLang`,{sentence:txt});
+    setCheckedLangs({...checkedLangs, [res.data.data]:false})
+    setUserLang(res.data.data);
+  }
   return (
     <>
       <MetaTags
@@ -276,10 +285,12 @@ function Overview({ query }) {
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">
-                        <FormLangsCheck id={1} default_lang={userInfo?.user_details?.profile?.lang} onChange={(e) => {
+                        <FormLangsCheck id={1} default_lang={userLang} onChange={(e) => {
                           setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
                           if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
-                        }} />
+                        }} 
+                          
+                        />
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
                             {getAll("Service_title")}
@@ -296,14 +307,22 @@ function Overview({ query }) {
                                 " has-error")
                             }
                             autoComplete="off"
-                            onKeyUp={clearValidationHandle}
+                            onKeyDown={()=>{
+                              clearTimeout(testTime);
+                            }}
+                            onKeyUp={()=>{
+                              clearValidationHandle()
+                              testTime = setTimeout(()=>detectLang(formik.values['title']),3000)
+
+                            }}
                             onChange={formik.handleChange}
+                            
                             value={formik.values.title}
                           />
                           <FormLangs onClick={(lang) => {
                             setIsShowenModal(true);
                             setSelectedLang(lang);
-                          }} checkedLangs={checkedLangs} default_lang={userInfo?.user_details?.profile?.lang} />
+                          }} checkedLangs={checkedLangs} default_lang={userLang} />
                           <div className="note-form-text-sh">
                             <p className="text">
                               {getAll("The_service_title")}

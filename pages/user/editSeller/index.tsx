@@ -15,6 +15,9 @@ import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
+import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
+import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+import FormModal from "@/components/NewIndex/Forms/FormModal";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -110,22 +113,31 @@ export const MenuBar = ({ editor }) => {
 MenuBar.propTypes = {
   editor: PropTypes.any,
 };
+let testTime;
 const Tiptap = (props: any) => {
   return (
     <EditorContent
       content={props.value}
       editor={props.editor}
       onChange={props.changeHandle}
+      onKeyDown={props.onKeyDown}
+      onKeyUp = {props.onKeyUp}
       style={{ minHeight: 170 }}
     />
   );
 };
+
 const EditSeller = () => {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { data: userInfo }: any = useSWR("api/me");
+  const [isShowenModal, setIsShowenModal] = useState(false);
+  const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
+  const [selectedLang, setSelectedLang] = useState('');
+  const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
+  const [userLang, setUserLang] = useState();
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
   const editor = useEditor({
     extensions: [StarterKit],
@@ -138,6 +150,25 @@ const EditSeller = () => {
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
   const html = editor && editor.getHTML();
+
+
+  const addSubtitle = (subtitle) => {
+    console.log(subtitle)
+    console.log(selectedLang)
+    switch (selectedLang) {
+      case 'ar':
+        setSubtitles({ ...subtitles, ar: subtitle });
+        break;
+      case 'en':
+        setSubtitles({ ...subtitles, en: subtitle });
+        break;
+      case 'fr':
+        setSubtitles({ ...subtitles, fr: subtitle });
+        break;
+    }
+  }
+
+
   const formik = useFormik({
     initialValues: {
       bio: html,
@@ -151,6 +182,9 @@ const EditSeller = () => {
     onSubmit: async (values) => {
       setValidationsErrors({});
       try {
+        if (subtitles['ar']) values.bio = subtitles['ar'];
+        if (subtitles['en']) values.bio = subtitles['en'];
+        if (subtitles['fr']) values.bio = subtitles['fr'];
         const res = await API.post("api/sellers/detailsStore", values, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -178,6 +212,13 @@ const EditSeller = () => {
     }
   }, [token]);
   // Return statement.
+
+  const detectLang = async (txt) => {
+
+    const res = await API.post(`/api/detectLang`, { sentence: txt });
+    setCheckedLangs({ ...checkedLangs, [res.data.data]: false })
+    setUserLang(res.data.data);
+  }
   return (
     <>
       <MetaTags
@@ -194,6 +235,8 @@ const EditSeller = () => {
               <>
                 <div className="row justify-content-md-center">
                   <div className="col-lg-7">
+                    {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
+
                     <form onSubmit={formik.handleSubmit}>
                       <div className="login-panel update-form">
                         <div
@@ -265,12 +308,29 @@ const EditSeller = () => {
                                   {getLogin("Brief_me_about")}
                                 </label>
                                 <div className="app-content-editor">
+                                  <FormLangsCheck id={1} default_lang={userLang} onChange={(e) => {
+                                    setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
+                                    if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
+                                  }}
+
+                                  />
                                   <MenuBar editor={editor} />
                                   <Tiptap
                                     value={formik.values.bio}
                                     changeHandle={formik.handleChange}
                                     editor={editor}
+                                    onKeyDown={()=>{
+                                      clearTimeout(testTime);
+                                    }}
+                                    onKeyUp={()=>{
+                                      testTime = setTimeout(()=>detectLang(formik.values['bio']),3000)
+                              
+                                    }}
                                   />
+                                  <FormLangs onClick={(lang) => {
+                                    setIsShowenModal(true);
+                                    setSelectedLang(lang);
+                                  }} checkedLangs={checkedLangs} default_lang={userLang} />
                                 </div>
                                 {validationsErrors && validationsErrors.bio && (
                                   <div style={{ overflow: "hidden" }}>

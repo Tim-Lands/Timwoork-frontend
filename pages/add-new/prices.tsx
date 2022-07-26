@@ -12,10 +12,20 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 import PropTypes from "prop-types";
+import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
+import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+import FormModal from "@/components/NewIndex/Forms/FormModal";
 // import FormLangs from "@/components/NewIndex/Forms/FormLangs";
 // import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
-
+let testTime;
 function Prices({ query }) {
+  const { data: userInfo }: any = useSWR("api/me");
+  const [userLang, setUserLang] = useState();
+  const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
+  const [selectedLang, setSelectedLang] = useState('');
+  const [subtitles, setSubtitles]: any = useState([{ ar: null, fr: null, en: null }]);
+  const [isShowenModal, setIsShowenModal] = useState(false);
+  const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
@@ -27,7 +37,6 @@ function Prices({ query }) {
   const { id } = query;
   const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { data: userInfo }: any = useSWR("api/me");
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -69,6 +78,24 @@ function Prices({ query }) {
       : durationCount;
     setDurationCount(financialGoal);
   };
+
+  const addSubtitle = (subtitle) => {
+    console.log(subtitle)
+    console.log(selectedLang)
+    switch (selectedLang) {
+      case 'ar':
+        setSubtitles([...subtitles, { ...subtitles[dvlpindex], ar: subtitle }]);
+        break;
+      case 'en':
+        setSubtitles([...subtitles, { ...subtitles[dvlpindex], en: subtitle }]);
+        break;
+      case 'fr':
+        setSubtitles([...subtitles, { ...subtitles[dvlpindex], fr: subtitle }]);
+        break;
+    }
+  }
+
+
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
@@ -78,6 +105,12 @@ function Prices({ query }) {
     }
     getProductId();
   }, []);
+  const detectLang = async (txt) => {
+
+    const res = await API.post(`/api/detectLang`, { sentence: txt });
+    setCheckedLangs({ ...checkedLangs, [res.data.data]: false })
+    setUserLang(res.data.data);
+  }
   return (
     <>
       <MetaTags
@@ -95,6 +128,8 @@ function Prices({ query }) {
               <SidebarAdvices />
             </div>
             <div className="col-md-8 pt-3">
+              {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
+
               <Formik
                 isInitialValid={true}
                 initialValues={{
@@ -107,12 +142,18 @@ function Prices({ query }) {
                 onSubmit={async (values) => {
                   setValidationsErrors({});
                   try {
+                    values.developments.foreach((val,indx) => {
+                      if (subtitles[indx]['ar']) val.title_ar = subtitles['ar'];
+                      if (subtitles[indx]['en']) val.title_en = subtitles['en'];
+                      if (subtitles[indx]['fr']) val.title_fr = subtitles['fr'];
+                    })
                     const res = await API.post(
                       `api/product/${id}/product-step-two`,
                       values,
                       {
                         headers: {
                           Authorization: `Bearer ${token}`,
+                          'X-LOCALIZATION':userLang
                         },
                       }
                     );
@@ -307,241 +348,256 @@ function Prices({ query }) {
                               >
                                 {getLanguage("Upgrades")}
                               </label>
+
                               <FieldArray
                                 name="developments"
                                 render={(arrayHelpers) => (
                                   <div>
                                     {values.developments &&
-                                    values.developments !== null &&
-                                    values.developments.length > 0
+                                      values.developments !== null &&
+                                      values.developments.length > 0
                                       ? values.developments &&
-                                        values.developments.map(
-                                          (development, index) => (
-                                            <motion.div
-                                              initial={{ y: -7, opacity: 0 }}
-                                              exit={{ y: -7, opacity: 0 }}
-                                              animate={{ y: 0, opacity: 1 }}
-                                              className="develop-price"
-                                              key={index}
-                                            >
-                                              <div className="row">
-                                                <div className="col-sm-12">
-                                                  {/* <FormLangsCheck /> */}
-                                                  <div className="timlands-form">
-                                                    <label
-                                                      className="label-block"
-                                                      htmlFor={
-                                                        "input-name-" + index
-                                                      }
-                                                    >
-                                                      {getAll(
-                                                        "Development_title"
-                                                      )}
-                                                    </label>
-                                                    <Field
-                                                      id={"input-name-" + index}
-                                                      placeholder={getAll(
-                                                        "Development_title"
-                                                      )}
-                                                      onKeyUp={
-                                                        clearValidationHandle
-                                                      }
-                                                      className={
-                                                        "timlands-inputs " +
-                                                        (validationsErrors &&
-                                                          validationsErrors[
-                                                            `developments.${index}.title`
-                                                          ] &&
-                                                          " has-error")
-                                                      }
-                                                      name={`developments[${index}].title`}
-                                                    />
-                                                    {/* <FormLangs /> */}
-                                                    {validationsErrors &&
-                                                      validationsErrors[
+                                      values.developments.map(
+                                        (development, index) => (
+                                          <motion.div
+                                            initial={{ y: -7, opacity: 0 }}
+                                            exit={{ y: -7, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            className="develop-price"
+                                            key={index}
+                                          >
+                                            <div className="row">
+                                              <div className="col-sm-12">
+                                                {/* <FormLangsCheck /> */}
+                                                <div className="timlands-form">
+                                                  <label
+                                                    className="label-block"
+                                                    htmlFor={
+                                                      "input-name-" + index
+                                                    }
+                                                  >
+                                                    {getAll(
+                                                      "Development_title"
+                                                    )}
+                                                  </label>
+                                                  <FormLangsCheck id={1} default_lang={userLang} onChange={(e) => {
+                                                    setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
+                                                    if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
+                                                  }} />
+                                                  <Field
+                                                    id={"input-name-" + index}
+                                                    placeholder={getAll(
+                                                      "Development_title"
+                                                    )}
+                                                    onKeyUp={() => {
+                                                      clearValidationHandle()
+                                                      testTime = setTimeout(() => detectLang(values['developments'][index].title), 3000)
+
+                                                    }}
+                                                    onKeyDown={() => {
+                                                      clearTimeout(testTime);
+                                                    }}
+                                                    className={
+                                                      "timlands-inputs " +
+                                                      (validationsErrors &&
+                                                        validationsErrors[
                                                         `developments.${index}.title`
-                                                      ] && (
-                                                        <div
-                                                          style={{
-                                                            overflow: "hidden",
+                                                        ] &&
+                                                        " has-error")
+                                                    }
+                                                    name={`developments[${index}].title`}
+                                                  />
+                                                  <FormLangs onClick={(lang) => {
+                                                    setIsShowenModal(true);
+                                                    setSelectedLang(lang);
+                                                    setDvlpindex(index);
+                                                  }} checkedLangs={checkedLangs} default_lang={userLang} />
+                                                  {/* <FormLangs /> */}
+                                                  {validationsErrors &&
+                                                    validationsErrors[
+                                                    `developments.${index}.title`
+                                                    ] && (
+                                                      <div
+                                                        style={{
+                                                          overflow: "hidden",
+                                                        }}
+                                                      >
+                                                        <motion.div
+                                                          initial={{
+                                                            y: -70,
+                                                            opacity: 0,
                                                           }}
+                                                          animate={{
+                                                            y: 0,
+                                                            opacity: 1,
+                                                          }}
+                                                          className="timlands-form-note form-note-error"
                                                         >
-                                                          <motion.div
-                                                            initial={{
-                                                              y: -70,
-                                                              opacity: 0,
-                                                            }}
-                                                            animate={{
-                                                              y: 0,
-                                                              opacity: 1,
-                                                            }}
-                                                            className="timlands-form-note form-note-error"
-                                                          >
-                                                            <p className="text">
-                                                              {
-                                                                validationsErrors[
-                                                                  `developments.${index}.title`
-                                                                ][0]
-                                                              }
-                                                            </p>
-                                                          </motion.div>
-                                                        </div>
-                                                      )}
-                                                  </div>
+                                                          <p className="text">
+                                                            {
+                                                              validationsErrors[
+                                                              `developments.${index}.title`
+                                                              ][0]
+                                                            }
+                                                          </p>
+                                                        </motion.div>
+                                                      </div>
+                                                    )}
                                                 </div>
-                                                <div className="col-sm-6">
-                                                  <div className="timlands-form">
-                                                    <label
-                                                      className="label-block"
-                                                      htmlFor={
-                                                        "input-price-" + index
-                                                      }
-                                                    >
-                                                      {getAll(
-                                                        "Development_price"
-                                                      )}
-                                                    </label>
+                                              </div>
+                                              <div className="col-sm-6">
+                                                <div className="timlands-form">
+                                                  <label
+                                                    className="label-block"
+                                                    htmlFor={
+                                                      "input-price-" + index
+                                                    }
+                                                  >
+                                                    {getAll(
+                                                      "Development_price"
+                                                    )}
+                                                  </label>
+                                                  <Field
+                                                    id={
+                                                      "input-price-" + index
+                                                    }
+                                                    placeholder={getAll(
+                                                      "Development_price"
+                                                    )}
+                                                    onKeyUp={
+                                                      clearValidationHandle
+                                                    }
+                                                    className={
+                                                      "timlands-inputs " +
+                                                      (validationsErrors &&
+                                                        validationsErrors[
+                                                        `developments.${index}.price`
+                                                        ] &&
+                                                        " has-error")
+                                                    }
+                                                    name={`developments[${index}].price`}
+                                                  />
+                                                  {validationsErrors &&
+                                                    validationsErrors[
+                                                    `developments.${index}.price`
+                                                    ] && (
+                                                      <div
+                                                        style={{
+                                                          overflow: "hidden",
+                                                        }}
+                                                      >
+                                                        <motion.div
+                                                          initial={{
+                                                            y: -70,
+                                                            opacity: 0,
+                                                          }}
+                                                          animate={{
+                                                            y: 0,
+                                                            opacity: 1,
+                                                          }}
+                                                          className="timlands-form-note form-note-error"
+                                                        >
+                                                          <p className="text">
+                                                            {
+                                                              validationsErrors[
+                                                              `developments.${index}.price`
+                                                              ][0]
+                                                            }
+                                                          </p>
+                                                        </motion.div>
+                                                      </div>
+                                                    )}
+                                                </div>
+                                              </div>
+                                              <div className="col-sm-6">
+                                                <div className="timlands-form with-label">
+                                                  <label
+                                                    className="label-block"
+                                                    htmlFor={
+                                                      "input-duration-" +
+                                                      index
+                                                    }
+                                                  >
+                                                    {getAll(
+                                                      "Development_duration"
+                                                    )}
+                                                  </label>
+                                                  <div className="rel-form">
                                                     <Field
-                                                      id={
-                                                        "input-price-" + index
-                                                      }
-                                                      placeholder={getAll(
-                                                        "Development_price"
-                                                      )}
+                                                      type="number"
+                                                      id="input-duration"
                                                       onKeyUp={
                                                         clearValidationHandle
                                                       }
+                                                      name={`developments[${index}].duration`}
                                                       className={
                                                         "timlands-inputs " +
                                                         (validationsErrors &&
                                                           validationsErrors[
-                                                            `developments.${index}.price`
+                                                          `developments.${index}.duration`
                                                           ] &&
                                                           " has-error")
                                                       }
-                                                      name={`developments[${index}].price`}
+                                                      autoComplete="off"
                                                     />
-                                                    {validationsErrors &&
-                                                      validationsErrors[
-                                                        `developments.${index}.price`
-                                                      ] && (
-                                                        <div
-                                                          style={{
-                                                            overflow: "hidden",
-                                                          }}
-                                                        >
-                                                          <motion.div
-                                                            initial={{
-                                                              y: -70,
-                                                              opacity: 0,
-                                                            }}
-                                                            animate={{
-                                                              y: 0,
-                                                              opacity: 1,
-                                                            }}
-                                                            className="timlands-form-note form-note-error"
-                                                          >
-                                                            <p className="text">
-                                                              {
-                                                                validationsErrors[
-                                                                  `developments.${index}.price`
-                                                                ][0]
-                                                              }
-                                                            </p>
-                                                          </motion.div>
-                                                        </div>
-                                                      )}
-                                                  </div>
-                                                </div>
-                                                <div className="col-sm-6">
-                                                  <div className="timlands-form with-label">
-                                                    <label
-                                                      className="label-block"
-                                                      htmlFor={
-                                                        "input-duration-" +
-                                                        index
-                                                      }
-                                                    >
-                                                      {getAll(
-                                                        "Development_duration"
-                                                      )}
-                                                    </label>
-                                                    <div className="rel-form">
-                                                      <Field
-                                                        type="number"
-                                                        id="input-duration"
-                                                        onKeyUp={
-                                                          clearValidationHandle
-                                                        }
-                                                        name={`developments[${index}].duration`}
-                                                        className={
-                                                          "timlands-inputs " +
-                                                          (validationsErrors &&
-                                                            validationsErrors[
-                                                              `developments.${index}.duration`
-                                                            ] &&
-                                                            " has-error")
-                                                        }
-                                                        autoComplete="off"
-                                                      />
-                                                      <div className="timlands-form-label">
-                                                        <p className="text">
-                                                          {getLanguage(
-                                                            "In_Days"
-                                                          )}
-                                                        </p>
-                                                      </div>
+                                                    <div className="timlands-form-label">
+                                                      <p className="text">
+                                                        {getLanguage(
+                                                          "In_Days"
+                                                        )}
+                                                      </p>
                                                     </div>
-                                                    {validationsErrors &&
-                                                      validationsErrors[
-                                                        `developments.${index}.duration`
-                                                      ] && (
-                                                        <div
-                                                          style={{
-                                                            overflow: "hidden",
-                                                          }}
-                                                        >
-                                                          <motion.div
-                                                            initial={{
-                                                              y: -70,
-                                                              opacity: 0,
-                                                            }}
-                                                            animate={{
-                                                              y: 0,
-                                                              opacity: 1,
-                                                            }}
-                                                            className="timlands-form-note form-note-error"
-                                                          >
-                                                            <p className="text">
-                                                              {
-                                                                validationsErrors[
-                                                                  `developments.${index}.duration`
-                                                                ][0]
-                                                              }
-                                                            </p>
-                                                          </motion.div>
-                                                        </div>
-                                                      )}
                                                   </div>
+                                                  {validationsErrors &&
+                                                    validationsErrors[
+                                                    `developments.${index}.duration`
+                                                    ] && (
+                                                      <div
+                                                        style={{
+                                                          overflow: "hidden",
+                                                        }}
+                                                      >
+                                                        <motion.div
+                                                          initial={{
+                                                            y: -70,
+                                                            opacity: 0,
+                                                          }}
+                                                          animate={{
+                                                            y: 0,
+                                                            opacity: 1,
+                                                          }}
+                                                          className="timlands-form-note form-note-error"
+                                                        >
+                                                          <p className="text">
+                                                            {
+                                                              validationsErrors[
+                                                              `developments.${index}.duration`
+                                                              ][0]
+                                                            }
+                                                          </p>
+                                                        </motion.div>
+                                                      </div>
+                                                    )}
                                                 </div>
                                               </div>
-                                              <div className="buttons-tools">
-                                                <button
-                                                  type="button"
-                                                  className="formarray-butt del"
-                                                  onClick={() =>
-                                                    arrayHelpers.remove(index)
-                                                  } // remove a friend from the list
-                                                >
-                                                  -
-                                                </button>
-                                              </div>
-                                            </motion.div>
-                                          )
+                                            </div>
+                                            <div className="buttons-tools">
+                                              <button
+                                                type="button"
+                                                className="formarray-butt del"
+                                                onClick={() =>
+                                                  arrayHelpers.remove(index)
+                                                } // remove a friend from the list
+                                              >
+                                                -
+                                              </button>
+                                            </div>
+                                          </motion.div>
                                         )
+                                      )
                                       : ""}
                                     {values.developments &&
-                                    values.developments.length < 5 ? (
+                                      values.developments.length < 5 ? (
                                       <div className="product-devlopes-butt">
                                         <p className="product-devlopes-text">
                                           {getLanguage("Service_upgrades_are")}
