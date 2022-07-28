@@ -20,16 +20,17 @@ import router from "next/router";
 import Loading from "@/components/Loading";
 import pusher from "../../config/pusher";
 import { LanguageContext } from "contexts/languageContext/context";
+let testTime;
 
 function Conversation({ query }) {
   let token = Cookies.get("token");
-
+  const [userLang, setUserLang] = useState();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();
   const inputRefMsg: any = useRef();
   const messageCont = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("conversion");
   const { data: conversationsSingle }: any = useSWR(
     `api/conversations/${query.id}`
@@ -37,9 +38,8 @@ function Conversation({ query }) {
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
   const { data: profileInfo }: any = useSWR(`api/me`);
-  const channelChat = `presence-receiver.${
-    profileInfo && profileInfo.user_details.id
-  }`;
+  const channelChat = `presence-receiver.${profileInfo && profileInfo.user_details.id
+    }`;
   const channel = pusher.subscribe(channelChat);
   const veriedEmail = profileInfo && profileInfo.user_details.email_verified_at;
   const [messageProgress, setMessageProgress] = useState(0);
@@ -47,7 +47,7 @@ function Conversation({ query }) {
   const [sendMessageLoading, setSendMessageLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(0);
-
+  const [isTranslate, setIsTranslate] = useState({})
   useEffect(() => {
     if (!token) {
       router.push("/login");
@@ -89,6 +89,7 @@ function Conversation({ query }) {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'X-LOCALIZATION': userLang
           },
           onUploadProgress: (uploadEvent) => {
             if (filesMsg.length !== 0)
@@ -117,6 +118,12 @@ function Conversation({ query }) {
   channel.bind("message.sent", () => {
     mutate(`api/conversations/${query.id}`);
   });
+
+  const detectLang = async (txt) => {
+
+    const res = await API.post(`/api/detectLang`, { sentence: txt });
+    setUserLang(res.data.data);
+  }
   function switchTypeMessage(type: any) {
     switch (type) {
       case 0:
@@ -292,9 +299,8 @@ function Conversation({ query }) {
   return (
     <>
       <MetaTags
-        title={`${getAll("Conversations")} - ${
-          conversationsSingle && conversationsSingle.data.title
-        }`}
+        title={`${getAll("Conversations")} - ${conversationsSingle && conversationsSingle.data.title
+          }`}
         metaDescription={getAll("My_sells_Timwoork")}
         ogDescription={getAll("My_sells_Timwoork")}
       />
@@ -335,7 +341,7 @@ function Conversation({ query }) {
                           key={1}
                           className={
                             (profileInfo &&
-                            profileInfo.user_details.id == item.user.id
+                              profileInfo.user_details.id == item.user.id
                               ? ""
                               : "recieved ") +
                             "d-flex message-item " +
@@ -396,6 +402,9 @@ function Conversation({ query }) {
                                 fontWeight: 200,
                               }}
                             >
+                              <button
+                                onClick={() => setIsTranslate({ ...isTranslate, [item.id]: !isTranslate[item.id] })}
+                              >{isTranslate[item.id] ? 'إعادة النص للترجمة الاصلية' : 'ترجمة'}</button>
                               <LastSeen date={item.created_at} />
                             </p>
                             {item.attachments && (
@@ -424,7 +433,9 @@ function Conversation({ query }) {
                             )}
 
                             <div
-                              dangerouslySetInnerHTML={{
+                              dangerouslySetInnerHTML={isTranslate[item.id]?{
+                                __html: linkify(item[`message_${language}`]||'', query)
+                              }:{
                                 __html: linkify(item.message, query),
                               }}
                             />
@@ -569,8 +580,13 @@ function Conversation({ query }) {
                       <input
                         id="input-buyer_instruct"
                         name="buyer_instruct"
+                        onKeyDown={() => {
+                          clearTimeout(testTime);
+                        }}
                         onKeyUp={() => {
                           setMessageErrors({});
+                          testTime = setTimeout(() => detectLang(message), 3000)
+
                         }}
                         placeholder={getLogin("Message_text")}
                         className={

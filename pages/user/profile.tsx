@@ -19,11 +19,13 @@ function Profile() {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
+  const [isTranslate, setIsTranslate] = useState(false);
   const { data: userInfo }: any = useSWR("api/me");
   const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
+
 
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
@@ -60,8 +62,8 @@ function Profile() {
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
-        detectHeight.current &&
-        detectHeight.current.scrollHeight > 230
+      detectHeight.current &&
+      detectHeight.current.scrollHeight > 230
     ),
       [detectHeight, detectHeight.current];
   }, [detectHeight]);
@@ -70,6 +72,7 @@ function Profile() {
       router.push("/login");
     }
   }, []);
+
   if (userInfo && userInfo.user_details.profile.steps < 1) {
     return (
       <div className="row justify-content-md-center">
@@ -251,16 +254,22 @@ function Profile() {
                               </Link>
                             }
                           >
+                            <button className='btn butt-primary2 flex-center butt-sm' onClick={() => setIsTranslate(!isTranslate)}>
+                              {isTranslate ? 'إعادة الى اللغة الاصلية' : 'ترجمة'}
+                            </button>
                             <div
                               ref={detectHeight}
                               className={
                                 "user-bro " + (isLess ? "is-less" : "")
                               }
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  userInfo.user_details.profile.profile_seller
-                                    .bio,
-                              }}
+                              dangerouslySetInnerHTML={isTranslate
+                                ? {
+                                  __html: userInfo.user_details.profile.profile_seller[`bio_${language}`]
+                                }
+                                : {
+                                  __html:
+                                    userInfo.user_details.profile.profile_seller.bio,
+                                }}
                             />
                             {isOverflow && (
                               <button
@@ -321,8 +330,8 @@ function Profile() {
                             <p className="text-value">
                               {userInfo.user_details.phone
                                 ? userInfo.user_details.code_phone?.split(
-                                    "+"
-                                  )[1] + userInfo.user_details.phone
+                                  "+"
+                                )[1] + userInfo.user_details.phone
                                 : "غير مكتمل"}
                               {userInfo.user_details.phone && "+"}
                             </p>
@@ -358,12 +367,12 @@ function Profile() {
                             <h3 className="text-label">{getLogin("Gender")}</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile &&
-                              userInfo.user_details.profile.gender == null
+                                userInfo.user_details.profile.gender == null
                                 ? ""
                                 : userInfo.user_details.profile &&
-                                  (userInfo.user_details.profile.gender == 0
-                                    ? getLogin("woman")
-                                    : getLogin("Man"))}
+                                (userInfo.user_details.profile.gender == 0
+                                  ? getLogin("woman")
+                                  : getLogin("Man"))}
                             </p>
                           </div>
                         </div>
@@ -374,7 +383,7 @@ function Profile() {
                             </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.date_of_birth ==
-                              null
+                                null
                                 ? ""
                                 : userInfo.user_details.profile.date_of_birth}
                             </p>

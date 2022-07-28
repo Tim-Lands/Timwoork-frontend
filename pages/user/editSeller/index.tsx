@@ -188,6 +188,7 @@ const EditSeller = () => {
         const res = await API.post("api/sellers/detailsStore", values, {
           headers: {
             Authorization: `Bearer ${token}`,
+            'X-LOCALIZATION':userLang
           },
         });
         // Authentication was successful.
