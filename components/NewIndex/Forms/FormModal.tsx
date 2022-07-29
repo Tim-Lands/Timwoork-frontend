@@ -4,9 +4,9 @@ import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
-
-function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
-  const [subtitle, setSubtitle] = useState('')
+import { Switch } from 'antd';
+function FormModal({ setIsConfirmText, onSubmit, onSwitch, isSwitchChecked, defaultValue }): ReactElement {
+  const [subtitle, setSubtitle] = useState(defaultValue)
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage("all");
   return (
@@ -17,9 +17,10 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
     >
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head">
+          <Switch onChange={onSwitch} checkedChildren="ترجمة تلقائية" unCheckedChildren="ترجمة يدوية" checked={isSwitchChecked} />
           <h3 className="title">إضافة حقل لغة جديد</h3>
         </div>
-        <div className="modal-conferm-body"> 
+        <div className="modal-conferm-body">
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-title">
               {getAll("Service_title")}
@@ -31,6 +32,7 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
               className={"timlands-inputs "}
               value={subtitle}
               onChange={e => setSubtitle(e.target.value)}
+              disabled={isSwitchChecked}
             />
           </div>
         </div>
@@ -61,5 +63,8 @@ function FormModal({ setIsConfirmText, onSubmit }): ReactElement {
 export default FormModal;
 FormModal.propTypes = {
   setIsConfirmText: PropTypes.func,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  onSwitch: PropTypes.func,
+  isSwitchChecked: PropTypes.bool,
+  defaultValue:PropTypes.string
 };

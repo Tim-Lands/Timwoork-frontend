@@ -12,7 +12,6 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 import PropTypes from "prop-types";
-import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 import FormLangs from "@/components/NewIndex/Forms/FormLangs";
 import FormModal from "@/components/NewIndex/Forms/FormModal";
 // import FormLangs from "@/components/NewIndex/Forms/FormLangs";
@@ -24,6 +23,7 @@ function Prices({ query }) {
   const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
   const [selectedLang, setSelectedLang] = useState('');
   const [subtitles, setSubtitles]: any = useState([{ ar: null, fr: null, en: null }]);
+  const [isSubtitle, setIsSubtitle] = useState([{ ar: false, fr: false, en: false }])
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
@@ -128,7 +128,11 @@ function Prices({ query }) {
               <SidebarAdvices />
             </div>
             <div className="col-md-8 pt-3">
-              {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
+              {isShowenModal && <FormModal 
+              isSwitchChecked={isSubtitle[selectedLang]}
+              onSwitch={() => setIsSubtitle({ ...isSubtitle, [selectedLang]: !isSubtitle[selectedLang] })}
+              onSubmit={txt => addSubtitle(txt)}
+               setIsConfirmText={setIsShowenModal} />}
 
               <Formik
                 isInitialValid={true}
@@ -143,9 +147,9 @@ function Prices({ query }) {
                   setValidationsErrors({});
                   try {
                     values.developments.foreach((val,indx) => {
-                      if (subtitles[indx]['ar']) val.title_ar = subtitles['ar'];
-                      if (subtitles[indx]['en']) val.title_en = subtitles['en'];
-                      if (subtitles[indx]['fr']) val.title_fr = subtitles['fr'];
+                      if (!isSubtitle[indx]['ar'] && subtitles[indx]['ar']) val.title_ar = subtitles['ar'];
+                      if (!isSubtitle[indx]['en'] && subtitles[indx]['en']) val.title_en = subtitles['en'];
+                      if (!isSubtitle[indx]['fr'] && subtitles[indx]['fr']) val.title_fr = subtitles['fr'];
                     })
                     const res = await API.post(
                       `api/product/${id}/product-step-two`,
@@ -380,10 +384,7 @@ function Prices({ query }) {
                                                       "Development_title"
                                                     )}
                                                   </label>
-                                                  <FormLangsCheck id={1} default_lang={userLang} onChange={(e) => {
-                                                    setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
-                                                    if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
-                                                  }} />
+                                              
                                                   <Field
                                                     id={"input-name-" + index}
                                                     placeholder={getAll(
@@ -411,7 +412,7 @@ function Prices({ query }) {
                                                     setIsShowenModal(true);
                                                     setSelectedLang(lang);
                                                     setDvlpindex(index);
-                                                  }} checkedLangs={checkedLangs} default_lang={userLang} />
+                                                  }}  default_lang={userLang} />
                                                   {/* <FormLangs /> */}
                                                   {validationsErrors &&
                                                     validationsErrors[

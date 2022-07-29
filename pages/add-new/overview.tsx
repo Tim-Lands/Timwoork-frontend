@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 import FormModal from "@/components/NewIndex/Forms/FormModal";
 
 // import FormLangs from "@/components/NewIndex/Forms/FormLangs";
@@ -72,12 +71,13 @@ function Overview({ query }) {
   const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
   const [selectedLang, setSelectedLang] = useState('');
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
+  const [isSubtitle, setIsSubtitle] = useState({ ar: false, fr: false, en: false })
   const [userLang, setUserLang] = useState();
   const id = query.id;
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("add_new");
   const getAll = getSectionLanguage("all");
-  const timeoutFunc:any = useRef();
+  const timeoutFunc: any = useRef();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -129,10 +129,10 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const body:any = {...values}
-        if(subtitles['ar'])body.title_ar = subtitles['ar'];
-        if(subtitles['en'])body.title_en = subtitles['en'];
-        if(subtitles['fr'])body.title_fr = subtitles['fr'];
+        const body: any = { ...values }
+        if (!isSubtitle['ar'] && subtitles['ar']) body.title_ar = subtitles['ar'];
+        if (!isSubtitle['en'] && subtitles['en']) body.title_en = subtitles['en'];
+        if (!isSubtitle['fr'] && subtitles['fr']) body.title_fr = subtitles['fr'];
         const res = await API.post(
           `api/product/${id}/product-step-one`,
           body,
@@ -192,14 +192,14 @@ function Overview({ query }) {
       router.push("/login");
       return;
     }
-    timeoutFunc.current = setTimeout(()=>console.log('test time out '),3000);
+    timeoutFunc.current = setTimeout(() => console.log('test time out '), 3000);
     getProductId();
   }, []);
-  
-  const detectLang =async (txt)=>{
 
-    const res = await API.post(`/api/detectLang`,{sentence:txt});
-    setCheckedLangs({...checkedLangs, [res.data.data]:false})
+  const detectLang = async (txt) => {
+
+    const res = await API.post(`/api/detectLang`, { sentence: txt });
+    setCheckedLangs({ ...checkedLangs, [res.data.data]: false })
     setUserLang(res.data.data);
   }
   return (
@@ -220,7 +220,11 @@ function Overview({ query }) {
               <SidebarAdvices />
             </div>
             <div className="col-md-8 pt-3">
-              {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
+              {isShowenModal && <FormModal
+                defaultValue={subtitles[selectedLang]}
+                isSwitchChecked={isSubtitle[selectedLang]}
+                onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal}
+                onSwitch={() => setIsSubtitle({ ...isSubtitle, [selectedLang]: !isSubtitle[selectedLang] })} />}
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -285,12 +289,6 @@ function Overview({ query }) {
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">
-                        <FormLangsCheck id={1} default_lang={userLang} onChange={(e) => {
-                          setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
-                          if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
-                        }} 
-                          
-                        />
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
                             {getAll("Service_title")}
@@ -307,22 +305,22 @@ function Overview({ query }) {
                                 " has-error")
                             }
                             autoComplete="off"
-                            onKeyDown={()=>{
+                            onKeyDown={() => {
                               clearTimeout(testTime);
                             }}
-                            onKeyUp={()=>{
+                            onKeyUp={() => {
                               clearValidationHandle()
-                              testTime = setTimeout(()=>detectLang(formik.values['title']),3000)
+                              testTime = setTimeout(() => detectLang(formik.values['title']), 3000)
 
                             }}
                             onChange={formik.handleChange}
-                            
+
                             value={formik.values.title}
                           />
                           <FormLangs onClick={(lang) => {
                             setIsShowenModal(true);
                             setSelectedLang(lang);
-                          }} checkedLangs={checkedLangs} default_lang={userLang} />
+                          }} default_lang={userLang} />
                           <div className="note-form-text-sh">
                             <p className="text">
                               {getAll("The_service_title")}
