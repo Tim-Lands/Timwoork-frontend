@@ -30,7 +30,7 @@ function Conversation({ query }) {
   const { mutate } = useSWRConfig();
   const inputRefMsg: any = useRef();
   const messageCont = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const { data: conversationsSingle }: any = useSWR(
     `api/conversations/${query.id}`
   );
