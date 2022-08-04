@@ -1,22 +1,30 @@
 import Link from "next/link";
 import React from "react";
 import { FaAngleDown, FaHeart } from "react-icons/fa";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function PortfolioNav() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <nav className="portfolios-nav d-flex">
       <ul className="portfolios-nav-list me-auto">
         <li>
-          <button className="portfolio-item">تصميم المواقع</button>
+          <button className="portfolio-item">
+            {getAll("Websites_design")}
+          </button>
         </li>
         <li>
-          <button className="portfolio-item">التصميم الغرافيكي</button>
+          <button className="portfolio-item">{getAll("Graphic_design")}</button>
         </li>
         <li>
-          <button className="portfolio-item">تسجيلات صوتية</button>
+          <button className="portfolio-item">
+            {getAll("Audios_recording")}
+          </button>
         </li>
         <li>
-          <button className="portfolio-item">تصميم UI/UX</button>
+          <button className="portfolio-item">{getAll("Design")}</button>
         </li>
       </ul>
       <ul className="portfolios-nav-list ml-auto">
@@ -24,13 +32,13 @@ function PortfolioNav() {
           <Link href={`/user/myfavorites`}>
             <a className="portfolio-item">
               <span className="counts">20+</span>
-              <FaHeart /> المفضلة
+              <FaHeart /> {getAll("Favorite")}
             </a>
           </Link>
         </li>
         <li>
           <button className="portfolio-item">
-            الإعدادات <FaAngleDown />{" "}
+            {getAll("Settings")} <FaAngleDown />{" "}
           </button>
         </li>
       </ul>

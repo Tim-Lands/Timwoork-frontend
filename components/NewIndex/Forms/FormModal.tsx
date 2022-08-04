@@ -23,12 +23,12 @@ function FormModal({
     >
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head flex-center">
-          <h3 className="title me-auto">إضافة حقل لغة جديد</h3>
+          <h3 className="title me-auto">{getAll("Add_new_langage")}</h3>
           <div className="ml-auto">
             <Switch
               onChange={onSwitch}
-              checkedChildren="ترجمة تلقائية"
-              unCheckedChildren="ترجمة يدوية"
+              checkedChildren={getAll("automatic_translation")}
+              unCheckedChildren={getAll("Manual_translation")}
               checked={isSwitchChecked}
             />
           </div>

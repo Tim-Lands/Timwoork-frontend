@@ -1,16 +1,22 @@
 import router from "next/router";
 import React from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function ContestSidebar() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className="contest-sidebar">
       <div className="box-sidebar sidebar-search">
-        <input type="text" placeholder="البحث في صفحة المسابقات" />
-        <button className="btn butt-primary2 butt-sm">بحث</button>
+        <input type="text" placeholder={getAll("Research_in_competitions")} />
+        <button className="btn butt-primary2 butt-sm">
+          {getAll("Search")}
+        </button>
       </div>
       <div className="box-sidebar">
         <div className="box-sidebar-head">
-          <h4 className="title">أقسام المسابقات</h4>
+          <h4 className="title">{getAll("Competitions_categories")}</h4>
         </div>
         <div className="filter-categories-list">
           <div className="categories-list-inner">
@@ -23,7 +29,7 @@ function ContestSidebar() {
               >
                 <span className="item-cat-label">
                   <span className="material-icons material-icons-outlined"></span>
-                  جميع الأقسام
+                  {getAll("All_categories")}
                 </span>
               </div>
             </div>
@@ -37,7 +43,7 @@ function ContestSidebar() {
                   <span className="material-icons material-icons-outlined">
                     home
                   </span>
-                  تصميم مواقع
+                  {getAll("Websites_design")}
                 </span>
               </div>
             </div>
@@ -51,7 +57,7 @@ function ContestSidebar() {
                   <span className="material-icons material-icons-outlined">
                     home
                   </span>
-                  تسجيلات صوتية
+                  {getAll("Audios_recording")}
                 </span>
               </div>
             </div>
@@ -65,7 +71,7 @@ function ContestSidebar() {
                   <span className="material-icons material-icons-outlined">
                     home
                   </span>
-                  اختيار الاسماء
+                  {getAll("Choose_names")}
                 </span>
               </div>
             </div>
@@ -79,7 +85,7 @@ function ContestSidebar() {
                   <span className="material-icons material-icons-outlined">
                     home
                   </span>
-                  تصميم شعارات
+                  {getAll("Logos_design")}
                 </span>
               </div>
             </div>
@@ -92,7 +98,7 @@ function ContestSidebar() {
                   <span className="material-icons material-icons-outlined">
                     home
                   </span>
-                  فيديوهات
+                  {getAll("Videos")}
                 </span>
               </div>
             </div>

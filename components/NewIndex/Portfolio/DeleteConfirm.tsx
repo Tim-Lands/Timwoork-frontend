@@ -2,7 +2,11 @@ import { Space } from "antd";
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 function DeleteConfirm({ setIsDeleteModal }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -11,10 +15,10 @@ function DeleteConfirm({ setIsDeleteModal }): ReactElement {
     >
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head">
-          <h3 className="title">رسالة تأكيد</h3>
+          <h3 className="title">{getAll("Confirmation_message")}</h3>
         </div>
         <div className="modal-conferm-body">
-          <p className="text">هل تريد حقا حذف معرض أعمالك؟</p>
+          <p className="text">{getAll("Do_you_really")}</p>
         </div>
         <div className="modal-conferm-footer">
           <Space>
@@ -22,7 +26,7 @@ function DeleteConfirm({ setIsDeleteModal }): ReactElement {
               className="btn butt-sm butt-green"
               onClick={() => console.log("jhkjfh")}
             >
-              نعم
+              {getAll("Yes")}
             </button>
             <button
               className="btn butt-sm butt-red-text"

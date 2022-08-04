@@ -1,6 +1,8 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function ContestSingleInfo({
   created_at,
@@ -11,42 +13,44 @@ function ContestSingleInfo({
   viewsCount,
   likesCount,
 }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className="p-3 bg-white portfolio-sidebar single-info-portfolio-container">
-      <h3 className="title">معلومات عن المسابقة</h3>
+      <h3 className="title">{getAll("Information_about_the")}</h3>
       <div className="single-info-portfolio">
         <table className="table table-borderles">
           <tbody>
             <tr>
-              <th>تاريخ النشر:</th>
+              <th>{getAll("Publication_date")}</th>
               <td>{created_at}</td>
             </tr>
             <tr>
-              <th>مدة التسليم:</th>
+              <th>{getAll("Delivery_period")}</th>
               <td>{deleveryTime}</td>
             </tr>
             <tr>
-              <th>المتسابقين:</th>
+              <th>{getAll("Competitors")}</th>
               <td>{contestantsCount}</td>
             </tr>
             <tr>
-              <th>عدد الفائزين:</th>
+              <th>{getAll("Winners’_number")}</th>
               <td>{winnersCount}</td>
             </tr>
             <tr>
-              <th>عدد المشاركات:</th>
+              <th>{getAll("Participations_number")}</th>
               <td>{sharesCount}</td>
             </tr>
             <tr>
-              <th>المشاهدات:</th>
+              <th>{getAll("Views")}</th>
               <td>{viewsCount}</td>
             </tr>
             <tr>
-              <th>الإعجابات:</th>
+              <th>{getAll("Likes")}</th>
               <td>{likesCount}</td>
             </tr>
             <tr>
-              <th>مشاركة المسابقة:</th>
+              <th>{getAll("Share_competition")}</th>
               <td>
                 <a href="" className="share-item">
                   <FaFacebook />

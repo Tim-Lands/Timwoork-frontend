@@ -2,8 +2,12 @@ import { Badge } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function PortfolioProfileHeader() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className="timlands-profile-content bg-white">
       <div className="profile-content-header">
@@ -22,7 +26,8 @@ function PortfolioProfileHeader() {
         <div className="profile-content-head">
           <h4 className="title">Abdelhamid Boumegouas</h4>
           <p className="text">
-            @aboumegouass |<span className="app-label"> VIP Seller </span>
+            @aboumegouass |
+            <span className="app-label"> {getAll("VIP_Seller")}</span>
           </p>
           <div className="button-edit d-flex">
             <Link href="/user/personalInformations">
@@ -30,7 +35,7 @@ function PortfolioProfileHeader() {
                 <span className="material-icons material-icons-outlined">
                   edit
                 </span>{" "}
-                Edit Profile
+                {getAll("Edit_profile")}
               </a>
             </Link>
             <Link href="/user/personalInformations">
@@ -38,7 +43,7 @@ function PortfolioProfileHeader() {
                 <span className="material-icons material-icons-outlined">
                   add_circle
                 </span>{" "}
-                Add New Portfolio
+                {getAll("Add_New_Portfolio")}
               </a>
             </Link>
           </div>
@@ -55,7 +60,7 @@ function PortfolioProfileHeader() {
             <span className="material-icons material-icons-outlined">
               file_copy
             </span>{" "}
-            Copy My Profile Link
+            {getAll("Copy_My_Profile")}
           </button>
         </p>
       </div>

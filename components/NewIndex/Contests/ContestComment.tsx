@@ -4,6 +4,8 @@ import React, { ReactElement } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BsCheck2All, BsClock, BsPersonBadge } from "react-icons/bs";
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function ContestComment({
   text,
@@ -13,6 +15,8 @@ function ContestComment({
   username,
   avatar,
 }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className="contest-comment-item">
       <div className="contest-comment-item-head flex-center">
@@ -36,7 +40,8 @@ function ContestComment({
         </Link>
         <div className="contest-comment-item-head-tools ml-auto">
           <button type="button" className="btn butt-xs butt-dark mx-1">
-            <BsCheck2All /> <span className="text"> تحديد الفائز</span>
+            <BsCheck2All />{" "}
+            <span className="text"> {getAll("Winner_selection")}</span>
           </button>
           <button type="button" className="btn butt-xs butt-light mx-1">
             <AiOutlineEdit />
@@ -45,7 +50,7 @@ function ContestComment({
             <AiOutlineDelete />
           </button>
           <button type="button" className="btn butt-xs butt-orange mx-1">
-            تبليغ
+            {getAll("Report")}
           </button>
         </div>
       </div>

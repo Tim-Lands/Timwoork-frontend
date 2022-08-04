@@ -1,7 +1,11 @@
 import React from "react";
 import PortfolioSlider from "@/components/Post/PortfolioSlider";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function PortfolioSliders() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className="portfolios-slider">
       <div className="row">
@@ -9,7 +13,7 @@ function PortfolioSliders() {
           <PortfolioSlider
             thumbnail={`https://i.pinimg.com/736x/7e/90/4b/7e904beaf84643862390894801aa2895.jpg`}
             author={`قويدر جلال`}
-            level={`بائع جديد`}
+            level={getAll("New_seller")}
             username={`wjw`}
             avatar={`/avatar3.jpg`}
           />

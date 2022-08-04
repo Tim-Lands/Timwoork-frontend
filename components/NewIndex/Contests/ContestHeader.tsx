@@ -1,23 +1,27 @@
 import Link from "next/link";
 import React from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function ContestHeader() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className="timlands-top-header">
       <ul className="timlands-tabs-nav me-auto">
         <li className="active">
           <button type="button" className="tab-butt-nav">
-            الأحدث
+            {getAll("Lastest")}
           </button>
         </li>
         <li>
           <button type="button" className="tab-butt-nav">
-            الأكثر شعبية
+            {getAll("Most_popular")}
           </button>
         </li>
         <li>
           <button type="button" className="tab-butt-nav">
-            الأكثر مشاركة
+            {getAll("Most_shared")}
           </button>
         </li>
       </ul>
@@ -28,7 +32,7 @@ function ContestHeader() {
               <span className="material-icons material-icons-outlined">
                 add_circle
               </span>{" "}
-              إضافة مسابقة جديدة
+              {getAll("Add_new_competition")}
             </a>
           </Link>
         </li>

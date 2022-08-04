@@ -2376,7 +2376,7 @@
     "fr": "Pour des services tels que : Je choisis un nom pour votre produit ou votre entreprise, j’apporte des followers, j’augmente les likes, j’apporte des vues... Dans ces services, en cas de problème entre le vendeur et l’acheteur et l’incapacité du vendeur à fournir une preuve ferme, explicite et claire de la mise en œuvre complète du service, le bon de commande est annulé et l’acheteur est remboursé.",
     "ar": "بالنسبة للخدمات من أمثال: أختار لك إسم لمنتجك أو شركتك، جلب  متابعين، زيادة لايكات، جلب مشاهدات ... في هذه الخدمات ، في حال    حدوث أي مشكلة بين البائع والمشتري وعدم تمكن البائع من تقديم إثبات مؤكد وصريح وواضح عن تنفيذ الخدمة على أكمل وجه، يصار حينها   لإلغاء طلب الشراء وإعادة المال للمشتري."
   },
-  "Concerning_financial_services,": {
+  "Concerning_financial_services": {
     "en": "Concerning financial services, the seller must state that he/she will not execute any request definitively 24 hours before the service or service request and will comply. Failure to comply leads to cancellation of orders even after they have been executed and the seller bears the loss in that case. Examples of these services: balance charging services in mobile networks or locations, profit withdrawal services ...",
     "fr": "Pour les services financiers, le vendeur doit déclarer qu’il n’exécutera aucune demande définitivement 24 heures avant la demande de service, et qu’il s’y conformera effectivement. Le non-respect entraîne l’annulation des commandes même après leur exécution et le vendeur supporte la perte dans ce cas. Exemples de ces services : services de recharge de solde dans les réseaux ou emplacements mobiles, services de retrait de bénéfices ...",
     "ar": "بالنسبة للخدمات المالية يتوجب على البائع أن يذكر أنه لن يقوم  بتنفيذ أي طلب نهائياً قبل مرور 24 ساعة على طلب الخدمة أو    الخدمات، والإلتزام بذلك فعلياً. عدم الإلتزام بذلك يؤدي إلى إلغاء   الطلبات حتى بعد تنفيذها ويتحمل البائع الخسارة في تلك الحالة.   أمثلة عن هذه الخدمات: خدمات شحن الرصيد في شبكات المحمول أو  المواقع، خدمات سحب الأرباح ..."
@@ -2806,7 +2806,13 @@
     "fr": "Non",
     "ar": "لا"
   },
-  "Super!_You_have": {
+  "Have": {
+    "en": "Have",
+    "fr": "a fait",
+    "ar": "قام"
+  },
+
+  "Super_You_have": {
     "en": "Super! You have reached your last step to join Timwoork’s sellers’ team",
     "fr": "Parfait ! Vous êtes à la dernière étape pour rejoindre l’équipe des vendeurs de Timwoork",
     "ar": "رائع ! لقد وصلت إلى خطوتك الأخيرة لتنضم إلى فريق بائعي تيموورك"
@@ -4676,7 +4682,7 @@
     "fr": "Gestion des members",
     "ar": "إدارة الأعضاء"
   },
-  "User_notification ": {
+  "User_notification1": {
     "en": "User notification ",
     "fr": "Notification de l’utilisateur",
     "ar": "إشعار للمستخدم"
@@ -4922,7 +4928,7 @@
     "fr": "Êtes-vous sûr de vouloir archiver cet élément ?",
     "ar": "هل انت متأكد أنك تريد أرشفة هذا العنصر"
   },
-  "Yes,_I_want": {
+  "Yes_I_want": {
     "en": "Yes, I want to archive it",
     "fr": "Oui, je veux l’archiver",
     "ar": "نعم, أريد الأرشفة"
@@ -4937,12 +4943,12 @@
     "fr": "Annulé",
     "ar": "ملغي"
   },
-  "Are_you_sur?": {
+  "Are_you_sur1": {
     "en": "Are you sur that you want to delete permanently?",
     "fr": "Êtes-vous sûr de vouloir supprimer cet élément définitivement ?",
     "ar": "هل انت متأكد أنك تريد حذف هذا العنصر نهائيًا"
   },
-  "Yes,_I_ant": {
+  "Yes_I_ant": {
     "en": "Yes, I ant to delete it",
     "fr": "Oui, je veux le supprimer",
     "ar": "نعم, أريد الحذف"
@@ -4952,7 +4958,7 @@
     "fr": "Êtes-vous sûr de vouloir récuppérer cet élément ?",
     "ar": "هل انت متأكد أنك تريد إستعادة هذا العنصر"
   },
-  "Yes,_I_ant_2": {
+  "Yes_I_ant_2": {
     "en": "Yes, I ant to recover it",
     "fr": "Oui, je veux le récupérer",
     "ar": "نعم, أريد الإستعادة"
@@ -5322,6 +5328,16 @@
     "en": "Writing and translation",
     "fr": "Rédaction et traduction",
     "ar": "كتابة وترجمة"
+  },
+  "Manual_translation": {
+    "en": "Manual translation",
+    "fr": "Traduction manuelle",
+    "ar": "ترجمة يدوية"
+  },
+  "automatic_translation": {
+    "en": "automatic translation",
+    "fr": "traduction automatique",
+    "ar": "ترجمة يدوية"
   },
 
   "Housewives’_services": {
@@ -5714,7 +5730,7 @@
     "fr": "Ajouter un nouveau concours",
     "ar": "إضافة مسابقة جديدة"
   },
-  "Research_in_competitions ": {
+  "Research_in_competitions": {
     "en": "Research in competitions page",
     "fr": "Rechercher dans la page de concours",
     "ar": "البحث في صفحة المسابقات"
@@ -5760,42 +5776,42 @@
     "fr": "Date de publication:",
     "ar": "تاريخ النشر:"
   },
-  "Delivery_period:": {
+  "Delivery_period": {
     "en": "Delivery period:",
     "fr": "Durée de livraison:",
     "ar": "مدة التسليم:"
   },
-  "Competitors:": {
+  "Competitors": {
     "en": "Competitors:",
     "fr": "Candidats:",
     "ar": "المتسابقين:"
   },
-  "Winners’_number:": {
+  "Winners’_number": {
     "en": "Winners’ number:",
     "fr": "Nombre de gagnants:",
     "ar": "عدد الفائزين:"
   },
-  "Participations_number:": {
+  "Participations_number": {
     "en": "Participations number:",
     "fr": "Nombre de participations:",
     "ar": "عدد المشاركات:"
   },
-  "Views:": {
+  "Views": {
     "en": "Views:",
     "fr": "Vues:",
     "ar": "المشاهدات:"
   },
-  "Likes:": {
+  "Likes": {
     "en": "Likes:",
     "fr": "J’aime:",
     "ar": "الإعجابات:"
   },
-  "Share_competition:": {
+  "Share_competition": {
     "en": "Share competition:",
     "fr": "Partager  le concours:",
     "ar": "مشاركة المسابقة:"
   },
-  "Title’s_language_used:": {
+  "Title’s_language_used": {
     "en": "Title’s language used:",
     "fr": "Langue de titre utilisée:",
     "ar": "لغة العنوان المستخدمة:"
@@ -5849,7 +5865,7 @@
     "ar": "انسخ رابط محفظتي"
   },
 
-  "About_the_competition ": {
+  "About_the_competition": {
     "en": "About the competition owner",
     "fr": "A propos du propriétaire de concours",
     "ar": "عن صاحب المسابقة"

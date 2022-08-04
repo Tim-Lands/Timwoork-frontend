@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
 import { AiOutlineLike } from "react-icons/ai";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function ContestEntierPost({
   thumbnail,
@@ -18,21 +20,27 @@ function ContestEntierPost({
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   // const [isFavorated, setIsFavorated] = useState(false);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
 
   return (
-    <Badge.Ribbon color={'orange'} text="الفائز الأول" style={{ display: isWin ? "block" : "none" }}>
+    <Badge.Ribbon
+      color={"orange"}
+      text={getAll("First_winner")}
+      style={{ display: isWin ? "block" : "none" }}
+    >
       <div className={"timlands-contest-entier-post"}>
         <div
           className="contest-item-img"
           style={{ backgroundImage: thumbnailUrl }}
         >
           <Link href={`/contests/${slug}/posts/${id}`}>
-            <a className="btn butt-white-out butt-xs">مشاهدة...</a>
+            <a className="btn butt-white-out butt-xs">{getAll("View")}</a>
           </Link>
         </div>
         <div className="contest-item-content p-2">
           <p className="public-vote">
-            تصويت الجمهور{" "}
+            {getAll("Public_vote")}{" "}
             <small>
               (<AiOutlineLike /> 12 )
             </small>

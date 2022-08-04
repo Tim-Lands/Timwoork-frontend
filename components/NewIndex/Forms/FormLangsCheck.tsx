@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import FormModal from "./FormModal";
 import PropTypes from "prop-types";
+import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useContext } from "react";
 
-function FormLangsCheck({ default_lang, onChange, id}) {
+function FormLangsCheck({ default_lang, onChange, id }) {
   const [isShowenModal, setIsShowenModal] = useState(false);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <>
       {isShowenModal && <FormModal setIsConfirmText={setIsShowenModal} />}
       <div className="form-languages">
         <div className="row">
           <div className="col-4">
-            <h4 className="title-lang">لغة العنوان المستخدمة: </h4>
+            <h4 className="title-lang">{getAll("Title’s_language_used")}</h4>
           </div>
-          {default_lang != 'ar' &&
+          {default_lang != "ar" && (
             <div className="col">
               <div className="form-check">
                 <input
@@ -23,12 +27,16 @@ function FormLangsCheck({ default_lang, onChange, id}) {
                   onChange={onChange}
                 />
 
-                <label className="form-check-label" htmlFor={`flexCheckArabic${id}`}>
+                <label
+                  className="form-check-label"
+                  htmlFor={`flexCheckArabic${id}`}
+                >
                   العربية
                 </label>
               </div>
-            </div>}
-          {default_lang != 'en' &&
+            </div>
+          )}
+          {default_lang != "en" && (
             <div className="col">
               <div className="form-check">
                 <input
@@ -37,14 +45,17 @@ function FormLangsCheck({ default_lang, onChange, id}) {
                   value="en"
                   id={`flexCheckEnglish${id}`}
                   onChange={onChange}
-
                 />
-                <label className="form-check-label" htmlFor={`flexCheckEnglish${id}`}>
+                <label
+                  className="form-check-label"
+                  htmlFor={`flexCheckEnglish${id}`}
+                >
                   الإنجليزية
                 </label>
               </div>
-            </div>}
-          {default_lang != 'fr' &&
+            </div>
+          )}
+          {default_lang != "fr" && (
             <div className="col">
               <div className="form-check">
                 <input
@@ -53,13 +64,16 @@ function FormLangsCheck({ default_lang, onChange, id}) {
                   value="fr"
                   id={`flexCheckFrench${id}`}
                   onChange={onChange}
-
                 />
-                <label className="form-check-label" htmlFor={`flexCheckFrench${id}`}>
+                <label
+                  className="form-check-label"
+                  htmlFor={`flexCheckFrench${id}`}
+                >
                   الفرنسية
                 </label>
               </div>
-            </div>}
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -68,6 +82,6 @@ function FormLangsCheck({ default_lang, onChange, id}) {
 FormLangsCheck.propTypes = {
   onChange: PropTypes.func,
   default_lang: PropTypes.string,
-  id:PropTypes.number
-}
+  id: PropTypes.number,
+};
 export default FormLangsCheck;
