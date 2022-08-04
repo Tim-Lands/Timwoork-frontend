@@ -939,12 +939,20 @@
   left: 12px;
 }
 
+.rtl .message-item .btn-translate {
+  left: 34px;
+}
+
 .rtl .message-item.recieved {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
   text-align: left;
+}
+
+.rtl .message-item.recieved .btn-translate {
+  right: 20px;
 }
 
 .rtl .message-item.recieved .readed {
@@ -1412,9 +1420,5 @@
 
 .rtl .user-mata-post-content {
   margin-right: 5px;
-}
-
-.rtl .btn-translate {
-  right: 20px;
 }
 /*# sourceMappingURL=app-rtl.css.map */

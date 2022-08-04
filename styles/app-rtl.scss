@@ -888,11 +888,15 @@
     .readed {
       left: 12px;
     }
-
+    .btn-translate {
+      left: 34px;
+    }
     &.recieved {
       flex-direction: row-reverse;
       text-align: left;
-
+      .btn-translate {
+        right: 20px;
+      }
       .readed {
         right: 12px;
       }
@@ -1527,9 +1531,5 @@
 
   .user-mata-post-content {
     margin-right: 5px;
-  }
-  
-  .btn-translate {
-    right: 20px;
   }
 }
