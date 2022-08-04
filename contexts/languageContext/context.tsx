@@ -9,10 +9,10 @@ export const LanguageProvider = (props) => {
 
   const [language, setLanguage] = useState(lang || "ar");
 
-  function getSectionLanguage(section) {
+  function getSectionLanguage() {
     return function getLanguage(name) {
-      if (translates[section][name]) {
-        return translates[section][name][language];
+      if (translates["all"][name]) {
+        return translates["all"][name][language];
       } else {
       }
     };

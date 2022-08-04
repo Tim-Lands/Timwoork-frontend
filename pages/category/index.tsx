@@ -7,10 +7,9 @@ import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const { getSectionLanguage, language } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   const { data: categories }: any = useSWR(`api/categories`);
-  const { language } = useContext(LanguageContext);
   categories &&
     categories.data.sort((a, b) => {
       if (a.subcategories.length < b.subcategories.length) {

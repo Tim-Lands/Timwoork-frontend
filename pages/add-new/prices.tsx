@@ -18,9 +18,7 @@ import PropTypes from "prop-types";
 function Prices({ query }) {
   const stepsView = useRef(null);
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -118,7 +116,7 @@ function Prices({ query }) {
                     );
                     // Authentication was successful.
                     if (res.status === 200) {
-                      message.success(getLogin("The_update_has"));
+                      message.success(getAll("The_update_has"));
                       router.push({
                         pathname: "/add-new/description",
                         query: {
@@ -153,7 +151,7 @@ function Prices({ query }) {
                                   collections_bookmark
                                 </span>
                               </span>
-                              {getLanguage("General_information")}
+                              {getAll("General_information")}
                             </h3>
                           </div>
                           <div
@@ -166,7 +164,7 @@ function Prices({ query }) {
                                   payments
                                 </span>
                               </span>
-                              {getLanguage("Upgrades_price")}
+                              {getAll("Upgrades_price")}
                             </h3>
                           </div>
                           <div className="timlands-step-item">
@@ -176,7 +174,7 @@ function Prices({ query }) {
                                   description
                                 </span>
                               </span>
-                              {getLanguage("Description_and_instructions")}
+                              {getAll("Description_and_instructions")}
                             </h3>
                           </div>
                           <div className="timlands-step-item">
@@ -186,7 +184,7 @@ function Prices({ query }) {
                                   mms
                                 </span>
                               </span>
-                              {getLanguage("Gallery_and_folders")}
+                              {getAll("Gallery_and_folders")}
                             </h3>
                           </div>
                           <div className="timlands-step-item">
@@ -196,7 +194,7 @@ function Prices({ query }) {
                                   publish
                                 </span>
                               </span>
-                              {getLanguage("Publish_service")}
+                              {getAll("Publish_service")}
                             </h3>
                           </div>
                         </div>
@@ -210,7 +208,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-price"
                               >
-                                {getLanguage("Service_price")}
+                                {getAll("Service_price")}
                               </label>
                               <Field
                                 id="input-price"
@@ -249,7 +247,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-duration"
                               >
-                                {getLanguage("Delivery_terme")}
+                                {getAll("Delivery_terme")}
                               </label>
                               <div className="rel-form">
                                 <Field
@@ -270,9 +268,7 @@ function Prices({ query }) {
                                   autoComplete="off"
                                 />
                                 <div className="timlands-form-label">
-                                  <p className="text">
-                                    {getLanguage("In_Days")}
-                                  </p>
+                                  <p className="text">{getAll("In_Days")}</p>
                                 </div>
                               </div>
                               <motion.div
@@ -281,7 +277,7 @@ function Prices({ query }) {
                                 className="timlands-form-note"
                               >
                                 <p className="text">
-                                  {getLanguage("Choose_a_suitable")}
+                                  {getAll("Choose_a_suitable")}
                                 </p>
                               </motion.div>
                               {validationsErrors && validationsErrors.duration && (
@@ -305,7 +301,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-tags"
                               >
-                                {getLanguage("Upgrades")}
+                                {getAll("Upgrades")}
                               </label>
                               <FieldArray
                                 name="developments"
@@ -486,9 +482,7 @@ function Prices({ query }) {
                                                       />
                                                       <div className="timlands-form-label">
                                                         <p className="text">
-                                                          {getLanguage(
-                                                            "In_Days"
-                                                          )}
+                                                          {getAll("In_Days")}
                                                         </p>
                                                       </div>
                                                     </div>
@@ -544,7 +538,7 @@ function Prices({ query }) {
                                     values.developments.length < 5 ? (
                                       <div className="product-devlopes-butt">
                                         <p className="product-devlopes-text">
-                                          {getLanguage("Service_upgrades_are")}
+                                          {getAll("Service_upgrades_are")}
                                         </p>
                                         <button
                                           type="button"
@@ -555,7 +549,7 @@ function Prices({ query }) {
                                           <span className="material-icons-outlined">
                                             post_add
                                           </span>{" "}
-                                          {getLanguage("Click_to_add")}
+                                          {getAll("Click_to_add")}
                                         </button>
                                       </div>
                                     ) : (
@@ -596,7 +590,7 @@ function Prices({ query }) {
                                   </span>
                                 )}
                                 <span className="text">
-                                  {getLanguage("Previous_step")}
+                                  {getAll("Previous_step")}
                                 </span>
                               </button>
                               <button
@@ -607,7 +601,7 @@ function Prices({ query }) {
                                 className="btn flex-center butt-green ml-auto butt-sm"
                               >
                                 <span className="text">
-                                  {getLanguage("Next_step")}
+                                  {getAll("Next_step")}
                                 </span>
                                 {language === "ar" ? (
                                   <span className="material-icons-outlined">

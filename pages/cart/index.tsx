@@ -16,9 +16,7 @@ import router from "next/router";
 function index() {
   const { data: userInfo }: any = useSWR("api/me");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("cart");
-  const getLanguageMain = getSectionLanguage("main");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [, getCurrency] = useContext(CurrencyContext);
   const specCurrency = getCurrency(
     userInfo?.user_details?.profile?.currency?.code
@@ -119,8 +117,8 @@ function index() {
                     />
                   </div>
                   <div className="cart-nothing-content">
-                    <h1 className="title">{getLanguage("Cart")}</h1>
-                    <p className="text">{getLanguage("No_services_in")}</p>
+                    <h1 className="title">{getAll("Cart")}</h1>
+                    <p className="text">{getAll("No_services_in")}</p>
                   </div>
                 </div>
               </div>
@@ -214,10 +212,10 @@ function index() {
       </div>
       <div className="container">
         <PostsAside
-          title={getLanguageMain("Most_popular_services")}
+          title={getAll("Most_popular_services")}
           PostData={popularProducts && popularProducts.data.data}
           isError={popularError}
-          more={getLanguageMain("More")}
+          more={getAll("More")}
           linkURL="/products/popular"
         />
       </div>

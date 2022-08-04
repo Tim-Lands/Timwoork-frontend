@@ -15,8 +15,7 @@ import API from "../../config";
 function index() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -63,9 +62,9 @@ function index() {
   return (
     <>
       <MetaTags
-        title={getLanguage("Add_new_service")}
-        metaDescription={getLanguage("Add_new_service")}
-        ogDescription={getLanguage("Add_new_service")}
+        title={getAll("Add_new_service")}
+        metaDescription={getAll("Add_new_service")}
+        ogDescription={getAll("Add_new_service")}
       />
       <div className="container">
         {token && veriedEmail && (
@@ -86,8 +85,8 @@ function index() {
                   )}
                   <img src="/img/g10.png" alt="" className="add-new-image" />
                   <div className="timlands-add-new-body mt-3">
-                    <h3 className="title">{getLanguage("Add_new_service")}</h3>
-                    <p className="text">{getLanguage("Super!_You_have")}</p>
+                    <h3 className="title">{getAll("Add_new_service")}</h3>
+                    <p className="text">{getAll("Super!_You_have")}</p>
                     {!userData && (
                       <div className="add-butts">
                         <button
@@ -107,7 +106,7 @@ function index() {
                           className="btn butt-md butt-primary2"
                           onClick={addNewProduct}
                         >
-                          {getLanguage("Add_a_service")}
+                          {getAll("Add_a_service")}
                         </button>
                       </div>
                     )}

@@ -34,11 +34,6 @@
     "fr": "Choisir des photos à partir de votre appareil",
     "ar": "اختر صور من جهازك"
   },
-  "The_profile_picture": {
-    "en": "The profile picture must be clear and high-quality that reflects the content of the service",
-    "fr": "La photo de profil doit être claire, de bonne résolution et doit refléter le contenu du service",
-    "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة واضحة تعكس محتوى الخدمة"
-  },
   "It’s_better_that ": {
     "en": "It’s better that the dimensions be: 450x750 ",
     "fr": "Il est preferable que les dimensions soient: 450x750 ",
@@ -199,11 +194,7 @@
     "fr": "Choisir la devise du site",
     "ar": "اختيار عملة الموقع"
   },
-  "Choose": {
-    "en": "Choose",
-    "fr": "Choisir",
-    "ar": "اختيار"
-  },
+
   "Cancel": {
     "en": "Cancel",
     "fr": "Annuler",
@@ -474,11 +465,6 @@
     "fr": "Veuillez patienter s’il vous plaît",
     "ar": " يرجى الانتظار"
   },
-  "Choose_a_subcategory": {
-    "en": "Choose a subcategory",
-    "fr": "Choisissez la catégorie secondaire",
-    "ar": "اختر التصنيف الفرعي"
-  },
   "Service_editing_Description": {
     "en": "Service editing- Description & instructions to the buyer",
     "fr": "Modification du service- Description et instructions à l’acheteur",
@@ -723,11 +709,6 @@
     "en": "Tips to add a service",
     "fr": "Conseils pour ajouter un nouveau service",
     "ar": " نصائح لإضافة خدمة"
-  },
-  "Add_a_brief": {
-    "en": "Add a brief and attractive title that does not contain symbols",
-    "fr": "Ajouter un titre bref et attractif qui ne contient pas de symboles ",
-    "ar": " أضف عنوانا جذابا مختصرا وخال من الرموز"
   },
   "Choose_the_suitable": {
     "en": "Choose the suitable category to your service to help customers find it",
@@ -989,20 +970,11 @@
     "fr": "Vous devez trouver un accord ou l'administration interviendra sous 48h",
     "ar": "يجب عليكم الوصول إلى اتفاق وإلا ستتدخل الإدارة  في ظرف 48 ساعة"
   },
-  "Instructions_to_the": {
-    "en": "Instructions to the buyer",
-    "fr": "Instructions à l’acheteur",
-    "ar": "تعليمات للمشتري"
-  },
+
   "Conversation": {
     "en": "Conversation",
     "fr": "Conversation",
     "ar": "المحادثة"
-  },
-  "Instructions": {
-    "en": "Instructions",
-    "fr": "Instructions",
-    "ar": "تعليمات"
   },
   "Cancellation_reason": {
     "en": "Cancellation reason",
@@ -2498,11 +2470,6 @@
     "fr": "Les services de marketing de commission pour d’autres sites.",
     "ar": "خدمات التسويق بالعمولة لمواقع أخرى."
   },
-  "Counselling_and_medical": {
-    "en": "Counselling and medical treatment services, as they cause harm if the service provider is not an experienced doctor. In addition, physical medical examination is best for proper diagnosis.",
-    "fr": "Les services de consultation et de traitement médical, car ils causent du tort si le prestataire de services n’est pas un médecin expérimenté. En outre, l’examen médical physique est le meilleur pour un diagnostic approprié.",
-    "ar": "خدمات الإستشارة والعلاج الطبي، ﻷنها تسبب الأذى إن لم يكن مقدم الخدمة طبيبا متمرساً. إضافة إلى أن الكشف الطبي الفيزيائي هو    الأفضل للتشخيص السليم."
-  },
   "Voting_fetching_services": {
     "en": "Voting fetching services or increased voting at voting Websites, prizes, etc.",
     "fr": "Les services de collecte de votes ou augmentation du vote sur les sites de vote, les prix, etc.",
@@ -2833,5 +2800,3758 @@
     "en": "No",
     "fr": "Non",
     "ar": "لا"
+  },
+  "Super!_You_have": {
+    "en": "Super! You have reached your last step to join Timwoork’s sellers’ team",
+    "fr": "Parfait ! Vous êtes à la dernière étape pour rejoindre l’équipe des vendeurs de Timwoork",
+    "ar": "رائع ! لقد وصلت إلى خطوتك الأخيرة لتنضم إلى فريق بائعي تيموورك"
+  },
+  "Add_a_service": {
+    "en": "Add a service",
+    "fr": "Ajouter un service",
+    "ar": "إضافة خدمة"
+  },
+  "General_information": {
+    "en": "General information",
+    "fr": "Informations générales",
+    "ar": "معلومات عامة"
+  },
+  "Choose_the_principal": {
+    "en": "Choose the principal category",
+    "fr": "Choisissez la catégorie principale",
+    "ar": "اختر التصنيف الرئيسي"
+  },
+  "Choose_a_subcategory": {
+    "en": "Choose a subcategory",
+    "fr": "Choisissez la catégorie secondaire",
+    "ar": "اختر التصنيف الفرعي"
+  },
+  "Key_words": {
+    "en": "Key-words",
+    "fr": "Les mots-clés",
+    "ar": "الوسوم/ التاج"
+  },
+  "Service_title_is": {
+    "en": "Service title is required",
+    "fr": "Le titre du service est nécessaire",
+    "ar": "عنوان الخدمة مطلوب"
+  },
+  "Subcategory_is_required": {
+    "en": "Subcategory is required",
+    "fr": "LA catégorie secondaire est nécessaire",
+    "ar": "التصنيف الفرعي مطلوب"
+  },
+  "Choose": {
+    "en": "Choose",
+    "fr": "Choisissez",
+    "ar": "اختر"
+  },
+  "You_should_enter_one": {
+    "en": "You should enter at least one key-word",
+    "fr": "Vous devez entrer au moins un mot-clé",
+    "ar": "يجب عليك وضع على أقل وسم"
+  },
+  "Upgrades_price": {
+    "en": "Upgrades price",
+    "fr": "Prix des mises à jours",
+    "ar": "السعر والتطويرات"
+  },
+  "Service_price": {
+    "en": "Service price",
+    "fr": "Prix du service",
+    "ar": "سعر الخدمة"
+  },
+  "Delivery_terme": {
+    "en": "Delivery term",
+    "fr": "Délai de livraison",
+    "ar": "مدة التسليم"
+  },
+  "In_Days": {
+    "en": "In Days",
+    "fr": "En Jours",
+    "ar": "بالأيام"
+  },
+  "Choose_a_suitable": {
+    "en": "Choose a suitable delivery term. The buyer can cancel the service directly in case of delay in delivering the service on the specified date",
+    "fr": "Déterminez un délai de livraison qui vous convient. L’acheteur peut annuler directement le service en cas de retard de livraison.",
+    "ar": "حدد مدة تسليم مناسبة لك. يستطيع المشتري إلغاء الخدمة مباشرة في حال التأخر بتسليم الخدمة في الموعد المحدد"
+  },
+  "Upgrades": {
+    "en": "Upgrades",
+    "fr": "Les mises à jour ",
+    "ar": "التطويرات"
+  },
+  "The_profile_picture": {
+    "en": "The profile picture must be clear and  high quality that reflects the content of the service. It is better if its dimensions are 750 * 450",
+    "fr": "La photo de profil doit être claire et de bonne qualité qui reflète le contenu du service Il est préférable qu’elle soit de dimensions : 750 * 450",
+    "ar": "يجب أن تكون الصورة البارزة واضحة وبجودة عالية تعكس محتوى الخدمة من الأفضل أن تكون الأبعاد 750*450"
+  },
+  "Service_upgrades_are": {
+    "en": "Service upgrades are optional, so you can’t oblige the buyer to request them. Know how to use them properly",
+    "fr": "Les mises à jour du service sont facultatives, vous ne pouvez pas exiger à l’acheteur de les utiliser. Savoir comment les utiliser correctement.",
+    "ar": "تطويرات الخدمة المقدمة اختيارية فقط ولا يمكن أن تجبر المشتري على طلبها. اعرف طريقة استخدامها بشكل صحيح"
+  },
+  "Click_to_add": {
+    "en": "Click to add an upgrad",
+    "fr": "Cliquez pour ajouter une mise à jour",
+    "ar": "اضغط لإضافة تطوير للخدمة"
+  },
+  "Previous_step": {
+    "en": "Previous step",
+    "fr": "Etape précédente",
+    "ar": "المرحلة السابقة"
+  },
+  "Next_step": {
+    "en": "Next step",
+    "fr": "Etape suivante",
+    "ar": "المرحلة التالية"
+  },
+  "Service_price_is": {
+    "en": "Service price is required",
+    "fr": "Le prix du service est nécessaire",
+    "ar": "سعر الخدمة مطلوب"
+  },
+  "You_should_enter": {
+    "en": "You should enter the duration",
+    "fr": "Vous devez entrer la durée",
+    "ar": "يجب عليك إدخال المدة"
+  },
+  "Description_and_instructions": {
+    "en": "Description and instructions to the buyer",
+    "fr": "Description et instructions à l’acheteur",
+    "ar": "الوصف وتعليمات المشتري"
+  },
+  "Service_description": {
+    "en": "Service description",
+    "fr": "Description du service",
+    "ar": "وصف الخدمة"
+  },
+  "Enter_an_accurate": {
+    "en": "Enter an accurate service description that includes all information and conditions. It is forbidden to put email, phone number or other contact information.",
+    "fr": "Entrez une description de service précise qui inclut toutes les informations et conditions. Il est interdit de mettre un courriel, un numéro de téléphone ou d'autres informations de contact.",
+    "ar": "أدخل وصف الخدمة بدقة يتضمن جميع المعلومات والشروط. يمنع وضع البريد الالكتروني، رقم الهاتف أو معلومات اتصال أخرى."
+  },
+  "Instructions_to_the": {
+    "en": "Instructions to the buyer",
+    "fr": "Instructions à l’acheteur",
+    "ar": "تعليمات للمشتري"
+  },
+  "They_are_information": {
+    "en": "They are information you need from the buyer to implement the service. This information appears only after purchasing the service.",
+    "fr": "Ce ses informations dont vous avez besoin de la part de l'acheteur pour mettre en œuvre le service. Ces informations n’apparaîtront qu'après l'achat du service.",
+    "ar": "المعلومات التي تحتاجها من المشتري لتنفيذ الخدمة. تظهر هذه المعلومات بعد شراء الخدمة فقط."
+  },
+  "The_content_shouldn’t": {
+    "en": "The content shouldn’t be less than 80 characters",
+    "fr": "Le contenu ne doit pas être inférieur à 80 caractères",
+    "ar": "يجب أن لا يقل المحتوى عن 80 حرف"
+  },
+  "Gallery_and_folders": {
+    "en": "Gallery and folders",
+    "fr": "Galerie et dossiers",
+    "ar": "مكتبة الصور والملفات"
+  },
+
+  "Gallery": {
+    "en": "Gallery",
+    "fr": "Galerie photos",
+    "ar": "معرض الصور"
+  },
+
+  "You_must_choose": {
+    "en": "You must choose a photo in the service gallery. The pictures must be suitable to the service",
+    "fr": "Vous devez choisir une photo dans la galerie du service. Les photos doivent convenir au service",
+    "ar": "يجب أن تختار صورة في معرض الخدمة ويجب أن تكون الصور مناسبة من الخدمة"
+  },
+  "Service_introduction_video": {
+    "en": "Service introduction video (optional)",
+    "fr": "Vidéo de présentation du service (facultatif)",
+    "ar": "فيديو تعريفي للخدمة (اختياري)"
+  },
+  "Video_link": {
+    "en": "Video link",
+    "fr": "Lien de la vidéo",
+    "ar": "رابط الفيديو"
+  },
+
+  "The_service_has": {
+    "en": "The service has been added successfully",
+    "fr": "LE service a bien été ajouté",
+    "ar": "تمت إضافة الخدمة بنجاح"
+  },
+  "Congratulations_Now_you": {
+    "en": "Congratulations! Now, you can publish your service and share it on social media after approval by the administration",
+    "fr": "Félicitation ! Maintenant vous pouvez publier votre service et le partager sur les réseaux sociaux après qu'il est approuvé par l'administration",
+    "ar": "تهانينا. يمكنك الآن نشر خدمتك ومشاركتها عبر مواقع التواصل الاجتماعي بعد الموافقة عليها من طرف الإدارة"
+  },
+
+  "Modify_the_service": {
+    "en": "Modify the service",
+    "fr": "Modifier le service",
+    "ar": "تعديل الخدمة"
+  },
+  "Delete_the_service": {
+    "en": "Delete the service",
+    "fr": "Supprimer le service",
+    "ar": "حذف الخدمة"
+  },
+  "No_upgrades_in": {
+    "en": "No upgrades in this service",
+    "fr": "Ce service ne contient pas de mises à jour",
+    "ar": "هذه الخدمة لا توجد فيها تطويرات"
+  },
+  "Are_you_sure1": {
+    "en": "Are you sure?",
+    "fr": "Êtes-vous sûr ?",
+    "ar": "هل أنت متأكد؟"
+  },
+  "Yes_I_want": {
+    "en": "Yes, I want to delete it.",
+    "fr": "Oui, je veux le supprimer.",
+    "ar": "نعم. أريد الحذف"
+  },
+  "Deleted": {
+    "en": "Deleted!",
+    "fr": "Supprimé !",
+    "ar": "تم الحذف !"
+  },
+  "It_has_been": {
+    "en": "It has been deleted successfully",
+    "fr": "Suppression réussie !",
+    "ar": "لقد تم حذف هذه الخدمة بنجاح"
+  },
+  "Sign_in": {
+    "en": "Sign in",
+    "fr": "Se connecter",
+    "ar": "تسجيل الدخول"
+  },
+  "E_mail": {
+    "en": "E-mail",
+    "fr": "E-mail",
+    "ar": "البريد الالكتروني"
+  },
+  "Password": {
+    "en": "Password",
+    "fr": "Mot de passe",
+    "ar": "كلمة المرور"
+  },
+  "Remember_me": {
+    "en": "Remember me",
+    "fr": "Enregistrer le mot de passe",
+    "ar": "تذكرني"
+  },
+  "Forgot_your_password": {
+    "en": "Forgot your password",
+    "fr": "Mot de passe oublié",
+    "ar": "نسيت كلمة المرور"
+  },
+  "Don’t_have_an": {
+    "en": "Don’t have an account? Join us!",
+    "fr": "Vous n’avez pas de compte ? Rejoignez-nous !",
+    "ar": "ليس لديك حساب؟ انضم إلينا !"
+  },
+  "Or_login_with": {
+    "en": "Or login with",
+    "fr": "Ou connectez-vous via",
+    "ar": "أو تسجيل الدخول بواسطة"
+  },
+  "Username": {
+    "en": "Username",
+    "fr": "Nom d’utilisateur",
+    "ar": "اسم المستخدم"
+  },
+  "Confirm_your_password": {
+    "en": "Confirm your password",
+    "fr": "Confirmer le mot de passe",
+    "ar": "إعادة كلمة المرور"
+  },
+  "If_your_press": {
+    "en": "If your press Create an account, you agree to the terms of use and privacy policy.",
+    "fr": "En cliquant sur Créer un compte, vous acceptez les conditions d’utilisation et la politique de confidentialité",
+    "ar": "بمجرد قمت بالضغط على إنشاء حساب فأنت توافق على شروط الاستخدام وسياسة الخصوصية"
+  },
+  "Create_an_account": {
+    "en": "Create an account",
+    "fr": "Créer un compte",
+    "ar": "إنشاء حساب"
+  },
+  "Have_you_already": {
+    "en": "Have you already an account? Sign in",
+    "fr": "Avez-vous déjà un compte ? Se connecter",
+    "ar": "لديك حساب؟ تسجيل الدخول"
+  },
+  "Or_sign_in": {
+    "en": "Or sign in with",
+    "fr": "Ou se connecter via",
+    "ar": "أو التسجيل بواسطة "
+  },
+  "Username_is_required": {
+    "en": "Username is required",
+    "fr": "Le nom d’utilisateur est nécessaire",
+    "ar": "اسم المستخدم مطلوب"
+  },
+  "Password_is_required": {
+    "en": "Password is required",
+    "fr": "Le mot de passe est nécessaire",
+    "ar": "كلمة السر مطلوبة"
+  },
+  "Earn_online": {
+    "en": "Earn online",
+    "fr": "Gagner l’argent sur Internet",
+    "ar": "الربح من الأنترنيت"
+  },
+  "Technology": {
+    "en": "Technology",
+    "fr": "Technologie",
+    "ar": "تكلنولوجيا"
+  },
+  "How_to-have ": {
+    "en": "How to have a job ",
+    "fr": "Méthodes pour avoir du travail",
+    "ar": "طرق الحصول على العمل"
+  },
+  "Unclassified": {
+    "en": "Unclassified",
+    "fr": "Non classé",
+    "ar": "غير مصنف"
+  },
+  "No_article": {
+    "en": "No article",
+    "fr": "Aucun article",
+    "ar": "لا يوجد مقالات"
+  },
+  "Related_articles": {
+    "en": "Related articles",
+    "fr": "Articles similaires",
+    "ar": "مقالات ذات صلة"
+  },
+  "Read_more": {
+    "en": "Read more",
+    "fr": "Lire plus",
+    "ar": "قراءة المزيد"
+  },
+  "Read_also": {
+    "en": "Read also",
+    "fr": "Lire aussi",
+    "ar": "اقرأ أيضا"
+  },
+  "See_also": {
+    "en": "See also",
+    "fr": "Voir aussi",
+    "ar": "شاهد أيضا"
+  },
+  "Here": {
+    "en": "Here",
+    "fr": "Ici",
+    "ar": "من هنا"
+  },
+  "This_may_interest": {
+    "en": "This may interest you",
+    "fr": "Ça peut vous intéresser",
+    "ar": "قد يهمك"
+  },
+  "Cart": {
+    "en": "Cart",
+    "fr": "Panier",
+    "ar": "السلة"
+  },
+  "No_services_in": {
+    "en": "No services in the cart",
+    "fr": "Aucun service dans votre panier",
+    "ar": "لا توجد خدمات في سلة المشتريات"
+  },
+  "Business": {
+    "en": "Business",
+    "fr": "Affaires",
+    "ar": "أعمال"
+  },
+  "Programming_and_development": {
+    "en": "Programming and development",
+    "fr": "Programmation et développement",
+    "ar": "برمجة وتطوير"
+  },
+  "E_marketing": {
+    "en": "E-marketing",
+    "fr": "E-marketing",
+    "ar": "تسويق الكتروني"
+  },
+  "Online_training": {
+    "en": "Online training",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+  "Video_design": {
+    "en": "Video design",
+    "fr": "Conception de vidéo",
+    "ar": "تصميم فيديو"
+  },
+  "General_design": {
+    "en": "General design",
+    "fr": "Conception générale",
+    "ar": "تصميم عام"
+  },
+  "Audio": {
+    "en": "Audio",
+    "fr": "Audio",
+    "ar": "صوتيات"
+  },
+  "Audio_book_production": {
+    "en": "Audio book production",
+    "fr": "Réalisation de livres audio",
+    "ar": "إنتاج كتب صوتية"
+  },
+  "Acoustic_treatment": {
+    "en": "Acoustic treatment",
+    "fr": "traitement acoustique",
+    "ar": "المعالجة الصوتية"
+  },
+  "Edit_a_podcast": {
+    "en": "Edit a podcast",
+    "fr": "Editer un podcast",
+    "ar": "تحرير بودكاست"
+  },
+  "Voice_off": {
+    "en": "Voice off",
+    "fr": "Commentaire audio/ Voix off",
+    "ar": "تعليق صوتي"
+  },
+  "Other": {
+    "en": "Other",
+    "fr": "Autre",
+    "ar": "أخرى"
+  },
+  "Animation_design": {
+    "en": "Animation design",
+    "fr": "Conception d’animation",
+    "ar": "تصميم صور متحركة"
+  },
+  "Video’s_intro_design": {
+    "en": "Video’s intro design",
+    "fr": "Conception d’intro de vidéo",
+    "ar": "تصميم مقدمات فيديو"
+  },
+  "Motion_graphics": {
+    "en": "Motion graphics",
+    "fr": "Animation graphique/ motion graphics",
+    "ar": "موشن جرافيك"
+  },
+  "Video_editing": {
+    "en": "Video editing",
+    "fr": "Montage de vidéo",
+    "ar": "مونتاج فيديو"
+  },
+  "White_board": {
+    "en": "White board",
+    "fr": "Tableau blanc",
+    "ar": "وايت بورد"
+  },
+  "Transcription_one": {
+    "en": "Transcription",
+    "fr": "Transcription",
+    "ar": "إدخال بيانات"
+  },
+  "Consulting_and_business": {
+    "en": "Consulting and business",
+    "fr": "Consultation et affaires",
+    "ar": "استشارات أعمال"
+  },
+  "E_commerce": {
+    "en": "E-commerce",
+    "fr": "E-commerce",
+    "ar": "تجارة الكترونية"
+  },
+  "Legal_services": {
+    "en": "Legal services",
+    "fr": "Services juridiques",
+    "ar": "خدمات قانونية"
+  },
+  "Studies_and_researches": {
+    "en": "Studies and researches",
+    "fr": "Etudes et recherches",
+    "ar": "دراسات وأبحاث"
+  },
+  "Virtual_assistant": {
+    "en": "Virtual assistant",
+    "fr": "Assistant virtuel",
+    "ar": "مساعد افتراضي"
+  },
+  "Legal_consulting": {
+    "en": "Legal consulting",
+    "fr": "Consultation juridique",
+    "ar": "استشارات قانونية"
+  },
+  "Commercial_consulting": {
+    "en": "Commercial consulting",
+    "fr": "Consultation commerciale",
+    "ar": "استشارات تسويقية"
+  },
+  "Financial_consulting": {
+    "en": "Financial consulting",
+    "fr": "Consultation financière",
+    "ar": "استشارات مالية"
+  },
+  "Tourism_and_travel": {
+    "en": "Tourism and travel tips",
+    "fr": "Conseils tourisme et voyage",
+    "ar": "نصائح سياحة وسفر"
+  },
+  "Personal_consulting_one": {
+    "en": "Personal consulting",
+    "fr": "Consultation personnelle",
+    "ar": "استشارات شخصية"
+  },
+  "Linguistic_consulting": {
+    "en": "Linguistic consulting",
+    "fr": "Consultation linguistique",
+    "ar": "استشارات لغوية"
+  },
+  "Android_services": {
+    "en": "Android services",
+    "fr": "Services Android",
+    "ar": "خدمات اندرويد"
+  },
+  "iPhone_services": {
+    "en": "iPhone services",
+    "fr": "Services iPhone",
+    "ar": "خدمات آيفون"
+  },
+  "Windows_problem_solving": {
+    "en": "Windows problem solving",
+    "fr": "Résolution des problème Windows",
+    "ar": "حل مشاكل ويندوز"
+  },
+  "Servers_and_Linux": {
+    "en": "Servers and Linux",
+    "fr": "Servers et Linux",
+    "ar": "السيرفرات ولينيكس"
+  },
+  "Data_entry": {
+    "en": "Data entry",
+    "fr": "Saisie de données",
+    "ar": "إدخال بيانات"
+  },
+  "Trial_tests": {
+    "en": "Trial tests",
+    "fr": "Tests d’essai",
+    "ar": "اختبارات تجريبية"
+  },
+  "Skribbl": {
+    "en": "Skribbl",
+    "fr": "Skribbl",
+    "ar": "سكربل"
+  },
+  "Payoneer": {
+    "en": "Payoneer",
+    "fr": "Payoneer",
+    "ar": "بايونير"
+  },
+  "PayPal": {
+    "en": "PayPal",
+    "fr": "PayPal",
+    "ar": "بايبال"
+  },
+  "Payeer": {
+    "en": "Payeer",
+    "fr": "Payeer",
+    "ar": "بايير"
+  },
+  "Mobile_credits": {
+    "en": "Mobile credits",
+    "fr": "Crédits mobiles",
+    "ar": "أرصدة جوالات"
+  },
+  "Charge_games": {
+    "en": "Charge games",
+    "fr": "Charger jeux",
+    "ar": "شحن العاب"
+  },
+  "Book_and_magazine": {
+    "en": "Book and magazine covers",
+    "fr": "Couverture de livres et revues",
+    "ar": "أغلفة كتب ومجلات"
+  },
+  "Advertising_banner_design": {
+    "en": "Advertising banner design",
+    "fr": "Conception de bannière publicitaire",
+    "ar": "تصميم بانرات إعلانية"
+  },
+  "Business_card_design": {
+    "en": "Business card design",
+    "fr": "Conception de carte de visite",
+    "ar": "تصميم بطاقات أعمال"
+  },
+  "T_shirt_design": {
+    "en": "T-shirt design",
+    "fr": "Conception T-shirt",
+    "ar": "تصميم تيشرتات"
+  },
+  "Logo_design": {
+    "en": "Logo design",
+    "fr": "Conception de logo",
+    "ar": "تصميم شعار"
+  },
+  "Presentation_design": {
+    "en": "Presentation design",
+    "fr": "Conception de présentation",
+    "ar": "تصميم عروض تقديمية"
+  },
+  "Architectural_design_and": {
+    "en": "Architectural design and decoration",
+    "fr": "Conception architecturale et décor",
+    "ar": "تصميم معماري وديكور"
+  },
+  "Photo_editing_services": {
+    "en": "Photo editing services",
+    "fr": "Services d’édition de photos",
+    "ar": "خدمات تعديل الصور"
+  },
+  "Cartoons": {
+    "en": "Cartoons",
+    "fr": "Dessins animés",
+    "ar": "رسوم كرتونية"
+  },
+  "Flyers_brochure_et": {
+    "en": "Flyers, brochure et roll up",
+    "fr": "Flyers, brochure et roll up",
+    "ar": "فلاير وبروشور ورول اب"
+  },
+  "Creative_writing": {
+    "en": "Creative writing",
+    "fr": "Rédaction créative",
+    "ar": "الكتابة الإبداعية"
+  },
+  "Transcription_tow": {
+    "en": "Transcription",
+    "fr": "Transcription",
+    "ar": "تفريغ نصوص"
+  },
+  "Proofreading_services": {
+    "en": "Proofreading services",
+    "fr": "Relectures et correction",
+    "ar": "خدمات تدقيق لغوي"
+  },
+  "Translation_services": {
+    "en": "Translation services",
+    "fr": "Services de traduction",
+    "ar": "خدمات ترجمة"
+  },
+  " Summery_services": {
+    "en": " Summery services",
+    "fr": "Service de synthèse/ résumé",
+    "ar": "خدمات تلخيص"
+  },
+  "CV_writing": {
+    "en": "CV writing",
+    "fr": "Rédaction de CV",
+    "ar": "كتابة السيرة الذاتية"
+  },
+  "Writing_ad_texts": {
+    "en": "Writing ad texts",
+    "fr": "Rédaction d’annonce publicitaire",
+    "ar": "كتابة النصوص الإعلانية"
+  },
+  "Script_writing": {
+    "en": "Script writing",
+    "fr": "Rédaction de scénario",
+    "ar": "كتابة سيناريو"
+  },
+  "Writing_specialized_content": {
+    "en": "Writing specialized content",
+    "fr": "Rédaction de contenu spécialisé",
+    "ar": "كتابة محتوى متخصص"
+  },
+  "Writing_Websites_content": {
+    "en": "Writing Websites content",
+    "fr": "Rédaction de contenu pour site Web",
+    "ar": "كتابة محتوى مواقع"
+  },
+  "Writing_articles_and": {
+    "en": "Writing articles and reviews ",
+    "fr": "Rédactions d’articles et critiques",
+    "ar": "كتابة مقالات ومراجعات"
+  },
+  "Learning_online ": {
+    "en": "Learning online ",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+  "Personal_consulting_tow": {
+    "en": "Personal consulting",
+    "fr": "Consultation personnelle",
+    "ar": "استشارات شخصية"
+  },
+  "Health_and_fitness": {
+    "en": "Health and fitness",
+    "fr": "Santé et aptitude physique",
+    "ar": "الصحة واللياقة البدنية"
+  },
+  "Learn_programing": {
+    "en": "Learn programing",
+    "fr": "Apprendre la programmation",
+    "ar": "تعلم البرمجة"
+  },
+  "Learn_e_marketing": {
+    "en": "Learn e-marketing",
+    "fr": "Apprendre le e-marketing",
+    "ar": "تعلم التسويق الالكتروني"
+  },
+  "Design_learning": {
+    "en": "Design learning",
+    "fr": "Apprendre le design",
+    "ar": "تعلم التصميم"
+  },
+  "Languages_learning": {
+    "en": "Languages learning",
+    "fr": "Apprendre les langues",
+    "ar": "تعلم اللغات"
+  },
+  "Learn_English": {
+    "en": "Learn English",
+    "fr": "Apprendre l’Anglais",
+    "ar": "تعلم اللغة الإنجليزية"
+  },
+  "Learn_French": {
+    "en": "Learn French",
+    "fr": "Apprendre le Français",
+    "ar": "تعلم اللغة الفرنسية"
+  },
+  "Art_and_professions": {
+    "en": "Art and professions",
+    "fr": "Arts et métiers",
+    "ar": "فنون وحرف"
+  },
+  "Help_with_homework": {
+    "en": "Help with homework",
+    "fr": "Aide aux devoirs",
+    "ar": "مساعدة بحل الواجبات"
+  },
+  "Content_management_systems": {
+    "en": "Content management systems",
+    "fr": "Systèmes de gestion de contenu",
+    "ar": "أنظمة إدارة المحتوى"
+  },
+  "Programming_CSS_and": {
+    "en": "Programming CSS and HTML",
+    "fr": "Programmation CSS et HTML",
+    "ar": "برمجة CSS و HTML "
+  },
+  "Programming_Java_and": {
+    "en": "Programming Java and NET.",
+    "fr": "Programmation Java et NET.",
+    "ar": "برمجة  Java و .NET"
+  },
+  "Programming_PHP": {
+    "en": "Programming PHP",
+    "fr": "Programmation PHP",
+    "ar": "برمجة PHP"
+  },
+  "Programming_Python": {
+    "en": "Programming Python",
+    "fr": "Programmation Python",
+    "ar": "برمجة بايثون"
+  },
+  "Programming_phone_Apps": {
+    "en": "Programming phone Apps",
+    "fr": "Programmation des applications mobiles",
+    "ar": "برمجة تطبيقات الجوال"
+  },
+  "Desktop_Apps": {
+    "en": "Desktop Apps",
+    "fr": "Application bureau",
+    "ar": "تطبيقات سطح المكتب"
+  },
+  "Online_store_developement": {
+    "en": "Online store developement",
+    "fr": "Développement boutique en ligne",
+    "ar": "تطوير متاجر الكترونية"
+  },
+  "Blogger_blogging_services": {
+    "en": "Blogger blogging services",
+    "fr": "Services de blogs sur Blogger",
+    "ar": "خدمات مدونات بلوجر"
+  },
+  "Wordpress_services": {
+    "en": "Wordpress services",
+    "fr": "Services Wordpress",
+    "ar": "خدمات ووردبريس"
+  },
+  "Technical_support": {
+    "en": "Technical support",
+    "fr": "Assistance technique",
+    "ar": "دعم فني تقني"
+  },
+  "Websites_Ads": {
+    "en": "Websites Ads",
+    "fr": "Annonces des sites",
+    "ar": "إعلانات المواقع"
+  },
+  "Mobile_Ads_and": {
+    "en": "Mobile Ads and marketing",
+    "fr": "Annonces publicitaires et marketing sur mobile",
+    "ar": "الإعلانات والتسويق على الجوال"
+  },
+  "Content_marketing": {
+    "en": "Content marketing",
+    "fr": "Marketing de contenu",
+    "ar": "التسويق بالمحتوى"
+  },
+  "Marketing_via_e_mail": {
+    "en": "Marketing via e-mail",
+    "fr": "Marketing par e-mail",
+    "ar": "التسويق عبر البريد الالكتروني"
+  },
+  "Marketing_on_Instagram": {
+    "en": "Marketing on Instagram",
+    "fr": "Marketing sur Instagram",
+    "ar": "التسويق عبر انستقرام"
+  },
+  "Marketing_on_Tik": {
+    "en": "Marketing on Tik Tok",
+    "fr": "Marketing sur Tik Tok",
+    "ar": "التسويق عبر تيك توك"
+  },
+  "Search_engine_marketing": {
+    "en": "Search engine marketing via SEM",
+    "fr": "Marketing via moteur de recherche SEM",
+    "ar": "التسويق عبر محركات البحث SEM"
+  },
+  "Marketing_on_Twitter": {
+    "en": "Marketing on Twitter",
+    "fr": "Marketing sur Twitter",
+    "ar": "التسويق على تويتر"
+  },
+  "Marketing_on_Snapchat": {
+    "en": "Marketing on Snapchat",
+    "fr": "Marketing sur Snap Chat",
+    "ar": "التسويق على سناب شات"
+  },
+  "Marketing_on_Facebook": {
+    "en": "Marketing on Facebook",
+    "fr": "Marketing sur Facebook",
+    "ar": "التسويق على فيسبوك"
+  },
+  "Marketing_on_YouTube": {
+    "en": "Marketing on YouTube",
+    "fr": "Marketing sur YouTube",
+    "ar": "التسويق على يوتيوب"
+  },
+  "Website_analytics": {
+    "en": "Website analytics",
+    "fr": "Analyse de sites Web",
+    "ar": "تحليلات المواقع"
+  },
+  "SEO_services": {
+    "en": "SEO services",
+    "fr": "Services SEO",
+    "ar": "خدمات SEO"
+  },
+  "Design_services": {
+    "en": "Design services",
+    "fr": "Services de conception",
+    "ar": "خدمات التصميم"
+  },
+  "Embroidery_services": {
+    "en": "Embroidery services",
+    "fr": "Embroidery services",
+    "ar": "خدمات التطريز"
+  },
+  "Transcription_three": {
+    "en": "Transcription",
+    "fr": "Transcription",
+    "ar": "تفريغ نصوص"
+  },
+  "Writing_CV": {
+    "en": "Writing CV",
+    "fr": "Rédaction de CV",
+    "ar": "كتابة السيرة الذاتية"
+  },
+  "Forum": {
+    "en": "Forum",
+    "fr": "Forum",
+    "ar": "المنتدى"
+  },
+  "The_forum_will": {
+    "en": "The forum will be available soon.",
+    "fr": "Le forum Timwoork sera disponible prochainement",
+    "ar": "سيتم إطلاق منتدى تيم وورك قريبا"
+  },
+  "Go_to_Home": {
+    "en": "Go to Home",
+    "fr": "Retourner à la page d’accueil",
+    "ar": "العودة للرئيسية "
+  },
+  "Object": {
+    "en": "Object",
+    "fr": "Objet",
+    "ar": "عنوان الرسالة"
+  },
+  "Email": {
+    "en": "Email",
+    "fr": "E-mail",
+    "ar": "البريد الالكتروني"
+  },
+  "Complete_name": {
+    "en": "Complete name",
+    "fr": "Nom et prénom",
+    "ar": "الاسم الكامل"
+  },
+  "Message": {
+    "en": "Message",
+    "fr": "Message",
+    "ar": "نص الرسالة"
+  },
+  "Complaint": {
+    "en": "Complaint",
+    "fr": "Réclamation",
+    "ar": "شكوى"
+  },
+  "Inquiry": {
+    "en": "Inquiry",
+    "fr": "Demande d’information",
+    "ar": "استفسار"
+  },
+  "File_link": {
+    "en": "File link",
+    "fr": "Lien du fichier",
+    "ar": "رابط الملف"
+  },
+  "Send_information": {
+    "en": "Send information",
+    "fr": "Envoyer les informations",
+    "ar": "إرسال المعلومات"
+  },
+  "You_must_type_one": {
+    "en": "You must type the object",
+    "fr": "Vous devez saisir l’objet du message",
+    "ar": "يجب عليك إدخال موضوع الرسالة"
+  },
+  "You_must_type_tow": {
+    "en": "You must type your email",
+    "fr": "Vous devez saisir l’e-mail",
+    "ar": "يجب عليك إدخال الاميل"
+  },
+  "You_must_type_three": {
+    "en": "You must type your complete name",
+    "fr": "Vous devez saisir le nom et prénom",
+    "ar": "يجب عليك إدخال الاسم الكامل"
+  },
+  "You_must_type_four": {
+    "en": "You must type the message",
+    "fr": "Vous devez saisir le message",
+    "ar": "يجب عليك إدخال نص الرسالة"
+  },
+  "All_Conversations": {
+    "en": "All Conversations",
+    "fr": "Toutes les discussions",
+    "ar": "جميع المحادثات"
+  },
+  "Choose_a_conversation": {
+    "en": "Choose a conversation to view messages",
+    "fr": "Choisissez une discussion pour afficher les messages",
+    "ar": "اختر إحدى المحادثات لعرض الرسائل"
+  },
+  "Logged_in_successfully": {
+    "en": "Logged in successfully",
+    "fr": "Connecté avec succès",
+    "ar": "تم تسجيل الدخول بنجاح"
+  },
+
+  "Forgotten_password": {
+    "en": "Forgotten password?",
+    "fr": "Mot de passe oublié?",
+    "ar": "نسيت كلمة المرور؟"
+  },
+
+  "Or_log_in": {
+    "en": "Or log in with",
+    "fr": "Ou se connecter via",
+    "ar": "أو تسجيل الدخول بواسطة"
+  },
+  "Google": {
+    "en": "Google",
+    "fr": "Google",
+    "ar": "غوغل"
+  },
+  "Register": {
+    "en": "Register",
+    "fr": "S’inscrire",
+    "ar": ""
+  },
+
+  "Code": {
+    "en": "Code",
+    "fr": "Code",
+    "ar": "كود"
+  },
+  "The_password_must": {
+    "en": "The password must contain at least one uppercase letter and one lowercase letter and must be at least 8 letters or numbers",
+    "fr": "Le mot de passe doit contenir au moins une lettre majuscule et une lettre minuscule et doit être composé d'au moins 8 lettres ou chiffres",
+    "ar": "كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام"
+  },
+
+  "By_clicking_create": {
+    "en": "By clicking create an account, you agree to the Terms of Use and Privacy Policy",
+    "fr": "En cliquant sur créer un compte, vous acceptez les conditions d'utilisation et la politique de confidentialité",
+    "ar": "بمجد الضغط على إنشاء حساب فانت توافق على شروط الاستخدام وسياسة الخصوصية"
+  },
+
+  "Do_you_have": {
+    "en": "Do you have already an account?",
+    "fr": "Avez-vous déjà un compte ?",
+    "ar": "لديك حساب؟"
+  },
+  "Or_sign_up": {
+    "en": "Or sign up with",
+    "fr": "Ou s’inscrire via",
+    "ar": "أو التسجيل بواسطة"
+  },
+  "Withdrawal": {
+    "en": "Withdrawal",
+    "fr": "Retrait de fond",
+    "ar": "السحب"
+  },
+  "The_withdrawal_request": {
+    "en": "The withdrawal request has been sent to the administration",
+    "fr": "La demande de retrait de fond a bien été envoyée à l’administration",
+    "ar": "لقد تم ارسال طلب السحب إلى الإدارة"
+  },
+
+  "Amount_to_withdraw": {
+    "en": "Amount to withdraw",
+    "fr": "Le montant à transférer",
+    "ar": "المبلغ الذي تريد تحويله"
+  },
+  "The_amount_you": {
+    "en": "The amount you want to transfer must be at least   0",
+    "fr": "Le montant que vous souhaitez transférer doit être d'au moins 50",
+    "ar": "يجب ان يكون المبلغ الذي تريد تحويل على الأقل 50"
+  },
+  "Money_transfer": {
+    "en": "Money transfer",
+    "fr": "Mandat",
+    "ar": "الحوالة المالية"
+  },
+  "Wise_transfer": {
+    "en": "Wise transfer",
+    "fr": "Transfert via Wise",
+    "ar": "تحويل وايز Wise"
+  },
+  "PayPayl_transfer": {
+    "en": "PayPayl transfer",
+    "fr": "Transfert via PayPal",
+    "ar": "تحويل بايبال Paypal"
+  },
+  "The_data_has": {
+    "en": "The data has been registered successfully",
+    "fr": "Les données ont bien été enregistrées",
+    "ar": "لقد تم حفظ البيانات بنجاح"
+  },
+  "Money_orders": {
+    "en": "Money orders",
+    "fr": "Mandats",
+    "ar": "الحوالات المالية"
+  },
+  "Full_name": {
+    "en": "Full name",
+    "fr": "Nom complet",
+    "ar": "الاسم الكامل"
+  },
+  "Select_country": {
+    "en": "Select country",
+    "fr": "Sélectionner le pays",
+    "ar": "اختر البلد"
+  },
+
+  "Province_state": {
+    "en": "Province/ state",
+    "fr": "Région/ province",
+    "ar": "المحافظة/الولاية"
+  },
+  "City_Municipality": {
+    "en": "City/ Municipality",
+    "fr": "Ville/ Municipalité",
+    "ar": "المدينة/البلدية"
+  },
+  "Recipient’s_phone_number": {
+    "en": "Recipient’s phone number",
+    "fr": "Numéro de telephone du destinataire",
+    "ar": "رقم هاتف المستلم"
+  },
+  "Country_code": {
+    "en": "Country code",
+    "fr": "Code du pays",
+    "ar": "كود الدولة"
+  },
+  "Countys_phone_code": {
+    "en": "Counrty’s phone code",
+    "fr": "Indicatif téléphonique du pays",
+    "ar": "كود هاتف الدولة"
+  },
+  "Personal_address": {
+    "en": "Personal address",
+    "fr": "Adresse personnelle",
+    "ar": "العنوان الشخصي"
+  },
+  "Postal_code": {
+    "en": "Postal code",
+    "fr": "Code postal",
+    "ar": "الرمز البريدي"
+  },
+  "_of": {
+    "en": "Select the type of ID",
+    "fr": "Sélectionner le type d’identifiant",
+    "ar": "اختر نوع الهوية"
+  },
+  "The_National_identity": {
+    "en": "The National identity card",
+    "fr": "LA carte d’identité nationale",
+    "ar": "بطاقة التعريف الوطني"
+  },
+  "Passeport": {
+    "en": "Passeport",
+    "fr": "Passeport",
+    "ar": "جواز سفر"
+  },
+  "Other_documents_proving": {
+    "en": "Other documents proving your identity",
+    "fr": "Autres documents justifiant votre identité",
+    "ar": "وثائق اخرى تثبت هويتك"
+  },
+  "Attachments": {
+    "en": "Attachments",
+    "fr": "Pièces jointes",
+    "ar": "المرفقات"
+  },
+
+  "Hide_edit": {
+    "en": "Hide edit",
+    "fr": "Masquer la modification",
+    "ar": "إخفاء التعديل"
+  },
+  "Bank_name": {
+    "en": "Bank name",
+    "fr": "Nom de la banque",
+    "ar": "اسم البنك"
+  },
+  "SWIFT_code": {
+    "en": "SWIFT code",
+    "fr": "Code SWIFT",
+    "ar": "كود SWIFT"
+  },
+  "IBAN": {
+    "en": "IBAN",
+    "fr": "IBAN",
+    "ar": "رقم الإيبان IBAN"
+  },
+  "Bank_account": {
+    "en": "Bank account",
+    "fr": "Compte bancaire",
+    "ar": "الحساب البنكي"
+  },
+  "Bank_branch": {
+    "en": "Bank branch",
+    "fr": "Agence bancaire",
+    "ar": "الفرع البنكي"
+  },
+  "Bank_address": {
+    "en": "Bank address",
+    "fr": "Adresse de la banque",
+    "ar": "العنوان البنكي"
+  },
+  "PayPal_account": {
+    "en": "PayPal account",
+    "fr": "Compte PayPAl",
+    "ar": "حساب الباييال Paypal"
+  },
+  "Money_order": {
+    "en": "Money order",
+    "fr": "Mandat",
+    "ar": "الحوالة المالية"
+  },
+  "City": {
+    "en": "City",
+    "fr": "Ville",
+    "ar": "المدينة"
+  },
+  "Transfer_address": {
+    "en": "Transfer address",
+    "fr": "Adresse de transfert",
+    "ar": "عنوان الحوالة"
+  },
+  "Edit_information": {
+    "en": "Edit information",
+    "fr": "Modifier les informations",
+    "ar": "تعديل المعلومات"
+  },
+  "Bank_transfer": {
+    "en": "Bank transfer",
+    "fr": "Virement bancaire",
+    "ar": "تحويل بنكي"
+  },
+
+  "Go_to_Edit": {
+    "en": "Go to Edit",
+    "fr": "Allez à Modifier",
+    "ar": "الذهاب إلى التعديل"
+  },
+  "Edit": {
+    "en": "Edit",
+    "fr": "Modifier",
+    "ar": "التعديل"
+  },
+  "The_password_has ": {
+    "en": "The password has been changed successfully",
+    "fr": "LE mot de passe a bien été changé",
+    "ar": "لقد تم تغيير كلمة المرور بنجاح"
+  },
+  "Old_password": {
+    "en": "Old password",
+    "fr": "Ancien mot de passe",
+    "ar": "كلمة المرور القديمة"
+  },
+
+  "The_password_reset": {
+    "en": "The password reset link has been sent to email successfully",
+    "fr": "Le lien de réinitialisation du mot de passe a bien été envoyé à l’adresse électronique",
+    "ar": "تم ارسال رابط تعيين كلمة المرور الى الايميل بنجاح"
+  },
+  "Enter_your_e_mail": {
+    "en": "Enter your e-mail",
+    "fr": "Entrer votre adresse électronique",
+    "ar": "أدخل بريدك الإلكتروني"
+  },
+  "Recover": {
+    "en": "Recover",
+    "fr": "Récupérer",
+    "ar": "استعادة"
+  },
+  "This_field_is": {
+    "en": "This field is necessary",
+    "fr": "Ce champ est obligatoire",
+    "ar": "هذا الحقل إجباري"
+  },
+  "Please_fill_the": {
+    "en": "Please fill the data",
+    "fr": "Veuillez remplir les données",
+    "ar": "يرجى تعبئة البيانات"
+  },
+  "Operation_failed": {
+    "en": "Operation failed",
+    "fr": "Opération échouée",
+    "ar": "العملية غير ناجحة"
+  },
+
+  "Update_phone_number": {
+    "en": "Update phone number",
+    "fr": "Mettre à jour le numéro de téléphone ",
+    "ar": "تحديث رقم الهاتف"
+  },
+  "Edit_profile": {
+    "en": "Edit profile",
+    "fr": "Modifier le profil",
+    "ar": "تعديل الملف الشخصي"
+  },
+  "Edit_personal_information": {
+    "en": "Edit personal information",
+    "fr": "Modifier les informations personnelles",
+    "ar": "تعديل المعلومات الشخصية"
+  },
+  "First_name": {
+    "en": "First name",
+    "fr": "Prénom",
+    "ar": "الاسم الأول"
+  },
+  "Last_name": {
+    "en": "Last name",
+    "fr": "Nom",
+    "ar": "الاسم الأخير"
+  },
+  "Select_sexe": {
+    "en": "Select sex",
+    "fr": "Sélectionner sexe",
+    "ar": "اختر الجنس"
+  },
+  "woman": {
+    "en": "woman",
+    "fr": "Femme",
+    "ar": "أنثى"
+  },
+  "Man": {
+    "en": "Man",
+    "fr": "Homme",
+    "ar": "ذكر"
+  },
+  "Birthday": {
+    "en": "Birthday",
+    "fr": "Date de naissance",
+    "ar": "تاريخ الميلاد"
+  },
+  "Select_currency": {
+    "en": "Select currency",
+    "fr": "Sélectionner une devise",
+    "ar": "اختر عملة"
+  },
+  "Virtual": {
+    "en": "Virtual",
+    "fr": "Virtuelle",
+    "ar": "الافتراضية"
+  },
+  "Update_basic_information": {
+    "en": "Update basic information",
+    "fr": "Mettre à jour les informations essentielles",
+    "ar": "تحديث المعلومات اﻷساسية"
+  },
+
+  "Your_account_is_2": {
+    "en": "Your account is incomplete",
+    "fr": "Votre compte est incomplete",
+    "ar": "حسابك غير كامل"
+  },
+  "X’s_profile": {
+    "en": "X’s profile",
+    "fr": "Le profil de X",
+    "ar": "الملف الشخصي لـفلان"
+  },
+  "Profile_editing": {
+    "en": "Profile editing",
+    "fr": "Modifier le profil",
+    "ar": "تعديل الملف الشخصي"
+  },
+  "Copy_my_profiles": {
+    "en": "Copy my profile’s link",
+    "fr": "Copier le lien de mon profil",
+    "ar": "نسخ رابط بروفايلي"
+  },
+  "Do_you_ant": {
+    "en": "Do you ant to be a seller? You can add extra information!",
+    "fr": "Voulez-vous devenir un vendeur? Vous pouvez ajouter des informations supplémentaires",
+    "ar": "هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!"
+  },
+  "Read_less": {
+    "en": "Read less",
+    "fr": "Lire moins",
+    "ar": "قراءة أقل"
+  },
+
+  "Personal_information": {
+    "en": "Personal information",
+    "fr": "Informations personnelles",
+    "ar": "المعلومات الشخصية"
+  },
+  "Gender": {
+    "en": "Gender",
+    "fr": "Sexe",
+    "ar": "الجنس"
+  },
+  "Country": {
+    "en": "Country",
+    "fr": "Pays",
+    "ar": "البلد"
+  },
+  "Currency": {
+    "en": "Currency",
+    "fr": "Devise",
+    "ar": "العملة"
+  },
+
+  "Disabled1": {
+    "en": "Disabled ",
+    "fr": "Désactivé",
+    "ar": "تم التعطيل"
+  },
+  "The_service_has_2": {
+    "en": "The service has been disabled successfully",
+    "fr": "Le service a bien été désactivé",
+    "ar": "لقد تم تعطيل هذه الخدمة بنجاح"
+  },
+  "Error_message": {
+    "en": "Error message",
+    "fr": "Message d’erreur",
+    "ar": "رسالة خطأ"
+  },
+  "Unfortunately_this_service": {
+    "en": "Unfortunately, this service is not disabled",
+    "fr": "Malheureusement ce service n’a pas été désactivé",
+    "ar": "للأسف لم يتم تعطيل هذه الخدمة"
+  },
+  "Abled1": {
+    "en": "Abled!",
+    "fr": "Activé!",
+    "ar": "تم التنشيط!"
+  },
+  "This_service_has": {
+    "en": "This service has been successfully abled",
+    "fr": "Ce service a bien été activé",
+    "ar": "لقد تم تمشيط هذه الخدمة بنجاح"
+  },
+  "Unfortunately_this_service_2": {
+    "en": "Unfortunately, this service is not abled",
+    "fr": "Malheureusement, ce service n’a pas été éctivé",
+    "ar": "للأسف لم يتم تنشيط هذه الخدمة"
+  },
+  "Pending": {
+    "en": "Pending",
+    "fr": "En attente",
+    "ar": "في الإنتظار"
+  },
+  "Rejected": {
+    "en": "Rejected",
+    "fr": "Refusé",
+    "ar": "مرفوظة"
+  },
+  "Accepted": {
+    "en": "Accepted",
+    "fr": "Accepté",
+    "ar": "مقبولة"
+  },
+
+  "Active": {
+    "en": "Active",
+    "fr": "Actifs",
+    "ar": "النشطة"
+  },
+  "Draft": {
+    "en": "Draft",
+    "fr": "Brouillons",
+    "ar": "المسودات "
+  },
+  "Disabled": {
+    "en": "Disabled",
+    "fr": "Désactivés",
+    "ar": "المعطلة"
+  },
+
+  "You_can_add": {
+    "en": "You can add a service at any time",
+    "fr": "Vous pouvez ajouter un service quand vous voulez",
+    "ar": "يمكنك إضافة خدمة في أي وقت"
+  },
+  "Address": {
+    "en": "Address",
+    "fr": "Adresse",
+    "ar": "العنوان"
+  },
+  "Completed": {
+    "en": "Completed",
+    "fr": "Achevés",
+    "ar": "مكتملة"
+  },
+  "Buyers_number": {
+    "en": "Buyers number",
+    "fr": "Nombre d’acheteurs",
+    "ar": "عدد المشتريين"
+  },
+  "Activation_status": {
+    "en": "Activation status",
+    "fr": "Statut d’activation",
+    "ar": "حالة التفعيل"
+  },
+  "Admission_status": {
+    "en": "Admission status",
+    "fr": "Statut d’admission",
+    "ar": "حالة القبول"
+  },
+
+  "Abled": {
+    "en": "Abled",
+    "fr": "Activé",
+    "ar": "مفعلة"
+  },
+  "Delete_this_service": {
+    "en": "Delete this service",
+    "fr": "Supprimer ce service",
+    "ar": "حذف هذه الخدمة"
+  },
+  "Able_this_service": {
+    "en": "Able this service",
+    "fr": "Activer ce service",
+    "ar": "تفعيل هذه الخدمة"
+  },
+  "Disable_this_service": {
+    "en": "Disable this service",
+    "fr": "Désactiver ce service",
+    "ar": "تعطيل هذه الخدمة"
+  },
+  "Service_editing": {
+    "en": "Service editing",
+    "fr": "Modification de service",
+    "ar": "تعديل الخدمة"
+  },
+  "Balance": {
+    "en": "Balance",
+    "fr": "Solde",
+    "ar": "الرصيد"
+  },
+  "Pending_balance": {
+    "en": "Pending balance",
+    "fr": "Solde en attente",
+    "ar": "الرصيد المعلق"
+  },
+  "Withdrawable_balance": {
+    "en": "Withdrawable balance",
+    "fr": "Solde disponible",
+    "ar": "الرصيد القابل للسحب"
+  },
+  "Unfortunately_you_already": {
+    "en": "Unfortunately, you already have a withdrawal request in processing",
+    "fr": "Malheureusement, vous avez déjà une demande de retrait en cours de traitement",
+    "ar": "للأسف لديك طلب سحب أموال في المعالجة"
+  },
+  "Unfortunately_you_cannot": {
+    "en": "Unfortunately, you cannot request a withdrawal of funds. Your withdrawable balance is less than $10",
+    "fr": "Malheureusement, vous ne pouvez pas demander de retrait de fonds. Votre solde disponible est inférieur à 10 $.",
+    "ar": "للأسف لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار"
+  },
+  "Total_balance": {
+    "en": "Total balance",
+    "fr": "Solde total",
+    "ar": "الرصيد الكلي"
+  },
+
+  "Update_profile_picture": {
+    "en": "Update profile picture",
+    "fr": "Mettre à jour la photo de profil",
+    "ar": "تحديث الصورة الشخصية"
+  },
+  "Choose_profile_picture": {
+    "en": "Choose profile picture",
+    "fr": "Choisir une photo de profile",
+    "ar": "اختر الصورة الشخصية"
+  },
+  "A_link_is": {
+    "en": "A link is sent to your e-mail",
+    "fr": "Un lien a été envoyé à votre adresse électronique",
+    "ar": "لقد تم إرسال رابط إلى بريدك الإلكتروني"
+  },
+
+  "Edit_the_sellers": {
+    "en": "Edit the seller’s profile",
+    "fr": "Modifier le profil du vendeur",
+    "ar": "تعديل الملف الشخصي للبائع"
+  },
+  "Online": {
+    "en": "Online",
+    "fr": "Connecté",
+    "ar": "متصل"
+  },
+  "Offline": {
+    "en": "Offline",
+    "fr": "Déconnecté",
+    "ar": "غير متصل"
+  },
+  "Brief_me_about": {
+    "en": "Brief me about me",
+    "fr": "Bref sur moi",
+    "ar": "نبذة عني"
+  },
+  "Services": {
+    "en": "Services",
+    "fr": "Services",
+    "ar": "الخدمات"
+  },
+  "Home_General_administration": {
+    "en": "Home – General administration",
+    "fr": "Accueil – Administration general",
+    "ar": "الصفحة الرئيسية - الإدارة العامة"
+  },
+  "An_error_occurred_2": {
+    "en": "An error occurred while fetching data",
+    "fr": "Une erreur s'est produite lors de la récupération des données",
+    "ar": "حدث خطأ أثناء جلب البيانات"
+  },
+  "Benefits": {
+    "en": "Benefits",
+    "fr": "Bénifices",
+    "ar": "الفوائد"
+  },
+  "Users": {
+    "en": "Users",
+    "fr": "Utilisateurs",
+    "ar": "المستخدمين"
+  },
+  "Supervisors_and_managers": {
+    "en": "Supervisors and managers",
+    "fr": "Superviseurs et administrateurs",
+    "ar": "المشرفين والمدراء"
+  },
+
+  "More_details": {
+    "en": "More details",
+    "fr": "Plus de details",
+    "ar": "تفاصيل أكثر"
+  },
+  "Wating_for_activation": {
+    "en": "Wating for activation",
+    "fr": "En attente d’activation",
+    "ar": "في انتظار التفعيل"
+  },
+  "Abled_2": {
+    "en": "Abled",
+    "fr": "Activés",
+    "ar": "النشطة"
+  },
+  "User_management": {
+    "en": "User management",
+    "fr": "Gestion des utilisateurs",
+    "ar": "إدارة المستخدمين"
+  },
+  "All_users": {
+    "en": "All users",
+    "fr": "Tous les utilisateurs",
+    "ar": "جميع المستخدمين"
+  },
+  "Temporary_suspended": {
+    "en": "Temporary suspended",
+    "fr": "Temporairement suspendus",
+    "ar": "المعلقة مؤقتا"
+  },
+  "Definitively_suspended": {
+    "en": "Definitively suspended",
+    "fr": "Suspendu définitivement",
+    "ar": "المعلقة دائما"
+  },
+
+  "Abled_services": {
+    "en": "Abled services",
+    "fr": "Services actives",
+    "ar": "الخدمات النشطة"
+  },
+  "Rejected_services": {
+    "en": "Rejected services",
+    "fr": "Services refusés",
+    "ar": "الخدمات المرفوضة"
+  },
+  "Pending_services": {
+    "en": "Pending services",
+    "fr": "Services en attente",
+    "ar": "الخدمات قيد الانتظار"
+  },
+  "Achieved_services": {
+    "en": "Achieved services",
+    "fr": "Services archives",
+    "ar": "الخدمات المؤرشفة"
+  },
+  "Withdrawal_requests": {
+    "en": "Withdrawal requests",
+    "fr": "Les demandes de retrait de fonds",
+    "ar": "طلبات السحب"
+  },
+  "Users’_activities": {
+    "en": "Users’ activities",
+    "fr": "Activités des utilisateurs",
+    "ar": "نشاطات المستخدمين"
+  },
+  "All_notifications": {
+    "en": "All notifications",
+    "fr": "Toutes les notifications",
+    "ar": "جميع الإشعارات"
+  },
+  "Buyers_and_sellers": {
+    "en": "Buyers and sellers’ messages",
+    "fr": "Messages d’acheteurs et de vendeurs",
+    "ar": "رسائل البائعين والمشتريين"
+  },
+  "Financial_transactions": {
+    "en": "Financial transactions",
+    "fr": "Transactions financières",
+    "ar": "المعاملات المالية"
+  },
+  "Payment_Getways": {
+    "en": "Payment Getways",
+    "fr": "Passerelles de paiement",
+    "ar": "بوابات الدفع"
+  },
+  "Content’s_management": {
+    "en": "Content’s management",
+    "fr": "Gestion de contenu",
+    "ar": "إدارة المحتوى"
+  },
+  "Badges": {
+    "en": "Badges",
+    "fr": "Badges",
+    "ar": "الشارات"
+  },
+  "Levels": {
+    "en": "Levels",
+    "fr": "Niveaux",
+    "ar": "المستويات"
+  },
+  "Categories_management": {
+    "en": "Categories management",
+    "fr": "Gestion des categories",
+    "ar": "إدارة التصنيفات"
+  },
+  "Tags": {
+    "en": "Tags",
+    "fr": "Tags",
+    "ar": "الوسوم"
+  },
+  "Countries": {
+    "en": "Countries",
+    "fr": "Pays",
+    "ar": "البلدان"
+  },
+
+  "Langueges": {
+    "en": "Langueges",
+    "fr": "Langues",
+    "ar": "اللغات"
+  },
+
+  "Contact_us_messages": {
+    "en": "Contact us messages",
+    "fr": "Messages sur contactez-nous",
+    "ar": "رسائل اتصل بنا"
+  },
+
+  "Unfortunately_its_rejected": {
+    "en": "Unfortunately, it’s rejected",
+    "fr": "Malheureusement, c’est refusé",
+    "ar": "للأسف لم يتم القبول"
+  },
+  "Rejected_succesufully": {
+    "en": "Rejected succesufully",
+    "fr": "Refusé avec succès",
+    "ar": "لقد تم الرفض بنجاح"
+  },
+  "Unfortunately_it_was": {
+    "en": "Unfortunately, it was not rejected",
+    "fr": "Malheureusement, ceci n’a pas été refusé",
+    "ar": "للأسف لم يتم الرفض"
+  },
+  "PayPal_transfer": {
+    "en": "PayPal transfer",
+    "fr": "Transfert PayPal",
+    "ar": "تحويل بايبال"
+  },
+  "State_the_reason": {
+    "en": "State the reason for rejection",
+    "fr": "Indiquez le motif du refus",
+    "ar": "أذكر سبب الرفض"
+  },
+  "Rejection": {
+    "en": "Rejection",
+    "fr": "Refus",
+    "ar": "رفض"
+  },
+
+  "Reject_this_request": {
+    "en": "Reject this request",
+    "fr": "Refuser cette demande",
+    "ar": "رفض هذا الطلب"
+  },
+  "Accept_this_request": {
+    "en": "Accept this request",
+    "fr": "Accepter cette demande",
+    "ar": "قبول هذا الطلب"
+  },
+  "Financial_transaction_information": {
+    "en": "Financial transaction information",
+    "fr": "Information sur cette transaction financière",
+    "ar": "معلومات المعاملة المالية"
+  },
+  "Amount_to_transfer": {
+    "en": "Amount to transfer",
+    "fr": "Montant à transférer",
+    "ar": "المبلغ المراد تحويله"
+  },
+  "Amount": {
+    "en": "Amount",
+    "fr": "Montant",
+    "ar": "المبلغ"
+  },
+  "Transfer_type": {
+    "en": "Transfer type",
+    "fr": "Type de transfert",
+    "ar": "نوع السحب"
+  },
+  "Withdrawal_date": {
+    "en": "Withdrawal date",
+    "fr": "Date de retrait ",
+    "ar": "تاريخ السحب"
+  },
+  "Personnal_address": {
+    "en": "Personnal address",
+    "fr": "Addresse personnelle",
+    "ar": "العنوان الشخصي"
+  },
+  "Swift_code": {
+    "en": "Swift code",
+    "fr": "Code SWIFT",
+    "ar": "كود السويفت SWIFT"
+  },
+  "Amount_to_transfer:": {
+    "en": "Amount to transfer:",
+    "fr": "Montant à transférer:",
+    "ar": "المبلغ المراد تحويله:"
+  },
+  "Withdrawal_requester_information": {
+    "en": "Withdrawal requester information",
+    "fr": "Information du demandeur de transfert",
+    "ar": "معلومات طالب السحب"
+  },
+  "His_her_level": {
+    "en": "His/ her level",
+    "fr": "Son niveau",
+    "ar": "مستواه"
+  },
+  "Withdrawal_holder": {
+    "en": "Withdrawal holder",
+    "fr": "Titulaire du retrait",
+    "ar": "صاحب السحب"
+  },
+  "His_her_withdrawabal": {
+    "en": "His/ her withdrawabal balance",
+    "fr": "Son solde disponible",
+    "ar": "رصيده القابل للسحب"
+  },
+  "Details": {
+    "en": "Details",
+    "fr": "Détails",
+    "ar": "تفاصيل"
+  },
+  "No_withdrawal_requests": {
+    "en": "No withdrawal requests",
+    "fr": "Aucune demande de retrait de fond",
+    "ar": "لا يوجد طلبات سحب"
+  },
+  "In_this_case": {
+    "en": "In this case there is no withdrawal requests",
+    "fr": "Dans ce cas il n’y a pas de demande de retrait de fonds",
+    "ar": "في هذه الحالة لاتوجد طلبات سحب"
+  },
+  "User_successfully_blocked": {
+    "en": "User successfully blocked",
+    "fr": "Utilisateur bloqué avec succès",
+    "ar": "تم حظر المُستخدم بنجاح"
+  },
+  "Nameless": {
+    "en": "Nameless",
+    "fr": "Sans nom",
+    "ar": "بدون اسم"
+  },
+  "Phone": {
+    "en": "Phone",
+    "fr": "Téléphone",
+    "ar": "الهاتف"
+  },
+  "Registration_date": {
+    "en": "Registration date",
+    "fr": "Date d’inscription",
+    "ar": "تاريخ التسجيل"
+  },
+  "Temporary_suspension": {
+    "en": "Temporary suspension",
+    "fr": "Suspension temporaire",
+    "ar": "تعليق مؤقت"
+  },
+  "Permanent_suspension": {
+    "en": "Permanent suspension",
+    "fr": "Suspension définitive",
+    "ar": "تعليق دائم"
+  },
+  "Send_e_mail": {
+    "en": "Send e-mail",
+    "fr": "Envoyer courriel",
+    "ar": "إرسال إيميل"
+  },
+
+  "Send_notification": {
+    "en": "Send notification",
+    "fr": "Envoyer une notification",
+    "ar": "إرسال إشعار"
+  },
+  "The_notification_was": {
+    "en": "The notification was sent to the user successfully",
+    "fr": "La notification a bien été envoyée à l’utilisateur",
+    "ar": "تم إرسال الإشعار للمُستخدم بنجاح"
+  },
+  "Members_management": {
+    "en": "Members management",
+    "fr": "Gestion des members",
+    "ar": "إدارة الأعضاء"
+  },
+  "User_notification ": {
+    "en": "User notification ",
+    "fr": "Notification de l’utilisateur",
+    "ar": "إشعار للمستخدم"
+  },
+  "Send_e_mail_to": {
+    "en": "Send e-mail to the user",
+    "fr": "Envoyer un courriel à l’utilisateur",
+    "ar": "إرسال إيميل للمستخدم"
+  },
+  "Search_in_table": {
+    "en": "Search in table",
+    "fr": "Rechercher dans le tableau",
+    "ar": "البحث في الجدول"
+  },
+  "Suspension_of_the": {
+    "en": "Suspension of the account of this person",
+    "fr": "Suspension du compte de la personne",
+    "ar": "تعليق الحساب للشخص"
+  },
+  "Suspension_duration": {
+    "en": "Suspension duration",
+    "fr": "Durée de suspension",
+    "ar": "مدة التعليق"
+  },
+  "Stop_purchases": {
+    "en": "Stop purchases",
+    "fr": "Arrêter les achats",
+    "ar": "إيقاف عمليات الشراء"
+  },
+  "Stop_Selling_operations": {
+    "en": "Stop Selling operations",
+    "fr": "Arrêter les operations de vente",
+    "ar": "إيقاف عمليات البيع"
+  },
+  "Stop_conversations": {
+    "en": "Stop conversations",
+    "fr": "Arrêter les conversations",
+    "ar": "إيقاف المراسلات"
+  },
+  "Stop_delivery": {
+    "en": "Stop delivery",
+    "fr": "Arrêter la livraison",
+    "ar": "إيقاف التسليم"
+  },
+  "Stop_adding_services": {
+    "en": "Stop adding services",
+    "fr": "Arrêter l’ajout de services",
+    "ar": "إيقاف إضافة خدمة"
+  },
+  "Stop_displaying_services": {
+    "en": "Stop displaying services on the website",
+    "fr": "Arrêter l’affichage des services dans le site",
+    "ar": "إيقاف ظهور الخدمات في الموقع"
+  },
+  "Stop_editing_services": {
+    "en": "Stop editing services",
+    "fr": "Arrêter la modification des services",
+    "ar": "إيقاف التعديل على الخدمات"
+  },
+  "Stop_deleting_services": {
+    "en": "Stop deleting services",
+    "fr": "Arrêter la suppression des services",
+    "ar": "إيقاف حذف الخدمات"
+  },
+  "Stop_withdrawing_balances": {
+    "en": "Stop withdrawing balances",
+    "fr": "Arrêter le retrait des fonds",
+    "ar": "إيقاف سحب الأموال"
+  },
+  "Stop_changing_the": {
+    "en": "Stop changing the account to seller",
+    "fr": "Arrêter le changement du compte en vendeur",
+    "ar": "إيقاف تغيير الحساب إلى بائع"
+  },
+  "Stop_signing_in": {
+    "en": "Stop signing in",
+    "fr": "Arrêter la connexion",
+    "ar": "إيقاف تسجيل الدخول"
+  },
+  "Account_suspension": {
+    "en": "Account suspension",
+    "fr": "Suspension du compte",
+    "ar": "تعليق الحساب"
+  },
+  "Suspension_of_the ": {
+    "en": "Suspension of the account of this person",
+    "fr": "Suspension du compte de la personne",
+    "ar": "تعليق الحساب للشخص"
+  },
+
+  "Stop_buying_operations": {
+    "en": "Stop buying operations",
+    "fr": "Arrêter les operations d’achat",
+    "ar": "إيقاف عمليات الشراء"
+  },
+  "Stop_selling_operations": {
+    "en": "Stop selling operations",
+    "fr": "Arrêt des operations de vente",
+    "ar": "إيقاف عمليات البيع"
+  },
+  "Notification_reason": {
+    "en": "Notification reason",
+    "fr": "Motif de notification",
+    "ar": "سبب الإشعار"
+  },
+  "Send_now": {
+    "en": "Send now",
+    "fr": "Envoyer maintenant",
+    "ar": "أرسل الآن"
+  },
+
+  "To": {
+    "en": "To",
+    "fr": "À",
+    "ar": "إلى"
+  },
+  "Subject": {
+    "en": "Subject",
+    "fr": "Objet",
+    "ar": "موضوع الرسالة"
+  },
+  "The_user_has": {
+    "en": "The user has been successfully unblocked",
+    "fr": "L'utilisateur a été débloqué avec succès",
+    "ar": "تم فك الحظر عن المستخدم بنجاح"
+  },
+  "Stop_suspension": {
+    "en": "Stop suspension",
+    "fr": "Arrêter la suspension",
+    "ar": "إيقاف التعليق"
+  },
+  "Suspension_information": {
+    "en": "Suspension information",
+    "fr": "Information de suspension",
+    "ar": "معلومات التعليق"
+  },
+  "Accounts_permanently_suspended": {
+    "en": "Accounts permanently suspended",
+    "fr": "Les comptes suspendus définitivement",
+    "ar": "الحسابات المعلقة دائما"
+  },
+  "Account_suspension_information": {
+    "en": "Account suspension information",
+    "fr": "Information de la suspension du compte",
+    "ar": "معلومات تعليق الحساب"
+  },
+  "Suspension_reason": {
+    "en": "Suspension reason",
+    "fr": "Motif de suspension",
+    "ar": "سبب التعليق"
+  },
+
+  "Tasks_suspended": {
+    "en": "Tasks suspended",
+    "fr": "Tâches suspendues",
+    "ar": "المهمات التي تم تعليقها"
+  },
+  "All_tasks": {
+    "en": "All tasks",
+    "fr": "Toutes les taches",
+    "ar": "جميع المهمات"
+  },
+  "Accounts_temporary_suspended": {
+    "en": "Accounts temporary suspended",
+    "fr": "Les comptes suspendus temporairement",
+    "ar": "الحسابات المعلقة مؤقتا"
+  },
+  "Passwords_are_not": {
+    "en": "Passwords are not identical",
+    "fr": "Les mots de passe ne sont pas identiques",
+    "ar": "كلمتا المرور المرور غير متطابقتين"
+  },
+  "This_fiels_is": {
+    "en": "This fiels is too much short",
+    "fr": "Ce champs est très court",
+    "ar": "هذا الحقل قصير جدا"
+  },
+  "This_field_is_2": {
+    "en": "This field is so big",
+    "fr": "Ce champs est très grand",
+    "ar": "هذا الحقل كبير جدا"
+  },
+
+  "This_is_not": {
+    "en": "This is not a phone number",
+    "fr": "Ceci n’est pas un numéro de téléphone",
+    "ar": "هذا ليس رقم هاتف"
+  },
+  "Add_new": {
+    "en": "Add new",
+    "fr": "Ajouter nouveau",
+    "ar": "إضافة جديد"
+  },
+  "Added_successfully": {
+    "en": "Added successfully",
+    "fr": "Ajouté avec succès",
+    "ar": "تمت الإضافة بنجاح"
+  },
+  "Select_a_state": {
+    "en": "Select a state",
+    "fr": "Choisir une province",
+    "ar": "اختر الولاية"
+  },
+
+  "About_seller": {
+    "en": "About seller",
+    "fr": "A propos du vendeur",
+    "ar": "حول البائع"
+  },
+  "Share_service": {
+    "en": "Share service",
+    "fr": "Partager le service",
+    "ar": "مشاركة الخدمة"
+  },
+  "Available_developments": {
+    "en": "Available developments",
+    "fr": "Développements disponibles",
+    "ar": "التطويرات المتوفرة"
+  },
+  "This_service_contains": {
+    "en": "This service contains no development",
+    "fr": "Ce service ne contient pas de développements",
+    "ar": "هذه الخدمة لاتوجد فيها تطويرات"
+  },
+
+  "User_notification": {
+    "en": "User notification",
+    "fr": "Notification de l’utilisateur",
+    "ar": "إشعار للمستخدم"
+  },
+  "Services_management": {
+    "en": "Services management",
+    "fr": "Gestion des services",
+    "ar": "إدارة الخدمات"
+  },
+  "Reply_sent_successfully": {
+    "en": "Reply sent successfully",
+    "fr": "La réponse a bien été envoyée",
+    "ar": "تم إرسال الرد بنجاح"
+  },
+  "Are_you_sur": {
+    "en": "Are you sur that you want to archive this item?",
+    "fr": "Êtes-vous sûr de vouloir archiver cet élément ?",
+    "ar": "هل انت متأكد أنك تريد أرشفة هذا العنصر"
+  },
+  "Yes,_I_want": {
+    "en": "Yes, I want to archive it",
+    "fr": "Oui, je veux l’archiver",
+    "ar": "نعم, أريد الأرشفة"
+  },
+  "Cancelled": {
+    "en": "Cancelled",
+    "fr": "Annulation effectuée",
+    "ar": "تم الإلغاء"
+  },
+  "Cancelled_2": {
+    "en": "Cancelled",
+    "fr": "Annulé",
+    "ar": "ملغي"
+  },
+  "Are_you_sur?": {
+    "en": "Are you sur that you want to delete permanently?",
+    "fr": "Êtes-vous sûr de vouloir supprimer cet élément définitivement ?",
+    "ar": "هل انت متأكد أنك تريد حذف هذا العنصر نهائيًا"
+  },
+  "Yes,_I_ant": {
+    "en": "Yes, I ant to delete it",
+    "fr": "Oui, je veux le supprimer",
+    "ar": "نعم, أريد الحذف"
+  },
+  "Are_you_sure_2": {
+    "en": "Are you sure that you ant to recover this item?",
+    "fr": "Êtes-vous sûr de vouloir récuppérer cet élément ?",
+    "ar": "هل انت متأكد أنك تريد إستعادة هذا العنصر"
+  },
+  "Yes,_I_ant_2": {
+    "en": "Yes, I ant to recover it",
+    "fr": "Oui, je veux le récupérer",
+    "ar": "نعم, أريد الإستعادة"
+  },
+  "PEnding": {
+    "en": "Pending",
+    "fr": "En attente",
+    "ar": "قيد الإنتظار"
+  },
+  "Edit_service_Description": {
+    "en": "Edit service – Description & instructions to buyer",
+    "fr": "Modification de service – Description & instruction à l’acheteur",
+    "ar": "تعديل الخدمة - الوصف وتعليمات المشتري"
+  },
+
+  "Price_and_developments": {
+    "en": "Price and developments",
+    "fr": "Prix et développements",
+    "ar": "السعر والتطويرات"
+  },
+  "Desciprion_intrustions": {
+    "en": "Desciprion & intrustions to buyer",
+    "fr": "Description & instruction à l’acheteur",
+    "ar": "الوصف وتعليمات المشتري"
+  },
+
+  "The_gateaway_had": {
+    "en": "The gateaway had been successfully added",
+    "fr": "La passerelle a bien été ajoutée",
+    "ar": "لقد تم إضافة البوابة بنجاح"
+  },
+  "General_administration_Add": {
+    "en": "General administration – Add a new payment gateway",
+    "fr": "Administration Générale – Ajouter une nouvelle passerelle de paiement",
+    "ar": "الإدارة العامة - إضافة بوابة دفع جديدة"
+  },
+  "Home_Add_a": {
+    "en": "Home  – Add a new payment gateway",
+    "fr": "Accueil  – Ajouter une nouvelle passerelle de paiement",
+    "ar": "الصفحة الرئيسية - إضافة بوابة دفع جديدة"
+  },
+  "Add_a_new": {
+    "en": "Add a new payment Gateway",
+    "fr": "Ajouter une nouvelle passerelle de paiement",
+    "ar": "إضافة بوابة دفع جديدة"
+  },
+  "Gateway_name_in": {
+    "en": "Gateway name in Arabic",
+    "fr": "Nom de passerelle en Arabe",
+    "ar": "اسم البوابة بالعربي"
+  },
+  "Gateway_name_in_2": {
+    "en": "Gateway name in English",
+    "fr": "Nom de passerelle en Anglais",
+    "ar": "اسم البوابة بالإنجليزي"
+  },
+  "Deduction_rate": {
+    "en": "Deduction rate",
+    "fr": "Taux de deduction",
+    "ar": "نسبة الإقتطاع"
+  },
+  "Cent_value": {
+    "en": "Cent value",
+    "fr": "Valeur centime",
+    "ar": "قيمة السنت"
+  },
+  "The_gateway_had": {
+    "en": "The gateway had been successfully activated",
+    "fr": "La passerelle a bien été activée",
+    "ar": "تم تنشيط البوابة بنجاح"
+  },
+  "Unfortunately_the_gateway": {
+    "en": "Unfortunately, the gateway is not activated",
+    "fr": "Malheureusement, la paserelle n’a pas été active",
+    "ar": "للأسف لم يتم تنشيط   البوابة"
+  },
+  "The_gateway_has": {
+    "en": "The gateway has been disabled successfully",
+    "fr": "La passerelle a bien été désactivée",
+    "ar": "تم تعطيل البوابة بنجاح"
+  },
+  "Unfortunately_the_gateway_2": {
+    "en": "Unfortunately, the gateway is not disabled",
+    "fr": "Malheureusement, la passerelle n’a pas été désactivée",
+    "ar": "للأسف لم يتم تعطيل البوابة"
+  },
+  "Genaral_administration_Payment": {
+    "en": "Genaral administration – Payment Gateways",
+    "fr": "Administration Générale – Paserelles de paiement",
+    "ar": "الإدارة العامة - بوابات الدفع"
+  },
+  "Home_Payment_Gateways": {
+    "en": "Home – Payment Gateways",
+    "fr": "Accueil – Paserelles de paiement",
+    "ar": "الصفحة الرئيسية - بوابات الدفع"
+  },
+  "Payment_gateways": {
+    "en": "Payment gateways",
+    "fr": "Passerelles de paiement",
+    "ar": "بوابات الدفع"
+  },
+  "Gateway_name": {
+    "en": "Gateway name",
+    "fr": "Nom de passerelle",
+    "ar": "اسم البوابة"
+  },
+  "Desactivation": {
+    "en": "Desactivation",
+    "fr": "Désactivation",
+    "ar": "تعطيل"
+  },
+  "Activation": {
+    "en": "Activation",
+    "fr": "Activation",
+    "ar": "تنشيط"
+  },
+  "Reply_the_message": {
+    "en": "Reply the message",
+    "fr": "Répondre au message",
+    "ar": "الرد على الرسالة"
+  },
+  "Message_date": {
+    "en": "Message date",
+    "fr": "Date du message",
+    "ar": "تاريخ الرسالة"
+  },
+  "Message_author": {
+    "en": "Message author",
+    "fr": "Auteur du message",
+    "ar": "صاحب الرسالة"
+  },
+  "Message_time": {
+    "en": "Message time",
+    "fr": "Heure du message",
+    "ar": "وقت الرسالة"
+  },
+  "Waiting_for_it": {
+    "en": "Waiting for it from the backend",
+    "fr": "En attente depuis le backend",
+    "ar": "في انتظارها من الباكأند"
+  },
+  "Message_type": {
+    "en": "Message type",
+    "fr": "Type de message",
+    "ar": "نوع الرسالة"
+  },
+  "Messagelink": {
+    "en": "Message link",
+    "fr": "Lien du message",
+    "ar": "رابط الرسالة"
+  },
+  "Message_text": {
+    "en": "Message text",
+    "fr": "Texte du message",
+    "ar": "نص الرسالة"
+  },
+  "Replies": {
+    "en": "Replies",
+    "fr": "Réponses",
+    "ar": "الردود"
+  },
+  "This_text_is_2": {
+    "en": "This text is an example of a text that can be replaced in the same space. This text was generated from the Arabic text generator, where you can generate such text or many other texts in addition to increasing the number of characters generated by the application",
+    "fr": "Ce texte est un exemple de texte pouvant être remplacé dans le même espace. Ce texte a été généré à partir du générateur de texte arabe, où vous pouvez générer un tel texte ou bien d'autres textes en plus d'augmenter le nombre de caractères générés par l’application.",
+    "ar": "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق."
+  },
+  "If_you_need": {
+    "en": "If you need a larger number of paragraphs, the Arabic text generator allows you to",
+    "fr": "Si vous avez besoin d'un plus grand nombre de paragraphes, le générateur de texte arabe vous permet d’en avoir",
+    "ar": "إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى"
+  },
+  "See_details": {
+    "en": "See details",
+    "fr": "Voir details",
+    "ar": "مشاهدة التفاصيل"
+  },
+  "In_this_status": {
+    "en": "In this status there is no messages",
+    "fr": "Il n’y a pas de messages dans ce statut",
+    "ar": "في هذه الحالة لاتوجد رسائل"
+  },
+  "Add_new_message": {
+    "en": "Add new message",
+    "fr": "Ajouter un nouveau message",
+    "ar": "إضافة رسالة جديدة"
+  },
+  "To_select_all": {
+    "en": "To select all users write *",
+    "fr": "Pour sélectionner tous les utilisateurs écrivez *",
+    "ar": "لتحديد جميع المستخدمين اكتب *"
+  },
+  "Select_a_template": {
+    "en": "Select a template for the message",
+    "fr": "Choisissez un modèle pour le message",
+    "ar": "تحديد قالب للرسالة"
+  },
+  "Please_choose_one": {
+    "en": "Please choose one of the appropriate templates",
+    "fr": "Veuillez choisir l’un des modèles appropriés",
+    "ar": "يرجى اختيار احد القوالب المناسبة"
+  },
+  "Select_now": {
+    "en": "Select now",
+    "fr": "Sélectionner maintemant",
+    "ar": "تحديد الآن"
+  },
+  "Pay_close_attention": {
+    "en": "Pay close attention. You are about to move to another site outside the platform Timwoork",
+    "fr": "Attention ! Vous êtes sur le point de migrer vers un autre site en dehors de la plateforme Timwoork",
+    "ar": "انتبه جيدا. أنت على وشك الانتقال لموقع آخر خارج منصة تيم ورك"
+  },
+  "Do_not_enter": {
+    "en": "Do not enter your account information in Timwoork or your email on any external page",
+    "fr": "N'entrez pas les informations de votre compte Timwoork ou votre courriel sur une page externe",
+    "ar": "لا تدخل معلومات حسابك في تيم ورك أو بريدك الالكتروني في أي صفحة خارجية"
+  },
+  "Always_check_the": {
+    "en": "Always check the link of the page you are on before logging in to your Timwoork account",
+    "fr": "Vérifiez toujours le lien de la page sur laquelle vous vous trouvez avant de vous connecter à votre compte Timwoork",
+    "ar": "تأكد دائماً من رابط الصفحة التي أنت عليها قبل تسجيل الدخول لحسابك في تيم ورك"
+  },
+  "Do_not_deal": {
+    "en": "Do not deal with any user outside the site nor transfer funds to him, Timwoork guarantees your rights inside the site only and not outside it",
+    "fr": "Ne traitez avec aucun utilisateur en dehors du site ou ne lui transférez pas de fonds, Timwoork garantit vos droits à l'intérieur du site uniquement et non à l'extérieur",
+    "ar": "لا تتعامل مع أي مستخدم خارج الموقع أو تحول مبالغ له، تيم ورك يضمن حقوقك داخل الموقع فقط وليس خارجه"
+  },
+  "Go_to_the": {
+    "en": "Go to the external site",
+    "fr": "Aller vers le site externe",
+    "ar": "الانتقال للموقع الخارجي"
+  },
+  "Return": {
+    "en": "Return",
+    "fr": "Retour",
+    "ar": "رجوع"
+  },
+  "Purchase_operation": {
+    "en": "Purchase operation",
+    "fr": "Opération d’achat",
+    "ar": "عملية الشراء"
+  },
+  "An_error_occurred_3": {
+    "en": "An error occurred while preparing the purchase operation",
+    "fr": "Une erreur s’est produite lors de la préparation de l’opération d’achat",
+    "ar": "حدث خطأ أثناء التحضير لعملية الشراء"
+  },
+  "Finale_bill": {
+    "en": "Finale bill",
+    "fr": "Facture finale",
+    "ar": "الفاتورة النهائية"
+  },
+  "Services_number": {
+    "en": "Services number",
+    "fr": "Nombre de services",
+    "ar": "عدد الخدمات"
+  },
+  "Transfer_fees_for": {
+    "en": "Transfer fees for ",
+    "fr": "Frais de transfert pour ",
+    "ar": "رسوم التحويل ل"
+  },
+  "These_fees_cover": {
+    "en": "These fees cover the costs of payment gateways and help us operate the site and provide you with technical support",
+    "fr": "Ces frais couvrent les coûts des passerelles de paiement et nous aident à exploiter le site et à vous fournir un support technique",
+    "ar": "هذه الرسوم لتغطية تكاليف بوابات الدفع وتساعدنا على تشغيل الموقع وتقديم دعم فني لك"
+  },
+  "Total_without_fees": {
+    "en": "Total without fees",
+    "fr": "Total sans frais",
+    "ar": "المجموع بدون رسوم"
+  },
+  "Total_with_fees": {
+    "en": "Total with fees",
+    "fr": "Montant global avec frais",
+    "ar": "المجموع مع رسوم"
+  },
+  "Choose_payment_method": {
+    "en": "Choose payment method",
+    "fr": "Choisir la méthode de paiement",
+    "ar": "اختيار طريقة الدفع"
+  },
+  "Payment_by_bank": {
+    "en": "Payment by bank cards",
+    "fr": "Paiement par cartes bancaires",
+    "ar": "الدفع عن طريق البطاقات البنكية"
+  },
+  "Payment_via_PayPal": {
+    "en": "Payment via PayPal",
+    "fr": "Paiement via PayPal",
+    "ar": "الدفع عن طريق البايبال Paypal"
+  },
+  "Via": {
+    "en": "Via",
+    "fr": "Via",
+    "ar": "عن طريق"
+  },
+  "You_cannot_buy": {
+    "en": "You cannot buy with the wallet. The total amount is greater than your balance",
+    "fr": "Vous ne pouvez pas acheter avec le portefeuille. Le montant total est supérieur à votre solde",
+    "ar": "لا يمكنك الشراء بواسطة المحفظة . المبلغ الإجمالي اكبر من رصيدك"
+  },
+  "Payment_via_wallet": {
+    "en": "Payment via wallet",
+    "fr": "Paiement via portefeuille",
+    "ar": "الدفع عن طريق المحفظة"
+  },
+  "Or_you_can": {
+    "en": "Or you can buy through the wallet.. Make sure you have a balance in your wallet",
+    "fr": "Ou vous pouvez acheter via le portefeuille. Assurez-vous d'avoir un solde dans votre portefeuille",
+    "ar": "أو يمكنك الشراء عن طريق المحفظة .. تأكد جيدا من وجود رصيد في محفظتك"
+  },
+  "The_result_of": {
+    "en": "The result of the purchase",
+    "fr": "Le résultat de l’achat",
+    "ar": "نتيجة عملية الشراء"
+  },
+  "The_purchase_is": {
+    "en": "The purchase is done successfully",
+    "fr": "L’achat est effectué avec succès",
+    "ar": "لقد تمت عملية الشراء بجاح"
+  },
+  "Unfortunately_the_purchase": {
+    "en": "Unfortunately, the purchase failed, please try again",
+    "fr": "Malheureusement l’achat a échoué, veuillez réessayer",
+    "ar": "للأسف لم تتم عملية الشراء يرجى المحاولة مرة أخرى"
+  },
+  "You_have_no_2": {
+    "en": "You have no notification to display",
+    "fr": "Vous n’avez aucune notification à afficher",
+    "ar": "ليس لديك اشعارات لعرضها"
+  },
+  "Logo": { "en": "Timwoork", "fr": "Timwoork", "ar": "تيم وورك" },
+  "Buy_chat_sell": {
+    "ar": "اشتري. دردش .بيع",
+    "fr": "Achetez, Discutez et vendez",
+    "en": "Buy, chat, sell"
+  },
+  "Discover_Timwoork’s_most": {
+    "ar": "اكتشف سوق تيم وورك للخدمات الالكترونية الأكثر تطورا وراحة",
+    "fr": "Découvrez le marché Timwoork pour les e-services le plus sophistiqué et confortable",
+    "en": "Discover Timwoork’s most sophisticated and comfortable e-services marketplace"
+  },
+  "Search_in_Timwoork": {
+    "ar": "البحث في تيم وورك...",
+    "fr": "Rechercher dans Timwoork …",
+    "en": "Search in Timwoork …"
+  },
+  "Timwoork_sections": {
+    "en": "Timwoork’s’ sections",
+    "fr": "Sections de Timwoork",
+    "ar": "أقسام تيم وورك"
+  },
+  "Search": { "ar": "بحث", "en": "Search", "fr": "chercher" },
+
+  "Learning_online": {
+    "en": "Learning online",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+
+  "Active_Categories": {
+    "en": "Active Categories",
+    "ar": "التصنيفات النشطة",
+    "fr": "Catégories actives"
+  },
+  "Writing_and_translation": {
+    "en": "Writing and translation",
+    "fr": "Rédaction et traduction",
+    "ar": "كتابة وترجمة"
+  },
+
+  "Housewives’_services": {
+    "en": "Housewives’ services",
+    "fr": "Services de femmes au foyer",
+    "ar": "خدمات ربات البيوت"
+  },
+  "Consulting_and_advice": {
+    "en": "Consulting and advice",
+    "fr": "Consultation et conseils",
+    "ar": "استشارات ونصائح"
+  },
+
+  "Financial_services": {
+    "en": "Financial services",
+    "fr": "Services financiers",
+    "ar": "خدمات مالية"
+  },
+
+  "More": {
+    "en": "More …",
+    "fr": "Plus …",
+    "ar": "المزيد ..."
+  },
+  "Newly_added_services": {
+    "en": "Newly added services",
+    "fr": "Services récents",
+    "ar": "الخدمات الأحدث"
+  },
+
+  "Websites’_links": {
+    "en": "Websites’ links",
+    "fr": "Liens des sites",
+    "ar": "روابط المواقع"
+  },
+
+  "About_website": {
+    "en": "About_website",
+    "fr": "A propos du site",
+    "ar": "حول الموقع"
+  },
+
+  "Working_online_for": {
+    "en": "Working online for beginners… Top 3 areas of profit",
+    "fr": "Travail en ligne pour les débutants… 3 domaines pour gagner",
+    "ar": "العمل عبر الإنترنت للمبتدئين.. وأهم 3 مجالات للربح منهم"
+  },
+  "Besides_your_business ": {
+    "en": "Besides your business 5 easy ideas helping you to earn money online",
+    "fr": "En plus de votre travail, 5 idées faciles qui vous aident à gagner l’argent sur Internet",
+    "ar": "5 أفكار سهلة تساعدك في ربح المال من الإنترنت بجانب عملك"
+  },
+  "What_are_the": {
+    "en": "What are the basic elements of a resume?",
+    "fr": "Quels sont les principaux éléments d’un CV ?",
+    "ar": "ما هي العناصر الأساسية للسيرة الذاتية؟"
+  },
+  "Writing_a_professional": {
+    "en": "Writing a professional resume",
+    "fr": "Rédaction d’un CV professionnel",
+    "ar": "كتابة سيرة ذاتية احترافية"
+  },
+  "Resume_mistakes": {
+    "en": "Resume mistakes",
+    "fr": "Les erreurs de CV",
+    "ar": "أخطاء السيرة الذاتية"
+  },
+  "Developing_a_store": {
+    "en": "Developing a store using Laravel framework",
+    "fr": "Développement d’un magasin en ligne avec la plateforme Laravel",
+    "ar": "تطوير متجر إلكتروني باستخدام إطار العمل لارفال laravel"
+  },
+  "Professional_voicing_over": {
+    "en": "Professional voicing over with distinctive voice and in record time",
+    "fr": "Commentaire audio professionnel avec une voix distinctive et en temps record ",
+    "ar": "تعليق صوتي احترافي بخامة صوتية مميزة وبوقت قياسي"
+  },
+  "Personal _CV_Review": {
+    "en": "Personal CV (Resume) Review",
+    "fr": "Examen du CV personnel",
+    "ar": ""
+  },
+  "Penetration_test_report": {
+    "en": "Penetration test report about web application",
+    "fr": "Rapport de test d’intrusion sur l’application Web",
+    "ar": ""
+  },
+  "Professional_website_design": {
+    "en": "Professional website design on Wix at a competitive price",
+    "fr": "Conception d’un site Web professionnel sur la plateforme Wix à un prix imbattable",
+    "ar": "تصميم موقع احترافي على منصة ويكس Wix وبسعر منافس"
+  },
+
+  "All_rights_reserved": {
+    "en": "All rights reserved",
+    "fr": "Tous droits sont réservés",
+    "ar": "جميع الحقوق محفوظة"
+  },
+  "WhatsApp": {
+    "en": "WhatsApp",
+    "fr": "WhatsApp",
+    "ar": "واتساب"
+  },
+  "Telegram": {
+    "en": "Telegram",
+    "fr": "Telegram",
+    "ar": "تيليجرام"
+  },
+  "Browsing_services": {
+    "en": "Browsing services",
+    "ar": "تصفح الخدمات",
+    "fr": "Explorer les services"
+  },
+  "Payment_methods": {
+    "en": "Payment methods",
+    "ar": "وسائل الدفع",
+    "fr": "Moyens de paiement"
+  },
+  "Visa": {
+    "en": "Visa",
+    "ar": "فيزا",
+    "fr": "Visa"
+  },
+  "Withdrawl_methods": {
+    "en": "Withdrawl methods",
+    "ar": "وسائل السحب",
+    "fr": "Moyens de retrait"
+  },
+
+  "Western_Union": {
+    "en": "Western Union",
+    "ar": "ويسترن يونيون",
+    "fr": "Western Union"
+  },
+  "Algery_Post": {
+    "en": "Algerian Post",
+    "ar": "بريد الجزائر",
+    "fr": "Poste algérienne"
+  },
+
+  "Mastercard": {
+    "en": "Mastercard",
+    "ar": "ماستر كارد",
+    "fr": "Mastercard"
+  },
+
+  "Your_earnings_are": {
+    "en": "Your earnings are held for 3 days before you can use them",
+    "fr": "Vos gains sont conservés en attente pendant 3 jours avant que vous puissiez l’utiliser",
+    "ar": "يتم تعليق الأرباح لمدة 3 أيام قبل أن تتمكن من استخدامها"
+  },
+  "The_mount_you": {
+    "en": "The amount you made from selling services and that you can withdraw",
+    "fr": "La somme que vous avez gagné et que vous pouvez retirer",
+    "ar": "المبلغ الذي حققته من بيع الخدمات يمكنك سحبه"
+  },
+  "The_entire_balance": {
+    "en": "The entire balance in your account now includes profits and the pending balance as well.",
+    "fr": "Le solde existant sur votre compte comprend aussi bien les gains que le solde en attente",
+    "ar": "كامل الرصيد الموجود في حسابك الآن يضمن الأرباح والرصيد المعلق أيضا"
+  },
+  "You_cannot_request": {
+    "en": "You cannot request a withdrawal of funds, your balance is less than 10$.",
+    "fr": "Vous ne pouvez pas demander un retrait de fonds, votre solde disponible est inférieur à 10$.",
+    "ar": "لا يمكنك طلب سحب الأموال رصيدك القابل للسحب أقل من 10 دولار"
+  },
+
+  "About_Seller": {
+    "en": "About Seller",
+    "fr": "A propos du vendeur",
+    "ar": "حول البائع"
+  },
+
+  "Contact_seller_one": {
+    "en": "Contact seller",
+    "fr": "Contactez le vendeur",
+    "ar": "مراسلة البائع"
+  },
+  "Customer_reviews": {
+    "en": "Customer reviews",
+    "fr": "Avis des clients",
+    "ar": "آراء المشترين"
+  },
+  "Number_of_purchases": {
+    "en": "Number of purchases",
+    "fr": "Nombre d’achats",
+    "ar": "عدد مرات الشراء"
+  },
+
+  "Available_upgrades": {
+    "en": "Available upgrades",
+    "fr": "Les mises à jour disponibles",
+    "ar": "التطويرات المتوفرة"
+  },
+
+  "Add_to_cart": {
+    "en": "Add to cart",
+    "fr": "Ajouter au panier",
+    "ar": "إضافة إلى السلة"
+  },
+  "boght_this": {
+    "en": "Buy this",
+    "fr": "Achète ça",
+    "ar": "اشتروا هذا"
+  },
+  "Brief_about_me": {
+    "en": "Brief about me",
+    "fr": "Bref sur moi",
+    "ar": "نبذة عني"
+  },
+  "Copy_my_profils": {
+    "en": "Copy my profil ‘s link",
+    "fr": "Copier le lien de mon profil",
+    "ar": "نسخ رابط بروفايلي"
+  },
+  "Personal_informations_one": {
+    "en": "Personal informations",
+    "fr": "Informations personnelles",
+    "ar": "المعلومات الشخصية"
+  },
+
+  "Copy_my_profile ‘s": {
+    "en": "Copy my profile ‘s link",
+    "fr": "Copier le lien de mon profil",
+    "ar": "نسخ رابط بروفايلي"
+  },
+  "Personal_informations": {
+    "en": "Personal informations",
+    "fr": "Informations personnelles",
+    "ar": "المعلومات الشخصية"
+  },
+  "Contact_seller": {
+    "en": "Contact seller",
+    "fr": "Contactez le vendeur",
+    "ar": "مراسلة البائع"
+  },
+
+  "Start_a_conversation": {
+    "en": "Start a conversation",
+    "fr": "Démarrer la conversation",
+    "ar": "بدء المحادثة"
+  },
+
+  "Type_your_search": {
+    "en": "Type your search word",
+    "fr": "Taper le mo de recherche",
+    "ar": "اكتب كلمة البحث..."
+  },
+
+  "Evaluation": {
+    "en": "Evaluation",
+    "fr": "Evaluation",
+    "ar": "التقييم"
+  },
+
+  "Select": {
+    "en": "Select",
+    "fr": "Sélectionner",
+    "ar": ".............."
+  },
+  "No_options": {
+    "en": "No options",
+    "fr": "Aucune option",
+    "ar": "………………"
+  },
+  "Less_than_a": {
+    "en": "Less than a week",
+    "fr": "Moins d’une semaine",
+    "ar": "أقل من أسبوع"
+  },
+
+  "From_2_weeks": {
+    "en": "From 2 weeks to 1 month",
+    "fr": "De 2 semaines à 1 mois",
+    "ar": "من 2  أسابيع إلى شهر"
+  },
+
+  "More_than_3": {
+    "en": "More than 3 months",
+    "fr": "Plus que 3 mois",
+    "ar": "أكثر من 3 أشهر"
+  },
+  "Featured_seller": {
+    "en": "Featured seller",
+    "fr": "Vendeur vedette",
+    "ar": "بائع مميز"
+  },
+  "Soon": {
+    "en": "Soon",
+    "fr": "Prochainement",
+    "ar": "قريبا"
+  },
+
+  "Competitions": {
+    "en": "Competitions",
+    "fr": "Compétitions",
+    "ar": "المسابقات"
+  },
+  "Projects": {
+    "en": "Projects",
+    "fr": "Projets",
+    "ar": "المشاريع"
+  },
+
+  "Freelancers": {
+    "en": "Freelancers",
+    "fr": "Freelancer",
+    "ar": "المستقلين"
+  },
+  "general_information": {
+    "en": "general information",
+    "fr": "Informations générales",
+    "ar": "معلومات عامة ومفيدة"
+  },
+  "Desactivation_reason": {
+    "en": "Desactivation reason",
+    "fr": "Motif de désactivation",
+    "ar": "سبب التعطيل"
+  },
+  "Buisiness": {
+    "en": "Buisiness",
+    "fr": "Affaires",
+    "ar": "الاعمال"
+  },
+  "Administration": {
+    "en": "Administration",
+    "fr": "Administration",
+    "ar": "اﻹدارة"
+  },
+  "Winner_selection": {
+    "en": "Winner selection",
+    "fr": "Selection du gagnant",
+    "ar": "تحديد الفائز"
+  },
+  "Report": {
+    "en": "Report",
+    "fr": "Signaler",
+    "ar": "تبليغ"
+  },
+  "Since_2_days": {
+    "en": "Since 2 days",
+    "fr": "Depuis 2 jours",
+    "ar": "منذ يومين"
+  },
+
+  "Such_text_or": {
+    "en": "Such text or many other texts, in addition to increasing the number of letters, puts temporary texts on the design to appear to the customer",
+    "fr": "Un tel texte ou de nombreux autres textes, en plus d'augmenter le nombre de lettres, met des textes temporaires sur la conception pour apparaître au client",
+    "ar": "مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف يضع نصوصا مؤقتة على التصميم ليظهر للعميل"
+  },
+  "Since_2_minutes": {
+    "en": "Since 2 minutes",
+    "fr": "Depuis 2 minutes",
+    "ar": "منذ دقيقتين"
+  },
+  "Since_1_hour": {
+    "en": "Since 1 hour",
+    "fr": "Depuis 1 heure",
+    "ar": "منذ ساعة"
+  },
+  "Professional_seller": {
+    "en": "Professional seller",
+    "fr": "Vendeur professionnel",
+    "ar": "بائع محترف"
+  },
+  "Add_new_comment": {
+    "en": "Add new comment",
+    "fr": "Ajouter un nouveau commentaire",
+    "ar": "أضف تعليقا جديد"
+  },
+  "Comment_text": {
+    "en": "Comment text",
+    "fr": "Texte du commentaire",
+    "ar": "نص التعليق"
+  },
+
+  "Lastest": {
+    "en": "Lastest",
+    "fr": "Plus recent",
+    "ar": "الأحدث"
+  },
+
+  "Most_shared": {
+    "en": "Most shared",
+    "fr": "Plus partagé",
+    "ar": "الأكثر مشاركة"
+  },
+  "Add_new_competition": {
+    "en": "Add new competition",
+    "fr": "Ajouter un nouveau concours",
+    "ar": "إضافة مسابقة جديدة"
+  },
+  "Research_in_competitions ": {
+    "en": "Research in competitions page",
+    "fr": "Rechercher dans la page de concours",
+    "ar": "البحث في صفحة المسابقات"
+  },
+  "Competitions_categories": {
+    "en": "Competitions categories",
+    "fr": "Catégories de concours",
+    "ar": "أقسام المسابقات"
+  },
+
+  "Websites_design": {
+    "en": "Websites design",
+    "fr": "Conception de Sites web",
+    "ar": "تصميم مواقع"
+  },
+  "Audios_recording": {
+    "en": "Audios recording",
+    "fr": "Enregistrement d’audios",
+    "ar": "تسجيلات صوتية"
+  },
+  "Choose_names": {
+    "en": "Choose names",
+    "fr": "Choisir les noms",
+    "ar": "اختيار الأسماء"
+  },
+  "Logos_design": {
+    "en": "Logos design",
+    "fr": "Conception de logos",
+    "ar": "تصميم شعارات"
+  },
+  "Videos": {
+    "en": "Videos",
+    "fr": "Vidéos",
+    "ar": "فيديوهات"
+  },
+  "Information_about_the": {
+    "en": "Information about the competition",
+    "fr": "Information sur le concours",
+    "ar": "معلومات عن المسابقة"
+  },
+  "Publication_date:": {
+    "en": "Publication date:",
+    "fr": "Date de publication:",
+    "ar": "تاريخ النشر:"
+  },
+  "Delivery_period:": {
+    "en": "Delivery period:",
+    "fr": "Durée de livraison:",
+    "ar": "مدة التسليم:"
+  },
+  "Competitors:": {
+    "en": "Competitors:",
+    "fr": "Candidats:",
+    "ar": "المتسابقين:"
+  },
+  "Winners’_number:": {
+    "en": "Winners’ number:",
+    "fr": "Nombre de gagnants:",
+    "ar": "عدد الفائزين:"
+  },
+  "Participations_number:": {
+    "en": "Participations number:",
+    "fr": "Nombre de participations:",
+    "ar": "عدد المشاركات:"
+  },
+  "Views:": {
+    "en": "Views:",
+    "fr": "Vues:",
+    "ar": "المشاهدات:"
+  },
+  "Likes:": {
+    "en": "Likes:",
+    "fr": "J’aime:",
+    "ar": "الإعجابات:"
+  },
+  "Share_competition:": {
+    "en": "Share competition:",
+    "fr": "Partager  le concours:",
+    "ar": "مشاركة المسابقة:"
+  },
+  "Title’s_language_used:": {
+    "en": "Title’s language used:",
+    "fr": "Langue de titre utilisée:",
+    "ar": "لغة العنوان المستخدمة:"
+  },
+  "Add_new_langage": {
+    "en": "Add new langage field",
+    "fr": "Ajouter un nouveau champ de langue",
+    "ar": "إضافة حقل لغة جديد"
+  },
+
+  "Do_you_really": {
+    "en": "Do you really want to delete your gallery?",
+    "fr": "Voulez-vous vraiment supprimer ceci de votre gallerie?",
+    "ar": "هل تريد حقا حذف معرض أعمالك؟"
+  },
+
+  "Graphic_design": {
+    "en": "Graphic design",
+    "fr": "Conception graphique",
+    "ar": "التصميم الغرافيكي"
+  },
+  "Audios": {
+    "en": "Audios",
+    "fr": "Audios",
+    "ar": "تسجيلات صوتية"
+  },
+  "Design": {
+    "en": "Design",
+    "fr": "Conception",
+    "ar": "تصميم UI/UX"
+  },
+  "Favorite": {
+    "en": "Favorite",
+    "fr": "Favoris",
+    "ar": "المفضلة"
+  },
+
+  "VIP_Seller": {
+    "en": "VIP Seller",
+    "fr": "Vendeur VIP",
+    "ar": "بائع جاد"
+  },
+  "Add_New_Portfolio": {
+    "en": "Add New Portfolio",
+    "fr": "Ajouter un nouveau portefeuille",
+    "ar": "إضافة محفظة جديدة"
+  },
+  "Copy_My_Profile": {
+    "en": "Copy My Profile Link",
+    "fr": "Copier le lien de mon portefeuille",
+    "ar": "انسخ رابط محفظتي"
+  },
+
+  "About_the_competition ": {
+    "en": "About the competition owner",
+    "fr": "A propos du propriétaire de concours",
+    "ar": "عن صاحب المسابقة"
+  },
+  "Follow": {
+    "en": "Follow",
+    "fr": "Suivre",
+    "ar": "متابعته"
+  },
+  "Has_been_followed": {
+    "en": "Has been followed",
+    "fr": "A bien été suivi",
+    "ar": "تمت المتابعة"
+  },
+  "Following": {
+    "en": "Following",
+    "fr": "Suit",
+    "ar": "يتابع"
+  },
+  "First_winner": {
+    "en": "First winner",
+    "fr": "Premier gagnant",
+    "ar": "الفائز الأول"
+  },
+  "Public_vote": {
+    "en": "Public vote",
+    "fr": "Vote public",
+    "ar": "تصويت الجمهور"
+  },
+
+  "To_Favorite": {
+    "en": "To Favorite",
+    "fr": "A favoris",
+    "ar": "للمفضلة"
+  },
+  "Favorited": {
+    "en": "Favorited",
+    "fr": "Favoris",
+    "ar": "مفضلة"
+  },
+  "View": {
+    "en": "View",
+    "fr": "Vue",
+    "ar": "مشاهدة"
+  },
+  "Algeria": {
+    "en": "Algeria",
+    "fr": "Algérie",
+    "ar": "الجزائر"
+  },
+
+  "Explanatory_message": {
+    "en": "Explanatory message",
+    "fr": "Message explicative",
+    "ar": "رسالة توضيحية"
+  },
+  "Your_service_cannot ": {
+    "en": "Your service cannot be purchased",
+    "fr": "Votre service ne peut être acheté",
+    "ar": "لا يمكن شراء خدمتك"
+  },
+  "Do_you_need ": {
+    "en": "Do you need help?",
+    "fr": "Avez-vous besoin d’aide?",
+    "ar": "تحتاج الى مساعدة ? 🤙"
+  },
+  "Password_change": {
+    "en": "Password change",
+    "fr": "Changement de mot de passe",
+    "ar": "تغيير كلمة المرور"
+  },
+
+  "Information_update": {
+    "en": "Information update",
+    "fr": "Mise à jour d’informations",
+    "ar": "تحديث المعلومات"
+  },
+  "There_is_no_reason": {
+    "en": "There is no reason",
+    "fr": "il n’y a pas de motif particulier",
+    "ar": "لا يوجد سبب بعينه"
+  },
+  "Please_explain_the ": {
+    "en": "Please explain the reason for deletion",
+    "fr": "Veuillez expliquer le motif de suppression",
+    "ar": "برجاء توضيح سبب الحذف"
+  },
+  "Desactivate_now": {
+    "en": "Desactivate now",
+    "fr": "Désactiver maintenant",
+    "ar": "تعطيل الآن"
+  },
+  "Edit_reason": {
+    "en": "Edit reason",
+    "fr": "Motif de modification",
+    "ar": "سبب التعديل"
+  },
+
+  "Update_information": {
+    "en": "Update information",
+    "fr": "Mettre les informations à jour",
+    "ar": "تحديث المعلومات"
+  },
+
+  "Account_suspension_period": {
+    "en": "Account suspension period",
+    "fr": "Période de suspension du compte",
+    "ar": "مدة تعليق الحساب"
+  },
+  "Suspension_period": {
+    "en": "Suspension period …",
+    "fr": "Période de suspension …",
+    "ar": "مدة التعليق..."
+  },
+
+  "Political_services_sectarianism": {
+    "en": "Political services, sectarianism, services contrary to general laws and state regulations, conditions of other related Websites, or to Islam.",
+    "fr": "Les services politiques, sectarisme, services contraires aux lois générales et aux règlements de l’État, conditions d’autres sites connexes ou aux enseignements de l’Islam.",
+    "ar": " الخدمات السياسية، الطائفية .والخدمات المخالفة للقوانين العامة وأنظمة الدول، وشروط المواقع الأخرى المتعلقة بها، أو تعاليم الإسلام. "
+  },
+
+  "Selling_Websites_services": {
+    "en": "Selling Websites services, selling pages and accounts on Websites that prevent that, such as Facebook pages, Twitter accounts, Google AdSense ready-made accounts and so on.",
+    "fr": "Les services vendant des sites, des pages et des comptes sur des sites qui interdisent une telle activité, tels que des pages Facebook, des comptes Twitter, des comptes prêts à l’emploi Google AdSense, etc.",
+    "ar": "خدمات بيع المواقع والصفحات والحسابات في المواقع التي تمنع ذلك، كصفحات الفيسبوك وحسابات تويتر، حسابات جوجل أدسنس الجاهزة وما إلى ذلك."
+  },
+
+  "Low_quality_services": {
+    "en": "Low quality services.",
+    "fr": "Les services de mauvaise qualité.",
+    "ar": "الخدمات المنخفضة الجودة."
+  },
+
+  "Bitcoin_related_financial": {
+    "en": "Bitcoin-related financial services.",
+    "fr": "Les services financiers liés à Bitcoin .",
+    "ar": "الخدمات المالية المتعلقة بعملة Bitcoin."
+  },
+
+  "Software_books_pirated ": {
+    "en": "Software, books, pirated products, software crackers and everything that violates the rights of others.",
+    "fr": "Les logiciels, livres, produits piratés, crackers de logiciels et tout ce qui viole les droits d’autrui.",
+    "ar": "البرامج والكتب والمنتجات المقرصنة وكراكات البرامج وكل ما ينتهك حقوق الآخرين."
+  },
+
+  "Services_that_lead": {
+    "en": "Services that lead to dealing and payment outside Timwoork.",
+    "fr": "Les services qui mènent à la négociation et au paiement en dehors du site Timwoork.",
+    "ar": "الخدمات التي تؤدي إلى التعامل والدفع خارج موقع تيم ورك."
+  },
+  "Services_sold_only": {
+    "en": "Services sold only once.",
+    "fr": "Les services vendus une seule fois.",
+    "ar": "الخدمات التي تباع مرة واحدة فقط."
+  },
+
+  "Forex_services_pyramid": {
+    "en": "Forex services, pyramid, and online marketing.",
+    "fr": "Les services Forex, de vente pyramidale et de marketing en ligne.",
+    "ar": "خدمات الفوركس، التسويق الهرمي والشبكي."
+  },
+  "Counselling_and_medical": {
+    "en": "Counselling and medical treatment services, as they cause harm if the service provider is not an experienced doctor. In addition, physical medical examination is best for proper diagnosis.",
+    "fr": "Les services de consultation et de traitement médical, car ils causent du tort si le prestataire de services n’est pas un médecin expérimenté. En outre, l’examen médical physique est le meilleur pour un diagnostic approprié.",
+    "ar": "خدمات الإستشارة والعلاج الطبي، ﻷنها تسبب الأذى إن لم يكن مقدم الخدمة طبيبا متمرساً. إضافة إلى أن الكشف الطبي الفيزيائي هو  الأفضل للتشخيص السليم."
+  },
+
+  "Terms_of_use_of": {
+    "en": "Terms of use of public communication pages between members of the Website:",
+    "fr": "Les conditions d’utilisation des pages de communication publique entre les membres du site :",
+    "ar": "شروط إستخدام صفحات التواصل العامة بين الأعضاء في الموقع:"
+  },
+  "In_the_case_repeated": {
+    "en": "In the case of repeated violation of these conditions, the offending user's account may be suspended.",
+    "fr": "En cas de violation répétée de ces conditions, le compte de l’utilisateur fautif peut être suspendu.",
+    "ar": "في حال المخالفة المتكررة لهذه الشروط قد يصار إلى إيقاف حساب المستخدم المخالف "
+  },
+  "You_agree_to ": {
+    "en": "You agree to the terms of use",
+    "fr": "Vous acceptez les conditions d’utilisation",
+    "ar": "فأنت توافق على شروط الاستخدام"
+  },
+  "Signing_up": {
+    "en": "Signing up",
+    "fr": "Inscription",
+    "ar": "التسجيل"
+  },
+  "Increase_the_number": {
+    "en": "Increase the number of characters",
+    "fr": "Augmenter le nombre de caractères",
+    "ar": "زيادة عدد الحروف"
+  },
+
+  "Sent": {
+    "en": "Sent",
+    "fr": "Envoyé",
+    "ar": "تم الإرسال"
+  },
+  "Create_a_seller ": {
+    "en": "Create a seller profile",
+    "fr": "Créer un profile de vendeur",
+    "ar": "إنشاء بروفايل بائع"
+  },
+
+  "People_I_follow": {
+    "en": "People I follow",
+    "fr": "Personnes que je suis",
+    "ar": "الأشخاص الذين أتابعهم"
+  },
+  "My_favoite": {
+    "en": "My favoite",
+    "fr": "Mes favoris",
+    "ar": "مفضلاتي"
+  },
+  "X’s_business_gallery": {
+    "en": "X’s business gallery",
+    "fr": "Galerie d’affaires de X",
+    "ar": "معرض الأعمال ل، فلان بن فلان"
+  },
+  "Business_gallery": {
+    "en": "Business gallery",
+    "fr": "Galerie d’affaires",
+    "ar": "معرض الأعمال"
+  },
+  "Palestine": {
+    "en": "Palestine",
+    "fr": "Palestine",
+    "ar": "فلسطين"
+  },
+  "Kuwait": {
+    "en": "Kuwait",
+    "fr": "Kuweit",
+    "ar": "الكويت"
+  },
+  "Jordan": {
+    "en": "Jordan",
+    "fr": "Jordanie",
+    "ar": "الأردن"
+  },
+  "Turkey": {
+    "en": "Turkey",
+    "fr": "Turquie",
+    "ar": "تركيا"
+  },
+  "Edit_seller’s_information": {
+    "en": "Edit seller’s information",
+    "fr": "Modifier les informations de vendeur",
+    "ar": "تعديل المعلومات البائع"
+  },
+  "Your_business_link": {
+    "en": "Your business link",
+    "fr": "Votre lien d'affaires",
+    "ar": "رابط أعمالك"
+  },
+  "Exchange_rate": {
+    "en": "Exchange rate",
+    "fr": "Taux de change",
+    "ar": "سعر التحويل "
+  },
+  "Redirection": {
+    "en": "Redirection",
+    "fr": "Redirection",
+    "ar": "أعادة توجيه"
+  },
+  "Principal_category": {
+    "en": "Principal category",
+    "fr": "Catégorie principale",
+    "ar": "التصنيف الرئيسي"
+  },
+  "Like": {
+    "en": "Like",
+    "fr": "J’aime",
+    "ar": "أعجبني"
+  },
+  "Fan": {
+    "en": "Fan",
+    "fr": "Fan",
+    "ar": "معجب"
+  },
+  "Add_to_favorite": {
+    "en": "Add to favorite",
+    "fr": "Ajouter aux favoris",
+    "ar": "إضافة للمفضلة"
+  },
+  "See_work": {
+    "en": "See work",
+    "fr": "Voir le travail",
+    "ar": "مشاهدة العمل"
+  },
+  "Work_for_the ": {
+    "en": "Work for the same user",
+    "fr": "Travaux du même utilisateur",
+    "ar": "أعمال لنفس المستخدم"
+  },
+  "Gallery_tools": {
+    "en": "Gallery tools",
+    "fr": "Outils de galerie",
+    "ar": "أدوات المعرض"
+  },
+  "Edit_business_gallery": {
+    "en": "Edit business gallery",
+    "fr": "Modifier la galerie d’affaires",
+    "ar": "تعديل معرض الأعمال"
+  },
+  "Delete_business_gallery": {
+    "en": "Delete business gallery",
+    "fr": "Supprimer la galerie d’affaires",
+    "ar": "حذف معرض الأعمال"
+  },
+  "User’s_information": {
+    "en": "User’s information",
+    "fr": "Informations de l’utilisateur",
+    "ar": "معلومات عن المستخدم"
+  },
+  "Followed": {
+    "en": "Followed",
+    "fr": "Suivi",
+    "ar": "تمت المتابعة"
+  },
+  "Created_At:": {
+    "en": "Created At:",
+    "fr": "Créé à :",
+    "ar": "أنشئ في:"
+  },
+  "Depuis_7_minutes": {
+    "en": "Depuis 7 minutes",
+    "fr": "7 min ago",
+    "ar": "منذ 7 دقائق"
+  },
+  "Like:": {
+    "en": "Like:",
+    "fr": "J’aime :",
+    "ar": "إعجاب:"
+  },
+  "Skills:": {
+    "en": "Skills:",
+    "fr": "Compétences :",
+    "ar": "مهارات:"
+  },
+  "After_Effect": {
+    "en": "After Effect",
+    "fr": "Après-effet",
+    "ar": "بعد التأثير"
+  },
+  "Photoshop": {
+    "en": "Photoshop",
+    "fr": "Photoshop",
+    "ar": "فتوشوب"
+  },
+  "Share_My_Portfolio:": {
+    "en": "Share My Portfolio:",
+    "fr": "Partager mon portefeuille :",
+    "ar": "مشاركة محفظتي:"
+  },
+  "Write_the_cancellation": {
+    "en": "Write the cancellation reason",
+    "fr": "Tapez le motif d’annulation",
+    "ar": "أكتب سبب الإلغاء"
+  },
+  "Instructions": {
+    "en": "Instructions",
+    "fr": "Instructions",
+    "ar": "تعليمات"
+  },
+  "Contact_the_buyer": {
+    "en": "Contact the buyer",
+    "fr": "Contactez l’acheteur",
+    "ar": "تواصل مع المشتري"
+  },
+  "Try_to_agree ": {
+    "en": "Try to agree with the buyer before starting the process",
+    "fr": "Essayez de vous mettre d'accord avec l'acheteur avant de commencer le processus",
+    "ar": "حاول ان تتفق مع المشتري قبل البدء في تنفيذ العملية"
+  },
+  "This_service_is": {
+    "en": "This service is incomplete and lacks some modifications",
+    "fr": "Ce service est incomplet et manque de quelques modifications",
+    "ar": "هذه الخدمة غير كاملة تنقصها بعض التعديلات يمكنك"
+  },
+  "Edit_service_request": {
+    "en": "Edit service request",
+    "fr": "Demande de modification de service",
+    "ar": "طلب تعديل الخدمة"
+  },
+  "Deleting_service_request": {
+    "en": "Deleting service request",
+    "fr": "Demande de suppression de service",
+    "ar": "طلب حذف الخدمة"
+  },
+  "Verified_successfully": {
+    "en": "Verified successfully",
+    "fr": "Vérifié avec succès",
+    "ar": "تم التحقق بنجاح"
+  },
+  "Set_password": {
+    "en": "Set password",
+    "fr": "Définir le mot de passe",
+    "ar": "تعيين كلمة المرور"
+  },
+  "Edit_service_Price": {
+    "en": "Edit service- Price and duration",
+    "fr": "Modifier le service – Prix et durée",
+    "ar": "تعديل الخدمة - السعر والمدة"
+  },
+  "Browse_services": {
+    "en": "Browse services",
+    "fr": "Parcourir les services",
+    "ar": "تصفح الخدمات"
+  },
+  "Remote_training": {
+    "en": "Remote training",
+    "fr": "Formation à distance",
+    "ar": "تدريب عن بعد"
+  },
+  "Browse_competitions": {
+    "en": "Browse competitions",
+    "fr": "Parcourir les concours",
+    "ar": "تصفح المسابقات"
+  },
+  "The_current_balance": {
+    "en": "The current balance is not enough to create a new competition, please recharge the balance first ",
+    "fr": "Le solde actuel est insuffisant pour créer un nouveau concours, veuillez d'abord recharger votre compte",
+    "ar": "رصيد الحالى غير كافي لإنشاء مسابقة جديدة, برجاء الشحن اولاً شحن   الرصيد"
+  },
+  "Publish_your_competition": {
+    "en": "Publish your competition on Timwoork",
+    "fr": "Publier votre concours sur Timwoork",
+    "ar": "نشر مسابقتك على تيم وورك"
+  },
+  "The_platform_Kafeel": {
+    "en": "The platform Kafeel provides the first section of its kind in the Arabic world (competitions), which allows you to create a competition among the most skilled freelancers and receive hundreds of entries to compare them and choose the best. Do you want a new logo for your company? Are you looking for a new unique domain name for your website that is not reserved before? Do you have other needs and ideas that can be put into a competition? So here is the starting point",
+    "fr": "La plateforme Kafeel fournit la première section du genre dans le monde arabe (concours), qui vous permet de créer un concours entre les freelances les plus qualifiés et de recevoir des centaines de candidatures pour les comparer et choisir le meilleur. Souhaitez-vous avoir un nouveau logo pour votre entreprise ? Recherchez-vous un nouveau nom de domaine unique pour votre site web qui n'est pas réservé auparavant ? Avez-vous d'autres besoins et idées qui pourraient être mis en concours ? Voici donc le point de départ",
+    "ar": "توفر منصة كفيل القسم الأول من نوعة فى الوطن العربي (المسابقات)   الذي يسمح لك بإنشاء مسابقة بين أمهر المستقلين وتلقي مئات المشاركات للمقارنة بينهم وإختيار الأفضل. تريد شعار جديد لشركتك؟ تبحث عن إسم نطاق جديد مميز لموقعك غير محجوز من قبل ؟ هل لديك إحتياجات وأفكار اخري يمكن وضعها فى مسابقه ؟ إذاً من  هنا تكون نقطة البداية"
+  },
+  "Tips_to_add_competition": {
+    "en": "Tips to add your competition",
+    "fr": "Conseils pour ajouter votre concours",
+    "ar": "نصائح لإضافة مسابقتك"
+  },
+  "Add_a_clear ": {
+    "en": "Add a clear and expressive title to your competition",
+    "fr": "Ajouter un titre de concours clair et expressif",
+    "ar": "أضف عنوان واضح ومعبر لمسابقتك"
+  },
+  "Add_a_section": {
+    "en": "Add a section and appropriate skills to your competition so that it is easier for freelancers to access it",
+    "fr": "Ajoutez une section et des compétences appropriées à votre concours afin qu'il soit plus facile pour les freelances d'y accéder",
+    "ar": "أضف قسم ومهارات مناسبه لمسابقتك حتى يسهل على المستقلين الوصول لها"
+  },
+  "Explain_your_requirements ": {
+    "en": "Explain your requirements clearly in Arabic so that it is easy for freelancers to understand and implement them",
+    "fr": "Expliquez clairement vos exigences en Arabe afin qu'il soit facile pour les indépendants de les comprendre et de les mettre en œuvre",
+    "ar": " اشرح متطلباتك بشكل واضح باللغة العربية حتى يسهل على المستقلين فهمها وتنفيذها"
+  },
+  "Select_the_type_of": {
+    "en": "Select the type of competition well, as the type of competition requires the freelancer to participate in the competition if it is (images / videos / texts, articles, or website domains)",
+    "fr": "Sélectionnez bien le type de concours, car il oblige l’indépendant/ freelancer à participer au concours s'il en est (images / vidéos / textes, articles ou domaines de site Web)",
+    "ar": "حدد نوع المسابقة جيداً, فنوع المسابقة يفرض على المستقل نوع مشاركته فى المسابقه إذا كانت (صور / فيديو / نصوص ومقالات  أو نطاقات مواقع)  "
+  },
+  "Explain_your_requirements": {
+    "en": "Explain your requirements clearly in Arabic so that it is easy for freelancers to understand and implement them",
+    "fr": "Expliquez clairement vos exigences en Arabe afin qu'il soit facile pour les indépendants de les comprendre et de les mettre en œuvre",
+    "ar": "اشرح متطلباتك بشكل واضح باللغة العربية حتى يسهل على المستقلين فهمها وتنفيذها"
+  },
+  "You_can_add ": {
+    "en": "You can add some terms to the competition, such as the necessity of using certain tools for implementation, the use of certain colors, or that the participation is not transmitted.",
+    "fr": "Vous pouvez ajouter certaines conditions au concours, telles que la nécessité d'utiliser certains outils pour la mise en œuvre, l'utilisation de certaines couleurs, ou que la participation ne soit pas transmise.",
+    "ar": "يمكنك إضافه بعض الشروط إلى المسابقة مثل ضرورة إستخدام أدوات   معينة للتنفيذ أو إستخدام ألوان بعينها أو أن تكون المشاركة  غير منقوله"
+  },
+  "Choose_a_reasonable": {
+    "en": "Choose a reasonable period and budget for the competition and that commensurate with your requirements",
+    "fr": "Choisissez une période et un budget pour le concours qui soient raisonnables et proportionnés à vos besoins",
+    "ar": " إختر مدة وميزانية للمسابقة منطقيه وتتناسب مع متطلباتك"
+  },
+  "Mostly_we_choose": {
+    "en": "Mostly we choose one winner for the competition, but if you want to choose more than one participation, you can choose two or three",
+    "fr": "Généralement, nous choisissons un gagnant pour le concours, mais si vous voulez choisir plus d’une participation, vous pouvez en choisir deux ou trois.",
+    "ar": "فى الغالب نختار فائز واحد للمسابقة لكن إذا أردت أختيار أكتر  من مشاركة , يمكنك أختيار أتنين أو ثلاثة"
+  },
+  "You_can_make": {
+    "en": "You can make a poll among the best works so that visitors to the site choose the best work according to their point of view as a non-binding recommendation to you.",
+    "fr": "Vous pouvez faire un sondage parmi les meilleurs travaux afin que les visiteurs du site choisissent le meilleur travail de leur point de vue sous forme de recommandation non contraignante pour vous.",
+    "ar": " يمكنك عمل استفتاء بين أفضل الأعمال حتى يقوم زوار الموقع   باختيار العمل الأفضل من وجهة نظرهم كتوصية غير ملزمة لك"
+  },
+  "Timwoork_guarantees_your": {
+    "en": "Timwoork guarantees your rights. Timwoork guarantees your rights by reviewing all entries submitted in the competition and ensure their quality and distinction. In the case that you do not receive the sufficient number (determined from the site) of the participations for your competition, the competition will be canceled and your balance will be returned to your account.",
+    "fr": "Timwoork garantit vos droits. Timwoork vous garantit votre droit en examinant toutes les participations soumises dans le concours et assurant leur qualité et leur distinction. Dans le cas où vous ne recevriez pas le nombre suffisant (déterminé à partir du site) d'inscriptions pour votre concours, le concours sera annulé et votre solde sera retourné à votre compte.",
+    "ar": "تيم وورك يضمن حقوقك يضمن لك تيم وورك حقوقك بمراجعة جميع المشاركات المقدمة فى المسابقة      والتأكد من جودتها و تميزها. فى حالة لم تستلم العدد الكافى (المحدد من الموقع) من المشاركات على مسابقتك, فسيتم إلغاء المسابقه وإرجاع رصيدك مره أخري إلى حسابك."
+  },
+  "Competition_type": {
+    "en": "Competition type",
+    "fr": "Type de concours",
+    "ar": "نوع المسابقة"
+  },
+  "Pictures": {
+    "en": "Pictures",
+    "fr": "Images",
+    "ar": "صور"
+  },
+  "Add_a_brief": {
+    "en": "Add a brief and expressive title",
+    "fr": "Ajouter un titre bref et expressif",
+    "ar": "أضف عنوان مختصر معبر يوصف المطلوب"
+  },
+  "Description": {
+    "en": "Description",
+    "fr": "Description",
+    "ar": "الوصف"
+  },
+  "Terms": {
+    "en": "Terms",
+    "fr": "Conditions",
+    "ar": "الشروط"
+  },
+  "Winners_number": {
+    "en": "Winners number",
+    "fr": "Nombre de gagnants",
+    "ar": "عدد الفائزين"
+  },
+  "1_winner": {
+    "en": "1 winner",
+    "fr": "1 gagnant",
+    "ar": "1 فائز"
+  },
+  "2_winners": {
+    "en": "2 winners",
+    "fr": "2 gagnants",
+    "ar": "2 فائزين"
+  },
+  "3_winners": {
+    "en": "3 winners",
+    "fr": "3 gagnants",
+    "ar": "3 فائزين"
+  },
+  "Prize_value": {
+    "en": "Prize value",
+    "fr": "Valeur de prix",
+    "ar": "قيمة الجائزة..."
+  },
+  "Second_winner": {
+    "en": "Second winner",
+    "fr": "Deuxième gagnant",
+    "ar": "الفائز الثاني"
+  },
+  "Third_winner": {
+    "en": "Third winner",
+    "fr": "Troisième gagnant",
+    "ar": "الفائز الثالث"
+  },
+  "Competition_duration": {
+    "en": "Competition duration",
+    "fr": "Durée du concours",
+    "ar": "مدة المسابقة"
+  },
+  "Today": {
+    "en": "Today",
+    "fr": "Aujourd’hui",
+    "ar": "اليوم"
+  },
+  "Delivery_duration": {
+    "en": "Delivery duration",
+    "fr": "Durée de livraison",
+    "ar": "مدة التسليم"
+  },
+  "Category": {
+    "en": "Category",
+    "fr": "Catégorie",
+    "ar": "القسم"
+  },
+  "I_agree_to": {
+    "en": "I agree to pay a fee of 15% of the prize value that I allocate to the winner of the competition, if there are at least 5 participants and I decide to cancel the competition",
+    "fr": "J'accepte de payer des frais de 15% de la valeur du prix que j'attribue au gagnant du concours, dans le cas où il y a au moins 5 participants et que je décide d'annuler le concours",
+    "ar": "أوافق على دفع رسوم وقدرها 15% من قيمة الجائزة التي أخصصها للفائز في المسابقة وذلك في حال: كان هناك 5 مشاركين على الأقل و قررت أن يتم إلغاء المسابقة"
+  },
+  "Not_to_demand ": {
+    "en": "Not to demand the cancellation of the competition even if the participations are not at the required level, in appreciation of the efforts of the competitors",
+    "fr": "Ne pas exiger l'annulation du concours même si les inscriptions ne sont pas au niveau requis, en reconnaissance des efforts des participants",
+    "ar": "عدم المطالبة بإلغاء المسابقة حتى لو كانت المشاركات ليست على المستوي المطلوب وذلك تقديراً لجهود     المتسابقين"
+  },
+  "Do_not_delay": {
+    "en": "Do not delay or ignore the selection of the winner after the end of the competition, otherwise the platform management will have to choose the winner based on the highest rated posts.",
+    "fr": "Ne retardez pas ou n'ignorez pas la sélection du gagnant après la fin du concours, sinon la direction de la plateforme devra choisir le gagnant en fonction des publications les mieux notées.",
+    "ar": "عدم التأخر أو تجاهل إختيار الفائز بعد إنتهاء المسابقة وإلا ستضطر إدارة المنصة لإختيار الفائز بناء على أعلي المشاركات تقييماً"
+  },
+  "Publish_competition": {
+    "en": "Publish competition",
+    "fr": "Publier le concours",
+    "ar": "نشر المسابقة"
+  },
+  "Save_draft": {
+    "en": "Save draft",
+    "fr": "Enregistrer en tant que brouillon",
+    "ar": "حفظ كمسودة"
+  },
+  "Competition_details": {
+    "en": "Competition details",
+    "fr": "Détails du concours",
+    "ar": "تفاصيل المسابقة"
+  },
+  "Shares": {
+    "en": "Shares",
+    "fr": "Partages",
+    "ar": "المشاركات"
+  },
+  "First_step": {
+    "en": "First step",
+    "fr": "Première étape",
+    "ar": "المرحلة الأولى"
+  },
+  "Second_step": {
+    "en": "Second step",
+    "fr": "Deuxième étape",
+    "ar": "المرحلة الثانية"
+  },
+  "Last_step": {
+    "en": "Last step",
+    "fr": "Dernière étape",
+    "ar": "المرحلة الأخيرة"
+  },
+  "This_text_is": {
+    "en": "This text is an example of text that can be replaced in the same space,",
+    "fr": "Ce texte est un exemple de texte qui peut être remplacé dans le même espace,",
+    "ar": "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لق"
+  },
+  "Competition’s_participations": {
+    "en": "Competition’s participations",
+    "fr": "Participations du concours",
+    "ar": "مشاركات المسابقة"
+  },
+  "Competitions_tools": {
+    "en": "Competitions tools",
+    "fr": "Outils du concours",
+    "ar": "أدوات المسابقة"
+  },
+  "Edit_competition": {
+    "en": "Edit competition",
+    "fr": "Modifier concours",
+    "ar": "تعديل المسابقة"
+  },
+  "Delete_competition": {
+    "en": "Delete competition",
+    "fr": "Supprimer le concours",
+    "ar": "حذف المسابقة"
+  },
+  "Winners": {
+    "en": "Winners",
+    "fr": "Gagnants",
+    "ar": "الفائزين"
+  },
+  "Since_a_week": {
+    "en": "Since a week",
+    "fr": "Depuis une semaine",
+    "ar": "منذ أسبوع"
+  },
+  "9_days": {
+    "en": "9 days",
+    "fr": "9 jours",
+    "ar": "9 أيام"
+  },
+  "Comments": {
+    "en": "Comments",
+    "fr": "Commentaires",
+    "ar": "التعليقات"
+  },
+  "Recharge_your_balance": {
+    "en": "Recharge your balance",
+    "fr": "Recharger votre solde",
+    "ar": "شحن رصيدك"
+  },
+  "Write_the_amount": {
+    "en": "Write the amount here…",
+    "fr": "Saisissez le montant ici…",
+    "ar": "أكتب المبلغ هنا..."
+  },
+  "In_Dollar": {
+    "en": "In Dollar",
+    "fr": "En Dollar",
+    "ar": "بالدولار"
+  },
+  "Example_text_here": {
+    "en": "Example text here",
+    "fr": "Exemple de texte ici",
+    "ar": "مثال لنص هنا"
+  },
+  "Choose_the_payment ": {
+    "en": "Choose the payment method",
+    "fr": "Choisir le mode de paiement",
+    "ar": "إختر طريقة الدفع"
+  },
+  "Bank_cards": {
+    "en": "Bank cards",
+    "fr": "Cartes bancaires",
+    "ar": "البطاقات البنكية"
+  },
+  "Pay_securely_your": {
+    "en": "Pay securely, your connection is protected and encrypted, you can enter your card information safely",
+    "fr": "Payez en toute sécurité, votre connexion est protégée et cryptée, vous pouvez saisir les informations de votre carte en toute sécurité",
+    "ar": "إدفع بأمان, إتصالك محمي و مشفر , يمكنك ادخال معلومات بطاقتة بأمان"
+  },
+  "Please_send_the": {
+    "en": "Please send the required amount to timlands@gmail.com and then request the recharge",
+    "fr": "Veuillez envoyer le montant requis à timlands@gmail.com, puis demander le rechargement",
+    "ar": "برجاء إرسال المبلغ المطلوب إلى timlands@gmail.com وبعدها طلب الشحن"
+  },
+  "Add_new_services": {
+    "en": "Add new services – Price and duration",
+    "fr": "Ajouter un nouveau service – prix et durée",
+    "ar": "إضافة خدمة جديدة - السعر والمدة"
   }
 }

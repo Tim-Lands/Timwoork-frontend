@@ -6,11 +6,12 @@ import useSWR, { useSWRConfig } from "swr";
 import PropTypes from "prop-types";
 import Pagination from "react-js-pagination";
 import { PusherContext } from "../../contexts/pusherContext";
-function Sidebar({ RouterId, getLanguage }) {
+
+function Sidebar({ RouterId }) {
   const [chatPusher] = useContext(PusherContext);
   const { mutate } = useSWRConfig();
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguageNotify = getSectionLanguage("notification");
+  const getAll = getSectionLanguage();
   const [pageNumber, setPageNumber]: any = useState(1);
   const { data: conversationsList }: any = useSWR(
     `api/conversations?paginate=6&page=${pageNumber}`
@@ -96,7 +97,7 @@ function Sidebar({ RouterId, getLanguage }) {
           </div>
         )}
         <div className="conversations-item-head">
-          <h3 className="title">{getLanguage("All_Conversations")}</h3>
+          <h3 className="title">{getAll("All_Conversations")}</h3>
         </div>
         <ul className="conversations-items-list">
           {conversationsList &&
@@ -155,8 +156,8 @@ function Sidebar({ RouterId, getLanguage }) {
           itemClass="page-item"
           linkClass="page-link"
           className="productPagination"
-          firstPageText={getLanguageNotify("First_page")}
-          lastPageText={getLanguageNotify("Last_page")}
+          firstPageText={getAll("First_page")}
+          lastPageText={getAll("Last_page")}
         />
       </div>
     </div>

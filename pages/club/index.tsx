@@ -8,20 +8,19 @@ import router from "next/router";
 
 function Home() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("club");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <>
       <MetaTags title={getAll("Timwoork_community")} />
       <Result
         icon={<SmileOutlined />}
-        title={getLanguage("The_forum_will")}
+        title={getAll("The_forum_will")}
         extra={
           <button
             onClick={() => router.push("/")}
             className="btn butt-sm butt-primary"
           >
-            {getLanguage("Go_to_Home")}
+            {getAll("Go_to_Home")}
           </button>
         }
       />

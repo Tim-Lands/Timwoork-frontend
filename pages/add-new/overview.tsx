@@ -67,13 +67,16 @@ const MySelect = (props: any) => {
 
 function Overview({ query }) {
   const [isShowenModal, setIsShowenModal] = useState(false);
-  const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
-  const [selectedLang, setSelectedLang] = useState('');
+  const [checkedLangs, setCheckedLangs] = useState({
+    ar: false,
+    fr: false,
+    en: false,
+  });
+  const [selectedLang, setSelectedLang] = useState("");
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
   const id = query.id;
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -91,20 +94,20 @@ function Overview({ query }) {
   };
 
   const addSubtitle = (subtitle) => {
-    console.log(subtitle)
-    console.log(selectedLang)
+    console.log(subtitle);
+    console.log(selectedLang);
     switch (selectedLang) {
-      case 'ar':
+      case "ar":
         setSubtitles({ ...subtitles, ar: subtitle });
         break;
-      case 'en':
+      case "en":
         setSubtitles({ ...subtitles, en: subtitle });
         break;
-      case 'fr':
+      case "fr":
         setSubtitles({ ...subtitles, fr: subtitle });
         break;
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -126,19 +129,15 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const body:any = {...values}
-        if(subtitles['ar'])body.title_ar = subtitles['ar'];
-        if(subtitles['en'])body.title_en = subtitles['en'];
-        if(subtitles['fr'])body.title_fr = subtitles['fr'];
-        const res = await API.post(
-          `api/product/${id}/product-step-one`,
-          body,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const body: any = { ...values };
+        if (subtitles["ar"]) body.title_ar = subtitles["ar"];
+        if (subtitles["en"]) body.title_en = subtitles["en"];
+        if (subtitles["fr"]) body.title_fr = subtitles["fr"];
+        const res = await API.post(`api/product/${id}/product-step-one`, body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         // Authentication was successful.
         if (res.status === 200) {
           message.success(getAll("The_update_has"));
@@ -191,8 +190,8 @@ function Overview({ query }) {
     }
     getProductId();
   }, []);
-  console.log(checkedLangs)
-  console.log(subtitles)
+  console.log(checkedLangs);
+  console.log(subtitles);
   return (
     <>
       <MetaTags
@@ -211,7 +210,12 @@ function Overview({ query }) {
               <SidebarAdvices />
             </div>
             <div className="col-md-8 pt-3">
-              {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
+              {isShowenModal && (
+                <FormModal
+                  onSubmit={(txt) => addSubtitle(txt)}
+                  setIsConfirmText={setIsShowenModal}
+                />
+              )}
               <form onSubmit={formik.handleSubmit}>
                 <div
                   className={
@@ -227,7 +231,7 @@ function Overview({ query }) {
                               collections_bookmark
                             </span>
                           </span>
-                          {getLanguage("General_information")}
+                          {getAll("General_information")}
                         </h3>
                       </div>
                       <div className="timlands-step-item">
@@ -237,7 +241,7 @@ function Overview({ query }) {
                               payments
                             </span>
                           </span>
-                          {getLanguage("Upgrades_price")}
+                          {getAll("Upgrades_price")}
                         </h3>
                       </div>
                       <div className="timlands-step-item">
@@ -247,7 +251,7 @@ function Overview({ query }) {
                               description
                             </span>
                           </span>
-                          {getLanguage("Description_and_instructions")}
+                          {getAll("Description_and_instructions")}
                         </h3>
                       </div>
                       <div className="timlands-step-item">
@@ -257,7 +261,7 @@ function Overview({ query }) {
                               mms
                             </span>
                           </span>
-                          {getLanguage("Gallery_and_folders")}
+                          {getAll("Gallery_and_folders")}
                         </h3>
                       </div>
                       <div className="timlands-step-item">
@@ -267,7 +271,7 @@ function Overview({ query }) {
                               publish
                             </span>
                           </span>
-                          {getLanguage("Publish_service")}
+                          {getAll("Publish_service")}
                         </h3>
                       </div>
                     </div>
@@ -276,10 +280,21 @@ function Overview({ query }) {
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">
-                        <FormLangsCheck id={1} default_lang={userInfo?.user_details?.profile?.lang} onChange={(e) => {
-                          setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
-                          if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
-                        }} />
+                        <FormLangsCheck
+                          id={1}
+                          default_lang={userInfo?.user_details?.profile?.lang}
+                          onChange={(e) => {
+                            setCheckedLangs({
+                              ...checkedLangs,
+                              [e.target.value]: e.target.checked,
+                            });
+                            if (!e.target.checked)
+                              setSubtitles({
+                                ...subtitles,
+                                [e.target.value]: null,
+                              });
+                          }}
+                        />
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="input-title">
                             {getAll("Service_title")}
@@ -300,10 +315,14 @@ function Overview({ query }) {
                             onChange={formik.handleChange}
                             value={formik.values.title}
                           />
-                          <FormLangs onClick={(lang) => {
-                            setIsShowenModal(true);
-                            setSelectedLang(lang);
-                          }} checkedLangs={checkedLangs} default_lang={userInfo?.user_details?.profile?.lang} />
+                          <FormLangs
+                            onClick={(lang) => {
+                              setIsShowenModal(true);
+                              setSelectedLang(lang);
+                            }}
+                            checkedLangs={checkedLangs}
+                            default_lang={userInfo?.user_details?.profile?.lang}
+                          />
                           <div className="note-form-text-sh">
                             <p className="text">
                               {getAll("The_service_title")}
@@ -330,7 +349,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-catetory"
                           >
-                            {getLanguage("Choose_the_principal")}
+                            {getAll("Choose_the_principal")}
                           </label>
                           {categoriesError && getAll("An_error_occured")}
                           <select
@@ -341,10 +360,10 @@ function Overview({ query }) {
                             disabled={!getProduct ? true : false}
                             onChange={formik.handleChange}
                             value={formik.values.catetory}
-                          //onChange={() => setmainCat(values.catetory)}
+                            //onChange={() => setmainCat(values.catetory)}
                           >
                             <option value="">
-                              {getLanguage("Choose_the_principal")}
+                              {getAll("Choose_the_principal")}
                             </option>
                             {!categories && (
                               <option value="">{getAll("Please_wait")}</option>
@@ -364,7 +383,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-subcategory"
                           >
-                            {getLanguage("Choose_a_subcategory")}
+                            {getAll("Choose_a_subcategory")}
                           </label>
                           <select
                             id="input-subcategory"
@@ -381,7 +400,7 @@ function Overview({ query }) {
                             value={formik.values.subcategory}
                           >
                             <option value={0}>
-                              {getLanguage("Choose_a_subcategory")}
+                              {getAll("Choose_a_subcategory")}
                             </option>
                             {subCategoriesError && (
                               <option value="">
@@ -421,7 +440,7 @@ function Overview({ query }) {
                           marginBottom: -9,
                         }}
                       >
-                        {getLanguage("Key_words")}
+                        {getAll("Key_words")}
                       </p>
                       <MySelect
                         value={formik.values.tags}
@@ -451,9 +470,7 @@ function Overview({ query }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">
-                              {getLanguage("Next_step")}
-                            </span>
+                            <span className="text">{getAll("Next_step")}</span>
                             {language === "ar" ? (
                               <span className="material-icons-outlined">
                                 chevron_left

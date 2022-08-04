@@ -11,14 +11,13 @@ import API from "../../config";
 function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("blog");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [postsMediaTable, setPostsMediaTable] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const { data: getCategories }: any = useSWR(
     "https://timwoork.net/wp-json/wp/v2/categories"
   );
-  console.log(getCategories)
+  console.log(getCategories);
   const { data: getPosts }: any = useSWR(
     `https://timwoork.net/wp-json/wp/v2/posts?per_page=9&page=${pageNumber}&${categories}`
   );
@@ -78,7 +77,7 @@ function Category(): JSX.Element {
                   <Post
                     title={item.title.rendered}
                     thumbnail={postsMediaTable[item.featured_media]}
-                    more={getLanguage("Read_more")}
+                    more={getAll("Read_more")}
                     size={""}
                     slug={item.slug}
                     excerpt={
@@ -97,8 +96,8 @@ function Category(): JSX.Element {
         {getPosts && getPosts.length == 0 && (
           <Result
             status="404"
-            title={getLanguage("No_article")}
-            subTitle={getLanguage("There_is_no")}
+            title={getAll("No_article")}
+            subTitle={getAll("There_is_no")}
           />
         )}
         <Pagination

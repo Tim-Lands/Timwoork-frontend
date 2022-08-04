@@ -20,8 +20,7 @@ import RemoveImageModal from "@/components/removeImageModal";
 function Medias({ query, stars }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail
   );
@@ -329,7 +328,7 @@ function Medias({ query, stars }) {
                             collections_bookmark
                           </span>
                         </span>
-                        {getLanguage("General_information")}
+                        {getAll("General_information")}
                       </h3>
                     </div>
                     <div className="timlands-step-item">
@@ -339,7 +338,7 @@ function Medias({ query, stars }) {
                             payments
                           </span>
                         </span>
-                        {getLanguage("Upgrades_price")}
+                        {getAll("Upgrades_price")}
                       </h3>
                     </div>
                     <div className="timlands-step-item">
@@ -349,7 +348,7 @@ function Medias({ query, stars }) {
                             description
                           </span>
                         </span>
-                        {getLanguage("Description_and_instructions")}
+                        {getAll("Description_and_instructions")}
                       </h3>
                     </div>
                     <div className="timlands-step-item active">
@@ -359,7 +358,7 @@ function Medias({ query, stars }) {
                             mms
                           </span>
                         </span>
-                        {getLanguage("Gallery_and_folders")}
+                        {getAll("Gallery_and_folders")}
                       </h3>
                     </div>
                     <div className="timlands-step-item">
@@ -369,7 +368,7 @@ function Medias({ query, stars }) {
                             publish
                           </span>
                         </span>
-                        {getLanguage("Publish_service")}
+                        {getAll("Publish_service")}
                       </h3>
                     </div>
                   </div>
@@ -392,14 +391,14 @@ function Medias({ query, stars }) {
                       <div className="timlands-content-form mt-2">
                         <div className="choose-images-file">
                           <h4 className="timlands-content-form-subtitle">
-                            {getLanguage("Service_introduction_video")}
+                            {getAll("Service_introduction_video")}
                           </h4>
                           <div className="timlands-form">
                             <label
                               className="label-block"
                               htmlFor="input-videourl"
                             >
-                              {getLanguage("Video_link")}
+                              {getAll("Video_link")}
                             </label>
                             <input
                               type="text"
@@ -445,9 +444,7 @@ function Medias({ query, stars }) {
                             chevron_left
                           </span>
                         )}
-                        <span className="text">
-                          {getLanguage("Previous_step")}
-                        </span>
+                        <span className="text">{getAll("Previous_step")}</span>
                       </button>
                       <button
                         type="submit"
@@ -455,7 +452,7 @@ function Medias({ query, stars }) {
                         onClick={loadImagesHandle}
                         className="btn flex-center butt-green ml-auto butt-sm"
                       >
-                        <span className="text">{getLanguage("Next_step")}</span>
+                        <span className="text">{getAll("Next_step")}</span>
                         {language === "ar" ? (
                           <span className="material-icons-outlined">
                             chevron_left

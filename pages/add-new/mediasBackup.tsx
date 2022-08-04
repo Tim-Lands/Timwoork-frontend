@@ -18,8 +18,7 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 function Medias({ query, stars }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [validationsErrors, setValidationsErrors]: any = useState({});
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -235,7 +234,7 @@ function Medias({ query, stars }) {
                           collections_bookmark
                         </span>
                       </span>
-                      {getLanguage("General_information")}
+                      {getAll("General_information")}
                     </h3>
                   </div>
                   <div className="timlands-step-item">
@@ -245,7 +244,7 @@ function Medias({ query, stars }) {
                           payments
                         </span>
                       </span>
-                      {getLanguage("Upgrades_price")}
+                      {getAll("Upgrades_price")}
                     </h3>
                   </div>
                   <div className="timlands-step-item">
@@ -255,7 +254,7 @@ function Medias({ query, stars }) {
                           description
                         </span>
                       </span>
-                      {getLanguage("Description_and_instructions")}
+                      {getAll("Description_and_instructions")}
                     </h3>
                   </div>
                   <div className="timlands-step-item active" ref={stepsView}>
@@ -265,7 +264,7 @@ function Medias({ query, stars }) {
                           mms
                         </span>
                       </span>
-                      {getLanguage("Gallery_and_folders")}
+                      {getAll("Gallery_and_folders")}
                     </h3>
                   </div>
                   <div className="timlands-step-item">
@@ -275,7 +274,7 @@ function Medias({ query, stars }) {
                           publish
                         </span>
                       </span>
-                      {getLanguage("Publish_service")}
+                      {getAll("Publish_service")}
                     </h3>
                   </div>
                 </div>
@@ -294,7 +293,7 @@ function Medias({ query, stars }) {
                         <div className="images-list-uploading">
                           <div className="page-header">
                             <h4 className="title">
-                              {getLanguage("Profil_picture")}
+                              {getAll("Profil_picture")}
                             </h4>
                           </div>
                           <p
@@ -398,7 +397,7 @@ function Medias({ query, stars }) {
                       <div className="col-md-12 align-center">
                         <div className="images-list-uploading">
                           <div className="page-header">
-                            <h4 className="title">{getLanguage("Gallery")}</h4>
+                            <h4 className="title">{getAll("Gallery")}</h4>
                           </div>
                           <ImageUploading
                             multiple
@@ -435,7 +434,7 @@ function Medias({ query, stars }) {
                                       onClick={onImageUpload}
                                       {...dragProps}
                                     >
-                                      {getLanguage("You_can_choose")}
+                                      {getAll("You_can_choose")}
                                     </button>
                                     &nbsp;
                                     <button
@@ -453,7 +452,7 @@ function Medias({ query, stars }) {
                                         {getAll("Choose_a_picture")}
                                       </h4>
                                       <p className="nothing-text">
-                                        {getLanguage("You_must_choose")}
+                                        {getAll("You_must_choose")}
                                       </p>
                                     </div>
                                   )}
@@ -527,11 +526,11 @@ function Medias({ query, stars }) {
               <div className="timlands-content-form">
                 <div className="choose-images-file">
                   <h4 className="timlands-content-form-subtitle">
-                    {getLanguage("Service_introduction_video")}
+                    {getAll("Service_introduction_video")}
                   </h4>
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-videourl">
-                      {getLanguage("Video_link")}
+                      {getAll("Video_link")}
                     </label>
                     <input
                       type="text"
@@ -569,7 +568,7 @@ function Medias({ query, stars }) {
                     <span className="material-icons-outlined">
                       chevron_right
                     </span>
-                    <span className="text">{getLanguage("Previous_step")}</span>
+                    <span className="text">{getAll("Previous_step")}</span>
                     <div
                       className="spinner-border spinner-border-sm text-white"
                       role="status"
@@ -581,7 +580,7 @@ function Medias({ query, stars }) {
                     onClick={loadImagesHandle}
                     className="btn flex-center butt-green ml-auto butt-sm"
                   >
-                    <span className="text"> {getLanguage("Next_step")}</span>
+                    <span className="text"> {getAll("Next_step")}</span>
                     <span className="material-icons-outlined">
                       chevron_left
                     </span>

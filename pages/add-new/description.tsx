@@ -122,20 +122,33 @@ import FormModal from "@/components/NewIndex/Forms/FormModal";
 //   );
 // };
 function Description({ query }) {
-  const [checkedLangsDesc, setCheckedLangsDesc] = useState({ ar: false, fr: false, en: false })
-  const [checkedLangsInstruc, setCheckedLangsInstruc] = useState({ ar: false, fr: false, en: false })
-  const [selectedLangDesc, setSelectedLangDesc] = useState('');
-  const [selectedLangInstruc, setSelectedLangInstruc] = useState('');
-  const [subtitlesDesc, setSubtitlesDesc] = useState({ ar: null, fr: null, en: null });
-  const [subtitlesInstruc, setSubtitlesInstruc] = useState({ ar: null, fr: null, en: null });
+  const [checkedLangsDesc, setCheckedLangsDesc] = useState({
+    ar: false,
+    fr: false,
+    en: false,
+  });
+  const [checkedLangsInstruc, setCheckedLangsInstruc] = useState({
+    ar: false,
+    fr: false,
+    en: false,
+  });
+  const [selectedLangDesc, setSelectedLangDesc] = useState("");
+  const [selectedLangInstruc, setSelectedLangInstruc] = useState("");
+  const [subtitlesDesc, setSubtitlesDesc] = useState({
+    ar: null,
+    fr: null,
+    en: null,
+  });
+  const [subtitlesInstruc, setSubtitlesInstruc] = useState({
+    ar: null,
+    fr: null,
+    en: null,
+  });
   const [isShownDescModal, setIsShownDescModal] = useState(false);
-  const [isShownInstrucModal, setIsShownInstrucModal] = useState(false)
-
+  const [isShownInstrucModal, setIsShownInstrucModal] = useState(false);
 
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
@@ -157,32 +170,31 @@ function Description({ query }) {
   // const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML();
   const addSubtitleDesc = (subtitle) => {
     switch (selectedLangDesc) {
-      case 'ar':
+      case "ar":
         setSubtitlesDesc({ ...subtitlesDesc, ar: subtitle });
         break;
-      case 'en':
+      case "en":
         setSubtitlesDesc({ ...subtitlesDesc, en: subtitle });
         break;
-      case 'fr':
+      case "fr":
         setSubtitlesDesc({ ...subtitlesDesc, fr: subtitle });
         break;
     }
-  }
+  };
 
   const addSubtitleInstruc = (subtitle) => {
-    
     switch (selectedLangInstruc) {
-      case 'ar':
+      case "ar":
         setSubtitlesInstruc({ ...subtitlesInstruc, ar: subtitle });
         break;
-      case 'en':
+      case "en":
         setSubtitlesInstruc({ ...subtitlesInstruc, en: subtitle });
         break;
-      case 'fr':
+      case "fr":
         setSubtitlesInstruc({ ...subtitlesInstruc, fr: subtitle });
         break;
     }
-  }
+  };
   const formik = useFormik({
     initialValues: {
       // buyer_instruct: buyerInstructhtml,
@@ -197,14 +209,17 @@ function Description({ query }) {
 
       try {
         const id = query.id;
-        const body:any ={...values}
-        if(subtitlesInstruc['ar'])body['buyer_instruct_ar'] = subtitlesInstruc['ar']
-        if(subtitlesInstruc['en'])body['buyer_instruct_en'] = subtitlesInstruc['en']
-        if(subtitlesInstruc['fr'])body['buyer_instruct_fr'] = subtitlesInstruc['fr']
+        const body: any = { ...values };
+        if (subtitlesInstruc["ar"])
+          body["buyer_instruct_ar"] = subtitlesInstruc["ar"];
+        if (subtitlesInstruc["en"])
+          body["buyer_instruct_en"] = subtitlesInstruc["en"];
+        if (subtitlesInstruc["fr"])
+          body["buyer_instruct_fr"] = subtitlesInstruc["fr"];
 
-        if(setSubtitlesDesc['ar'])body['content_ar'] = subtitlesDesc['ar']
-        if(setSubtitlesDesc['en'])body['content_en'] = subtitlesDesc['en']
-        if(setSubtitlesDesc['fr'])body['content_fr'] = subtitlesDesc['fr']
+        if (setSubtitlesDesc["ar"]) body["content_ar"] = subtitlesDesc["ar"];
+        if (setSubtitlesDesc["en"]) body["content_en"] = subtitlesDesc["en"];
+        if (setSubtitlesDesc["fr"]) body["content_fr"] = subtitlesDesc["fr"];
         const res = await API.post(
           `api/product/${id}/product-step-three`,
           {
@@ -220,7 +235,7 @@ function Description({ query }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_update_has"));
+          message.success(getAll("The_update_has"));
           router.push({
             pathname: "/add-new/medias",
             query: {
@@ -295,8 +310,18 @@ function Description({ query }) {
                       (formik.isSubmitting ? " is-loader" : "")
                     }
                   >
-                    {isShownDescModal && <FormModal onSubmit={txt => addSubtitleDesc(txt)} setIsConfirmText={setIsShownDescModal} />}
-                    {isShownInstrucModal && <FormModal onSubmit={txt => addSubtitleInstruc(txt)} setIsConfirmText={setIsShownInstrucModal} />}
+                    {isShownDescModal && (
+                      <FormModal
+                        onSubmit={(txt) => addSubtitleDesc(txt)}
+                        setIsConfirmText={setIsShownDescModal}
+                      />
+                    )}
+                    {isShownInstrucModal && (
+                      <FormModal
+                        onSubmit={(txt) => addSubtitleInstruc(txt)}
+                        setIsConfirmText={setIsShownInstrucModal}
+                      />
+                    )}
 
                     <div className="timlands-steps-cont">
                       <div className="timlands-steps">
@@ -307,7 +332,7 @@ function Description({ query }) {
                                 collections_bookmark
                               </span>
                             </span>
-                            {getLanguage("General_information")}
+                            {getAll("General_information")}
                           </h4>
                         </div>
                         <div className="timlands-step-item">
@@ -317,7 +342,7 @@ function Description({ query }) {
                                 payments
                               </span>
                             </span>
-                            {getLanguage("Upgrades_price")}
+                            {getAll("Upgrades_price")}
                           </h4>
                         </div>
                         <div
@@ -330,7 +355,7 @@ function Description({ query }) {
                                 description
                               </span>
                             </span>
-                            {getLanguage("Description_and_instructions")}
+                            {getAll("Description_and_instructions")}
                           </h4>
                         </div>
                         <div className="timlands-step-item">
@@ -340,7 +365,7 @@ function Description({ query }) {
                                 mms
                               </span>
                             </span>
-                            {getLanguage("Gallery_and_folders")}
+                            {getAll("Gallery_and_folders")}
                           </h3>
                         </div>
                         <div className="timlands-step-item">
@@ -350,7 +375,7 @@ function Description({ query }) {
                                 publish
                               </span>
                             </span>
-                            {getLanguage("Publish_service")}
+                            {getAll("Publish_service")}
                           </h3>
                         </div>
                       </div>
@@ -359,15 +384,27 @@ function Description({ query }) {
                     <div className="timlands-content-form">
                       <div className="row">
                         <div className="col-md-12">
-                          <FormLangsCheck id={1} default_lang={userInfo?.user_details?.profile?.lang} onChange={(e) => {
-                            setCheckedLangsDesc({ ...checkedLangsDesc, [e.target.value]: e.target.checked })
-                            if (!e.target.checked) setSubtitlesDesc({ ...subtitlesDesc, [e.target.value]: null })
-                          }} />                          <div className="timlands-form">
+                          <FormLangsCheck
+                            id={1}
+                            default_lang={userInfo?.user_details?.profile?.lang}
+                            onChange={(e) => {
+                              setCheckedLangsDesc({
+                                ...checkedLangsDesc,
+                                [e.target.value]: e.target.checked,
+                              });
+                              if (!e.target.checked)
+                                setSubtitlesDesc({
+                                  ...subtitlesDesc,
+                                  [e.target.value]: null,
+                                });
+                            }}
+                          />{" "}
+                          <div className="timlands-form">
                             <label
                               className="label-block"
                               htmlFor="input-content"
                             >
-                              {getLanguage("Service_description")}
+                              {getAll("Service_description")}
                             </label>
                             <div className="app-content-editor">
                               <textarea
@@ -375,12 +412,18 @@ function Description({ query }) {
                                 id="content"
                                 className="descriptionInputHold"
                                 onChange={(e) => formik.handleChange(e)}
-                              // onChange={formik.setFieldValue}
+                                // onChange={formik.setFieldValue}
                               ></textarea>
-                              <FormLangs onClick={(lang) => {
-                                setIsShownDescModal(true);
-                                setSelectedLangDesc(lang);
-                              }} checkedLangs={checkedLangsDesc} default_lang={userInfo?.user_details?.profile?.lang} />
+                              <FormLangs
+                                onClick={(lang) => {
+                                  setIsShownDescModal(true);
+                                  setSelectedLangDesc(lang);
+                                }}
+                                checkedLangs={checkedLangsDesc}
+                                default_lang={
+                                  userInfo?.user_details?.profile?.lang
+                                }
+                              />
                               {/* <MenuBar editor={editor} />
                               <Tiptap
                                 value={formik.values.content}
@@ -394,7 +437,7 @@ function Description({ query }) {
                               className="timlands-form-note"
                             >
                               <p className="text">
-                                {getLanguage("Enter_an_accurate")}
+                                {getAll("Enter_an_accurate")}
                               </p>
                             </motion.div>
                             {validationsErrors && validationsErrors.content && (
@@ -413,15 +456,27 @@ function Description({ query }) {
                           </div>
                         </div>
                         <div className="col-md-12">
-                          <FormLangsCheck id={2} default_lang={userInfo?.user_details?.profile?.lang} onChange={(e) => {
-                            setCheckedLangsInstruc({ ...checkedLangsInstruc, [e.target.value]: e.target.checked })
-                            if (!e.target.checked) setSubtitlesInstruc({ ...subtitlesInstruc, [e.target.value]: null })
-                          }} />                          <div className="timlands-form">
+                          <FormLangsCheck
+                            id={2}
+                            default_lang={userInfo?.user_details?.profile?.lang}
+                            onChange={(e) => {
+                              setCheckedLangsInstruc({
+                                ...checkedLangsInstruc,
+                                [e.target.value]: e.target.checked,
+                              });
+                              if (!e.target.checked)
+                                setSubtitlesInstruc({
+                                  ...subtitlesInstruc,
+                                  [e.target.value]: null,
+                                });
+                            }}
+                          />{" "}
+                          <div className="timlands-form">
                             <label
                               className="label-block"
                               htmlFor="input-buyer_instruct"
                             >
-                              {getLanguage("Instructions_to_the")}
+                              {getAll("Instructions_to_the")}
                             </label>
                             <div className="app-content-editor">
                               <textarea
@@ -430,10 +485,17 @@ function Description({ query }) {
                                 id="buyer_instruct"
                                 onChange={(e) => formik.handleChange(e)}
                               ></textarea>
-                              <FormLangs onClick={(lang) => {
-                                setIsShownInstrucModal(true);
-                                setSelectedLangInstruc(lang);
-                              }} checkedLangs={checkedLangsInstruc} default_lang={userInfo?.user_details?.profile?.lang} />                              {/* <MenuBar editor={buyerInstruct} />
+                              <FormLangs
+                                onClick={(lang) => {
+                                  setIsShownInstrucModal(true);
+                                  setSelectedLangInstruc(lang);
+                                }}
+                                checkedLangs={checkedLangsInstruc}
+                                default_lang={
+                                  userInfo?.user_details?.profile?.lang
+                                }
+                              />{" "}
+                              {/* <MenuBar editor={buyerInstruct} />
                               <Tiptap
                                 value={formik.values.buyer_instruct}
                                 changeHandle={formik.handleChange}
@@ -446,7 +508,7 @@ function Description({ query }) {
                               className="timlands-form-note"
                             >
                               <p className="text">
-                                {getLanguage("They_are_information")}
+                                {getAll("They_are_information")}
                               </p>
                             </motion.div>
                             {validationsErrors &&
@@ -482,7 +544,7 @@ function Description({ query }) {
                                 </span>
                               )}
                               <span className="text">
-                                {getLanguage("Previous_step")}
+                                {getAll("Previous_step")}
                               </span>
                             </button>
                             <button
@@ -494,7 +556,7 @@ function Description({ query }) {
                               className="btn flex-center butt-green ml-auto butt-sm"
                             >
                               <span className="text">
-                                {getLanguage("Next_step")}
+                                {getAll("Next_step")}
                               </span>
                               {language === "ar" ? (
                                 <span className="material-icons-outlined">

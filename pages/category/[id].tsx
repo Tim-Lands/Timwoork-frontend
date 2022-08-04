@@ -10,8 +10,7 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { language } = useContext(LanguageContext);
   const { data: popularProducts }: any = useSWR(
     `api/get_products_subcategory/${query.id}`
@@ -35,7 +34,7 @@ function index({ query }) {
                 <span className={"material-icons material-icons-outlined"}>
                   {subCategories.data.icon}
                 </span>
-                <span style={{ fontWeight: 200 }}> {getLogin("Services")}</span>{" "}
+                <span style={{ fontWeight: 200 }}> {getAll("Services")}</span>{" "}
                 <strong> {subCategories.data[which(language)]} </strong>
               </h3>
             </div>

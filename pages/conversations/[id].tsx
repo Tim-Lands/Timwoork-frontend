@@ -30,12 +30,10 @@ function Conversation({ query }) {
   const inputRefMsg: any = useRef();
   const messageCont = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("conversion");
   const { data: conversationsSingle }: any = useSWR(
     `api/conversations/${query.id}`
   );
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: profileInfo }: any = useSWR(`api/me`);
   const channelChat = `presence-receiver.${
     profileInfo && profileInfo.user_details.id
@@ -305,7 +303,7 @@ function Conversation({ query }) {
         {veriedEmail && (
           <div className="row">
             <div className="col-lg-4">
-              <Sidebar RouterId={query.id} getLanguage={getLanguage} />
+              <Sidebar RouterId={query.id} />
             </div>
             <div className="col-lg-8">
               <div className="app-bill conv" ref={messageCont}>
@@ -572,7 +570,7 @@ function Conversation({ query }) {
                         onKeyUp={() => {
                           setMessageErrors({});
                         }}
-                        placeholder={getLogin("Message_text")}
+                        placeholder={getAll("Message_text")}
                         className={
                           "timlands-inputs " +
                           (messageErrors &&

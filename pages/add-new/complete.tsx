@@ -14,9 +14,7 @@ import API from "../../config";
 function Complete({ query }) {
   let token = Cookies.get("token");
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -68,7 +66,7 @@ function Complete({ query }) {
       );
       // Authentication was successful.
       if (res.status === 200) {
-        message.success(getLogin("The_update_has"));
+        message.success(getAll("The_update_has"));
         router.push({
           pathname: "/myproducts",
           query: {
@@ -107,7 +105,7 @@ function Complete({ query }) {
                           collections_bookmark
                         </span>
                       </span>
-                      {getLanguage("General_information")}
+                      {getAll("General_information")}
                     </h4>
                   </div>
                   <div className="timlands-step-item">
@@ -117,7 +115,7 @@ function Complete({ query }) {
                           payments
                         </span>
                       </span>
-                      {getLanguage("Upgrades_price")}
+                      {getAll("Upgrades_price")}
                     </h4>
                   </div>
                   <div className="timlands-step-item">
@@ -127,7 +125,7 @@ function Complete({ query }) {
                           description
                         </span>
                       </span>
-                      {getLanguage("Description_and_instructions")}
+                      {getAll("Description_and_instructions")}
                     </h4>
                   </div>
                   <div className="timlands-step-item">
@@ -137,7 +135,7 @@ function Complete({ query }) {
                           mms
                         </span>
                       </span>
-                      {getLanguage("Gallery_and_folders")}
+                      {getAll("Gallery_and_folders")}
                     </h4>
                   </div>
                   <div className="timlands-step-item active" ref={stepsView}>
@@ -147,7 +145,7 @@ function Complete({ query }) {
                           publish
                         </span>
                       </span>
-                      {getLanguage("Publish_service")}
+                      {getAll("Publish_service")}
                     </h4>
                   </div>
                 </div>
@@ -159,10 +157,8 @@ function Complete({ query }) {
                   </span>
                 </div>
                 <div className="timlands-add-new-body">
-                  <h4 className="title">{getLanguage("The_service_has")}</h4>
-                  <p className="text">
-                    {getLanguage("Congratulations_Now_you")}
-                  </p>
+                  <h4 className="title">{getAll("The_service_has")}</h4>
+                  <p className="text">{getAll("Congratulations_Now_you")}</p>
                   <div className="add-butts">
                     <button
                       onClick={() => router.back()}
@@ -178,15 +174,13 @@ function Complete({ query }) {
                           chevron_left
                         </span>
                       )}
-                      <span className="text">
-                        {getLanguage("Previous_step")}
-                      </span>
+                      <span className="text">{getAll("Previous_step")}</span>
                     </button>
                     <button
                       onClick={stepFive}
                       className="btn butt-md butt-primary2"
                     >
-                      {getLanguage("Publish_service")}
+                      {getAll("Publish_service")}
                     </button>
                   </div>
                 </div>

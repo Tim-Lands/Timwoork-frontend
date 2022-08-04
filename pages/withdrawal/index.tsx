@@ -308,7 +308,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        تحويل وايز Wise
+                        {getLogin("Wise_transfer")}
                       </label>
                     </div>
                     <button
@@ -363,7 +363,7 @@ function Withdrawal() {
                       className="btn butt-lg butt-primary"
                       style={{ width: "100%" }}
                     >
-                      طلب السحب
+                      {getLogin("Withdrawal_request")}
                     </button>
                   </div>
                 </div>
