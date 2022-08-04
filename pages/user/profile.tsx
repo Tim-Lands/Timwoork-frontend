@@ -26,7 +26,6 @@ function Profile() {
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
 
-
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
   };
@@ -62,8 +61,8 @@ function Profile() {
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
-      detectHeight.current &&
-      detectHeight.current.scrollHeight > 230
+        detectHeight.current &&
+        detectHeight.current.scrollHeight > 230
     ),
       [detectHeight, detectHeight.current];
   }, [detectHeight]);
@@ -169,7 +168,7 @@ function Profile() {
                       <span className="material-icons material-icons-outlined">
                         copy
                       </span>{" "}
-                      {getLogin("Copy_my_profile’s")}
+                      {getLogin("Copy_my_profiles")}
                     </button>
                   </p>
                 </div>
@@ -254,23 +253,26 @@ function Profile() {
                               </Link>
                             }
                           >
-                            <button className='btn butt-primary2 flex-center butt-sm' onClick={() => setIsTranslate(!isTranslate)}>
-                              {isTranslate ? 'إعادة الى اللغة الاصلية' : 'ترجمة'}
-                            </button>
                             <div
                               ref={detectHeight}
                               className={
                                 "user-bro " + (isLess ? "is-less" : "")
                               }
-                              dangerouslySetInnerHTML={isTranslate
-                                ? {
-                                  __html: userInfo.user_details.profile.profile_seller[`bio_${language}`]
-                                }
-                                : {
-                                  __html:
-                                    userInfo.user_details.profile.profile_seller.bio,
-                                }}
+                              dangerouslySetInnerHTML={
+                                isTranslate
+                                  ? {
+                                      __html:
+                                        userInfo.user_details.profile
+                                          .profile_seller[`bio_${language}`],
+                                    }
+                                  : {
+                                      __html:
+                                        userInfo.user_details.profile
+                                          .profile_seller.bio,
+                                    }
+                              }
                             />
+
                             {isOverflow && (
                               <button
                                 onClick={() => {
@@ -286,6 +288,19 @@ function Profile() {
                                   : getLogin("Read_less")}
                               </button>
                             )}
+                            <div className="d-flex justify-content-center">
+                              <button
+                                className="btn butt-sm butt-primary-text flex-center"
+                                onClick={() => setIsTranslate(!isTranslate)}
+                              >
+                                <span className="material-icons material-icons-outlined">
+                                  translate
+                                </span>
+                                {isTranslate
+                                  ? "إعادة الى اللغة الاصلية"
+                                  : "ترجمة"}
+                              </button>
+                            </div>
                           </Card>
                         </div>
                       </>
@@ -330,8 +345,8 @@ function Profile() {
                             <p className="text-value">
                               {userInfo.user_details.phone
                                 ? userInfo.user_details.code_phone?.split(
-                                  "+"
-                                )[1] + userInfo.user_details.phone
+                                    "+"
+                                  )[1] + userInfo.user_details.phone
                                 : "غير مكتمل"}
                               {userInfo.user_details.phone && "+"}
                             </p>
@@ -367,12 +382,12 @@ function Profile() {
                             <h3 className="text-label">{getLogin("Gender")}</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile &&
-                                userInfo.user_details.profile.gender == null
+                              userInfo.user_details.profile.gender == null
                                 ? ""
                                 : userInfo.user_details.profile &&
-                                (userInfo.user_details.profile.gender == 0
-                                  ? getLogin("woman")
-                                  : getLogin("Man"))}
+                                  (userInfo.user_details.profile.gender == 0
+                                    ? getLogin("woman")
+                                    : getLogin("Man"))}
                             </p>
                           </div>
                         </div>
@@ -383,7 +398,7 @@ function Profile() {
                             </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.date_of_birth ==
-                                null
+                              null
                                 ? ""
                                 : userInfo.user_details.profile.date_of_birth}
                             </p>

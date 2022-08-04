@@ -192,6 +192,21 @@
             border-color: darken(#e20a0a, 13);
         }
     }
+    &.butt-primary-text {
+        background-color: transparent;
+        border-color: transparent;
+        color: $primary;
+        &:hover {
+            background-color: transparent;
+            border-color: transparent;
+            color: darken($primary, 5);
+        }
+        &:focus {
+            background-color: transparent;
+            border-color: transparent;
+            color: darken($primary, 13);
+        }
+    }
     &.butt-red-text {
         background-color: transparent;
         border-color: transparent;

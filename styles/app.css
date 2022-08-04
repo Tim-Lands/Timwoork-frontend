@@ -659,6 +659,24 @@
   border-color: #a30707;
 }
 
+.btn.butt-primary-text {
+  background-color: transparent;
+  border-color: transparent;
+  color: #475c80;
+}
+
+.btn.butt-primary-text:hover {
+  background-color: transparent;
+  border-color: transparent;
+  color: #3e5070;
+}
+
+.btn.butt-primary-text:focus {
+  background-color: transparent;
+  border-color: transparent;
+  color: #2f3d55;
+}
+
 .btn.butt-red-text {
   background-color: transparent;
   border-color: transparent;
