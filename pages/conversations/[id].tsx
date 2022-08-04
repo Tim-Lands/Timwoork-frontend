@@ -38,8 +38,9 @@ function Conversation({ query }) {
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
   const { data: profileInfo }: any = useSWR(`api/me`);
-  const channelChat = `presence-receiver.${profileInfo && profileInfo.user_details.id
-    }`;
+  const channelChat = `presence-receiver.${
+    profileInfo && profileInfo.user_details.id
+  }`;
   const channel = pusher.subscribe(channelChat);
   const veriedEmail = profileInfo && profileInfo.user_details.email_verified_at;
   const [messageProgress, setMessageProgress] = useState(0);
@@ -47,7 +48,7 @@ function Conversation({ query }) {
   const [sendMessageLoading, setSendMessageLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(0);
-  const [isTranslate, setIsTranslate] = useState({})
+  const [isTranslate, setIsTranslate] = useState({});
   useEffect(() => {
     if (!token) {
       router.push("/login");
@@ -89,7 +90,7 @@ function Conversation({ query }) {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-LOCALIZATION': userLang
+            "X-LOCALIZATION": userLang,
           },
           onUploadProgress: (uploadEvent) => {
             if (filesMsg.length !== 0)
@@ -120,10 +121,9 @@ function Conversation({ query }) {
   });
 
   const detectLang = async (txt) => {
-
     const res = await API.post(`/api/detectLang`, { sentence: txt });
     setUserLang(res.data.data);
-  }
+  };
   function switchTypeMessage(type: any) {
     switch (type) {
       case 0:
@@ -299,8 +299,9 @@ function Conversation({ query }) {
   return (
     <>
       <MetaTags
-        title={`${getAll("Conversations")} - ${conversationsSingle && conversationsSingle.data.title
-          }`}
+        title={`${getAll("Conversations")} - ${
+          conversationsSingle && conversationsSingle.data.title
+        }`}
         metaDescription={getAll("My_sells_Timwoork")}
         ogDescription={getAll("My_sells_Timwoork")}
       />
@@ -341,7 +342,7 @@ function Conversation({ query }) {
                           key={1}
                           className={
                             (profileInfo &&
-                              profileInfo.user_details.id == item.user.id
+                            profileInfo.user_details.id == item.user.id
                               ? ""
                               : "recieved ") +
                             "d-flex message-item " +
@@ -363,6 +364,23 @@ function Conversation({ query }) {
                           </div>
 
                           <div className="item-content">
+                            <button
+                              className="btn butt-sm butt-primary-text btn-translate flex-center"
+                              onClick={() =>
+                                setIsTranslate({
+                                  ...isTranslate,
+                                  [item.id]: !isTranslate[item.id],
+                                })
+                              }
+                            >
+                              <span className="material-icons material-icons-outlined">
+                                  translate
+                                </span>
+                              {isTranslate[item.id]
+                                ? "إعادة النص للترجمة الاصلية"
+                                : "ترجمة"}
+                            </button>
+                            <LastSeen date={item.created_at} />
                             {item.type == 1 && (
                               <span
                                 className="bg-success text-light d-inline-block"
@@ -394,19 +412,6 @@ function Conversation({ query }) {
                             <p className="text" style={{ margin: 0 }}>
                               {item.user.profile.full_name}
                             </p>
-                            <p
-                              className="meta"
-                              style={{
-                                marginBlock: 4,
-                                fontSize: 11,
-                                fontWeight: 200,
-                              }}
-                            >
-                              <button
-                                onClick={() => setIsTranslate({ ...isTranslate, [item.id]: !isTranslate[item.id] })}
-                              >{isTranslate[item.id] ? 'إعادة النص للترجمة الاصلية' : 'ترجمة'}</button>
-                              <LastSeen date={item.created_at} />
-                            </p>
                             {item.attachments && (
                               <div
                                 className="attach-items"
@@ -433,11 +438,18 @@ function Conversation({ query }) {
                             )}
 
                             <div
-                              dangerouslySetInnerHTML={isTranslate[item.id]?{
-                                __html: linkify(item[`message_${language}`]||'', query)
-                              }:{
-                                __html: linkify(item.message, query),
-                              }}
+                              dangerouslySetInnerHTML={
+                                isTranslate[item.id]
+                                  ? {
+                                      __html: linkify(
+                                        item[`message_${language}`] || "",
+                                        query
+                                      ),
+                                    }
+                                  : {
+                                      __html: linkify(item.message, query),
+                                    }
+                              }
                             />
                             {profileInfo &&
                               profileInfo.user_details.id == item.user.id && (
@@ -585,8 +597,10 @@ function Conversation({ query }) {
                         }}
                         onKeyUp={() => {
                           setMessageErrors({});
-                          testTime = setTimeout(() => detectLang(message), 3000)
-
+                          testTime = setTimeout(
+                            () => detectLang(message),
+                            3000
+                          );
                         }}
                         placeholder={getLogin("Message_text")}
                         className={

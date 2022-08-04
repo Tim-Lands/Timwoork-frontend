@@ -8509,6 +8509,11 @@ h3 {
   position: relative;
 }
 
+.message-item .btn-translate {
+  position: absolute;
+  top: 20px;
+}
+
 .message-item .item-content {
   width: 65%;
 }
