@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 function NotSeller() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <div className="row justify-content-md-center">
       <div className="col-md-5">

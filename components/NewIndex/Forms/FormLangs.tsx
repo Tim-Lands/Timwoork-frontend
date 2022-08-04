@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function FormLangs({ default_lang, onClick, checkedLangs }) {
+  console.log(checkedLangs);
   return (
     <ul className="timlands-checked-items">
       <li

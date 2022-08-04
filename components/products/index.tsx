@@ -7,7 +7,7 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 
 function index({ products, isError, isLoading, size }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   if (isError) message.error(getAll("An_error_occurred_while"));
   if (isLoading)
     return (

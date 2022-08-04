@@ -20,8 +20,7 @@ const { Panel } = Collapse;
 const MobileMenu = ({ postsList }) => {
   const { language, getSectionLanguage } = useContext(LanguageContext);
   const [visible, setVisible] = useState(false);
-  const getLanguage = getSectionLanguage("main");
-  const getLanguageSoon = getSectionLanguage("soon");
+  const getAll = getSectionLanguage();
   const { data: userInfo }: any = useSWR("api/me");
   const [size, setSize] = useState("70%");
   const [query, setQuery] = useState("");
@@ -75,7 +74,7 @@ const MobileMenu = ({ postsList }) => {
                   e.keyCode === 13 && router.push(`/products?query=${query}`)
                 }
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder={getLanguage("Search_in_Timwoork")}
+                placeholder={getAll("Search_in_Timwoork")}
                 className="form-serach-nav"
               />
               <button
@@ -85,21 +84,21 @@ const MobileMenu = ({ postsList }) => {
                   onClose();
                 }}
               >
-                {getLanguage("Search")}
+                {getAll("Search")}
               </button>
             </div>
           </div>
           <Link href={"/products"}>
             <div className="products" onClick={onClose}>
               <MdOutlineShoppingCart />
-              {getLanguage("Browsing_services")}
+              {getAll("Browsing_services")}
             </div>
           </Link>
           <div className="collapses">
             <div className="society">
               <Collapse>
                 <Panel
-                  header={getLanguage("Timwoork_sections")}
+                  header={getAll("Timwoork_sections")}
                   key="1"
                   extra={<MdBackupTable style={{ marginLeft: 20 }} />}
                 >
@@ -116,10 +115,8 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">
-                              {getLanguageSoon("Competitions")}
-                            </h4>
-                            <p className="text">{getLanguageSoon("Soon")}</p>
+                            <h4 className="title">{getAll("Competitions")}</h4>
+                            <p className="text">{getAll("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -135,10 +132,8 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">
-                              {getLanguageSoon("Projects")}
-                            </h4>
-                            <p className="text">{getLanguageSoon("Soon")}</p>
+                            <h4 className="title">{getAll("Projects")}</h4>
+                            <p className="text">{getAll("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -154,10 +149,8 @@ const MobileMenu = ({ postsList }) => {
                             </span>
                           </div>
                           <div className="dropd-item-content">
-                            <h4 className="title">
-                              {getLanguageSoon("Business")}
-                            </h4>
-                            <p className="text">{getLanguageSoon("Soon")}</p>
+                            <h4 className="title">{getAll("Business")}</h4>
+                            <p className="text">{getAll("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -172,9 +165,9 @@ const MobileMenu = ({ postsList }) => {
                           </div>
                           <div className="dropd-item-content">
                             <h4 className="title">
-                              {getLanguageSoon("Timwoork_community")}
+                              {getAll("Timwoork_community")}
                             </h4>
-                            <p className="text">{getLanguageSoon("Soon")}</p>
+                            <p className="text">{getAll("Soon")}</p>
                           </div>
                         </a>
                         {/* </Link> */}
@@ -191,11 +184,9 @@ const MobileMenu = ({ postsList }) => {
                               </span>
                             </div>
                             <div className="dropd-item-content">
-                              <h4 className="title">
-                                {getLanguageSoon("Blog")}
-                              </h4>
+                              <h4 className="title">{getAll("Blog")}</h4>
                               <p className="text">
-                                {getLanguageSoon("general_information")}
+                                {getAll("general_information")}
                               </p>
                             </div>
                           </a>

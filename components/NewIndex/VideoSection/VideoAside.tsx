@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 function VideoAside(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <div className="video-section">
       <div className="innerVideo">

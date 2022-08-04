@@ -14,7 +14,7 @@ function EditModal({
   const [msg, setMsg] = useState(msgValues);
   const [reason, setReason] = useState("");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -29,12 +29,12 @@ function EditModal({
           {text && <p className="text">{text}</p>}
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-msg">
-              {getLog("Message_text")}
+              {getAll("Message_text")}
             </label>
             <textarea
               id="input-msg"
               name="msg"
-              placeholder={getLog("Message_text") + "..."}
+              placeholder={getAll("Message_text") + "..."}
               className={"timlands-inputs"}
               onChange={(e) => setMsg(e.target.value)}
               value={msg}
@@ -67,7 +67,7 @@ function EditModal({
               className="btn butt-sm butt-red-text"
               onClick={() => setIsConfirmText(false)}
             >
-              {getLog("Cancel")}
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>

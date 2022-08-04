@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useRouter } from "next/router";
-import PropTypes from "prop-types";
 
-function HeroSearchContent({}) {
+function HeroSearchContent() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   const [query, setQuery] = useState("");

@@ -7,8 +7,7 @@ export const LanguageContext = createContext(null);
 export const LanguageProvider = (props) => {
   const lang = Cookies.get("lang");
 
-  const [language, setLanguage] = useState(lang || "ar");
-
+  const [language, setLanguage] = useState("ar");
   function getSectionLanguage() {
     return function getLanguage(name) {
       if (translates["all"][name]) {
@@ -17,7 +16,11 @@ export const LanguageProvider = (props) => {
       }
     };
   }
-
+  useEffect(() => {
+    if (lang && lang !== language) {
+      setLanguage(lang);
+    }
+  }, []);
   useEffect(() => {
     Cookies.set("lang", language);
   }, [language]);

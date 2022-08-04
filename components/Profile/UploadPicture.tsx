@@ -39,14 +39,13 @@ export default function UploadPicture({ token, avatarPicture }) {
     fd.append("steps", 2);
     API.post("https://api.timwoork.com/api/profiles/step_two", fd, config)
       .then(() => {
-        message.success(getLogin("The_profile_picture"));
+        message.success(getAll("The_profile_picture"));
         router.reload();
       })
       .catch(() => {});
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   return (
     <div className="login-panel update-form">

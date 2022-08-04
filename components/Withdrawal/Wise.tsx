@@ -13,8 +13,7 @@ import { useContext } from "react";
 
 function Wise({ token, create, setIsShowBankTransfert }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: userInfo }: any = useSWR("api/me");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
@@ -30,7 +29,7 @@ function Wise({ token, create, setIsShowBankTransfert }) {
       });
       // Authentication was successful.
       if (res.status === 200) {
-        message.success(getLogin("The_data_has"));
+        message.success(getAll("The_data_has"));
       }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -68,7 +67,7 @@ function Wise({ token, create, setIsShowBankTransfert }) {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_withdrawal_request"));
+          message.success(getAll("The_withdrawal_request"));
           router.push("/mywallet");
         }
       } catch (error: any) {
@@ -102,12 +101,12 @@ function Wise({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-email">
-                  {getLogin("E_mail")}
+                  {getAll("E_mail")}
                 </label>
                 <input
                   id="input-email"
                   name="email"
-                  placeholder={getLogin("E_mail")}
+                  placeholder={getAll("E_mail")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -139,14 +138,14 @@ function Wise({ token, create, setIsShowBankTransfert }) {
                   onClick={UpdateMoney}
                   className="btn flex-center butt-green me-auto butt-lg"
                 >
-                  <span className="text">{getLogin("Save_edits")}</span>
+                  <span className="text">{getAll("Save_edits")}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsShowBankTransfert(false)}
                   className="btn flex-center butt-red ml-auto butt-lg"
                 >
-                  <span className="text">{getLogin("Hide_edit")}</span>
+                  <span className="text">{getAll("Hide_edit")}</span>
                 </button>
               </div>
             </div>

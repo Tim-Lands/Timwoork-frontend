@@ -15,7 +15,7 @@ import { useContext } from "react";
 
 export function SmallSpinner(props: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return props.show ? (
     <div className="spinner-border spinner-border-sm text-light" role="status">
       {" "}

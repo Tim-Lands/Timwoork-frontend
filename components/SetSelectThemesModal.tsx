@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 function SetSelectThemesModal({ setIsConfirmText, title }: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -18,7 +18,7 @@ function SetSelectThemesModal({ setIsConfirmText, title }: any): ReactElement {
           <h3 className="title">{title}</h3>
         </div>
         <div className="modal-conferm-body" style={{ paddingTop: 0 }}>
-          <p className="modal-note">{getLog("Please_choose_one")}</p>
+          <p className="modal-note">{getAll("Please_choose_one")}</p>
           <div className="row">
             <div className="col-lg-3 col-6">
               <div className="theme-item">
@@ -90,13 +90,13 @@ function SetSelectThemesModal({ setIsConfirmText, title }: any): ReactElement {
           <div className="d-flex">
             <div className="me-auto">
               <button className="btn butt-sm butt-green mx-1">
-                {getLog("Select_now")}
+                {getAll("Select_now")}
               </button>
               <button
                 className="btn butt-sm butt-red-text mx-1"
                 onClick={() => setIsConfirmText(false)}
               >
-                {getLog("Cancel")}
+                {getAll("Cancel")}
               </button>
             </div>
           </div>

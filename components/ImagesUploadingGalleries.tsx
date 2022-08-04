@@ -13,8 +13,7 @@ function ImagesUploadingGalleries({
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLanguage = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage();
   useEffect(() => {
     setImages(galaries);
   }, [galaries]);
@@ -35,7 +34,7 @@ function ImagesUploadingGalleries({
           <div className="images-list-uploading align-center">
             <div className="page-header">
               <h4 className="title" style={{ fontSize: 20 }}>
-                {getLanguage("Gallery")}
+                {getAll("Gallery")}
               </h4>
             </div>
 
@@ -67,7 +66,7 @@ function ImagesUploadingGalleries({
                           onClick={onImageUpload}
                           {...dragProps}
                         >
-                          {getLanguage("You_can_choose")}
+                          {getAll("You_can_choose")}
                         </button>
                       )}
                       &nbsp;
@@ -79,7 +78,7 @@ function ImagesUploadingGalleries({
                           {getAll("Choose_pictures_from")}
                         </h4>
                         <p className="nothing-text">
-                          {getLanguage("You_must_choose")}
+                          {getAll("You_must_choose")}
                         </p>
                       </div>
                     )}

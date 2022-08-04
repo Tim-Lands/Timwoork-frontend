@@ -114,7 +114,7 @@ function PostInner({
     }
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <div className={"timlands-post-inner" + sizeClass()}>
       <Link href={`/p/${slug}`}>

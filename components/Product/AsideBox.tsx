@@ -18,9 +18,7 @@ export default function AsideBox({
   developments,
 }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getWallet = getSectionLanguage("my_wallet");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -99,12 +97,12 @@ export default function AsideBox({
       setIsLoadingCart(false);
       if (error.response && error.response.status === 400) {
         notification.open({
-          message: getLogin("Error_message"),
+          message: getAll("Error_message"),
           description: "لا يمكن شراء خدمتك",
           onClose: close,
         });
       } else {
-        message.error(getLogin("An_unexpected_error"));
+        message.error(getAll("An_unexpected_error"));
       }
     }
   };
@@ -157,7 +155,7 @@ export default function AsideBox({
           rel="noreferrer"
           href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${title}&text=`}
         >
-          {getLogin("Share_on_Twitter")}
+          {getAll("Share_on_Twitter")}
         </a>
       </Menu.Item>
     </Menu>
@@ -172,7 +170,7 @@ export default function AsideBox({
                 <span className="material-icons material-icons-outlined">
                   timer
                 </span>{" "}
-                {getLogin("Delivery_duration")}
+                {getAll("Delivery_duration")}
                 {durationFunc()}
               </li>
               <li className="cat-post ml-auto">
@@ -181,7 +179,7 @@ export default function AsideBox({
                     <span className="material-icons material-icons-outlined">
                       share
                     </span>{" "}
-                    {getLogin("Share_service")}
+                    {getAll("Share_service")}
                   </a>
                 </Dropdown>
               </li>
@@ -190,9 +188,7 @@ export default function AsideBox({
           {token && (
             <div className="row mx-auto py-2">
               <div className="col-7">
-                <p className="text-quatity">
-                  {getWallet("Number_of_purchases")}
-                </p>
+                <p className="text-quatity">{getAll("Number_of_purchases")}</p>
               </div>
               <div className="col-5">
                 <input
@@ -207,7 +203,7 @@ export default function AsideBox({
           )}
           <div className="panel-aside-body">
             <div className="add-devloppers-header">
-              <h3 className="title">{getLogin("Available_developments")}</h3>
+              <h3 className="title">{getAll("Available_developments")}</h3>
             </div>
             <ul className="add-devloppers-nav">
               {developments &&
@@ -242,7 +238,7 @@ export default function AsideBox({
           <div className="panel-aside-footer">
             <div className="aside-footer-total-price">
               <h1 className="price-total me-auto">
-                <strong>{getLogin("Total")} </strong> {_totalPrice()}$
+                <strong>{getAll("Total")} </strong> {_totalPrice()}$
               </h1>
               <div className="bayers-count">
                 <p className="num">
@@ -265,7 +261,7 @@ export default function AsideBox({
                   <span className="material-icons material-icons-outlined">
                     add_shopping_cart
                   </span>
-                  {getWallet("Add_to_cart")}
+                  {getAll("Add_to_cart")}
                 </button>
               </div>
             )}

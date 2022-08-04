@@ -28,7 +28,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
       });
       // Authentication was successful.
       if (res.status === 200) {
-        message.success(getLogin("The_data_has"));
+        message.success(getAll("The_data_has"));
       }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -113,7 +113,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_withdrawal_request"));
+          message.success(getAll("The_withdrawal_request"));
           router.push("/mywallet");
         }
       } catch (error: any) {
@@ -140,15 +140,14 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
   //     </div>
   // );
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <form onSubmit={formik.handleSubmit}>
       <div
         className={"timlands-panel" + (formik.isSubmitting ? " is-loader" : "")}
       >
         <div className="page-header d-flex">
-          <h4 className="title me-auto">{getLogin("Bank_transfer")}</h4>
+          <h4 className="title me-auto">{getAll("Bank_transfer")}</h4>
           {/* <button
             type="button"
             onClick={() => setIsShowBankTransfert(false)}
@@ -163,12 +162,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-full_name">
-                  {getLogin("Full_name")}
+                  {getAll("Full_name")}
                 </label>
                 <input
                   id="input-full_name"
                   name="full_name"
-                  placeholder={getLogin("Full_name")}
+                  placeholder={getAll("Full_name")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -196,12 +195,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_name">
-                  {getLogin("Bank_name")}
+                  {getAll("Bank_name")}
                 </label>
                 <input
                   id="input-bank_name"
                   name="bank_name"
-                  placeholder={getLogin("Bank_name")}
+                  placeholder={getAll("Bank_name")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -229,12 +228,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_swift">
-                  {getLogin("SWIFT_code")}
+                  {getAll("SWIFT_code")}
                 </label>
                 <input
                   id="input-bank_swift"
                   name="bank_swift"
-                  placeholder={getLogin("SWIFT_code")}
+                  placeholder={getAll("SWIFT_code")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -262,12 +261,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_iban">
-                  {getLogin("IBAN")}
+                  {getAll("IBAN")}
                 </label>
                 <input
                   id="input-bank_iban"
                   name="bank_iban"
-                  placeholder={getLogin("IBAN")}
+                  placeholder={getAll("IBAN")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -298,12 +297,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   className="label-block"
                   htmlFor="input-bank_number_account"
                 >
-                  {getLogin("Bank_account")}
+                  {getAll("Bank_account")}
                 </label>
                 <input
                   id="input-bank_number_account"
                   name="bank_number_account"
-                  placeholder={getLogin("Bank_account")}
+                  placeholder={getAll("Bank_account")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -333,12 +332,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-bank_branch">
-                  {getLogin("Bank_branch")}
+                  {getAll("Bank_branch")}
                 </label>
                 <input
                   id="input-bank_branch"
                   name="bank_branch"
-                  placeholder={getLogin("Bank_branch")}
+                  placeholder={getAll("Bank_branch")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -366,7 +365,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-wise_country_id">
-                  {getLogin("Select_country")}
+                  {getAll("Select_country")}
                 </label>
                 <select
                   id="input-wise_country_id"
@@ -381,7 +380,7 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   onChange={formik.handleChange}
                   value={formik.values.wise_country_id}
                 >
-                  <option value="">{getLogin("Select_country")}</option>
+                  <option value="">{getAll("Select_country")}</option>
                   {!Countries && (
                     <option value="">{getAll("Please_wait")}</option>
                   )}
@@ -410,12 +409,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-state">
-                  {getLogin("Province_state")}
+                  {getAll("Province_state")}
                 </label>
                 <input
                   id="input-state"
                   name="state"
-                  placeholder={getLogin("Province_state")}
+                  placeholder={getAll("Province_state")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -443,12 +442,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-city">
-                  {getLogin("City_Municipality")}
+                  {getAll("City_Municipality")}
                 </label>
                 <input
                   id="input-city"
                   name="city"
-                  placeholder={getLogin("City_Municipality")}
+                  placeholder={getAll("City_Municipality")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -479,12 +478,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   className="label-block"
                   htmlFor="input-bank_adress_line_one"
                 >
-                  {getLogin("Bank_address")}
+                  {getAll("Bank_address")}
                 </label>
                 <input
                   id="input-bank_adress_line_one"
                   name="bank_adress_line_one"
-                  placeholder={getLogin("Bank_address")}
+                  placeholder={getAll("Bank_address")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -514,12 +513,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-8">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-address_line_one">
-                  {getLogin("Personal_address")}
+                  {getAll("Personal_address")}
                 </label>
                 <input
                   id="input-address_line_one"
                   name="address_line_one"
-                  placeholder={getLogin("Personal_address")}
+                  placeholder={getAll("Personal_address")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -549,12 +548,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
             <div className="col-md-4">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-code_postal">
-                  {getLogin("Postal_code")}
+                  {getAll("Postal_code")}
                 </label>
                 <input
                   id="input-code_postal"
                   name="code_postal"
-                  placeholder={getLogin("Postal_code")}
+                  placeholder={getAll("Postal_code")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -586,12 +585,12 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   className="label-block"
                   htmlFor="input-phone_number_without_code"
                 >
-                  {getLogin("Recipient’s_phone_number")}
+                  {getAll("Recipient’s_phone_number")}
                 </label>
                 <input
                   id="input-phone_number_without_code"
                   name="phone_number_without_code"
-                  placeholder={getLogin("Recipient’s_phone_number")}
+                  placeholder={getAll("Recipient’s_phone_number")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -627,14 +626,14 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   onClick={() => UpdateMoney(formik.values)}
                   className="btn flex-center butt-green me-auto butt-lg"
                 >
-                  <span className="text">{getLogin("Save_edits")}</span>
+                  <span className="text">{getAll("Save_edits")}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsShowBankTransfert(false)}
                   className="btn flex-center butt-red ml-auto butt-lg"
                 >
-                  <span className="text">{getLogin("Hide_edit")}</span>
+                  <span className="text">{getAll("Hide_edit")}</span>
                 </button>
               </div>
             </div>

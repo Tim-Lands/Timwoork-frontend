@@ -33,8 +33,7 @@ import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false }) {
   const { language, setLanguage, getSectionLanguage } =
     useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -380,14 +379,14 @@ function Navbar({ dark = false }) {
                     e.keyCode === 13 && router.push(`/products?query=${query}`)
                   }
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder={getLanguage("Search_in_Timwoork")}
+                  placeholder={getAll("Search_in_Timwoork")}
                   className="form-serach-nav"
                 />
                 <button
                   className="btn butt-xs butt-primary2"
                   onClick={() => router.push(`/products?query=${query}`)}
                 >
-                  {getLanguage("Search")}
+                  {getAll("Search")}
                 </button>
               </div>
             </div>
@@ -399,7 +398,7 @@ function Navbar({ dark = false }) {
               <span className="material-icons material-icons-outlined">
                 backup_table
               </span>{" "}
-              {getLanguage("Timwoork_sections")}
+              {getAll("Timwoork_sections")}
               <span className="material-icons material-icons-outlined expand-more">
                 expand_more
               </span>
@@ -412,7 +411,7 @@ function Navbar({ dark = false }) {
                 <span className="material-icons material-icons-outlined">
                   shopping_cart
                 </span>{" "}
-                {getLanguage("Browsing_services")}
+                {getAll("Browsing_services")}
               </a>
             </Link>
           </li>
@@ -563,7 +562,7 @@ function Navbar({ dark = false }) {
           <li className="circular-newitem" ref={languageRef}>
             <a
               className="link-circular-button "
-              onClick={() => setIsLanguageVisible(false)}
+              // onClick={() => setIsLanguageVisible(!isLanguageVisible)}
             >
               <span className="material-icons material-icons-outlined">
                 language

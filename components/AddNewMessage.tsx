@@ -157,7 +157,7 @@ const Tiptap = (props: any) => {
 };
 function AddNewMessage({ setIsConfirmText, title }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [toState, setToState] = useState("");
   const [fromState, setFromState] = useState("");
   const [setSlectThemesModal, setSetSlectThemesModal] = useState(false);
@@ -179,7 +179,7 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
       <div className="modal-conferm-inner">
         {setSlectThemesModal && (
           <SetSelectThemesModal
-            title={getLog("Select_a_template")}
+            title={getAll("Select_a_template")}
             setIsConfirmText={setSetSlectThemesModal}
           />
         )}
@@ -191,12 +191,12 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
             <div className="col-xl-5">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-fromState">
-                  {getLog("From")}
+                  {getAll("From")}
                 </label>
                 <select
                   id="input-fromState"
                   name="fromState"
-                  placeholder={getLog("From") + "..."}
+                  placeholder={getAll("From") + "..."}
                   className={
                     "timlands-inputs select sm " +
                     (validationsErrors &&
@@ -234,7 +234,7 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
             <div className="col-xl-7">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-toState">
-                  {getLog("To")}
+                  {getAll("To")}
                 </label>
                 <div style={{ marginTop: -8 }}>
                   <MySelect
@@ -251,7 +251,7 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
                       className="timlands-form-note"
                     >
                       <p className="text">
-                        {getLog("To_select_all")}
+                        {getAll("To_select_all")}
                         <strong>(*)</strong>
                       </p>
                     </motion.div>
@@ -273,13 +273,13 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
             <div className="col-xl-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-subject">
-                  {getLog("Subject")}
+                  {getAll("Subject")}
                 </label>
                 <input
                   type="text"
                   id="input-subject"
                   name="subject"
-                  placeholder={getLog("Subject") + "..."}
+                  placeholder={getAll("Subject") + "..."}
                   className={
                     "timlands-inputs sm " +
                     (validationsErrors &&
@@ -337,7 +337,7 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
                 className="btn butt-sm butt-green mx-1"
                 onClick={() => setValidationsErrors("error")}
               >
-                {getLog("Send")}
+                {getAll("Send")}
               </button>
               <button
                 className="btn butt-sm butt-red-text mx-1"
@@ -353,7 +353,7 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
               <span className="material-icons material-icons-outlined">
                 collections_bookmark
               </span>
-              {getLog("Select_a_template")}
+              {getAll("Select_a_template")}
             </button>
           </div>
         </div>

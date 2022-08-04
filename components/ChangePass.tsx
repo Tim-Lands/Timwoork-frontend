@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 
 function ChangePass() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -42,7 +42,7 @@ function ChangePass() {
                 });
                 // Authentication was successful.
                 if (res.status === 200) {
-                  message.success(getLog("The_password_has"));
+                  message.success(getAll("The_password_has"));
                   values.old_password = "";
                   values.password_confirmation = "";
                   values.password = "";
@@ -74,7 +74,7 @@ function ChangePass() {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="old_password">
-                        {getLog("Old_password")}
+                        {getAll("Old_password")}
                       </label>
                       <Field
                         type="password"
@@ -82,7 +82,7 @@ function ChangePass() {
                         onKeyUp={setValidationsErrorsHandle}
                         name="old_password"
                         disabled={isSubmitting}
-                        placeholder={getLog("Old_password")}
+                        placeholder={getAll("Old_password")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -102,7 +102,7 @@ function ChangePass() {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
-                        {getLog("New_password")}
+                        {getAll("New_password")}
                         <Tooltip title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام.">
                           <Badge
                             style={{ color: "#52c41a " }}
@@ -123,7 +123,7 @@ function ChangePass() {
                         name="password"
                         onKeyUp={setValidationsErrorsHandle}
                         disabled={isSubmitting}
-                        placeholder={getLog("New_password")}
+                        placeholder={getAll("New_password")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -146,7 +146,7 @@ function ChangePass() {
                         className="label-block"
                         htmlFor="password_confirmation"
                       >
-                        {getLog("Reset_password")}
+                        {getAll("Reset_password")}
                         <Tooltip title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام.">
                           <Badge
                             style={{ color: "#52c41a " }}
@@ -167,7 +167,7 @@ function ChangePass() {
                         onKeyUp={setValidationsErrorsHandle}
                         id="password_confirmation"
                         name="password_confirmation"
-                        placeholder={getLog("Confirm_new_password")}
+                        placeholder={getAll("Confirm_new_password")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />

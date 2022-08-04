@@ -5,7 +5,7 @@ import { LanguageContext } from "../contexts/languageContext/context";
 import { useContext } from "react";
 function SuspensionInfo({ setIsShowSuspensionInfo, user }: any) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <div className="single-comments-overlay">
       <motion.div
@@ -16,7 +16,7 @@ function SuspensionInfo({ setIsShowSuspensionInfo, user }: any) {
       >
         <div className="modal-title">
           <h4 className="title">
-            {getLog("Suspension_of_the")}
+            {getAll("Suspension_of_the")}
             {user.id}
           </h4>
           <button
@@ -27,16 +27,16 @@ function SuspensionInfo({ setIsShowSuspensionInfo, user }: any) {
         </div>
 
         <div className="modal-body">
-          <h4 className="title-modal">{getLog("Suspension_reason")}</h4>
+          <h4 className="title-modal">{getAll("Suspension_reason")}</h4>
           <p className="cause-text">{user.bans[0].comment}</p>
-          <h4 className="title-modal">{getLog("Suspension_duration")}</h4>
+          <h4 className="title-modal">{getAll("Suspension_duration")}</h4>
           <p className="delay-text">
-            {user.bans[0].expired_at} {getLog("Day")}
+            {user.bans[0].expired_at} {getAll("Day")}
           </p>
-          <h4 className="title-modal">{getLog("Tasks_suspended")}</h4>
+          <h4 className="title-modal">{getAll("Tasks_suspended")}</h4>
           <div className="sus-list-inner">
             <ul className="sus-list">
-              <li className="sus-item">{getLog("All_tasks")}</li>
+              <li className="sus-item">{getAll("All_tasks")}</li>
             </ul>
           </div>
           <hr />
@@ -45,7 +45,7 @@ function SuspensionInfo({ setIsShowSuspensionInfo, user }: any) {
             className="btn butt-light butt-sm mx-1"
             type="submit"
           >
-            {getLog("Cancel_2")}
+            {getAll("Cancel_2")}
           </button>
         </div>
       </motion.div>

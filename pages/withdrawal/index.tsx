@@ -42,7 +42,7 @@ function Withdrawal() {
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [isPaymentAvailable, setIsPaymentAvailable]: any = useState({});
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   const sendMoney = async () => {
     let url = "api/withdrawals/withdrawal_";
@@ -72,7 +72,7 @@ function Withdrawal() {
       );
       // Authentication was successful.
       if (res.status === 200) {
-        message.success(getLogin("The_withdrawal_request"));
+        message.success(getAll("The_withdrawal_request"));
         router.push("/mywallet");
       }
     } catch (error: any) {
@@ -157,9 +157,9 @@ function Withdrawal() {
   return (
     <>
       <MetaTags
-        title={getLogin("Withdrawal_request")}
-        metaDescription={getLogin("Withdrawal_request")}
-        ogDescription={getLogin("Withdrawal_request")}
+        title={getAll("Withdrawal_request")}
+        metaDescription={getAll("Withdrawal_request")}
+        ogDescription={getAll("Withdrawal_request")}
       />
       {!userInfo && <Loading />}
       <div className="container-fluid transition-all pt-5 pb-5">
@@ -178,15 +178,15 @@ function Withdrawal() {
                   <div className="">
                     <div className="timlands-form">
                       <label className="label-block lg" htmlFor="input-amount">
-                        {getLogin("Amount_to_withdraw")}($)
+                        {getAll("Amount_to_withdraw")}($)
                       </label>
-                      <p className="label-note">{getLogin("The_amount_you")}</p>
+                      <p className="label-note">{getAll("The_amount_you")}</p>
                       <input
                         id="input-amount"
                         name="amount"
                         type="number"
                         onInput={allowOnlyNumericsOrDigits}
-                        placeholder={getLogin("Amount_to_withdraw")}
+                        placeholder={getAll("Amount_to_withdraw")}
                         className={
                           "timlands-inputs lg " +
                           (validationsErrors &&
@@ -236,7 +236,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        {getLogin("Bank_transfer")}
+                        {getAll("Bank_transfer")}
                       </label>
                     </div>
                     <button
@@ -271,7 +271,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        {getLogin("Money_transfer")}
+                        {getAll("Money_transfer")}
                       </label>
                     </div>
                     <button
@@ -308,7 +308,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        {getLogin("Wise_transfer")}
+                        {getAll("Wise_transfer")}
                       </label>
                     </div>
                     <button
@@ -343,7 +343,7 @@ function Withdrawal() {
                           height={35}
                           style={{ borderRadius: "50%", marginLeft: 6 }}
                         />
-                        {getLogin("PayPal_transfer")}
+                        {getAll("PayPal_transfer")}
                       </label>
                     </div>
                     <button
@@ -363,7 +363,7 @@ function Withdrawal() {
                       className="btn butt-lg butt-primary"
                       style={{ width: "100%" }}
                     >
-                      {getLogin("Withdrawal_request")}
+                      {getAll("Withdrawal_request")}
                     </button>
                   </div>
                 </div>

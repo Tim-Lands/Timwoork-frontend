@@ -7,7 +7,7 @@ import { useContext } from "react";
 const Tags = ({ placeholder, values, labels, selected }) => {
   let checked = [""];
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   if (!values) return <Loading />;
 
   let newArrayofObjects = [];

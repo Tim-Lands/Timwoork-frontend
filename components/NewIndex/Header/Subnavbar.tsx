@@ -8,7 +8,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 function Subnavbar({ visible, postsList }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("categories");
+  const getAll = getSectionLanguage();
   const end = useRef(null);
   const start = useRef(null);
   const middle = useRef(null);
@@ -18,52 +18,52 @@ function Subnavbar({ visible, postsList }) {
     data: [
       {
         id: 8,
-        name_ar: getLanguage("All_services"),
+        name_ar: getAll("All_services"),
         to: "products",
         end: true,
       },
       {
         id: 1,
-        name_ar: getLanguage("Business"),
+        name_ar: getAll("Business"),
         to: "products?categoryID=12",
         start: true,
         categoryID: 12,
       },
       {
         id: 2,
-        name_ar: getLanguage("Programming_and_development"),
+        name_ar: getAll("Programming_and_development"),
 
         to: "products?categoryID=11",
         categoryID: 11,
       },
       {
-        name_ar: getLanguage("E_marketing"),
+        name_ar: getAll("E_marketing"),
         id: 3,
         to: "products?categoryID=10",
         categoryID: 10,
       },
       {
         id: 4,
-        name_ar: getLanguage("Online_training"),
+        name_ar: getAll("Online_training"),
 
         to: "products?categoryID=9",
         categoryID: 9,
       },
       {
         id: 5,
-        name_ar: getLanguage("Video_design"),
+        name_ar: getAll("Video_design"),
         to: "products?categoryID=8",
         categoryID: 8,
       },
       {
         id: 6,
-        name_ar: getLanguage("General_design"),
+        name_ar: getAll("General_design"),
 
         to: "products?categoryID=7",
         categoryID: 7,
       },
       {
-        name_ar: getLanguage("Audio"),
+        name_ar: getAll("Audio"),
         id: 7,
         to: "products?categoryID=6",
         categoryID: 6,

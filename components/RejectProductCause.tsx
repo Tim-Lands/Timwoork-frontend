@@ -11,7 +11,7 @@ function RejectProductCause({
   title,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [msg, setMsg] = useState("");
   return (
     <motion.div
@@ -27,12 +27,12 @@ function RejectProductCause({
           {text && <p className="text">{text}</p>}
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-msg">
-              {getLog("Rejection_reason")}
+              {getAll("Rejection_reason")}
             </label>
             <textarea
               id="input-msg"
               name="msg"
-              placeholder={getLog("Rejection_reason")}
+              placeholder={getAll("Rejection_reason")}
               className={"timlands-inputs"}
               onChange={(e) => setMsg(e.target.value)}
               value={msg}
@@ -53,7 +53,7 @@ function RejectProductCause({
               className="btn butt-sm butt-red-text"
               onClick={() => setIsConfirmText(false)}
             >
-              {getLog("Cancel")}
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>

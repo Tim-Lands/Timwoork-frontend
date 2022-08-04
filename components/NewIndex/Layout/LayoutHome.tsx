@@ -13,7 +13,7 @@ function LayoutHome(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   useEffect(() => {
@@ -58,7 +58,7 @@ function LayoutHome(props: any) {
         {props.children}
         {loading && (
           <div className="loading">
-            <Spin tip={getLanguage("Loading")} spinning={true}></Spin>
+            <Spin tip={getAll("Loading")} spinning={true}></Spin>
           </div>
         )}
       </div>

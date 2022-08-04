@@ -13,7 +13,7 @@ function EmailModalCause({
   setMsg,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -27,12 +27,12 @@ function EmailModalCause({
         <div className="modal-conferm-body">
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-msg">
-              {getLog("Notification_reason")}
+              {getAll("Notification_reason")}
             </label>
             <textarea
               id="input-msg"
               name="msg"
-              placeholder={getLog("Notification_reason") + "..."}
+              placeholder={getAll("Notification_reason") + "..."}
               className={"timlands-inputs"}
               onChange={(e) => setMsg(e.target.value)}
               value={msg}
@@ -53,7 +53,7 @@ function EmailModalCause({
               className="btn butt-sm butt-red-text"
               onClick={() => setIsConfirmText(false)}
             >
-              {getLog("Cancel")}
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>

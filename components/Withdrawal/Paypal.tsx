@@ -12,7 +12,7 @@ import { useContext } from "react";
 
 function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const UpdateMoney = async (values) => {
@@ -27,7 +27,7 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
       });
       // Authentication was successful.
       if (res.status === 200) {
-        message.success(getLogin("The_data_has"));
+        message.success(getAll("The_data_has"));
       }
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -63,7 +63,7 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_withdrawal_request"));
+          message.success(getAll("The_withdrawal_request"));
           router.push("/mywallet");
         }
       } catch (error: any) {
@@ -86,7 +86,7 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
         className={"timlands-panel" + (formik.isSubmitting ? " is-loader" : "")}
       >
         <div className="page-header d-flex">
-          <h4 className="title">{getLogin("PayPal_account")}</h4>
+          <h4 className="title">{getAll("PayPal_account")}</h4>
           {/* <button type='button' onClick={() => setIsShowBankTransfert(false)} className='btn-close ml-auto'></button> */}
         </div>
         <div className="timlands-content-form">
@@ -97,12 +97,12 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
             <div className="col-md-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-email">
-                  {getLogin("E_mail")}
+                  {getAll("E_mail")}
                 </label>
                 <input
                   id="input-email"
                   name="email"
-                  placeholder={getLogin("E_mail")}
+                  placeholder={getAll("E_mail")}
                   className={
                     "timlands-inputs " +
                     (validationsErrors &&
@@ -134,14 +134,14 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
                   onClick={UpdateMoney}
                   className="btn flex-center butt-green me-auto butt-lg"
                 >
-                  <span className="text">{getLogin("Save_edits")}</span>
+                  <span className="text">{getAll("Save_edits")}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsShowBankTransfert(false)}
                   className="btn flex-center butt-red ml-auto butt-lg"
                 >
-                  <span className="text">{getLogin("Hide_edit")}</span>
+                  <span className="text">{getAll("Hide_edit")}</span>
                 </button>
               </div>
             </div>

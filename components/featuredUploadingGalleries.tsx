@@ -11,8 +11,7 @@ function FeaturedUploadingGalleries({
   setIsChanged,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [featuredImages, setFeaturedImages]: any = useState([
     {
       data_url: full_path_thumbnail,
@@ -32,7 +31,7 @@ function FeaturedUploadingGalleries({
           <div className="images-list-uploading align-center">
             <div className="page-header">
               <h4 className="title" style={{ fontSize: 20 }}>
-                {getLanguage("Profil_picture")}
+                {getAll("Profil_picture")}
               </h4>
             </div>
             <p
@@ -93,7 +92,7 @@ function FeaturedUploadingGalleries({
                           {getAll("Choose_a_profile")}
                         </h4>
                         <p className="nothing-text">
-                          {getLanguage("You_must_choose")}
+                          {getAll("You_must_choose")}
                         </p>
                       </div>
                     )}

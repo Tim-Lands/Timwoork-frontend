@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Result, Spin } from "antd";
-import React, { ReactElement, useEffect, useState, useContext } from "react";
+import React, { ReactElement, useState, useContext } from "react";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,7 +8,6 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
-import router from "next/router";
 import MyProducts from "@/components/Profile/MyProducts";
 
 function index() {
@@ -19,10 +18,10 @@ function index() {
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const [statusType, setStatusType] = useState("");
-  useEffect(() => {
-    if (!token) {
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!token) {
+  //   }
+  // }, []);
 
   const { data: userInfo }: any = useSWR("api/me");
   const {

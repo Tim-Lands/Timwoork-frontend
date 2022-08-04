@@ -100,7 +100,7 @@ function Post({
     }
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <div className={"timlands-post-item" + sizeClass()}>
       <a href={`/p/${slug}`}>

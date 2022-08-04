@@ -9,7 +9,7 @@ import Loading from "./Loading";
 
 function Explores() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [postsList, setPostsList]: any = useState([]);

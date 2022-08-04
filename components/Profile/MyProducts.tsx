@@ -18,9 +18,7 @@ import { useContext } from "react";
 
 export default function MyProducts({ setStatusType, postsList, refresh }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getAuth = getSectionLanguage("auth");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -37,12 +35,12 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
-        cancelButtonText: getLogin("No"),
+        confirmButtonText: getAll("Yes"),
+        cancelButtonText: getAll("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -59,8 +57,8 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
             );
             if (res.status === 200) {
               swalWithBootstrapButtons.fire(
-                getLogin("Deleted"),
-                getLogin("The_service_has"),
+                getAll("Deleted"),
+                getAll("The_service_has"),
                 "success"
               );
               refresh();
@@ -94,16 +92,16 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       );
       if (res.status === 200) {
         swalWithBootstrapButtons.fire(
-          getLogin("Disabled1"),
-          getLogin("The_service_has_2"),
+          getAll("Disabled1"),
+          getAll("The_service_has_2"),
           "success"
         );
         refresh();
       }
     } catch (error) {
       notification["error"]({
-        message: getLogin("Error_message"),
-        description: getLogin("Unfortunately_this_service"),
+        message: getAll("Error_message"),
+        description: getAll("Unfortunately_this_service"),
       });
     }
   };
@@ -125,29 +123,29 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       });
       if (res.status === 200) {
         swalWithBootstrapButtons.fire(
-          getLogin("Abled1"),
-          getLogin("This_service_has"),
+          getAll("Abled1"),
+          getAll("This_service_has"),
           "success"
         );
         refresh();
       }
     } catch (error) {
       notification["error"]({
-        message: getLogin("Error_message"),
-        description: getLogin("Unfortunately_this_service_2"),
+        message: getAll("Error_message"),
+        description: getAll("Unfortunately_this_service_2"),
       });
     }
   };
   function statusProduct(status: any) {
     switch (status) {
       case null:
-        return <span className="badge bg-info">{getLogin("Pending")}</span>;
+        return <span className="badge bg-info">{getAll("Pending")}</span>;
       case 0:
-        return <span className="badge bg-danger">{getLogin("Rejected")}</span>;
+        return <span className="badge bg-danger">{getAll("Rejected")}</span>;
       case 1:
-        return <span className="badge bg-success">{getLogin("Rejected")}</span>;
+        return <span className="badge bg-success">{getAll("Rejected")}</span>;
       default:
-        return <span className="badge bg-info">{getLogin("Pending")}</span>;
+        return <span className="badge bg-info">{getAll("Pending")}</span>;
     }
   }
 
@@ -194,29 +192,29 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       </div>
       <Menu mode="horizontal">
         <Menu.Item key="all" onClick={() => setStatusType("")}>
-          {getLogin("All")}
+          {getAll("All")}
         </Menu.Item>
         <Menu.Item key="mail" onClick={() => setStatusType("/published")}>
-          {getLogin("Active")}
+          {getAll("Active")}
         </Menu.Item>
         <Menu.Item key="app" onClick={() => setStatusType("/rejected")}>
-          {getLogin("Rejected")}
+          {getAll("Rejected")}
         </Menu.Item>
         <Menu.Item key="waiting" onClick={() => setStatusType("/pending")}>
-          {getLogin("PEnding")}
+          {getAll("PEnding")}
         </Menu.Item>
         <Menu.Item key="drafts" onClick={() => setStatusType("/drafts")}>
-          {getLogin("Draft")}
+          {getAll("Draft")}
         </Menu.Item>
         <Menu.Item key="alipay" onClick={() => setStatusType("/paused")}>
-          {getLogin("Disabled")}
+          {getAll("Disabled")}
         </Menu.Item>
       </Menu>
       {postsList && postsList.data.length == 0 ? (
         <Result
           status="404"
-          title={getLogin("You_have_no")}
-          subTitle={getLogin("You_can_add")}
+          title={getAll("You_have_no")}
+          subTitle={getAll("You_can_add")}
           extra={
             <Link href="/add-new">
               <a className="btn butt-sm butt-primary">
@@ -231,10 +229,10 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
             <thead>
               <tr>
                 <th>{getAll("Title")}</th>
-                <th>{getLogin("Completed")}</th>
-                <th>{getLogin("Buyers_number")}</th>
-                <th>{getLogin("Activation_status")}</th>
-                <th>{getLogin("Admission_status")}</th>
+                <th>{getAll("Completed")}</th>
+                <th>{getAll("Buyers_number")}</th>
+                <th>{getAll("Activation_status")}</th>
+                <th>{getAll("Admission_status")}</th>
                 <th>{getAll("Tools")}</th>
               </tr>
             </thead>
@@ -253,12 +251,10 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                     </td>
                     <td>
                       {e.is_completed == 0 ? (
-                        <span className="badge bg-danger">
-                          {getLogin("No")}
-                        </span>
+                        <span className="badge bg-danger">{getAll("No")}</span>
                       ) : (
                         <span className="badge bg-success">
-                          {getAuth("Yes")}
+                          {getAll("Yes")}
                         </span>
                       )}
                     </td>
@@ -266,17 +262,17 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                     <td>
                       {e.is_active == 0 ? (
                         <span className="badge bg-danger">
-                          {getLogin("Disabled")}
+                          {getAll("Disabled")}
                         </span>
                       ) : (
                         <span className="badge bg-success">
-                          {getLogin("Abled")}
+                          {getAll("Abled")}
                         </span>
                       )}
                     </td>
                     <td>{statusProduct(e.status)}</td>
                     <td>
-                      <Tooltip title={getLogin("Delete_this_service")}>
+                      <Tooltip title={getAll("Delete_this_service")}>
                         <Button
                           danger
                           type="primary"
@@ -290,7 +286,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                       {e.status !== null && (
                         <>
                           {e.is_active == 0 && e.is_completed == 1 ? (
-                            <Tooltip title={getLogin("Able_this_service")}>
+                            <Tooltip title={getAll("Able_this_service")}>
                               <Button
                                 type="primary"
                                 color="orange"
@@ -305,7 +301,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                               />
                             </Tooltip>
                           ) : (
-                            <Tooltip title={getLogin("Disable_this_service")}>
+                            <Tooltip title={getAll("Disable_this_service")}>
                               <Button
                                 type="primary"
                                 color="orange"
@@ -322,7 +318,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                           )}
                         </>
                       )}
-                      <Tooltip title={getLogin("Service_editing")}>
+                      <Tooltip title={getAll("Service_editing")}>
                         <Button
                           type="default"
                           color="orange"

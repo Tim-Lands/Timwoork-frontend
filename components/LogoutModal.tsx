@@ -11,7 +11,7 @@ import { message } from "antd";
 
 function LogoutModal({ setIsLogoutModal }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const token = Cookies.get("token");
   const logout = async () => {
     try {

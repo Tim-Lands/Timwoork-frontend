@@ -11,7 +11,7 @@ function RemoveImageModal({
   index,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}

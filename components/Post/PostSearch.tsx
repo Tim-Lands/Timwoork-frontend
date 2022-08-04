@@ -107,8 +107,7 @@ function PostSearch({
     }
   }
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <div className="timlands-post-item post-item-search">
       <div className="d-flex">
@@ -125,7 +124,7 @@ function PostSearch({
               {price}.00$
             </li>
             <li className="post-meta-bayer">
-              {(buyers == 1 ? getAll("Buyers") : getLogin("Buyer")) &&
+              {(buyers == 1 ? getAll("Buyers") : getAll("Buyer")) &&
                 getAll("Buy_now")}
             </li>
           </ul>
@@ -152,7 +151,7 @@ function PostSearch({
             </li>
 
             <li className="post-meta-delay">
-              {getLogin("Delivery_duration")}
+              {getAll("Delivery_duration")}
               {durationFunc()}
             </li>
           </ul>

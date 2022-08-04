@@ -79,7 +79,7 @@ function Overview({ query }) {
     fr: false,
     en: false,
   });
-  const [selectedLang, setSelectedLang] = useState("");
+  const [selectedLang] = useState("");
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
   const [isSubtitle, setIsSubtitle] = useState({
     ar: false,
@@ -339,7 +339,7 @@ function Overview({ query }) {
                             value={formik.values.title}
                           />
                           <FormLangs
-                            onClick={(lang) => {}}
+                            onClick={() => {}}
                             default_lang={userLang}
                           />
                           <div className="note-form-text-sh">

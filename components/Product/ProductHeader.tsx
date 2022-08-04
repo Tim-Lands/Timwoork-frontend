@@ -95,7 +95,7 @@ export default function ProductHeader({
     }
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <div className="timwoork-single-header">
       <h1 className="title">{title}</h1>

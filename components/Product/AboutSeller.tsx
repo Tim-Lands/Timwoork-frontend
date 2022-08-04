@@ -16,13 +16,11 @@ export default function AboutSeller({
   userId,
 }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getWallet = getSectionLanguage("my_wallet");
+  const getAll = getSectionLanguage();
   return (
     <div className="timwoork-single-seller-info">
       <div className="seller-info-header">
-        <h2 className="title">{getLogin("About_seller")}</h2>
+        <h2 className="title">{getAll("About_seller")}</h2>
       </div>
       <div className="seller-info-container">
         <div className="d-flex">
@@ -79,7 +77,7 @@ export default function AboutSeller({
                 onClick={() => getOrCreateChat(email, userId, username)}
               >
                 <i className="material-icons material-icons-outlined">email</i>{" "}
-                {getWallet("Contact_seller_one")}
+                {getAll("Contact_seller_one")}
               </a>
             </div>
           </div>

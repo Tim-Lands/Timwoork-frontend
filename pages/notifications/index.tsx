@@ -23,6 +23,8 @@ function index() {
     `api/notifications?page=${pageNumber}`
   );
   const [size, setSize] = useState(4);
+  console.log(size);
+
   const [paginationSize, setPaginationSize] = useState(8);
   // const fetchData = async (pageNumber: number = 1) => {
   //   try {

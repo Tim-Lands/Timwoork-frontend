@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 
 function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -37,7 +37,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
       >
         <div className="modal-title">
           <h4 className="title">
-            {getLog("Suspension_of_the")}
+            {getAll("Suspension_of_the")}
             {id}
           </h4>
           <button
@@ -56,13 +56,13 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                   style={{ fontSize: 13, fontWeight: "bold", marginBottom: 10 }}
                   className="form-text"
                 >
-                  {getLog("Write_the_reason")}
+                  {getAll("Write_the_reason")}
                 </label>
                 <div className="relative-form d-flex">
                   <textarea
                     id="input-cause"
                     name="cause"
-                    placeholder={getLog("Write_the_reason") + "..."}
+                    placeholder={getAll("Write_the_reason") + "..."}
                     className={"timlands-inputs"}
                     value={formik.values.cause}
                     onChange={formik.handleChange}
@@ -104,7 +104,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-1"
                     />
                     <label className="form-check-label" htmlFor="suspond-1">
-                      {getLog("Stop_purchases")}
+                      {getAll("Stop_purchases")}
                     </label>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-2"
                     />
                     <label className="form-check-label" htmlFor="suspond-2">
-                      {getLog("Stop_Selling_operations")}
+                      {getAll("Stop_Selling_operations")}
                     </label>
                   </div>
                 </div>
@@ -134,7 +134,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-3"
                     />
                     <label className="form-check-label" htmlFor="suspond-3">
-                      {getLog("Stop_conversations")}
+                      {getAll("Stop_conversations")}
                     </label>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-4"
                     />
                     <label className="form-check-label" htmlFor="suspond-4">
-                      {getLog("Stop_delivery")}
+                      {getAll("Stop_delivery")}
                     </label>
                   </div>
                 </div>
@@ -164,7 +164,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-5"
                     />
                     <label className="form-check-label" htmlFor="suspond-5">
-                      {getLog("Stop_adding_services")}
+                      {getAll("Stop_adding_services")}
                     </label>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-6"
                     />
                     <label className="form-check-label" htmlFor="suspond-6">
-                      {getLog("Stop_displaying_services")}
+                      {getAll("Stop_displaying_services")}
                     </label>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-7"
                     />
                     <label className="form-check-label" htmlFor="suspond-7">
-                      {getLog("Stop_editing_services")}
+                      {getAll("Stop_editing_services")}
                     </label>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-8"
                     />
                     <label className="form-check-label" htmlFor="suspond-8">
-                      {getLog("Stop_deleting_services")}
+                      {getAll("Stop_deleting_services")}
                     </label>
                   </div>
                 </div>
@@ -224,7 +224,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-9"
                     />
                     <label className="form-check-label" htmlFor="suspond-9">
-                      {getLog("Stop_withdrawing_balances")}
+                      {getAll("Stop_withdrawing_balances")}
                     </label>
                   </div>
                 </div>
@@ -239,7 +239,7 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-10"
                     />
                     <label className="form-check-label" htmlFor="suspond-10">
-                      {getLog("Stop_changing_the")}
+                      {getAll("Stop_changing_the")}
                     </label>
                   </div>
                 </div>
@@ -254,21 +254,21 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                       id="suspond-11"
                     />
                     <label className="form-check-label" htmlFor="suspond-11">
-                      {getLog("Stop_signing_in")}
+                      {getAll("Stop_signing_in")}
                     </label>
                   </div>
                 </div>
               </div>
               <hr />
               <button className="btn butt-primary butt-sm mx-1" type="submit">
-                {getLog("Account_suspension")}
+                {getAll("Account_suspension")}
               </button>
               <button
                 className="btn butt-red-text butt-sm mx-1"
                 onClick={() => setIsShowSuspensionTimer(false)}
                 type="button"
               >
-                {getLog("Cancel_2")}
+                {getAll("Cancel_2")}
               </button>
             </form>
           </Spin>

@@ -158,7 +158,7 @@ const Tiptap = (props: any) => {
 };
 function SendNotification({ setIsConfirmText, title }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLog = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [toState, setToState] = useState("");
   const [fromState, setFromState] = useState("");
 
@@ -185,12 +185,12 @@ function SendNotification({ setIsConfirmText, title }): ReactElement {
             <div className="col-xl-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-fromState">
-                  {getLog("From")}
+                  {getAll("From")}
                 </label>
                 <select
                   id="input-fromState"
                   name="fromState"
-                  placeholder={getLog("From") + "..."}
+                  placeholder={getAll("From") + "..."}
                   className={
                     "timlands-inputs select sm " +
                     (validationsErrors &&
@@ -251,13 +251,13 @@ function SendNotification({ setIsConfirmText, title }): ReactElement {
             <div className="col-xl-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-subject">
-                  {getLog("Subject")}
+                  {getAll("Subject")}
                 </label>
                 <input
                   type="text"
                   id="input-subject"
                   name="subject"
-                  placeholder={getLog("Subject") + "..."}
+                  placeholder={getAll("Subject") + "..."}
                   className={
                     "timlands-inputs sm " +
                     (validationsErrors &&
@@ -320,7 +320,7 @@ function SendNotification({ setIsConfirmText, title }): ReactElement {
               className="btn butt-sm butt-red-text"
               onClick={() => setIsConfirmText(false)}
             >
-              {getLog("Cancel")}
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>

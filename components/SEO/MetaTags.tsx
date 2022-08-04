@@ -21,8 +21,7 @@ export function MetaTags({
   ogUrl,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <>
       <Head>
@@ -48,7 +47,7 @@ export function MetaTags({
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>
-          {getLanguage("Logo")} | {title}
+          {getAll("Logo")} | {title}
         </title>
         {ogImage && <meta property="og:image" content={ogImage} key="image" />}
         {ogUrl && <meta property="og:url" content={ogUrl} />}

@@ -21,7 +21,7 @@ function PostsAside({
   more,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   if (isError)
     return (
       <div className="posts-aside error">
