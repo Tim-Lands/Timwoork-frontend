@@ -15,7 +15,7 @@ function CartPost({
   deleteItem,
 }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const { data: userInfo }: any = useSWR("api/me");
   function DevdurationFunc(duration) {
     if (duration == 1) {

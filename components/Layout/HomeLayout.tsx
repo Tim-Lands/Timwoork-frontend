@@ -14,7 +14,7 @@ function Layout(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   useEffect(() => {
@@ -32,39 +32,40 @@ function Layout(props: any) {
       value={{
         fetcher: async (url: string) => {
           console.log(url);
-          return url.includes('wp-json')? await API.get(url, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((r: any) => r.data)
-            .catch(() => {
-              if (url == "api/me" && token) {
-                Cookies.remove("token");
-                if (typeof window !== undefined) {
-                  localStorage.removeItem("token");
-                  return;
-                }
-                router.reload();
-              }
-            })
-          : await API.get(url, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "X-LOCALIZATION": language,
-            },
-          })
-            .then((r: any) => r.data)
-            .catch(() => {
-              if (url == "api/me" && token) {
-                Cookies.remove("token");
-                if (typeof window !== undefined) {
-                  localStorage.removeItem("token");
-                  return;
-                }
-                router.reload();
-              }
-            });
+          return url.includes("wp-json")
+            ? await API.get(url, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+                .then((r: any) => r.data)
+                .catch(() => {
+                  if (url == "api/me" && token) {
+                    Cookies.remove("token");
+                    if (typeof window !== undefined) {
+                      localStorage.removeItem("token");
+                      return;
+                    }
+                    router.reload();
+                  }
+                })
+            : await API.get(url, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "X-LOCALIZATION": language,
+                },
+              })
+                .then((r: any) => r.data)
+                .catch(() => {
+                  if (url == "api/me" && token) {
+                    Cookies.remove("token");
+                    if (typeof window !== undefined) {
+                      localStorage.removeItem("token");
+                      return;
+                    }
+                    router.reload();
+                  }
+                });
         },
       }}
     >
@@ -73,7 +74,7 @@ function Layout(props: any) {
         {props.children}
         {loading && (
           <div className="loading">
-            <Spin tip={getLanguage("Loading")} spinning={true}></Spin>
+            <Spin tip={getAll("Loading")} spinning={true}></Spin>
           </div>
         )}
         <Footer />

@@ -10,8 +10,7 @@ import { useContext } from "react";
 
 function Id({ query }): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const getContactUs = getSectionLanguage("contact_us");
   const { data: postsList }: any = useSWR(`dashboard/contacts/${query.id}`);
   const [isShowReplyModal, setIsShowReplyModal] = useState(false);
@@ -22,7 +21,7 @@ function Id({ query }): ReactElement {
           onClose={() => setIsShowReplyModal(false)}
           user={postsList?.data}
           setIsConfirmText={setIsShowReplyModal}
-          title={getLogin("Reply_the_message")}
+          title={getAll("Reply_the_message")}
         />
       )}
       <div className="timlands-panel">
@@ -34,7 +33,7 @@ function Id({ query }): ReactElement {
               className="btn butt-sm butt-primary me-auto"
               onClick={() => setIsShowReplyModal(true)}
             >
-              {getLogin("Reply_the_message")}
+              {getAll("Reply_the_message")}
             </button>
           </div>
         </div>
@@ -42,15 +41,15 @@ function Id({ query }): ReactElement {
           <table className="table">
             <tbody>
               <tr>
-                <th>{getLogin("Message_date")}</th>
+                <th>{getAll("Message_date")}</th>
                 <td>{postsList && postsList.data.created_at}</td>
               </tr>
               <tr>
-                <th>{getLogin("Message_author")}</th>
+                <th>{getAll("Message_author")}</th>
                 <td>{postsList && postsList.data.full_name}</td>
               </tr>
               <tr>
-                <th>{getLogin("E_mail")}</th>
+                <th>{getAll("E_mail")}</th>
                 <td>{postsList && postsList.data.email}</td>
               </tr>
               <tr>
@@ -58,19 +57,19 @@ function Id({ query }): ReactElement {
                 <td>{postsList && postsList.data.ip_client}</td>
               </tr>
               <tr>
-                <th>{getLogin("Object")}</th>
+                <th>{getAll("Object")}</th>
                 <td>{postsList && postsList.data.subject}</td>
               </tr>
               <tr>
-                <th>{getLogin("Message_time")}</th>
+                <th>{getAll("Message_time")}</th>
                 <td>{postsList && postsList.data.email}</td>
               </tr>
               <tr>
                 <th>{getAll("Phone_number")}</th>
-                <td>{getLogin("Waiting_for_it")}</td>
+                <td>{getAll("Waiting_for_it")}</td>
               </tr>
               <tr>
-                <th>{getLogin("Message_type")}</th>
+                <th>{getAll("Message_type")}</th>
                 <td>
                   {postsList && postsList.data.type_message == 0
                     ? getContactUs("Inquiry")
@@ -78,11 +77,11 @@ function Id({ query }): ReactElement {
                 </td>
               </tr>
               <tr>
-                <th>{getLogin("Messagelink")}</th>
+                <th>{getAll("Messagelink")}</th>
                 <td>{postsList && postsList.data.url}</td>
               </tr>
               <tr>
-                <th>{getLogin("Message_text")}</th>
+                <th>{getAll("Message_text")}</th>
                 <td>{postsList && postsList.data.message}</td>
               </tr>
             </tbody>
@@ -90,7 +89,7 @@ function Id({ query }): ReactElement {
         </div>
         <div className="justify-content-md-center">
           <div className="timlands-panel-header">
-            <h2 className="title">{getLogin("Replies")}</h2>
+            <h2 className="title">{getAll("Replies")}</h2>
           </div>
           <div className="timlands-panel-item p-2">
             <div className="panel-item-body">
@@ -124,14 +123,14 @@ function Id({ query }): ReactElement {
                   fontWeight: 200,
                 }}
               >
-                {getLogin("This_text_is_2")}
-                {getLogin("If_you_need")}
+                {getAll("This_text_is_2")}
+                {getAll("If_you_need")}
               </p>
             </div>
             <div className="panel-item-footer d-flex">
               <div className="absolute-btns">
                 <button className="btn butt-xs butt-blue">
-                  {getLogin("See_details")}
+                  {getAll("See_details")}
                 </button>
               </div>
             </div>

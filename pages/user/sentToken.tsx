@@ -6,7 +6,7 @@ import { useContext } from "react";
 
 const SentToken = (): ReactElement => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <div className="row justify-content-md-center pt-5">
       <div className="col-lg-6 p-0">
@@ -22,19 +22,17 @@ const SentToken = (): ReactElement => {
             <Result
               status="success"
               title="تم الإرسال"
-              subTitle={getLogin("A_link_is")}
+              subTitle={getAll("A_link_is")}
             />
             <div className="panel-modal-footer">
               <div className="d-flex">
                 <Link href="/">
                   <a className="btn butt-default butt-md">
-                    {getLogin("Go_to_Home")}
+                    {getAll("Go_to_Home")}
                   </a>
                 </Link>
                 <Link href="/login">
-                  <a className="btn butt-primary butt-md">
-                    {getLogin("Log_in")}
-                  </a>
+                  <a className="btn butt-primary butt-md">{getAll("Log_in")}</a>
                 </Link>
               </div>
             </div>

@@ -9,7 +9,7 @@ import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 function Notifications({ notifications, refs, setShowNotificationsMenu }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   function switchNotifyType(notification) {
     console.log(notification);
     const { type, to, slug, content } = notification?.data;

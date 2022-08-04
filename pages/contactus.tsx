@@ -11,8 +11,7 @@ function Overview() {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getLanguage = getSectionLanguage("contact_us");
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const formik = useFormik({
     initialValues: {
       subject: "",
@@ -31,7 +30,7 @@ function Overview() {
         const res = await API.post(`api/contactus`, values);
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_update_has"));
+          message.success(getAll("The_update_has"));
         }
       } catch (error: any) {
         if (
@@ -132,12 +131,12 @@ function Overview() {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-phone">
-                        {getLogin("Phone_number")} *
+                        {getAll("Phone_number")} *
                       </label>
                       <input
                         id="input-phone"
                         name="phoneNumber"
-                        placeholder={getLogin("Phone_number")}
+                        placeholder={getAll("Phone_number")}
                         className={"timlands-inputs "}
                         autoComplete="off"
                         onChange={formik.handleChange}

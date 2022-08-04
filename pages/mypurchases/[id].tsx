@@ -19,8 +19,7 @@ import { useContext } from "react";
 
 const Order = ({ query }) => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -436,9 +435,7 @@ const Order = ({ query }) => {
   const statusLabel = (status: any) => {
     switch (status) {
       case 0:
-        return (
-          <span className="badge bg-secondary">{getLogin("PEnding")}</span>
-        );
+        return <span className="badge bg-secondary">{getAll("PEnding")}</span>;
 
       case 1:
         return (
@@ -477,7 +474,7 @@ const Order = ({ query }) => {
       case 7:
         return (
           <span className="badge bg-success text-light">
-            {getLogin("Completed")}
+            {getAll("Completed")}
           </span>
         );
 
@@ -502,7 +499,7 @@ const Order = ({ query }) => {
 
       default:
         return (
-          <span className="badge bg-info text-dark">{getLogin("PEnding")}</span>
+          <span className="badge bg-info text-dark">{getAll("PEnding")}</span>
         );
     }
   };
@@ -1205,7 +1202,7 @@ const Order = ({ query }) => {
                     }}
                   >
                     <div className="aside-header">
-                      <h3 className="title">{getLogin("Tools")}</h3>
+                      <h3 className="title">{getAll("Tools")}</h3>
                     </div>
                     <div className="d-grid gap-2">
                       {ShowItem && ShowItem.data.status == 0 && (
@@ -1284,13 +1281,13 @@ const Order = ({ query }) => {
                             <span className="material-icons material-icons-outlined">
                               edit
                             </span>{" "}
-                            {getLogin("Edit")}{" "}
+                            {getAll("Edit")}{" "}
                           </button>
                         </>
                       )}
                       {ShowItem && ShowItem.data.status == 7 && (
                         <span className="badge bg-success text-light">
-                          {getLogin("Completed")}
+                          {getAll("Completed")}
                         </span>
                       )}
                       {ShowItem && ShowItem.data.status == 8 && (

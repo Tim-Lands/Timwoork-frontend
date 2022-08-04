@@ -10,7 +10,7 @@ import { useContext } from "react";
 
 function Messages({ messages, refs, setShowMessagesMenu }) {
   const { lang, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       initial={{ y: -70, opacity: 0 }}

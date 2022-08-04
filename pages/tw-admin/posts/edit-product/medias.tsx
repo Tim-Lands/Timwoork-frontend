@@ -28,9 +28,7 @@ function Medias({ query, product, token }) {
   const [removedImages, setRemovedImages] = useState([]);
   const id = query.id;
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   useEffect(() => {
     if (!token) {
@@ -290,7 +288,7 @@ function Medias({ query, product, token }) {
                             collections_bookmark
                           </span>
                         </span>
-                        {getLogin("General_information")}
+                        {getAll("General_information")}
                       </a>
                     </Link>
                   </h3>
@@ -304,7 +302,7 @@ function Medias({ query, product, token }) {
                             payments
                           </span>
                         </span>
-                        {getLogin("Price_and_developments")}
+                        {getAll("Price_and_developments")}
                       </a>
                     </Link>
                   </h3>
@@ -320,7 +318,7 @@ function Medias({ query, product, token }) {
                             description
                           </span>
                         </span>
-                        {getLogin("Desciprion_intrustions")}
+                        {getAll("Desciprion_intrustions")}
                       </a>
                     </Link>
                   </h3>
@@ -334,7 +332,7 @@ function Medias({ query, product, token }) {
                             mms
                           </span>
                         </span>
-                        {getLogin("Gallery_and_folders")}
+                        {getAll("Gallery_and_folders")}
                       </a>
                     </Link>
                   </h3>
@@ -373,11 +371,11 @@ function Medias({ query, product, token }) {
                   <div className="timlands-content-form mt-2">
                     <div className="choose-images-file">
                       <h4 className="timlands-content-form-subtitle">
-                        {getLanguage("Service_introduction_video")}
+                        {getAll("Service_introduction_video")}
                       </h4>
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="input-videourl">
-                          {getLanguage("Video_link")}
+                          {getAll("Video_link")}
                         </label>
                         <input
                           type="text"
@@ -416,7 +414,7 @@ function Medias({ query, product, token }) {
                     <span className="material-icons-outlined">
                       chevron_right
                     </span>
-                    <span className="text">{getLanguage("Previous_step")}</span>
+                    <span className="text">{getAll("Previous_step")}</span>
                   </button>
                   <button
                     type="submit"
@@ -424,7 +422,7 @@ function Medias({ query, product, token }) {
                     onClick={loadImagesHandle}
                     className="btn flex-center butt-green ml-auto butt-sm"
                   >
-                    <span className="text">{getLanguage("Next_step")}</span>
+                    <span className="text">{getAll("Next_step")}</span>
                     <span className="material-icons-outlined">
                       chevron_left
                     </span>

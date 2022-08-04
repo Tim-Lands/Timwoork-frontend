@@ -14,8 +14,7 @@ import { useContext } from "react";
 function ChangePass() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -25,12 +24,12 @@ function ChangePass() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title={getLogin("Your_account_is")}
-            subTitle={getLogin("Your_account_is")}
+            title={getAll("Your_account_is")}
+            subTitle={getAll("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
                 <a className="btn butt-primary butt-md">
-                  {getLogin("Go_to_Edit")}
+                  {getAll("Go_to_Edit")}
                 </a>
               </Link>
             }
@@ -64,7 +63,7 @@ function ChangePass() {
                 });
                 // Authentication was successful.
                 if (res.status === 200) {
-                  message.success(getLogin("The_password_has"));
+                  message.success(getAll("The_password_has"));
                   values.old_password = "";
                   values.password_confirmation = "";
                   values.password = "";
@@ -96,7 +95,7 @@ function ChangePass() {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="old_password">
-                        {getLogin("Old_password")}
+                        {getAll("Old_password")}
                       </label>
                       <Field
                         type="password"
@@ -104,7 +103,7 @@ function ChangePass() {
                         onKeyUp={setValidationsErrorsHandle}
                         name="old_password"
                         disabled={isSubmitting}
-                        placeholder={getLogin("Old_password")}
+                        placeholder={getAll("Old_password")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -124,7 +123,7 @@ function ChangePass() {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
-                        {getLogin("New_password")}
+                        {getAll("New_password")}
                       </label>
                       <Field
                         type="password"
@@ -132,7 +131,7 @@ function ChangePass() {
                         name="password"
                         onKeyUp={setValidationsErrorsHandle}
                         disabled={isSubmitting}
-                        placeholder={getLogin("New_password")}
+                        placeholder={getAll("New_password")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -190,7 +189,7 @@ function ChangePass() {
                           disabled={isSubmitting}
                           className="btn me-auto butt-primary butt-md"
                         >
-                          {getLogin("Update_basic_information")}
+                          {getAll("Update_basic_information")}
                         </button>
                       </div>
                     </div>

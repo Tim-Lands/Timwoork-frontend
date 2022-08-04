@@ -29,7 +29,7 @@ const User = ({ query, stars }) => {
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   useEffect(() => {
     setIsOverflow(
@@ -64,7 +64,7 @@ const User = ({ query, stars }) => {
                 <Badge
                   color={User.status == 0 ? "#ccc" : "green"}
                   count={
-                    User.status == 0 ? getLogin("Offline") : getLogin("Online")
+                    User.status == 0 ? getAll("Offline") : getAll("Online")
                   }
                   offset={[10, 10]}
                 >
@@ -111,7 +111,7 @@ const User = ({ query, stars }) => {
                     <span className="material-icons material-icons-outlined">
                       copy
                     </span>{" "}
-                    {getLogin("Copy_my_profiles")}
+                    {getAll("Copy_my_profiles")}
                   </button>
                 </p>
                 {/* {User && User.profile.profile_seller && User.profile.profile_seller.portfolio &&
@@ -128,7 +128,7 @@ const User = ({ query, stars }) => {
                     User.profile.profile_seller &&
                     User.profile.profile_seller.bio && (
                       <div className="pb-1 mb-2">
-                        <Card title={getLogin("Brief_me_about")}>
+                        <Card title={getAll("Brief_me_about")}>
                           <div
                             ref={detectHeight}
                             className={"user-bro " + (isLess ? "is-less" : "")}
@@ -147,8 +147,8 @@ const User = ({ query, stars }) => {
                               }
                             >
                               {isLess
-                                ? getLogin("Read_more")
-                                : getLogin("Read_less")}
+                                ? getAll("Read_more")
+                                : getAll("Read_less")}
                             </button>
                           )}
                         </Card>
@@ -161,16 +161,14 @@ const User = ({ query, stars }) => {
                           <span className="material-icons material-icons-outlined">
                             account_circle
                           </span>
-                          {getLogin("Personal_information")}
+                          {getAll("Personal_information")}
                         </h3>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-sm-6">
                         <div className="content-text-item">
-                          <h3 className="text-label">
-                            {getLogin("First_name")}
-                          </h3>
+                          <h3 className="text-label">{getAll("First_name")}</h3>
                           <p className="text-value">
                             {User.profile && User.profile.first_name}
                           </p>
@@ -178,9 +176,7 @@ const User = ({ query, stars }) => {
                       </div>
                       <div className="col-sm-6">
                         <div className="content-text-item">
-                          <h3 className="text-label">
-                            {getLogin("Last_name")}
-                          </h3>
+                          <h3 className="text-label">{getAll("Last_name")}</h3>
                           <p className="text-value">
                             {User.profile && User.profile.last_name}
                           </p>
@@ -189,9 +185,7 @@ const User = ({ query, stars }) => {
                       {User && User.profile.country !== null && (
                         <div className="col-sm-6">
                           <div className="content-text-item">
-                            <h3 className="text-label">
-                              {getLogin("Country")}
-                            </h3>
+                            <h3 className="text-label">{getAll("Country")}</h3>
                             <p className="text-value">
                               {User.profile.country.name_ar}
                             </p>
@@ -200,14 +194,14 @@ const User = ({ query, stars }) => {
                       )}
                       <div className="col-sm-6">
                         <div className="content-text-item">
-                          <h3 className="text-label">{getLogin("Gender")}</h3>
+                          <h3 className="text-label">{getAll("Gender")}</h3>
                           <p className="text-value">
                             {User.profile && User.profile.gender == null
                               ? ""
                               : User.profile &&
                                 (User.profile.gender == 0
-                                  ? getLogin("woman")
-                                  : getLogin("Man"))}
+                                  ? getAll("woman")
+                                  : getAll("Man"))}
                           </p>
                         </div>
                       </div>
@@ -225,7 +219,7 @@ const User = ({ query, stars }) => {
                     className="title me-auto"
                     style={{ fontWeight: "bold", fontSize: 26 }}
                   >
-                    {getLogin("Services")}
+                    {getAll("Services")}
                   </h1>
                 </div>
                 <div className="posts-aside-body">

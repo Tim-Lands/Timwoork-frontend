@@ -13,8 +13,7 @@ import { useContext } from "react";
 
 function index(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: GetData, error }: any = useSWR(`dashboard/tags`);
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
@@ -28,12 +27,12 @@ function index(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
-        cancelButtonText: getLogin("No"),
+        confirmButtonText: getAll("Yes"),
+        cancelButtonText: getAll("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -43,8 +42,8 @@ function index(): ReactElement {
             await API.post(`dashboard/tags/${id}/delete`);
           }
           swalWithBootstrapButtons.fire(
-            getLogin("Deleted"),
-            getLogin("The_service_has"),
+            getAll("Deleted"),
+            getAll("The_service_has"),
             "success"
           );
         }
@@ -87,7 +86,7 @@ function index(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              {getLogin("Add_new")}
+              {getAll("Add_new")}
             </button>
           </div>
         </div>
@@ -96,7 +95,7 @@ function index(): ReactElement {
             <thead>
               <tr>
                 <th> اسم الوسم</th>
-                <th>{getLogin("Tools")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>

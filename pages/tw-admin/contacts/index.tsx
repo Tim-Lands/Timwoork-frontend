@@ -13,8 +13,7 @@ import { useContext } from "react";
 
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [postsList, setPostsList] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +57,7 @@ function index() {
       {newMessageModal && (
         <AddNewMessage
           setIsConfirmText={setNewMessageModal}
-          title={getLogin("Add_new_message")}
+          title={getAll("Add_new_message")}
         />
       )}
 
@@ -68,7 +67,7 @@ function index() {
             <span className="material-icons material-icons-outlined">
               collections_bookmark
             </span>
-            {getLogin("Services_management")}
+            {getAll("Services_management")}
           </h2>
           <div className="header-butt">
             <button
@@ -78,7 +77,7 @@ function index() {
               <span className="material-icons material-icons-outlined">
                 maps_ugc
               </span>
-              {getLogin("Add_new_message")}
+              {getAll("Add_new_message")}
             </button>
           </div>
         </div>
@@ -86,9 +85,9 @@ function index() {
           <table className="table">
             <thead>
               <tr>
-                <th>{getLogin("Address")}</th>
-                <th>{getLogin("E_mail")}</th>
-                <th>{getLogin("Full_name")}</th>
+                <th>{getAll("Address")}</th>
+                <th>{getAll("E_mail")}</th>
+                <th>{getAll("Full_name")}</th>
                 <th>{getAll("Date")}</th>
               </tr>
             </thead>
@@ -119,8 +118,8 @@ function index() {
           {postsList && postsList.length == 0 && (
             <Result
               status="404"
-              title={getLogin("No_messages")}
-              subTitle={getLogin("In_this_status")}
+              title={getAll("No_messages")}
+              subTitle={getAll("In_this_status")}
             />
           )}
 

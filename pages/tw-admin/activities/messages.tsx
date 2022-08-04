@@ -12,8 +12,7 @@ import { useContext } from "react";
 
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [messages, setMessages] = useState({
     last_page: 1,
     per_page: 12,
@@ -61,7 +60,6 @@ function index() {
             <span className="material-icons material-icons-outlined">
               event_repeat
             </span>
-            {getLogin("Buyers_and_sellers")}
           </h2>
         </div>
 
@@ -104,7 +102,6 @@ function index() {
                         <Image src={"/avatar.png"} width={50} height={50} />
                       </div>
                       <div className="activity-item">
-                        <span className="text">{getLogin("Send")} </span>
                         <a
                           href={`/u/${message.members[0].id}`}
                           rel="noreferrer"

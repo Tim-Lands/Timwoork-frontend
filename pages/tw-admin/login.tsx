@@ -12,8 +12,7 @@ import { useContext } from "react";
 
 const Login = (): ReactElement => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   // The router object used for redirecting after login.
   const router = useRouter();
   // Redirect to user home route if user is authenticated.
@@ -35,8 +34,8 @@ const Login = (): ReactElement => {
     <>
       <MetaTags
         title={getAll("Log_in")}
-        metaDescription={getLogin("Home")}
-        ogDescription={getLogin("Home")}
+        metaDescription={getAll("Home")}
+        ogDescription={getAll("Home")}
       />
       <Formik
         initialValues={{
@@ -102,17 +101,17 @@ const Login = (): ReactElement => {
                       </Link>
                     </div>
                     <div className="page-header">
-                      <h1 className="title">{getLogin("Log_in")}</h1>
+                      <h1 className="title">{getAll("Log_in")}</h1>
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="email">
-                        {getLogin("E_mail")}
+                        {getAll("E_mail")}
                       </label>
                       <Field
                         id="email"
                         onKeyUp={setValidationsErrorsHandle}
                         name="email"
-                        placeholder={getLogin("E_mail")}
+                        placeholder={getAll("E_mail")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -134,14 +133,14 @@ const Login = (): ReactElement => {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
-                        {getLogin("Password")}
+                        {getAll("Password")}
                       </label>
                       <Field
                         type="password"
                         onKeyUp={setValidationsErrorsHandle}
                         id="password"
                         name="password"
-                        placeholder={getLogin("Password")}
+                        placeholder={getAll("Password")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&

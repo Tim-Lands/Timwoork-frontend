@@ -18,9 +18,7 @@ function Prices({ query }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const token = useRef(Cookies.get("token_dash"));
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getAddNew = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage();
 
   useEffect(() => {
     if (!token) {
@@ -76,7 +74,7 @@ function Prices({ query }) {
                     );
                     // Authentication was successful.
                     if (res.status === 200) {
-                      message.success(getLogin("The_update_has"));
+                      message.success(getAll("The_update_has"));
                       router.push(
                         `/tw-admin/posts/edit-product/description?id=${product?.id}`
                       );
@@ -111,7 +109,7 @@ function Prices({ query }) {
                                     collections_bookmark
                                   </span>
                                 </span>
-                                {getLogin("General_information")}
+                                {getAll("General_information")}
                               </a>
                             </Link>
                           </h3>
@@ -131,7 +129,7 @@ function Prices({ query }) {
                                     payments
                                   </span>
                                 </span>
-                                {getLogin("Price_and_developments")}
+                                {getAll("Price_and_developments")}
                               </a>
                             </Link>
                           </h3>
@@ -151,7 +149,7 @@ function Prices({ query }) {
                                     description
                                   </span>
                                 </span>
-                                {getLogin("Desciprion_intrustions")}
+                                {getAll("Desciprion_intrustions")}
                               </a>
                             </Link>
                           </h3>
@@ -171,7 +169,7 @@ function Prices({ query }) {
                                     mms
                                   </span>
                                 </span>
-                                {getAddNew("Gallery_and_folders")}
+                                {getAll("Gallery_and_folders")}
                               </a>
                             </Link>
                           </h3>
@@ -211,7 +209,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-price"
                               >
-                                {getLogin("Service_price")}
+                                {getAll("Service_price")}
                               </label>
                               <Field
                                 id="input-price"
@@ -245,7 +243,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-duration"
                               >
-                                {getLogin("Service_price")}
+                                {getAll("Service_price")}
                               </label>
                               <div className="rel-form">
                                 <Field
@@ -262,7 +260,7 @@ function Prices({ query }) {
                                   autoComplete="off"
                                 />
                                 <div className="timlands-form-label">
-                                  <p className="text">{getAddNew("In_Days")}</p>
+                                  <p className="text">{getAll("In_Days")}</p>
                                 </div>
                               </div>
                               <motion.div
@@ -271,7 +269,7 @@ function Prices({ query }) {
                                 className="timlands-form-note"
                               >
                                 <p className="text">
-                                  {getAddNew("Choose_a_suitable")}
+                                  {getAll("Choose_a_suitable")}
                                 </p>
                               </motion.div>
                               {validationsErrors && validationsErrors.duration && (
@@ -295,7 +293,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-tags"
                               >
-                                {getAddNew("Upgrades")}
+                                {getAll("Upgrades")}
                               </label>
                               <FieldArray
                                 name="developments"
@@ -465,7 +463,7 @@ function Prices({ query }) {
                                                       />
                                                       <div className="timlands-form-label">
                                                         <p className="text">
-                                                          {getAddNew("In_Days")}
+                                                          {getAll("In_Days")}
                                                         </p>
                                                       </div>
                                                     </div>
@@ -521,7 +519,7 @@ function Prices({ query }) {
                                     values.developments.length < 5 ? (
                                       <div className="product-devlopes-butt">
                                         <p className="product-devlopes-text">
-                                          {getAddNew("Service_upgrades_are")}
+                                          {getAll("Service_upgrades_are")}
                                         </p>
                                         <button
                                           type="button"
@@ -532,7 +530,7 @@ function Prices({ query }) {
                                           <span className="material-icons-outlined">
                                             post_add
                                           </span>{" "}
-                                          {getAddNew("Click_to_add")}
+                                          {getAll("Click_to_add")}
                                         </button>
                                       </div>
                                     ) : (
@@ -567,7 +565,7 @@ function Prices({ query }) {
                                   chevron_right
                                 </span>
                                 <span className="text">
-                                  {getAddNew("Previous_step")}
+                                  {getAll("Previous_step")}
                                 </span>
                               </button>
                               <button
@@ -578,7 +576,7 @@ function Prices({ query }) {
                                 className="btn flex-center butt-green ml-auto butt-sm"
                               >
                                 <span className="text">
-                                  {getLogin("Save_edits")}
+                                  {getAll("Save_edits")}
                                 </span>
                               </button>
                             </div>

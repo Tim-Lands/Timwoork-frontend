@@ -16,9 +16,7 @@ import { Table } from "antd";
 function index() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("my_wallet");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
@@ -52,7 +50,7 @@ function index() {
   }
   const columns: any = [
     {
-      title: getLogin("Amount"),
+      title: getAll("Amount"),
       dataIndex: "",
       render: (e: any) => <>{switchType(e.status, e.amount)}</>,
     },
@@ -83,8 +81,8 @@ function index() {
         <>
           <MetaTags
             title={getAll("My_portfolio")}
-            metaDescription={getLogin("Home")}
-            ogDescription={getLogin("Home")}
+            metaDescription={getAll("Home")}
+            ogDescription={getAll("Home")}
           />
           {veriedEmail && (
             <div className="container">
@@ -121,27 +119,27 @@ function index() {
                     </div>
                     <div className="profile-content-body">
                       <div className="page-header xs">
-                        <h3 className="title">{getLanguage("My_portfolio")}</h3>
+                        <h3 className="title">{getAll("My_portfolio")}</h3>
                       </div>
                       <div className="row">
                         <div className="col-sm-4">
                           <div className="content-text-item wallet-info red">
                             <h3 className="text-label">
-                              {getLanguage("Pending_balance")}
+                              {getAll("Pending_balance")}
                             </h3>
                             <p className="text-value">
                               {userInfo &&
                                 userInfo.user_details.profile.pending_amount}
                             </p>
                             <p className="text-note">
-                              {getLanguage("Your_earnings_are")}
+                              {getAll("Your_earnings_are")}
                             </p>
                           </div>
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item wallet-info green">
                             <h3 className="text-label">
-                              {getLanguage("Withdrawable_balance")}
+                              {getAll("Withdrawable_balance")}
                             </h3>
                             <p className="text-value">
                               {userInfo &&
@@ -149,14 +147,14 @@ function index() {
                                   .withdrawable_amount}
                             </p>
                             <p className="text-note">
-                              {getLanguage("The_mount_you")}
+                              {getAll("The_mount_you")}
                             </p>
                           </div>
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item wallet-info ">
                             <h3 className="text-label">
-                              {getLanguage("Total_balance")}
+                              {getAll("Total_balance")}
                             </h3>
                             <p className="text-value">
                               {Number(
@@ -170,7 +168,7 @@ function index() {
                                 )}
                             </p>
                             <p className="text-note">
-                              {getLanguage("The_entire_balance")}
+                              {getAll("The_entire_balance")}
                             </p>
                           </div>
                         </div>
@@ -201,7 +199,7 @@ function index() {
                                   <Alert type="error">
                                     <strong>
                                       {" "}
-                                      {getLanguage("You_cannot_request")}
+                                      {getAll("You_cannot_request")}
                                     </strong>
                                   </Alert>
                                 </div>
@@ -212,7 +210,7 @@ function index() {
                       </div>
                       <div className="page-header xs">
                         <h3 className="title">
-                          {getLanguage("Financial_transactions")}
+                          {getAll("Financial_transactions")}
                         </h3>
                       </div>
                       <Table

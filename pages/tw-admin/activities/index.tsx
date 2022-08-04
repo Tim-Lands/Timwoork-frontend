@@ -52,8 +52,7 @@ const ActivityData = (activity, getAll) => {
 };
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [pageNumber, setPagenNumber]: any = useState(1);
   const [activities, setActivities]: any = useState({
     data: [],
@@ -117,7 +116,7 @@ function index() {
                     <input
                       id="input-sQuery"
                       name="sQuery"
-                      placeholder={getLogin("Search_in_table")}
+                      placeholder={getAll("Search_in_table")}
                       className="timlands-inputs"
                       onChange={(e) => (search.current = e.target.value)}
                       onKeyDown={(e) => {

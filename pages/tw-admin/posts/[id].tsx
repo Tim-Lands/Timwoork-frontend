@@ -126,8 +126,7 @@ function Id({ ProductData, errorFetch }: any) {
     }
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const menu = (
     <Menu>
       {ProductData && (
@@ -317,7 +316,7 @@ function Id({ ProductData, errorFetch }: any) {
                     {ProductData.data.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
-                          <li className="title">{getLogin("Tags")}:</li>
+                          <li className="title">{getAll("Tags")}:</li>
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -329,7 +328,7 @@ function Id({ ProductData, errorFetch }: any) {
                     {ProductData.data.profile_seller && (
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
-                          <h4 className="title">{getLogin("About_seller")}</h4>
+                          <h4 className="title">{getAll("About_seller")}</h4>
                         </div>
                         <div className="seller-info-container">
                           <div className="d-flex">
@@ -418,7 +417,7 @@ function Id({ ProductData, errorFetch }: any) {
                         <span className="material-icons material-icons-outlined">
                           timer
                         </span>{" "}
-                        {getLogin("Delivery_duration")}
+                        {getAll("Delivery_duration")}
                         {durationFunc()}
                       </li>
                       <li className="cat-post ml-auto">
@@ -427,7 +426,7 @@ function Id({ ProductData, errorFetch }: any) {
                             <span className="material-icons material-icons-outlined">
                               share
                             </span>{" "}
-                            {getLogin("Share_service")}
+                            {getAll("Share_service")}
                           </span>
                         </Dropdown>
                       </li>
@@ -437,13 +436,13 @@ function Id({ ProductData, errorFetch }: any) {
                     <div className="panel-aside-body">
                       <div className="add-devloppers-header">
                         <h4 className="title">
-                          {getLogin("Available_developments")}
+                          {getAll("Available_developments")}
                         </h4>
                       </div>
                       {ProductData.data.developments.length == 0 && (
                         <div className="nothing-note">
                           <p className="text">
-                            {getLogin("This_service_contains")}
+                            {getAll("This_service_contains")}
                           </p>
                         </div>
                       )}
@@ -472,7 +471,7 @@ function Id({ ProductData, errorFetch }: any) {
                   <div className="panel-aside-footer">
                     <div className="aside-footer-total-price">
                       <h4 className="price-total me-auto">
-                        <strong>{getLogin("Service_price")}</strong>{" "}
+                        <strong>{getAll("Service_price")}</strong>{" "}
                         {ProductData && ProductData.data.price}$
                       </h4>
                       <div className="bayers-count">

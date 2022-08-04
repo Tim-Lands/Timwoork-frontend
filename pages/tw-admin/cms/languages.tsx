@@ -14,8 +14,7 @@ import { useContext } from "react";
 
 function Languages(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: GetData, error }: any = useSWR(`dashboard/languages`);
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
@@ -29,12 +28,12 @@ function Languages(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
-        cancelButtonText: getLogin("No"),
+        confirmButtonText: getAll("Yes"),
+        cancelButtonText: getAll("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -45,8 +44,8 @@ function Languages(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            getLogin("Deleted"),
-            getLogin("The_service_has"),
+            getAll("Deleted"),
+            getAll("The_service_has"),
             "success"
           );
         }
@@ -74,8 +73,8 @@ function Languages(): ReactElement {
     <>
       <MetaTags
         title={"اللغات - الإدارة العامة"}
-        metaDescription={getLogin("Home_General_administration")}
-        ogDescription={getLogin("Home_General_administration")}
+        metaDescription={getAll("Home_General_administration")}
+        ogDescription={getAll("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewLanguage setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -86,7 +85,7 @@ function Languages(): ReactElement {
             <span className="material-icons material-icons-outlined">
               translate
             </span>
-            {getLogin("Langueges")}
+            {getAll("Langueges")}
           </h2>
           <div className="header-butt">
             <button
@@ -96,7 +95,7 @@ function Languages(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              {getLogin("Add_new")}
+              {getAll("Add_new")}
             </button>
           </div>
         </div>
@@ -105,7 +104,7 @@ function Languages(): ReactElement {
             <thead>
               <tr>
                 <th> اسم اللغة</th>
-                <th>{getLogin("Tools")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>

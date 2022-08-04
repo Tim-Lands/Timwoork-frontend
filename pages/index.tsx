@@ -22,7 +22,7 @@ import "swiper/css/autoplay";
 import PostInner from "@/components/Post/PostInner";
 function index({ products, latestProducts, categories, popularProducts }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   const menu = (
     <Menu>
       <Menu.Item>
@@ -32,7 +32,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
           href="https://wa.me/+905519951407"
         >
           <i className="fab fa-whatsapp fa-fw"></i>
-          {getLanguage("WhatsApp")}
+          {getAll("WhatsApp")}
         </a>
       </Menu.Item>
       <Menu.Item>
@@ -42,12 +42,11 @@ function index({ products, latestProducts, categories, popularProducts }) {
           href="https://t.me/timwoorkDotCom"
         >
           <i className="fab fa-telegram fa-fw"></i>
-          {getLanguage("Telegram")}
+          {getAll("Telegram")}
         </a>
       </Menu.Item>
     </Menu>
   );
-  const getAll = getSectionLanguage("all");
   return (
     <>
       <Head>
@@ -91,10 +90,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
             <div className="container ">
               <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
                 <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
-                  {getLanguage("Newly_added_services")}
+                  {getAll("Newly_added_services")}
                 </h6>
                 <Link href="/products/latest">
-                  <button>{getLanguage("More")}</button>
+                  <button>{getAll("More")}</button>
                 </Link>
               </div>
               <Swiper
@@ -152,10 +151,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
             <div className="container " style={{ marginBlock: 90 }}>
               <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
                 <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
-                  {getLanguage("Top_selling_services")}
+                  {getAll("Top_selling_services")}
                 </h6>
                 <Link href="/products/best-seller">
-                  <button>{getLanguage("More")}</button>
+                  <button>{getAll("More")}</button>
                 </Link>
               </div>
               <Swiper
@@ -213,10 +212,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
             <div className="container ">
               <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
                 <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
-                  {getLanguage("Most_popular_services")}
+                  {getAll("Most_popular_services")}
                 </h6>
                 <button>
-                  <Link href="/products/popular">{getLanguage("More")}</Link>
+                  <Link href="/products/popular">{getAll("More")}</Link>
                 </button>
               </div>
               <Swiper

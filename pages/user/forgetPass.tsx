@@ -14,8 +14,7 @@ const ForgetPass = (): ReactElement => {
     setValidationsErrors({});
   }
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   // Return statement.
   return (
     <>
@@ -31,7 +30,7 @@ const ForgetPass = (): ReactElement => {
             );
             // Authentication was successful.
             if (res.status === 200) {
-              message.success(getLogin("The_password_reset"));
+              message.success(getAll("The_password_reset"));
               router.push("/user/sentToken");
             }
           } catch (error: any) {
@@ -80,12 +79,12 @@ const ForgetPass = (): ReactElement => {
                       <div className="col-md-12">
                         <div className="timlands-form">
                           <label className="label-block" htmlFor="email">
-                            {getLogin("Enter_your_e_mail")}
+                            {getAll("Enter_your_e_mail")}
                           </label>
                           <Field
                             id="email"
                             name="email"
-                            placeholder={getLogin("E_mail")}
+                            placeholder={getAll("E_mail")}
                             onKeyUp={setValidationsErrorsHandle}
                             className={
                               "timlands-inputs " +
@@ -118,7 +117,7 @@ const ForgetPass = (): ReactElement => {
                           disabled={isSubmitting}
                           className="btn me-auto butt-primary butt-md"
                         >
-                          {getLogin("Recover")}
+                          {getAll("Recover")}
                         </button>
                         <Link href="/">
                           <a className="btn ml-auto butt-light butt-md flex-center">

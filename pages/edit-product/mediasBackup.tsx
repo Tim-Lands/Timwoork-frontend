@@ -17,9 +17,7 @@ import useSWR from "swr";
 function Medias({ query, stars }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const id = query.id;
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -191,22 +189,22 @@ function Medias({ query, stars }) {
       // Authentication was successful.
       if (res.status === 200) {
         setLoading(false);
-        message.success(getLogin("The_update_has"));
+        message.success(getAll("The_update_has"));
         stepFive();
       }
     } catch (error: any) {
       setLoading(false);
       if (error.response && error.response.status === 200) {
-        message.success(getLogin("The_update_has"));
+        message.success(getAll("The_update_has"));
       }
       if (error.response && error.response.status === 422) {
-        message.error(getLogin("Please_fill_the"));
+        message.error(getAll("Please_fill_the"));
       }
       if (error.response && error.response.status === 403) {
         message.error(getAll("Something_went_wrong"));
       }
       if (error.response && error.response.status === 419) {
-        message.error(getLogin("Operation_failed"));
+        message.error(getAll("Operation_failed"));
       }
       if (error.response && error.response.status === 400) {
         message.error(getAll("An_error_occurred1"));
@@ -241,7 +239,7 @@ function Medias({ query, stars }) {
                               collections_bookmark
                             </span>
                           </span>
-                          {getLanguage("General_information")}
+                          {getAll("General_information")}
                         </a>
                       </Link>
                     </h3>
@@ -255,7 +253,7 @@ function Medias({ query, stars }) {
                               payments
                             </span>
                           </span>
-                          {getLanguage("Upgrades_price")}
+                          {getAll("Upgrades_price")}
                         </a>
                       </Link>
                     </h3>
@@ -269,7 +267,7 @@ function Medias({ query, stars }) {
                               description
                             </span>
                           </span>
-                          {getLanguage("Description_and_instructions")}
+                          {getAll("Description_and_instructions")}
                         </a>
                       </Link>
                     </h3>
@@ -283,7 +281,7 @@ function Medias({ query, stars }) {
                               mms
                             </span>
                           </span>
-                          {getLanguage("Gallery_and_folders")}
+                          {getAll("Gallery_and_folders")}
                         </a>
                       </Link>
                     </h3>
@@ -405,7 +403,7 @@ function Medias({ query, stars }) {
                       <div className="col-md-12 align-center">
                         <div className="images-list-uploading">
                           <div className="page-header">
-                            <h4 className="title">{getLanguage("Gallery")}</h4>
+                            <h4 className="title">{getAll("Gallery")}</h4>
                           </div>
                           <ImageUploading
                             multiple
@@ -460,7 +458,7 @@ function Medias({ query, stars }) {
                                         {getAll("Choose_a_picture")}
                                       </h4>
                                       <p className="nothing-text">
-                                        {getLanguage("You_must_choose")}
+                                        {getAll("You_must_choose")}
                                       </p>
                                     </div>
                                   )}
@@ -529,11 +527,11 @@ function Medias({ query, stars }) {
               <div className="timlands-content-form">
                 <div className="choose-images-file">
                   <h4 className="timlands-content-form-subtitle">
-                    {getLanguage("Service_introduction_video")}
+                    {getAll("Service_introduction_video")}
                   </h4>
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-videourl">
-                      {getLanguage("Video_link")}
+                      {getAll("Video_link")}
                     </label>
                     <input
                       type="text"

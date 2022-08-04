@@ -16,21 +16,19 @@ import { useContext } from "react";
 
 const sellerInformations = (): ReactElement => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getMain = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
   // Redirect to user home route if user is authenticated.
   const SignupSchema = Yup.object().shape({
-    first_name: Yup.string().required(getLogin("This_field_is")),
-    last_name: Yup.string().required(getLogin("This_field_is")),
-    date_of_birth: Yup.string().required(getLogin("This_field_is")),
-    gender: Yup.number().required(getLogin("This_field_is")),
-    username: Yup.string().required(getLogin("This_field_is")),
-    country_id: Yup.number().required(getLogin("This_field_is")),
+    first_name: Yup.string().required(getAll("This_field_is")),
+    last_name: Yup.string().required(getAll("This_field_is")),
+    date_of_birth: Yup.string().required(getAll("This_field_is")),
+    gender: Yup.number().required(getAll("This_field_is")),
+    username: Yup.string().required(getAll("This_field_is")),
+    country_id: Yup.number().required(getAll("This_field_is")),
   });
   // Return statement.
   return (
@@ -40,9 +38,9 @@ const sellerInformations = (): ReactElement => {
       {userInfo && userInfo.profile && (
         <>
           <MetaTags
-            title={getLogin("Edit_profile")}
-            metaDescription={getLogin("Edit_profile")}
-            ogDescription={getLogin("Edit_profile")}
+            title={getAll("Edit_profile")}
+            metaDescription={getAll("Edit_profile")}
+            ogDescription={getAll("Edit_profile")}
           />
           <Formik
             isInitialValid={true}
@@ -64,11 +62,11 @@ const sellerInformations = (): ReactElement => {
                 });
                 // Authentication was successful.
                 if (res.status === 200) {
-                  message.success(getLogin("The_update_has"));
+                  message.success(getAll("The_update_has"));
                 }
               } catch (error: any) {
                 if (error.response && error.response.status === 200) {
-                  message.success(getLogin("The_update_has"));
+                  message.success(getAll("The_update_has"));
                 }
                 if (error.response && error.response.status === 422) {
                   message.error(getAll("Please_fill_in"));
@@ -77,9 +75,9 @@ const sellerInformations = (): ReactElement => {
                   message.error(getAll("Failed_operation"));
                 }
                 if (error.response && error.response.status === 400) {
-                  message.error(getLogin("An_error_occurred"));
+                  message.error(getAll("An_error_occurred"));
                 } else {
-                  message.error(getLogin("An_unexpected_error"));
+                  message.error(getAll("An_unexpected_error"));
                 }
               }
             }}
@@ -97,9 +95,9 @@ const sellerInformations = (): ReactElement => {
                         </Link>
                       </div>
                       <h1 className="login-title">
-                        {getLogin("Edit_personal_information")}
+                        {getAll("Edit_personal_information")}
                       </h1>
-                      <h3 className="login-text">{getLogin("This_text_is")}</h3>
+                      <h3 className="login-text">{getAll("This_text_is")}</h3>
                     </div>
                   </div>
                   <div className="col-lg-6 p-0">
@@ -132,12 +130,12 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="first_name"
                               >
-                                {getLogin("First_name")}
+                                {getAll("First_name")}
                               </label>
                               <Field
                                 id="first_name"
                                 name="first_name"
-                                placeholder={getLogin("First_name")}
+                                placeholder={getAll("First_name")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -160,12 +158,12 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="last_name"
                               >
-                                {getLogin("Last_name")}{" "}
+                                {getAll("Last_name")}{" "}
                               </label>
                               <Field
                                 id="last_name"
                                 name="last_name"
-                                placeholder={getLogin("Last_name")}
+                                placeholder={getAll("Last_name")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -185,12 +183,12 @@ const sellerInformations = (): ReactElement => {
                           <div className="col-md-6">
                             <div className="timlands-form">
                               <label className="label-block" htmlFor="username">
-                                {getLogin("Username")}
+                                {getAll("Username")}
                               </label>
                               <Field
                                 id="username"
                                 name="username"
-                                placeholder={getLogin("Username")}
+                                placeholder={getAll("Username")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -213,13 +211,13 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="date_of_birth"
                               >
-                                {getLogin("Birthday")}
+                                {getAll("Birthday")}
                               </label>
                               <Field
                                 type="date"
                                 id="date_of_birth"
                                 name="date_of_birth"
-                                placeholder={getLogin("Birthday")}
+                                placeholder={getAll("Birthday")}
                                 className="timlands-inputs"
                                 autoComplete="off"
                               />
@@ -241,7 +239,7 @@ const sellerInformations = (): ReactElement => {
                           <div className="col-md-6">
                             <div className="timlands-form">
                               <label className="label-block" htmlFor="gender">
-                                {getLogin("Select_sexe")}
+                                {getAll("Select_sexe")}
                               </label>
                               <Field
                                 as="select"
@@ -249,8 +247,8 @@ const sellerInformations = (): ReactElement => {
                                 name="gender"
                                 className="timlands-inputs"
                               >
-                                <option value={1}>{getLogin("Man")}</option>
-                                <option value={0}>{getLogin("woman")}</option>
+                                <option value={1}>{getAll("Man")}</option>
+                                <option value={0}>{getAll("woman")}</option>
                               </Field>
                               {errors.gender && touched.gender ? (
                                 <div style={{ overflow: "hidden" }}>
@@ -271,7 +269,7 @@ const sellerInformations = (): ReactElement => {
                                 className="label-block"
                                 htmlFor="country_id"
                               >
-                                {getLogin("Select_country")}
+                                {getAll("Select_country")}
                               </label>
                               <Field
                                 as="select"
@@ -304,9 +302,9 @@ const sellerInformations = (): ReactElement => {
                           <div style={{ overflow: "hidden" }}>
                             <div className="timlands-form-note">
                               <p className="text">
-                                {getLogin("If_your_press")}{" "}
+                                {getAll("If_your_press")}{" "}
                                 <Link href="/">
-                                  <a>{getMain("Terms_of_use")}</a>
+                                  <a>{getAll("Terms_of_use")}</a>
                                 </Link>{" "}
                                 و{" "}
                                 <Link href="/">
@@ -323,7 +321,7 @@ const sellerInformations = (): ReactElement => {
                               disabled={isSubmitting}
                               className="btn me-auto butt-primary butt-md"
                             >
-                              {getLogin("Edit_information")}
+                              {getAll("Edit_information")}
                             </button>
                           </div>
                         </div>

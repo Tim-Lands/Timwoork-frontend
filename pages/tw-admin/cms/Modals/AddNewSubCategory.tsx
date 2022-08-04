@@ -12,8 +12,7 @@ export default function AddNewSubCategory({
   CatId,
 }: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   //const [iconPrev, setIconPrev] = useState('')
   //const iconPreviewHandle = (e) => {
   //    setIconPrev(e.target.value)
@@ -27,7 +26,7 @@ export default function AddNewSubCategory({
             <span className="material-icons material-icons-outlined">
               add_box
             </span>
-            {getLogin("Add_new")}
+            {getAll("Add_new")}
           </h2>
           <div className="panel-modal-left-tools">
             <button onClick={setIsModalHiddenHandle} className="close-modal">
@@ -49,19 +48,19 @@ export default function AddNewSubCategory({
             parent_id: CatId,
           }}
           validationSchema={Yup.object().shape({
-            name_ar: Yup.string().required(getLogin("This_field_is")),
-            name_en: Yup.string().required(getLogin("This_field_is")),
-            name_fr: Yup.string().required(getLogin("This_field_is")),
+            name_ar: Yup.string().required(getAll("This_field_is")),
+            name_en: Yup.string().required(getAll("This_field_is")),
+            name_fr: Yup.string().required(getAll("This_field_is")),
             description_ar: Yup.string()
               .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
-              .required(getLogin("This_field_is")),
+              .required(getAll("This_field_is")),
             description_en: Yup.string()
               .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
-              .required(getLogin("This_field_is")),
+              .required(getAll("This_field_is")),
             description_fr: Yup.string()
               .min(8, "يجب أن يكون عدد الحروف أكثر من 8")
-              .required(getLogin("This_field_is")),
-            icon: Yup.string().required(getLogin("This_field_is")),
+              .required(getAll("This_field_is")),
+            icon: Yup.string().required(getAll("This_field_is")),
           })}
           onSubmit={async (values) => {
             try {
@@ -72,7 +71,7 @@ export default function AddNewSubCategory({
               // If Activate Network
               // Authentication was successful.
               if (res.status == 201 || res.status == 200) {
-                //alert(getLogin("Added_successfully"))
+                //alert(getAll("Added_successfully"))
                 setIsModalHiddenHandle();
               } else {
                 alert("Error");
@@ -303,7 +302,7 @@ export default function AddNewSubCategory({
                   disabled={isSubmitting}
                   className="btn butt-primary butt-sm"
                 >
-                  {getLogin("Save_edits")}
+                  {getAll("Save_edits")}
                 </button>
               </div>
             </Form>

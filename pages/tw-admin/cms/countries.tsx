@@ -14,8 +14,7 @@ import { useContext } from "react";
 
 function Countries(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: GetData, error }: any = useSWR(`dashboard/countries?page=1`);
 
   const deleteHandle = (id: any) => {
@@ -30,12 +29,12 @@ function Countries(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
-        cancelButtonText: getLogin("No"),
+        confirmButtonText: getAll("Yes"),
+        cancelButtonText: getAll("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -46,8 +45,8 @@ function Countries(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            getLogin("Deleted"),
-            getLogin("The_service_has"),
+            getAll("Deleted"),
+            getAll("The_service_has"),
             "success"
           );
         }
@@ -75,8 +74,8 @@ function Countries(): ReactElement {
     <>
       <MetaTags
         title={" الإدارة العامة - البلدان"}
-        metaDescription={getLogin("Home_General_administration")}
-        ogDescription={getLogin("Home_General_administration")}
+        metaDescription={getAll("Home_General_administration")}
+        ogDescription={getAll("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewCountry setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -85,7 +84,7 @@ function Countries(): ReactElement {
         <div className="timlands-panel-header d-flex align-items-center">
           <h2 className="title">
             <span className="material-icons material-icons-outlined">map</span>
-            {getLogin("Countries")}
+            {getAll("Countries")}
           </h2>
           <div className="header-butt">
             <button
@@ -95,7 +94,7 @@ function Countries(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              {getLogin("Add_new")}
+              {getAll("Add_new")}
             </button>
           </div>
         </div>
@@ -105,7 +104,7 @@ function Countries(): ReactElement {
               <tr>
                 <th> اسم الدولة</th>
                 <th> الرمز</th>
-                <th>{getLogin("Tools")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>

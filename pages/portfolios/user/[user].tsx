@@ -10,8 +10,7 @@ import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 function Index({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   console.log(query);
   return (
     <div className="container pt-4 mt-2">
@@ -60,7 +59,7 @@ function Index({ query }) {
           <div className="row">
             <div className="col-sm-6 col-lg-3">
               <Portfolio
-                title={getLogin("This_text_is")}
+                title={getAll("This_text_is")}
                 thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/1400/165af265485593.5af5bf8eae575.jpg`}
                 slug={`dedej-djeded-wedw-wedwef-hgc`}
                 author={"أحمد يحيى"}

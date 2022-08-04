@@ -14,8 +14,7 @@ export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -25,7 +24,7 @@ export default function AddNewUser({
             <span className="material-icons material-icons-outlined">
               add_box
             </span>
-            {getLogin("Add_new")}
+            {getAll("Add_new")}
           </h2>
           <div className="panel-modal-left-tools">
             <button onClick={setIsModalHiddenHandle} className="close-modal">
@@ -49,23 +48,23 @@ export default function AddNewUser({
             },
           }}
           validationSchema={Yup.object().shape({
-            password: Yup.string().required(getLogin("This_field_is")),
+            password: Yup.string().required(getAll("This_field_is")),
             repassword: Yup.string()
-              .oneOf([Yup.ref("password"), null], getLogin("Passwords_are_not"))
-              .required(getLogin("This_field_is")),
+              .oneOf([Yup.ref("password"), null], getAll("Passwords_are_not"))
+              .required(getAll("This_field_is")),
             username: Yup.string()
-              .min(4, getLogin("This_fiels_is"))
-              .max(30, getLogin("This_field_is_2"))
-              .required(getLogin("This_field_is")),
+              .min(4, getAll("This_fiels_is"))
+              .max(30, getAll("This_field_is_2"))
+              .required(getAll("This_field_is")),
             name: Yup.string()
-              .min(4, getLogin("This_fiels_is"))
-              .max(35, getLogin("This_field_is_2"))
-              .required(getLogin("This_field_is")),
+              .min(4, getAll("This_fiels_is"))
+              .max(35, getAll("This_field_is_2"))
+              .required(getAll("This_field_is")),
             email: Yup.string()
-              .email(getLogin("Please_enter_a"))
-              .max(60, getLogin("This_field_is_2"))
-              .required(getLogin("This_field_is")),
-            phone: Yup.string().matches(phoneRegExp, getLogin("This_is_not")),
+              .email(getAll("Please_enter_a"))
+              .max(60, getAll("This_field_is_2"))
+              .required(getAll("This_field_is")),
+            phone: Yup.string().matches(phoneRegExp, getAll("This_is_not")),
           })}
           onSubmit={async (values) => {
             try {
@@ -76,7 +75,7 @@ export default function AddNewUser({
               // If Activate Network
               // Authentication was successful.
               if (res.status == 201 || res.status == 200) {
-                alert(getLogin("Added_successfully"));
+                alert(getAll("Added_successfully"));
                 setIsModalHiddenHandle();
               } else {
                 alert("Error");
@@ -111,12 +110,12 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-fname">
-                        {getLogin("Full_name")}
+                        {getAll("Full_name")}
                       </label>
                       <Field
                         id="input-fname"
                         name="name"
-                        placeholder={getLogin("Full_name")}
+                        placeholder={getAll("Full_name")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -136,12 +135,12 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-username">
-                        {getLogin("Username")}
+                        {getAll("Username")}
                       </label>
                       <Field
                         id="input-username"
                         name="username"
-                        placeholder={getLogin("Username")}
+                        placeholder={getAll("Username")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -161,12 +160,12 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-email">
-                        {getLogin("E_mail")}
+                        {getAll("E_mail")}
                       </label>
                       <Field
                         id="input-email"
                         name="email"
-                        placeholder={getLogin("E_mail")}
+                        placeholder={getAll("E_mail")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -186,7 +185,7 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-state">
-                        {getLogin("Select_a_state")}
+                        {getAll("Select_a_state")}
                       </label>
                       <Field
                         as="select"
@@ -194,7 +193,7 @@ export default function AddNewUser({
                         name="address.state"
                         className="timlands-inputs select"
                       >
-                        <option value="">{getLogin("Select_a_state")}</option>
+                        <option value="">{getAll("Select_a_state")}</option>
                         <option value="الجلفة">الجلفة</option>
                       </Field>
                       {errors.address?.state && touched.address?.state ? (
@@ -213,12 +212,12 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-street">
-                        {getLogin("Address")}
+                        {getAll("Address")}
                       </label>
                       <Field
                         id="input-street"
                         name="address.street"
-                        placeholder={getLogin("Address")}
+                        placeholder={getAll("Address")}
                         className="timlands-inputs"
                         autoComplete="off"
                       />
@@ -238,12 +237,12 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-phone">
-                        {getLogin("Phone_number")}
+                        {getAll("Phone_number")}
                       </label>
                       <Field
                         id="input-phone"
                         name="phone"
-                        placeholder={getLogin("Phone_number")}
+                        placeholder={getAll("Phone_number")}
                         className="timlands-inputs"
                       />
                       {errors.phone && touched.phone ? (
@@ -262,13 +261,13 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-password">
-                        {getLogin("Password")}
+                        {getAll("Password")}
                       </label>
                       <Field
                         id="input-password"
                         type="password"
                         name="password"
-                        placeholder={getLogin("Password")}
+                        placeholder={getAll("Password")}
                         className="timlands-inputs"
                       />
                       {errors.password && touched.password ? (
@@ -287,13 +286,13 @@ export default function AddNewUser({
                   <div className="col-sm-6">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-repassword">
-                        {getLogin("Reset_password")}
+                        {getAll("Reset_password")}
                       </label>
                       <Field
                         type="password"
                         id="input-repassword"
                         name="repassword"
-                        placeholder={getLogin("Reset_password")}
+                        placeholder={getAll("Reset_password")}
                         className="timlands-inputs"
                       />
                       {errors.repassword && touched.repassword ? (
@@ -324,7 +323,7 @@ export default function AddNewUser({
                   disabled={isSubmitting}
                   className="btn butt-primary butt-sm"
                 >
-                  {getLogin("Save_edits")}
+                  {getAll("Save_edits")}
                 </button>
               </div>
             </Form>

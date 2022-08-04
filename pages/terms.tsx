@@ -6,19 +6,18 @@ import { useContext } from "react";
 
 function Terms() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getMain = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   return (
     <div className="py-4">
       <MetaTags
-        title={getMain("Terms_of_use")}
+        title={getAll("Terms_of_use")}
         metaDescription={getAll("Services_are_provided")}
         ogDescription={getAll("Services_are_provided")}
       />
       <div className="container my-3">
         <div className="bg-white p-2 px-4">
           <div className="page-header">
-            <h2 className="title">{getMain("Terms_of_use")}</h2>
+            <h2 className="title">{getAll("Terms_of_use")}</h2>
           </div>
           <div className="page-content">
             <p className="text">

@@ -12,7 +12,7 @@ import { useContext } from "react";
 
 function Countries(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const token = Cookies.get("token_dash");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
@@ -37,7 +37,7 @@ function Countries(): ReactElement {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_gateaway_had"));
+          message.success(getAll("The_gateaway_had"));
           router.push(`/tw-admin/payments`);
         }
       } catch (error: any) {
@@ -55,13 +55,13 @@ function Countries(): ReactElement {
   return (
     <>
       <MetaTags
-        title={getLogin("General_administration_Add")}
-        metaDescription={getLogin("Home_Add_a")}
-        ogDescription={getLogin("Home_Add_a")}
+        title={getAll("General_administration_Add")}
+        metaDescription={getAll("Home_Add_a")}
+        ogDescription={getAll("Home_Add_a")}
       />
       <div className="timlands-panel">
         <div className="timlands-panel-header d-flex align-items-center">
-          <h2 className="title">{getLogin("Add_a_new")}</h2>
+          <h2 className="title">{getAll("Add_a_new")}</h2>
         </div>
         <form onSubmit={formik.handleSubmit}>
           <div
@@ -74,12 +74,12 @@ function Countries(): ReactElement {
                 <div className="col-md-6">
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-name_ar">
-                      {getLogin("Gateway_name_in")}
+                      {getAll("Gateway_name_in")}
                     </label>
                     <input
                       id="input-name_ar"
                       name="name_ar"
-                      placeholder={getLogin("Gateway_name_in")}
+                      placeholder={getAll("Gateway_name_in")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -107,12 +107,12 @@ function Countries(): ReactElement {
                 <div className="col-md-6">
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-name_en">
-                      {getLogin("Gateway_name_in_2")}
+                      {getAll("Gateway_name_in_2")}
                     </label>
                     <input
                       id="input-name_en"
                       name="name_en"
-                      placeholder={getLogin("Gateway_name_in_2")}
+                      placeholder={getAll("Gateway_name_in_2")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -143,12 +143,12 @@ function Countries(): ReactElement {
                       className="label-block"
                       htmlFor="input-precent_of_payment"
                     >
-                      {getLogin("Deduction_rate")}
+                      {getAll("Deduction_rate")}
                     </label>
                     <input
                       id="input-precent_of_payment"
                       name="precent_of_payment"
-                      placeholder={getLogin("Deduction_rate")}
+                      placeholder={getAll("Deduction_rate")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -181,12 +181,12 @@ function Countries(): ReactElement {
                       className="label-block"
                       htmlFor="input-value_of_cent"
                     >
-                      {getLogin("Cent_value")}
+                      {getAll("Cent_value")}
                     </label>
                     <input
                       id="input-value_of_cent"
                       name="value_of_cent"
-                      placeholder={getLogin("Cent_value")}
+                      placeholder={getAll("Cent_value")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -220,7 +220,7 @@ function Countries(): ReactElement {
                       disabled={formik.isSubmitting}
                       className="btn flex-center butt-green ml-auto butt-sm"
                     >
-                      <span className="text">{getLogin("Save_edits")}</span>
+                      <span className="text">{getAll("Save_edits")}</span>
                     </button>
                   </div>
                 </div>

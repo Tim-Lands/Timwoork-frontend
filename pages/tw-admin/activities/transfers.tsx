@@ -48,8 +48,7 @@ Amount.propTypes = {
 };
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [pageNumber, setPageNumber]: any = useState(1);
   const [transfers, setTransfers]: any = useState({
     data: [],
@@ -99,7 +98,7 @@ function index() {
             <span className="material-icons material-icons-outlined">
               event_repeat
             </span>
-            {getLogin("Financial_transactions")}
+            {getAll("Financial_transactions")}
           </h2>
         </div>
         <div className="row justify-content-center">
@@ -111,7 +110,7 @@ function index() {
                     <input
                       id="input-sQuery"
                       name="sQuery"
-                      placeholder={getLogin("Search_in_table")}
+                      placeholder={getAll("Search_in_table")}
                       className="timlands-inputs"
                       onChange={(e) => (search.current = e.target.value)}
                       onKeyDown={(e) => {
@@ -131,7 +130,7 @@ function index() {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>{getLogin("Amount")}($)</th>
+                      <th>{getAll("Amount")}($)</th>
                       <th>{getAll("Operation_title")}</th>
                       <th>{getAll("Operation_method")}</th>
                       <th>صاحب العملية</th>

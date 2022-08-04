@@ -8,8 +8,7 @@ import { useContext } from "react";
 
 export default function EditCategory(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const router = useRouter();
   const id = router.query.id;
 
@@ -97,7 +96,7 @@ export default function EditCategory(): ReactElement {
         res.status == 202 ||
         res.status == 203
       ) {
-        //alert(getLogin("Added_successfully"))
+        //alert(getAll("Added_successfully"))
         router.push("/tw-admin/cms/categories");
       } else {
         alert("Error");
@@ -115,7 +114,7 @@ export default function EditCategory(): ReactElement {
             <span className="material-icons material-icons-outlined">
               add_box
             </span>
-            {getLogin("Add_new")}
+            {getAll("Add_new")}
           </h2>
           <div className="panel-modal-left-tools">
             <button
@@ -280,7 +279,7 @@ export default function EditCategory(): ReactElement {
               {getAll("Cancel_2")}
             </button>
             <button type="submit" className="btn butt-primary butt-sm">
-              {getLogin("Save_edits")}
+              {getAll("Save_edits")}
             </button>
           </div>
         </form>

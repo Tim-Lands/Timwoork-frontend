@@ -9,8 +9,7 @@ import router from "next/router";
 import useSWR from "swr";
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("conversion");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -32,7 +31,7 @@ function index() {
         <div className=" my-3" style={{ maxWidth: 1300, marginInline: "auto" }}>
           <div className="row">
             <div className="col-lg-4">
-              <Sidebar getLanguage={getLanguage} />
+              <Sidebar />
             </div>
             <div className="col-lg-8">
               <div
@@ -47,7 +46,7 @@ function index() {
                 }}
               >
                 <div className="conversations-form">
-                  <Empty description={getLanguage("Choose_a_conversation")} />
+                  <Empty description={getAll("Choose_a_conversation")} />
                 </div>
               </div>
             </div>

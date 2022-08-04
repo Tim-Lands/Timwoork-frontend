@@ -43,10 +43,7 @@ if (!token && typeof window !== "undefined")
   token = localStorage.getItem("token");
 function Single({ query, stars }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getWallet = getSectionLanguage("my_wallet");
-  const getNew = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage();
   const { language } = useContext(LanguageContext);
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
 
@@ -74,16 +71,16 @@ function Single({ query, stars }) {
       );
       if (res.status === 200) {
         swalWithBootstrapButtons.fire(
-          getLogin("Disabled1"),
-          getLogin("The_service_has_2"),
+          getAll("Disabled1"),
+          getAll("The_service_has_2"),
           "success"
         );
         router.reload();
       }
     } catch (error) {
       notification["error"]({
-        message: getLogin("Error_message"),
-        description: getLogin("Unfortunately_this_service"),
+        message: getAll("Error_message"),
+        description: getAll("Unfortunately_this_service"),
       });
     }
   };
@@ -100,11 +97,11 @@ function Single({ query, stars }) {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
+        confirmButtonText: getAll("Yes"),
         cancelButtonText: "لا",
         reverseButtons: true,
       })
@@ -122,8 +119,8 @@ function Single({ query, stars }) {
             );
             if (res.status === 200) {
               swalWithBootstrapButtons.fire(
-                getLogin("Deleted"),
-                getLogin("The_service_has"),
+                getAll("Deleted"),
+                getAll("The_service_has"),
                 "success"
               );
             }
@@ -154,8 +151,8 @@ function Single({ query, stars }) {
       if (res.status === 200) {
         setIsProductActive(false);
         swalWithBootstrapButtons.fire(
-          getLogin("Abled1"),
-          getLogin("This_service_has"),
+          getAll("Abled1"),
+          getAll("This_service_has"),
           "success"
         );
         router.reload();
@@ -163,8 +160,8 @@ function Single({ query, stars }) {
     } catch (error) {
       setIsProductActive(false);
       notification["error"]({
-        message: getLogin("Error_message"),
-        description: getLogin("Unfortunately_this_service_2"),
+        message: getAll("Error_message"),
+        description: getAll("Unfortunately_this_service_2"),
       });
     }
   };
@@ -321,9 +318,9 @@ function Single({ query, stars }) {
           {ProductData.data.is_active == null && (
             <div style={{ marginTop: 27 }}>
               <Alert type="warning">
-                هذه الخدمة غير كامة تنقصها بعض التعديلات يمكنك{" "}
+                {getAll("This_service_is")}{" "}
                 <Link href={`/edit-product/overview?id=${ProductData.data.id}`}>
-                  <a>{getLogin("Edit")}</a>
+                  <a>{getAll("Edit")}</a>
                 </Link>
               </Alert>
             </div>
@@ -426,7 +423,7 @@ function Single({ query, stars }) {
                     {ProductData.data.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
-                          <li className="title">{getLogin("Tags")}</li>
+                          <li className="title">{getAll("Tags")}</li>
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -443,7 +440,7 @@ function Single({ query, stars }) {
                               <span className="material-icons material-icons-outlined">
                                 question_answer
                               </span>
-                              {getWallet("Customer_reviews")}
+                              {getAll("Customer_reviews")}
                             </h4>
                           </div>
                         </div>
@@ -475,7 +472,7 @@ function Single({ query, stars }) {
                         <span className="material-icons material-icons-outlined">
                           create
                         </span>{" "}
-                        {getLogin("Service_editing")}
+                        {getAll("Service_editing")}
                       </a>
                     </Link>
                     <button
@@ -485,7 +482,7 @@ function Single({ query, stars }) {
                       <span className="material-icons material-icons-outlined">
                         delete
                       </span>{" "}
-                      {getNew("Delete_the_service")}
+                      {getAll("Delete_the_service")}
                     </button>
                   </div>
                 )}
@@ -515,7 +512,7 @@ function Single({ query, stars }) {
                         <span className="material-icons material-icons-outlined">
                           timer
                         </span>{" "}
-                        {getNew("Delivery_terme")}
+                        {getAll("Delivery_terme")}
                         {durationFunc()}
                       </li>
                     </ul>
@@ -524,13 +521,13 @@ function Single({ query, stars }) {
                     <div className="panel-aside-body">
                       <div className="add-devloppers-header">
                         <h4 className="title">
-                          {getLogin("Available_developments")}
+                          {getAll("Available_developments")}
                         </h4>
                       </div>
                       {ProductData.data.developments.length == 0 && (
                         <div className="nothing-note">
                           <p className="text">
-                            {getLogin("This_service_contains")}
+                            {getAll("This_service_contains")}
                           </p>
                         </div>
                       )}
@@ -559,7 +556,7 @@ function Single({ query, stars }) {
                   <div className="panel-aside-footer">
                     <div className="aside-footer-total-price">
                       <h4 className="price-total me-auto">
-                        <strong>{getLogin("Service_price")}</strong>{" "}
+                        <strong>{getAll("Service_price")}</strong>{" "}
                         {ProductData && ProductData.data.price}$
                       </h4>
                       <div className="bayers-count">
@@ -597,7 +594,7 @@ function Single({ query, stars }) {
                           }
                           className="btn butt-sm butt-red"
                         >
-                          {getLogin("Disable_this_service")}
+                          {getAll("Disable_this_service")}
                         </button>
                       )}
                     </Spin>

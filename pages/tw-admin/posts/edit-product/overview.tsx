@@ -60,8 +60,7 @@ const MySelect = (props: any) => {
 };
 function Overview({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [product, setProduct]: any = useState({});
   const [categories, setCategories] = useState({});
   const [subCategories, setSubCategories]: any = useState({});
@@ -203,7 +202,7 @@ function Overview({ query }) {
                                 collections_bookmark
                               </span>
                             </span>
-                            {getLogin("General_information")}
+                            {getAll("General_information")}
                           </a>
                         </Link>
                       </h3>
@@ -223,7 +222,7 @@ function Overview({ query }) {
                                 payments
                               </span>
                             </span>
-                            {getLogin("Price_and_developments")}
+                            {getAll("Price_and_developments")}
                           </a>
                         </Link>
                       </h3>
@@ -243,7 +242,7 @@ function Overview({ query }) {
                                 description
                               </span>
                             </span>
-                            {getLogin("Desciprion_intrustions")}
+                            {getAll("Desciprion_intrustions")}
                           </a>
                         </Link>
                       </h3>
@@ -263,7 +262,7 @@ function Overview({ query }) {
                                 mms
                               </span>
                             </span>
-                            {getLogin("Gallery_and_folders")}
+                            {getAll("Gallery_and_folders")}
                           </a>
                         </Link>
                       </h3>
@@ -336,7 +335,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-catetory"
                           >
-                            {getLogin("Choose_the_principal")}
+                            {getAll("Choose_the_principal")}
                           </label>
                           <select
                             id="input-catetory"
@@ -350,7 +349,7 @@ function Overview({ query }) {
                             //onChange={() => setmainCat(values.catetory)}
                           >
                             <option value="">
-                              {getLogin("Choose_the_principal")}
+                              {getAll("Choose_the_principal")}
                             </option>
                             {!categories && (
                               <option value="">{getAll("Please_wait")}</option>
@@ -443,9 +442,7 @@ function Overview({ query }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">
-                              {getLogin("Save_edits")}
-                            </span>
+                            <span className="text">{getAll("Save_edits")}</span>
                           </button>
                         </div>
                       </div>

@@ -7,8 +7,7 @@ import { LanguageContext } from "../../../../../contexts/languageContext/context
 import { useContext } from "react";
 export default function Id(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const router = useRouter();
   const id = router.query.id;
 
@@ -69,7 +68,6 @@ export default function Id(): ReactElement {
         res.status == 202 ||
         res.status == 203
       ) {
-        //alert(getLogin("Added_successfully"))
         router.push("/tw-admin/cms/tags");
       } else {
         alert("Error");
@@ -85,7 +83,6 @@ export default function Id(): ReactElement {
         <div className="panel-modal-header">
           <h2 className="title">
             <span className="material-icons material-icons-outlined">edit</span>
-            {getLogin("Edit")}
           </h2>
           <div className="panel-modal-left-tools">
             <button
@@ -163,9 +160,7 @@ export default function Id(): ReactElement {
             >
               {getAll("Cancel_2")}
             </button>
-            <button type="submit" className="btn butt-primary butt-sm">
-              {getLogin("Save_edits")}
-            </button>
+            <button type="submit" className="btn butt-primary butt-sm"></button>
           </div>
         </form>
       </div>

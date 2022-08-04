@@ -22,8 +22,7 @@ import { useContext } from "react";
 
 function Index({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFavorated, setIsFavorated] = useState(false);
@@ -44,7 +43,7 @@ function Index({ query }) {
             <div className="portfolio-single bg-white p-3">
               <div className="portfolio-single-header">
                 <div className="portfolio-single-header-aside">
-                  <h2 className="title">{getLogin("This_text_is")}</h2>
+                  <h2 className="title">{getAll("This_text_is")}</h2>
                 </div>
                 <div className="portfolio-single-header-tool">
                   <button
@@ -76,7 +75,7 @@ function Index({ query }) {
                       </>
                     ) : (
                       <>
-                        <FaHeart /> {getLogin("Added_successfully")}
+                        <FaHeart /> {getAll("Added_successfully")}
                       </>
                     )}
                   </button>
@@ -108,9 +107,9 @@ function Index({ query }) {
                   />
                 </div>
                 <p className="text">
-                  {getLogin("This_text_is_2")}
-                  {getLogin("If_you_need")}
-                  {getLogin("This_text_is")}
+                  {getAll("This_text_is_2")}
+                  {getAll("If_you_need")}
+                  {getAll("This_text_is")}
                 </p>
                 <div className="buttons-link">
                   <a
@@ -128,7 +127,7 @@ function Index({ query }) {
                   <div className="row">
                     <div className="col-sm-6 col-md-4">
                       <Portfolio
-                        title={getLogin("If_you_need")}
+                        title={getAll("If_you_need")}
                         thumbnail={`https://cdn.dribbble.com/uploads/7999/original/71d0450f3b5282d9ae34f788ba3a04e2.jpg?1582829647`}
                         slug={`dedej-djeded-wedw-wedwef-hgc`}
                         author={"طارق عروي"}
@@ -152,7 +151,7 @@ function Index({ query }) {
                     </div>
                     <div className="col-sm-6 col-md-4">
                       <Portfolio
-                        title={getLogin("This_text_is")}
+                        title={getAll("This_text_is")}
                         thumbnail={`https://cdn.dribbble.com/users/2189268/screenshots/8028972/media/5ae2b122667ec785965a00a021b54eee.png?compress=1&resize=400x300`}
                         slug={`dedej-djeded-wedw-wedwef-hgc`}
                         author={"أحمد يحيى"}
@@ -205,7 +204,7 @@ function Index({ query }) {
                   </Link>
                 </h3>
                 <p className="meta">بائع محترف</p>
-                <p className="text">{getLogin("This_text_is")}</p>
+                <p className="text">{getAll("This_text_is")}</p>
                 <div className="btns-follow">
                   {isFollowing && (
                     <button

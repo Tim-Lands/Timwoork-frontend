@@ -14,7 +14,7 @@ function Popular() {
   let token = Cookies.get("token");
   const [size, setSize] = useState(3);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("products");
+  const getAll = getSectionLanguage();
   const [paginationSize, setPaginationSize] = useState(8);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -88,9 +88,9 @@ function Popular() {
   return (
     <div className="containerProductsPagePopular py-5">
       <MetaTags
-        title={getLanguage("Most_popular_services")}
-        metaDescription={getLanguage("Most_popular_services")}
-        ogDescription={getLanguage("Most_popular_services")}
+        title={getAll("Most_popular_services")}
+        metaDescription={getAll("Most_popular_services")}
+        ogDescription={getAll("Most_popular_services")}
       />
       <Formik
         isInitialValid={true}
@@ -103,9 +103,7 @@ function Popular() {
           <div className="row">
             <div className="col-md-12">
               <div className="page-header">
-                <h4 className="title">
-                  {getLanguage("Most_popular_services")}
-                </h4>
+                <h4 className="title">{getAll("Most_popular_services")}</h4>
               </div>
               {!getProducts && <Loading />}
               <FilterContent
@@ -129,8 +127,8 @@ function Popular() {
                     pageRangeDisplayed={paginationSize}
                     itemClass="page-item"
                     linkClass="page-link"
-                    firstPageText={getLanguage("First_page")}
-                    lastPageText={getLanguage("Last_page")}
+                    firstPageText={getAll("First_page")}
+                    lastPageText={getAll("Last_page")}
                   />
                 </div>
               )}

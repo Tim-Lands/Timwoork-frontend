@@ -38,8 +38,7 @@ function index() {
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   console.log(postsList);
   useEffect(() => {
     refreshData();
@@ -85,7 +84,7 @@ function index() {
       );
       if (res.status === 200)
         notification.success({
-          message: getLogin("User_successfully_blocked"),
+          message: getAll("User_successfully_blocked"),
         });
       setPostsList((posts) => ({
         ...posts,
@@ -98,7 +97,7 @@ function index() {
 
   const columns: any = [
     {
-      title: getLogin("Full_name"),
+      title: getAll("Full_name"),
       dataIndex: "",
       render: (e: any) => (
         <Link key={e.id} href={`/u/${e.id}`}>
@@ -106,7 +105,7 @@ function index() {
             <Image src={`${e.profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
               {!e.profile.full_name || e.profile.full_name == ""
-                ? getLogin("Nameless")
+                ? getAll("Nameless")
                 : e.profile.full_name}
             </span>
           </a>
@@ -123,7 +122,7 @@ function index() {
       ellipsis: true,
     },
     {
-      title: getLogin("E_mail"),
+      title: getAll("E_mail"),
       //className: 'column-money',
       dataIndex: "email",
       key: "email",
@@ -135,7 +134,7 @@ function index() {
       ellipsis: true,
     },
     {
-      title: getLogin("Phone"),
+      title: getAll("Phone"),
       dataIndex: "phone",
       key: "phone",
       sorter: {
@@ -146,7 +145,7 @@ function index() {
       width: 120,
     },
     {
-      title: getLogin("Registration_date"),
+      title: getAll("Registration_date"),
       //className: 'column-money',
       dataIndex: "created_at",
       key: "created_at",
@@ -172,7 +171,7 @@ function index() {
               }}
               type="button"
             >
-              {getLogin("Temporary_suspension")}
+              {getAll("Temporary_suspension")}
             </button>
             <button
               title={item.id}
@@ -183,24 +182,24 @@ function index() {
               }}
               type="button"
             >
-              {getLogin("Permanent_suspension")}{" "}
+              {getAll("Permanent_suspension")}{" "}
             </button>
             <button
-              title={getLogin("Send_e_mail")}
+              title={getAll("Send_e_mail")}
               className="btn butt-xs2 butt-blue"
               onClick={() => setIsNotifyModalVisible(true)}
             >
-              {getLogin("Send_e_mail")}
+              {getAll("Send_e_mail")}
             </button>
             <button
-              title={getLogin("Send_notification")}
+              title={getAll("Send_notification")}
               className="btn butt-xs2 butt-green"
               onClick={() => {
                 setSelectedUserID(item.id);
                 setIsEmailModalVisible(true);
               }}
             >
-              {getLogin("Send_notification")}
+              {getAll("Send_notification")}
             </button>
           </Space>
         </>
@@ -243,7 +242,7 @@ function index() {
           },
         }
       );
-      notification.success({ message: getLogin("The_notification_was") });
+      notification.success({ message: getAll("The_notification_was") });
     } catch (err) {
       console.log(err);
       notification.warning({ message: getAll("An_error_occured") });
@@ -258,14 +257,14 @@ function index() {
             <span className="material-icons material-icons-outlined">
               people
             </span>
-            {getLogin("Members_management")}
+            {getAll("Members_management")}
           </h2>
         </div>
         {isEmailModalVisible && (
           <EmailModalCause
             setIsConfirmText={setIsEmailModalVisible}
             handleFunc={() => sendNotification()}
-            title={getLogin("User_notification")}
+            title={getAll("User_notification")}
             msg={cause}
             setMsg={(e) => setCause(e)}
           />
@@ -273,7 +272,7 @@ function index() {
         {isNotifyModalVisible && (
           <SendNotification
             setIsConfirmText={setIsNotifyModalVisible}
-            title={getLogin("Send_e_mail_to")}
+            title={getAll("Send_e_mail_to")}
           />
         )}
         {isShowSuspensionTimer && (
@@ -300,7 +299,7 @@ function index() {
                 <input
                   id="input-sQuery"
                   name="sQuery"
-                  placeholder={getLogin("Search_in_table")}
+                  placeholder={getAll("Search_in_table")}
                   className="timlands-inputs"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}

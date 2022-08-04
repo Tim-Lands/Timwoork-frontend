@@ -15,8 +15,7 @@ import { useContext } from "react";
 
 function ResetPassword({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -51,10 +50,10 @@ function ResetPassword({ query }) {
       </div>
     );
   const SignupSchema = Yup.object().shape({
-    password: Yup.string().required(getLogin("This_field_is")),
+    password: Yup.string().required(getAll("This_field_is")),
     password_confirmation: Yup.string().oneOf(
       [Yup.ref("password"), null],
-      getLogin("Passwords_are_not")
+      getAll("Passwords_are_not")
     ),
   });
   return (
@@ -86,21 +85,21 @@ function ResetPassword({ query }) {
                       );
                       // Authentication was successful.
                       if (res.status === 200) {
-                        message.success(getLogin("The_update_has"));
+                        message.success(getAll("The_update_has"));
                         router.push("/login");
                       }
                     } catch (error: any) {
                       if (error.response && error.response.status === 200) {
-                        message.success(getLogin("The_update_has"));
+                        message.success(getAll("The_update_has"));
                       }
                       if (error.response && error.response.status === 422) {
                         message.error(getAll("Please_fill_in"));
                       }
                       if (error.response && error.response.status === 419) {
-                        message.error(getLogin("Operation_failed"));
+                        message.error(getAll("Operation_failed"));
                       }
                       if (error.response && error.response.status === 400) {
-                        message.error(getLogin("An_error_occurred"));
+                        message.error(getAll("An_error_occurred"));
                       } else {
                         message.error(getAll("An_unexpected_error_occurred"));
                       }
@@ -184,7 +183,7 @@ function ResetPassword({ query }) {
                               disabled={isSubmitting}
                               className="btn me-auto butt-primary butt-md"
                             >
-                              {getLogin("Update_basic_information")}
+                              {getAll("Update_basic_information")}
                             </button>
                           </div>
                         </div>

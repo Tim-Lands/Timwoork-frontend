@@ -13,8 +13,7 @@ import { useContext } from "react";
 
 function Levels(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: GetData, error }: any = useSWR(`dashboard/levels`);
 
   const deleteHandle = (id: any) => {
@@ -29,12 +28,12 @@ function Levels(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
-        cancelButtonText: getLogin("No"),
+        confirmButtonText: getAll("Yes"),
+        cancelButtonText: getAll("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -45,8 +44,8 @@ function Levels(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            getLogin("Deleted"),
-            getLogin("The_service_has"),
+            getAll("Deleted"),
+            getAll("The_service_has"),
             "success"
           );
         }
@@ -74,8 +73,8 @@ function Levels(): ReactElement {
     <>
       <MetaTags
         title={" المستويات - الإدارة العامة"}
-        metaDescription={getLogin("Home_General_administration")}
-        ogDescription={getLogin("Home_General_administration")}
+        metaDescription={getAll("Home_General_administration")}
+        ogDescription={getAll("Home_General_administration")}
       />
       {isModalShowen && (
         <AddNewLevel setIsModalHiddenHandle={setIsModalHiddenHandle} />
@@ -86,7 +85,7 @@ function Levels(): ReactElement {
             <span className="material-icons material-icons-outlined">
               badge
             </span>
-            {getLogin("Levels")}
+            {getAll("Levels")}
           </h2>
           <div className="header-butt">
             <button
@@ -96,7 +95,7 @@ function Levels(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              {getLogin("Add_new")}
+              {getAll("Add_new")}
             </button>
           </div>
         </div>
@@ -106,7 +105,7 @@ function Levels(): ReactElement {
               <tr>
                 <th>اسم المستوى</th>
                 <th>نوع المستوى</th>
-                <th>{getLogin("Tools")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -120,9 +119,7 @@ function Levels(): ReactElement {
                     key={e.id}
                   >
                     <td>{e.name_ar}</td>
-                    <td>
-                      {e.type !== 0 ? getLogin("Buyer") : getLogin("Seller")}
-                    </td>
+                    <td>{e.type !== 0 ? getAll("Buyer") : getAll("Seller")}</td>
                     <td className="tools-col">
                       <button className="table-del success">
                         <span className="material-icons material-icons-outlined">

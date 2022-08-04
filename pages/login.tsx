@@ -40,8 +40,7 @@ const Login = (): ReactElement => {
 
   // Login with Google
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const onLoginSuccess = async (res) => {
     setValidationsErrorsHandle();
     //أرسل هذا الريسبونس الى الباكند
@@ -63,7 +62,7 @@ const Login = (): ReactElement => {
         }
         // Cookies.set('username', );
         // Cookies.set('userID', )
-        message.success(getLogin("Logged_in_successfully"));
+        message.success(getAll("Logged_in_successfully"));
         switch (response.data.data.step) {
           case 0:
             router.push("/user/personalInformations");
@@ -79,7 +78,7 @@ const Login = (): ReactElement => {
         }
       }
     } catch (error: any) {
-      message.error(getLanguage("An_unexpected_error_occurred"));
+      message.error(getAll("An_unexpected_error_occurred"));
     }
   };
 
@@ -102,9 +101,9 @@ const Login = (): ReactElement => {
   return (
     <>
       <MetaTags
-        title={getLanguage("Login_in")}
-        metaDescription={getLogin("Home")}
-        ogDescription={getLogin("Home")}
+        title={getAll("Login_in")}
+        metaDescription={getAll("Home")}
+        ogDescription={getAll("Home")}
       />
       <Formik
         initialValues={{
@@ -176,17 +175,17 @@ const Login = (): ReactElement => {
                       </Link>
                     </div>
                     <div className="page-header">
-                      <h1 className="title">{getLanguage("Login_in")}</h1>
+                      <h1 className="title">{getAll("Login_in")}</h1>
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="email">
-                        {getLogin("E_mail")}
+                        {getAll("E_mail")}
                       </label>
                       <Field
                         id="email"
                         name="username"
                         onKeyUp={setValidationsErrorsHandle}
-                        placeholder={getLogin("E_mail")}
+                        placeholder={getAll("E_mail")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -210,13 +209,13 @@ const Login = (): ReactElement => {
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
-                        {getLogin("Password")}
+                        {getAll("Password")}
                       </label>
                       <Field
                         type={passVisibled ? "text" : "password"}
                         id="password"
                         name="password"
-                        placeholder={getLogin("Password")}
+                        placeholder={getAll("Password")}
                         onKeyUp={setValidationsErrorsHandle}
                         className={
                           "timlands-inputs " +
@@ -270,12 +269,12 @@ const Login = (): ReactElement => {
                             className="form-check-label"
                             htmlFor="defaultCheck1"
                           >
-                            {getLogin("Remember_me")}
+                            {getAll("Remember_me")}
                           </label>
                         </div>
                         <p className="text">
                           <Link href="/user/forgetPass">
-                            <a>{getLogin("Forgotten_password")}</a>
+                            <a>{getAll("Forgotten_password")}</a>
                           </Link>
                         </p>
                       </div>
@@ -287,13 +286,13 @@ const Login = (): ReactElement => {
                           disabled={isSubmitting}
                           className="btn  butt-primary butt-md"
                         >
-                          {getLanguage("Login_in")}
+                          {getAll("Login_in")}
                         </button>
                         <div className="footer-text">
                           <p className="text" style={{ margin: 0 }}>
-                            {getLogin("Have_you_already")}
+                            {getAll("Have_you_already")}
                             <Link href="/register">
-                              <a>{getLanguage("join_us")}</a>
+                              <a>{getAll("join_us")}</a>
                             </Link>
                           </p>
                         </div>
@@ -301,7 +300,7 @@ const Login = (): ReactElement => {
                     </div>
                     <div className="panel-login-external">
                       <div className="login-external-header">
-                        <h4 className="title">{getLogin("Or_log_in")}</h4>
+                        <h4 className="title">{getAll("Or_log_in")}</h4>
                       </div>
                       <ul className="login-external-links nav justify-content-center">
                         {/* <li>
@@ -312,7 +311,7 @@ const Login = (): ReactElement => {
                         <li>
                           <GoogleLogin
                             clientId={clientId}
-                            buttonText={getLogin("Google")}
+                            buttonText={getAll("Google")}
                             onSuccess={onLoginSuccess}
                             onFailure={onLoginFailure}
                             cookiePolicy={"single_host_origin"}

@@ -27,24 +27,23 @@ function FourOFour(props: any) {
     ? process.env.NEXT_PUBLIC_USER_HOME_ROUTE
     : "/";
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   return (
     <div className="timwoork-404-page">
       <Head>
-        <title>{getLanguage("Page_not_found")}</title>
+        <title>{getAll("Page_not_found")}</title>
       </Head>
       <div className="timwoork-404-page-inner">
         <div className="not-found-image">
           <img src="/undraw_Waiting__for_you_ldha.svg" alt="" />
         </div>
         <h1 className="title">
-          <span className="error-status">404</span> |
-          {getLanguage("Page_not_found")}
+          <span className="error-status">404</span> |{getAll("Page_not_found")}
         </h1>
         <h2 className="text-xl text-purple-500 text-center underline flex hover:text-purple-700 transition">
           <Link href={linkLocation}>
             <a className="btn butt-primary butt-md">
-              {getLanguage("Return_to_Home")}
+              {getAll("Return_to_Home")}
             </a>
           </Link>
         </h2>

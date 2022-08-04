@@ -12,12 +12,11 @@ import { useContext } from "react";
 
 const NumberPhone = (): ReactElement => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: userInfo }: any = useSWR("api/me");
   // Redirect to user home route if user is authenticated.
   const SignupSchema = Yup.object().shape({
-    phone_number: Yup.number().required(getLogin("This_field_is")),
+    phone_number: Yup.number().required(getAll("This_field_is")),
   });
   // Return statement.
   return (
@@ -41,22 +40,22 @@ const NumberPhone = (): ReactElement => {
               });
               // Authentication was successful.
               if (res.status === 200) {
-                message.success(getLogin("The_update_has"));
+                message.success(getAll("The_update_has"));
               }
             } catch (error: any) {
               if (error.response && error.response.status === 200) {
-                message.success(getLogin("The_update_has"));
+                message.success(getAll("The_update_has"));
               }
               if (error.response && error.response.status === 422) {
-                message.error(getLogin("Please_fill_in"));
+                message.error(getAll("Please_fill_in"));
               }
               if (error.response && error.response.status === 419) {
                 message.error(getAll("Failed_operation"));
               }
               if (error.response && error.response.status === 400) {
-                message.error(getLogin("An_error_occurred"));
+                message.error(getAll("An_error_occurred"));
               } else {
-                message.error(getLogin("An_unexpected_error"));
+                message.error(getAll("An_unexpected_error"));
               }
             }
           }}
@@ -85,18 +84,18 @@ const NumberPhone = (): ReactElement => {
                   )}
 
                   <div className="update-form-header">
-                    <h1 className="title">{getLogin("Update_phone_number")}</h1>
+                    <h1 className="title">{getAll("Update_phone_number")}</h1>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="phone_number">
-                          {getLogin("Phone_number")}
+                          {getAll("Phone_number")}
                         </label>
                         <Field
                           id="phone_number"
                           name="phone_number"
-                          placeholder={getLogin("Phone_number")}
+                          placeholder={getAll("Phone_number")}
                           className="timlands-inputs"
                           autoComplete="off"
                         />
@@ -121,7 +120,7 @@ const NumberPhone = (): ReactElement => {
                         disabled={isSubmitting}
                         className="btn me-auto butt-primary butt-md"
                       >
-                        {getLogin("Update_phone_number")}
+                        {getAll("Update_phone_number")}
                       </button>
                     </div>
                   </div>

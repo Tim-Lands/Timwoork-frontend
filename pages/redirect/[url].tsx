@@ -19,28 +19,28 @@ function Redirect() {
     }
   });
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <div className="py-4">
       <MetaTags title="أعادة توجيه" />
       <div className="container my-3">
         <div className="redirect">
-          <h4>{getLogin("Pay_close_attention")}</h4>
+          <h4>{getAll("Pay_close_attention")}</h4>
           <div className="warnings">
             <ul className="list">
-              <li>{getLogin("Do_not_enter")}</li>
-              <li>{getLogin("Always_check_the")}</li>
-              <li>{getLogin("Do_not_deal")}</li>
+              <li>{getAll("Do_not_enter")}</li>
+              <li>{getAll("Always_check_the")}</li>
+              <li>{getAll("Do_not_deal")}</li>
             </ul>
             <div className="controllers">
               <button>
                 <Link href={back ? "/" + back : "/redirect/f"}>
-                  {getLogin("Return")}
+                  {getAll("Return")}
                 </Link>
               </button>
               <button>
                 <Link href={go ? go : "/redirect/f"}>
-                  {getLogin("Go_to_the")}
+                  {getAll("Go_to_the")}
                 </Link>
               </button>
             </div>

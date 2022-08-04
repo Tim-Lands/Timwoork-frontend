@@ -25,9 +25,9 @@ function Footer() {
     name: "Dollar",
     symbol: "$",
   });
-  const [isLogged, setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(false);
   const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,10 +39,10 @@ function Footer() {
       },
     })
       .then((res) => {
-        setIsLogged(true)
+        setIsLogged(true);
         setCurrency(res?.data?.user_details?.profile?.currency);
       })
-      .catch(() => { });
+      .catch(() => {});
     const [categoriesRes, blogPostsRes, popularProductsRes] = await Promise.all(
       [
         API.get("api/top_main_categories"),
@@ -68,32 +68,32 @@ function Footer() {
       <div className="footer-inner">
         <div className=" footer-cont">
           <div className="footer-item">
-            <h3 className="title">{getLanguage("Websites’_links")}</h3>
+            <h3 className="title">{getAll("Websites’_links")}</h3>
             <ul className="footerlist">
               <li>
                 <Link href="/privacy">
-                  <a>{getLanguage("Privacy_policy")}</a>
+                  <a>{getAll("Privacy_policy")}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/terms">
-                  <a>{getLanguage("Terms_of_use")}</a>
+                  <a>{getAll("Terms_of_use")}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/about-us">
-                  <a>{getLanguage("About_website")}</a>
+                  <a>{getAll("About_website")}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/contactus">
-                  <a>{getLanguage("Contact_us")}</a>
+                  <a>{getAll("Contact_us")}</a>
                 </Link>
               </li>
             </ul>
           </div>
           <div className="footer-item">
-            <h3 className="title">{getLanguage("Active_Categories")}</h3>
+            <h3 className="title">{getAll("Active_Categories")}</h3>
             <ul className="footerlist">
               {categories.map((category, index) => {
                 if (index > 7) return;
@@ -108,7 +108,7 @@ function Footer() {
             </ul>
           </div>
           <div className="footer-item">
-            <h3 className="title">{getLanguage("Most_popular_services")}</h3>
+            <h3 className="title">{getAll("Most_popular_services")}</h3>
             <ul className="footerlist">
               {popularProducts.map((product) => {
                 return (
@@ -122,7 +122,7 @@ function Footer() {
             </ul>
           </div>
           <div className="footer-item">
-            <h3 className="title">{getLanguage("Blog")}</h3>
+            <h3 className="title">{getAll("Blog")}</h3>
             <ul className="footerlist">
               {blogPosts.map((post) => (
                 <li key={post.id} style={{ width: 350 }}>
@@ -133,32 +133,32 @@ function Footer() {
               ))}
             </ul>
             <div className="payments-me">
-              <h4 className="title">{getLanguage("Payment_methods")}</h4>
-              <Tooltip title={getLanguage("Visa")}>
+              <h4 className="title">{getAll("Payment_methods")}</h4>
+              <Tooltip title={getAll("Visa")}>
                 <img src="/png1.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title={getLanguage("Mastercard")}>
+              <Tooltip title={getAll("Mastercard")}>
                 <img src="/png2.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title={getLanguage("PayPal")}>
+              <Tooltip title={getAll("PayPal")}>
                 <img src="/png4.png" alt="" height={38} className="mx-1" />
               </Tooltip>
             </div>
             <div className="payments-me mt-2">
-              <h4 className="title">{getLanguage("Withdrawl_methods")}</h4>
-              <Tooltip title={getLanguage("Western_Union")}>
+              <h4 className="title">{getAll("Withdrawl_methods")}</h4>
+              <Tooltip title={getAll("Western_Union")}>
                 <img src="/western.png" alt="" height={38} className="mx-1" />
               </Tooltip>
-              <Tooltip title={getLanguage("Wise")}>
+              <Tooltip title={getAll("Wise")}>
                 <img src="/png3.png" alt="" height={30} className="mx-1" />
               </Tooltip>
-              <Tooltip title={getLanguage("Algery_Post")}>
+              <Tooltip title={getAll("Algery_Post")}>
                 <img src="/ccp.png" alt="" height={30} className="mx-1" />
               </Tooltip>
-              <Tooltip title={getLanguage("Bank_transfer")}>
+              <Tooltip title={getAll("Bank_transfer")}>
                 <img src="/bank.png" alt="" height={30} className="mx-1" />
               </Tooltip>
-              <Tooltip title={getLanguage("Money_order")}>
+              <Tooltip title={getAll("Money_order")}>
                 <img src="/cash.png" alt="" height={30} className="mx-1" />
               </Tooltip>
             </div>
@@ -171,7 +171,7 @@ function Footer() {
             <div className="right-footer">
               <img src="img/logofoot.png" alt="" />
               <p className="text">
-                © 2021-2022 Timlands {getLanguage("All_rights_reserved")}
+                © 2021-2022 Timlands {getAll("All_rights_reserved")}
               </p>
             </div>
             <div className="left-footer">
@@ -182,7 +182,9 @@ function Footer() {
                   </button>
                 </li> */}
                 <li className="rounded-button">
-                  <Link href={isLogged ? `/user/personalInformations` : '/login'}>
+                  <Link
+                    href={isLogged ? `/user/personalInformations` : "/login"}
+                  >
                     <a className="rounded-button">
                       {currency?.name + "   " + currency?.symbol}
                     </a>

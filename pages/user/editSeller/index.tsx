@@ -121,7 +121,7 @@ const Tiptap = (props: any) => {
       editor={props.editor}
       onChange={props.changeHandle}
       onKeyDown={props.onKeyDown}
-      onKeyUp = {props.onKeyUp}
+      onKeyUp={props.onKeyUp}
       style={{ minHeight: 170 }}
     />
   );
@@ -134,8 +134,12 @@ const EditSeller = () => {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { data: userInfo }: any = useSWR("api/me");
   const [isShowenModal, setIsShowenModal] = useState(false);
-  const [checkedLangs, setCheckedLangs] = useState({ ar: false, fr: false, en: false })
-  const [selectedLang, setSelectedLang] = useState('');
+  const [checkedLangs, setCheckedLangs] = useState({
+    ar: false,
+    fr: false,
+    en: false,
+  });
+  const [selectedLang, setSelectedLang] = useState("");
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
   const [userLang, setUserLang] = useState();
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
@@ -147,27 +151,24 @@ const EditSeller = () => {
       userInfo.user_details.profile.profile_seller.bio,
   });
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const html = editor && editor.getHTML();
 
-
   const addSubtitle = (subtitle) => {
-    console.log(subtitle)
-    console.log(selectedLang)
+    console.log(subtitle);
+    console.log(selectedLang);
     switch (selectedLang) {
-      case 'ar':
+      case "ar":
         setSubtitles({ ...subtitles, ar: subtitle });
         break;
-      case 'en':
+      case "en":
         setSubtitles({ ...subtitles, en: subtitle });
         break;
-      case 'fr':
+      case "fr":
         setSubtitles({ ...subtitles, fr: subtitle });
         break;
     }
-  }
-
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -182,13 +183,13 @@ const EditSeller = () => {
     onSubmit: async (values) => {
       setValidationsErrors({});
       try {
-        if (subtitles['ar']) values.bio = subtitles['ar'];
-        if (subtitles['en']) values.bio = subtitles['en'];
-        if (subtitles['fr']) values.bio = subtitles['fr'];
+        if (subtitles["ar"]) values.bio = subtitles["ar"];
+        if (subtitles["en"]) values.bio = subtitles["en"];
+        if (subtitles["fr"]) values.bio = subtitles["fr"];
         const res = await API.post("api/sellers/detailsStore", values, {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-LOCALIZATION':userLang
+            "X-LOCALIZATION": userLang,
           },
         });
         // Authentication was successful.
@@ -215,17 +216,16 @@ const EditSeller = () => {
   // Return statement.
 
   const detectLang = async (txt) => {
-
     const res = await API.post(`/api/detectLang`, { sentence: txt });
-    setCheckedLangs({ ...checkedLangs, [res.data.data]: false })
+    setCheckedLangs({ ...checkedLangs, [res.data.data]: false });
     setUserLang(res.data.data);
-  }
+  };
   return (
     <>
       <MetaTags
-        title={getLogin("Edit_the_sellers")}
-        metaDescription={getLogin("Edit_the_sellers")}
-        ogDescription={getLogin("Edit_the_sellers")}
+        title={getAll("Edit_the_sellers")}
+        metaDescription={getAll("Edit_the_sellers")}
+        ogDescription={getAll("Edit_the_sellers")}
       />
       {veriedEmail && (
         <>
@@ -236,7 +236,12 @@ const EditSeller = () => {
               <>
                 <div className="row justify-content-md-center mt-3">
                   <div className="col-lg-7">
-                    {isShowenModal && <FormModal onSubmit={txt => addSubtitle(txt)} setIsConfirmText={setIsShowenModal} />}
+                    {isShowenModal && (
+                      <FormModal
+                        onSubmit={(txt) => addSubtitle(txt)}
+                        setIsConfirmText={setIsShowenModal}
+                      />
+                    )}
 
                     <form onSubmit={formik.handleSubmit}>
                       <div className="login-panel update-form">
@@ -306,32 +311,47 @@ const EditSeller = () => {
                             <div className="col-md-12">
                               <div className="timlands-form">
                                 <label className="label-block" htmlFor="bio">
-                                  {getLogin("Brief_me_about")}
+                                  {getAll("Brief_me_about")}
                                 </label>
                                 <div className="app-content-editor">
-                                  <FormLangsCheck id={1} default_lang={userLang} onChange={(e) => {
-                                    setCheckedLangs({ ...checkedLangs, [e.target.value]: e.target.checked })
-                                    if (!e.target.checked) setSubtitles({ ...subtitles, [e.target.value]: null })
-                                  }}
-
+                                  <FormLangsCheck
+                                    id={1}
+                                    default_lang={userLang}
+                                    onChange={(e) => {
+                                      setCheckedLangs({
+                                        ...checkedLangs,
+                                        [e.target.value]: e.target.checked,
+                                      });
+                                      if (!e.target.checked)
+                                        setSubtitles({
+                                          ...subtitles,
+                                          [e.target.value]: null,
+                                        });
+                                    }}
                                   />
                                   <MenuBar editor={editor} />
                                   <Tiptap
                                     value={formik.values.bio}
                                     changeHandle={formik.handleChange}
                                     editor={editor}
-                                    onKeyDown={()=>{
+                                    onKeyDown={() => {
                                       clearTimeout(testTime);
                                     }}
-                                    onKeyUp={()=>{
-                                      testTime = setTimeout(()=>detectLang(formik.values['bio']),3000)
-                              
+                                    onKeyUp={() => {
+                                      testTime = setTimeout(
+                                        () => detectLang(formik.values["bio"]),
+                                        3000
+                                      );
                                     }}
                                   />
-                                  <FormLangs onClick={(lang) => {
-                                    setIsShowenModal(true);
-                                    setSelectedLang(lang);
-                                  }} checkedLangs={checkedLangs} default_lang={userLang} />
+                                  <FormLangs
+                                    onClick={(lang) => {
+                                      setIsShowenModal(true);
+                                      setSelectedLang(lang);
+                                    }}
+                                    checkedLangs={checkedLangs}
+                                    default_lang={userLang}
+                                  />
                                 </div>
                                 {validationsErrors && validationsErrors.bio && (
                                   <div style={{ overflow: "hidden" }}>
@@ -356,7 +376,7 @@ const EditSeller = () => {
                                 disabled={formik.isSubmitting}
                                 className="btn me-auto butt-primary butt-md"
                               >
-                                {getLogin("Update_basic_information")}
+                                {getAll("Update_basic_information")}
                               </button>
                             </div>
                           </div>

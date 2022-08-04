@@ -22,8 +22,7 @@ const profileAvatar = (): ReactElement => {
     avatar: Yup.mixed().required(),
   });
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   // Return statement.
   return (
     <>
@@ -51,22 +50,22 @@ const profileAvatar = (): ReactElement => {
               });
               // Authentication was successful.
               if (res.status === 200) {
-                message.success(getLogin("The_update_has"));
+                message.success(getAll("The_update_has"));
               }
             } catch (error: any) {
               if (error.response && error.response.status === 200) {
-                message.success(getLogin("The_update_has"));
+                message.success(getAll("The_update_has"));
               }
               if (error.response && error.response.status === 422) {
-                message.error(getLanguage("Please_fill_in"));
+                message.error(getAll("Please_fill_in"));
               }
               if (error.response && error.response.status === 419) {
-                message.error(getLogin("Operation_failed"));
+                message.error(getAll("Operation_failed"));
               }
               if (error.response && error.response.status === 400) {
-                message.error(getLogin("An_error_occurred"));
+                message.error(getAll("An_error_occurred"));
               } else {
-                message.error(getLogin("An_unexpected_error"));
+                message.error(getAll("An_unexpected_error"));
               }
             }
           }}
@@ -91,9 +90,9 @@ const profileAvatar = (): ReactElement => {
                       </Link>
                     </div>
                     <h1 className="login-title">
-                      {getLogin("Update_profile_picture")}
+                      {getAll("Update_profile_picture")}
                     </h1>
-                    <h3 className="login-text">{getLogin("This_text_is")}</h3>
+                    <h3 className="login-text">{getAll("This_text_is")}</h3>
                   </div>
                 </div>
                 <div className="col-lg-6 p-0">
@@ -126,7 +125,7 @@ const profileAvatar = (): ReactElement => {
                           />
                           <div className="timlands-form">
                             <label className="label-block" htmlFor="avatar">
-                              {getLogin("Choose_profile_picture")}
+                              {getAll("Choose_profile_picture")}
                             </label>
                             <input
                               id="avatar"
@@ -161,7 +160,7 @@ const profileAvatar = (): ReactElement => {
                             disabled={isSubmitting}
                             className="btn me-auto butt-primary butt-md"
                           >
-                            {getLogin("Update_basic_information")}
+                            {getAll("Update_basic_information")}
                           </button>
                         </div>
                       </div>

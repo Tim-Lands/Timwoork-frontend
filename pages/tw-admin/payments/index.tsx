@@ -15,8 +15,7 @@ import { useContext } from "react";
 
 function Countries(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: GetData, error }: any = useSWR(`dashboard/types_payments`);
 
   const token = Cookies.get("token_dash");
@@ -31,12 +30,12 @@ function Countries(): ReactElement {
         })
 
         swalWithBootstrapButtons.fire({
-            title: {getLogin("Are_you_sure")},
-            text: {getLogin("Are_you_sure")},
+            title: {getAll("Are_you_sure")},
+            text: {getAll("Are_you_sure")},
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: {getLogin("Yes")}',
-            cancelButtonText: {getLogin("No")},
+            confirmButtonText: {getAll("Yes")}',
+            cancelButtonText: {getAll("No")},
             reverseButtons: true
         }).then(async (result) => {
             if (result.isConfirmed) {
@@ -48,7 +47,7 @@ function Countries(): ReactElement {
 
                 }
                 swalWithBootstrapButtons.fire(
-                    {getLogin("Deleted")},
+                    {getAll("Deleted")},
                     'لقد تم حذف هذا العنصر بنجاح',
                     'success'
                 )
@@ -66,11 +65,11 @@ function Countries(): ReactElement {
         }
       );
       if (res.status === 200) {
-        message.success(getLogin("The_gateway_had"));
+        message.success(getAll("The_gateway_had"));
         router.reload();
       }
     } catch (error) {
-      message.success(getLogin("Unfortunately_the_gateway"));
+      message.success(getAll("Unfortunately_the_gateway"));
     }
   };
   const disactivateHandle = async (id: any) => {
@@ -83,11 +82,11 @@ function Countries(): ReactElement {
         }
       );
       if (res.status === 200) {
-        message.success(getLogin("The_gateway_has"));
+        message.success(getAll("The_gateway_has"));
         router.reload();
       }
     } catch (error) {
-      message.success(getLogin("Unfortunately_the_gateway_2"));
+      message.success(getAll("Unfortunately_the_gateway_2"));
     }
   };
   const catVariants = {
@@ -104,9 +103,9 @@ function Countries(): ReactElement {
   return (
     <>
       <MetaTags
-        title={getLogin("Genaral_administration_Payment")}
-        metaDescription={getLogin("Home_Payment_Gateways")}
-        ogDescription={getLogin("Home_Payment_Gateways")}
+        title={getAll("Genaral_administration_Payment")}
+        metaDescription={getAll("Home_Payment_Gateways")}
+        ogDescription={getAll("Home_Payment_Gateways")}
       />
       <div className="timlands-panel">
         <div className="timlands-panel-header d-flex align-items-center">
@@ -114,7 +113,7 @@ function Countries(): ReactElement {
             <span className="material-icons material-icons-outlined">
               payments
             </span>
-            {getLogin("Payment_gateways")}
+            {getAll("Payment_gateways")}
           </h2>
           <div className="header-butt">
             <Link href={`/tw-admin/payments/add`}>
@@ -122,7 +121,7 @@ function Countries(): ReactElement {
                 <span className="material-icons material-icons-outlined">
                   add_box
                 </span>{" "}
-                {getLogin("Add_new")}
+                {getAll("Add_new")}
               </a>
             </Link>
           </div>
@@ -131,9 +130,9 @@ function Countries(): ReactElement {
           <table className="table">
             <thead>
               <tr>
-                <th>{getLogin("Gateway_name")}</th>
-                <th>{getLogin("Deduction_rate")}</th>
-                <th>{getLogin("Status")}</th>
+                <th>{getAll("Gateway_name")}</th>
+                <th>{getAll("Deduction_rate")}</th>
+                <th>{getAll("Status")}</th>
                 <th>{getAll("Tools")}</th>
               </tr>
             </thead>
@@ -150,9 +149,7 @@ function Countries(): ReactElement {
                     <td>{e.name_ar}</td>
                     <td>{e.precent_of_payment}</td>
                     <td>
-                      {e.status == 0
-                        ? getLogin("Disabled")
-                        : getLogin("Active")}
+                      {e.status == 0 ? getAll("Disabled") : getAll("Active")}
                     </td>
                     <td className="tools-col">
                       <Link href={`/tw-admin/payments/edit/${e.id}`}>
@@ -166,14 +163,14 @@ function Countries(): ReactElement {
                           onClick={() => disactivateHandle(e.id)}
                           className="btn butt-xs2 mx-1 butt-orange"
                         >
-                          {getLogin("Desactivation")}
+                          {getAll("Desactivation")}
                         </button>
                       ) : (
                         <button
                           onClick={() => activateHandle(e.id)}
                           className="btn butt-xs2 mx-1 butt-green"
                         >
-                          {getLogin("Activation")}
+                          {getAll("Activation")}
                         </button>
                       )}
                     </td>
@@ -185,7 +182,7 @@ function Countries(): ReactElement {
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
-                {getLogin("An_unexpected_error")}
+                {getAll("An_unexpected_error")}
               </p>
             </Alert>
           )}

@@ -7,7 +7,7 @@ import { RiUserSmileLine } from "react-icons/ri";
 
 const Community = ({ refs }) => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("soon");
+  const getAll = getSectionLanguage();
   return (
     <motion.div
       ref={refs}
@@ -27,8 +27,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">{getLanguage("Competitions")}</h4>
-                <p className="text">{getLanguage("Soon")}</p>
+                <h4 className="title">{getAll("Competitions")}</h4>
+                <p className="text">{getAll("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -44,8 +44,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">{getLanguage("Projects")}</h4>
-                <p className="text">{getLanguage("Soon")}</p>
+                <h4 className="title">{getAll("Projects")}</h4>
+                <p className="text">{getAll("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -61,8 +61,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">{getLanguage("Business")}</h4>
-                <p className="text">{getLanguage("Soon")}</p>
+                <h4 className="title">{getAll("Business")}</h4>
+                <p className="text">{getAll("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -76,8 +76,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">{getLanguage("Timwoork_community")}</h4>
-                <p className="text">{getLanguage("Soon")}</p>
+                <h4 className="title">{getAll("Timwoork_community")}</h4>
+                <p className="text">{getAll("Soon")}</p>
               </div>
             </a>
           </Link>
@@ -93,8 +93,8 @@ const Community = ({ refs }) => {
                 </span>
               </div>
               <div className="dropd-item-content">
-                <h4 className="title">{getLanguage("Blog")}</h4>
-                <p className="text">{getLanguage("general_information")}</p>
+                <h4 className="title">{getAll("Blog")}</h4>
+                <p className="text">{getAll("general_information")}</p>
               </div>
             </a>
           </Link>

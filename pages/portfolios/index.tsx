@@ -10,7 +10,7 @@ import { useContext } from "react";
 
 function Index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   // const [isLoading, setIsLoading] = useState(false);
   // const [isSettings, setIsSettings] = useState(false);
   // const { language, getSectionLanguage } = useContext(LanguageContext);

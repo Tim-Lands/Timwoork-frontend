@@ -23,8 +23,7 @@ function Profile() {
   const { data: userInfo }: any = useSWR("api/me");
   const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
   const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
@@ -78,12 +77,12 @@ function Profile() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title={getLogin("Your_account_is_2")}
-            subTitle={getLogin("Your_account_is")}
+            title={getAll("Your_account_is_2")}
+            subTitle={getAll("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
                 <a className="btn butt-primary butt-md">
-                  {getLogin("Go_to_Edit")}
+                  {getAll("Go_to_Edit")}
                 </a>
               </Link>
             }
@@ -100,19 +99,19 @@ function Profile() {
           <>
             <MetaTags
               title={
-                getLogin("X’s_profile") +
+                getAll("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               metaDescription={
-                getLogin("X’s_profile") +
+                getAll("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               ogDescription={
-                getLogin("X’s_profile") +
+                getAll("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
@@ -151,7 +150,7 @@ function Profile() {
                           <span className="material-icons material-icons-outlined">
                             edit
                           </span>{" "}
-                          {getLogin("Profile_editing")}
+                          {getAll("Profile_editing")}
                         </a>
                       </Link>
                     </div>
@@ -168,7 +167,7 @@ function Profile() {
                       <span className="material-icons material-icons-outlined">
                         copy
                       </span>{" "}
-                      {getLogin("Copy_my_profiles")}
+                      {getAll("Copy_my_profiles")}
                     </button>
                   </p>
                 </div>
@@ -227,7 +226,7 @@ function Profile() {
                     {!userInfo.user_details.profile.profile_seller && (
                       <div className="be-seller-aside mb-2">
                         <h3 className="title">{getAll("Become_a_seller")}</h3>
-                        <p className="text">{getLogin("Do_you_ant")}</p>
+                        <p className="text">{getAll("Do_you_ant")}</p>
                         <button
                           onClick={beseller}
                           disabled={isLoadingSeler}
@@ -242,7 +241,7 @@ function Profile() {
                       <>
                         <div className="pb-1 mb-2">
                           <Card
-                            title={getLogin("Brief_me_about")}
+                            title={getAll("Brief_me_about")}
                             extra={
                               <Link href="/user/editSeller">
                                 <a className="edit-button flex-center">
@@ -284,8 +283,8 @@ function Profile() {
                                 }
                               >
                                 {isLess
-                                  ? getLogin("Read_more")
-                                  : getLogin("Read_less")}
+                                  ? getAll("Read_more")
+                                  : getAll("Read_less")}
                               </button>
                             )}
                             <div className="d-flex justify-content-center">
@@ -312,7 +311,7 @@ function Profile() {
                             <span className="material-icons material-icons-outlined">
                               account_circle
                             </span>
-                            {getLogin("Personal_information")}
+                            {getAll("Personal_information")}
                           </h3>
                         </div>
                       </div>
@@ -320,7 +319,7 @@ function Profile() {
                         <div className="col-sm-4">
                           <div className="content-text-item">
                             <h3 className="text-label">
-                              {getLogin("First_name")}
+                              {getAll("First_name")}
                             </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.first_name}
@@ -330,7 +329,7 @@ function Profile() {
                         <div className="col-sm-4">
                           <div className="content-text-item">
                             <h3 className="text-label">
-                              {getLogin("Last_name")}
+                              {getAll("Last_name")}
                             </h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.last_name}
@@ -340,7 +339,7 @@ function Profile() {
                         <div className="col-sm-4">
                           <div className="content-text-item">
                             <h3 className="text-label">
-                              {getLogin("Phone_number")}
+                              {getAll("Phone_number")}
                             </h3>
                             <p className="text-value">
                               {userInfo.user_details.phone
@@ -354,9 +353,7 @@ function Profile() {
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">
-                              {getLogin("Currency")}
-                            </h3>
+                            <h3 className="text-label">{getAll("Currency")}</h3>
                             <p className="text-value">
                               {
                                 userInfo.user_details.profile.currency
@@ -369,7 +366,7 @@ function Profile() {
                           <div className="col-sm-4">
                             <div className="content-text-item">
                               <h3 className="text-label">
-                                {getLogin("Country")}
+                                {getAll("Country")}
                               </h3>
                               <p className="text-value">
                                 {userInfo.user_details.profile.country.name_ar}
@@ -379,23 +376,21 @@ function Profile() {
                         )}
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">{getLogin("Gender")}</h3>
+                            <h3 className="text-label">{getAll("Gender")}</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile &&
                               userInfo.user_details.profile.gender == null
                                 ? ""
                                 : userInfo.user_details.profile &&
                                   (userInfo.user_details.profile.gender == 0
-                                    ? getLogin("woman")
-                                    : getLogin("Man"))}
+                                    ? getAll("woman")
+                                    : getAll("Man"))}
                             </p>
                           </div>
                         </div>
                         <div className="col-sm-4">
                           <div className="content-text-item">
-                            <h3 className="text-label">
-                              {getLogin("Birthday")}
-                            </h3>
+                            <h3 className="text-label">{getAll("Birthday")}</h3>
                             <p className="text-value">
                               {userInfo.user_details.profile.date_of_birth ==
                               null

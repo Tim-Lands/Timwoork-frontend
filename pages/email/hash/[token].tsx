@@ -12,8 +12,7 @@ import { useContext } from "react";
 
 function Token({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,7 +89,7 @@ function Token({ query }) {
                   });
                   // Authentication was successful.
                   if (res.status === 200) {
-                    message.success(getLogin("The_update_has"));
+                    message.success(getAll("The_update_has"));
                     //router.push('/')
                   }
                 } catch (error: any) {

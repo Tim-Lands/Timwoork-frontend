@@ -118,9 +118,7 @@ const Tiptap = (props: any) => {
 };
 function Description({ query, product }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
-  const getAddNew = getSectionLanguage("add_new");
+  const getAll = getSectionLanguage();
   const token = useRef(Cookies.get("token_dash"));
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -164,7 +162,7 @@ function Description({ query, product }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_update_has"));
+          message.success(getAll("The_update_has"));
           router.push(`/tw-admin/posts/edit-product/medias?id=${product.id}`);
         }
       } catch (error: any) {
@@ -181,7 +179,7 @@ function Description({ query, product }) {
   return (
     <>
       <MetaTags
-        title={getLogin("Edit_service_Description")}
+        title={getAll("Edit_service_Description")}
         metaDescription={getAll("Add_new_service_Description")}
         ogDescription={getAll("Add_new_service_Description")}
       />
@@ -207,7 +205,7 @@ function Description({ query, product }) {
                                 collections_bookmark
                               </span>
                             </span>
-                            {getLogin("General_information")}
+                            {getAll("General_information")}
                           </a>
                         </Link>
                       </h3>
@@ -227,7 +225,7 @@ function Description({ query, product }) {
                                 payments
                               </span>
                             </span>
-                            {getLogin("Price_and_developments")}
+                            {getAll("Price_and_developments")}
                           </a>
                         </Link>
                       </h3>
@@ -247,7 +245,7 @@ function Description({ query, product }) {
                                 description
                               </span>
                             </span>
-                            {getLogin("Desciprion_intrustions")}
+                            {getAll("Desciprion_intrustions")}
                           </a>
                         </Link>
                       </h3>
@@ -265,7 +263,7 @@ function Description({ query, product }) {
                                 mms
                               </span>
                             </span>
-                            {getLogin("Gallery_and_folders")}
+                            {getAll("Gallery_and_folders")}
                           </a>
                         </Link>
                       </h3>
@@ -293,7 +291,7 @@ function Description({ query, product }) {
                         <span className="material-icons material-icons-outlined">
                           description
                         </span>
-                        {getLogin("Desciprion_intrustions")}
+                        {getAll("Desciprion_intrustions")}
                       </h2>
                     </div>
                   </div>
@@ -306,7 +304,7 @@ function Description({ query, product }) {
                             className="label-block"
                             htmlFor="input-content"
                           >
-                            {getAddNew("Service_description")}
+                            {getAll("Service_description")}
                           </label>
                           <div className="app-content-editor">
                             <MenuBar editor={editor} />
@@ -322,7 +320,7 @@ function Description({ query, product }) {
                             className="timlands-form-note"
                           >
                             <p className="text">
-                              {getAddNew("Enter_an_accurate")}
+                              {getAll("Enter_an_accurate")}
                             </p>
                           </motion.div>
                           {validationsErrors && validationsErrors.content && (
@@ -346,7 +344,7 @@ function Description({ query, product }) {
                             className="label-block"
                             htmlFor="input-buyer_instruct"
                           >
-                            {getAddNew("Instructions_to_the")}
+                            {getAll("Instructions_to_the")}
                           </label>
                           <div className="app-content-editor">
                             <MenuBar editor={buyerInstruct} />
@@ -362,7 +360,7 @@ function Description({ query, product }) {
                             className="timlands-form-note"
                           >
                             <p className="text">
-                              {getAddNew("They_are_information")}
+                              {getAll("They_are_information")}
                             </p>
                           </motion.div>
                           {validationsErrors &&
@@ -392,7 +390,7 @@ function Description({ query, product }) {
                               chevron_right
                             </span>
                             <span className="text">
-                              {getAddNew("Previous_step")}
+                              {getAll("Previous_step")}
                             </span>
                           </button>
                           <button
@@ -402,9 +400,7 @@ function Description({ query, product }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">
-                              {getLogin("Save_edits")}
-                            </span>
+                            <span className="text">{getAll("Save_edits")}</span>
                           </button>
                         </div>
                       </div>

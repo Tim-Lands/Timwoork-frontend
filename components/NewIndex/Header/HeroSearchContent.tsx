@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 
-function HeroSearchContent({ getLanguage }) {
+function HeroSearchContent({}) {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   const [query, setQuery] = useState("");
   const router = useRouter();
   return (
@@ -17,20 +20,18 @@ function HeroSearchContent({ getLanguage }) {
           }
           onChange={(e) => setQuery(e.target.value)}
           type="text"
-          placeholder={getLanguage("Search_in_Timwoork")}
+          placeholder={getAll("Search_in_Timwoork")}
         />
         <button
           type="button"
           className="btn butt-md butt-primary2"
           onClick={() => router.push(`/products?query=${query}`)}
         >
-          {getLanguage("Search")}
+          {getAll("Search")}
         </button>
       </div>
     </div>
   );
 }
-HeroSearchContent.propTypes = {
-  getLanguage: PropTypes.func,
-};
+
 export default HeroSearchContent;

@@ -12,7 +12,7 @@ import { useContext } from "react";
 function Index({ query }) {
   console.log(query);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
 
   return (
     <div className="container pt-4 mt-2">

@@ -1771,6 +1771,11 @@
     "fr": "Et activer la fonctionnalité de services développés dans le compte, avec une limite de 5 mises à niveau et un prix maximal de 100 $ par développement/ mise à niveau.",
     "ar": "تفعيل خاصية الخدمات المطورة في الحساب، بحد 5 تطويرات  وبسعر أقصى 100 دولار للتطوير الواحد"
   },
+  "Activate": {
+    "en": "Activate",
+    "fr": "activer",
+    "ar": "تفعيل"
+  },
   "Active_seller": {
     "en": "Active seller",
     "fr": "Vendeur actif",

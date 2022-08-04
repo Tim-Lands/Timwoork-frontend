@@ -11,8 +11,7 @@ export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -22,7 +21,7 @@ export default function AddNewUser({
             <span className="material-icons material-icons-outlined">
               add_box
             </span>
-            {getLogin("Add_new")}
+            {getAll("Add_new")}
           </h2>
           <div className="panel-modal-left-tools">
             <button onClick={setIsModalHiddenHandle} className="close-modal">
@@ -44,18 +43,16 @@ export default function AddNewUser({
             value_bayer: "",
           }}
           validationSchema={Yup.object().shape({
-            name_ar: Yup.string().required(getLogin("This_field_is")),
-            name_en: Yup.string().required(getLogin("This_field_is")),
-            name_fr: Yup.string().required(getLogin("This_field_is")),
-            type: Yup.number().required(getLogin("This_field_is")),
+            name_ar: Yup.string().required(getAll("This_field_is")),
+            name_en: Yup.string().required(getAll("This_field_is")),
+            name_fr: Yup.string().required(getAll("This_field_is")),
+            type: Yup.number().required(getAll("This_field_is")),
             number_developments: Yup.number()
               .lessThan(127, "عدد التطويرات لا يتعدى 127")
-              .required(getLogin("This_field_is")),
-            price_developments: Yup.number().required(
-              getLogin("This_field_is")
-            ),
-            number_sales: Yup.number().required(getLogin("This_field_is")),
-            value_bayer: Yup.number().required(getLogin("This_field_is")),
+              .required(getAll("This_field_is")),
+            price_developments: Yup.number().required(getAll("This_field_is")),
+            number_sales: Yup.number().required(getAll("This_field_is")),
+            value_bayer: Yup.number().required(getAll("This_field_is")),
           })}
           onSubmit={async (values) => {
             try {
@@ -63,7 +60,7 @@ export default function AddNewUser({
               // If Activate Network
               // Authentication was successful.
               if (res.status == 201 || res.status == 200) {
-                //alert(getLogin("Added_successfully"))
+                //alert(getAll("Added_successfully"))
                 setIsModalHiddenHandle();
               } else {
                 alert("Error");
@@ -182,8 +179,8 @@ export default function AddNewUser({
                         className="timlands-inputs select"
                       >
                         <option value="">اختر نوع المستوى</option>
-                        <option value={1}>{getLogin("Seller")}</option>
-                        <option value={0}>{getLogin("Buyer")}</option>
+                        <option value={1}>{getAll("Seller")}</option>
+                        <option value={0}>{getAll("Buyer")}</option>
                       </Field>
                       {errors.type && touched.type ? (
                         <div style={{ overflow: "hidden" }}>
@@ -319,7 +316,7 @@ export default function AddNewUser({
                   disabled={isSubmitting}
                   className="btn butt-primary butt-sm"
                 >
-                  {getLogin("Save_edits")}
+                  {getAll("Save_edits")}
                 </button>
               </div>
             </Form>

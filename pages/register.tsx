@@ -22,8 +22,7 @@ const Register = (): ReactElement => {
     setValidationsErrors({});
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const onLoginSuccess = async (res) => {
     //أرسل هذا الريسبونس الى الباكند
     try {
@@ -42,7 +41,7 @@ const Register = (): ReactElement => {
         Cookies.set("token", response.data.data.token);
         if (!Cookies.get("token"))
           localStorage.setItem("token", response.data.data.token);
-        message.success(getLogin("Logged_in_successfully"));
+        message.success(getAll("Logged_in_successfully"));
         switch (response.data.data.step) {
           case 0:
             router.push("/user/personalInformations");
@@ -58,7 +57,7 @@ const Register = (): ReactElement => {
         }
       }
     } catch (error: any) {
-      message.error(getLanguage("An_unexpected_error"));
+      message.error(getAll("An_unexpected_error"));
     }
   };
   /* Generate username from email and random 4 numbers
@@ -96,9 +95,9 @@ const Register = (): ReactElement => {
   return (
     <>
       <MetaTags
-        title={getLanguage("Sign_up")}
-        metaDescription={getLogin("Home")}
-        ogDescription={getLogin("Home")}
+        title={getAll("Sign_up")}
+        metaDescription={getAll("Home")}
+        ogDescription={getAll("Home")}
       />
       <Formik
         initialValues={{
@@ -168,19 +167,19 @@ const Register = (): ReactElement => {
                     </Link>
                   </div>
                   <div className="page-header">
-                    <h1 className="title">{getLanguage("Sign_up")}</h1>
+                    <h1 className="title">{getAll("Sign_up")}</h1>
                   </div>
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="username">
-                          {getLogin("Username")}
+                          {getAll("Username")}
                         </label>
                         <Field
                           id="username"
                           name="username"
                           onKeyUp={clearValidationHandle}
-                          placeholder={getLogin("Username")}
+                          placeholder={getAll("Username")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -207,13 +206,13 @@ const Register = (): ReactElement => {
                     <div className="col-lg-6">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="email">
-                          {getLogin("E_mail")}
+                          {getAll("E_mail")}
                         </label>
                         <Field
                           id="email"
                           name="email"
                           onKeyUp={clearValidationHandle}
-                          placeholder={getLogin("E_mail")}
+                          placeholder={getAll("E_mail")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -238,7 +237,7 @@ const Register = (): ReactElement => {
                     <div className="col-lg-6">
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="phone">
-                          {getLogin("Phone_number")}
+                          {getAll("Phone_number")}
                         </label>
                         <div
                           style={{
@@ -256,7 +255,7 @@ const Register = (): ReactElement => {
                             id="phone"
                             name="phone"
                             onKeyUp={clearValidationHandle}
-                            placeholder={getLogin("Phone_number")}
+                            placeholder={getAll("Phone_number")}
                             className={
                               "innerPhone " +
                               (validationsErrors &&
@@ -300,8 +299,8 @@ const Register = (): ReactElement => {
                       <div className="timlands-form">
                         <label className="label-block" htmlFor="password">
                           {" "}
-                          {getLogin("Password")}{" "}
-                          <Tooltip title={getLogin("The_password_must")}>
+                          {getAll("Password")}{" "}
+                          <Tooltip title={getAll("The_password_must")}>
                             <Badge
                               style={{ color: "#52c41a " }}
                               count={
@@ -320,7 +319,7 @@ const Register = (): ReactElement => {
                           id="password"
                           name="password"
                           onKeyUp={clearValidationHandle}
-                          placeholder={getLogin("Password")}
+                          placeholder={getAll("Password")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -368,8 +367,8 @@ const Register = (): ReactElement => {
                           className="label-block"
                           htmlFor="password_confirmation"
                         >
-                          {getLogin("Reset_password")}
-                          <Tooltip title={getLogin("The_password_must")}>
+                          {getAll("Reset_password")}
+                          <Tooltip title={getAll("The_password_must")}>
                             <Badge
                               style={{ color: "#52c41a " }}
                               count={
@@ -388,7 +387,7 @@ const Register = (): ReactElement => {
                           id="password_confirmation"
                           name="password_confirmation"
                           onKeyUp={clearValidationHandle}
-                          placeholder={getLogin("Reset_password")}
+                          placeholder={getAll("Reset_password")}
                           className={
                             "timlands-inputs " +
                             (validationsErrors &&
@@ -436,15 +435,15 @@ const Register = (): ReactElement => {
                     <div style={{ overflow: "hidden" }}>
                       <div className="timlands-form-note">
                         <p className="text">
-                          {getLanguage("If_your_press")}
-                          <strong>{getLogin("Create_an_account")}</strong> فأنت
+                          {getAll("If_your_press")}
+                          <strong>{getAll("Create_an_account")}</strong> فأنت
                           توافق على{" "}
                           <Link href="/terms">
                             <a>شروط الاستخدام</a>
                           </Link>{" "}
                           و{" "}
                           <Link href="/privacy">
-                            <a>{getLanguage("Privacy_policy")}</a>
+                            <a>{getAll("Privacy_policy")}</a>
                           </Link>
                         </p>
                       </div>
@@ -457,14 +456,14 @@ const Register = (): ReactElement => {
                         disabled={registerLoading}
                         className="btn  butt-primary butt-md"
                       >
-                        {getLogin("Create_an_account")}
+                        {getAll("Create_an_account")}
                       </button>
                       <div className="footer-text">
                         <p className="text" style={{ margin: 0 }}>
                           {" "}
-                          {getLogin("Do_you_have")}
+                          {getAll("Do_you_have")}
                           <Link href="/login">
-                            <a>{getLanguage("Login_in")}</a>
+                            <a>{getAll("Login_in")}</a>
                           </Link>
                         </p>
                       </div>
@@ -472,7 +471,7 @@ const Register = (): ReactElement => {
                   </div>
                   <div className="panel-login-external">
                     <div className="login-external-header">
-                      <h4 className="title">{getLogin("Or_sign_up")}</h4>
+                      <h4 className="title">{getAll("Or_sign_up")}</h4>
                     </div>
                     <ul className="login-external-links nav justify-content-center">
                       {/* <li>
@@ -483,7 +482,7 @@ const Register = (): ReactElement => {
                       <li>
                         <GoogleLogin
                           clientId={clientId}
-                          buttonText={getLogin("Google")}
+                          buttonText={getAll("Google")}
                           onSuccess={onLoginSuccess}
                           onFailure={onLoginFailure}
                           cookiePolicy={"single_host_origin"}

@@ -19,7 +19,7 @@ import { Alert } from "@/components/Alert/Alert";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
-const CheckoutForm = (getLogin: any) => {
+const CheckoutForm = (getAll: any) => {
   const stripe = useStripe();
   const elements = useElements();
   let token = Cookies.get("token");
@@ -73,7 +73,7 @@ const CheckoutForm = (getLogin: any) => {
           className="btn butt-md purchace-by-stripe-btn butt-primary mt-2"
           disabled={!stripe || !elements}
         >
-          <span>{getLogin("Buy_now")}</span>
+          <span>{getAll("Buy_now")}</span>
           {isLoading && (
             <span
               className="spinner-border spinner-border-sm mx-1"
@@ -92,8 +92,7 @@ const stripePromise = loadStripe(
 
 function Bill() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -168,9 +167,9 @@ function Bill() {
   return (
     <>
       <MetaTags
-        title={getLogin("Purchase_operation")}
-        metaDescription={getLogin("Purchase_operation")}
-        ogDescription={getLogin("Purchase_operation")}
+        title={getAll("Purchase_operation")}
+        metaDescription={getAll("Purchase_operation")}
+        ogDescription={getAll("Purchase_operation")}
       />
       {veriedEmail && (
         <>
@@ -180,7 +179,7 @@ function Bill() {
                 <Result
                   status="warning"
                   title={getAll("An_error_occured")}
-                  subTitle={getLogin("An_error_occurred_3")}
+                  subTitle={getAll("An_error_occurred_3")}
                 />
               </div>
             </div>
@@ -189,7 +188,7 @@ function Bill() {
             <div className="col-md-3">
               <div className="app-bill">
                 <div className="app-bill-header">
-                  <h3 className="title">{getLogin("Finale_bill")}</h3>
+                  <h3 className="title">{getAll("Finale_bill")}</h3>
                 </div>
                 {!cartList && <Loading />}
                 {cartList &&
@@ -202,7 +201,7 @@ function Bill() {
                       {e.pivot.type_payment_id == billPayment && (
                         <ul className="list-group">
                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            {getLogin("Services_number")}
+                            {getAll("Services_number")}
                             <span className="">
                               {cartList && cartList.data.cart_items_count}
                             </span>
@@ -211,10 +210,10 @@ function Bill() {
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
-                            {getLogin("Transfer_fees_for")}
+                            {getAll("Transfer_fees_for")}
                             {e.name_ar}{" "}
                             <span className="me-auto">
-                              <Tooltip title={getLogin("These_fees_cover")}>
+                              <Tooltip title={getAll("These_fees_cover")}>
                                 <Badge
                                   style={{ color: "#52c41a " }}
                                   count={
@@ -234,14 +233,14 @@ function Bill() {
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
-                            {getLogin("Total_without_fees")}
+                            {getAll("Total_without_fees")}
                             <span className="">{e.pivot.total}</span>
                           </li>
                           <li
                             style={{ fontSize: 12, fontWeight: 300 }}
                             className="list-group-item total d-flex justify-content-between align-items-center"
                           >
-                            {getLogin("Total_with_fees")}
+                            {getAll("Total_with_fees")}
                             <span className="">{e.pivot.total_with_tax}</span>
                           </li>
                         </ul>
@@ -253,7 +252,7 @@ function Bill() {
             <div className="col-md-5">
               <div className="app-bill">
                 <div className="app-bill-header">
-                  <h3 className="title">{getLogin("Choose_payment_method")}</h3>
+                  <h3 className="title">{getAll("Choose_payment_method")}</h3>
                 </div>
                 {cartList && cartList.data !== null && (
                   <div className="app-bill-payment">
@@ -270,7 +269,7 @@ function Bill() {
                         className="form-check-label"
                         htmlFor="billPayment-strap"
                       >
-                        {getLogin("Payment_by_bank")}
+                        {getAll("Payment_by_bank")}
                       </label>
                     </div>
                     <div style={{ overflow: "hidden" }}>
@@ -281,7 +280,7 @@ function Bill() {
                           animate={{ y: 0, opacity: 1 }}
                         >
                           <Elements stripe={stripePromise}>
-                            <CheckoutForm getLogin={getLogin} />
+                            <CheckoutForm getAll={getAll} />
                           </Elements>
                         </motion.div>
                       ) : null}
@@ -299,7 +298,7 @@ function Bill() {
                         className="form-check-label"
                         htmlFor="billPayment-paypal"
                       >
-                        {getLogin("Payment_via_PayPal")}
+                        {getAll("Payment_via_PayPal")}
                       </label>
                     </div>
                     <div style={{ overflow: "hidden" }}>
@@ -322,7 +321,7 @@ function Bill() {
                               <>
                                 {" "}
                                 <i className="fab fa-paypal"></i> |{" "}
-                                {getLogin("Via")}
+                                {getAll("Via")}
                                 Paypal
                               </>
                             )}
@@ -333,9 +332,7 @@ function Bill() {
                     {Number(mybalance) <
                     Number(cartList && cartList.data.price_with_tax) ? (
                       <>
-                        <Alert type="primary">
-                          {getLogin("You_cannot_buy")}
-                        </Alert>
+                        <Alert type="primary">{getAll("You_cannot_buy")}</Alert>
                       </>
                     ) : (
                       <>
@@ -354,7 +351,7 @@ function Bill() {
                             className="form-check-label"
                             htmlFor="billPayment-wallet"
                           >
-                            {getLogin("Payment_via_wallet")}
+                            {getAll("Payment_via_wallet")}
                           </label>
                         </div>
                         <div style={{ overflow: "hidden" }}>
@@ -370,7 +367,7 @@ function Bill() {
                               )}
                               <div className="purchase-by-wallet">
                                 <p className="purchase-text">
-                                  {getLogin("Or_you_can")}
+                                  {getAll("Or_you_can")}
                                 </p>
                                 <button
                                   onClick={chargeWallet}
@@ -390,7 +387,7 @@ function Bill() {
                                         width={15}
                                         height={17}
                                       />{" "}
-                                      {getLogin("Buy_now")} (
+                                      {getAll("Buy_now")} (
                                       <span className="">
                                         ${cartList && cartList.data.total_price}
                                       </span>

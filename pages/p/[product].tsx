@@ -48,9 +48,7 @@ const properties = {
 function Single({ query, stars, errorFetch }) {
   let token = Cookies.get("token");
   const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("my_wallet");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: ProductData, errorLoad }: any = useSWR(
@@ -171,7 +169,7 @@ function Single({ query, stars, errorFetch }) {
             rel="noreferrer"
             href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.data.slug}&display=popup&ref=plugin&src=share_button`}
           >
-            {getLogin("Share_on_Facebook")}
+            {getAll("Share_on_Facebook")}
           </a>
         </Menu.Item>
       )}
@@ -289,7 +287,7 @@ function Single({ query, stars, errorFetch }) {
              placement: 'topLeft'
            });
          } */
-          message.error(getLogin("An_unexpected_error"));
+          message.error(getAll("An_unexpected_error"));
         }
       }
     } else {
@@ -391,7 +389,7 @@ function Single({ query, stars, errorFetch }) {
       {ProductData && (
         <div className="timwoork-single">
           <Modal
-            title={getLanguage("Create_a_conversation")}
+            title={getAll("Create_a_conversation")}
             visible={isModalVisible}
             confirmLoading={createConversationLoading}
             onOk={() => startConversation(messageConv)}
@@ -542,7 +540,7 @@ function Single({ query, stars, errorFetch }) {
                     {ProductData.data.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
-                          <li className="title">{getLanguage("Key_words")}:</li>
+                          <li className="title">{getAll("Key_words")}:</li>
                           {ProductData.data.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
@@ -567,9 +565,7 @@ function Single({ query, stars, errorFetch }) {
                     {ProductData.data.profile_seller && (
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
-                          <h4 className="title">
-                            {getLanguage("About_Seller")}
-                          </h4>
+                          <h4 className="title">{getAll("About_Seller")}</h4>
                         </div>
                         <div className="seller-info-container">
                           <div className="d-flex">
@@ -636,7 +632,7 @@ function Single({ query, stars, errorFetch }) {
                                     <i className="material-icons material-icons-outlined">
                                       account_circle
                                     </i>{" "}
-                                    {getLanguage("Profile")}
+                                    {getAll("Profile")}
                                   </a>
                                 </Link>
                                 {!hasConversation && (
@@ -652,7 +648,7 @@ function Single({ query, stars, errorFetch }) {
                                     <i className="material-icons material-icons-outlined">
                                       email
                                     </i>{" "}
-                                    {getLanguage("Contact_seller_one")}
+                                    {getAll("Contact_seller_one")}
                                     {createConversationLoading && (
                                       <span
                                         className="spinner-border spinner-border-sm"
@@ -676,7 +672,7 @@ function Single({ query, stars, errorFetch }) {
                               <span className="material-icons material-icons-outlined">
                                 question_answer
                               </span>
-                              {getLanguage("Customer_reviews")}
+                              {getAll("Customer_reviews")}
                             </h4>
                           </div>
                         </div>
@@ -711,7 +707,7 @@ function Single({ query, stars, errorFetch }) {
                           <span className="material-icons material-icons-outlined">
                             timer
                           </span>{" "}
-                          {getLanguage("Delivery_term")}: {durationFunc()}
+                          {getAll("Delivery_term")}: {durationFunc()}
                         </li>
                         <li className="cat-post ml-auto">
                           <Dropdown overlay={menu}>
@@ -719,7 +715,7 @@ function Single({ query, stars, errorFetch }) {
                               <span className="material-icons material-icons-outlined">
                                 share
                               </span>{" "}
-                              {getLanguage("Share_service")}
+                              {getAll("Share_service")}
                             </span>
                           </Dropdown>
                         </li>
@@ -729,7 +725,7 @@ function Single({ query, stars, errorFetch }) {
                       <div className="col-7">
                         <p className="text-quatity">
                           {" "}
-                          {getLanguage("Number_of_purchases")}:
+                          {getAll("Number_of_purchases")}:
                           <span className="me-auto">
                             <Popover
                               content={noteContent}
@@ -788,14 +784,12 @@ function Single({ query, stars, errorFetch }) {
                       <div className="panel-aside-body">
                         <div className="add-devloppers-header">
                           <h4 className="title">
-                            {getLanguage("Available_upgrades")}
+                            {getAll("Available_upgrades")}
                           </h4>
                         </div>
                         {ProductData.data.developments.length == 0 && (
                           <div className="nothing-note">
-                            <p className="text">
-                              {getLanguage("No_upgrades_in")}
-                            </p>
+                            <p className="text">{getAll("No_upgrades_in")}</p>
                           </div>
                         )}
                         <ul className="add-devloppers-nav">
@@ -835,7 +829,7 @@ function Single({ query, stars, errorFetch }) {
                     <div className="panel-aside-footer ">
                       <div className="aside-footer-total-price">
                         <h4 className="price-total me-auto">
-                          <strong>{getLanguage("Total")} </strong>{" "}
+                          <strong>{getAll("Total")} </strong>{" "}
                           {specCurrency
                             ? Math.round(_totalPrice() * specCurrency)
                             : _totalPrice()}
@@ -849,7 +843,7 @@ function Single({ query, stars, errorFetch }) {
 
                             <span className="text">
                               {" "}
-                              {getLanguage("boght_this")}
+                              {getAll("boght_this")}
                             </span>
                           </p>
                         </div>
@@ -862,7 +856,7 @@ function Single({ query, stars, errorFetch }) {
                           <span className="material-icons material-icons-outlined">
                             add_shopping_cart
                           </span>
-                          {getLanguage("Add_to_cart")}
+                          {getAll("Add_to_cart")}
                         </button>
                       </div>
                     </div>

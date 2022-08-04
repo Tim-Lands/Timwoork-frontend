@@ -22,8 +22,7 @@ function MyFollowers() {
   const { data: userInfo }: any = useSWR("api/me");
   const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
@@ -39,12 +38,12 @@ function MyFollowers() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title={getLogin("Your_account_is_2")}
-            subTitle={getLogin("Your_account_is")}
+            title={getAll("Your_account_is_2")}
+            subTitle={getAll("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
                 <a className="btn butt-primary butt-md">
-                  {getLogin("Go_to_Edit")}
+                  {getAll("Go_to_Edit")}
                 </a>
               </Link>
             }
@@ -61,19 +60,19 @@ function MyFollowers() {
           <>
             <MetaTags
               title={
-                getLogin("X’s_profile") +
+                getAll("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               metaDescription={
-                getLogin("X’s_profile") +
+                getAll("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
               }
               ogDescription={
-                getLogin("X’s_profile") +
+                getAll("X’s_profile") +
                 userInfo.user_details.profile.first_name +
                 " " +
                 userInfo.user_details.profile.last_name
@@ -112,7 +111,7 @@ function MyFollowers() {
                           <span className="material-icons material-icons-outlined">
                             edit
                           </span>{" "}
-                          {getLogin("Edit_profile")}
+                          {getAll("Edit_profile")}
                         </a>
                       </Link>
                     </div>
@@ -129,7 +128,7 @@ function MyFollowers() {
                       <span className="material-icons material-icons-outlined">
                         copy
                       </span>{" "}
-                      {getLogin("Copy_my_profiles")}
+                      {getAll("Copy_my_profiles")}
                     </button>
                   </p>
                 </div>

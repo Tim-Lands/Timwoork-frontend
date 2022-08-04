@@ -11,8 +11,7 @@ export default function AddNewTag({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -22,7 +21,7 @@ export default function AddNewTag({
             <span className="material-icons material-icons-outlined">
               add_box
             </span>
-            {getLogin("Add_new")}
+            {getAll("Add_new")}
           </h2>
           <div className="panel-modal-left-tools">
             <button onClick={setIsModalHiddenHandle} className="close-modal">
@@ -39,9 +38,9 @@ export default function AddNewTag({
             name_fr: "",
           }}
           validationSchema={Yup.object().shape({
-            name_ar: Yup.string().required(getLogin("This_field_is")),
-            name_en: Yup.string().required(getLogin("This_field_is")),
-            name_fr: Yup.string().required(getLogin("This_field_is")),
+            name_ar: Yup.string().required(getAll("This_field_is")),
+            name_en: Yup.string().required(getAll("This_field_is")),
+            name_fr: Yup.string().required(getAll("This_field_is")),
           })}
           onSubmit={async (values) => {
             try {
@@ -49,7 +48,7 @@ export default function AddNewTag({
               // If Activate Network
               // Authentication was successful.
               if (res.status == 201 || res.status == 200) {
-                //alert(getLogin("Added_successfully"))
+                //alert(getAll("Added_successfully"))
                 setIsModalHiddenHandle();
               } else {
                 alert("Error");
@@ -171,7 +170,7 @@ export default function AddNewTag({
                   disabled={isSubmitting}
                   className="btn butt-primary butt-sm"
                 >
-                  {getLogin("Save_edits")}
+                  {getAll("Save_edits")}
                 </button>
               </div>
             </Form>

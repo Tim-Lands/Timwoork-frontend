@@ -13,8 +13,7 @@ import MyProducts from "@/components/Profile/MyProducts";
 
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { language } = useContext(LanguageContext);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -22,7 +21,6 @@ function index() {
   const [statusType, setStatusType] = useState("");
   useEffect(() => {
     if (!token) {
-      router.push("/login");
     }
   }, []);
 
@@ -39,12 +37,12 @@ function index() {
         <div className="col-md-5">
           <Result
             status="warning"
-            title={getLogin("Your_account_is")}
-            subTitle={getLogin("Your_account_is")}
+            title={getAll("Your_account_is")}
+            subTitle={getAll("Your_account_is")}
             extra={
               <Link href="/user/personalInformations">
                 <a className="btn butt-primary butt-md">
-                  {getLogin("Go_to_Edit")}
+                  {getAll("Go_to_Edit")}
                 </a>
               </Link>
             }
@@ -62,15 +60,15 @@ function index() {
         <>
           <MetaTags
             title={getAll("My_services")}
-            metaDescription={getLogin("Home")}
-            ogDescription={getLogin("Home")}
+            metaDescription={getAll("Home")}
+            ogDescription={getAll("Home")}
           />
           <div className="container">
             <div className="timlands-profile-content">
               <div className="profile-content-header">
                 <Badge
                   color={"green"}
-                  count={getLogin("Online")}
+                  count={getAll("Online")}
                   offset={[10, 10]}
                 >
                   <div className="profile-content-avatar">

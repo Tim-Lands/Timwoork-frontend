@@ -14,7 +14,7 @@ import { useContext } from "react";
 
 function Id({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const token = Cookies.get("token_dash");
   const { data: GetData }: any = useSWR(`dashboard/types_payments/${query.id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -81,12 +81,12 @@ function Id({ query }) {
                 <div className="col-md-12">
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-name_ar">
-                      {getLogin("Gateway_name_in")}
+                      {getAll("Gateway_name_in")}
                     </label>
                     <input
                       id="input-name_ar"
                       name="name_ar"
-                      placeholder={getLogin("Gateway_name_in")}
+                      placeholder={getAll("Gateway_name_in")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -114,12 +114,12 @@ function Id({ query }) {
                 <div className="col-md-12">
                   <div className="timlands-form">
                     <label className="label-block" htmlFor="input-name_en">
-                      {getLogin("Gateway_name_in_2")}
+                      {getAll("Gateway_name_in_2")}
                     </label>
                     <input
                       id="input-name_en"
                       name="name_en"
-                      placeholder={getLogin("Gateway_name_in_2")}
+                      placeholder={getAll("Gateway_name_in_2")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -150,12 +150,12 @@ function Id({ query }) {
                       className="label-block"
                       htmlFor="input-precent_of_payment"
                     >
-                      {getLogin("Deduction_rate")}
+                      {getAll("Deduction_rate")}
                     </label>
                     <input
                       id="input-precent_of_payment"
                       name="precent_of_payment"
-                      placeholder={getLogin("Deduction_rate")}
+                      placeholder={getAll("Deduction_rate")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -188,12 +188,12 @@ function Id({ query }) {
                       className="label-block"
                       htmlFor="input-value_of_cent"
                     >
-                      {getLogin("Cent_value")}
+                      {getAll("Cent_value")}
                     </label>
                     <input
                       id="input-value_of_cent"
                       name="value_of_cent"
-                      placeholder={getLogin("Cent_value")}
+                      placeholder={getAll("Cent_value")}
                       className={
                         "timlands-inputs " +
                         (validationsErrors &&
@@ -227,7 +227,7 @@ function Id({ query }) {
                       disabled={formik.isSubmitting}
                       className="btn flex-center butt-green ml-auto butt-sm"
                     >
-                      <span className="text">{getLogin("Save_edits")}</span>
+                      <span className="text">{getAll("Save_edits")}</span>
                     </button>
                   </div>
                 </div>

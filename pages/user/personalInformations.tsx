@@ -25,7 +25,7 @@ const personalInformations = () => {
   const { data: Countries }: any = useSWR("api/get_countries");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }
@@ -54,9 +54,9 @@ const personalInformations = () => {
   return (
     <>
       <MetaTags
-        title={getLogin("Profile_editing")}
-        metaDescription={getLogin("Profile_editing")}
-        ogDescription={getLogin("Profile_editing")}
+        title={getAll("Profile_editing")}
+        metaDescription={getAll("Profile_editing")}
+        ogDescription={getAll("Profile_editing")}
       />
       {!userInfo && <Loading />}
       <div className="container py-4">
@@ -102,7 +102,7 @@ const personalInformations = () => {
                       );
                       // Authentication was successful.
                       if (res.status === 200) {
-                        message.success(getLogin("The_update_has"));
+                        message.success(getAll("The_update_has"));
                         //router.reload();
                       }
                     } catch (error: any) {
@@ -142,7 +142,7 @@ const personalInformations = () => {
                           )}
                           <div className="update-form-header">
                             <h1 className="title">
-                              {getLogin("Edit_personal_information")}
+                              {getAll("Edit_personal_information")}
                             </h1>
                           </div>
                           <div className="row">
@@ -152,13 +152,13 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="first_name"
                                 >
-                                  {getLogin("First_name")}
+                                  {getAll("First_name")}
                                 </label>
                                 <Field
                                   id="first_name"
                                   name="first_name"
                                   onKeyUp={setValidationsErrorsHandle}
-                                  placeholder={getLogin("First_name")}
+                                  placeholder={getAll("First_name")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -189,12 +189,12 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="last_name"
                                 >
-                                  {getLogin("Last_name")}
+                                  {getAll("Last_name")}
                                 </label>
                                 <Field
                                   id="last_name"
                                   name="last_name"
-                                  placeholder={getLogin("Last_name")}
+                                  placeholder={getAll("Last_name")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -226,13 +226,13 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="username"
                                 >
-                                  {getLogin("Username")}
+                                  {getAll("Username")}
                                 </label>
                                 <Field
                                   id="username"
                                   name="username"
                                   onKeyUp={setValidationsErrorsHandle}
-                                  placeholder={getLogin("Username")}
+                                  placeholder={getAll("Username")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -260,7 +260,7 @@ const personalInformations = () => {
                             <div className="col-md-6">
                               <div className="timlands-form">
                                 <label className="label-block" htmlFor="gender">
-                                  {getLogin("Select_sexe")}
+                                  {getAll("Select_sexe")}
                                 </label>
                                 <Field
                                   as="select"
@@ -274,10 +274,10 @@ const personalInformations = () => {
                                   }
                                 >
                                   <option value="">
-                                    {getLogin("Select_sexe")}
+                                    {getAll("Select_sexe")}
                                   </option>
-                                  <option value="0">{getLogin("woman")}</option>
-                                  <option value="1">{getLogin("Man")}</option>
+                                  <option value="0">{getAll("woman")}</option>
+                                  <option value="1">{getAll("Man")}</option>
                                 </Field>
                                 {validationsErrors && validationsErrors.gender && (
                                   <div style={{ overflow: "hidden" }}>
@@ -300,14 +300,14 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="date_of_birth"
                                 >
-                                  {getLogin("Birthday")}
+                                  {getAll("Birthday")}
                                 </label>
                                 <Field
                                   type="date"
                                   id="date_of_birth"
                                   name="date_of_birth"
                                   onKeyUp={setValidationsErrorsHandle}
-                                  placeholder={getLogin("Birthday")}
+                                  placeholder={getAll("Birthday")}
                                   className={
                                     "timlands-inputs " +
                                     (validationsErrors &&
@@ -338,7 +338,7 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="country_id"
                                 >
-                                  {getLogin("Select_country")}
+                                  {getAll("Select_country")}
                                 </label>
                                 <Field
                                   as="select"
@@ -352,7 +352,7 @@ const personalInformations = () => {
                                   }
                                 >
                                   <option value="">
-                                    {getLogin("Select_country")}
+                                    {getAll("Select_country")}
                                   </option>
                                   {Countries &&
                                     Countries.data.map((e: any) => (
@@ -381,7 +381,7 @@ const personalInformations = () => {
                             <div className="col-md-6">
                               <div className="timlands-form">
                                 <label className="label-block" htmlFor="phone">
-                                  {getLogin("Phone_number")}
+                                  {getAll("Phone_number")}
                                 </label>
                                 <div
                                   style={{
@@ -399,7 +399,7 @@ const personalInformations = () => {
                                     id="phone"
                                     name="phone"
                                     onKeyUp={setValidationsErrorsHandle}
-                                    placeholder={getLogin("Phone_number")}
+                                    placeholder={getAll("Phone_number")}
                                     // className={"timlands-inputs "}
                                     autoComplete="off"
                                   />
@@ -409,7 +409,7 @@ const personalInformations = () => {
                                     name="code_phone"
                                     // className={"timlands-inputs "}
                                   >
-                                    <option value="">{getLogin("Code")}</option>
+                                    <option value="">{getAll("Code")}</option>
                                     {codes.map((e: any) => (
                                       <option key={e.id} value={e.code_phone}>
                                         {e.code_phone}
@@ -445,7 +445,7 @@ const personalInformations = () => {
                                   className="label-block"
                                   htmlFor="currency"
                                 >
-                                  {getLogin("Select_currency")}
+                                  {getAll("Select_currency")}
                                 </label>
                                 <Field
                                   as="select"
@@ -464,7 +464,7 @@ const personalInformations = () => {
                                         ?.id
                                     }
                                   >
-                                    {getLogin("Virtual")}
+                                    {getAll("Virtual")}
                                   </option>
 
                                   {currencies.map((e: any) => (
@@ -498,7 +498,7 @@ const personalInformations = () => {
                                 disabled={isSubmitting}
                                 className="btn me-auto butt-primary butt-md"
                               >
-                                {getLogin("Update_basic_information")}
+                                {getAll("Update_basic_information")}
                               </button>
                             </div>
                           </div>

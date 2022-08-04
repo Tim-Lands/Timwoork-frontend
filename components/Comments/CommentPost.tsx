@@ -13,8 +13,7 @@ import { useContext } from "react";
 
 function CommentPost(props: any): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [isShowCommentForm, setIsShowCommentForm]: any = useState(false);
   let token = Cookies.get("token");
@@ -36,7 +35,7 @@ function CommentPost(props: any): ReactElement {
         });
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_gateaway_had"));
+          message.success(getAll("The_gateaway_had"));
           setIsShowCommentForm(false);
         }
       } catch (error: any) {

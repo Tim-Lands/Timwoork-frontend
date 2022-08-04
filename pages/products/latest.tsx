@@ -14,7 +14,7 @@ function Latest() {
   /**----------------------------------------------------------**/
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("products");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const [size, setSize] = useState(3);
@@ -89,9 +89,9 @@ function Latest() {
   return (
     <div className="containerProductsPagePopular py-5">
       <MetaTags
-        title={getLanguage("Newly_added_services")}
-        metaDescription={getLanguage("Newly_added_services")}
-        ogDescription={getLanguage("Newly_added_services")}
+        title={getAll("Newly_added_services")}
+        metaDescription={getAll("Newly_added_services")}
+        ogDescription={getAll("Newly_added_services")}
       />
       <Formik
         isInitialValid={true}
@@ -104,7 +104,7 @@ function Latest() {
           <div className="row">
             <div className="col-md-12">
               <div className="page-header">
-                <h4 className="title">{getLanguage("Newly_added_services")}</h4>
+                <h4 className="title">{getAll("Newly_added_services")}</h4>
               </div>
               {!getProducts && <Loading />}
               <FilterContent
@@ -128,8 +128,8 @@ function Latest() {
                     pageRangeDisplayed={paginationSize}
                     itemClass="page-item"
                     linkClass="page-link"
-                    firstPageText={getLanguage("First_page")}
-                    lastPageText={getLanguage("Last_page")}
+                    firstPageText={getAll("First_page")}
+                    lastPageText={getAll("Last_page")}
                   />
                 </div>
               )}

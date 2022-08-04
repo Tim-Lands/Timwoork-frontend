@@ -62,9 +62,7 @@ const MySelect = (props: any) => {
 function Overview({ query }) {
   const id = query.id;
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -185,7 +183,7 @@ function Overview({ query }) {
                                   collections_bookmark
                                 </span>
                               </span>
-                              {getLanguage("General_information")}
+                              {getAll("General_information")}
                             </a>
                           </Link>
                         </h3>
@@ -203,7 +201,7 @@ function Overview({ query }) {
                                   payments
                                 </span>
                               </span>
-                              {getLanguage("Upgrades_price")}
+                              {getAll("Upgrades_price")}
                             </a>
                           </Link>
                         </h3>
@@ -221,7 +219,7 @@ function Overview({ query }) {
                                   description
                                 </span>
                               </span>
-                              {getLanguage("Description_and_instructions")}
+                              {getAll("Description_and_instructions")}
                             </a>
                           </Link>
                         </h3>
@@ -239,7 +237,7 @@ function Overview({ query }) {
                                   mms
                                 </span>
                               </span>
-                              {getLanguage("Gallery_and_folders")}
+                              {getAll("Gallery_and_folders")}
                             </a>
                           </Link>
                         </h3>
@@ -252,7 +250,7 @@ function Overview({ query }) {
                             <a>
                               <span className="icon-circular">
                                 <span className="material-icons material-icons-outlined">
-                                  {getLanguage("Publish_service")}
+                                  {getAll("Publish_service")}
                                 </span>
                               </span>
                               {getAll("Publish_service")}
@@ -312,7 +310,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-catetory"
                           >
-                            {getLanguage("Choose_the_principal")}
+                            {getAll("Choose_the_principal")}
                           </label>
                           {categoriesError && getAll("An_error_occured")}
                           <select
@@ -327,7 +325,7 @@ function Overview({ query }) {
                           >
                             <option value="">
                               {" "}
-                              {getLanguage("Choose_the_principal")}
+                              {getAll("Choose_the_principal")}
                             </option>
                             {!categories && (
                               <option value="">{getAll("Please_wait")}</option>
@@ -347,7 +345,7 @@ function Overview({ query }) {
                             className="label-block"
                             htmlFor="input-subcategory"
                           >
-                            {getLanguage("Choose_a_subcategory")}
+                            {getAll("Choose_a_subcategory")}
                           </label>
                           <select
                             id="input-subcategory"
@@ -365,7 +363,7 @@ function Overview({ query }) {
                           >
                             <option value={0}>
                               {" "}
-                              {getLanguage("Choose_a_subcategory")}
+                              {getAll("Choose_a_subcategory")}
                             </option>
                             {subCategoriesError && (
                               <option value="">
@@ -414,9 +412,7 @@ function Overview({ query }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">
-                              {getLogin("Save_edits")}
-                            </span>
+                            <span className="text">{getAll("Save_edits")}</span>
                           </button>
                         </div>
                       </div>

@@ -60,11 +60,10 @@ function suspondedstimer() {
     };
   }, []);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const columns: any = [
     {
-      title: getLogin("Full_name"),
+      title: getAll("Full_name"),
       dataIndex: ["profile"],
       render: (profile: any) => (
         <Link key={profile.id} href={`/u/${profile.id}`}>
@@ -72,7 +71,7 @@ function suspondedstimer() {
             <Image src={`${profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
               {!profile.full_name || profile.full_name == ""
-                ? getLogin("Nameless")
+                ? getAll("Nameless")
                 : profile.full_name}
             </span>
           </a>
@@ -89,7 +88,7 @@ function suspondedstimer() {
       ellipsis: true,
     },
     {
-      title: getLogin("E_mail"),
+      title: getAll("E_mail"),
       //className: 'column-money',
       dataIndex: "email",
       key: "email",
@@ -101,7 +100,7 @@ function suspondedstimer() {
       ellipsis: true,
     },
     {
-      title: getLogin("Registration_date"),
+      title: getAll("Registration_date"),
       //className: 'column-money',
       dataIndex: "created_at",
       key: "created_at",
@@ -124,7 +123,7 @@ function suspondedstimer() {
               type="button"
               onClick={() => unSuspend(item.id)}
             >
-              {getLogin("Stop_suspension")}
+              {getAll("Stop_suspension")}
             </button>
             <button
               title={item.id}
@@ -135,7 +134,7 @@ function suspondedstimer() {
               className="btn butt-xs butt-green"
               type="button"
             >
-              {getLogin("Suspension_information")}
+              {getAll("Suspension_information")}
             </button>
           </Space>
         </>
@@ -156,7 +155,7 @@ function suspondedstimer() {
       );
       if (res.status === 200) {
         notification.success({
-          message: getLogin("The_user_has"),
+          message: getAll("The_user_has"),
         });
         setPostsList((posts) => ({
           ...posts,
@@ -205,7 +204,7 @@ function suspondedstimer() {
             <span className="material-icons material-icons-outlined">
               people
             </span>
-            {getLogin("Accounts_temporary_suspended")}
+            {getAll("Accounts_temporary_suspended")}
           </h2>
         </div>
         {isShowSuspensionInfo && (
@@ -222,7 +221,7 @@ function suspondedstimer() {
                 <input
                   id="input-sQuery"
                   name="sQuery"
-                  placeholder={getLogin("Search_in_table")}
+                  placeholder={getAll("Search_in_table")}
                   className="timlands-inputs"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}

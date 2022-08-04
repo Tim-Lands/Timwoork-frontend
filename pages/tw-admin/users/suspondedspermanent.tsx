@@ -30,8 +30,7 @@ function suspondedspermanent() {
 
   const token = Cookies.get("token_dash");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   useEffect(() => {
     refreshData();
@@ -77,7 +76,7 @@ function suspondedspermanent() {
       );
       if (res.status === 200) {
         notification.success({
-          message: getLogin("The_user_has"),
+          message: getAll("The_user_has"),
         });
         setPostsList((posts) => ({
           ...posts,
@@ -91,7 +90,7 @@ function suspondedspermanent() {
 
   const columns: any = [
     {
-      title: getLogin("Full_name"),
+      title: getAll("Full_name"),
       dataIndex: ["profile"],
       render: (profile: any) => (
         <Link key={profile.id} href={`/u/${profile.id}`}>
@@ -99,7 +98,7 @@ function suspondedspermanent() {
             <Image src={`${profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
               {!profile.full_name || profile.full_name == ""
-                ? getLogin("Nameless")
+                ? getAll("Nameless")
                 : profile.full_name}
             </span>
           </a>
@@ -116,7 +115,7 @@ function suspondedspermanent() {
       ellipsis: true,
     },
     {
-      title: getLogin("E_mail"),
+      title: getAll("E_mail"),
       //className: 'column-money',
       dataIndex: "email",
       key: "email",
@@ -128,7 +127,7 @@ function suspondedspermanent() {
       ellipsis: true,
     },
     {
-      title: getLogin("Registration_date"),
+      title: getAll("Registration_date"),
       //className: 'column-money',
       dataIndex: "created_at",
       key: "created_at",
@@ -151,7 +150,7 @@ function suspondedspermanent() {
               className="btn butt-xs butt-light"
               type="button"
             >
-              {getLogin("Stop_suspension")}
+              {getAll("Stop_suspension")}
             </button>
             <button
               title={item.id}
@@ -162,7 +161,7 @@ function suspondedspermanent() {
               className="btn butt-xs butt-green"
               type="button"
             >
-              {getLogin("Suspension_information")}
+              {getAll("Suspension_information")}
             </button>
           </Space>
         </>
@@ -207,7 +206,7 @@ function suspondedspermanent() {
             <span className="material-icons material-icons-outlined">
               people
             </span>
-            {getLogin("Accounts_permanently_suspended")}
+            {getAll("Accounts_permanently_suspended")}
           </h2>
         </div>
         {isShowSuspensionInfo && (
@@ -224,7 +223,7 @@ function suspondedspermanent() {
                 <input
                   id="input-sQuery"
                   name="sQuery"
-                  placeholder={getLogin("Search_in_table")}
+                  placeholder={getAll("Search_in_table")}
                   className="timlands-inputs"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}

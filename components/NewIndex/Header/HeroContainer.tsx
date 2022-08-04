@@ -6,7 +6,7 @@ import HeroSearchContent from "./HeroSearchContent";
 
 function HeroContainer() {
   const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("main");
+  const getAll = getSectionLanguage();
   const [topCategories, setTopCaegories] = useState([]);
   useEffect(() => {
     fetchData();
@@ -18,10 +18,10 @@ function HeroContainer() {
   return (
     <div className="hero-container">
       <div className="inner">
-        <h1 className="main-title">{getLanguage("Buy_chat_sell")}</h1>
-        <h1 className="sub-title">{getLanguage("Discover_Timwoork’s_most")}</h1>
+        <h1 className="main-title">{getAll("Buy_chat_sell")}</h1>
+        <h1 className="sub-title">{getAll("Discover_Timwoork’s_most")}</h1>
         <div className="hero-container-search">
-          <HeroSearchContent getLanguage={getLanguage} />
+          <HeroSearchContent />
           <ul className="popular-search">
             {topCategories.slice(0, 4).map((category) => (
               <li key={category} className="pop-item ">

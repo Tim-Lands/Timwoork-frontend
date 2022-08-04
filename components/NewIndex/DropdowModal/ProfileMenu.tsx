@@ -22,7 +22,7 @@ import { message, notification } from "antd";
 function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
 

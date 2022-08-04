@@ -13,8 +13,7 @@ import { useContext } from "react";
 
 function Skills(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const { data: GetData, error }: any = useSWR(`dashboard/skills`);
 
   const deleteHandle = (id: any) => {
@@ -29,12 +28,12 @@ function Skills(): ReactElement {
 
     swalWithBootstrapButtons
       .fire({
-        title: getLogin("Are_you_sure1"),
-        text: getLogin("Are_you_sure"),
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sure"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: getLogin("Yes"),
-        cancelButtonText: getLogin("No"),
+        confirmButtonText: getAll("Yes"),
+        cancelButtonText: getAll("No"),
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -45,8 +44,8 @@ function Skills(): ReactElement {
             () => {};
           }
           swalWithBootstrapButtons.fire(
-            getLogin("Deleted"),
-            getLogin("The_service_has"),
+            getAll("Deleted"),
+            getAll("The_service_has"),
             "success"
           );
         }
@@ -81,7 +80,7 @@ function Skills(): ReactElement {
             <span className="material-icons material-icons-outlined">
               layers
             </span>
-            {getLogin("Skills")}
+            {getAll("Skills")}
           </h2>
           <div className="header-butt">
             <button
@@ -91,7 +90,7 @@ function Skills(): ReactElement {
               <span className="material-icons material-icons-outlined">
                 add_box
               </span>{" "}
-              {getLogin("Add_new")}
+              {getAll("Add_new")}
             </button>
           </div>
         </div>
@@ -100,7 +99,7 @@ function Skills(): ReactElement {
             <thead>
               <tr>
                 <th> اسم المهارة</th>
-                <th>{getLogin("Tools")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>

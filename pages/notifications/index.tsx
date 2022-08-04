@@ -14,8 +14,7 @@ import Pagination from "react-js-pagination";
 function index() {
   let token = Cookies.get("token");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("notification");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();
@@ -112,24 +111,14 @@ function index() {
   }, []);
   return (
     <div className="my-2 py-4">
-      <MetaTags
-        title={getLanguage("Notifications")}
-        metaDescription={getLanguage("Notifications")}
-        ogDescription={getLanguage("Notifications") + size}
-      />
+      <MetaTags />
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="app-bill">
-            <div className="app-bill-header">
-              <h3 className="title">{getLanguage("Notifications")}</h3>
-            </div>
+            <div className="app-bill-header"></div>
             {!notifications && <Loading />}
             {notifications && notifications.data.data.length == 0 && (
-              <Result
-                status="404"
-                title={getLanguage("You_have_no")}
-                subTitle={getLogin("You_have_no_2")}
-              />
+              <Result status="404" subTitle={getAll("You_have_no_2")} />
             )}
             <div className="notifications-panel">
               <div className="list-group">
@@ -169,8 +158,6 @@ function index() {
             itemClass="page-item"
             linkClass="page-link"
             className="productPagination"
-            firstPageText={getLanguage("First_page")}
-            lastPageText={getLanguage("Last_page")}
           />
         </div>
       </div>

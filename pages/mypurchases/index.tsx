@@ -12,8 +12,7 @@ import { useContext } from "react";
 
 function index() {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -30,9 +29,7 @@ function index() {
   const statusLabel = (status: any) => {
     switch (status) {
       case 0:
-        return (
-          <span className="badge bg-secondary">{getLogin("PEnding")}</span>
-        );
+        return <span className="badge bg-secondary">{getAll("PEnding")}</span>;
 
       case 1:
         return (
@@ -71,7 +68,7 @@ function index() {
       case 7:
         return (
           <span className="badge bg-success text-light">
-            {getLogin("Completed")}
+            {getAll("Completed")}
           </span>
         );
 
@@ -96,7 +93,7 @@ function index() {
 
       default:
         return (
-          <span className="badge bg-info text-dark">{getLogin("PEnding")}</span>
+          <span className="badge bg-info text-dark">{getAll("PEnding")}</span>
         );
     }
   };
@@ -133,7 +130,7 @@ function index() {
       ),
     },
     {
-      title: getLogin("Status"),
+      title: getAll("Status"),
       dataIndex: "status",
       render: (e: any) => <>{statusLabel(e)}</>,
     },

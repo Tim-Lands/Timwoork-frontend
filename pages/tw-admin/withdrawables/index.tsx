@@ -46,8 +46,7 @@ function index(): ReactElement {
     hidden: { opacity: 0, y: 9 },
   };
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   // Return statement.
   return (
     <>
@@ -57,18 +56,18 @@ function index(): ReactElement {
             <span className="material-icons material-icons-outlined">
               collections_bookmark
             </span>
-            {getLogin("Withdrawal_requests")}
+            {getAll("Withdrawal_requests")}
           </h2>
         </div>
         <div className="timlands-table">
           <table className="table">
             <thead>
               <tr>
-                <th>{getLogin("Amount_to_transfer")}</th>
+                <th>{getAll("Amount_to_transfer")}</th>
                 <th>{getAll("Date")}</th>
-                <th>{getLogin("Withdrawal_holder")}</th>
-                <th>{getLogin("His_her_withdrawabal")}</th>
-                <th>{getLogin("Tools")}</th>
+                <th>{getAll("Withdrawal_holder")}</th>
+                <th>{getAll("His_her_withdrawabal")}</th>
+                <th>{getAll("Tools")}</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +88,7 @@ function index(): ReactElement {
                     <td>{e.withdrawalable.profile.withdrawable_amount}</td>
                     <td>
                       <Link href={`/tw-admin/withdrawables/${e.id}`}>
-                        <a> {getLogin("Details")}</a>
+                        <a> {getAll("Details")}</a>
                       </Link>
                     </td>
                   </motion.tr>
@@ -99,8 +98,8 @@ function index(): ReactElement {
           {postsList && postsList.length == 0 && (
             <Result
               status="404"
-              title={getLogin("No_withdrawal_requests")}
-              subTitle={getLogin("In_this_case")}
+              title={getAll("No_withdrawal_requests")}
+              subTitle={getAll("In_this_case")}
             />
           )}
 

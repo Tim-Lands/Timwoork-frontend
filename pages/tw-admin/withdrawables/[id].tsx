@@ -19,8 +19,7 @@ function Id({ query }) {
   const [isLoading, setIsLoading] = useState(false);
   const [cause, setCause] = useState("");
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const AcceptAmount = async (id: any) => {
     try {
       const res: any = await API.post(
@@ -34,7 +33,7 @@ function Id({ query }) {
         router.push("/tw-admin/withdrawables");
       }
     } catch (error) {
-      message.error(getLogin("Unfortunately_its_rejected"));
+      message.error(getAll("Unfortunately_its_rejected"));
     }
   };
   const cancelAmount = async () => {
@@ -49,26 +48,26 @@ function Id({ query }) {
       );
       if (res.status === 200) {
         router.push("/tw-admin/withdrawables");
-        message.success(getLogin("Rejected_succesufully"));
+        message.success(getAll("Rejected_succesufully"));
         setIsLoading(false);
       }
     } catch (error) {
-      message.error(getLogin("Unfortunately_it_was"));
+      message.error(getAll("Unfortunately_it_was"));
       setIsLoading(false);
     }
   };
   function switchType() {
     switch (getData && getData.data.type) {
       case 3:
-        return getLogin("Money_transfer");
+        return getAll("Money_transfer");
       case 2:
-        return getLogin("Bank_transfer");
+        return getAll("Bank_transfer");
       case 1:
-        return getLogin("Wise_transfer");
+        return getAll("Wise_transfer");
       case 0:
-        return getLogin("PayPal_transfer");
+        return getAll("PayPal_transfer");
       default:
-        return getLogin("Wise_transfer");
+        return getAll("Wise_transfer");
     }
   }
   return (
@@ -81,12 +80,12 @@ function Id({ query }) {
             <Spin spinning={isLoading}>
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-title">
-                  {getLogin("State_the_reason")}
+                  {getAll("State_the_reason")}
                 </label>
                 <textarea
                   id="input-title"
                   name="title"
-                  placeholder={getLogin("State_the_reason")}
+                  placeholder={getAll("State_the_reason")}
                   className={"timlands-inputs"}
                   onChange={(e) => setCause(e.target.value)}
                   value={cause}
@@ -97,7 +96,7 @@ function Id({ query }) {
                   className="btn butt-primary butt-sm mx-1"
                   onClick={cancelAmount}
                 >
-                  {getLogin("Rejection")}
+                  {getAll("Rejection")}
                 </button>
                 <button
                   className="btn butt-red butt-sm mx-1"
@@ -121,14 +120,14 @@ function Id({ query }) {
               className="btn butt-xs butt-red mx-1"
               onClick={() => setIsShowCause(true)}
             >
-              {getLogin("Reject_this_request")}
+              {getAll("Reject_this_request")}
             </button>
 
             <button
               className="btn butt-xs butt-green mx-1"
               onClick={() => AcceptAmount(getData && getData.data.id)}
             >
-              {getLogin("Accept_this_request")}
+              {getAll("Accept_this_request")}
             </button>
           </div>
         </div>
@@ -136,80 +135,80 @@ function Id({ query }) {
           <div className="col-lg-6">
             <div className="page-header">
               <h4 className="title">
-                {getLogin("Financial_transaction_information")}
+                {getAll("Financial_transaction_information")}
               </h4>
             </div>
             {getData && getData.data.type == 2 && (
               <table className="table">
                 <tbody>
                   <tr>
-                    <th>{getLogin("Amount_to_transfer")}</th>
+                    <th>{getAll("Amount_to_transfer")}</th>
                     <td>{getData && getData.data.amount}$</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Transfer_type")}</th>
+                    <th>{getAll("Transfer_type")}</th>
                     <td>{switchType()}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Withdrawal_date")}</th>
+                    <th>{getAll("Withdrawal_date")}</th>
                     <td>
                       <LastSeen date={getData && getData.data.created_at} />
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Personnal_address")}</th>
+                    <th>{getAll("Personnal_address")}</th>
                     <td>
                       {getData && getData.data.withdrawalable.address_line_one}
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Bank_address")}</th>
+                    <th>{getAll("Bank_address")}</th>
                     <td>
                       {getData &&
                         getData.data.withdrawalable.bank_adress_line_one}
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Bank_branch")}</th>
+                    <th>{getAll("Bank_branch")}</th>
                     <td>
                       {getData && getData.data.withdrawalable.bank_branch}
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("IBAN")}</th>
+                    <th>{getAll("IBAN")}</th>
                     <td>{getData && getData.data.withdrawalable.bank_iban}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Bank_name")}</th>
+                    <th>{getAll("Bank_name")}</th>
                     <td>{getData && getData.data.withdrawalable.bank_name}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Bank_account")}</th>
+                    <th>{getAll("Bank_account")}</th>
                     <td>
                       {getData &&
                         getData.data.withdrawalable.bank_number_account}
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Swift_code")}</th>
+                    <th>{getAll("Swift_code")}</th>
                     <td>{getData && getData.data.withdrawalable.bank_swift}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("City")}</th>
+                    <th>{getAll("City")}</th>
                     <td>{getData && getData.data.withdrawalable.city}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Postal_code")}</th>
+                    <th>{getAll("Postal_code")}</th>
                     <td>
                       {getData && getData.data.withdrawalable.code_postal}
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Full_name")}</th>
+                    <th>{getAll("Full_name")}</th>
                     <td>{getData && getData.data.withdrawalable.full_name}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Phone_number")}</th>
+                    <th>{getAll("Phone_number")}</th>
                     <td>
                       {getData &&
                         getData.data.withdrawalable.phone_number_without_code}
@@ -222,21 +221,21 @@ function Id({ query }) {
               <table className="table">
                 <tbody>
                   <tr>
-                    <th>{getLogin("Amount_to_transfer")}</th>
+                    <th>{getAll("Amount_to_transfer")}</th>
                     <td>{getData && getData.data.amount}$</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Transfer_type")}</th>
+                    <th>{getAll("Transfer_type")}</th>
                     <td>{switchType()}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Withdrawal_date")}</th>
+                    <th>{getAll("Withdrawal_date")}</th>
                     <td>
                       <LastSeen date={getData && getData.data.created_at} />
                     </td>
                   </tr>
                   <tr>
-                    <th>{getLogin("E_mail")}</th>
+                    <th>{getAll("E_mail")}</th>
                     <td>{getData && getData.data.withdrawalable.email}</td>
                   </tr>
                 </tbody>
@@ -246,15 +245,15 @@ function Id({ query }) {
               <table className="table">
                 <tbody>
                   <tr>
-                    <th>{getLogin("Amount_to_transfer")}</th>
+                    <th>{getAll("Amount_to_transfer")}</th>
                     <td>{getData && getData.data.amount}$</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Transfer_type")}</th>
+                    <th>{getAll("Transfer_type")}</th>
                     <td>{switchType()}</td>
                   </tr>
                   <tr>
-                    <th>{getLogin("Withdrawal_date")}</th>
+                    <th>{getAll("Withdrawal_date")}</th>
                     <td>
                       <LastSeen date={getData && getData.data.created_at} />
                     </td>
@@ -270,13 +269,13 @@ function Id({ query }) {
           <div className="col-lg-6">
             <div className="page-header">
               <h4 className="title">
-                {getLogin("Withdrawal_requester_information")}
+                {getAll("Withdrawal_requester_information")}
               </h4>
             </div>
             <table className="table">
               <tbody>
                 <tr>
-                  <th>{getLogin("Full_name")}</th>
+                  <th>{getAll("Full_name")}</th>
                   <td>
                     <Link
                       href={`/u/${
@@ -304,14 +303,14 @@ function Id({ query }) {
                   </td>
                 </tr>
                 <tr>
-                  <th>{getLogin("Withdrawable_balance")}</th>
+                  <th>{getAll("Withdrawable_balance")}</th>
                   <td>
                     {getData &&
                       getData.data.withdrawalable.profile.withdrawable_amount}
                   </td>
                 </tr>
                 <tr>
-                  <th>{getLogin("His_her_level")}</th>
+                  <th>{getAll("His_her_level")}</th>
                   <td>
                     {getData &&
                       getData.data.withdrawalable.profile.level &&
@@ -319,7 +318,7 @@ function Id({ query }) {
                   </td>
                 </tr>
                 <tr>
-                  <th>{getLogin("Birthday")}</th>
+                  <th>{getAll("Birthday")}</th>
                   <td>
                     {getData &&
                       getData.data.withdrawalable.profile.date_of_birth}{" "}

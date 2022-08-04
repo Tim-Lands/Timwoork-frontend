@@ -71,9 +71,7 @@ function Category({ products, categories, url_params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
   const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("products");
-  const getLogin = getSectionLanguage("login");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
 
@@ -379,7 +377,7 @@ function Category({ products, categories, url_params }) {
           <div className="col-md-3">
             <div className="filter-search-sidebar">
               <div className="filter-sidebar-title">
-                <h4 className="title">{getLanguage("Services_filter")}</h4>
+                <h4 className="title">{getAll("Services_filter")}</h4>
               </div>
               {validationsGeneral.msg && (
                 <Alert type="error">{validationsGeneral.msg}</Alert>
@@ -389,7 +387,7 @@ function Category({ products, categories, url_params }) {
                 <input
                   id="input-query"
                   name="query"
-                  placeholder={getLanguage("Type_your_search")}
+                  placeholder={getAll("Type_your_search")}
                   className={"timlands-inputs"}
                   autoComplete="off"
                   onKeyPress={(e) => {
@@ -410,7 +408,7 @@ function Category({ products, categories, url_params }) {
                 expandIconPosition="right"
               >
                 <Panel
-                  header={getLanguage("Price")}
+                  header={getAll("Price")}
                   key="1"
                   style={{
                     backgroundColor: "#fff",
@@ -474,7 +472,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header={getLanguage("Categories")}
+                  header={getAll("Categories")}
                   key="2"
                   style={{
                     backgroundColor: "#fff",
@@ -552,7 +550,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header={getLogin("Skills")}
+                  header={getAll("Skills")}
                   key="6"
                   style={{
                     backgroundColor: "#fff",
@@ -571,7 +569,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header={getLanguage("Evaluation")}
+                  header={getAll("Evaluation")}
                   key="3"
                   style={{
                     backgroundColor: "#fff",
@@ -717,7 +715,7 @@ function Category({ products, categories, url_params }) {
                   </div>
                 </Panel>
                 <Panel
-                  header={getLanguage("Delivery_term")}
+                  header={getAll("Delivery_term")}
                   key="4"
                   style={{
                     backgroundColor: "#fff",
@@ -754,7 +752,7 @@ function Category({ products, categories, url_params }) {
                         id="delevring-1"
                       />
                       <label className="form-check-label" htmlFor="delevring-1">
-                        {getLanguage("Less_than_a")}
+                        {getAll("Less_than_a")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -771,7 +769,7 @@ function Category({ products, categories, url_params }) {
                         checked={formik.values.delevring == "7,14"}
                       />
                       <label className="form-check-label" htmlFor="delevring-2">
-                        {getLanguage("From_1_to")}
+                        {getAll("From_1_to")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -788,7 +786,7 @@ function Category({ products, categories, url_params }) {
                         checked={formik.values.delevring == "14,30"}
                       />
                       <label className="form-check-label" htmlFor="delevring-3">
-                        {getLanguage("From_2_weeks")}
+                        {getAll("From_2_weeks")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -805,7 +803,7 @@ function Category({ products, categories, url_params }) {
                         id="delevring-4"
                       />
                       <label className="form-check-label" htmlFor="delevring-4">
-                        {getLanguage("From_1_month")}
+                        {getAll("From_1_month")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -822,7 +820,7 @@ function Category({ products, categories, url_params }) {
                         id="delevring-5"
                       />
                       <label className="form-check-label" htmlFor="delevring-5">
-                        {getLanguage("More_than_3")}
+                        {getAll("More_than_3")}
                       </label>
                     </div>
                   </div>
@@ -868,7 +866,7 @@ function Category({ products, categories, url_params }) {
                         className="form-check-label"
                         htmlFor="sellerBadge-1"
                       >
-                        {getLanguage("Featured_seller")}
+                        {getAll("Featured_seller")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -888,7 +886,7 @@ function Category({ products, categories, url_params }) {
                         className="form-check-label"
                         htmlFor="sellerBadge-2"
                       >
-                        {getLanguage("VIP_seller")}
+                        {getAll("VIP_seller")}
                       </label>
                     </div>
                     <div className="form-check">
@@ -920,7 +918,7 @@ function Category({ products, categories, url_params }) {
             <div className="page-header flex-center" style={{ paddingTop: 0 }}>
               <h4 className="title me-auto">
                 {products_type.current[url_params.type] ||
-                  getLanguage("All_services")}
+                  getAll("All_services")}
               </h4>
               <div className="tool-right ml-auto">
                 <button
@@ -1029,8 +1027,8 @@ function Category({ products, categories, url_params }) {
                   itemClass="page-item"
                   linkClass="page-link"
                   className="productPagination"
-                  firstPageText={getLanguage("First_page")}
-                  lastPageText={getLanguage("Last_page")}
+                  firstPageText={getAll("First_page")}
+                  lastPageText={getAll("Last_page")}
                 />
               </div>
             )}

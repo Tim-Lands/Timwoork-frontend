@@ -19,8 +19,7 @@ import { useContext } from "react";
 
 const User = ({ query }) => {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -560,9 +559,7 @@ const User = ({ query }) => {
   const statusLabel = (status: any) => {
     switch (status) {
       case 0:
-        return (
-          <span className="badge bg-secondary">{getLogin("PEnding")}</span>
-        );
+        return <span className="badge bg-secondary">{getAll("PEnding")}</span>;
 
       case 1:
         return (
@@ -603,7 +600,7 @@ const User = ({ query }) => {
       case 7:
         return (
           <span className="badge bg-success text-light">
-            {getLogin("Completed")}
+            {getAll("Completed")}
           </span>
         );
 
@@ -630,7 +627,7 @@ const User = ({ query }) => {
 
       default:
         return (
-          <span className="badge bg-info text-dark">{getLogin("PEnding")}</span>
+          <span className="badge bg-info text-dark">{getAll("PEnding")}</span>
         );
     }
   };
@@ -659,11 +656,11 @@ const User = ({ query }) => {
       {veriedEmail && (
         <div style={{ backgroundColor: "#f6f6f6" }} className="my-3">
           {errorItem && !ShowItem.data && (
-            <Result status="warning" title={getLogin("An_unexpected_error")} />
+            <Result status="warning" title={getAll("An_unexpected_error")} />
           )}
           {!ShowItem && <Loading />}
           <Modal
-            title={getLogin("Rejection_reason")}
+            title={getAll("Rejection_reason")}
             visible={isModalVisibleReject}
             okText={getAll("I’m_sure")}
             onOk={() => item_rejected_by_seller(ShowItem.data.id)}
@@ -1253,7 +1250,7 @@ const User = ({ query }) => {
                                     onKeyUp={() => {
                                       setMessageErrors({});
                                     }}
-                                    placeholder={getLogin("Message_text")}
+                                    placeholder={getAll("Message_text")}
                                     className={
                                       "timlands-inputs " +
                                       (messageErrors &&
@@ -1320,7 +1317,7 @@ const User = ({ query }) => {
                             <textarea
                               id="input-initial_message"
                               name="initial_message"
-                              placeholder={getLogin("Message_text")}
+                              placeholder={getAll("Message_text")}
                               className={"timlands-inputs mt-2"}
                               autoComplete="off"
                               style={{ minHeight: 80 }}

@@ -12,8 +12,7 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 
 function Paypal({ query }) {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -66,15 +65,13 @@ function Paypal({ query }) {
         <div className="col-md-5">
           <div className="app-bill">
             <div className="app-bill-header">
-              <h3 className="title">{getLogin("The_result_of")}</h3>
+              <h3 className="title">{getAll("The_result_of")}</h3>
             </div>
             {isLoading && <Loading />}
             {query.return == 1 && !isError ? (
-              <Alert type="success">{getLogin("The_purchase_is")}</Alert>
+              <Alert type="success">{getAll("The_purchase_is")}</Alert>
             ) : (
-              <Alert type="error">
-                {getLogin("Unfortunately_the_purchase")}
-              </Alert>
+              <Alert type="error">{getAll("Unfortunately_the_purchase")}</Alert>
             )}
             <div className="app-bill-content">
               {!isError && getBills && (

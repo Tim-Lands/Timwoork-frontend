@@ -12,8 +12,7 @@ import { useContext } from "react";
 
 function index(): ReactElement {
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
   const [postsList, setPostsList] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,16 +58,16 @@ function index(): ReactElement {
             <span className="material-icons material-icons-outlined">
               collections_bookmark
             </span>
-            {getLogin("Contact_us_messages")}
+            {getAll("Contact_us_messages")}
           </h2>
         </div>
         <div className="timlands-table">
           <table className="table">
             <thead>
               <tr>
-                <th>{getLogin("Address")}</th>
-                <th>{getLogin("E_mail")}</th>
-                <th>{getLogin("Full_name")}</th>
+                <th>{getAll("Address")}</th>
+                <th>{getAll("E_mail")}</th>
+                <th>{getAll("Full_name")}</th>
                 <th>{getAll("Date")}</th>
               </tr>
             </thead>
@@ -99,8 +98,8 @@ function index(): ReactElement {
           {postsList && postsList.length == 0 && (
             <Result
               status="404"
-              title={getLogin("No_messages")}
-              subTitle={getLogin("In_this_status")}
+              title={getAll("No_messages")}
+              subTitle={getAll("In_this_status")}
             />
           )}
 

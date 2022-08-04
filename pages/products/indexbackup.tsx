@@ -19,8 +19,7 @@ function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLogin = getSectionLanguage("login");
-  const getAll = getSectionLanguage("all");
+  const getAll = getSectionLanguage();
   const [size, setSize] = useState(4);
   const [paginationSize, setPaginationSize] = useState(8);
   let token = Cookies.get("token");
@@ -233,7 +232,7 @@ function Category() {
             </div>
             <div className="col-md-9">
               <div className="page-header">
-                <h4 className="title">{getLogin("All_services")}</h4>
+                <h4 className="title">{getAll("All_services")}</h4>
               </div>
               <FilterContent
                 products={getProducts && getProducts.data}

@@ -119,9 +119,7 @@ const Tiptap = (props: any) => {
 function Description({ query, stars }) {
   const stepsView = useRef(null);
   const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("add_new");
-  const getAll = getSectionLanguage("all");
-  const getLogin = getSectionLanguage("login");
+  const getAll = getSectionLanguage();
 
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
@@ -180,7 +178,7 @@ function Description({ query, stars }) {
         );
         // Authentication was successful.
         if (res.status === 200) {
-          message.success(getLogin("The_update_has"));
+          message.success(getAll("The_update_has"));
           router.push(`/edit-product/medias?id=${getProduct?.data.id}`);
         }
       } catch (error: any) {
@@ -250,7 +248,6 @@ function Description({ query, stars }) {
                                   collections_bookmark
                                 </span>
                               </span>
-                              {getLanguage("General_information")}
                             </a>
                           </Link>
                         </h3>
@@ -267,8 +264,6 @@ function Description({ query, stars }) {
                                 <span className="material-icons material-icons-outlined">
                                   payments
                                 </span>
-                                {getLanguage("Upgrades_price")}
-
                               </span>
                             </a>
                           </Link>
@@ -288,7 +283,6 @@ function Description({ query, stars }) {
                                   description
                                 </span>
                               </span>
-                              {getLanguage("Description_and_instructions")}
                             </a>
                           </Link>
                         </h3>
@@ -306,8 +300,6 @@ function Description({ query, stars }) {
                                   mms
                                 </span>
                               </span>
-                              {getLanguage("Gallery_and_folders")}
-
                             </a>
                           </Link>
                         </h3>
@@ -323,7 +315,6 @@ function Description({ query, stars }) {
                                   publish
                                 </span>
                               </span>
-                              {getLanguage("Publish_service")}
                             </a>
                           </Link>
                         </h3>
@@ -336,7 +327,6 @@ function Description({ query, stars }) {
                         <span className="material-icons material-icons-outlined">
                           description
                         </span>
-                        {getLanguage("Description_and_instructions")}
                       </h2>
                     </div>
                   </div>
@@ -347,9 +337,7 @@ function Description({ query, stars }) {
                           <label
                             className="label-block"
                             htmlFor="input-content"
-                          >
-                            {getLanguage("Service_description")}
-                          </label>
+                          ></label>
                           <div className="app-content-editor">
                             <MenuBar editor={editor} />
                             <Tiptap
@@ -363,9 +351,7 @@ function Description({ query, stars }) {
                             animate={{ y: 0, opacity: 1 }}
                             className="timlands-form-note"
                           >
-                            <p className="text">
-                              {getLanguage("Enter_an_accurate")}
-                            </p>
+                            <p className="text"></p>
                           </motion.div>
                           {validationsErrors && validationsErrors.content && (
                             <div style={{ overflow: "hidden" }}>
@@ -387,9 +373,7 @@ function Description({ query, stars }) {
                           <label
                             className="label-block"
                             htmlFor="input-buyer_instruct"
-                          >
-                            {getLanguage("Instructions_to_the")}
-                          </label>
+                          ></label>
                           <div className="app-content-editor">
                             <MenuBar editor={buyerInstruct} />
                             <Tiptap
@@ -403,9 +387,7 @@ function Description({ query, stars }) {
                             animate={{ y: 0, opacity: 1 }}
                             className="timlands-form-note"
                           >
-                            <p className="text">
-                              {getLanguage("They_are_information")}
-                            </p>
+                            <p className="text"></p>
                           </motion.div>
                           {validationsErrors &&
                             validationsErrors.buyer_instruct && (
@@ -433,10 +415,7 @@ function Description({ query, stars }) {
                             <span className="material-icons-outlined">
                               chevron_right
                             </span>
-                            <span className="text">
-                              {" "}
-                              {getLanguage("Previous_step")}
-                            </span>
+                            <span className="text"> </span>
                             <div
                               className="spinner-border spinner-border-sm text-white"
                               role="status"
@@ -450,9 +429,7 @@ function Description({ query, stars }) {
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
                           >
-                            <span className="text">
-                              {getLogin("Save_edits")}
-                            </span>
+                            <span className="text">{getAll("Save_edits")}</span>
                           </button>
                         </div>
                       </div>
