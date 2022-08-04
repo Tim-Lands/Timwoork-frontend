@@ -12,10 +12,28 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 import PropTypes from "prop-types";
+import FormLangs from "@/components/NewIndex/Forms/FormLangs";
+import FormModal from "@/components/NewIndex/Forms/FormModal";
 // import FormLangs from "@/components/NewIndex/Forms/FormLangs";
 // import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
-
+let testTime;
 function Prices({ query }) {
+  const { data: userInfo }: any = useSWR("api/me");
+  const [userLang, setUserLang] = useState();
+  const [checkedLangs, setCheckedLangs] = useState({
+    ar: false,
+    fr: false,
+    en: false,
+  });
+  const [selectedLang, setSelectedLang] = useState("");
+  const [subtitles, setSubtitles]: any = useState([
+    { ar: null, fr: null, en: null },
+  ]);
+  const [isSubtitle, setIsSubtitle] = useState([
+    { ar: false, fr: false, en: false },
+  ]);
+  const [isShowenModal, setIsShowenModal] = useState(false);
+  const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
   const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
@@ -25,7 +43,6 @@ function Prices({ query }) {
   const { id } = query;
   const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { data: userInfo }: any = useSWR("api/me");
   const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -67,6 +84,23 @@ function Prices({ query }) {
       : durationCount;
     setDurationCount(financialGoal);
   };
+
+  const addSubtitle = (subtitle) => {
+    console.log(subtitle);
+    console.log(selectedLang);
+    switch (selectedLang) {
+      case "ar":
+        setSubtitles([...subtitles, { ...subtitles[dvlpindex], ar: subtitle }]);
+        break;
+      case "en":
+        setSubtitles([...subtitles, { ...subtitles[dvlpindex], en: subtitle }]);
+        break;
+      case "fr":
+        setSubtitles([...subtitles, { ...subtitles[dvlpindex], fr: subtitle }]);
+        break;
+    }
+  };
+
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
@@ -76,6 +110,11 @@ function Prices({ query }) {
     }
     getProductId();
   }, []);
+  const detectLang = async (txt) => {
+    const res = await API.post(`/api/detectLang`, { sentence: txt });
+    setCheckedLangs({ ...checkedLangs, [res.data.data]: false });
+    setUserLang(res.data.data);
+  };
   return (
     <>
       <MetaTags
@@ -93,6 +132,20 @@ function Prices({ query }) {
               <SidebarAdvices />
             </div>
             <div className="col-md-8 pt-3">
+              {isShowenModal && (
+                <FormModal
+                  isSwitchChecked={isSubtitle[selectedLang]}
+                  onSwitch={() =>
+                    setIsSubtitle({
+                      ...isSubtitle,
+                      [selectedLang]: !isSubtitle[selectedLang],
+                    })
+                  }
+                  onSubmit={(txt) => addSubtitle(txt)}
+                  setIsConfirmText={setIsShowenModal}
+                />
+              )}
+
               <Formik
                 isInitialValid={true}
                 initialValues={{
@@ -105,12 +158,21 @@ function Prices({ query }) {
                 onSubmit={async (values) => {
                   setValidationsErrors({});
                   try {
+                    values.developments.foreach((val, indx) => {
+                      if (!isSubtitle[indx]["ar"] && subtitles[indx]["ar"])
+                        val.title_ar = subtitles["ar"];
+                      if (!isSubtitle[indx]["en"] && subtitles[indx]["en"])
+                        val.title_en = subtitles["en"];
+                      if (!isSubtitle[indx]["fr"] && subtitles[indx]["fr"])
+                        val.title_fr = subtitles["fr"];
+                    });
                     const res = await API.post(
                       `api/product/${id}/product-step-two`,
                       values,
                       {
                         headers: {
                           Authorization: `Bearer ${token}`,
+                          "X-LOCALIZATION": userLang,
                         },
                       }
                     );
@@ -303,6 +365,7 @@ function Prices({ query }) {
                               >
                                 {getAll("Upgrades")}
                               </label>
+
                               <FieldArray
                                 name="developments"
                                 render={(arrayHelpers) => (
@@ -334,14 +397,27 @@ function Prices({ query }) {
                                                         "Development_title"
                                                       )}
                                                     </label>
+
                                                     <Field
                                                       id={"input-name-" + index}
                                                       placeholder={getAll(
                                                         "Development_title"
                                                       )}
-                                                      onKeyUp={
-                                                        clearValidationHandle
-                                                      }
+                                                      onKeyUp={() => {
+                                                        clearValidationHandle();
+                                                        testTime = setTimeout(
+                                                          () =>
+                                                            detectLang(
+                                                              values[
+                                                                "developments"
+                                                              ][index].title
+                                                            ),
+                                                          3000
+                                                        );
+                                                      }}
+                                                      onKeyDown={() => {
+                                                        clearTimeout(testTime);
+                                                      }}
                                                       className={
                                                         "timlands-inputs " +
                                                         (validationsErrors &&
@@ -351,6 +427,14 @@ function Prices({ query }) {
                                                           " has-error")
                                                       }
                                                       name={`developments[${index}].title`}
+                                                    />
+                                                    <FormLangs
+                                                      onClick={(lang) => {
+                                                        setIsShowenModal(true);
+                                                        setSelectedLang(lang);
+                                                        setDvlpindex(index);
+                                                      }}
+                                                      default_lang={userLang}
                                                     />
                                                     {/* <FormLangs /> */}
                                                     {validationsErrors &&

@@ -5075,7 +5075,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .modal-conferm-head {
       border-bottom: 2px dashed #f6f6f6;
       margin-bottom: 9px;
-
       .title {
         margin: 0;
         font-size: 21px;
@@ -5249,7 +5248,10 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
   flex-direction: row;
   padding: 20px 10px;
   position: relative;
-
+  .btn-translate {
+    position: absolute;
+    top: 10px;
+  }
   .item-content {
     width: 65%;
 

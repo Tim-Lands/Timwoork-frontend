@@ -20,10 +20,11 @@ import router from "next/router";
 import Loading from "@/components/Loading";
 import pusher from "../../config/pusher";
 import { LanguageContext } from "contexts/languageContext/context";
+let testTime;
 
 function Conversation({ query }) {
   let token = Cookies.get("token");
-
+  const [userLang, setUserLang] = useState();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();
@@ -45,7 +46,7 @@ function Conversation({ query }) {
   const [sendMessageLoading, setSendMessageLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(0);
-
+  const [isTranslate, setIsTranslate] = useState({});
   useEffect(() => {
     if (!token) {
       router.push("/login");
@@ -87,6 +88,7 @@ function Conversation({ query }) {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "X-LOCALIZATION": userLang,
           },
           onUploadProgress: (uploadEvent) => {
             if (filesMsg.length !== 0)
@@ -115,6 +117,11 @@ function Conversation({ query }) {
   channel.bind("message.sent", () => {
     mutate(`api/conversations/${query.id}`);
   });
+
+  const detectLang = async (txt) => {
+    const res = await API.post(`/api/detectLang`, { sentence: txt });
+    setUserLang(res.data.data);
+  };
   function switchTypeMessage(type: any) {
     switch (type) {
       case 0:
@@ -355,6 +362,23 @@ function Conversation({ query }) {
                           </div>
 
                           <div className="item-content">
+                            <button
+                              className="btn butt-sm butt-primary-text btn-translate flex-center"
+                              onClick={() =>
+                                setIsTranslate({
+                                  ...isTranslate,
+                                  [item.id]: !isTranslate[item.id],
+                                })
+                              }
+                            >
+                              <span className="material-icons material-icons-outlined">
+                                translate
+                              </span>
+                              {isTranslate[item.id]
+                                ? "إعادة النص للترجمة الاصلية"
+                                : "ترجمة"}
+                            </button>
+                            <LastSeen date={item.created_at} />
                             {item.type == 1 && (
                               <span
                                 className="bg-success text-light d-inline-block"
@@ -386,16 +410,6 @@ function Conversation({ query }) {
                             <p className="text" style={{ margin: 0 }}>
                               {item.user.profile.full_name}
                             </p>
-                            <p
-                              className="meta"
-                              style={{
-                                marginBlock: 4,
-                                fontSize: 11,
-                                fontWeight: 200,
-                              }}
-                            >
-                              <LastSeen date={item.created_at} />
-                            </p>
                             {item.attachments && (
                               <div
                                 className="attach-items"
@@ -422,9 +436,18 @@ function Conversation({ query }) {
                             )}
 
                             <div
-                              dangerouslySetInnerHTML={{
-                                __html: linkify(item.message, query),
-                              }}
+                              dangerouslySetInnerHTML={
+                                isTranslate[item.id]
+                                  ? {
+                                      __html: linkify(
+                                        item[`message_${language}`] || "",
+                                        query
+                                      ),
+                                    }
+                                  : {
+                                      __html: linkify(item.message, query),
+                                    }
+                              }
                             />
                             {profileInfo &&
                               profileInfo.user_details.id == item.user.id && (
@@ -567,8 +590,15 @@ function Conversation({ query }) {
                       <input
                         id="input-buyer_instruct"
                         name="buyer_instruct"
+                        onKeyDown={() => {
+                          clearTimeout(testTime);
+                        }}
                         onKeyUp={() => {
                           setMessageErrors({});
+                          testTime = setTimeout(
+                            () => detectLang(message),
+                            3000
+                          );
                         }}
                         placeholder={getAll("Message_text")}
                         className={

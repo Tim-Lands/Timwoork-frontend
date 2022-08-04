@@ -19,9 +19,10 @@ function Profile() {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
+  const [isTranslate, setIsTranslate] = useState(false);
   const { data: userInfo }: any = useSWR("api/me");
   const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage("all");
   const getLogin = getSectionLanguage("login");
 
@@ -70,6 +71,7 @@ function Profile() {
       router.push("/login");
     }
   }, []);
+
   if (userInfo && userInfo.user_details.profile.steps < 1) {
     return (
       <div className="row justify-content-md-center">
@@ -166,7 +168,7 @@ function Profile() {
                       <span className="material-icons material-icons-outlined">
                         copy
                       </span>{" "}
-                      {getLogin("Copy_my_profile’s")}
+                      {getLogin("Copy_my_profiles")}
                     </button>
                   </p>
                 </div>
@@ -256,12 +258,21 @@ function Profile() {
                               className={
                                 "user-bro " + (isLess ? "is-less" : "")
                               }
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  userInfo.user_details.profile.profile_seller
-                                    .bio,
-                              }}
+                              dangerouslySetInnerHTML={
+                                isTranslate
+                                  ? {
+                                      __html:
+                                        userInfo.user_details.profile
+                                          .profile_seller[`bio_${language}`],
+                                    }
+                                  : {
+                                      __html:
+                                        userInfo.user_details.profile
+                                          .profile_seller.bio,
+                                    }
+                              }
                             />
+
                             {isOverflow && (
                               <button
                                 onClick={() => {
@@ -277,6 +288,19 @@ function Profile() {
                                   : getLogin("Read_less")}
                               </button>
                             )}
+                            <div className="d-flex justify-content-center">
+                              <button
+                                className="btn butt-sm butt-primary-text flex-center"
+                                onClick={() => setIsTranslate(!isTranslate)}
+                              >
+                                <span className="material-icons material-icons-outlined">
+                                  translate
+                                </span>
+                                {isTranslate
+                                  ? "إعادة الى اللغة الاصلية"
+                                  : "ترجمة"}
+                              </button>
+                            </div>
                           </Card>
                         </div>
                       </>

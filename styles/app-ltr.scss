@@ -893,11 +893,15 @@
     .readed {
       right: 12px;
     }
-
+    .btn-translate {
+      right: 34px;
+    }
     &.recieved {
       flex-direction: row;
       text-align: right;
-
+      .btn-translate {
+        left: 20px;
+      }
       .readed {
         left: 12px;
       }
