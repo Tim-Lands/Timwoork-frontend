@@ -343,7 +343,7 @@ function AddNewMessage({ setIsConfirmText, title }): ReactElement {
                 className="btn butt-sm butt-red-text mx-1"
                 onClick={() => setIsConfirmText(false)}
               >
-                إلغاء الأمر
+                {getAll("Cancel")}
               </button>
             </div>
             <button

@@ -10,6 +10,8 @@ import bgIMG from "../styles/5313770.jpg";
 import heroIMG from "../public/hero3.png";
 import Image from "next/image";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 
 export function LoadingSearch() {
   return (
@@ -21,16 +23,20 @@ export function LoadingSearch() {
   );
 }
 export function NotFountSearch() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <Result
       status="warning"
-      title="لا توجد نتائج"
-      subTitle="لاتوجد نتائج لعرضها يرجى إعادة المحاولة"
+      title={getAll("No_results")}
+      subTitle={getAll("No_results_to_display")}
     />
   );
 }
 
 function Hero() {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   const controlsParent = useAnimation();
   const controls = useAnimation();
   const [isSearch, setIsSearch] = useState(false);
@@ -145,7 +151,7 @@ function Hero() {
             animate={{ y: 0, opacity: 1 }}
             className="main-title"
           >
-            اشتري. دردش .بيع
+            {getAll("Buy_chat_sell")}
           </motion.h1>
           <motion.h1
             transition={{ duration: 0.69 }}
@@ -153,7 +159,7 @@ function Hero() {
             animate={{ y: 0, opacity: 1 }}
             className="sub-title"
           >
-            اكتشف سوق تيم ورك للخدمات الالكترونية الأكثر تطورا وراحة
+            {getAll("Discover_Timwoork’s_most")}
           </motion.h1>
         </div>
         <div className="timlands-hero-search" ref={buttonRef}>
@@ -161,7 +167,7 @@ function Hero() {
             <input
               type="text"
               onKeyUp={onKeyUpHandle}
-              placeholder="البحث في تيم ورك..."
+              placeholder={getAll("Search_in_Timwoork")}
               className="timlands-inputs"
               style={{
                 border: "1px solid #ddd",
@@ -208,10 +214,10 @@ function Hero() {
                         dataLength={getSearchs.length} //This is important field to render the next data
                         next={fetch}
                         hasMore={pageNumber < totalPages}
-                        loader={<h4>جاري التحميل</h4>}
+                        loader={<h4>{getAll("Loading")}</h4>}
                         endMessage={
                           <p style={{ textAlign: "center" }}>
-                            <b>لا يوجد المزيد من النتائج</b>
+                            <b>{getAll("There_are_no_more")}</b>
                           </p>
                         }
                         scrollableTarget="scrollableTest"

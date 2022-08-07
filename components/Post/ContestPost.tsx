@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaTag } from "react-icons/fa";
 import { GiTrophyCup } from "react-icons/gi";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 import {
   AiFillHeart,
   AiFillLike,
@@ -50,6 +52,8 @@ function ContestPost({
         return "";
     }
   };
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   return (
     <div className={"contest-post-item" + sizeClass()}>
       <div className="contest-post-item-content">
@@ -107,7 +111,7 @@ function ContestPost({
             <li className="post-meta-status">
               <span className={`label-status ${sizeStatusClass()}`}>
                 {" "}
-                كتابة وترجمة{" "}
+                {getAll("Writing_and_translation")}{" "}
               </span>
             </li>
           </ul>

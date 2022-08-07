@@ -59,7 +59,7 @@ export default function AboutSeller({
                   <span className="material-icons material-icons-outlined">
                     place
                   </span>{" "}
-                  الجزائر
+                  {getAll("Algeria")}
                 </li>
               )}
             </ul>

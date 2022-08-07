@@ -84,6 +84,11 @@
     "fr": "Téléchargement en cours …",
     "ar": "جاري التحميل..."
   },
+  "There_are_no_more": {
+    "en": "There are no more results",
+    "fr": "Il n'y a plus de résultats",
+    "ar": "لا يوجد المزيد من النتائج"
+  },
   "One_day": {
     "en": "One day",
     "fr": "Un jour",
@@ -387,8 +392,13 @@
   },
   "No_services_to_display": {
     "en": "No services to display",
-    "fr": "Aucun service à afficher",
+    "fr": "Aucun résultats à afficher",
     "ar": "لا توجد خدمات لعرضها"
+  },
+  "No_results_to_display": {
+    "en": "No results to display, please try again",
+    "fr": "Aucun service à afficher, Veuillez réessayer",
+    "ar": "لاتوجد نتائج لعرضها يرجى إعادة المحاولة"
   },
   "Number_of_times": {
     "en": "Number of times",
@@ -454,6 +464,11 @@
     "en": "No services",
     "fr": "Aucun service",
     "ar": "لا توجد خدمات"
+  },
+  "No_results": {
+    "en": "No results",
+    "fr": "Aucun résultats",
+    "ar": "لا توجد نتائج"
   },
   "Add_new_service1": {
     "en": "Add new service- Publish the service",
@@ -5653,7 +5668,7 @@
     "ar": "معلومات عامة ومفيدة"
   },
   "Desactivation_reason": {
-    "en": "Desactivation reason",
+    "en": "Deactivation reason",
     "fr": "Motif de désactivation",
     "ar": "سبب التعطيل"
   },
@@ -5922,12 +5937,12 @@
     "fr": "Message explicative",
     "ar": "رسالة توضيحية"
   },
-  "Your_service_cannot ": {
+  "Your_service_cannot": {
     "en": "Your service cannot be purchased",
     "fr": "Votre service ne peut être acheté",
     "ar": "لا يمكن شراء خدمتك"
   },
-  "Do_you_need ": {
+  "Do_you_need": {
     "en": "Do you need help?",
     "fr": "Avez-vous besoin d’aide?",
     "ar": "تحتاج الى مساعدة ? 🤙"
@@ -5948,13 +5963,13 @@
     "fr": "il n’y a pas de motif particulier",
     "ar": "لا يوجد سبب بعينه"
   },
-  "Please_explain_the ": {
+  "Please_explain_the": {
     "en": "Please explain the reason for deletion",
     "fr": "Veuillez expliquer le motif de suppression",
     "ar": "برجاء توضيح سبب الحذف"
   },
   "Desactivate_now": {
-    "en": "Desactivate now",
+    "en": "Deactivate now",
     "fr": "Désactiver maintenant",
     "ar": "تعطيل الآن"
   },

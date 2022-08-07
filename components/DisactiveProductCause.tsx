@@ -27,12 +27,12 @@ function DisactiveProductCause({
         <div className="modal-conferm-body">
           <div className="timlands-form">
             <label className="label-block" htmlFor="input-msg">
-              سبب التعطيل
+              {getAll("Desactivation_reason")}
             </label>
             <textarea
               id="input-msg"
               name="msg"
-              placeholder="سبب التعطيل..."
+              placeholder={getAll("Desactivation_reason")}
               className={"timlands-inputs"}
               onChange={(e) => setMsg(e.target.value)}
               value={msg}
@@ -47,7 +47,7 @@ function DisactiveProductCause({
               className="btn butt-sm butt-green"
               onClick={() => handleFunc({ message: msg })}
             >
-              تعطيل الآن
+              {getAll("Desactivate_now")}
             </button>
             <button
               className="btn butt-sm butt-red-text"

@@ -41,12 +41,12 @@ function EditModal({
               style={{ minHeight: 120, marginBottom: 15 }}
             />
             <label className="label-block" htmlFor="input-msg">
-              سبب التعديل
+              {getAll("Edit_reason")}
             </label>
             <textarea
               id="input-msg"
               name="msg"
-              placeholder="التعديل..."
+              placeholder={getAll("Edit")}
               className={"timlands-inputs"}
               onChange={(e) => setReason(e.target.value)}
               value={reason}
@@ -61,7 +61,7 @@ function EditModal({
               className="btn butt-sm butt-green"
               onClick={() => handleFunc({ message: msg, cause: reason })}
             >
-              تحديث المعلومات
+              {getAll("Update_information")}
             </button>
             <button
               className="btn butt-sm butt-red-text"

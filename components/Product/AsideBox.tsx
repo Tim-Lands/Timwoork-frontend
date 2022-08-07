@@ -85,7 +85,7 @@ export default function AsideBox({
         );
 
         notification.open({
-          message: "رسالة توضيحية",
+          message: getAll("Explanatory_message"),
           description: getAll("This_service_was"),
           btn,
           key,
@@ -98,7 +98,7 @@ export default function AsideBox({
       if (error.response && error.response.status === 400) {
         notification.open({
           message: getAll("Error_message"),
-          description: "لا يمكن شراء خدمتك",
+          description: getAll("Your_service_cannot"),
           onClose: close,
         });
       } else {

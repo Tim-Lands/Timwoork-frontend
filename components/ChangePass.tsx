@@ -68,7 +68,7 @@ function ChangePass() {
                           <span className="material-icons material-icons-outlined">
                             lock
                           </span>
-                          تغيير كلمة المرور
+                          {getAll("Password_change")}
                         </h3>
                       </div>
                     </div>
@@ -103,7 +103,7 @@ function ChangePass() {
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
                         {getAll("New_password")}
-                        <Tooltip title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام.">
+                        <Tooltip title={getAll("The_password_must")}>
                           <Badge
                             style={{ color: "#52c41a " }}
                             count={
@@ -147,7 +147,7 @@ function ChangePass() {
                         htmlFor="password_confirmation"
                       >
                         {getAll("Reset_password")}
-                        <Tooltip title="كلمة المرور يجب ان تحتوي على الاقل حرف كبير واحد وحرف صغير واحد وان يكون على الاقل 8 حروف أو أرقام.">
+                        <Tooltip title={getAll("The_password_must")}>
                           <Badge
                             style={{ color: "#52c41a " }}
                             count={
@@ -194,7 +194,7 @@ function ChangePass() {
                           disabled={isSubmitting}
                           className="btn me-auto butt-primary butt-md"
                         >
-                          تحديث المعلومات
+                          {getAll("Update_information")}
                         </button>
                       </div>
                     </div>

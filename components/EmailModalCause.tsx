@@ -47,7 +47,7 @@ function EmailModalCause({
               className="btn butt-sm butt-green"
               onClick={() => handleFunc({ message: msg })}
             >
-              أرسل الآن
+              {getAll("Send_now")}
             </button>
             <button
               className="btn butt-sm butt-red-text"

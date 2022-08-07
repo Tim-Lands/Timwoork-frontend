@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
 import { FaEye, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 function Portfolio({
   title,
@@ -17,6 +19,8 @@ function Portfolio({
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   const [isFavorated, setIsFavorated] = useState(false);
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
 
   return (
     <Badge.Ribbon
@@ -41,17 +45,17 @@ function Portfolio({
             >
               {!isFavorated ? (
                 <>
-                  <FaRegHeart /> To Favorite
+                  <FaRegHeart /> {getAll("To_Favorite")}
                 </>
               ) : (
                 <>
-                  <FaHeart /> Favorited
+                  <FaHeart /> {getAll("Favorited")}
                 </>
               )}
             </button>
             <Link href={`/portfolios/${slug}`}>
               <a className="btn butt-xs butt-white-out flex-center">
-                <FaEye /> View
+                <FaEye /> {getAll("View")}
               </a>
             </Link>
           </div>
