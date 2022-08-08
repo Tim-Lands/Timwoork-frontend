@@ -209,7 +209,6 @@ function Navbar({ dark = false }) {
           });
         }
       });
-      console.log("pusher gonna bind");
       notificationPusher.bind("notification.sent", (data) => {
         console.log(data);
         const today = new Date();
@@ -290,6 +289,9 @@ function Navbar({ dark = false }) {
           className={language === "ar" ? "selectedLanguage" : ""}
           onClick={() => {
             setLanguage("ar");
+            Cookies.set("lang", "ar");
+
+            window.location.reload();
             hideLanguage();
           }}
         >
@@ -299,6 +301,8 @@ function Navbar({ dark = false }) {
           className={language === "en" ? "selectedLanguage" : ""}
           onClick={() => {
             setLanguage("en");
+            Cookies.set("lang", "en");
+            window.location.reload();
             hideLanguage();
           }}
         >
@@ -308,6 +312,8 @@ function Navbar({ dark = false }) {
           className={language === "fr" ? "selectedLanguage" : ""}
           onClick={() => {
             setLanguage("fr");
+            Cookies.set("lang", "fr");
+            window.location.reload();
             hideLanguage();
           }}
         >

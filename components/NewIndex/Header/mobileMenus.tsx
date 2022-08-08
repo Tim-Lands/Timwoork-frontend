@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
+import LanguageModel from "../DropdowModal/Language";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import {
@@ -13,7 +14,6 @@ import {
 } from "react-icons/md";
 import { FaGlobe, FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-// import Image from "next/image";
 import Link from "next/link";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
@@ -44,8 +44,11 @@ const MobileMenu = ({ postsList }) => {
       });
     };
   }, []);
+  const [isLanguage, setIsLanguage] = useState(false);
+
   return (
     <>
+      {isLanguage && <LanguageModel setIsConfirmText={setIsLanguage} />}
       <GiHamburgerMenu onClick={showDrawer} className="toggleButton" />
       <Drawer
         placement="left"
@@ -247,11 +250,17 @@ const MobileMenu = ({ postsList }) => {
                     <MdNotificationsNone onClick={onClose} />
                   </Link>
                 </li>
-                <li className="circular-newitem">
-                  <FaGlobe />
-                </li>
               </>
             )}
+            <li
+              className="circular-newitem"
+              onClick={() => {
+                onClose();
+                setIsLanguage(true);
+              }}
+            >
+              <FaGlobe />
+            </li>
           </ul>
         </div>
       </Drawer>

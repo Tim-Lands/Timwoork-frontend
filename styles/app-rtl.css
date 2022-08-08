@@ -303,10 +303,6 @@
   border-left: 0;
 }
 
-.rtl .swiper-slide {
-  margin-left: 15px !important;
-}
-
 .rtl .swiper-button-prev,
 .rtl .swiper-rtl .swiper-button-next {
   left: 0px !important;

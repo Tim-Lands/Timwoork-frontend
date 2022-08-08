@@ -2355,10 +2355,6 @@
   background-color: #475c80 !important;
 }
 
-.ltr .swiper-slide {
-  margin-right: 15px !important;
-}
-
 .ltr .swiper-button-prev,
 .ltr .swiper-rtl .swiper-button-next {
   right: 0px !important;

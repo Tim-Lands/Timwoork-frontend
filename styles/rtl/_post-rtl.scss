@@ -1,12 +1,10 @@
 .timlands-post-item {
-
   .post-item-img {
     &::after {
       content: "";
       left: 0;
       right: 0;
     }
-
   }
 
   .post-item-content {
@@ -78,7 +76,6 @@
         }
       }
     }
-
   }
 }
 
@@ -117,9 +114,9 @@
     }
   }
 }
-.swiper-slide {
-  margin-left: 15px !important;
-}
+// .swiper-slide {
+//   margin-left: 15px !important;
+// }
 .swiper-button-prev,
 .swiper-rtl .swiper-button-next {
   left: 0px !important;

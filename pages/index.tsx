@@ -21,7 +21,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import PostInner from "@/components/Post/PostInner";
 function index({ products, latestProducts, categories, popularProducts }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { language, getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   const menu = (
     <Menu>
@@ -87,19 +87,27 @@ function index({ products, latestProducts, categories, popularProducts }) {
         popularProducts.length !== 0 &&
         latestProducts.length !== 0 && (
           <>
-            <div className="container ">
-              <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
-                <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
+            <div
+              className="container "
+              style={{ direction: language === "ar" ? "rtl" : "ltr" }}
+            >
+              <div
+                className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header w-100"
+                style={{ direction: language === "ar" ? "rtl" : "ltr" }}
+              >
+                <h6 className="title   fw-bold" style={{ fontSize: 19 }}>
                   {getAll("Newly_added_services")}
                 </h6>
                 <Link href="/products/latest">
                   <button>{getAll("More")}</button>
                 </Link>
               </div>
+
               <Swiper
                 pagination={{
                   type: "progressbar",
                 }}
+                // dir={language === "ar" ? "rtl" : "ltr"}
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 breakpoints={{
@@ -121,6 +129,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                   },
                 }}
                 className="mySwiper"
+                style={{ direction: "rtl" }}
+                dir={"rtl"}
               >
                 {latestProducts &&
                   latestProducts.data.map((e: any) => (
@@ -148,9 +158,15 @@ function index({ products, latestProducts, categories, popularProducts }) {
                   ))}
               </Swiper>
             </div>
-            <div className="container " style={{ marginBlock: 90 }}>
-              <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
-                <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
+            <div
+              className="container "
+              style={{ marginBlock: 90, direction: "rtl" }}
+            >
+              <div
+                className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header w-100"
+                style={{ direction: language === "ar" ? "rtl" : "ltr" }}
+              >
+                <h6 className="title   fw-bold" style={{ fontSize: 19 }}>
                   {getAll("Top_selling_services")}
                 </h6>
                 <Link href="/products/best-seller">
@@ -161,6 +177,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 pagination={{
                   type: "progressbar",
                 }}
+                // dir={language === "en" ? "ltr" : "rtl"}
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 breakpoints={{
@@ -182,6 +199,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                   },
                 }}
                 className="mySwiper"
+                dir={"rtl"}
+                style={{ direction: "rtl" }}
               >
                 {products &&
                   products.data.map((e: any) => (
@@ -209,9 +228,12 @@ function index({ products, latestProducts, categories, popularProducts }) {
                   ))}
               </Swiper>
             </div>
-            <div className="container ">
-              <div className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header">
-                <h6 className="title me-auto  fw-bold" style={{ fontSize: 19 }}>
+            <div className="container " style={{ direction: "rtl" }}>
+              <div
+                className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header w-100"
+                style={{ direction: language === "ar" ? "rtl" : "ltr" }}
+              >
+                <h6 className="title   fw-bold" style={{ fontSize: 19 }}>
                   {getAll("Most_popular_services")}
                 </h6>
                 <button>
@@ -219,6 +241,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 </button>
               </div>
               <Swiper
+                // dir={language === "ar" ? "rtl" : ""}
                 pagination={{
                   type: "progressbar",
                 }}
@@ -242,6 +265,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
                     spaceBetween: 15,
                   },
                 }}
+                style={{ direction: "rtl" }}
+                dir={"rtl"}
                 className="mySwiper "
               >
                 {popularProducts &&

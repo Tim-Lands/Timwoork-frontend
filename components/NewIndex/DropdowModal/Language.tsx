@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 function Language({ setIsConfirmText }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { language, getSectionLanguage, setLanguage } =
+    useContext(LanguageContext);
   const getAll = getSectionLanguage();
   return (
     <motion.div
@@ -20,25 +21,44 @@ function Language({ setIsConfirmText }): ReactElement {
         <div className="modal-conferm-body">
           <ul className="new-drop-check language-list">
             <li>
-              <button className="checked-item-button">العربية</button>
+              <button
+                className={`checked-item-button ${
+                  language === "ar" ? " checked" : ""
+                }`}
+                onClick={() => setLanguage("ar")}
+              >
+                العربية
+              </button>
             </li>
             <li>
-              <button className="checked-item-button checked">
+              <button
+                className={`checked-item-button ${
+                  language === "en" ? " checked" : ""
+                }`}
+                onClick={() => setLanguage("en")}
+              >
                 الإنجليزية
               </button>
             </li>
             <li>
-              <button className="checked-item-button">الفرنسية</button>
-            </li>
-            <li>
-              <button className="checked-item-button">التركية</button>
+              <button
+                className={`checked-item-button ${
+                  language === "fr" ? " checked" : ""
+                }`}
+                onClick={() => setLanguage("fr")}
+              >
+                الفرنسية
+              </button>
             </li>
           </ul>
         </div>
 
         <div className="modal-conferm-footer">
           <Space>
-            <button className="btn butt-md butt-green" type="submit">
+            <button
+              className="btn butt-md butt-green"
+              onClick={() => setIsConfirmText(false)}
+            >
               {getAll("Choose")}
             </button>
             <button
