@@ -37,7 +37,7 @@ function Language({ setIsConfirmText }): ReactElement {
                 }`}
                 onClick={() => setLanguage("en")}
               >
-                الإنجليزية
+                English
               </button>
             </li>
             <li>
@@ -47,7 +47,7 @@ function Language({ setIsConfirmText }): ReactElement {
                 }`}
                 onClick={() => setLanguage("fr")}
               >
-                الفرنسية
+                French
               </button>
             </li>
           </ul>
