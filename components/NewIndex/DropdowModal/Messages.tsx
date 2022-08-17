@@ -48,8 +48,8 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
                         <div className="new-popup-item-content">
                           <p className="text">
                             {lang === "ar" && getAll("Have")}{" "}
-                            {message?.members[0].username}{" "}
-                            {getAll("have_commented")}
+                            {message?.members[0].username}
+                            {" " + getAll("have_commented") + " "}
                             <strong>{message?.title}</strong>
                           </p>
                           <p className="meta">
