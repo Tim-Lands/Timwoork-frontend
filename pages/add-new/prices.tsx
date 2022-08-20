@@ -152,13 +152,15 @@ function Prices({ query }) {
                   price: getProduct && getProduct.data.price,
                   duration: getProduct && getProduct.data.duration,
                   developments:
-                    (getProduct && getProduct.data.developments) || null,
+                    (getProduct && getProduct.data.developments) || [],
                 }}
                 enableReinitialize={true}
                 onSubmit={async (values) => {
+                  console.log('submiting')
                   setValidationsErrors({});
                   try {
-                    values.developments.foreach((val, indx) => {
+                    console.log(values)
+                    values.developments.forEach((val, indx) => {
                       if (!isSubtitle[indx]["ar"] && subtitles[indx]["ar"])
                         val.title_ar = subtitles["ar"];
                       if (!isSubtitle[indx]["en"] && subtitles[indx]["en"])
@@ -187,6 +189,7 @@ function Prices({ query }) {
                       });
                     }
                   } catch (error: any) {
+                    console.log(error)
                     if (
                       error.response &&
                       error.response.data &&
@@ -679,9 +682,6 @@ function Prices({ query }) {
                               </button>
                               <button
                                 type="submit"
-                                disabled={
-                                  (!getProduct ? true : false) || isSubmitting
-                                }
                                 className="btn flex-center butt-green ml-auto butt-sm"
                               >
                                 <span className="text">
