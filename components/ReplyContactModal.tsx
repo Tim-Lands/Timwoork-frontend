@@ -6,12 +6,13 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import API from "../config";
 import Cookies from "js-cookie";
+import { LanguageContext } from "../contexts/languageContext/context";
+import { useContext } from "react";
 
 export const MenuBar = ({ editor }: any) => {
   if (!editor) {
     return null;
   }
-
   return (
     <div className="menubar">
       <button
@@ -114,6 +115,8 @@ function ReplyContactModal({
   title,
   user,
 }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   const [fromState, setFromState] = useState("");
   const [toEmail, setToEmail] = useState(user?.email);
   const [messageState, setMessageState] = useState("");
@@ -142,7 +145,7 @@ function ReplyContactModal({
     );
     if (res.status == 200)
       notification.open({
-        message: "تم إرسال الرد بنجاح",
+        message: getAll("Reply_sent_successfully"),
         type: "success",
       });
 
@@ -165,12 +168,12 @@ function ReplyContactModal({
             <div className="col-xl-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-msg">
-                  من
+                  {getAll("From1")}
                 </label>
                 <select
                   id="input-msg"
                   name="fromState"
-                  placeholder="من..."
+                  placeholder={getAll("From1")}
                   className={
                     "timlands-inputs sm " +
                     (validationsErrors &&
@@ -207,13 +210,13 @@ function ReplyContactModal({
             <div className="col-xl-6">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-toState">
-                  إلى
+                  {getAll("To")}
                 </label>
                 <input
                   type="text"
                   id="input-toState"
                   name="toState"
-                  placeholder="إلى..."
+                  placeholder={getAll("To")}
                   className={
                     "timlands-inputs sm " +
                     (validationsErrors &&
@@ -239,13 +242,13 @@ function ReplyContactModal({
             <div className="col-xl-12">
               <div className="timlands-form">
                 <label className="label-block" htmlFor="input-subject">
-                  موضوع الرسالة
+                  {getAll("Subject")}
                 </label>
                 <input
                   type="text"
                   id="input-subject"
                   name="subject"
-                  placeholder="موضوع الرسالة..."
+                  placeholder={getAll("Subject")}
                   className={
                     "timlands-inputs sm " +
                     (validationsErrors &&
@@ -305,7 +308,7 @@ function ReplyContactModal({
               className="btn butt-sm butt-green"
               onClick={() => sendEmail()}
             >
-              إرسال الآن
+              {getAll("Send_now")}
             </button>
             <button
               className="btn butt-sm butt-red-text"
@@ -314,7 +317,7 @@ function ReplyContactModal({
                 setValidationsErrors(); // just Test
               }}
             >
-              إلغاء الأمر
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>

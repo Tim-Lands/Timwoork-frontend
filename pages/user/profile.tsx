@@ -141,7 +141,9 @@ function Profile() {
                       @{userInfo.user_details.username} |
                       <span className="app-label">
                         {" "}
-                        {userInfo.user_details.profile.level.name_ar}{" "}
+                        {
+                          userInfo.user_details.profile.level[which(language)]
+                        }{" "}
                       </span>
                     </p>
                     <div className="button-edit">
@@ -233,7 +235,7 @@ function Profile() {
                           className="btn butt-green butt-md"
                           style={{ width: "100%" }}
                         >
-                          إنشاء بروفايل بائع
+                          {getAll("Create_a_seller")}
                         </button>
                       </div>
                     )}
@@ -369,7 +371,11 @@ function Profile() {
                                 {getAll("Country")}
                               </h3>
                               <p className="text-value">
-                                {userInfo.user_details.profile.country.name_ar}
+                                {
+                                  userInfo.user_details.profile.country[
+                                    which(language)
+                                  ]
+                                }
                               </p>
                             </div>
                           </div>
@@ -419,7 +425,18 @@ function Profile() {
       </div>
     );
 }
-
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+    case "fr":
+      return "name_fr";
+  }
+};
 Profile.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

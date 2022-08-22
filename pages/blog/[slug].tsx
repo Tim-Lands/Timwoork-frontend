@@ -30,10 +30,8 @@ const User = ({ query }) => {
     return API.get(
       `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
     );
-  }; 
-  console.log(postsMediaTable)
+  };
   const fetch = async () => {
-    console.log('data');
     const promises = [];
     const tempPostsMediaTable = [];
     getPosts?.forEach((post) => promises.push(fetchImage(post.featured_media)));

@@ -40,7 +40,7 @@ function PortfolioSliders() {
           <PortfolioSlider
             thumbnail={`https://pbs.twimg.com/media/FWhCIAHXEAAEYzB?format=jpg&name=large`}
             author={`عبد الحميد بومقواس`}
-            level={`بائع محترف`}
+            level={getAll("Professional_seller")}
             username={`wjw`}
             avatar={`/avatar3.jpg`}
           />
