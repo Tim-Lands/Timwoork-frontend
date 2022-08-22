@@ -143,7 +143,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       case 0:
         return <span className="badge bg-danger">{getAll("Rejected")}</span>;
       case 1:
-        return <span className="badge bg-success">{getAll("Rejected")}</span>;
+        return <span className="badge bg-success">{getAll("Accepted")}</span>;
       default:
         return <span className="badge bg-info">{getAll("Pending")}</span>;
     }
