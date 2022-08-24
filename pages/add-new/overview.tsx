@@ -121,7 +121,7 @@ function Overview({ query }) {
         break;
     }
   };
-
+  console.log(getProduct?.data)
   const formik = useFormik({
     initialValues: {
       content: "ejrferjgh erfkerh whgferg",
@@ -343,6 +343,7 @@ function Overview({ query }) {
                               setSelectedLang(lang)
                               setIsShowenModal(true)
                             }}
+
                             default_lang={userLang}
                           />
                           <div className="note-form-text-sh">

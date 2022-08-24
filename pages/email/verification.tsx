@@ -153,6 +153,12 @@ function EmailConfig() {
                     <button
                       type="button"
                       className="btn flex-center butt-sm butt-black me-auto"
+                      onClick={async()=>{
+                        await API.post('api/email/resend',{
+                          email:userInfo.user_details.email
+                        })
+                        message.success('تم الارسال بنجاح')
+                      }}
                     >
                       <span className="material-icons material-icons-outlined">
                         replay

@@ -70,7 +70,26 @@ function Profile() {
       router.push("/login");
     }
   }, []);
-
+  if(userInfo&&!userInfo.user_details.email_verified_at){
+    return(
+      <div className="row justify-content-md-center">
+        <div className="col-md-5">
+          <Result
+            status="warning"
+            title={getAll("Your_account_is_2")}
+            subTitle={getAll("Your_account_is")}
+            extra={
+              <Link href="/email/verification">
+                <a className="btn butt-primary butt-md">
+                  {getAll("Go_to_Edit")}
+                </a>
+              </Link>
+            }
+          />
+        </div>
+      </div>
+    )
+  }
   if (userInfo && userInfo.user_details.profile.steps < 1) {
     return (
       <div className="row justify-content-md-center">
