@@ -17,7 +17,7 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
 export default function MyProducts({ setStatusType, postsList, refresh }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -243,7 +243,7 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
                     <td>
                       {e.is_completed == 1 ? (
                         <Link href={`/myproducts/${e.slug}`}>
-                          <a>{e.title}</a>
+                          <a>{e[which(language)] || "لا يوجد ترجمة"}</a>
                         </Link>
                       ) : (
                         <p>{e.title}</p>
@@ -339,6 +339,18 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
     </div>
   );
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "title";
+    case "ar":
+      return "title";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 MyProducts.propTypes = {
   setStatusType: PropTypes.func,
   postsList: PropTypes.any,

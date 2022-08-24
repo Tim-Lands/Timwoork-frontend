@@ -185,7 +185,11 @@ export const generatecolumns = ({ status, callbacks }) => {
           </span>
         );
       case 0:
-        return <span className="badge bg-danger text-light">مرفوضة</span>;
+        return (
+          <span className="badge bg-danger text-light">
+            {getAll("Rejected")}
+          </span>
+        );
       case 1:
         return (
           <span className="badge bg-success text-light">

@@ -10,7 +10,7 @@
     "ar": "ليس لديك الصلاحية لدخول هذه الصفحة"
   },
   "Login_in": {
-    "en": "Login in",
+    "en": "Log in",
     "fr": "Se connecter",
     "ar": "تسجيل الدخول"
   },
@@ -235,6 +235,11 @@
     "fr": "De",
     "ar": "من طرف"
   },
+  "From1": {
+    "en": "From",
+    "fr": "De",
+    "ar": "من"
+  },
   "You_have_a_new": {
     "en": "You have a new instruction",
     "fr": "Vous avez une nouvelle instruction",
@@ -256,7 +261,7 @@
     "ar": "إضافة خدمة جديدة"
   },
   "My_portfolio": {
-    "en": "My portfolio",
+    "en": "My wallet",
     "fr": "Mon pertefeuille",
     "ar": "محفظتي"
   },
@@ -348,7 +353,7 @@
   "have_commented": {
     "en": " have commented your service",
     "fr": " a commenté votre service",
-    "ar": "  بالتعليق على خدمتك"
+    "ar": "  بالتعليق على خدمتك "
   },
   "View_all_messages": {
     "en": "View all messages",
@@ -810,6 +815,11 @@
     "fr": "Timwoork l Pour l’achat et la vente des micro-services",
     "ar": "تيم ورك | لبيع وشراء الخدمات المصغرة"
   },
+  "To": {
+    "en": "To",
+    "fr": "À",
+    "ar": "إلى"
+  },
   "Timwoork’s_website": {
     "en": "Timwoork’s website Some parts of the site are only open to registered subscribers after providing some personal information about them. The subscriber agrees when registering on the site that the information entered is complete and accurate and undertakes that he will not register on the site or try to enter it under the name of another subscriber and will not use a name that the administration may deem inappropriate, such as phone numbers, names of famous personalities, and links, incomprehensible names, and the like. He is also obligated not to register with more than one account on Timwoork, add to this, when the same person uses more than one account, he displays all his accounts for permanent suspension.",
     "fr": "Le site web Timwoork Certaines parties du site ne sont accessibles qu'aux abonnés inscrits après avoir fourni certaines informations personnelles les concernant. L'abonné s'engage lors de son inscription sur le site à ce que les informations saisies soient complètes et exactes, et s'engage à ne pas s'inscrire sur le site ou tenter de s'y inscrire sous le nom d'un autre abonné ainsi qu’à ne pas utiliser un nom que l'administration pourrait juger inappropriés, tels que des numéros de téléphone, des noms de personnalités célèbres et des liens vers des sites, des noms incompréhensibles, etc. Il est également tenu de ne pas enregistrer plus d'un compte sur le site Timwoork, et lorsqu'une même personne utilise plus d'un compte, il expose tous ses comptes pour suspension définitive.",
@@ -1115,6 +1125,11 @@
     "en": "Reject the amendment request",
     "fr": "Refuser la demande de modification",
     "ar": "رفض طلب التعديل"
+  },
+  "Reject_now": {
+    "en": "Reject now",
+    "fr": "Refuser maintenant",
+    "ar": "رفض الآن"
   },
   "If_you_reach": {
     "en": "If you reach out to a solution you can turn the process into action again",
@@ -3091,6 +3106,12 @@
     "fr": "Confirmer le mot de passe",
     "ar": "إعادة كلمة المرور"
   },
+  "or": {
+    "en": "or",
+    "fr": "ou",
+    "ar": "أو"
+  },
+
   "If_your_press": {
     "en": "If your press Create an account, you agree to the terms of use and privacy policy.",
     "fr": "En cliquant sur Créer un compte, vous acceptez les conditions d’utilisation et la politique de confidentialité",
@@ -4943,7 +4964,7 @@
     "fr": "Êtes-vous sûr de vouloir archiver cet élément ?",
     "ar": "هل انت متأكد أنك تريد أرشفة هذا العنصر"
   },
-  "Yes_I_want": {
+  "Yes_I_want_1": {
     "en": "Yes, I want to archive it",
     "fr": "Oui, je veux l’archiver",
     "ar": "نعم, أريد الأرشفة"

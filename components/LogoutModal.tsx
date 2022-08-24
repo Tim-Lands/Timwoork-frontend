@@ -51,7 +51,7 @@ function LogoutModal({ setIsLogoutModal }): ReactElement {
         <div className="modal-conferm-footer">
           <Space>
             <button className="btn butt-sm butt-green" onClick={logout}>
-              نعم
+              {getAll("Yes")}
             </button>
             <button
               className="btn butt-sm butt-red-text"

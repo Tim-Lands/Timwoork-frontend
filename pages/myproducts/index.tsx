@@ -131,6 +131,8 @@ const which = (language) => {
       return "name_ar";
     case "en":
       return "name_en";
+    case "fr":
+      return "name_fr";
   }
 };
 index.getLayout = function getLayout(page: any): ReactElement {

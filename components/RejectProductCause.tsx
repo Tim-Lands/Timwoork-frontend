@@ -47,7 +47,7 @@ function RejectProductCause({
               className="btn butt-sm butt-green"
               onClick={() => handleFunc({ cause: msg })}
             >
-              رفض الآن
+              {getAll("Reject_now")}
             </button>
             <button
               className="btn butt-sm butt-red-text"

@@ -75,14 +75,14 @@ function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
                   style={{ fontSize: 13, fontWeight: "bold", marginBottom: 10 }}
                   className="form-text"
                 >
-                  مدة تعليق الحساب
+                  {getAll("Account_suspension_period")}
                 </label>
                 <div className="relative-form d-flex">
                   <input
                     id="input-shutdownTime"
                     name="shutdownTime"
                     type="number"
-                    placeholder="مدة التعليق..."
+                    placeholder={getAll("Suspension_period")}
                     className={"timlands-inputs"}
                     value={formik.values.shutdownTime}
                     onChange={formik.handleChange}

@@ -8,11 +8,15 @@ import Cookies from "js-cookie";
 import API from "../../config";
 import { GoogleLogin } from "react-google-login";
 import router from "next/router";
+import { LanguageContext } from "../../contexts/languageContext/context";
+import { useContext } from "react";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 function LoginForm({ setIsConfirmText }): ReactElement {
+  const { getSectionLanguage } = useContext(LanguageContext);
+  const getAll = getSectionLanguage();
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [isShowenPass, setIsShowenPass] = useState(false);
@@ -50,7 +54,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
         }
         // Cookies.set('username', );
         // Cookies.set('userID', )
-        message.success("تم تسجيل الدخول بنجاح");
+        message.success(getAll("Logged_in_successfully"));
         switch (response.data.data.step) {
           case 0:
             router.push("/user/personalInformations");
@@ -66,7 +70,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
         }
       }
     } catch (error: any) {
-      message.error("حدث خطأ غير متوقع");
+      message.error(getAll("An_unexpected_error_occurred"));
     }
   };
   const onLoginFailure = () => {};
@@ -116,7 +120,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
     >
       <div className="modal-conferm-inner">
         <div className="modal-conferm-head">
-          <h3 className="title">تسجيل الدخول</h3>
+          <h3 className="title">{getAll("Log_in")}</h3>
         </div>
         <div className="modal-conferm-body">
           <form onSubmit={formik.handleSubmit}>
@@ -124,7 +128,9 @@ function LoginForm({ setIsConfirmText }): ReactElement {
               name="username"
               value={formik.values.username}
               size="small"
-              title="البريد الإلكتروني أو اسم المستخدم"
+              title={
+                getAll("E_mail") + " " + getAll("or") + " " + getAll("Username")
+              }
               handleChange={formik.handleChange}
               validationsErrors={
                 validationsErrors &&
@@ -140,7 +146,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
               setIsShowenPass={setIsShowenPass}
               isShowenPass={isShowenPass}
               value={formik.values.password}
-              title="كلمة المرور"
+              title={getAll("Password")}
               handleChange={formik.handleChange}
               validationsErrors={
                 validationsErrors &&
@@ -157,18 +163,21 @@ function LoginForm({ setIsConfirmText }): ReactElement {
                   id="remember_me"
                 />
                 <label className="form-check-label" htmlFor="remember_me">
-                  تذكرني
+                  {getAll("Remember_me")}
                 </label>
               </div>
               <div className="forget-pass">
-                <a href="#">نسيت كلمة المرور؟</a>
+                <a href="#">{getAll("Forgotten_password")}</a>
               </div>
             </div>
             <div className="external-login-modal">
-              <h5 className="title">أو التسجيل بواسطة غوغل</h5>
+              <h5 className="title">
+                {getAll("Or_sign_in")}
+                {getAll("Google")}
+              </h5>
               <GoogleLogin
                 clientId={clientId}
-                buttonText="غوغل"
+                buttonText={getAll("Google")}
                 onSuccess={onLoginSuccess}
                 onFailure={onLoginFailure}
                 cookiePolicy={"single_host_origin"}
@@ -181,7 +190,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
               className="btn butt-md butt-green submit-button-modal"
               type="submit"
             >
-              تسجيل الدخول
+              {getAll("Login_in")}
             </button>
           </form>
         </div>
@@ -193,7 +202,7 @@ function LoginForm({ setIsConfirmText }): ReactElement {
               type="button"
               onClick={() => setIsConfirmText(false)}
             >
-              إلغاء الأمر
+              {getAll("Cancel")}
             </button>
           </Space>
         </div>

@@ -64,7 +64,7 @@ function Hero() {
               />
             </div>
             <Link href={`/`}>
-              <a className="timlands-hero-text">
+              <a className="timlands-hero-text" style={{ color: "white" }}>
                 <h4 className="rating">
                   <span className="material-icons">star</span>
                   <span className="material-icons">star</span>

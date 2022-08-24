@@ -133,29 +133,31 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 dir={"rtl"}
               >
                 {latestProducts &&
-                  latestProducts.data.map((e: any) => (
-                    <SwiperSlide key={e.id}>
-                      <PostInner
-                        title={e.title}
-                        author={
-                          e.profile_seller &&
-                          e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
-                        }
-                        rate={e.ratings_avg_rating}
-                        username={
-                          e.profile_seller &&
-                          e.profile_seller.profile.user.username
-                        }
-                        price={e.price}
-                        slug={e.slug}
-                        thumbnail={e.full_path_thumbnail}
-                        buyers={e.count_buying}
-                        avatar={e.profile_seller.profile.avatar_path}
-                      />
-                    </SwiperSlide>
-                  ))}
+                  latestProducts.data.map((e: any) => {
+                    return (
+                      <SwiperSlide key={e.id}>
+                        <PostInner
+                          title={e.title}
+                          author={
+                            e.profile_seller &&
+                            e.profile_seller.profile.first_name +
+                              " " +
+                              e.profile_seller.profile.last_name
+                          }
+                          rate={e.ratings_avg_rating}
+                          username={
+                            e.profile_seller &&
+                            e.profile_seller.profile.user.username
+                          }
+                          price={e.price}
+                          slug={e.slug}
+                          thumbnail={e.full_path_thumbnail}
+                          buyers={e.count_buying}
+                          avatar={e.profile_seller.profile.avatar_path}
+                        />
+                      </SwiperSlide>
+                    );
+                  })}
               </Swiper>
             </div>
             <div

@@ -24,6 +24,7 @@ const which = (language) => {
       return fr;
   }
 };
+
 LastSeen.propTypes = {
   date: PropTypes.any,
 };
