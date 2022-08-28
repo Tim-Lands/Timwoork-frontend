@@ -107,8 +107,6 @@ function Overview({ query }) {
   };
 
   const addSubtitle = (subtitle) => {
-    console.log(subtitle);
-    console.log(selectedLang);
     switch (selectedLang) {
       case "ar":
         setSubtitles({ ...subtitles, ar: subtitle });
@@ -121,7 +119,6 @@ function Overview({ query }) {
         break;
     }
   };
-  console.log(getProduct?.data)
   const formik = useFormik({
     initialValues: {
       content: "ejrferjgh erfkerh whgferg",
@@ -340,10 +337,9 @@ function Overview({ query }) {
                           />
                           <FormLangs
                             onClick={(lang) => {
-                              setSelectedLang(lang)
-                              setIsShowenModal(true)
+                              setSelectedLang(lang);
+                              setIsShowenModal(true);
                             }}
-
                             default_lang={userLang}
                           />
                           <div className="note-form-text-sh">

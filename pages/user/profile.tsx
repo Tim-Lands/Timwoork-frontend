@@ -70,8 +70,8 @@ function Profile() {
       router.push("/login");
     }
   }, []);
-  if(userInfo&&!userInfo.user_details.email_verified_at){
-    return(
+  if (userInfo && !userInfo.user_details.email_verified_at) {
+    return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
           <Result
@@ -88,8 +88,9 @@ function Profile() {
           />
         </div>
       </div>
-    )
+    );
   }
+
   if (userInfo && userInfo.user_details.profile.steps < 1) {
     return (
       <div className="row justify-content-md-center">
