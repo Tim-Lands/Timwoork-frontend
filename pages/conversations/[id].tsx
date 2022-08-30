@@ -308,11 +308,11 @@ function Conversation({ query }) {
         style={{ maxWidth: 1300, marginInline: "auto" }}
       >
         {veriedEmail && (
-          <div className="row">
-            <div className="col-lg-4">
+          <div className="row ">
+            <div className="col-lg-4 ">
               <Sidebar RouterId={query.id} />
             </div>
-            <div className="col-lg-8">
+            <div className="col-lg-8 mt-4">
               <div className="app-bill conv" ref={messageCont}>
                 {!conversationsSingle && <Loading />}
                 <div className="conversations-list">

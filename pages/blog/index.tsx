@@ -1,6 +1,7 @@
-import React, { ReactElement, useEffect, useState, useContext } from "react";
-import Layout from "@/components/Layout/HomeLayout";
+import React, { useEffect, useState, useContext } from "react";
 import Pagination from "react-js-pagination";
+import Navbar from "@/components/NewIndex/Header/Navbar";
+import Footer from "@/components/NewIndex/Footer/Footer";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import Loading from "@/components/Loading";
 import useSWR from "swr";
@@ -40,19 +41,38 @@ function Category(): JSX.Element {
     if (getPosts) fetch();
   }, [getPosts]);
   return (
-    <div>
-      <MetaTags
-        title={getAll("Blog")}
-        metaDescription={getAll("Blog")}
-        ogDescription={getAll("Blog")}
+    <div className="pt-5 mainHomeIndex">
+      <Navbar
+        MoreNav={
+          <span
+            className="d-flex align-items-center w-100 justify-content-center"
+            style={{ backgroundColor: "white" }}
+          >
+            <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
+              {getCategories?.map((item: any) => (
+                <Menu.Item
+                  key={item.id}
+                  onClick={() => setCategories(`categories=${item.id}`)}
+                >
+                  {item.name}
+                </Menu.Item>
+              ))}
+            </Menu>
+          </span>
+        }
       />
-      <span
-        className="d-flex align-items-center w-100 justify-content-center"
-        style={{ backgroundColor: "white", marginTop: "1rem" }}
-      >
-        <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
-          {getCategories &&
-            getCategories.map((item: any) => (
+      <div>
+        <MetaTags
+          title={getAll("Blog")}
+          metaDescription={getAll("Blog")}
+          ogDescription={getAll("Blog")}
+        />
+        <span
+          className="d-flex align-items-center w-100 justify-content-center"
+          style={{ backgroundColor: "white", marginTop: "1rem" }}
+        >
+          <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
+            {getCategories?.map((item: any) => (
               <Menu.Item
                 key={item.id}
                 onClick={() => setCategories(`categories=${item.id}`)}
@@ -60,63 +80,66 @@ function Category(): JSX.Element {
                 {item.name}
               </Menu.Item>
             ))}
-        </Menu>
-      </span>
-      {!getPosts && <Loading />}
+          </Menu>
+        </span>
+        {!getPosts && <Loading />}
 
-      <div className="container py-4">
-        <div className="row">
-          {getPosts &&
-            getPosts.map((item: any) => {
-              return (
-                <div
-                  className={innerWidth < 992 ? `col-md-6` : `col-md-4`}
-                  key={item.id}
-                >
-                  <Post
-                    title={item.title.rendered}
-                    thumbnail={postsMediaTable[item.featured_media]}
-                    more={getAll("Read_more")}
-                    size={""}
-                    slug={item.slug}
-                    excerpt={
-                      item.excerpt.rendered.substring(
-                        0,
-                        innerWidth < 1500
-                          ? Math.floor(innerWidth / 5.5)
-                          : Math.floor(innerWidth / 12)
-                      ) + "..."
-                    }
-                  />
-                </div>
-              );
-            })}
-        </div>
-        {getPosts && getPosts.length == 0 && (
-          <Result
-            status="404"
-            title={getAll("No_article")}
-            subTitle={getAll("There_is_no")}
+        <div className="container py-4">
+          <div className="row">
+            {getPosts &&
+              getPosts.map((item: any) => {
+                return (
+                  <div
+                    className={innerWidth < 992 ? `col-md-6` : `col-md-4`}
+                    key={item.id}
+                  >
+                    <Post
+                      title={item.title.rendered}
+                      thumbnail={postsMediaTable[item.featured_media]}
+                      more={getAll("Read_more")}
+                      size={""}
+                      slug={item.slug}
+                      excerpt={
+                        item.excerpt.rendered.substring(
+                          0,
+                          innerWidth < 1500
+                            ? Math.floor(innerWidth / 5.5)
+                            : Math.floor(innerWidth / 12)
+                        ) + "..."
+                      }
+                    />
+                  </div>
+                );
+              })}
+          </div>
+          {getPosts && getPosts.length == 0 && (
+            <Result
+              status="404"
+              title={getAll("No_article")}
+              subTitle={getAll("There_is_no")}
+            />
+          )}
+          <Pagination
+            itemClass="page-item"
+            linkClass="page-link"
+            activePage={pageNumber}
+            itemsCountPerPage={9}
+            totalItemsCount={20}
+            hideFirstLastPages={true}
+            pageRangeDisplayed={3}
+            onChange={(number) => {
+              setPageNumber(number);
+            }}
           />
-        )}
-        <Pagination
-          itemClass="page-item"
-          linkClass="page-link"
-          activePage={pageNumber}
-          itemsCountPerPage={9}
-          totalItemsCount={20}
-          hideFirstLastPages={true}
-          pageRangeDisplayed={3}
-          onChange={(number) => {
-            setPageNumber(number);
-          }}
-        />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
 
-Category.getLayout = function getLayout(page: any): ReactElement {
-  return <Layout>{page}</Layout>;
-};
+// Category.getLayout = function getLayout(page: any): ReactElement {
+
+//   return <Layout>{page}</Layout>;
+// };
 export default Category;

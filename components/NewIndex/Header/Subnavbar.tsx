@@ -76,7 +76,7 @@ function Subnavbar({ visible, postsList }) {
   useOnScreen(end, setShowLeft);
   useOnScreen(start, setShowRight);
   return (
-    <nav className={`new-subnavbar ${visible ? "" : "show"}`}>
+    <nav className={`new-subnavbar ${visible ? "" : "show"} `}>
       <div className="container d-flex align-items-center">
         <span className="arrows-sub">
           <IoIosArrowForward

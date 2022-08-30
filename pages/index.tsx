@@ -134,6 +134,8 @@ function index({ products, latestProducts, categories, popularProducts }) {
               >
                 {latestProducts &&
                   latestProducts.data.map((e: any) => {
+                    console.log(e);
+
                     return (
                       <SwiperSlide key={e.id}>
                         <PostInner

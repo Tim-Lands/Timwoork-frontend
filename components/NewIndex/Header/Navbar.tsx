@@ -30,7 +30,7 @@ import {
 } from "@ant-design/icons";
 import { darken } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
-function Navbar({ dark = false }) {
+function Navbar({ dark = false, MoreNav = <></> }) {
   const { language, setLanguage, getSectionLanguage } =
     useContext(LanguageContext);
   const getAll = getSectionLanguage();
@@ -578,6 +578,7 @@ function Navbar({ dark = false }) {
           </li>
         </ul>
       </div>
+      {!visible && MoreNav}
       {!visible && <Subnavbar visible={visible} postsList={postsList} />}
     </nav>
   );
@@ -585,5 +586,6 @@ function Navbar({ dark = false }) {
 
 Navbar.propTypes = {
   dark: PropTypes.string,
+  MoreNav: PropTypes.any,
 };
 export default Navbar;

@@ -6,14 +6,12 @@ import Footer from "../NewIndex/Footer/Footer";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { connect } from "react-redux";
 import { logout } from "./../../store/auth/authActions";
-import { SWRConfig } from "swr";
-import API from "../../config";
 import Cookies from "js-cookie";
 
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
-  const { getSectionLanguage, language } = useContext(LanguageContext);
+  const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -28,58 +26,16 @@ function Layout(props: any) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
   return (
-    <SWRConfig
-      value={{
-        fetcher: async (url: string) => {
-          console.log(url);
-          return url.includes("wp-json")
-            ? await API.get(url, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              })
-                .then((r: any) => r.data)
-                .catch(() => {
-                  if (url == "api/me" && token) {
-                    Cookies.remove("token");
-                    if (typeof window !== undefined) {
-                      localStorage.removeItem("token");
-                      return;
-                    }
-                    router.reload();
-                  }
-                })
-            : await API.get(url, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "X-LOCALIZATION": language,
-                },
-              })
-                .then((r: any) => r.data)
-                .catch(() => {
-                  if (url == "api/me" && token) {
-                    Cookies.remove("token");
-                    if (typeof window !== undefined) {
-                      localStorage.removeItem("token");
-                      return;
-                    }
-                    router.reload();
-                  }
-                });
-        },
-      }}
-    >
-      <div className="pt-5 mainHomeIndex">
-        <Navbar />
-        {props.children}
-        {loading && (
-          <div className="loading">
-            <Spin tip={getAll("Loading")} spinning={true}></Spin>
-          </div>
-        )}
-        <Footer />
-      </div>
-    </SWRConfig>
+    <div className="pt-5 mainHomeIndex">
+      <Navbar />
+      {props.children}
+      {loading && (
+        <div className="loading">
+          <Spin tip={getAll("Loading")} spinning={true}></Spin>
+        </div>
+      )}
+      <Footer />
+    </div>
   );
 }
 const mapStateToProps = (state: any) => ({

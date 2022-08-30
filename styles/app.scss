@@ -469,7 +469,7 @@ h3 {
 
 .app-bill {
   background-color: #fff;
-  padding: 20px;
+  padding-inline: 20px;
   &.conv {
     max-height: 350px;
     overflow-y: auto;
@@ -9311,7 +9311,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     .progress {
       .progress-bar {
         background-color: $primary;
-
       }
     }
   }
@@ -9353,4 +9352,3 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     font-weight: 200;
   }
 }
-

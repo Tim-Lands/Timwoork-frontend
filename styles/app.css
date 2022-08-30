@@ -2069,10 +2069,20 @@
   font-weight: bold;
 }
 
+.conversations-list {
+  position: relative;
+}
 .conversations-list .conversations-title {
+  background-color: #fff;
+  z-index: 100;
   border-bottom: 2px dashed #f6f6f6;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
   margin-bottom: 8px;
   padding: 8px;
+  padding-top: 12px;
+  padding-bottom: 20px;
 }
 .conversations-list .conversations-title .title {
   margin: 0;
@@ -2483,7 +2493,7 @@ h3 {
 
 .app-bill {
   background-color: #fff;
-  padding: 20px;
+  padding-inline: 20px;
 }
 .app-bill.conv {
   max-height: 350px;
