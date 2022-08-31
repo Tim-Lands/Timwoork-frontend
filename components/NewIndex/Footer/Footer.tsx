@@ -114,7 +114,9 @@ function Footer() {
                 return (
                   <li key={product.id} style={{ width: 350 }}>
                     <Link href={`/p/${product.slug}`}>
-                      <a className="text-truncate">{product.title}</a>
+                      <a className="text-truncate">
+                        {product[whichTitle(language)]}
+                      </a>
                     </Link>
                   </li>
                 );
@@ -254,6 +256,18 @@ function Footer() {
     </>
   );
 }
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 const which = (language) => {
   switch (language) {
     default:

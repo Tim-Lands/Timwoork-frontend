@@ -134,12 +134,10 @@ function index({ products, latestProducts, categories, popularProducts }) {
               >
                 {latestProducts &&
                   latestProducts.data.map((e: any) => {
-                    console.log(e);
-
                     return (
                       <SwiperSlide key={e.id}>
                         <PostInner
-                          title={e.title}
+                          title={e[which(language)]}
                           author={
                             e.profile_seller &&
                             e.profile_seller.profile.first_name +
@@ -210,7 +208,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                   products.data.map((e: any) => (
                     <SwiperSlide key={e.id}>
                       <PostInner
-                        title={e.title}
+                        title={e[which(language)]}
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
@@ -277,7 +275,7 @@ function index({ products, latestProducts, categories, popularProducts }) {
                   popularProducts.data.map((e: any) => (
                     <SwiperSlide key={e.id}>
                       <PostInner
-                        title={e.title}
+                        title={e[which(language)]}
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
@@ -328,6 +326,18 @@ function index({ products, latestProducts, categories, popularProducts }) {
     </>
   );
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <LayoutHome dark={true}>{page}</LayoutHome>;
 };

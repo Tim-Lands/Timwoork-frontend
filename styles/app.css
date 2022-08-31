@@ -8366,6 +8366,7 @@ h3 {
   opacity: 1;
 }
 .video-section .video-section-content .video-section-header {
+  font-family: sans-serif !important;
   padding: 20px 5px;
   border-bottom: 2px dashed rgba(0, 0, 0, 0.055);
   margin-bottom: 10px;
@@ -8373,21 +8374,26 @@ h3 {
 .video-section .video-section-content .video-section-header .title {
   font-size: 21px;
   font-weight: bold;
+  font-family: sans-serif !important;
   margin: 0;
 }
 .video-section .video-section-content .video-section-body {
+  font-family: sans-serif !important;
   padding: 10px 0;
 }
 .video-section .video-section-content .video-section-body .video-section-list {
   list-style: none;
+  font-family: sans-serif !important;
   padding: 0;
   margin: 0;
 }
 .video-section .video-section-content .video-section-body .video-section-list li {
   color: rgba(0, 0, 0, 0.6);
+  font-family: sans-serif !important;
   line-height: 28px;
 }
 .video-section .video-section-content .video-section-body .video-section-list li .title {
+  font-family: sans-serif !important;
   font-weight: 300;
   font-size: 16px;
   display: flex;
@@ -8396,6 +8402,10 @@ h3 {
 .video-section .video-section-content .video-section-body .video-section-list li .title .material-icons {
   font-size: 20px;
 }
+.video-section .video-section-content .video-section-body .video-section-list li .text {
+  font-family: sans-serif !important;
+}
+
 .footer-inner {
   overflow-x: hidden;
   padding: 70px 0;

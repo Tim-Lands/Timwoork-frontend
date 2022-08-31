@@ -51,6 +51,7 @@ function Category(): JSX.Element {
             <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
               {getCategories?.map((item: any) => (
                 <Menu.Item
+                  style={{ color: "#777", fontSize: 13, fontWeight: "bold" }}
                   key={item.id}
                   onClick={() => setCategories(`categories=${item.id}`)}
                 >
