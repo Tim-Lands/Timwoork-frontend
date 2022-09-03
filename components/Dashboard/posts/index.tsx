@@ -39,7 +39,7 @@ function index({
       onDisactiveClick,
       onSendEmailClick,
     },
-  });
+  },getAll);
 
   useEffect(() => {
     setIsLoading(false);

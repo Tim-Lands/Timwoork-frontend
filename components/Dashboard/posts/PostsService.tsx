@@ -5,12 +5,8 @@ import LastSeen from "@/components/LastSeen";
 import { Space } from "antd";
 import Cookies from "js-cookie";
 import API from "../../../config";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
 
-export async function archieveHandle(id) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+export async function archieveHandle(id,getAll) {
   const token = Cookies.get("token_dash");
 
   const MySwal = withReactContent(Swal);
@@ -63,9 +59,7 @@ export async function archieveHandle(id) {
     });
 }
 
-async function forceDelete(id) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+async function forceDelete(id, getAll) {
   const token = Cookies.get("token_dash");
   const MySwal = withReactContent(Swal);
 
@@ -116,9 +110,7 @@ async function forceDelete(id) {
     });
 }
 
-async function restoreArchieved(id) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+async function restoreArchieved(id, getAll) {
   const token = Cookies.get("token_dash");
   const MySwal = withReactContent(Swal);
 
@@ -171,12 +163,8 @@ async function restoreArchieved(id) {
     });
 }
 
-export const generatecolumns = ({ status, callbacks }) => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  const switchStatus = (status) => {
-    const { getSectionLanguage } = useContext(LanguageContext);
-    const getAll = getSectionLanguage();
+export const generatecolumns = ({ status, callbacks }, getAll) => {
+  const switchStatus = (status, getAll) => {
     switch (status) {
       case null:
         return (
@@ -212,7 +200,7 @@ export const generatecolumns = ({ status, callbacks }) => {
     {
       title: getAll("Status"),
       dataIndex: ["status"],
-      render: (status: any) => switchStatus(status),
+      render: (status: any) => switchStatus(status, getAll),
       ellipsis: true,
       width: 90,
     },
@@ -242,14 +230,12 @@ export const generatecolumns = ({ status, callbacks }) => {
     {
       title: getAll("Tools"),
       dataIndex: "",
-      render: (post: any) => generateButtonSet({ status, post, callbacks }),
+      render: (post: any) => generateButtonSet({ status, post, callbacks }, getAll),
       ellipsis: true,
     },
   ];
 };
-const generateButtonSet = ({ status, post, callbacks }) => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+const generateButtonSet = ({ status, post, callbacks }, getAll) => {
   const {
     activateProduct,
     onRejectClick,
@@ -288,13 +274,13 @@ const generateButtonSet = ({ status, post, callbacks }) => {
           <button
             title={getAll("Delete_this_service")}
             className="btn butt-xs2 butt-red"
-            onClick={() => forceDelete(post.id)}
+            onClick={() => forceDelete(post.id, getAll)}
           >
             حذف نهائي
           </button>
           <button
             title="إستعادة هذه الخدمة"
-            onClick={() => restoreArchieved(post.id)}
+            onClick={() => restoreArchieved(post.id, getAll)}
             className="btn butt-xs2 butt-green"
           >
             إستعادة
@@ -305,7 +291,7 @@ const generateButtonSet = ({ status, post, callbacks }) => {
         <button
           title="أرشفة هذه الخدمة"
           className="btn butt-xs2 butt-red"
-          onClick={() => archieveHandle(post.id)}
+          onClick={() => archieveHandle(post.id, getAll)}
         >
           أرشفة
         </button>
