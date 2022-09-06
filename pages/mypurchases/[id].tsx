@@ -18,7 +18,7 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
 const Order = ({ query }) => {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -573,8 +573,9 @@ const Order = ({ query }) => {
                             <span className="badge bg-light text-dark">
                               {ShowItem &&
                                 ShowItem.data.order.cart.user.profile.level &&
-                                ShowItem.data.order.cart.user.profile.level
-                                  .name_ar}
+                                ShowItem.data.order.cart.user.profile.level[
+                                  which(language)
+                                ]}
                             </span>
                           </p>
                         </div>
@@ -618,7 +619,9 @@ const Order = ({ query }) => {
                             <span className="badge bg-light text-dark">
                               {ShowItem &&
                                 ShowItem.data.profile_seller.level &&
-                                ShowItem.data.profile_seller.level.name_ar}
+                                ShowItem.data.profile_seller.level[
+                                  which(language)
+                                ]}
                             </span>
                           </p>
                         </div>
@@ -1373,6 +1376,18 @@ const Order = ({ query }) => {
       )}
     </div>
   );
+};
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+    case "fr":
+      return "name_fr";
+  }
 };
 
 export default Order;
