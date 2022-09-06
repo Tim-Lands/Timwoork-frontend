@@ -125,19 +125,22 @@ function index() {
             <div className="notifications-panel">
               <div className="list-group">
                 {notifications &&
-                  notifications.data.data.map((e: any) => (
-                    <Notification
-                      key={e.id}
-                      title={e.data.title}
-                      type={e.data.type}
-                      item_id={e.data.content.item_id}
-                      to={e.data.to}
-                      avatar={e.data.user_sender.avatar_path}
-                      created_at={e.created_at}
-                      product_title={e.data.content.title}
-                      slug={e.data.content.slug}
-                    />
-                  ))}
+                  notifications.data.data.map((e: any) => {
+
+                    return (
+                      <Notification
+                        key={e.id}
+                        title={e.data.title}
+                        type={e.data.type}
+                        item_id={e.data.content.item_id}
+                        to={e.data.to}
+                        avatar={e.data.user_sender.avatar_path}
+                        created_at={e.created_at}
+                        product_title={e.data.content.title}
+                        slug={e.data.content.slug}
+                      />
+                    );
+                  })}
               </div>
             </div>
           </div>

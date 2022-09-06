@@ -2611,12 +2611,26 @@
   right: 0;
 }
 .ltr .message-item {
-  flex-direction: row-reverse;
+  display: flex !important;
+  flex-direction: row !important;
   text-align: left;
 }
 .ltr .message-item .item-content .bg-danger,
 .ltr .message-item .item-content .bg-success {
   right: 10px;
+}
+.ltr .message-item .item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ltr .message-item.recieved {
+  flex-direction: row-reverse !important;
+}
+.ltr .message-item.recieved .item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 .ltr .message-item .readed {
   right: 12px;

@@ -10302,4 +10302,23 @@ h3 {
 }
 .public-vote small {
   font-weight: 200;
+}
+
+.blog_navbar {
+  width: 100%;
+}
+@media (max-width: 3000px) {
+  .blog_navbar {
+    max-width: 1320px;
+  }
+}
+@media (max-width: 1400px) {
+  .blog_navbar {
+    max-width: 1140px;
+  }
+}
+@media (max-width: 1200px) {
+  .blog_navbar {
+    max-width: 960px;
+  }
 }/*# sourceMappingURL=app.css.map */

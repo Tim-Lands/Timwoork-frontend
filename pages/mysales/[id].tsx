@@ -18,7 +18,7 @@ import { useContext } from "react";
 //import { pusher } from "../../config/pusher";
 
 const User = ({ query }) => {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -73,7 +73,6 @@ const User = ({ query }) => {
   }, []);
 
   const { files, fileNames, totalSize, setFiles, removeFile } = useFileUpload();
-
   const {
     files: filesMsg,
     fileNames: fileNamesMsg,
@@ -645,6 +644,7 @@ const User = ({ query }) => {
       return ShowItem.data.duration + getAll("Day");
     }
   }
+  // console.log()
 
   return (
     <>
@@ -748,7 +748,7 @@ const User = ({ query }) => {
             <Spin spinning={BySellerMSGLoading}>
               <div className="timlands-form">
                 <label htmlFor="message_type" className="form-text">
-                  أكتب سبب الإلغاء
+                  {getAll("Write_the_cancellation")}
                 </label>
                 <div
                   className="relative-form d-flex"
@@ -757,7 +757,7 @@ const User = ({ query }) => {
                   <input
                     id="input-buyer_instruct"
                     name="buyer_instruct"
-                    placeholder="أكتب سبب الإلغاء..."
+                    placeholder={getAll("Write_the_cancellation")}
                     className={"timlands-inputs"}
                     autoComplete="off"
                     value={message}
@@ -834,7 +834,9 @@ const User = ({ query }) => {
                                 <span className="badge bg-light text-dark">
                                   {ShowItem &&
                                     ShowItem.data.profile_seller.level &&
-                                    ShowItem.data.profile_seller.level.name_ar}
+                                    ShowItem.data.profile_seller.level[
+                                      which(language)
+                                    ]}
                                 </span>
                               </p>
                             </div>
@@ -850,7 +852,7 @@ const User = ({ query }) => {
                         }}
                       >
                         <div className="aside-header">
-                          <h3 className="title">المشتري</h3>
+                          <h3 className="title">{getAll("Buyer")}</h3>
                         </div>
                         <Link
                           href={`/u/${ShowItem.data.order.cart.user.username}`}
@@ -878,8 +880,9 @@ const User = ({ query }) => {
                                   {ShowItem &&
                                     ShowItem.data.order.cart.user.profile
                                       .level &&
-                                    ShowItem.data.order.cart.user.profile.level
-                                      .name_ar}
+                                    ShowItem.data.order.cart.user.profile.level[
+                                      which(language)
+                                    ]}
                                 </span>
                               </p>
                             </div>
@@ -989,135 +992,147 @@ const User = ({ query }) => {
                               }}
                             >
                               {ShowItem.data.conversation.messages.map(
-                                (item: any) => (
-                                  <motion.li
-                                    initial={{ y: -4, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    key={item.id}
-                                    className={
-                                      (ShowItem &&
-                                      ShowItem.data.profile_seller.id ==
-                                        item.user.id
-                                        ? ""
-                                        : "recieved ") +
-                                      "d-flex message-item " +
-                                      switchTypeMessage(item.type)
-                                    }
-                                    style={{ marginBlock: 6, borderRadius: 6 }}
-                                  >
-                                    <div
-                                      className="item-avatar"
-                                      style={{ marginInline: 6 }}
+                                (item: any) => {
+                                  return (
+                                    <motion.li
+                                      initial={{ y: -4, opacity: 0 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      key={item.id}
+                                      className={
+                                        (ShowItem &&
+                                        userInfo?.user_details?.id ===
+                                          item.user.id
+                                          ? ""
+                                          : "recieved ") +
+                                        "d-flex message-item align-item-center" +
+                                        switchTypeMessage(item.type)
+                                      }
+                                      style={{
+                                        marginBlock: 6,
+                                        borderRadius: 6,
+                                      }}
                                     >
-                                      <img
-                                        src={item.user.profile.avatar_path}
-                                        width={45}
-                                        height={45}
-                                        className="rounded-pill"
-                                        alt=""
-                                      />
-                                    </div>
-
-                                    <div className="item-content">
-                                      {item.type == 1 && (
-                                        <span
-                                          className="bg-success text-light d-inline-block"
-                                          style={{
-                                            paddingInline: 9,
-                                            paddingBlock: 3,
-                                            borderRadius: "4px 4px 0 4px",
-                                            fontSize: 12,
-                                            marginBottom: 5,
-                                          }}
-                                        >
-                                          تعليمات
-                                        </span>
-                                      )}
-                                      {item.type == 2 && (
-                                        <span
-                                          className="bg-danger text-light d-inline-block"
-                                          style={{
-                                            paddingInline: 9,
-                                            paddingBlock: 3,
-                                            borderRadius: "4px 4px 0 4px",
-                                            fontSize: 12,
-                                            marginBottom: 5,
-                                          }}
-                                        >
-                                          {getAll("Rejection_reason")}
-                                        </span>
-                                      )}
-                                      <p className="text" style={{ margin: 0 }}>
-                                        {item.user.profile.full_name}
-                                      </p>
-                                      <p
-                                        className="meta"
-                                        style={{
-                                          marginBlock: 4,
-                                          fontSize: 11,
-                                          fontWeight: 200,
-                                        }}
+                                      <div
+                                        className="item-avatar"
+                                        style={{ marginInline: 6 }}
                                       >
-                                        <LastSeen date={item.created_at} />
-                                      </p>
-                                      {item.attachments && (
-                                        <div
-                                          className="attach-items"
+                                        <img
+                                          src={item.user.profile.avatar_path}
+                                          width={45}
+                                          height={45}
+                                          className="rounded-pill"
+                                          alt=""
+                                        />
+                                      </div>
+
+                                      <div className="item-content">
+                                        {item.type == 1 && (
+                                          <span
+                                            className="bg-success text-light d-inline-block"
+                                            style={{
+                                              paddingInline: 9,
+                                              paddingBlock: 3,
+                                              borderRadius: "4px 4px 0 4px",
+                                              fontSize: 12,
+                                              marginBottom: 5,
+                                            }}
+                                          >
+                                            {getAll("Instructions")}
+                                          </span>
+                                        )}
+                                        {item.type == 2 && (
+                                          <span
+                                            className="bg-danger text-light d-inline-block"
+                                            style={{
+                                              paddingInline: 9,
+                                              paddingBlock: 3,
+                                              borderRadius: "4px 4px 0 4px",
+                                              fontSize: 12,
+                                              marginBottom: 5,
+                                            }}
+                                          >
+                                            {getAll("Rejection_reason")}
+                                          </span>
+                                        )}
+                                        <p
+                                          className="text"
+                                          style={{ margin: 0 }}
+                                        >
+                                          {item.user.profile.full_name}
+                                        </p>
+                                        <p
+                                          className="meta"
                                           style={{
                                             marginBlock: 4,
-                                            fontSize: 12,
+                                            fontSize: 11,
                                             fontWeight: 200,
                                           }}
                                         >
-                                          {item.attachments.map(
-                                            (att: any, i: number) => (
-                                              <div
-                                                className="att-item"
-                                                key={att.id}
-                                              >
-                                                <a
-                                                  href={att.full_path}
-                                                  rel="noreferrer"
-                                                  target="_blank"
+                                          <LastSeen date={item.created_at} />
+                                        </p>
+                                        {item.attachments && (
+                                          <div
+                                            className="attach-items"
+                                            style={{
+                                              marginBlock: 4,
+                                              fontSize: 12,
+                                              fontWeight: 200,
+                                            }}
+                                          >
+                                            {item.attachments.map(
+                                              (att: any, i: number) => (
+                                                <div
+                                                  className="att-item"
+                                                  key={att.id}
                                                 >
-                                                  {switchFileTypes(
-                                                    att.mime_type
-                                                  )}{" "}
-                                                  تحميل الملف {i + 1}#
-                                                </a>
-                                              </div>
-                                            )
-                                          )}
-                                        </div>
-                                      )}
-                                      <div
-                                        dangerouslySetInnerHTML={{
-                                          __html: linkify(item.message, query),
-                                        }}
-                                      />
-                                      {ShowItem &&
-                                        ShowItem.data.profile_seller.id ==
-                                          item.user.id && (
-                                          <>
-                                            {item.read_at && (
-                                              <span className="readed is-readed">
-                                                <span className="material-icons material-icons-outlined">
-                                                  done_all
-                                                </span>
-                                              </span>
+                                                  <a
+                                                    href={att.full_path}
+                                                    rel="noreferrer"
+                                                    target="_blank"
+                                                  >
+                                                    {switchFileTypes(
+                                                      att.mime_type
+                                                    )}{" "}
+                                                    {getAll("Upload_file")}{" "}
+                                                    {i + 1}#
+                                                  </a>
+                                                </div>
+                                              )
                                             )}
-                                            {!item.read_at && (
-                                              <span className="readed is-unreaded">
-                                                <span className="material-icons material-icons-outlined">
-                                                  done
-                                                </span>
-                                              </span>
-                                            )}
-                                          </>
+                                          </div>
                                         )}
-                                    </div>
-                                  </motion.li>
-                                )
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html: linkify(
+                                              item.message,
+                                              query
+                                            ),
+                                          }}
+                                        />
+                                        {ShowItem &&
+                                          ShowItem.data.profile_seller.id ==
+                                            item.user.id && (
+                                            <>
+                                              {item.read_at && (
+                                                <span className="readed is-readed">
+                                                  <span className="material-icons material-icons-outlined">
+                                                    done_all
+                                                  </span>
+                                                </span>
+                                              )}
+                                              {!item.read_at && (
+                                                <span className="readed is-unreaded">
+                                                  <span className="material-icons material-icons-outlined">
+                                                    done
+                                                  </span>
+                                                </span>
+                                              )}
+                                            </>
+                                          )}
+                                      </div>
+                                    </motion.li>
+                                  );
+                                }
                               )}
                             </ul>
                           </div>
@@ -1283,7 +1298,7 @@ const User = ({ query }) => {
                                     <span className="material-icons material-icons-outlined">
                                       send
                                     </span>
-                                    إرسال
+                                    {getAll("Send")}
                                   </button>
                                 </div>
                                 {messageErrors && messageErrors.message && (
@@ -1310,10 +1325,10 @@ const User = ({ query }) => {
                                 forum
                               </span>
                             </div>
-                            <h3 className="title">تواصل مع المشتري</h3>
-                            <p className="text">
-                              حاول ان تتفق مع المشتري قبل البدء في تنفيذ العملية
-                            </p>
+                            <h3 className="title">
+                              {getAll("Contact_the_buyer")}
+                            </h3>
+                            <p className="text">{getAll("Try_to_agree")}</p>
                             <textarea
                               id="input-initial_message"
                               name="initial_message"
@@ -1661,6 +1676,16 @@ const User = ({ query }) => {
       )}
     </>
   );
+};
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
 };
 function linkify(text, query) {
   const urlRegex =

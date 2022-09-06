@@ -46,9 +46,9 @@ function Category(): JSX.Element {
         MoreNav={
           <span
             className="d-flex align-items-center w-100 justify-content-center"
-            style={{ backgroundColor: "white" }}
+            style={{ backgroundColor: "white", maxWidth: 1400 }}
           >
-            <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
+            <Menu mode="horizontal" className="blog_navbar">
               {getCategories?.map((item: any) => (
                 <Menu.Item
                   style={{ color: "#777", fontSize: 13, fontWeight: "bold" }}
@@ -75,6 +75,7 @@ function Category(): JSX.Element {
           <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
             {getCategories?.map((item: any) => (
               <Menu.Item
+                style={{ color: "#777", fontWeight: "bold" }}
                 key={item.id}
                 onClick={() => setCategories(`categories=${item.id}`)}
               >

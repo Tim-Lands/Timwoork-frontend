@@ -372,6 +372,7 @@ function Single({ query, stars, errorFetch }) {
       </Text>
     </div>
   );
+
   return (
     <>
       {!ProductData && <Loading />}
@@ -414,7 +415,9 @@ function Single({ query, stars, errorFetch }) {
             <div className="col-lg-8">
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">
-                  <h1 className="title">{ProductData.data.title}</h1>
+                  <h1 className="title">
+                    {ProductData.data[whichTitle(language)]}
+                  </h1>
 
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav ">
@@ -493,7 +496,9 @@ function Single({ query, stars, errorFetch }) {
                         <span className="value-level">
                           {ProductData &&
                             ProductData.data.profile_seller.level !== null &&
-                            ProductData.data.profile_seller.level.name_ar}
+                            ProductData.data.profile_seller.level[
+                              which(language)
+                            ]}
                         </span>
                       </li>
                     </ul>
@@ -534,7 +539,7 @@ function Single({ query, stars, errorFetch }) {
                     <div
                       className="timwoork-single-product-detailts p"
                       dangerouslySetInnerHTML={{
-                        __html: ProductData.data.content,
+                        __html: ProductData.data[whichContent(language)],
                       }}
                     />
                     {ProductData.data.product_tag && (
@@ -607,8 +612,9 @@ function Single({ query, stars, errorFetch }) {
                                   {ProductData &&
                                     ProductData.data.profile_seller.level !==
                                       null &&
-                                    ProductData.data.profile_seller.level
-                                      .name_ar}
+                                    ProductData.data.profile_seller.level[
+                                      which(language)
+                                    ]}
                                 </li>
                                 {ProductData.data.profile_seller.profile
                                   .country !== null && (
@@ -809,7 +815,7 @@ function Single({ query, stars, errorFetch }) {
                                     className="form-check-label"
                                     htmlFor={"flexCheckDefault-id" + e.id}
                                   >
-                                    {e.title}
+                                    {e[whichTitle(language)]}
                                     <p className="price-duration">
                                       {getAll("The_duration_will_cost")}
                                       {DevdurationFunc(e.duration)}{" "}
@@ -899,6 +905,30 @@ const which = (language) => {
       return "name_en";
   }
 };
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
+function whichContent(language) {
+  switch (language) {
+    default:
+      return "content_en";
+    case "ar":
+      return "content_ar";
+    case "en":
+      return "content_en";
+    case "fr":
+      return "content_fr";
+  }
+}
 Single.propTypes = {
   query: PropTypes.any,
   stars: PropTypes.any,

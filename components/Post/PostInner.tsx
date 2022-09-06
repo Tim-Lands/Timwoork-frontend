@@ -113,10 +113,13 @@ function PostInner({
       return yut.concat(yut2);
     }
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   return (
-    <div className={"timlands-post-inner" + sizeClass()}>
+    <div
+      className={"timlands-post-inner" + sizeClass()}
+      style={{ direction: language === "en" ? "ltr" : "rtl" }}
+    >
       <Link href={`/p/${slug}`}>
         <a>
           <div

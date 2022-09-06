@@ -9359,3 +9359,15 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     font-weight: 200;
   }
 }
+.blog_navbar {
+  width: 100%;
+  @media (max-width: 3000px) {
+    max-width: 1320px;
+  }
+  @media (max-width: 1400px) {
+    max-width: 1140px;
+  }
+  @media (max-width: 1200px) {
+    max-width: 960px;
+  }
+}
