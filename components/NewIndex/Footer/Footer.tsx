@@ -16,6 +16,7 @@ import API from "../../../config";
 import Cookies from "js-cookie";
 
 function Footer() {
+  const stopBuilding = "";
   const [isCurrencyVisible, setIsCurrencyVisible] = useState(false);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [categories, setCategories] = useState([]);
