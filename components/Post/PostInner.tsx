@@ -18,7 +18,6 @@ function PostInner({
   slug,
   rate = 2,
 }): ReactElement {
-  const thumbnailUrl = `url(${thumbnail})`;
   const { data: userInfo }: any = useSWR("api/me");
   const [, getCurrency] = useContext(CurrencyContext);
   const specCurrency = getCurrency(
@@ -122,10 +121,9 @@ function PostInner({
     >
       <Link href={`/p/${slug}`}>
         <a>
-          <div
-            style={{ backgroundImage: thumbnailUrl }}
-            className="post-item-img"
-          ></div>
+          <div className="post-item-img">
+            <img src={thumbnail} alt="thumbnail" />
+          </div>
         </a>
       </Link>
       <div className="post-item-content">
