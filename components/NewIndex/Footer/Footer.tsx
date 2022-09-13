@@ -13,10 +13,10 @@ import Language from "@/components/NewIndex/DropdowModal/Language";
 import { Tooltip } from "antd";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import API from "../../../config";
+import axios from "axios";
 import Cookies from "js-cookie";
 
 function Footer() {
-  const stopBuilding = "";
   const [isCurrencyVisible, setIsCurrencyVisible] = useState(false);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -47,7 +47,7 @@ function Footer() {
     const [categoriesRes, blogPostsRes, popularProductsRes] = await Promise.all(
       [
         API.get("api/top_main_categories"),
-        API.get("https://timwoork.net/wp-json/wp/v2/posts?per_page=5"),
+        axios.get("https://timwoork.net/wp-json/wp/v2/posts?per_page=5"),
         API.get("api/filter?paginate=5&popular"),
       ]
     ).then((responses) => responses.map((res) => res?.data));

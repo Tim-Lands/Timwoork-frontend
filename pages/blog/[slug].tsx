@@ -1,8 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import useSWR from "swr";
-import API from "../../config";
+import axios from "axios";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Post from "@/components/Post/blogPost";
@@ -12,22 +11,39 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
 const User = ({ query }) => {
+  const [getPosts, setGetPosts]: any = useState(false);
+  const [getSamePosts, setGetSamePosts] = useState([]);
+  const [getAds, setGetAds] = useState([]);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage("all");
   const [postsMediaTable, setPostsMediaTable] = useState([]);
-  const { data: getPosts }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`
-  );
-  const { data: getSamePosts }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/posts?categories=${
-      getPosts && getPosts[0].categories[0]
-    }&per_page=3`
-  );
-  const { data: getAds }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/media?include=28,29`
-  );
+  useEffect(() => {
+    axios
+      .get(`https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`)
+      .then((res) => setGetPosts(res.data));
+    axios
+      .get(`https://timwoork.net/wp-json/wp/v2/media?include=28,29`)
+      .then((res) => setGetAds(res.data));
+  }, [query.slug]);
+  // const { data: getPosts }: any = useSWR(
+
+  // );
+  useEffect(() => {
+    if (getPosts)
+      axios
+        .get(
+          `https://timwoork.net/wp-json/wp/v2/posts?categories=${getPosts[0].categories[0]}&per_page=3`
+        )
+        .then((res) => setGetSamePosts(res.data));
+  }, [getPosts]);
+  // const { data: getSamePosts }: any = useSWR(
+
+  // );
+  // const { data: getAds }: any = useSWR(
+  //   `https://timwoork.net/wp-json/wp/v2/media?include=28,29`
+  // );
   const fetchImage = (img_id) => {
-    return API.get(
+    return axios.get(
       `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
     );
   };
@@ -156,7 +172,7 @@ export async function getServerSideProps({ query }) {
     `https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`
   );
   // Fetch data from external API
-  const res = await API.get(uriString);
+  const res = await axios.get(uriString);
 
   // Pass data to the page via props
   return { props: { stars: res.data, query } };

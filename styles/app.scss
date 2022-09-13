@@ -7370,7 +7370,6 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
 
   .video-section-content {
     .video-section-header {
-      font-family: sans-serif !important;
       padding: 20px 5px;
       border-bottom: 2px dashed rgba(0, 0, 0, 0.055);
       margin-bottom: 10px;
@@ -7378,39 +7377,33 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
       .title {
         font-size: 21px;
         font-weight: bold;
-        font-family: sans-serif !important;
         margin: 0;
       }
     }
 
     .video-section-body {
-      font-family: sans-serif !important;
       padding: 10px 0;
 
       .video-section-list {
         list-style: none;
-        font-family: sans-serif !important;
         padding: 0;
         margin: 0;
 
         li {
           color: rgba(0, 0, 0, 0.6);
-          font-family: sans-serif !important;
           line-height: 28px;
 
           .title {
-            font-family: sans-serif !important;
             font-weight: 300;
             font-size: 16px;
             display: flex;
+            font-family: cairo !important;
+            font-weight: bolder;
             align-items: center;
 
             .material-icons {
               font-size: 20px;
             }
-          }
-          .text {
-            font-family: sans-serif !important;
           }
         }
       }

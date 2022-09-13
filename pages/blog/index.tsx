@@ -4,26 +4,39 @@ import Navbar from "@/components/NewIndex/Header/Navbar";
 import Footer from "@/components/NewIndex/Footer/Footer";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import Loading from "@/components/Loading";
-import useSWR from "swr";
 import { Menu, Result } from "antd";
 import Post from "@/components/Post/blogPost";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import API from "../../config";
+import axios from "axios";
 function Category(): JSX.Element {
   const [categories, setCategories] = useState("");
+  const [getCategories, setGetCategories] = useState([]);
+  const [getPosts, setGetPosts] = useState([]);
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   const [postsMediaTable, setPostsMediaTable] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: getCategories }: any = useSWR(
-    "https://timwoork.net/wp-json/wp/v2/categories"
-  );
-  const { data: getPosts }: any = useSWR(
-    `https://timwoork.net/wp-json/wp/v2/posts?per_page=9&page=${pageNumber}&${categories}`
-  );
+  useEffect(() => {
+    axios
+      .get("https://timwoork.net/wp-json/wp/v2/categories")
+      .then((res) => setGetCategories(res.data));
+  }, []);
+
+  // const { data: getCategories }: any = useSWR(
+  //   "https://timwoork.net/wp-json/wp/v2/categories"
+  // );
+  useEffect(() => {
+    axios
+      .get(
+        `https://timwoork.net/wp-json/wp/v2/posts?per_page=9&page=${pageNumber}&${categories}`
+      )
+      .then((res) => setGetPosts(res.data));
+  }, [pageNumber, categories]);
+  // const { data: getPosts }: any = useSWR(
+  // );
 
   const fetchImage = (img_id) => {
-    return API.get(
+    return axios.get(
       `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
     );
   };
@@ -38,7 +51,7 @@ function Category(): JSX.Element {
     setPostsMediaTable(tempPostsMediaTable);
   };
   useEffect(() => {
-    if (getPosts) fetch();
+    if (getPosts?.length > 0) fetch();
   }, [getPosts]);
   return (
     <div className="pt-5 mainHomeIndex">
@@ -72,7 +85,7 @@ function Category(): JSX.Element {
           className="d-flex align-items-center w-100 justify-content-center"
           style={{ backgroundColor: "white", marginTop: "1rem" }}
         >
-          <Menu mode="horizontal" style={{ width: "100%", maxWidth: 1450 }}>
+          <Menu className="blog_navbar" mode="horizontal">
             {getCategories?.map((item: any) => (
               <Menu.Item
                 style={{ color: "#777", fontWeight: "bold" }}

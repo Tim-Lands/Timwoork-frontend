@@ -1,11 +1,17 @@
-import React from "react";
-import useSWR from "swr";
+import { useState, useLayoutEffect } from "react";
+import axios from "axios";
 import Link from "next/link";
 
 function BlogFooter() {
-  const { data: getPosts }: any = useSWR(
-    "https://timwoork.net/wp-json/wp/v2/posts?per_page=5"
-  );
+  const [getPosts, setGetPosts] = useState([]);
+  useLayoutEffect(() => {
+    axios
+      .get("https://timwoork.net/wp-json/wp/v2/posts?per_page=5")
+      .then((res) => setGetPosts(res.data));
+  }, []);
+  // const { data: getPosts }: any = useSWR(
+  //   "https://timwoork.net/wp-json/wp/v2/posts?per_page=5"
+  // );
   return (
     <div className="app-footer-aside">
       <div className="aside-header">
