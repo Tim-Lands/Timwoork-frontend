@@ -15,7 +15,7 @@ import { Table } from "antd";
 
 function index() {
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -58,10 +58,14 @@ function index() {
       title: getAll("Operation_title"),
       dataIndex: "",
       width: 230,
-      render: (e: any) => <>{e.payload.title}</>,
+      render: (e: any) => {
+        console.log(e.payload);
+
+        return <>{e.payload.title}</>;
+      },
     },
     {
-      title: getAll("All_title"),
+      title: getAll("Payment_method"),
       dataIndex: "",
       render: (e: any) => <>{e.payload.payment_method}</>,
     },
@@ -112,7 +116,11 @@ function index() {
                           @{userInfo.user_details.username} |
                           <span className="app-label">
                             {" "}
-                            {userInfo.user_details.profile.level.name_ar}{" "}
+                            {
+                              userInfo.user_details.profile.level[
+                                which(language)
+                              ]
+                            }{" "}
                           </span>
                         </p>
                       </div>
@@ -231,7 +239,18 @@ function index() {
     </div>
   );
 }
-
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+    case "fr":
+      return "name_fr";
+  }
+};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

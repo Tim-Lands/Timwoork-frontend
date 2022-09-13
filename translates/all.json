@@ -5492,6 +5492,11 @@
     "ar": "وسائل الدفع",
     "fr": "Moyens de paiement"
   },
+  "Payment_method": {
+    "en": "Payment method",
+    "ar": "وسيلة الدفع",
+    "fr": "Moyen de paiement"
+  },
   "Visa": {
     "en": "Visa",
     "ar": "فيزا",

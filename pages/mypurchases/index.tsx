@@ -11,7 +11,7 @@ import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
 
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -103,7 +103,7 @@ function index() {
       dataIndex: "",
       render: (e: any) => (
         <Link href={`/mypurchases/${e.id}`}>
-          <a>{e.title}</a>
+          <a>{e[whichTitle(language)]}</a>
         </Link>
       ),
     },
@@ -175,6 +175,18 @@ function index() {
     </>
   );
 }
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

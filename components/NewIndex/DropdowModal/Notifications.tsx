@@ -8,10 +8,9 @@ import PropTypes from "prop-types";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 function Notifications({ notifications, refs, setShowNotificationsMenu }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   function switchNotifyType(notification) {
-    console.log(notification);
     const { type, to, slug, content } = notification?.data;
     const { item_id } = content;
     console.log(type);
@@ -38,19 +37,19 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
   function switchNotifyContent(notification) {
     switch (notification?.data?.type) {
       case "system":
-        return notification?.data?.title;
+        return notification?.data[whichTitle(language)];
       case "order":
         return (
           <>
-            {notification?.data?.title}{" "}
-            <strong>{notification?.data?.content?.title}</strong>
+            {notification?.data[whichTitle(language)]}{" "}
+            <strong>{notification?.data?.content[whichTitle(language)]}</strong>
           </>
         );
       case "rating":
         return (
           <>
-            {notification?.data?.title}
-            <strong>{notification?.data?.content?.title}</strong>
+            {notification?.data[whichTitle(language)]}
+            <strong>{notification?.data?.content[whichTitle(language)]}</strong>
           </>
         );
     }
@@ -120,6 +119,18 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
     </motion.div>
   );
 }
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 Notifications.propTypes = {
   notifications: PropTypes.array,
   refs: PropTypes.any,

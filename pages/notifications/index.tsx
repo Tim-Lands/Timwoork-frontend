@@ -13,7 +13,7 @@ import Pagination from "react-js-pagination";
 
 function index() {
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -23,7 +23,6 @@ function index() {
     `api/notifications?page=${pageNumber}`
   );
   const [size, setSize] = useState(4);
-  console.log(size);
 
   const [paginationSize, setPaginationSize] = useState(8);
   // const fetchData = async (pageNumber: number = 1) => {
@@ -126,17 +125,16 @@ function index() {
               <div className="list-group">
                 {notifications &&
                   notifications.data.data.map((e: any) => {
-
                     return (
                       <Notification
                         key={e.id}
-                        title={e.data.title}
+                        title={e.data[whichTitle(language)]}
                         type={e.data.type}
                         item_id={e.data.content.item_id}
                         to={e.data.to}
                         avatar={e.data.user_sender.avatar_path}
                         created_at={e.created_at}
-                        product_title={e.data.content.title}
+                        product_title={e.data.content[whichTitle(language)]}
                         slug={e.data.content.slug}
                       />
                     );
@@ -169,6 +167,18 @@ function index() {
     </div>
   );
 }
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 index.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
