@@ -22,7 +22,7 @@ function index() {
   const { data: notifications }: any = useSWR(
     `api/notifications?page=${pageNumber}`
   );
-  const [size, setSize] = useState(4);
+  const [, setSize] = useState(4);
 
   const [paginationSize, setPaginationSize] = useState(8);
   // const fetchData = async (pageNumber: number = 1) => {
