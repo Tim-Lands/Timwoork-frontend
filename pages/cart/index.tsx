@@ -15,7 +15,7 @@ import router from "next/router";
 
 function index() {
   const { data: userInfo }: any = useSWR("api/me");
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   const [, getCurrency] = useContext(CurrencyContext);
   const specCurrency = getCurrency(
@@ -146,7 +146,7 @@ function index() {
                             key={e.id}
                             id={e.id}
                             quantity={e.quantity}
-                            title={e.product_title}
+                            title={e[whichProduct(language)]}
                             price={e.price_product_origine}
                             itemTotal={e.price_product}
                             deleteItem={deleteItem}
@@ -222,6 +222,18 @@ function index() {
     </>
   );
 }
+const whichProduct = (language) => {
+  switch (language) {
+    default:
+      return "product_title";
+    case "ar":
+      return "product_title";
+    case "en":
+      return "product_title_en";
+    case "fr":
+      return "product_title_fr";
+  }
+};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

@@ -20,7 +20,7 @@ function PostsAside({
   linkURL,
   more,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   if (isError)
     return (
@@ -125,7 +125,7 @@ function PostsAside({
                 <SwiperSlide key={e.id}>
                   <div className="post-resposive-with-desktop">
                     <PostInner
-                      title={e.title}
+                      title={e[whichTitle(language)]}
                       avatar={
                         e.profile_seller && e.profile_seller.profile.avatar_path
                       }
@@ -180,6 +180,18 @@ function PostsAside({
     </>
   );
 }
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 export default PostsAside;
 PostsAside.propTypes = {
   title: PropTypes.string,
