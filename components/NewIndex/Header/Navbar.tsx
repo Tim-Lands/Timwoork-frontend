@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React, { useEffect, useState, useContext, useRef } from "react";
-import useSWR, { mutate } from "swr";
 import { useOutsideAlerter } from "../../useOutsideAlerter";
 import { useOutSide } from "../../useOutSide";
 import Community from "./Community";
@@ -37,7 +36,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
-
+  const [loading, setLoading] = useState(true);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [showCommunityMenu, setShowCommunityMenu] = useState(false);
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
@@ -53,7 +52,20 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   const [sentinel, setSentinel] = useState({ mount: true });
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
-  const { data: userInfo }: any = useSWR("api/me");
+  const [userInfo, setUserInfo]: any = useState(false);
+  useEffect(() => {
+    API.get("api/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        setUserInfo(res.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [token]);
+
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
     setShowMessagesMenu(false);
@@ -334,12 +346,30 @@ function Navbar({ dark = false, MoreNav = <></> }) {
           },
         }
       );
-      mutate("api/me");
+      API.get("api/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          setUserInfo(res.data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     } catch (error) {
       () => {};
     }
 
-    mutate("api/me");
+    API.get("api/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        setUserInfo(res.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }
   return (
     <nav
@@ -421,149 +451,150 @@ function Navbar({ dark = false, MoreNav = <></> }) {
               </a>
             </Link>
           </li>
-          {userInfo ? (
-            <>
-              <li className="circular-newitem avatar" ref={profileBtn}>
-                <a
-                  className="link-circular-button"
-                  onClick={() => {
-                    setIsShowProfileMenu(!isShowProfileMenu);
-                  }}
-                >
-                  <Image
-                    src={userInfo?.user_details?.profile?.avatar_path}
-                    width={31}
-                    height={31}
-                    alt={""}
+          {!loading &&
+            (userInfo ? (
+              <>
+                <li className="circular-newitem avatar" ref={profileBtn}>
+                  <a
                     className="link-circular-button"
-                  />
-                </a>
-                {isShowProfileMenu && (
-                  <ProfileMenu
-                    user_details={userInfo?.user_details}
-                    refs={profileRef}
-                    setIsShowProfileMenu={setIsShowProfileMenu}
-                  />
-                )}
-              </li>
-              <li className="circular-newitem">
-                <Badge
-                  count={userInfo?.cart_items_count}
-                  style={{ fontSize: 10 }}
-                  size="small"
-                  offset={[5, 5]}
-                >
-                  <Link href={"/cart"}>
-                    <a className="link-circular-button">
-                      <span className="material-icons material-icons-outlined">
-                        shopping_cart
-                      </span>
-                    </a>
-                  </Link>
-                </Badge>
-              </li>
-              {userInfo.user_details.profile.is_completed == 1 && (
-                <>
-                  <li className="circular-newitem" ref={messagesBtn}>
-                    <Badge
-                      count={userInfo?.unread_messages_count}
-                      offset={[5, 5]}
-                      style={{ fontSize: 10 }}
-                      size="small"
-                    >
-                      <a
-                        className="link-circular-button"
-                        onClick={() => setShowMessagesMenu(!showMessagesMenu)}
-                      >
-                        <span className="material-icons material-icons-outlined">
-                          mail
-                        </span>
-                      </a>
-                    </Badge>
-                    {showMessagesMenu && (
-                      <Messages
-                        refs={messagesRef}
-                        messages={messages}
-                        setShowMessagesMenu={setShowMessagesMenu}
-                      />
-                    )}
-                  </li>
-                  <li
-                    className="circular-newitem"
-                    ref={notificationsBtn}
                     onClick={() => {
-                      if (!showNotificationsMenu) markAllRead();
+                      setIsShowProfileMenu(!isShowProfileMenu);
                     }}
                   >
-                    <Badge
-                      count={userInfo?.unread_notifications_count}
-                      offset={[5, 5]}
-                      style={{ fontSize: 10 }}
-                      size="small"
-                    >
-                      <a
-                        className="link-circular-button"
-                        onClick={() =>
-                          setShowNotificationsMenu(!showNotificationsMenu)
-                        }
-                      >
+                    <Image
+                      src={userInfo?.user_details?.profile?.avatar_path}
+                      width={31}
+                      height={31}
+                      alt={""}
+                      className="link-circular-button"
+                    />
+                  </a>
+                  {isShowProfileMenu && (
+                    <ProfileMenu
+                      user_details={userInfo?.user_details}
+                      refs={profileRef}
+                      setIsShowProfileMenu={setIsShowProfileMenu}
+                    />
+                  )}
+                </li>
+                <li className="circular-newitem">
+                  <Badge
+                    count={userInfo?.cart_items_count}
+                    style={{ fontSize: 10 }}
+                    size="small"
+                    offset={[5, 5]}
+                  >
+                    <Link href={"/cart"}>
+                      <a className="link-circular-button">
                         <span className="material-icons material-icons-outlined">
-                          notifications
+                          shopping_cart
                         </span>
                       </a>
-                    </Badge>
-                    {showNotificationsMenu && (
-                      <Notifications
-                        notifications={notifications}
-                        setShowNotificationsMenu={setShowNotificationsMenu}
-                        refs={notificationsRef}
-                      />
-                    )}
-                  </li>
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <li className="authBtn">
-                <Link href={"/register"}>
-                  <a
-                    style={{ fontWeight: "bold" }}
-                    className="btn butt-xs butt-primary2 flex-center"
-                  >
-                    <span className="material-icons material-icons-outlined">
-                      person_add
-                    </span>{" "}
-                    {getAll("Sign_up")}
-                  </a>
-                </Link>
-              </li>
-              <li
-                className="mobAuthBtn"
-                // onClick={() => setIsShowLoginForm(true)}
-              >
-                <Link href="login">
-                  <button>{getAll("Login")}</button>
-                </Link>
-              </li>
-              <li className="authBtn">
-                <Link href="/login">
-                  <a
-                    style={{ fontWeight: "bold" }}
-                    className={`btn butt-xs flex-center ${
-                      !visible ? " butt-primary2-out" : " butt-white-out"
-                    }`}
-                    // onClick={() => setIsShowLoginForm(true)}
-                  >
-                    <span className="material-icons material-icons-outlined">
-                      person
-                    </span>{" "}
-                    {getAll("Log_in")}
-                  </a>
-                </Link>
-              </li>
-            </>
-          )}
+                    </Link>
+                  </Badge>
+                </li>
+                {userInfo.user_details.profile.is_completed == 1 && (
+                  <>
+                    <li className="circular-newitem" ref={messagesBtn}>
+                      <Badge
+                        count={userInfo?.unread_messages_count}
+                        offset={[5, 5]}
+                        style={{ fontSize: 10 }}
+                        size="small"
+                      >
+                        <a
+                          className="link-circular-button"
+                          onClick={() => setShowMessagesMenu(!showMessagesMenu)}
+                        >
+                          <span className="material-icons material-icons-outlined">
+                            mail
+                          </span>
+                        </a>
+                      </Badge>
+                      {showMessagesMenu && (
+                        <Messages
+                          refs={messagesRef}
+                          messages={messages}
+                          setShowMessagesMenu={setShowMessagesMenu}
+                        />
+                      )}
+                    </li>
+                    <li
+                      className="circular-newitem"
+                      ref={notificationsBtn}
+                      onClick={() => {
+                        if (!showNotificationsMenu) markAllRead();
+                      }}
+                    >
+                      <Badge
+                        count={userInfo?.unread_notifications_count}
+                        offset={[5, 5]}
+                        style={{ fontSize: 10 }}
+                        size="small"
+                      >
+                        <a
+                          className="link-circular-button"
+                          onClick={() =>
+                            setShowNotificationsMenu(!showNotificationsMenu)
+                          }
+                        >
+                          <span className="material-icons material-icons-outlined">
+                            notifications
+                          </span>
+                        </a>
+                      </Badge>
+                      {showNotificationsMenu && (
+                        <Notifications
+                          notifications={notifications}
+                          setShowNotificationsMenu={setShowNotificationsMenu}
+                          refs={notificationsRef}
+                        />
+                      )}
+                    </li>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <li className="authBtn">
+                  <Link href={"/register"}>
+                    <a
+                      style={{ fontWeight: "bold" }}
+                      className="btn butt-xs butt-primary2 flex-center"
+                    >
+                      <span className="material-icons material-icons-outlined">
+                        person_add
+                      </span>{" "}
+                      {getAll("Sign_up")}
+                    </a>
+                  </Link>
+                </li>
+                <li
+                  className="mobAuthBtn"
+                  // onClick={() => setIsShowLoginForm(true)}
+                >
+                  <Link href="login">
+                    <button>{getAll("Login")}</button>
+                  </Link>
+                </li>
+                <li className="authBtn">
+                  <Link href="/login">
+                    <a
+                      style={{ fontWeight: "bold" }}
+                      className={`btn butt-xs flex-center ${
+                        !visible ? " butt-primary2-out" : " butt-white-out"
+                      }`}
+                      // onClick={() => setIsShowLoginForm(true)}
+                    >
+                      <span className="material-icons material-icons-outlined">
+                        person
+                      </span>{" "}
+                      {getAll("Log_in")}
+                    </a>
+                  </Link>
+                </li>
+              </>
+            ))}
 
           <li className="circular-newitem" ref={languageRef}>
             <a
