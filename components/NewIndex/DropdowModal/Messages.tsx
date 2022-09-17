@@ -9,7 +9,7 @@ import { LanguageContext } from "../../../contexts/languageContext/context";
 import { useContext } from "react";
 
 function Messages({ messages, refs, setShowMessagesMenu }) {
-  const { lang, getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   return (
     <motion.div
@@ -47,10 +47,12 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
                         </div>
                         <div className="new-popup-item-content">
                           <p className="text">
-                            {lang === "ar" && getAll("Have")}{" "}
+                            {language === "ar" && getAll("Have")}{" "}
                             {message?.members[0].username}
                             {" " + getAll("have_commented") + " "}
-                            <strong>{message?.title}</strong>
+                            <strong>
+                              {message && message[whichTitle(language)]}
+                            </strong>
                           </p>
                           <p className="meta">
                             <FaClock />{" "}
@@ -134,6 +136,18 @@ function Messages({ messages, refs, setShowMessagesMenu }) {
     </motion.div>
   );
 }
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 Messages.propTypes = {
   messages: PropTypes.array,
   refs: PropTypes.any,

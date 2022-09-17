@@ -820,7 +820,9 @@ const Order = ({ query }) => {
                     </div>
                   )}
                   <div className="aside-header">
-                    <h3 className="title">{ShowItem.data.title}</h3>
+                    <h3 className="title">
+                      {ShowItem.data[whichTitle(language)]}
+                    </h3>
                   </div>
                   <div style={{ backgroundColor: "#fff", padding: 9 }}>
                     <div className="aside-header">
@@ -832,7 +834,8 @@ const Order = ({ query }) => {
                         dangerouslySetInnerHTML={{
                           __html:
                             ShowItem &&
-                            ShowItem.data.profile_seller.products[0]
+                            ShowItem?.data?.profile_seller?.products[0] &&
+                            ShowItem?.data?.profile_seller?.products[0]
                               .buyer_instruct,
                         }}
                       />
@@ -1389,7 +1392,18 @@ const which = (language) => {
       return "name_fr";
   }
 };
-
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 export default Order;
 Order.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;

@@ -117,7 +117,7 @@ function PostInner({
   return (
     <div
       className={"timlands-post-inner" + sizeClass()}
-      style={{ direction: language === "en" ? "ltr" : "rtl" }}
+      style={{ direction: language === "ar" ? "rtl" : "ltr" }}
     >
       <Link href={`/p/${slug}`}>
         <a>

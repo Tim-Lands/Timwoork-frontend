@@ -953,7 +953,9 @@ const User = ({ query }) => {
                         </>
                       )}
                       <div className="aside-header">
-                        <h3 className="title">{ShowItem.data.title}</h3>
+                        <h3 className="title">
+                          {ShowItem.data[whichTitle(language)]}
+                        </h3>
                       </div>
                       <div style={{ backgroundColor: "#fff", padding: 9 }}>
                         <div className="aside-header">
@@ -966,8 +968,8 @@ const User = ({ query }) => {
                             className="timwoork-single-product-detailts"
                             dangerouslySetInnerHTML={{
                               __html:
-                                ShowItem &&
-                                ShowItem.data.profile_seller.products[0]
+                                ShowItem?.data?.profile_seller?.products[0] &&
+                                ShowItem?.data?.profile_seller?.products[0]
                                   .buyer_instruct,
                             }}
                           />
@@ -1685,6 +1687,18 @@ const which = (language) => {
       return "name_ar";
     case "en":
       return "name_en";
+  }
+};
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
   }
 };
 function linkify(text, query) {
