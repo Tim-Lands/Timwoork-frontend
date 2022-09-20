@@ -30,7 +30,7 @@ const ActivityData = (activity, getAll) => {
         <p>
           {" "}
           قام <a href=""> {activity?.data?.user_sender?.full_name}</a> بتقييم
-          خدمة {activity?.data?.content?.slug.split("-").slice(1).join("")}{" "}
+          خدمة {activity?.data?.content?.slug.split("-").slice(1).join(" ")}{" "}
           المُقدمة من{" "}
           <a href={`/u/${activity?.user_id}`} target="_blank" rel="noreferrer">
             {" "}

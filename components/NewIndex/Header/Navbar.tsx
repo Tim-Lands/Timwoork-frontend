@@ -350,12 +350,9 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((res) => {
-          setUserInfo(res.data);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
+      }).then((res) => {
+        setUserInfo(res.data);
+      });
     } catch (error) {
       () => {};
     }
@@ -364,12 +361,9 @@ function Navbar({ dark = false, MoreNav = <></> }) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-      .then((res) => {
-        setUserInfo(res.data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    }).then((res) => {
+      setUserInfo(res.data);
+    });
   }
   return (
     <nav
