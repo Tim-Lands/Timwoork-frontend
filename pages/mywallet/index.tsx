@@ -61,7 +61,7 @@ function index() {
       render: (e: any) => {
         console.log(e.payload);
 
-        return <>{e.payload.title}</>;
+        return <>{e.payload[whichTitle(language)]}</>;
       },
     },
     {
@@ -249,6 +249,16 @@ const which = (language) => {
       return "name_en";
     case "fr":
       return "name_fr";
+  }
+};
+const whichTitle = (language) => {
+  switch (language) {
+    case "ar":
+      return "title";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
   }
 };
 index.getLayout = function getLayout(page: any): ReactElement {

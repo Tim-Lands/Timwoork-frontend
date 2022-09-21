@@ -28,7 +28,7 @@ const User = ({ query, stars }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const User = ({ query, stars }) => {
                       {User &&
                         User.profile &&
                         User.profile.level &&
-                        User.profile.level.name_ar}{" "}
+                        User.profile.level[which(language)]}{" "}
                     </span>
                   </p>
                 </div>
@@ -133,7 +133,9 @@ const User = ({ query, stars }) => {
                             ref={detectHeight}
                             className={"user-bro " + (isLess ? "is-less" : "")}
                             dangerouslySetInnerHTML={{
-                              __html: User && User.profile.profile_seller.bio,
+                              __html:
+                                User &&
+                                User.profile.profile_seller[whichBio(language)],
                             }}
                           />
                           {isOverflow && (
@@ -187,7 +189,7 @@ const User = ({ query, stars }) => {
                           <div className="content-text-item">
                             <h3 className="text-label">{getAll("Country")}</h3>
                             <p className="text-value">
-                              {User.profile.country.name_ar}
+                              {User.profile.country[which(language)]}
                             </p>
                           </div>
                         </div>
@@ -232,7 +234,7 @@ const User = ({ query, stars }) => {
                           <PostInner
                             avatar={`/avatar.png`}
                             size="small"
-                            title={e.title}
+                            title={e[whichTitle(language)]}
                             author={
                               e.profile_seller &&
                               e.profile_seller.profile.first_name +
@@ -278,6 +280,36 @@ export async function getServerSideProps({ query }) {
     return { props: { stars: null, query, errorFetch: true } };
   }
 }
+const whichTitle = (language) => {
+  switch (language) {
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
+const which = (language) => {
+  switch (language) {
+    case "fr":
+      return "name_fr";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+  }
+};
+const whichBio = (language) => {
+  switch (language) {
+    case "ar":
+      return "bio_ar";
+    case "en":
+      return "bio_en";
+    case "fr":
+      return "bio_fr";
+  }
+};
 User.propTypes = {
   query: PropTypes.any,
   stars: PropTypes.any,
