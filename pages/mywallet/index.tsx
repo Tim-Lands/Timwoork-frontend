@@ -67,7 +67,7 @@ function index() {
     {
       title: getAll("Payment_method"),
       dataIndex: "",
-      render: (e: any) => <>{e.payload.payment_method}</>,
+      render: (e: any) => <>{e.payload[whichPayment(language)]}</>,
     },
     {
       title: getAll("Date"),
@@ -259,6 +259,16 @@ const whichTitle = (language) => {
       return "title_en";
     case "fr":
       return "title_fr";
+  }
+};
+const whichPayment = (language) => {
+  switch (language) {
+    case "ar":
+      return "payment_method_ar";
+    case "en":
+      return "payment_method_en";
+    case "fr":
+      return "payment_method_fr";
   }
 };
 index.getLayout = function getLayout(page: any): ReactElement {
