@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { LanguageContext } from "../../contexts/languageContext/context";
 
 function index({ products, isError, isLoading, size }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
+  const { getSectionLanguage, language } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   if (isError) message.error(getAll("An_error_occurred_while"));
   if (isLoading)
@@ -72,8 +72,10 @@ function index({ products, isError, isLoading, size }): ReactElement {
                 avatar={
                   e.profile_seller && e.profile_seller.profile.avatar_path
                 }
-                title={e.title}
-                level={e.profile_seller && e.profile_seller.level.name_ar}
+                title={e[whichTitle(language)]}
+                level={
+                  e.profile_seller && e.profile_seller.level[which(language)]
+                }
                 author={
                   e.profile_seller &&
                   e.profile_seller.profile.first_name +
@@ -102,6 +104,30 @@ function index({ products, isError, isLoading, size }): ReactElement {
     </>
   );
 }
+const which = (language) => {
+  switch (language) {
+    default:
+      return "name_en";
+    case "ar":
+      return "name_ar";
+    case "en":
+      return "name_en";
+    case "fr":
+      return "name_fr";
+  }
+};
+const whichTitle = (language) => {
+  switch (language) {
+    default:
+      return "title_en";
+    case "ar":
+      return "title_ar";
+    case "en":
+      return "title_en";
+    case "fr":
+      return "title_fr";
+  }
+};
 export default index;
 index.propTypes = {
   products: PropTypes.array,

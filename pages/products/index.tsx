@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useEffect,
-  useState,
-  useRef,
-  useContext,
-} from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
@@ -86,11 +80,11 @@ function Category({ products, categories, url_params }) {
   const [subcategories, setSubCategories]: any = useState({});
   const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({});
   const [activeKeys, setActiveKeys]: any = useState([]);
-  const products_type = useRef({
+  const products_type = {
     most_recent: getAll("Recent_services"),
     most_selling: getAll("Top_selling_services"),
     popular: getAll("Most_popular_services"),
-  });
+  };
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
   /**----------------------------------------------------------**/
   useEffect(() => {
@@ -917,8 +911,7 @@ function Category({ products, categories, url_params }) {
           <div className="col-md-9">
             <div className="page-header flex-center" style={{ paddingTop: 0 }}>
               <h4 className="title me-auto">
-                {products_type.current[url_params.type] ||
-                  getAll("All_services")}
+                {products_type[url_params?.type] || getAll("All_services")}
               </h4>
               <div className="tool-right ml-auto">
                 <button
