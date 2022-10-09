@@ -143,7 +143,7 @@ function Navbar(): ReactElement {
     });
     setSize(window.innerWidth);
     if (token) {
-      chatPusher.bind("message.sent", (data) => {
+      chatPusher?.bind("message.sent", (data) => {
         const effect = new Audio("/effect.mp3");
         effect.play();
         mutate("api/me");
@@ -235,8 +235,8 @@ function Navbar(): ReactElement {
         }
       });
 
-      notificationPusher.bind("notification.sent", (data) => {
-        console.log(data)
+      notificationPusher?.bind("notification.sent", (data) => {
+        console.log(data);
         const NotifyEffect = new Audio("/bell.mp3");
         NotifyEffect.play();
         mutate("api/me");

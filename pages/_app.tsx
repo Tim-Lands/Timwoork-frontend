@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import "../styles/app.css";
 import "../styles/app-rtl.css";
 import "../styles/app-ltr.css";
-import store from "@/store/store";
+import { store } from "../store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
 //import useSWR from "swr";

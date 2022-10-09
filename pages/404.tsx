@@ -12,7 +12,7 @@
 */
 import Link from "next/link";
 import Head from "next/head";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { LanguageContext } from "../contexts/languageContext/context";
 import { useContext } from "react";
 
@@ -53,8 +53,9 @@ function FourOFour(props: any) {
 }
 
 // Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+export default FourOFour;
+// const mapStateToProps = (state: any) => ({
+//   isAuthenticated: state.auth.isAuthenticated,
+// });
 
-export default connect(mapStateToProps)(FourOFour);
+// export default connect(mapStateToProps)(FourOFour);

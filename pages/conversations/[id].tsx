@@ -114,7 +114,7 @@ function Conversation({ query }) {
       }
     }
   };
-  channel.bind("message.sent", () => {
+  channel?.bind("message.sent", () => {
     mutate(`api/conversations/${query.id}`);
   });
 

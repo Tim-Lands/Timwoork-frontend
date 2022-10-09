@@ -341,6 +341,7 @@ const which = (language) => {
 index.getLayout = function getLayout(page: any): ReactElement {
   return <LayoutHome dark={true}>{page}</LayoutHome>;
 };
+
 export async function getServerSideProps() {
   try {
     const [categories, popularProducts, latestProducts, products] =

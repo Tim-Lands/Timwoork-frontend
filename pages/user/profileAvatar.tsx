@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Cookies from "js-cookie";
@@ -7,7 +7,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import API from "../../config";
 import { motion } from "framer-motion";
-import withAuth from "../../services/withAuth";
+// import withAuth from "../../services/withAuth";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from "swr";
@@ -177,14 +177,15 @@ const profileAvatar = (): ReactElement => {
 };
 
 // Map redux states to local component props.
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  userInfo: state.auth.user,
-});
+// const mapStateToProps = (state: any) => ({
+//   isAuthenticated: state.auth.isAuthenticated,
+//   userInfo: state.auth.user,
+// });
 
 // Define PropTypes.
+export default profileAvatar;
 profileAvatar.propTypes = {
   props: PropTypes.object,
 };
 
-export default connect(mapStateToProps, {})(withAuth(profileAvatar));
+// export default connect(mapStateToProps, {})(withAuth(profileAvatar));

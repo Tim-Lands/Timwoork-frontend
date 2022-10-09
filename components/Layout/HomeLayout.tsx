@@ -4,8 +4,8 @@ import router from "next/router";
 import { useEffect, useState, useContext } from "react";
 import Footer from "../NewIndex/Footer/Footer";
 import { LanguageContext } from "../../contexts/languageContext/context";
-import { connect } from "react-redux";
-import { logout } from "./../../store/auth/authActions";
+// import { connect } from "react-redux";
+// import { logout } from "./../../store/auth/authActions";
 import Cookies from "js-cookie";
 
 function Layout(props: any) {
@@ -38,8 +38,9 @@ function Layout(props: any) {
     </div>
   );
 }
-const mapStateToProps = (state: any) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+export default Layout;
+// const mapStateToProps = (state: any) => ({
+//   isAuthenticated: state.auth.isAuthenticated,
+// });
 
-export default connect(mapStateToProps, { logout })(Layout);
+// export default connect(mapStateToProps, { logout })(Layout);

@@ -11,11 +11,14 @@ import { message } from "antd";
 import { Alert } from "@/components/Alert/Alert";
 import { LanguageContext } from "../contexts/languageContext/context";
 import { useContext } from "react";
+import { useAppSelector } from "../store/hooks";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 const Login = (): ReactElement => {
+  // const dispatch = useAppDispatch();
+  const user = useAppSelector((store) => store.user);
   const [passVisibled, setPassVisibled] = useState(false);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
@@ -87,15 +90,15 @@ const Login = (): ReactElement => {
   // The router object used for redirecting after login.
   const router = useRouter();
   // Redirect to user home route if user is authenticated.
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  // let token = Cookies.get("token");
+  // if (!token && typeof window !== "undefined")
+  //   token = localStorage.getItem("token");
   useEffect(() => {
-    if (token) {
+    if (user.isLogged) {
       router.push("/");
       return;
     }
-  }, [token]);
+  }, [user.isLogged]);
 
   // Return statement.
   return (

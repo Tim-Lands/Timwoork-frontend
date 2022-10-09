@@ -122,7 +122,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   }, [handleScroll]);
   useEffect(() => {
     if (userInfo) {
-      chatPusher.bind("message.sent", (data) => {
+      chatPusher?.bind("message.sent", (data) => {
         const message = {
           members: [data?.message?.user],
           id: data?.message?.conversation_id,
@@ -221,7 +221,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
           });
         }
       });
-      notificationPusher.bind("notification.sent", (data) => {
+      notificationPusher?.bind("notification.sent", (data) => {
         console.log(data);
         const today = new Date();
         const date = `${today.getFullYear()}_${

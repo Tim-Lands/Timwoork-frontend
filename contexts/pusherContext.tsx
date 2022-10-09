@@ -3,8 +3,10 @@ import { createContext, useEffect } from "react";
 import useSWR from "swr";
 import Cookies from "js-cookie";
 import API from "../config";
+import { useAppSelector } from "@/store/hooks";
 export const PusherContext = createContext(null);
 export const PusherProvider = (props) => {
+  const isLogged = useAppSelector((store) => store.user.isLogged);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -19,13 +21,20 @@ export const PusherProvider = (props) => {
   const channelNotification = `presence-notify.${
     userInfo && userInfo.user_details.id
   }`;
-  const chatPusher = pusher.subscribe(channelChat);
-
   const channelCurrency = "currency";
 
-  const notificationPusher = pusher.subscribe(channelNotification);
+  let chatPusher;
+  let notificationPusher;
+  let currencyPusher;
+  useEffect(() => {
+    if (isLogged) {
+      pusher.subscribe(channelChat);
 
-  const currencyPusher = pusher.subscribe(channelCurrency);
+      pusher.subscribe(channelNotification);
+
+      pusher.subscribe(channelCurrency);
+    }
+  }, [isLogged]);
   useEffect(() => {
     return () => {
       pusher.unsubscribe(channelChat);

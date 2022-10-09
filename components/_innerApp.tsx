@@ -7,6 +7,7 @@ import API from "../config";
 import PropTypes from "prop-types";
 
 import { LanguageContext } from "../contexts/languageContext/context";
+var used = "stop build";
 const App = ({ innerApp }) => {
   const { language } = useContext(LanguageContext);
   let token = Cookies.get("token");

@@ -7,18 +7,18 @@ export const CurrencyProvider = (props) => {
 
   const [currencyValues, setCurrencyValues] = useState([]);
   useEffect(() => {
-    currencyPusher.bind("currency", () => {
+    currencyPusher?.bind("currency", () => {
       API.get("api/currency_values")
         .then((data) => {
           setCurrencyValues(data.data.data);
         })
-        .catch(() => { });
+        .catch(() => {});
     });
     API.get("api/currency_values")
       .then((data) => {
         setCurrencyValues(data.data.data);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, []);
   function getSpecCurrency(codeID: "USD") {
     const oneCurrency = [];

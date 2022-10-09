@@ -16,7 +16,7 @@ function Sidebar({ RouterId }) {
   const { data: conversationsList }: any = useSWR(
     `api/conversations?paginate=6&page=${pageNumber}`
   );
-  chatPusher.bind("message.sent", () => {
+  chatPusher?.bind("message.sent", () => {
     mutate(`api/conversations?paginate=6&page=${pageNumber}`);
   });
   return (
