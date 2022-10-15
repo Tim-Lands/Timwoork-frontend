@@ -17,6 +17,7 @@ import ProfileMenu from "../DropdowModal/ProfileMenu";
 import { PusherContext } from "../../../contexts/pusherContext";
 import API from "../../../config";
 import { Badge, notification } from "antd";
+import { useAppSelector } from "../../../store/hooks";
 import LastSeen from "@/components/LastSeen";
 import MobileMenu from "./mobileMenus";
 import router from "next/router";
@@ -30,6 +31,7 @@ import {
 import { darken } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false, MoreNav = <></> }) {
+  const cartLength = useAppSelector((state) => state.cart.itemsLength);
   const { language, setLanguage, getSectionLanguage } =
     useContext(LanguageContext);
   const getAll = getSectionLanguage();
@@ -473,7 +475,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                 </li>
                 <li className="circular-newitem">
                   <Badge
-                    count={userInfo?.cart_items_count}
+                    count={cartLength}
                     style={{ fontSize: 10 }}
                     size="small"
                     offset={[5, 5]}

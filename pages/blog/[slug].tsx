@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import axios from "axios";
@@ -9,71 +9,51 @@ import { Divider } from "antd";
 import { Image } from "antd";
 import { LanguageContext } from "../../contexts/languageContext/context";
 import { useContext } from "react";
+import { BlogActions } from "../../store/blog/blogActions";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+const Blog = ({ query }) => {
+  const dispatch = useAppDispatch();
+  const blog = useAppSelector((state) => state.blog.blog);
+  const ads = useAppSelector((state) => state.blog.ads);
 
-const User = ({ query }) => {
-  const [getPosts, setGetPosts]: any = useState(false);
-  const [getSamePosts, setGetSamePosts] = useState([]);
-  const [getAds, setGetAds] = useState([]);
+  useEffect(() => {
+    if (blog.loaded && blog.id === query.slug) return;
+    dispatch(BlogActions.loadBlog());
+    dispatch(BlogActions.getBlogData({ slug: query.slug }));
+  }, [blog.loaded, query.slug]);
+  const { data: blogData, loaded } = blog;
+  const { relatedBlogs } = blog;
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage("all");
-  const [postsMediaTable, setPostsMediaTable] = useState([]);
   useEffect(() => {
-    axios
-      .get(`https://timwoork.net/wp-json/wp/v2/posts/?slug=${query.slug}`)
-      .then((res) => setGetPosts(res.data));
-    axios
-      .get(`https://timwoork.net/wp-json/wp/v2/media?include=28,29`)
-      .then((res) => setGetAds(res.data));
-  }, [query.slug]);
-  // const { data: getPosts }: any = useSWR(
-
-  // );
+    if (blogData.categories.length > 0)
+      dispatch(
+        BlogActions.getSimilarBlogs({
+          per_page: 3,
+          categories: blogData.categories[0],
+        })
+      );
+  }, [blogData]);
   useEffect(() => {
-    if (getPosts)
-      axios
-        .get(
-          `https://timwoork.net/wp-json/wp/v2/posts?categories=${getPosts[0].categories[0]}&per_page=3`
-        )
-        .then((res) => setGetSamePosts(res.data));
-  }, [getPosts]);
-  // const { data: getSamePosts }: any = useSWR(
-
-  // );
-  // const { data: getAds }: any = useSWR(
-  //   `https://timwoork.net/wp-json/wp/v2/media?include=28,29`
-  // );
-  const fetchImage = (img_id) => {
-    return axios.get(
-      `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
-    );
-  };
-  const fetch = async () => {
-    const promises = [];
-    const tempPostsMediaTable = [];
-    getPosts?.forEach((post) => promises.push(fetchImage(post.featured_media)));
-    getSamePosts?.forEach((post) =>
-      promises.push(fetchImage(post.featured_media))
-    );
-    const media = await Promise.all(promises);
-    media.forEach(
-      (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
-    );
-    setPostsMediaTable(tempPostsMediaTable);
-  };
-  useEffect(() => {
-    if (getPosts) fetch();
-  }, [getPosts, getSamePosts]);
+    if (ads.loaded) return;
+    dispatch(BlogActions.getAds());
+  }, [ads.loaded]);
+  const {
+    data: relatedBlogsData,
+    isLoading: relatedBlogsLoading,
+    dataImages: relatedBlogsImages,
+  } = relatedBlogs;
   return (
     <>
-      {!getPosts && <Loading />}
+      {blog.isLoading && <Loading />}
       <MetaTags
-        title={getPosts && getPosts[0].title.rendered}
-        metaDescription={getPosts && getPosts[0].excerpt.rendered}
-        ogDescription={getPosts && getPosts[0].excerpt.rendered}
-        ogImage={getPosts && getPosts[0].jetpack_featured_media_url}
-        ogUrl={`https://timwoork.com/blog/${getPosts && getPosts[0].slug}`}
+        title={loaded && blogData.title.rendered}
+        metaDescription={loaded && blogData.excerpt.rendered}
+        ogDescription={loaded && blogData.excerpt.rendered}
+        ogImage={loaded && blogData.jetpack_featured_media_url}
+        ogUrl={`https://timwoork.com/blog/${loaded && blogData.slug}`}
       />
-      {getPosts && (
+      {loaded && !blog.isLoading && (
         <>
           <article className="py-5">
             <div className="container">
@@ -81,7 +61,7 @@ const User = ({ query }) => {
                 <div className="row" style={{ alignItems: "center" }}>
                   <div className="col-lg-10 col-md-8">
                     <h1 className="mb-0 blogHeaderTitle">
-                      {getPosts[0].title.rendered}
+                      {blogData.title.rendered}
                     </h1>
                   </div>
                   <div className="col-md-4 col-lg-2 col-sm-12 text-md-start text-sm-end">
@@ -92,7 +72,7 @@ const User = ({ query }) => {
                         marginInlineStart: ".5rem",
                       }}
                     >
-                      {rtlDateFormatted(getPosts[0].modified)}
+                      {rtlDateFormatted(blogData.modified)}
                     </span>
                   </div>
                 </div>
@@ -100,50 +80,48 @@ const User = ({ query }) => {
               <Divider />
               <div className="row">
                 <div className="col-md-8">
-                  <Image src={postsMediaTable[getPosts[0].featured_media]} />
+                  <Image src={relatedBlogsImages[blogData.featured_media]} />
                   <div
                     className="blog-single-content mt-3"
                     style={{ lineHeight: 2, fontSize: 20 }}
                     dangerouslySetInnerHTML={{
-                      __html: getPosts[0].content.rendered,
+                      __html: blogData.content.rendered,
                     }}
                   ></div>
                   <Divider />
                   <h3>{getAll("Relating_articles")}</h3>
-                  {!getSamePosts && <Loading />}
+                  {relatedBlogsLoading && <Loading />}
                   <div className="row">
-                    {getSamePosts &&
-                      getSamePosts.map((item: any) => (
-                        <div className="col-md-4" key={item.id}>
-                          <Post
-                            title={
-                              item.title.rendered.length > 22
-                                ? item.title.rendered.substring(0, 22) + "..."
-                                : item.title.rendered
-                            }
-                            thumbnail={postsMediaTable[item.featured_media]}
-                            size={"small"}
-                            slug={item.slug}
-                            excerpt={
-                              item.excerpt.rendered.substring(0, 100) + "..."
-                            }
-                          />
-                        </div>
-                      ))}
+                    {relatedBlogsData.map((item: any) => (
+                      <div className="col-md-4" key={item.id}>
+                        <Post
+                          title={
+                            item.title.rendered.length > 22
+                              ? item.title.rendered.substring(0, 22) + "..."
+                              : item.title.rendered
+                          }
+                          thumbnail={relatedBlogsImages[item.featured_media]}
+                          size={"small"}
+                          slug={item.slug}
+                          excerpt={
+                            item.excerpt.rendered.substring(0, 100) + "..."
+                          }
+                        />
+                      </div>
+                    ))}
                   </div>
-                  {getSamePosts && getSamePosts.length == 0 && (
+                  {!relatedBlogsLoading && relatedBlogsData.length == 0 && (
                     <p>{getAll("There_is_no")}</p>
                   )}
                 </div>
 
                 <div className="col-md-4">
-                  {!getAds && <Loading />}
-                  {getAds &&
-                    getAds.map((item: any) => (
-                      <div key={item.id}>
-                        <Image src={item.guid.rendered} />
-                      </div>
-                    ))}
+                  {ads.isLoading && <Loading />}
+                  {ads.data.map((item: any) => (
+                    <div key={item.id}>
+                      <Image src={item.guid.rendered} />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -163,8 +141,8 @@ function rtlDateFormatted(theDate) {
   return theDate.split("T")[0];
 }
 
-export default User;
-User.getLayout = function getLayout(page: any): ReactElement {
+export default Blog;
+Blog.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export async function getServerSideProps({ query }) {
@@ -177,7 +155,7 @@ export async function getServerSideProps({ query }) {
   // Pass data to the page via props
   return { props: { stars: res.data, query } };
 }
-User.propTypes = {
+Blog.propTypes = {
   query: PropTypes.any,
   stars: PropTypes.any,
 };

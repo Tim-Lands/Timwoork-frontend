@@ -128,7 +128,7 @@ function PostInner({
       </Link>
       <div className="post-item-content">
         <h3 className="title">
-          <a href={`/p/${slug}`}>{title}</a>
+          <Link href={`/p/${slug}`}>{title}</Link>
         </h3>
         <ul className="nav post-meta">
           <li className="post-meta-user">

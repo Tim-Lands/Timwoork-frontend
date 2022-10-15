@@ -7,52 +7,25 @@ import Loading from "@/components/Loading";
 import { Menu, Result } from "antd";
 import Post from "@/components/Post/blogPost";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { BlogActions } from "../../store/blog/blogActions";
 function Category(): JSX.Element {
-  const [categories, setCategories] = useState("");
-  const [getCategories, setGetCategories] = useState([]);
-  const [getPosts, setGetPosts] = useState([]);
+  const dispatch = useAppDispatch();
+  const category = useAppSelector((state) => state.blog.categories);
+  useEffect(() => {
+    if (!category.loaded) dispatch(BlogActions.getCategories());
+  }, [category.loaded]);
+  const blogs = useAppSelector((state) => state.blog.blogs);
+  const [categories, setCategories] = useState();
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
-  const [postsMediaTable, setPostsMediaTable] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
-    axios
-      .get("https://timwoork.net/wp-json/wp/v2/categories")
-      .then((res) => setGetCategories(res.data));
-  }, []);
-
-  // const { data: getCategories }: any = useSWR(
-  //   "https://timwoork.net/wp-json/wp/v2/categories"
-  // );
-  useEffect(() => {
-    axios
-      .get(
-        `https://timwoork.net/wp-json/wp/v2/posts?per_page=9&page=${pageNumber}&${categories}`
-      )
-      .then((res) => setGetPosts(res.data));
+    if (blogs.loaded && pageNumber === 1 && categories === undefined) return;
+    dispatch(
+      BlogActions.getBlogsData({ per_page: 9, categories, page: pageNumber })
+    );
   }, [pageNumber, categories]);
-  // const { data: getPosts }: any = useSWR(
-  // );
-
-  const fetchImage = (img_id) => {
-    return axios.get(
-      `https://timwoork.net/wp-json/wp/v2/media/${img_id}?_fields[]=guid&_fields[]=id`
-    );
-  };
-  const fetch = async () => {
-    const promises = [];
-    const tempPostsMediaTable = [];
-    getPosts.forEach((post) => promises.push(fetchImage(post.featured_media)));
-    const media = await Promise.all(promises);
-    media.forEach(
-      (img) => (tempPostsMediaTable[img.data.id] = img.data.guid.rendered)
-    );
-    setPostsMediaTable(tempPostsMediaTable);
-  };
-  useEffect(() => {
-    if (getPosts?.length > 0) fetch();
-  }, [getPosts]);
   return (
     <div className="pt-5 mainHomeIndex">
       <Navbar
@@ -62,11 +35,11 @@ function Category(): JSX.Element {
             style={{ backgroundColor: "white", maxWidth: 1400 }}
           >
             <Menu mode="horizontal" className="blog_navbar">
-              {getCategories?.map((item: any) => (
+              {category.data?.map((item: any) => (
                 <Menu.Item
                   style={{ color: "#777", fontSize: 13, fontWeight: "bold" }}
                   key={item.id}
-                  onClick={() => setCategories(`categories=${item.id}`)}
+                  onClick={() => setCategories(item.id)}
                 >
                   {item.name}
                 </Menu.Item>
@@ -86,23 +59,23 @@ function Category(): JSX.Element {
           style={{ backgroundColor: "white", marginTop: "1rem" }}
         >
           <Menu className="blog_navbar" mode="horizontal">
-            {getCategories?.map((item: any) => (
+            {category.data?.map((item: any) => (
               <Menu.Item
                 style={{ color: "#777", fontWeight: "bold" }}
                 key={item.id}
-                onClick={() => setCategories(`categories=${item.id}`)}
+                onClick={() => setCategories(item.id)}
               >
                 {item.name}
               </Menu.Item>
             ))}
           </Menu>
         </span>
-        {!getPosts && <Loading />}
+        {blogs.isLoading && <Loading />}
 
         <div className="container py-4">
           <div className="row">
-            {getPosts &&
-              getPosts.map((item: any) => {
+            {!blogs.isLoading &&
+              blogs.data.map((item: any) => {
                 return (
                   <div
                     className={innerWidth < 992 ? `col-md-6` : `col-md-4`}
@@ -110,7 +83,7 @@ function Category(): JSX.Element {
                   >
                     <Post
                       title={item.title.rendered}
-                      thumbnail={postsMediaTable[item.featured_media]}
+                      thumbnail={blogs.dataImages[item.featured_media]}
                       more={getAll("Read_more")}
                       size={""}
                       slug={item.slug}
@@ -127,7 +100,7 @@ function Category(): JSX.Element {
                 );
               })}
           </div>
-          {getPosts && getPosts.length == 0 && (
+          {blogs.data.length == 0 && !blogs.isLoading && (
             <Result
               status="404"
               title={getAll("No_article")}

@@ -7,7 +7,9 @@ import { ReactElement, useEffect, useState, useContext } from "react";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
+import { CartActions } from "../../store/cart/cartActions";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import Loading from "@/components/Loading";
 import {
   Dropdown,
@@ -46,6 +48,8 @@ const properties = {
   ),
 };
 function Single({ query, stars, errorFetch }) {
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.cart.isLoading);
   let token = Cookies.get("token");
   const { language, getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
@@ -64,7 +68,6 @@ function Single({ query, stars, errorFetch }) {
   )?.value;
 
   const [quantutyCount, setQuantutyCount] = useState(1);
-  const [isLoadingCart, setIsLoadingCart] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [createConversationLoading, setCreateConversationLoading] =
     useState(false);
@@ -156,10 +159,6 @@ function Single({ query, stars, errorFetch }) {
       return yut.concat(yut2);
     }
   };
-  // const allowOnlyNumericsOrDigits = (evt) => {
-  //   const financialGoal = (evt.target.validity.valid) ? evt.target.value : quantutyCount;
-  //   setQuantutyCount(financialGoal);
-  // }
   const menu = (
     <Menu>
       {ProductData && (
@@ -224,69 +223,42 @@ function Single({ query, stars, errorFetch }) {
       return;
     }
     if (token) {
-      setIsLoadingCart(true);
       try {
-        const res = await API.post(
-          "api/cart/store",
-          {
+        await dispatch(
+          CartActions.addProduct({
             quantity: Number(quantutyCount),
             product_id: ProductData.data.id,
             developments: theIDs,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          })
+        ).unwrap();
+        const key = `open${Date.now()}`;
+        const btn = (
+          <button
+            onClick={() => {
+              notification.close(key);
+              router.push("/cart");
+            }}
+            className="btn butt-sm butt-primary"
+          >
+            {getAll("Go_to_cart")}
+          </button>
         );
-        // Authentication was successful.
-        if (res.status === 200) {
-          mutate("api/me");
-          const key = `open${Date.now()}`;
-          const btn = (
-            <button
-              onClick={() => {
-                notification.close(key);
-                router.push("/cart");
-              }}
-              className="btn butt-sm butt-primary"
-            >
-              {getAll("Go_to_cart")}
-            </button>
-          );
 
-          notification.open({
-            message: getAll("Notification"),
-            description: getAll("This_service_was"),
-            placement: "topLeft",
-            btn,
-            key,
-            onClose: close,
-          });
-          setIsLoadingCart(false);
-        }
+        notification.open({
+          message: getAll("Notification"),
+          description: getAll("This_service_was"),
+          placement: "topLeft",
+          btn,
+          key,
+        });
       } catch (error: any) {
-        setIsLoadingCart(false);
-        if (error.response && error.response.data && error.response.data.msg) {
+        if (error.msg) {
           notification.warning({
             message: getAll("Alert"),
-            description: error.response.data.msg,
+            description: error.msg,
             placement: "topLeft",
           });
         } else {
-          /*  if (error.response && error.response.status === 400) {
-           notification.warning({
-             message: getAll("Alert"),
-             description: 'لا يمكنك شراء خدمتك!',
-             placement: 'topLeft'
-           });
-         } else if (error.response && error.response.status === 404) {
-           notification.warning({
-             message: getAll("Alert"),
-             description: 'لايجوز إضافة نفس الخدمة إلى السلة مرتين!',
-             placement: 'topLeft'
-           });
-         } */
           message.error(getAll("An_unexpected_error"));
         }
       }
@@ -705,7 +677,7 @@ function Single({ query, stars, errorFetch }) {
             </div>
             <div className="col-lg-4">
               <div className="single-sidebar">
-                <Spin spinning={isLoadingCart}>
+                <Spin spinning={isLoading}>
                   <div className="single-panel-aside">
                     <div className="panel-aside-header">
                       <ul className="nav top-aside-nav">

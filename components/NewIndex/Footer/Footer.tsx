@@ -11,16 +11,22 @@ import {
 import Currency from "@/components/NewIndex/DropdowModal/Currency";
 import Language from "@/components/NewIndex/DropdowModal/Language";
 import { Tooltip } from "antd";
+import { BlogActions } from "../../../store/blog/blogActions";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { LanguageContext } from "../../../contexts/languageContext/context";
 import API from "../../../config";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 function Footer() {
+  const dispatch = useAppDispatch();
+  const footer = useAppSelector((state) => state.blog.footer);
+  useEffect(() => {
+    if (!footer.loaded) dispatch(BlogActions.getFooterData({ per_page: 5 }));
+  }, [footer.loaded]);
+
   const [isCurrencyVisible, setIsCurrencyVisible] = useState(false);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [blogPosts, setBlogPosts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
   const [currency, setCurrency]: any = useState({
     name: "Dollar",
@@ -44,15 +50,11 @@ function Footer() {
         setCurrency(res?.data?.user_details?.profile?.currency);
       })
       .catch(() => {});
-    const [categoriesRes, blogPostsRes, popularProductsRes] = await Promise.all(
-      [
-        API.get("api/top_main_categories"),
-        axios.get("https://timwoork.net/wp-json/wp/v2/posts?per_page=5"),
-        API.get("api/filter?paginate=5&popular"),
-      ]
-    ).then((responses) => responses.map((res) => res?.data));
+    const [categoriesRes, popularProductsRes] = await Promise.all([
+      API.get("api/top_main_categories"),
+      API.get("api/filter?paginate=5&popular"),
+    ]).then((responses) => responses.map((res) => res?.data));
     setCategories(categoriesRes?.data);
-    setBlogPosts(blogPostsRes);
     setPopularProducts(popularProductsRes?.data?.data);
   };
   return (
@@ -127,7 +129,7 @@ function Footer() {
           <div className="footer-item">
             <h3 className="title">{getAll("Blog")}</h3>
             <ul className="footerlist">
-              {blogPosts.map((post) => (
+              {footer.data.map((post) => (
                 <li key={post.id} style={{ width: 350 }}>
                   <Link href={`/blog/${post.slug}`}>
                     <a className="text-truncate">{post.title.rendered}</a>

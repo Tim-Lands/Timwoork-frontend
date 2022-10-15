@@ -11,7 +11,6 @@ const pusher = new Pusher("a00614632e45ad3d49ff", {
   auth: token
     ? {
         headers: {
-          // pass the authorization token when using private channels
           Authorization: `Bearer ${token}`,
         },
       }

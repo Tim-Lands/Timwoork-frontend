@@ -7,7 +7,6 @@ import chat from "./chat/chatSlice";
 import wallet from "./wallet/walletSlice";
 import currency from "./currency/currencySlice";
 import languages from "./languages/languagesSlice";
-import pusher from "./pusher/pusherSlice";
 import sales from "./sales/salesSlice";
 import profile from "./profile/profileSlice";
 import products from "./products/productsSlice";
@@ -23,7 +22,6 @@ export const store = configureStore({
     wallet,
     currency,
     languages,
-    pusher,
     sales,
     profile,
     products,

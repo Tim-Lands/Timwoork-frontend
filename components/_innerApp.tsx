@@ -1,18 +1,32 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ConfigProvider } from "antd";
 import { SWRConfig } from "swr";
 import router from "next/router";
 import Cookies from "js-cookie";
 import API from "../config";
 import PropTypes from "prop-types";
+import { UserActions } from "../store/user/UserActions";
+// import { ProfileActions } from "../store/profile/profileActions";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import { LanguageContext } from "../contexts/languageContext/context";
-var used = "stop build";
+// var used = "stop build";
+
 const App = ({ innerApp }) => {
   const { language } = useContext(LanguageContext);
+  const user = useAppSelector((state) => state.user);
+  const unUsed = "";
+  const dispatch = useAppDispatch();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
+  useEffect(() => {
+    if (user.token) initialize();
+  }, [user.token]);
+  async function initialize() {
+    await dispatch(UserActions.setToken(user.token));
+    dispatch(UserActions.getData({}));
+  }
   return (
     <SWRConfig
       value={{

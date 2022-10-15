@@ -1,6 +1,6 @@
 import { CartThunkFunctions } from "./thunkFunctions";
 import { cartSlice } from "./cartSlice";
-export const SalesActions = {
+export const CartActions = {
   ...CartThunkFunctions,
   ...cartSlice.actions,
 };

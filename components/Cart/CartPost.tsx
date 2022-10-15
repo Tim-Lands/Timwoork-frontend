@@ -161,7 +161,7 @@ CartPost.propTypes = {
   itemTotal: PropTypes.number,
   price: PropTypes.number,
   deleteItem: PropTypes.func,
-  updateItem: PropTypes.func,
+  // updateItem: PropTypes.func,
   developments: PropTypes.array,
 };
 

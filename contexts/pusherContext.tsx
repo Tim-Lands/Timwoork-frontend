@@ -29,7 +29,6 @@ export const PusherProvider = (props) => {
   useEffect(() => {
     if (isLogged) {
       pusher.subscribe(channelChat);
-
       pusher.subscribe(channelNotification);
 
       pusher.subscribe(channelCurrency);

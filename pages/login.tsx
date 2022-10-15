@@ -1,31 +1,32 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
-import API from "../config";
+// import API from "../config";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { GoogleLogin } from "react-google-login";
 import { message } from "antd";
-import { Alert } from "@/components/Alert/Alert";
+import { UserActions } from "../store/user/UserActions";
+// import { Alert } from "@/components/Alert/Alert";
 import { LanguageContext } from "../contexts/languageContext/context";
 import { useContext } from "react";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 const Login = (): ReactElement => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
   const [passVisibled, setPassVisibled] = useState(false);
-  const [validationsErrors, setValidationsErrors]: any = useState({});
-  const [validationsGeneral, setValidationsGeneral]: any = useState({});
-  function setValidationsErrorsHandle() {
-    setValidationsErrors({});
-    setValidationsGeneral({});
-  }
+  // const [validationsErrors, setValidationsErrors]: any = useState({});
+  // const [validationsGeneral, setValidationsGeneral]: any = useState({});
+  // function setValidationsErrorsHandle() {
+  //   setValidationsErrors({});
+  //   setValidationsGeneral({});
+  // }
   /* Generate username from email and random 4 numbers
    * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234
    * then the username= roqaia.alrfou31234
@@ -45,41 +46,32 @@ const Login = (): ReactElement => {
   const { getSectionLanguage } = useContext(LanguageContext);
   const getAll = getSectionLanguage();
   const onLoginSuccess = async (res) => {
-    setValidationsErrorsHandle();
+    // setValidationsErrorsHandle();
     //أرسل هذا الريسبونس الى الباكند
     try {
-      const response = await API.post("api/login/google", {
-        email: res.profileObj.email,
-        first_name: res.profileObj.givenName,
-        last_name: res.profileObj.familyName,
-        full_name: res.profileObj.name,
-        avatar: res.profileObj.imageUrl,
-        provider_id: res.profileObj.googleId,
-        username: generateUsername(res.profileObj.email),
-      });
+      await dispatch(
+        UserActions.loginGoogle({
+          email: res.profileObj.email,
+          first_name: res.profileObj.givenName,
+          last_name: res.profileObj.familyName,
+          full_name: res.profileObj.name,
+          avatar: res.profileObj.imageUrl,
+          provider_id: res.profileObj.googleId,
+          username: generateUsername(res.profileObj.email),
+        })
+      ).unwrap();
+
       // Authentication was successful.
-      if (response.status === 200) {
-        Cookies.set("token", response.data.data.token, { expires: 365 });
-        if (!Cookies.get("token") && typeof window !== "undefined") {
-          localStorage.setItem("token", response.data.data.token);
-        }
-        // Cookies.set('username', );
-        // Cookies.set('userID', )
-        message.success(getAll("Logged_in_successfully"));
-        switch (response.data.data.step) {
-          case 0:
-            router.push("/user/personalInformations");
-            break;
-          case 1:
-            router.push("/user/personalInformations");
-            break;
-          case 2:
-            router.push("/");
-            break;
-          default:
-            router.push("/");
-        }
-      }
+      // if (response.status === 200) {
+      //   Cookies.set("token", response.data.data.token, { expires: 365 });
+      //   if (!Cookies.get("token") && typeof window !== "undefined") {
+      //     localStorage.setItem("token", response.data.data.token);
+      //   }
+      //   // Cookies.set('username', );
+      //   // Cookies.set('userID', )
+      message.success(getAll("Logged_in_successfully"));
+
+      // }
     } catch (error: any) {
       message.error(getAll("An_unexpected_error_occurred"));
     }
@@ -94,12 +86,37 @@ const Login = (): ReactElement => {
   // if (!token && typeof window !== "undefined")
   //   token = localStorage.getItem("token");
   useEffect(() => {
-    if (user.isLogged) {
+    if (user.isLogged && user.step !== null) {
+      switch (user.step) {
+        case 0:
+          router.push("/user/personalInformations");
+          break;
+        case 1:
+          router.push("/user/personalInformations");
+          break;
+        case 2:
+          router.push("/");
+          break;
+        default:
+          router.push("/");
+      }
+      return;
+    }
+    if (user.isLogged && user.email_verified) {
       router.push("/");
       return;
     }
-  }, [user.isLogged]);
+    if (user.isLogged && !user.email_verified) {
+      router.push("/email/verification");
+      return;
+    }
+  }, [user]);
 
+  useEffect(() => {
+    if (user.errorMsg) {
+      message.error(user.errorMsg);
+    }
+  }, [user.errorMsg]);
   // Return statement.
   return (
     <>
@@ -114,31 +131,8 @@ const Login = (): ReactElement => {
           password: "",
         }}
         onSubmit={async (values) => {
-          setValidationsErrors({});
-          try {
-            const res = await API.post("api/login", values);
-            // Authentication was successful.
-            if (res.status === 200) {
-              Cookies.set("token", res.data.data.token, { expires: 365 });
-              Cookies.set("username", values.username);
-              if (res.data.data.is_verified) {
-                router.push("/");
-              } else {
-                router.push("/email/verification");
-              }
-            }
-          } catch (error: any) {
-            if (
-              error.response &&
-              error.response.data &&
-              error.response.data.errors
-            ) {
-              setValidationsErrors(error.response.data.errors);
-            }
-            if (error.response && error.response.data) {
-              setValidationsGeneral(error.response.data);
-            }
-          }
+          // setValidationsErrors({});
+          await dispatch(UserActions.login(values));
         }}
       >
         {({ isSubmitting }) => (
@@ -146,11 +140,11 @@ const Login = (): ReactElement => {
             <div className="row justify-content-md-center">
               <div className="col-lg-5 p-0" style={{ maxWidth: 900 }}>
                 <div className="login-panel">
-                  {(validationsGeneral.msg || validationsGeneral.message) && (
+                  {/* {(validationsGeneral.msg || validationsGeneral.message) && (
                     <Alert type="error">
                       {validationsGeneral.msg || validationsGeneral.message}
                     </Alert>
-                  )}
+                  )} */}
                   <div
                     className={
                       "panel-modal-body login-panel-body auto-height" +
@@ -187,16 +181,17 @@ const Login = (): ReactElement => {
                       <Field
                         id="email"
                         name="username"
-                        onKeyUp={setValidationsErrorsHandle}
+                        // onKeyUp={setValidationsErrorsHandle}
                         placeholder={getAll("E_mail")}
                         className={
-                          "timlands-inputs " +
-                          (validationsErrors &&
-                            validationsErrors.username &&
-                            " has-error")
+                          "timlands-inputs "
+                          //  +
+                          // (validationsErrors &&
+                          //   validationsErrors.username &&
+                          //   " has-error")
                         }
                       />
-                      {validationsErrors && validationsErrors.username && (
+                      {/* {validationsErrors && validationsErrors.username && (
                         <div style={{ overflow: "hidden" }}>
                           <motion.div
                             initial={{ y: -70, opacity: 0 }}
@@ -208,7 +203,7 @@ const Login = (): ReactElement => {
                             </p>
                           </motion.div>
                         </div>
-                      )}
+                      )} */}
                     </div>
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="password">
@@ -219,12 +214,13 @@ const Login = (): ReactElement => {
                         id="password"
                         name="password"
                         placeholder={getAll("Password")}
-                        onKeyUp={setValidationsErrorsHandle}
+                        // onKeyUp={setValidationsErrorsHandle}
                         className={
-                          "timlands-inputs " +
-                          (validationsErrors &&
-                            validationsErrors.password &&
-                            " has-error")
+                          "timlands-inputs "
+                          // +
+                          // (validationsErrors &&
+                          //   validationsErrors.password &&
+                          //   " has-error")
                         }
                         autoComplete="off"
                       />
@@ -245,7 +241,7 @@ const Login = (): ReactElement => {
                           </span>
                         )}
                       </button>
-                      {validationsErrors && validationsErrors.password && (
+                      {/* {validationsErrors && validationsErrors.password && (
                         <div style={{ overflow: "hidden" }}>
                           <motion.div
                             initial={{ y: -70, opacity: 0 }}
@@ -257,7 +253,7 @@ const Login = (): ReactElement => {
                             </p>
                           </motion.div>
                         </div>
-                      )}
+                      )} */}
                     </div>
                     <div className="timlands-form">
                       <div className="flex-center remember-text">
