@@ -8,35 +8,7 @@ import PropTypes from "prop-types";
 import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import UploadImageForm from "../UploadImageForm";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
-
-// function Thumb(props: any) {
-//     const [loading, setLoading] = useState(false)
-//     const [thumb, setThumb] = useState(undefined)
-//     useEffect(() => {
-//         if (!props.file) { return; }
-//         setLoading(true);
-//         const reader = new FileReader();
-//         reader.onloadend = () => {
-//             setThumb(reader.result);
-//             setLoading(false);
-//         };
-//         reader.readAsDataURL(props.file);
-
-//     }, [props.file])
-
-//     if (!props.file) { return null; }
-
-//     if (loading) { return <p>loading...</p>; }
-//     return (
-//         <img src={thumb}
-//             alt={props.file.name}
-//             className="img-thumbnail mt-2"
-//             height={200}
-//             width={200} />
-//     )
-// }
+import { useAppSelector } from "@/store/hooks";
 
 function BankAccount({ token, create, setIsShowBankTransfert }: any) {
   const { data: Countries }: any = useSWR("dashboard/countries");
@@ -137,8 +109,8 @@ function BankAccount({ token, create, setIsShowBankTransfert }: any) {
     setValidationsGeneral({});
     setValidationsErrors({});
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <form onSubmit={UpdateMoney}>
       <div className={"timlands-panel" + (isLoading ? " is-loader" : "")}>

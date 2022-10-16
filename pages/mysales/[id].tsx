@@ -13,13 +13,13 @@ import { Modal, Progress, Result, Spin, Timeline } from "antd";
 import useFileUpload from "react-use-file-upload";
 import { motion } from "framer-motion";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 //import { pusher } from "../../config/pusher";
 
 const User = ({ query }) => {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

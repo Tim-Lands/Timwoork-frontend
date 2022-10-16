@@ -1,6 +1,6 @@
 import { Space } from "antd";
-import React, { ReactElement, useContext } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
+import React, { ReactElement } from "react";
+import { useAppSelector } from "@/store/hooks";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import API from "../config";
@@ -10,8 +10,7 @@ import Cookies from "js-cookie";
 import { message } from "antd";
 
 function LogoutModal({ setIsLogoutModal }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const token = Cookies.get("token");
   const logout = async () => {
     try {

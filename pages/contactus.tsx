@@ -1,5 +1,6 @@
-import { ReactElement, useState, useContext } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { ReactElement, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
@@ -8,10 +9,9 @@ import API from "../config";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function Overview() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getLanguage = getSectionLanguage("contact_us");
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const formik = useFormik({
     initialValues: {
       subject: "",
@@ -61,18 +61,18 @@ function Overview() {
             >
               <div className="timlands-content-form">
                 <div className="page-header">
-                  <h2 className="title">{getLanguage("Contact_us")}</h2>
+                  <h2 className="title">{getAll("Contact_us")}</h2>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-subject">
-                        {getLanguage("Object")}
+                        {getAll("Object")}
                       </label>
                       <input
                         id="input-subject"
                         name="subject"
-                        placeholder={getLanguage("Object")}
+                        placeholder={getAll("Object")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -101,12 +101,12 @@ function Overview() {
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-email">
-                        {getLanguage("Email")}
+                        {getAll("Email")}
                       </label>
                       <input
                         id="input-email"
                         name="email"
-                        placeholder={getLanguage("Email")}
+                        placeholder={getAll("Email")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -147,12 +147,12 @@ function Overview() {
                   <div className="col-md-7">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-full_name">
-                        {getLanguage("Complete_name")}
+                        {getAll("Complete_name")}
                       </label>
                       <input
                         id="input-full_name"
                         name="full_name"
-                        placeholder={getLanguage("Complete_name")}
+                        placeholder={getAll("Complete_name")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -184,7 +184,7 @@ function Overview() {
                         className="label-block"
                         htmlFor="input-type_message"
                       >
-                        {getLanguage("Choose_the_message")}
+                        {getAll("Choose_the_message")}
                       </label>
                       <select
                         id="input-type_message"
@@ -201,10 +201,10 @@ function Overview() {
                       >
                         <option value="">
                           {" "}
-                          {getLanguage("Choose_the_message")}
+                          {getAll("Choose_the_message")}
                         </option>
-                        <option value="0">{getLanguage("Complaint")}</option>
-                        <option value="1">{getLanguage("Inquiry")}</option>
+                        <option value="0">{getAll("Complaint")}</option>
+                        <option value="1">{getAll("Inquiry")}</option>
                       </select>
                       {validationsErrors && validationsErrors.type_message && (
                         <div style={{ overflow: "hidden" }}>
@@ -224,14 +224,14 @@ function Overview() {
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-message">
-                        {getLanguage("Message")}
+                        {getAll("Message")}
                       </label>
                       <textarea
                         id="input-message"
                         name="message"
                         onChange={formik.handleChange}
                         value={formik.values.message}
-                        placeholder={getLanguage("Message")}
+                        placeholder={getAll("Message")}
                         className={
                           "timlands-inputs " +
                           (validationsErrors &&
@@ -259,7 +259,7 @@ function Overview() {
                   <div className="col-md-12">
                     <div className="timlands-form">
                       <label className="label-block" htmlFor="input-url">
-                        {getLanguage("File_link")}*
+                        {getAll("File_link")}*
                       </label>
                       <input
                         id="input-url"
@@ -297,7 +297,7 @@ function Overview() {
                         className="btn flex-center butt-green mr-auto butt-sm"
                       >
                         <span className="text">
-                          {getLanguage("Send_information")}
+                          {getAll("Send_information")}
                         </span>
                         <span className="material-icons-outlined">
                           chevron_left

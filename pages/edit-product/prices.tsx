@@ -1,6 +1,7 @@
-import { ReactElement, useEffect, useState, useRef, useContext } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { Field, FieldArray, Form, Formik } from "formik";
-import { LanguageContext } from "../../contexts/languageContext/context";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
@@ -14,8 +15,8 @@ import PropTypes from "prop-types";
 
 function Prices({ query }) {
   const stepsView = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

@@ -10,12 +10,11 @@ import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Loading from "@/components/Loading";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function ResetPassword({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

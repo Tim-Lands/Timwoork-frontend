@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 import { motion } from "framer-motion";
 import { Spin } from "antd";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 
 function SuspensionTimer({ setIsShowSuspensionTimer, id, onSuspend }: any) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

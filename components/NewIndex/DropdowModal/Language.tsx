@@ -2,12 +2,13 @@ import { Space } from "antd";
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { LanguagesActions } from "@/store/languages/languagesActions";
+
 function Language({ setIsConfirmText }): ReactElement {
-  const { language, getSectionLanguage, setLanguage } =
-    useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch();
+
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -25,7 +26,7 @@ function Language({ setIsConfirmText }): ReactElement {
                 className={`checked-item-button ${
                   language === "ar" ? " checked" : ""
                 }`}
-                onClick={() => setLanguage("ar")}
+                onClick={() => dispatch(LanguagesActions.setLanguage("ar"))}
               >
                 العربية
               </button>
@@ -35,7 +36,7 @@ function Language({ setIsConfirmText }): ReactElement {
                 className={`checked-item-button ${
                   language === "en" ? " checked" : ""
                 }`}
-                onClick={() => setLanguage("en")}
+                onClick={() => dispatch(LanguagesActions.setLanguage("en"))}
               >
                 English
               </button>
@@ -45,7 +46,7 @@ function Language({ setIsConfirmText }): ReactElement {
                 className={`checked-item-button ${
                   language === "fr" ? " checked" : ""
                 }`}
-                onClick={() => setLanguage("fr")}
+                onClick={() => dispatch(LanguagesActions.setLanguage("fr"))}
               >
                 French
               </button>

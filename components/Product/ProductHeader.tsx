@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 export default function ProductHeader({
   title,
@@ -94,8 +93,8 @@ export default function ProductHeader({
       return yut.concat(yut2);
     }
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="timwoork-single-header">
       <h1 className="title">{title}</h1>

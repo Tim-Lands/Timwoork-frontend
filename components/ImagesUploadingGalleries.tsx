@@ -1,5 +1,5 @@
-import { ReactElement, useState, useEffect, useContext } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { ReactElement, useState, useEffect } from "react";
+import { useAppSelector } from "@/store/hooks";
 import { Spin } from "antd";
 import PropTypes from "prop-types";
 import ImageUploading from "react-images-uploading";
@@ -12,8 +12,7 @@ function ImagesUploadingGalleries({
 }): ReactElement {
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   useEffect(() => {
     setImages(galaries);
   }, [galaries]);

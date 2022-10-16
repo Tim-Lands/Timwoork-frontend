@@ -16,8 +16,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const CheckoutForm = (getAll: any) => {
   const stripe = useStripe();
@@ -91,8 +90,8 @@ const stripePromise = loadStripe(
 );
 
 function Bill() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

@@ -7,12 +7,11 @@ import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { message } from "antd";
 import router from "next/router";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Countries(): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const token = Cookies.get("token_dash");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {

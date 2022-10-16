@@ -17,15 +17,15 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 const stripePromise = loadStripe(
   "pk_live_51KVxMmKZiLP53MTnv5FYIaUkHebKN8foIJRwcHoOwfsMJq8wgNFZZcqx7UIXfpfsgS25WpCSO4orGz5m0TFLa0pC00CrKR1Vp8"
 );
 
 function Bill() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();

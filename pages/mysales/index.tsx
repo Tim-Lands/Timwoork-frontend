@@ -7,12 +7,11 @@ import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
 import Cookies from "js-cookie";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function index() {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

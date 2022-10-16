@@ -9364,3 +9364,11 @@ $activeShadow: 0 0 10px rgba($teal1, 0.5);
     max-width: 960px;
   }
 }
+.rotate_load {
+  animation: loading_rotate 1.3s linear infinite;
+}
+@keyframes loading_rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

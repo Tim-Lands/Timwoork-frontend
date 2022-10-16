@@ -3,8 +3,9 @@ import { PRIMARY } from "../styles/variables";
 import Hero from "@/components/NewIndex/Header/Hero";
 import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
 import Head from "next/head";
-import React, { ReactElement, useContext } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
+import React, { ReactElement } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import Link from "next/link";
 import router from "next/router";
 import Categories from "@/components/Categories";
@@ -21,8 +22,8 @@ import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import PostInner from "@/components/Post/PostInner";
 function index({ products, latestProducts, categories, popularProducts }) {
-  const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const menu = (
     <Menu>
       <Menu.Item>

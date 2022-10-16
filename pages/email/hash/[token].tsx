@@ -7,12 +7,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Field, Form, Formik } from "formik";
 import Loading from "@/components/Loading";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Token({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

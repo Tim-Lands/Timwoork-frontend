@@ -7,12 +7,11 @@ import Pagination from "react-js-pagination";
 import API from "../../../config";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [messages, setMessages] = useState({
     last_page: 1,
     per_page: 12,

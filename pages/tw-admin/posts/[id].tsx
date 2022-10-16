@@ -13,8 +13,7 @@ import router from "next/router";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import cookies from "next-cookies";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const properties = {
   duration: 5000,
@@ -125,8 +124,8 @@ function Id({ ProductData, errorFetch }: any) {
       return yut.concat(yut2);
     }
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const menu = (
     <Menu>
       {ProductData && (

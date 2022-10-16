@@ -1,12 +1,11 @@
 import Link from "next/link";
 import React from "react";
 import { FaAngleDown, FaHeart } from "react-icons/fa";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function PortfolioNav() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <nav className="portfolios-nav d-flex">
       <ul className="portfolios-nav-list me-auto">

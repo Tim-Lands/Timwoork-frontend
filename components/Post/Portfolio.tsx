@@ -4,8 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
 import { FaEye, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Portfolio({
   title,
@@ -19,8 +18,7 @@ function Portfolio({
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   const [isFavorated, setIsFavorated] = useState(false);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <Badge.Ribbon

@@ -12,58 +12,32 @@ import {
 } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import PropTypes from "prop-types";
-import API from "../../../config";
-import Cookies from "js-cookie";
-import router from "next/router";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
-import { message, notification } from "antd";
 
-function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
-  let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+import { UserActions } from "../../../store/user/UserActions";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+
+import { message, notification } from "antd";
+function ProfileMenu({ refs, setIsShowProfileMenu }) {
+  // let token = Cookies.get("token");
+  const profile = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
+  const { getAll } = useAppSelector((state) => state.languages);
+
+  // if (!token && typeof window !== "undefined")
+  //   token = localStorage.getItem("token");
 
   const logout_all = async () => {
     try {
-      const res = await API.post(
-        "api/logout_all",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status == 200) {
-        message.success(getAll("Successfully_signed_out"));
-      }
-    } catch (error) {
+      await dispatch(UserActions.logoutAll()).unwrap();
+      message.success(getAll("Successfully_signed_out"));
+    } catch {
       notification.open({
         message: getAll("An_error_occurred"),
       });
     }
   };
   const logout = async () => {
-    try {
-      const res = await API.post(
-        "api/logout_user",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        Cookies.remove("token");
-        router.reload();
-      }
-    } catch (error) {
-      () => {};
-    }
+    dispatch(UserActions.logoutUser());
   };
   return (
     <motion.div
@@ -78,20 +52,16 @@ function ProfileMenu({ user_details, refs, setIsShowProfileMenu }) {
           onClick={() => setIsShowProfileMenu(false)}
         >
           <div className="nav-profile-list-header-img">
-            <Image
-              src={user_details?.profile?.avatar_path}
-              width={25}
-              height={25}
-            />
+            <Image src={profile?.avatar_path} width={25} height={25} />
           </div>
           <div className="nav-profile-list-header-content">
-            <h4 className="title">{user_details?.profile?.full_name}</h4>
+            <h4 className="title">{profile?.full_name}</h4>
           </div>
         </a>
       </Link>
       <div className="nav-profile-list-content">
         <ul className="list-profile-withicons">
-          {user_details.profile.is_completed == 1 && (
+          {profile.is_completed == 1 && (
             <>
               <li onClick={() => setIsShowProfileMenu(false)}>
                 <Link href={"/add-new"}>

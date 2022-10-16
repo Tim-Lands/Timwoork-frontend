@@ -2,12 +2,10 @@ import React from "react";
 import Select from "react-select";
 import Loading from "./Loading";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 const Tags = ({ placeholder, values, labels, selected }) => {
   let checked = [""];
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   if (!values) return <Loading />;
 
   let newArrayofObjects = [];

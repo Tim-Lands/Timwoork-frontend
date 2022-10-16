@@ -3,30 +3,26 @@ import { Result, message, Card, Spin } from "antd";
 import React, { createRef, ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Loading from "@/components/Loading";
 import router from "next/router";
 import API from "../../config";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import Loading from "@/components/Loading";
 import Sidebar from "@/components/Profile/Sidebar";
 import MyProducts from "@/components/Profile/MyProducts";
-import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "../../store/hooks";
 
 function Profile() {
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  const profile = useAppSelector((state) => state.profile);
+
+  const user = useAppSelector((state) => state.user);
   const [isTranslate, setIsTranslate] = useState(false);
   const { data: userInfo }: any = useSWR("api/me");
-  const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
 
   const myLoader = () => {
-    return `${userInfo.user_details.profile.avatar_path}`;
+    return `${profile.avatar_path}`;
   };
   const [statusType, setStatusType] = useState("");
   const {
@@ -41,7 +37,7 @@ function Profile() {
     try {
       const res = await API.post("api/sellers/store", null, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       });
       // Authentication was successful.
@@ -66,11 +62,11 @@ function Profile() {
       [detectHeight, detectHeight.current];
   }, [detectHeight]);
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
-  }, []);
-  if (userInfo && !userInfo.user_details.email_verified_at) {
+  }, [user.isLogged]);
+  if (!user.email_verified && !user.loading) {
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
@@ -89,9 +85,7 @@ function Profile() {
         </div>
       </div>
     );
-  }
-
-  if (userInfo && userInfo.user_details.profile.steps < 1) {
+  } else if (profile.steps < 1 && profile.steps !== null && !user.loading) {
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
@@ -110,31 +104,30 @@ function Profile() {
         </div>
       </div>
     );
-  } else
+  } else if (!user.loading)
     return (
       <div className="py-3">
-        {!userInfo && <Loading />}
-        {!token && <Unauthorized />}
-        {userInfo && userInfo.user_details.profile && (
+        {!user.isLogged && <Unauthorized />}
+        {profile && userInfo && (
           <>
             <MetaTags
               title={
                 getAll("X’s_profile") +
-                userInfo.user_details.profile.first_name +
+                profile.first_name +
                 " " +
-                userInfo.user_details.profile.last_name
+                profile.last_name
               }
               metaDescription={
                 getAll("X’s_profile") +
-                userInfo.user_details.profile.first_name +
+                profile.first_name +
                 " " +
-                userInfo.user_details.profile.last_name
+                profile.last_name
               }
               ogDescription={
                 getAll("X’s_profile") +
-                userInfo.user_details.profile.first_name +
+                profile.first_name +
                 " " +
-                userInfo.user_details.profile.last_name
+                profile.last_name
               }
             />
             <div className="userProfileCont">
@@ -143,9 +136,7 @@ function Profile() {
                   <div className="profile-content-avatar">
                     <Image
                       loader={myLoader}
-                      src={
-                        userInfo && userInfo.user_details.profile.avatar_path
-                      }
+                      src={profile.avatar_path}
                       quality={1}
                       width={120}
                       height={120}
@@ -154,17 +145,10 @@ function Profile() {
                     />
                   </div>
                   <div className="profile-content-head">
-                    <h4 className="title">
-                      {userInfo.user_details.profile.full_name}
-                    </h4>
+                    <h4 className="title">{profile.full_name}</h4>
                     <p className="text">
-                      @{userInfo.user_details.username} |
-                      <span className="app-label">
-                        {" "}
-                        {
-                          userInfo.user_details.profile.level[which(language)]
-                        }{" "}
-                      </span>
+                      @{user.username} |
+                      <span className="app-label"> {profile.level.name} </span>
                     </p>
                     <div className="button-edit">
                       <Link href="/user/personalInformations">
@@ -182,7 +166,7 @@ function Profile() {
                       className="btn butt-primary2 flex-center butt-sm"
                       onClick={() =>
                         navigator.clipboard.writeText(
-                          `https://timwoork.com/u/${userInfo.user_details.username}`
+                          `https://timwoork.com/u/${user.username}`
                         )
                       }
                     >
@@ -193,55 +177,12 @@ function Profile() {
                     </button>
                   </p>
                 </div>
-                {/* <div className="portfolios-container">
-                  <nav className="portfolios-nav d-flex">
-                    <ul className="portfolios-nav-list me-auto">
-                      <li className="active">
-                        <Link href={`/user/profile`}>
-                          <a className="portfolio-item">
-                            <FaUserCircle /> الملف الشخصي
-                          </a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href={`/portfolios/user/${
-                            userInfo && userInfo.user_details.username
-                          }`}
-                        >
-                          <a className="portfolio-item">
-                            <FaImages /> معرض الأعمال
-                          </a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/user/myfollowers`}>
-                          <a className="portfolio-item">
-                            <FaRss /> الأشخاص الذين أتابعهم
-                          </a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/user/myfavorites`}>
-                          <a className="portfolio-item">
-                            <FaHeart /> مفضلاتي
-                          </a>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                </div> */}
               </div>
               <div className="row">
                 <Sidebar
-                  withdrawable_amount={
-                    userInfo &&
-                    userInfo.user_details.profile.withdrawable_amount
-                  }
-                  pending_amount={
-                    userInfo && userInfo.user_details.profile.pending_amount
-                  }
-                  darkMode={darkMode}
+                  withdrawable_amount={profile.withdrawable_amount}
+                  pending_amount={profile.pending_amount}
+                  // darkMode={darkMode}
                 />
                 <div className="col-lg-8">
                   <div className="timlands-profile-content">
@@ -343,9 +284,7 @@ function Profile() {
                             <h3 className="text-label">
                               {getAll("First_name")}
                             </h3>
-                            <p className="text-value">
-                              {userInfo.user_details.profile.first_name}
-                            </p>
+                            <p className="text-value">{profile.first_name}</p>
                           </div>
                         </div>
                         <div className="col-sm-4">
@@ -353,9 +292,7 @@ function Profile() {
                             <h3 className="text-label">
                               {getAll("Last_name")}
                             </h3>
-                            <p className="text-value">
-                              {userInfo.user_details.profile.last_name}
-                            </p>
+                            <p className="text-value">{profile.last_name}</p>
                           </div>
                         </div>
                         <div className="col-sm-4">
@@ -364,12 +301,10 @@ function Profile() {
                               {getAll("Phone_number")}
                             </h3>
                             <p className="text-value">
-                              {userInfo.user_details.phone
-                                ? userInfo.user_details.code_phone?.split(
-                                    "+"
-                                  )[1] + userInfo.user_details.phone
+                              {user.phone
+                                ? user.code_phone?.split("+")[1] + user.phone
                                 : "غير مكتمل"}
-                              {userInfo.user_details.phone && "+"}
+                              {user.phone && "+"}
                             </p>
                           </div>
                         </div>
@@ -404,13 +339,11 @@ function Profile() {
                           <div className="content-text-item">
                             <h3 className="text-label">{getAll("Gender")}</h3>
                             <p className="text-value">
-                              {userInfo.user_details.profile &&
-                              userInfo.user_details.profile.gender == null
+                              {profile.gender == null
                                 ? ""
-                                : userInfo.user_details.profile &&
-                                  (userInfo.user_details.profile.gender == 0
-                                    ? getAll("woman")
-                                    : getAll("Man"))}
+                                : profile.gender == 0
+                                ? getAll("woman")
+                                : getAll("Man")}
                             </p>
                           </div>
                         </div>
@@ -418,10 +351,9 @@ function Profile() {
                           <div className="content-text-item">
                             <h3 className="text-label">{getAll("Birthday")}</h3>
                             <p className="text-value">
-                              {userInfo.user_details.profile.date_of_birth ==
-                              null
+                              {profile.date_of_birth == null
                                 ? ""
-                                : userInfo.user_details.profile.date_of_birth}
+                                : profile.date_of_birth}
                             </p>
                           </div>
                         </div>
@@ -444,6 +376,9 @@ function Profile() {
         )}
       </div>
     );
+  else {
+    return <Loading />;
+  }
 }
 const which = (language) => {
   switch (language) {

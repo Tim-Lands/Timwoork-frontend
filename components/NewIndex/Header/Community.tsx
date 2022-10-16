@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import React, { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 
 const Community = ({ refs }) => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <motion.div
       ref={refs}

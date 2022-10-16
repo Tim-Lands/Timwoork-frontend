@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useAppSelector } from "@/store/hooks";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import { LanguageContext } from "../contexts/languageContext/context";
 const placeholders = [
   {
     id: 1,
@@ -53,8 +53,8 @@ const placeholders = [
   },
 ];
 function Categories({ categories, onClickCategory, href }) {
-  //const { data: categories }: any = useSWR(`api/get_categories`)
-  const { language } = useContext(LanguageContext);
+  const language = useAppSelector((state) => state.languages.language);
+
   return (
     <div className="container">
       <div className="app-bill bg-transparent my-5" style={{ borderRadius: 7 }}>

@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import API from "../../../config";
 import HeroSearchContent from "./HeroSearchContent";
 
 function HeroContainer() {
-  const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const [topCategories, setTopCaegories] = useState([]);
   useEffect(() => {
     fetchData();

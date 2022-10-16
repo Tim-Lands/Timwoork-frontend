@@ -4,14 +4,12 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import useSWR from "swr";
 import { message } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function index(): ReactElement {
   const { data: postsList, categoriesError }: any = useSWR("dashboard");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  // Return statement.
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <>
       <MetaTags

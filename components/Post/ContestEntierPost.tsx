@@ -4,8 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
 import { AiOutlineLike } from "react-icons/ai";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function ContestEntierPost({
   thumbnail,
@@ -20,8 +19,7 @@ function ContestEntierPost({
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   // const [isFavorated, setIsFavorated] = useState(false);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <Badge.Ribbon

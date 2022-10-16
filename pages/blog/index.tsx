@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import Navbar from "@/components/NewIndex/Header/Navbar";
 import Footer from "@/components/NewIndex/Footer/Footer";
-import { LanguageContext } from "../../contexts/languageContext/context";
 import Loading from "@/components/Loading";
 import { Menu, Result } from "antd";
 import Post from "@/components/Post/blogPost";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { BlogActions } from "../../store/blog/blogActions";
+
 function Category(): JSX.Element {
   const dispatch = useAppDispatch();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const category = useAppSelector((state) => state.blog.categories);
   useEffect(() => {
     if (!category.loaded) dispatch(BlogActions.getCategories());
   }, [category.loaded]);
   const blogs = useAppSelector((state) => state.blog.blogs);
   const [categories, setCategories] = useState();
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
     if (blogs.loaded && pageNumber === 1 && categories === undefined) return;

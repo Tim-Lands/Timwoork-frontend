@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
-import { LanguageContext } from "../../contexts/languageContext/context";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { ReactElement, useEffect, useState, useRef, useContext } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import useSWR from "swr";
+import { useAppSelector } from "@/store/hooks";
+
 // import { useEditor, EditorContent } from "@tiptap/react";
 // import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
@@ -160,8 +161,8 @@ function Description({ query }) {
   const [isShownInstrucModal, setIsShownInstrucModal] = useState(false);
   const [userLang, setUserLang] = useState();
 
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );

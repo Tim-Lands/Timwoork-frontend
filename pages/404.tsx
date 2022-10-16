@@ -1,20 +1,6 @@
-/*
-|--------------------------------------------------------------------------
-| 404 Page.
-|--------------------------------------------------------------------------
-|
-| The view that gets rendered when a user tries to visit a route that has
-| no matching file in your /pages directory.
-| If the user is authenticated, a link to the user home route (defined in your
-| .env.local) will be displayed. Otherwise, a link to the homepage will be
-| displayed.
-|
-*/
 import Link from "next/link";
 import Head from "next/head";
-// import { connect } from "react-redux";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function FourOFour(props: any) {
   /**
@@ -26,8 +12,8 @@ function FourOFour(props: any) {
   const linkLocation = props.isAuthenticated
     ? process.env.NEXT_PUBLIC_USER_HOME_ROUTE
     : "/";
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="timwoork-404-page">
       <Head>

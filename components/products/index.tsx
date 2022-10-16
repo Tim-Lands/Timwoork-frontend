@@ -2,12 +2,11 @@ import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { message, Result } from "antd";
 import Post from "../Post/Post";
-import { useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function index({ products, isError, isLoading, size }): ReactElement {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   if (isError) message.error(getAll("An_error_occurred_while"));
   if (isLoading)
     return (

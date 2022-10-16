@@ -10,15 +10,13 @@ import ReplyContactModal from "@/components/ReplyContactModal";
 import EmailModalCause from "@/components/EmailModalCause";
 import DisactiveProductCause from "@/components/DisactiveProductCause";
 import { generatecolumns } from "./PostsService";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function index({
   postsList = { last_page: 1, per_page: 10, data: [] },
   status,
 }: any): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const router = useRouter();
   const [pageNumber, setPageNumber] = useState(router?.query?.pageNumber);
   const [cause, setCause] = useState("");
@@ -31,15 +29,18 @@ function index({
   const [selectedUser, setSelectedUser] = useState("");
   const token = Cookies.get("token_dash");
 
-  const columns: any = generatecolumns({
-    status,
-    callbacks: {
-      activateProduct,
-      onRejectClick,
-      onDisactiveClick,
-      onSendEmailClick,
+  const columns: any = generatecolumns(
+    {
+      status,
+      callbacks: {
+        activateProduct,
+        onRejectClick,
+        onDisactiveClick,
+        onSendEmailClick,
+      },
     },
-  },getAll);
+    getAll
+  );
 
   useEffect(() => {
     setIsLoading(false);

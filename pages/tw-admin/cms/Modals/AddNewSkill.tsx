@@ -4,14 +4,13 @@ import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { LanguageContext } from "../../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export default function AddNewSkill({
   setIsModalHiddenHandle,
 }: any): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <>
       <div className="panel-modal-overlay"></div>

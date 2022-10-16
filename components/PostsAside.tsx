@@ -1,11 +1,11 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Alert } from "./Alert/Alert";
 import Link from "next/link";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -20,8 +20,7 @@ function PostsAside({
   linkURL,
   more,
 }): ReactElement {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
   if (isError)
     return (
       <div className="posts-aside error">

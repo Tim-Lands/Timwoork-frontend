@@ -5,12 +5,12 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Card } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import useSWR from "swr";
+import { useAppSelector } from "@/store/hooks";
+
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import API from "../../config";
 import PostInner from "@/components/Post/PostInner";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
 
 const User = ({ query, stars }) => {
   // Return statement.
@@ -28,8 +28,7 @@ const User = ({ query, stars }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     setIsOverflow(

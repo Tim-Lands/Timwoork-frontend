@@ -6,8 +6,7 @@ import { useState } from "react";
 import router from "next/router";
 import { mutate } from "swr";
 import API from "../../config";
-import { useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 export default function AsideBox({
   title,
@@ -17,8 +16,8 @@ export default function AsideBox({
   duration,
   developments,
 }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

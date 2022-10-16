@@ -1,11 +1,12 @@
-import { ReactElement, useEffect, useState, useRef, useContext } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
+import { useAppSelector } from "@/store/hooks";
+
 import { message } from "antd";
-import { LanguageContext } from "../../contexts/languageContext/context";
 import Cookies from "js-cookie";
 import API from "../../config";
 import useSWR from "swr";
@@ -14,8 +15,6 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import FormLangs from "@/components/NewIndex/Forms/FormLangs";
 import FormModal from "@/components/NewIndex/Forms/FormModal";
-// import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-// import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 let testTime;
 function Prices({ query }) {
   const { data: userInfo }: any = useSWR("api/me");
@@ -32,11 +31,11 @@ function Prices({ query }) {
   const [isSubtitle, setIsSubtitle] = useState([
     { ar: false, fr: false, en: false },
   ]);
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -156,10 +155,10 @@ function Prices({ query }) {
                 }}
                 enableReinitialize={true}
                 onSubmit={async (values) => {
-                  console.log('submiting')
+                  console.log("submiting");
                   setValidationsErrors({});
                   try {
-                    console.log(values)
+                    console.log(values);
                     values.developments.forEach((val, indx) => {
                       if (!isSubtitle[indx]["ar"] && subtitles[indx]["ar"])
                         val.title_ar = subtitles["ar"];
@@ -189,7 +188,7 @@ function Prices({ query }) {
                       });
                     }
                   } catch (error: any) {
-                    console.log(error)
+                    console.log(error);
                     if (
                       error.response &&
                       error.response.data &&

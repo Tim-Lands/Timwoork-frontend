@@ -1,14 +1,15 @@
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { ReactElement, useEffect, useState, useRef, useContext } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import useSWR from "swr";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -118,8 +119,7 @@ const Tiptap = (props: any) => {
 };
 function Description({ query, stars }) {
   const stepsView = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`

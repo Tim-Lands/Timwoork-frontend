@@ -4,8 +4,7 @@ import React, { ReactElement } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { BsCheck2All, BsClock, BsPersonBadge } from "react-icons/bs";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function ContestComment({
   text,
@@ -15,8 +14,7 @@ function ContestComment({
   username,
   avatar,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <div className="contest-comment-item">
       <div className="contest-comment-item-head flex-center">

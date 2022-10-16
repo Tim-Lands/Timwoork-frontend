@@ -1,10 +1,11 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useContext } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
@@ -19,8 +20,8 @@ import RemoveImageModal from "@/components/removeImageModal";
 
 function Medias({ query, stars }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail
   );

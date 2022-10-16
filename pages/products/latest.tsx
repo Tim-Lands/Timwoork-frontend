@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect, useState, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement, useEffect, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
@@ -13,8 +13,8 @@ import API from "../../config";
 function Latest() {
   /**----------------------------------------------------------**/
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const [size, setSize] = useState(3);

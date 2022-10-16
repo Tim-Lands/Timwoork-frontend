@@ -1,11 +1,9 @@
-import {
-  createSlice,
-  isPending,
-  isAnyOf,
-  isFulfilled,
-  isRejected,
-} from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { CartThunkFunctions } from "./thunkFunctions";
+import { CustomMatchers } from "./matchers";
+const { getCartData } = CartThunkFunctions;
+const { isCartActionFulfilled, isCartActionPending, isCartActionRejected } =
+  CustomMatchers;
 export interface cartState {
   id: number;
   itemsLength: number;
@@ -44,7 +42,7 @@ export const cartSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(
-      CartThunkFunctions.getCartData.fulfilled,
+      getCartData.fulfilled,
       (
         state: cartState,
         action: {
@@ -87,10 +85,13 @@ export const cartSlice = createSlice({
         state.loaded = true;
       }
     );
-    builder.addMatcher(isAnyOf(isFulfilled, isRejected), (state: cartState) => {
-      state.isLoading = false;
-    });
-    builder.addMatcher(isPending, (state: cartState) => {
+    builder.addMatcher(
+      isAnyOf(isCartActionFulfilled, isCartActionRejected),
+      (state: cartState) => {
+        state.isLoading = false;
+      }
+    );
+    builder.addMatcher(isCartActionPending, (state: cartState) => {
       state.isLoading = true;
     });
   },

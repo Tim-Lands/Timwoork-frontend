@@ -3,12 +3,11 @@ import { ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
-import { LanguageContext } from "../../../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export default function Id(): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const router = useRouter();
   const id = router.query.id;
 

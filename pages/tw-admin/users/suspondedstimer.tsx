@@ -10,8 +10,7 @@ import Image from "next/image";
 import { notification, Space, Table } from "antd";
 import SuspensionInfo from "@/components/SuspensionInfo";
 import Pagination from "react-js-pagination";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function suspondedstimer() {
   const [postsList, setPostsList] = useState({
@@ -59,8 +58,8 @@ function suspondedstimer() {
       });
     };
   }, []);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const columns: any = [
     {
       title: getAll("Full_name"),

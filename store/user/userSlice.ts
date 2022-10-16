@@ -1,13 +1,13 @@
-import {
-  createSlice,
-  isAnyOf,
-  isPending,
-  isRejected,
-  isFulfilled,
-} from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { UserThunkFunctions } from "./thunkFunctions";
+import { CustomMatchers } from "./matchers";
 import Cookies from "js-cookie";
 import API from "../../config";
+
+const { getData, login, loginGoogle, logoutAll, logoutUser, register } =
+  UserThunkFunctions;
+const { isUserActionFulfilled, isUserActionPending, isUserActionRejected } =
+  CustomMatchers;
 export interface UserState {
   token?: string;
   id: number;
@@ -20,15 +20,8 @@ export interface UserState {
   loading: boolean;
   isLogged: boolean;
   errorMsg: string;
-  logInError: { username: string; password: string };
-  signInError: {
-    email: string;
-    password: string;
-    password_confirmation: string;
-    username: string;
-    phone: string;
-    code_phone: string;
-  };
+  logInError: any;
+  signInError: any;
 }
 const initialState: UserState = {
   token:
@@ -42,7 +35,7 @@ const initialState: UserState = {
   email_verified: "",
   code_phone: "",
   step: null,
-  loading: false,
+  loading: true,
   isLogged: false,
   errorMsg: "",
   logInError: { username: "", password: "" },
@@ -64,13 +57,22 @@ export const userSlice = createSlice({
       const token = action.payload;
       if (token) {
         API.defaults.headers.Authorization = `Bearer ${token}`;
-        Cookies.set("token", token);
-        localStorage.setItem("token", token);
+        typeof window !== "undefined"
+          ? localStorage.setItem("token", token)
+          : Cookies.set("token", token);
       }
+    },
+    clearErrors: (state: UserState) => {
+      state.signInError = {};
+      state.logInError = {};
+      state.errorMsg = "";
+    },
+    loaded: (state: UserState) => {
+      state.loading = false;
     },
   },
   extraReducers(builder) {
-    builder.addCase(UserThunkFunctions.getData.fulfilled, (state, action) => {
+    builder.addCase(getData.fulfilled, (state, action) => {
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.id = action.payload.id;
@@ -79,40 +81,62 @@ export const userSlice = createSlice({
       state.email_verified = action.payload.email_verified;
       state.isLogged = true;
     });
-    builder.addCase(UserThunkFunctions.login.fulfilled, (state, action) => {
+    builder.addCase(login.fulfilled, (state, action) => {
       state.token = action.payload;
     });
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.token = action.payload;
+    });
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      API.defaults.headers.Authorization = ``;
+      typeof window !== "undefined"
+        ? localStorage.setItem("token", "")
+        : Cookies.remove("token");
+      state.token = "";
+      state.isLogged = false;
+    });
+    builder.addCase(logoutAll.fulfilled, (state) => {
+      API.defaults.headers.Authorization = ``;
+      typeof window !== "undefined"
+        ? localStorage.setItem("token", "")
+        : Cookies.remove("token");
+      state.token = "";
+      state.isLogged = false;
+    });
     builder.addCase(
-      UserThunkFunctions.loginGoogle.fulfilled,
+      loginGoogle.fulfilled,
       (state, action: { payload: { token: string; step: number } }) => {
-        console.log(action.payload);
-
         const { token, step } = action.payload;
         state.token = token;
         state.step = step;
       }
     );
-    builder.addCase(
-      UserThunkFunctions.getData.rejected,
-      (state, action: { payload: any }) => {
-        const { msg, message } = action.payload;
-        state.errorMsg = message || msg;
-      }
-    );
-    builder.addCase(
-      UserThunkFunctions.login.rejected,
-      (state, action: { payload: any }) => {
-        const { msg, message } = action.payload;
-        state.errorMsg = message || msg;
-      }
-    );
-    builder.addMatcher(isPending, (state) => {
+    builder.addCase(getData.rejected, (state, action: { payload: any }) => {
+      const { msg, message } = action.payload;
+      state.errorMsg = message || msg;
+    });
+    builder.addCase(login.rejected, (state, action: { payload: any }) => {
+      const { msg, message } = action.payload;
+      state.errorMsg = message || msg;
+    });
+    builder.addCase(register.rejected, (state, action: { payload: any }) => {
+      const error = action?.payload;
+      const errors = {};
+      Object.keys(error?.errors || {}).forEach((key) => {
+        errors[key] = error.errors[key][0];
+      });
+      state.signInError = errors;
+    });
+    builder.addMatcher(isUserActionPending, (state) => {
       state.errorMsg = "";
       state.loading = true;
     });
-    builder.addMatcher(isAnyOf(isFulfilled, isRejected), (state) => {
-      state.loading = false;
-    });
+    builder.addMatcher(
+      isAnyOf(isUserActionFulfilled, isUserActionRejected),
+      (state) => {
+        state.loading = false;
+      }
+    );
   },
 });
 export default userSlice.reducer;

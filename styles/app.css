@@ -10323,4 +10323,21 @@ h3 {
   .blog_navbar {
     max-width: 960px;
   }
+}
+
+.rotate_load {
+  -webkit-animation: loading_rotate 1.3s linear infinite;
+          animation: loading_rotate 1.3s linear infinite;
+}
+
+@-webkit-keyframes loading_rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading_rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }/*# sourceMappingURL=app.css.map */

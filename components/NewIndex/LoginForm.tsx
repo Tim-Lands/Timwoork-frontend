@@ -8,15 +8,13 @@ import Cookies from "js-cookie";
 import API from "../../config";
 import { GoogleLogin } from "react-google-login";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 
 function LoginForm({ setIsConfirmText }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [isShowenPass, setIsShowenPass] = useState(false);

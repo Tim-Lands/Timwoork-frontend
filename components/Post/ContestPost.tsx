@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaTag } from "react-icons/fa";
 import { GiTrophyCup } from "react-icons/gi";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import {
   AiFillHeart,
   AiFillLike,
@@ -52,8 +52,8 @@ function ContestPost({
         return "";
     }
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className={"contest-post-item" + sizeClass()}>
       <div className="contest-post-item-content">

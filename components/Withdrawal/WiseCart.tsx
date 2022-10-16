@@ -1,12 +1,11 @@
 import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function WiseCart({ setIsShowBankTransfert, userInfo = {} }: any) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className={"timlands-panel-cart"}>
       <div className="py-4">

@@ -10,8 +10,7 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import Link from "next/link";
-import { LanguageContext } from "../../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -59,8 +58,8 @@ const MySelect = (props: any) => {
   );
 };
 function Overview({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [product, setProduct]: any = useState({});
   const [categories, setCategories] = useState({});
   const [subCategories, setSubCategories]: any = useState({});

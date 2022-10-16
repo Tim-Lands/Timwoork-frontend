@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Link from "next/link";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 import { Badge, Skeleton } from "antd";
 import useSWR, { useSWRConfig } from "swr";
 import PropTypes from "prop-types";
@@ -10,8 +10,7 @@ import { PusherContext } from "../../contexts/pusherContext";
 function Sidebar({ RouterId }) {
   const [chatPusher] = useContext(PusherContext);
   const { mutate } = useSWRConfig();
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [pageNumber, setPageNumber]: any = useState(1);
   const { data: conversationsList }: any = useSWR(
     `api/conversations?paginate=6&page=${pageNumber}`

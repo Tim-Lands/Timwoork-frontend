@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { ConfigProvider } from "antd";
 import { SWRConfig } from "swr";
 import router from "next/router";
@@ -6,15 +6,14 @@ import Cookies from "js-cookie";
 import API from "../config";
 import PropTypes from "prop-types";
 import { UserActions } from "../store/user/UserActions";
-// import { ProfileActions } from "../store/profile/profileActions";
+import { ProfileActions } from "../store/profile/profileActions";
+import { CartActions } from "../store/cart/cartActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-import { LanguageContext } from "../contexts/languageContext/context";
-// var used = "stop build";
-
 const App = ({ innerApp }) => {
-  const { language } = useContext(LanguageContext);
   const user = useAppSelector((state) => state.user);
+  const language = useAppSelector((state) => state.languages.language);
+
   const unUsed = "";
   const dispatch = useAppDispatch();
   let token = Cookies.get("token");
@@ -22,10 +21,15 @@ const App = ({ innerApp }) => {
     token = localStorage.getItem("token");
   useEffect(() => {
     if (user.token) initialize();
+    else {
+      dispatch(UserActions.loaded());
+    }
   }, [user.token]);
   async function initialize() {
     await dispatch(UserActions.setToken(user.token));
     dispatch(UserActions.getData({}));
+    dispatch(ProfileActions.getProfileData());
+    dispatch(CartActions.getCartData());
   }
   return (
     <SWRConfig

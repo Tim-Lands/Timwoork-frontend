@@ -1,8 +1,8 @@
 import { Space } from "antd";
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function RemoveImageModal({
   setIsRemoveModal,
@@ -10,8 +10,7 @@ function RemoveImageModal({
   image_id,
   index,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}

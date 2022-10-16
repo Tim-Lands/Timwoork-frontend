@@ -1,5 +1,6 @@
-import React, { ReactElement, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import Layout from "@/components/Layout/HomeLayout";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
@@ -7,8 +8,8 @@ import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index() {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const { data: categories }: any = useSWR(`api/categories`);
   categories &&
     categories.data.sort((a, b) => {

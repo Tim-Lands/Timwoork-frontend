@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout/DashboardLayout";
-import { ReactElement, useContext, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import API from "../../../../config";
 import router from "next/router";
 import { message, notification } from "antd";
@@ -13,7 +13,7 @@ import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
 import Link from "next/link";
-import { LanguageContext } from "contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function Medias({ query, product, token }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -27,8 +27,7 @@ function Medias({ query, product, token }) {
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
   const [removedImages, setRemovedImages] = useState([]);
   const id = query.id;
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     if (!token) {

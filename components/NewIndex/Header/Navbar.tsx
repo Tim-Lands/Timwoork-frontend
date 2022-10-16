@@ -5,22 +5,22 @@ import { useOutSide } from "../../useOutSide";
 import Community from "./Community";
 // import LoginForm from "@/components/NewIndex/LoginForm";
 import { FaSearch } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Subnavbar from "./Subnavbar";
-import Cookies from "js-cookie";
 import Notifications from "../DropdowModal/Notifications";
 import PropTypes from "prop-types";
 import Messages from "../DropdowModal/Messages";
 // import Language from "../DropdowModal/Language";
-import { LanguageContext } from "../../../contexts/languageContext/context";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
 import { PusherContext } from "../../../contexts/pusherContext";
 import API from "../../../config";
 import { Badge, notification } from "antd";
-import { useAppSelector } from "../../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import LastSeen from "@/components/LastSeen";
 import MobileMenu from "./mobileMenus";
 import router from "next/router";
+import { LanguagesActions } from "../../../store/languages/languagesActions";
 
 import {
   MessageOutlined,
@@ -32,20 +32,17 @@ import { darken } from "@mui/material";
 import { PRIMARY } from "../../../styles/variables";
 function Navbar({ dark = false, MoreNav = <></> }) {
   const cartLength = useAppSelector((state) => state.cart.itemsLength);
-  const { language, setLanguage, getSectionLanguage } =
-    useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(true);
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
+  const { getAll, language } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch();
+
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [showCommunityMenu, setShowCommunityMenu] = useState(false);
   const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
   const [showMessagesMenu, setShowMessagesMenu] = useState(false);
   const [isShowProfileMenu, setIsShowProfileMenu] = useState(false);
-  // const [isShowLoginForm, setIsShowLoginForm] = useState(false);
-  // const [prevScrollpos, setrtPrevScrollpos] = useState((typeof window === "undefined") ?? window.pageYOffset)
+
   const [visible, setVisible] = useState(true);
   const [notifications, setNotifications] = useState([]);
   const [postsList, setPostsList]: any = useState([]);
@@ -54,19 +51,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   const [sentinel, setSentinel] = useState({ mount: true });
   const [query, setQuery] = useState("");
   const [chatPusher, notificationPusher] = useContext(PusherContext);
-  const [userInfo, setUserInfo]: any = useState(false);
-  useEffect(() => {
-    API.get("api/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        setUserInfo(res.data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [token]);
 
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
@@ -114,8 +98,8 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         setPostsList(res.data.data);
       })
       .catch(() => {});
-    if (token) fetchData();
-  }, [token]);
+    if (user.token) fetchData();
+  }, [user.token]);
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -123,7 +107,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
     };
   }, [handleScroll]);
   useEffect(() => {
-    if (userInfo) {
+    if (user.isLogged) {
       chatPusher?.bind("message.sent", (data) => {
         const message = {
           members: [data?.message?.user],
@@ -276,12 +260,12 @@ function Navbar({ dark = false, MoreNav = <></> }) {
     try {
       const notificationsData = await API.get("api/notifications?page=1", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       });
       const messagesData = await API.get("api/conversations", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       });
 
@@ -302,10 +286,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         <li
           className={language === "ar" ? "selectedLanguage" : ""}
           onClick={() => {
-            setLanguage("ar");
-            Cookies.set("lang", "ar");
-
-            window.location.reload();
+            dispatch(LanguagesActions.setLanguage("ar"));
             hideLanguage();
           }}
         >
@@ -314,10 +295,8 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         <li
           className={language === "en" ? "selectedLanguage" : ""}
           onClick={() => {
-            setLanguage("en");
-            Cookies.set("lang", "en");
-            window.location.reload();
             hideLanguage();
+            dispatch(LanguagesActions.setLanguage("en"));
           }}
         >
           English
@@ -325,10 +304,8 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         <li
           className={language === "fr" ? "selectedLanguage" : ""}
           onClick={() => {
-            setLanguage("fr");
-            Cookies.set("lang", "fr");
-            window.location.reload();
             hideLanguage();
+            dispatch(LanguagesActions.setLanguage("fr"));
           }}
         >
           Français
@@ -344,28 +321,13 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${user.token}`,
           },
         }
       );
-      API.get("api/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((res) => {
-        setUserInfo(res.data);
-      });
     } catch (error) {
       () => {};
     }
-
-    API.get("api/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
-      setUserInfo(res.data);
-    });
   }
   return (
     <nav
@@ -447,8 +409,8 @@ function Navbar({ dark = false, MoreNav = <></> }) {
               </a>
             </Link>
           </li>
-          {!loading &&
-            (userInfo ? (
+          {!user.loading ? (
+            user.isLogged ? (
               <>
                 <li className="circular-newitem avatar" ref={profileBtn}>
                   <a
@@ -458,7 +420,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                     }}
                   >
                     <Image
-                      src={userInfo?.user_details?.profile?.avatar_path}
+                      src={profile.avatar_path}
                       width={31}
                       height={31}
                       alt={""}
@@ -467,7 +429,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                   </a>
                   {isShowProfileMenu && (
                     <ProfileMenu
-                      user_details={userInfo?.user_details}
                       refs={profileRef}
                       setIsShowProfileMenu={setIsShowProfileMenu}
                     />
@@ -476,9 +437,9 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                 <li className="circular-newitem">
                   <Badge
                     count={cartLength}
-                    style={{ fontSize: 10 }}
+                    style={{ fontSize: 10, zIndex: 1000 }}
                     size="small"
-                    offset={[5, 5]}
+                    offset={language === "ar" ? [5, 5] : [-6, 5]}
                   >
                     <Link href={"/cart"}>
                       <a className="link-circular-button">
@@ -489,13 +450,14 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                     </Link>
                   </Badge>
                 </li>
-                {userInfo.user_details.profile.is_completed == 1 && (
+                {profile.is_completed == 1 && (
                   <>
                     <li className="circular-newitem" ref={messagesBtn}>
                       <Badge
-                        count={userInfo?.unread_messages_count}
-                        offset={[5, 5]}
-                        style={{ fontSize: 10 }}
+                        // count={userInfo?.unread_messages_count}
+                        count={0}
+                        offset={language === "ar" ? [5, 5] : [-6, 5]}
+                        style={{ fontSize: 10, zIndex: 1000 }}
                         size="small"
                       >
                         <a
@@ -523,9 +485,10 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                       }}
                     >
                       <Badge
-                        count={userInfo?.unread_notifications_count}
-                        offset={[5, 5]}
-                        style={{ fontSize: 10 }}
+                        // count={userInfo?.unread_notifications_count}
+                        count={0}
+                        offset={language === "ar" ? [5, 5] : [-6, 5]}
+                        style={{ fontSize: 10, zIndex: 1000 }}
                         size="small"
                       >
                         <a
@@ -590,7 +553,14 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                   </Link>
                 </li>
               </>
-            ))}
+            )
+          ) : (
+            <li className="link-item">
+              <a>
+                <AiOutlineLoading3Quarters className="rotate_load fs-4" />
+              </a>
+            </li>
+          )}
 
           <li className="circular-newitem" ref={languageRef}>
             <a

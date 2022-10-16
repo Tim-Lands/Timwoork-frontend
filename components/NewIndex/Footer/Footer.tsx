@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaTiktok,
   FaFacebook,
@@ -12,8 +12,8 @@ import Currency from "@/components/NewIndex/DropdowModal/Currency";
 import Language from "@/components/NewIndex/DropdowModal/Language";
 import { Tooltip } from "antd";
 import { BlogActions } from "../../../store/blog/blogActions";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+
 import API from "../../../config";
 import Cookies from "js-cookie";
 
@@ -33,8 +33,8 @@ function Footer() {
     symbol: "$",
   });
   const [isLogged, setIsLogged] = useState(false);
-  const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   useEffect(() => {
     fetchData();
   }, []);

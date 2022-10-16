@@ -2,11 +2,11 @@ import { Space } from "antd";
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 function DeleteConfirm({ setIsDeleteModal }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}

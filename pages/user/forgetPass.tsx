@@ -5,17 +5,15 @@ import { motion } from "framer-motion";
 import { message } from "antd";
 import router from "next/router";
 import Link from "next/link";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const ForgetPass = (): ReactElement => {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  // Return statement.
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <>
       <Formik

@@ -8,13 +8,13 @@ import "antd/dist/antd.min.css";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
 import router from "next/router";
+import { useAppSelector } from "@/store/hooks";
+
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
 import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
 import FormLangs from "@/components/NewIndex/Forms/FormLangs";
 import FormModal from "@/components/NewIndex/Forms/FormModal";
@@ -150,13 +150,11 @@ const EditSeller = () => {
       userInfo.user_details.profile.profile_seller &&
       userInfo.user_details.profile.profile_seller.bio,
   });
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const html = editor && editor.getHTML();
 
   const addSubtitle = (subtitle) => {
-    console.log(subtitle);
-    console.log(selectedLang);
     switch (selectedLang) {
       case "ar":
         setSubtitles({ ...subtitles, ar: subtitle });

@@ -8,12 +8,11 @@ import PropTypes from "prop-types";
 import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Wise({ token, create, setIsShowBankTransfert }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const { data: userInfo }: any = useSWR("api/me");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});

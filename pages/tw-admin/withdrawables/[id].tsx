@@ -9,8 +9,7 @@ import { message, Spin } from "antd";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Loading from "@/components/Loading";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Id({ query }) {
   const token = Cookies.get("token_dash");
@@ -18,8 +17,8 @@ function Id({ query }) {
   const [isShowCause, setIsShowCause] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cause, setCause] = useState("");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const AcceptAmount = async (id: any) => {
     try {
       const res: any = await API.post(

@@ -5,65 +5,41 @@ import API from "../config";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import { GoogleLogin } from "react-google-login";
-import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Badge, message, Tooltip } from "antd";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { UserActions } from "../store/user/UserActions";
 
 const clientId =
   "1055095089511-f7lip5othejakennssbrlfbjbo2t9dp0.apps.googleusercontent.com";
 const Register = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((store) => store.user);
+  const validationsErrors = user.signInError;
+
   const [passVisibled, setPassVisibled] = useState(false);
-  const [registerLoading, setRegisterLoading] = useState(false);
-  const [validationsErrors, setValidationsErrors]: any = useState({});
+  const registerLoading = user.loading;
   const [codes, setCodes] = useState([]);
-  const clearValidationHandle = () => {
-    setValidationsErrors({});
-  };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const onLoginSuccess = async (res) => {
-    //أرسل هذا الريسبونس الى الباكند
     try {
-      const response = await API.post("api/login/google", {
-        email: res.profileObj.email,
-        first_name: res.profileObj.givenName,
-        last_name: res.profileObj.familyName,
-        full_name: res.profileObj.name,
-        avatar: res.profileObj.imageUrl,
-        provider_id: res.profileObj.googleId,
-        username: generateUsername(res.profileObj.email),
-      });
-      // Authentication was successful.
-      if (response.status === 200) {
-        // Cookies.set('username', generateUsername(res.profileObj.email) );// just  for chat
-        Cookies.set("token", response.data.data.token);
-        if (!Cookies.get("token"))
-          localStorage.setItem("token", response.data.data.token);
-        message.success(getAll("Logged_in_successfully"));
-        switch (response.data.data.step) {
-          case 0:
-            router.push("/user/personalInformations");
-            break;
-          case 1:
-            router.push("/user/personalInformations");
-            break;
-          case 2:
-            router.push("/");
-            break;
-          default:
-            router.push("/");
-        }
-      }
+      await dispatch(
+        UserActions.loginGoogle({
+          email: res.profileObj.email,
+          first_name: res.profileObj.givenName,
+          last_name: res.profileObj.familyName,
+          full_name: res.profileObj.name,
+          avatar: res.profileObj.imageUrl,
+          provider_id: res.profileObj.googleId,
+          username: generateUsername(res.profileObj.email),
+        })
+      ).unwrap();
+      message.success(getAll("Logged_in_successfully"));
     } catch (error: any) {
       message.error(getAll("An_unexpected_error"));
     }
   };
-  /* Generate username from email and random 4 numbers
-   * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234
-   * then the username= roqaia.alrfou31234
-   */
   const generateUsername = (email: string) => {
     const result = email.indexOf("@");
     const len = email.length;
@@ -72,26 +48,46 @@ const Register = (): ReactElement => {
     const username = removeData + Math.floor(Math.random() * 100000);
     return username;
   };
-
+  const clearValidationHandle = () => {
+    dispatch(UserActions.clearErrors());
+  };
   const onLoginFailure = () => {};
-  // Redirect to user home route if user is authenticated.
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+
   useEffect(() => {
     API.get("/api/phone_codes").then((data) => {
       setCodes(() => {
-        console.log(data.data.data);
         return data.data.data;
       });
     });
-    if (token) {
-      router.push("/");
-    }
   }, []);
 
   const router = useRouter();
-  // Return statement.
+  useEffect(() => {
+    if (user.isLogged && user.step !== null) {
+      switch (user.step) {
+        case 0:
+          router.push("/user/personalInformations");
+          break;
+        case 1:
+          router.push("/user/personalInformations");
+          break;
+        case 2:
+          router.push("/");
+          break;
+        default:
+          router.push("/");
+      }
+      return;
+    }
+    if (user.isLogged && user.email_verified) {
+      router.push("/");
+      return;
+    }
+    if (user.isLogged && !user.email_verified) {
+      router.push("/email/verification");
+      return;
+    }
+  }, [user]);
   return (
     <>
       <MetaTags
@@ -109,31 +105,7 @@ const Register = (): ReactElement => {
           code_phone: "",
         }}
         onSubmit={async (values) => {
-          setRegisterLoading(true);
-          setValidationsErrors({});
-          try {
-            // Start loading.
-            const res = await API.post("api/register", values);
-            // Authentication was successful.
-            if (res.status === 200) {
-              setRegisterLoading(false);
-              Cookies.set("token", res.data.data.token);
-              if (res.data.data.is_verified) {
-                router.push("/");
-              } else {
-                router.push("/email/verification");
-              }
-            }
-          } catch (error: any) {
-            setRegisterLoading(false);
-            if (
-              error.response &&
-              error.response.data &&
-              error.response.data.errors
-            ) {
-              setValidationsErrors(error.response.data.errors);
-            }
-          }
+          dispatch(UserActions.register(values));
         }}
       >
         <Form>
@@ -182,13 +154,11 @@ const Register = (): ReactElement => {
                           placeholder={getAll("Username")}
                           className={
                             "timlands-inputs " +
-                            (validationsErrors &&
-                              validationsErrors.username &&
-                              " has-error")
+                            (validationsErrors.username && " has-error")
                           }
                           autoComplete="off"
                         />
-                        {validationsErrors && validationsErrors.username && (
+                        {validationsErrors.username && (
                           <div style={{ overflow: "hidden" }}>
                             <motion.div
                               initial={{ y: -70, opacity: 0 }}
@@ -196,7 +166,7 @@ const Register = (): ReactElement => {
                               className="timlands-form-note form-note-error"
                             >
                               <p className="text">
-                                {validationsErrors.username[0]}
+                                {validationsErrors.username}
                               </p>
                             </motion.div>
                           </div>
@@ -215,13 +185,11 @@ const Register = (): ReactElement => {
                           placeholder={getAll("E_mail")}
                           className={
                             "timlands-inputs " +
-                            (validationsErrors &&
-                              validationsErrors.email &&
-                              " has-error")
+                            (validationsErrors.email && " has-error")
                           }
                           autoComplete="off"
                         />
-                        {validationsErrors && validationsErrors.email && (
+                        {validationsErrors.email && (
                           <div style={{ overflow: "hidden" }}>
                             <motion.div
                               initial={{ y: -70, opacity: 0 }}
@@ -242,12 +210,10 @@ const Register = (): ReactElement => {
                         <div
                           style={{
                             borderColor:
-                              validationsErrors &&
                               anyone(
                                 validationsErrors.phone,
                                 validationsErrors.code_phone
-                              ) &&
-                              " red",
+                              ) && " red",
                           }}
                           className="registerPhone"
                         >
@@ -258,9 +224,7 @@ const Register = (): ReactElement => {
                             placeholder={getAll("Phone_number")}
                             className={
                               "innerPhone " +
-                              (validationsErrors &&
-                                validationsErrors.phone &&
-                                " has-error")
+                              (validationsErrors.phone && " has-error")
                             }
                             autoComplete="off"
                           />
@@ -273,26 +237,25 @@ const Register = (): ReactElement => {
                             ))}
                           </Field>
                         </div>
-                        {validationsErrors &&
-                          anyone(
-                            validationsErrors.phone,
-                            validationsErrors.code_phone
-                          ) && (
-                            <div style={{ overflow: "hidden" }}>
-                              <motion.div
-                                initial={{ y: -70, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="timlands-form-note form-note-error"
-                              >
-                                <p className="text">
-                                  {which(
-                                    validationsErrors.phone,
-                                    validationsErrors.code_phone
-                                  )}
-                                </p>
-                              </motion.div>
-                            </div>
-                          )}
+                        {anyone(
+                          validationsErrors.phone,
+                          validationsErrors.code_phone
+                        ) && (
+                          <div style={{ overflow: "hidden" }}>
+                            <motion.div
+                              initial={{ y: -70, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              className="timlands-form-note form-note-error"
+                            >
+                              <p className="text">
+                                {which(
+                                  validationsErrors.phone,
+                                  validationsErrors.code_phone
+                                )}
+                              </p>
+                            </motion.div>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="col-lg-6">
@@ -322,9 +285,7 @@ const Register = (): ReactElement => {
                           placeholder={getAll("Password")}
                           className={
                             "timlands-inputs " +
-                            (validationsErrors &&
-                              validationsErrors.password &&
-                              " has-error")
+                            (validationsErrors.password && " has-error")
                           }
                           autoComplete="off"
                         />
@@ -346,7 +307,7 @@ const Register = (): ReactElement => {
                             </span>
                           )}
                         </button>
-                        {validationsErrors && validationsErrors.password && (
+                        {validationsErrors.password && (
                           <div style={{ overflow: "hidden" }}>
                             <motion.div
                               initial={{ y: -70, opacity: 0 }}
@@ -354,7 +315,7 @@ const Register = (): ReactElement => {
                               className="timlands-form-note form-note-error"
                             >
                               <p className="text">
-                                {validationsErrors.password[0]}
+                                {validationsErrors.password}
                               </p>
                             </motion.div>
                           </div>
@@ -390,8 +351,7 @@ const Register = (): ReactElement => {
                           placeholder={getAll("Reset_password")}
                           className={
                             "timlands-inputs " +
-                            (validationsErrors &&
-                              validationsErrors.password_confirmation &&
+                            (validationsErrors.password_confirmation &&
                               " has-error")
                           }
                           autoComplete="off"
@@ -414,20 +374,19 @@ const Register = (): ReactElement => {
                             </span>
                           )}
                         </button>
-                        {validationsErrors &&
-                          validationsErrors.password_confirmation && (
-                            <div style={{ overflow: "hidden" }}>
-                              <motion.div
-                                initial={{ y: -70, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="timlands-form-note form-note-error"
-                              >
-                                <p className="text">
-                                  {validationsErrors.password_confirmation[0]}
-                                </p>
-                              </motion.div>
-                            </div>
-                          )}
+                        {validationsErrors.password_confirmation && (
+                          <div style={{ overflow: "hidden" }}>
+                            <motion.div
+                              initial={{ y: -70, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              className="timlands-form-note form-note-error"
+                            >
+                              <p className="text">
+                                {validationsErrors.password_confirmation}
+                              </p>
+                            </motion.div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -503,9 +462,9 @@ const Register = (): ReactElement => {
 };
 const which = (one, two) => {
   if (one) {
-    return one[0];
+    return one;
   } else {
-    return two[0];
+    return two;
   }
 };
 const anyone = (one, two) => {

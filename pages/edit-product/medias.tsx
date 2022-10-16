@@ -1,8 +1,9 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useRef, useState, useContext } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import router from "next/router";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
@@ -19,8 +20,8 @@ import Link from "next/link";
 
 function Medias({ query, stars }) {
   const stepsView = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
     stars.data.full_path_thumbnail

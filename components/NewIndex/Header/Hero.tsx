@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import React, { useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
@@ -14,8 +15,8 @@ import Link from "next/link";
 
 function Hero() {
   const [index, setIndex] = useState(1);
-  const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   return (
     <div
       className={

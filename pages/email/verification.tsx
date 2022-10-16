@@ -9,12 +9,11 @@ import { message } from "antd";
 import Cookies from "js-cookie";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function EmailConfig() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
@@ -153,11 +152,11 @@ function EmailConfig() {
                     <button
                       type="button"
                       className="btn flex-center butt-sm butt-black me-auto"
-                      onClick={async()=>{
-                        await API.post('api/email/resend',{
-                          email:userInfo.user_details.email
-                        })
-                        message.success('تم الارسال بنجاح')
+                      onClick={async () => {
+                        await API.post("api/email/resend", {
+                          email: userInfo.user_details.email,
+                        });
+                        message.success("تم الارسال بنجاح");
                       }}
                     >
                       <span className="material-icons material-icons-outlined">

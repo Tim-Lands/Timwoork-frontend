@@ -4,7 +4,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
 import { CurrencyContext } from "../../contexts/currencyContext";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function PostInner({
   title,
@@ -112,8 +112,8 @@ function PostInner({
       return yut.concat(yut2);
     }
   };
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   return (
     <div
       className={"timlands-post-inner" + sizeClass()}

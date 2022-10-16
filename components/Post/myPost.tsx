@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const APIURL = "https://api.timwoork.com/products/thumbnails/";
 function Post({
@@ -99,8 +98,8 @@ function Post({
       return yut.concat(yut2);
     }
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className={"timlands-post-item" + sizeClass()}>
       <a href={`/p/${slug}`}>

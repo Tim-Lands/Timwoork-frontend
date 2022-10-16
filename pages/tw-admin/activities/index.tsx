@@ -5,8 +5,7 @@ import Image from "next/image";
 import API from "../../../config";
 import Cookies from "js-cookie";
 import Pagination from "react-js-pagination";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const ActivityData = (activity, getAll) => {
   switch (activity.data.type) {
@@ -51,8 +50,8 @@ const ActivityData = (activity, getAll) => {
   }
 };
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [pageNumber, setPagenNumber]: any = useState(1);
   const [activities, setActivities]: any = useState({
     data: [],

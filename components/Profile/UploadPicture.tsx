@@ -4,8 +4,7 @@ import { message, Progress } from "antd";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export default function UploadPicture({ token, avatarPicture }) {
   const [picture, setPicture] = useState(null);
@@ -44,8 +43,7 @@ export default function UploadPicture({ token, avatarPicture }) {
       })
       .catch(() => {});
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <div className="login-panel update-form">

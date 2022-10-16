@@ -1,6 +1,5 @@
 import { Space } from "antd";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
@@ -157,8 +156,7 @@ const Tiptap = (props: any) => {
   );
 };
 function SendNotification({ setIsConfirmText, title }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [toState, setToState] = useState("");
   const [fromState, setFromState] = useState("");
 

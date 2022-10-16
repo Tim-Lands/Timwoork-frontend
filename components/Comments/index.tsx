@@ -1,9 +1,9 @@
 import CommentPost from "./CommentPost";
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 function index({ comments, canReply }) {
-  const { language } = useContext(LanguageContext);
+  const language = useAppSelector((state) => state.languages.language);
 
   return (
     <div className="timwoork-single-comments">

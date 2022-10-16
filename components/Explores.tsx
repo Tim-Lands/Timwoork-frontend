@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import API from "../config";
 import useSWR from "swr";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 import { Spin } from "antd";
 import Loading from "./Loading";
 
 function Explores() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [postsList, setPostsList]: any = useState([]);

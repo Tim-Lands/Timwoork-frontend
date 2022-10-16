@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { styles } from "./styles";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
+import { useState } from "react";
 
 const Avatar = ({ style, onClick }) => {
   const [hovered, setHovered] = useState(false);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div style={style}>
       <div

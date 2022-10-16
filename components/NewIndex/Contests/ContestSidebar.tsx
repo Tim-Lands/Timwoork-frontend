@@ -1,11 +1,8 @@
 import router from "next/router";
 import React from "react";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
-
+import { useAppSelector } from "@/store/hooks";
 function ContestSidebar() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <div className="contest-sidebar">
       <div className="box-sidebar sidebar-search">

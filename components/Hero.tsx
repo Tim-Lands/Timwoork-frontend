@@ -10,9 +10,7 @@ import bgIMG from "../styles/5313770.jpg";
 import heroIMG from "../public/hero3.png";
 import Image from "next/image";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
-
+import { useAppSelector } from "@/store/hooks";
 export function LoadingSearch() {
   return (
     <div className="d-flex justify-content-center search-loading">
@@ -23,8 +21,7 @@ export function LoadingSearch() {
   );
 }
 export function NotFountSearch() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <Result
       status="warning"
@@ -35,8 +32,7 @@ export function NotFountSearch() {
 }
 
 function Hero() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const controlsParent = useAnimation();
   const controls = useAnimation();
   const [isSearch, setIsSearch] = useState(false);

@@ -7,13 +7,12 @@ import { motion } from "framer-motion";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from "swr";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const NumberPhone = (): ReactElement => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   const { data: userInfo }: any = useSWR("api/me");
+  const { getAll } = useAppSelector((state) => state.languages);
+
   // Redirect to user home route if user is authenticated.
   const SignupSchema = Yup.object().shape({
     phone_number: Yup.number().required(getAll("This_field_is")),

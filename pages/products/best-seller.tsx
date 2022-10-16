@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { Form, Formik } from "formik";
@@ -7,13 +6,15 @@ import Pagination from "react-js-pagination";
 import Loading from "@/components/Loading";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Cookies from "js-cookie";
+import { useAppSelector } from "@/store/hooks";
+
 import API from "../../config";
 
 function BestSeller() {
   let token = Cookies.get("token");
   const [size, setSize] = useState(3);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [paginationSize, setPaginationSize] = useState(8);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

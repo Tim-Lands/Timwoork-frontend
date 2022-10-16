@@ -7,16 +7,16 @@ import * as Yup from "yup";
 import API from "../../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
+import { useAppSelector } from "@/store/hooks";
+
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Unauthorized from "@/components/Unauthorized";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
 
 const sellerInformations = (): ReactElement => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import React, { useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { useRouter } from "next/router";
 
 function HeroSearchContent() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [query, setQuery] = useState("");
   const router = useRouter();
   return (

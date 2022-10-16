@@ -13,8 +13,7 @@ import SuspensionPermanent from "@/components/SuspensionPermanent";
 import Pagination from "react-js-pagination";
 import EmailModalCause from "@/components/EmailModalCause";
 import SendNotification from "@/components/SendNotification";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function index() {
   const [postsList, setPostsList] = useState({
@@ -37,9 +36,8 @@ function index() {
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  console.log(postsList);
+  const { getAll } = useAppSelector((state) => state.languages);
+
   useEffect(() => {
     refreshData();
   }, [pageNumber, sentinel]);

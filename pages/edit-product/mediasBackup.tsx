@@ -1,6 +1,5 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useRef, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
 import router from "next/router";
@@ -13,11 +12,12 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import Link from "next/link";
 import Image from "next/image";
 import useSWR from "swr";
+import { useAppSelector } from "@/store/hooks";
 
 function Medias({ query, stars }) {
   const stepsView = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const id = query.id;
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")

@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { useFormik } from "formik";
@@ -7,6 +6,8 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import Slider from "@mui/material/Slider";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import { useAppSelector } from "@/store/hooks";
+
 import Pagination from "react-js-pagination";
 import Cookies from "js-cookie";
 import { Collapse, Result } from "antd";
@@ -64,8 +65,8 @@ const MySelect = (props: any) => {
 function Category({ products, categories, url_params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
-  const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
 

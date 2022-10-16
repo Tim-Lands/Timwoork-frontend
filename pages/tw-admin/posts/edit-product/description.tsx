@@ -12,8 +12,7 @@ import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import cookies from "next-cookies";
-import { LanguageContext } from "../../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -117,8 +116,8 @@ const Tiptap = (props: any) => {
   );
 };
 function Description({ query, product }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const token = useRef(Cookies.get("token_dash"));
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});

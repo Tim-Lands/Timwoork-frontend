@@ -6,8 +6,7 @@ import API from "../../../config";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import Pagination from "react-js-pagination";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const Amount = ({ transfer }: any) => {
   switch (transfer.status) {
@@ -47,8 +46,8 @@ Amount.propTypes = {
   transfer: PropTypes.object,
 };
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [pageNumber, setPageNumber]: any = useState(1);
   const [transfers, setTransfers]: any = useState({
     data: [],

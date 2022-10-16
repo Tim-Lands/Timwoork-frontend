@@ -2,8 +2,8 @@ import { Space } from "antd";
 import { motion } from "framer-motion";
 import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { Switch } from "antd";
 function FormModal({
   setIsConfirmText,
@@ -13,8 +13,8 @@ function FormModal({
   defaultValue,
 }): ReactElement {
   const [subtitle, setSubtitle] = useState(defaultValue);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}

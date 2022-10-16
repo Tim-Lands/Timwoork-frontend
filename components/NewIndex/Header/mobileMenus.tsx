@@ -1,6 +1,7 @@
 import { Drawer } from "antd";
-import React, { useState, useEffect, useContext } from "react";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import React, { useState, useEffect } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 import LanguageModel from "../DropdowModal/Language";
@@ -18,9 +19,9 @@ import Link from "next/link";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 const MobileMenu = ({ postsList }) => {
-  const { language, getSectionLanguage } = useContext(LanguageContext);
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const [visible, setVisible] = useState(false);
-  const getAll = getSectionLanguage();
   const { data: userInfo }: any = useSWR("api/me");
   const [size, setSize] = useState("70%");
   const [query, setQuery] = useState("");

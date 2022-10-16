@@ -1,11 +1,5 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, {
-  ReactElement,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
@@ -19,7 +13,8 @@ import { motion } from "framer-motion";
 import router from "next/router";
 import Loading from "@/components/Loading";
 import pusher from "../../config/pusher";
-import { LanguageContext } from "contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 let testTime;
 
 function Conversation({ query }) {
@@ -30,11 +25,11 @@ function Conversation({ query }) {
   const { mutate } = useSWRConfig();
   const inputRefMsg: any = useRef();
   const messageCont = useRef(null);
-  const { getSectionLanguage, language } = useContext(LanguageContext);
   const { data: conversationsSingle }: any = useSWR(
     `api/conversations/${query.id}`
   );
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const { data: profileInfo }: any = useSWR(`api/me`);
   const channelChat = `presence-receiver.${
     profileInfo && profileInfo.user_details.id

@@ -1,17 +1,16 @@
-import { ReactElement, useState, useContext } from "react";
+import { ReactElement, useState } from "react";
 
 import { Spin } from "antd";
 import PropTypes from "prop-types";
 import ImageUploading from "react-images-uploading";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function FeaturedUploadingGalleries({
   full_path_thumbnail,
   setImage,
   setIsChanged,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [featuredImages, setFeaturedImages]: any = useState([
     {
       data_url: full_path_thumbnail,

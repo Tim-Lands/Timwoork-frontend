@@ -1,10 +1,11 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useRef, useContext } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { message } from "antd";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 import Cookies from "js-cookie";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -13,8 +14,8 @@ import API from "../../config";
 
 function Complete({ query }) {
   let token = Cookies.get("token");
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

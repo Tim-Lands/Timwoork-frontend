@@ -1,8 +1,7 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useRef, useContext } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import API from "../../config";
-import { LanguageContext } from "../../contexts/languageContext/context";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 import { message, notification, Progress, Spin } from "antd";
@@ -14,11 +13,13 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import Image from "next/image";
 import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
+import { useAppSelector } from "@/store/hooks";
+
 import { CloseCircleOutlined } from "@ant-design/icons";
 function Medias({ query, stars }) {
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const stepsView = useRef(null);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   const [validationsErrors, setValidationsErrors]: any = useState({});
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")

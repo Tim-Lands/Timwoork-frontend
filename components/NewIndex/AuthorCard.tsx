@@ -3,9 +3,7 @@ import Link from "next/link";
 import React, { ReactElement, useState } from "react";
 import { MdMyLocation } from "react-icons/md";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
-
+import { useAppSelector } from "@/store/hooks";
 function AuthorCard({
   bio,
   author,
@@ -15,8 +13,7 @@ function AuthorCard({
   avatar,
 }): ReactElement {
   const [isFollowing, setIsFollowing] = useState(isFollower);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <div className="p-3 bg-white portfolio-sidebar">

@@ -6,8 +6,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import API from "../config";
 import Cookies from "js-cookie";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export const MenuBar = ({ editor }: any) => {
   if (!editor) {
@@ -115,8 +114,7 @@ function ReplyContactModal({
   title,
   user,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [fromState, setFromState] = useState("");
   const [toEmail, setToEmail] = useState(user?.email);
   const [messageState, setMessageState] = useState("");

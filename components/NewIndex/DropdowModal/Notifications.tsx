@@ -5,11 +5,11 @@ import React from "react";
 import { FaBell, FaClock } from "react-icons/fa";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 function Notifications({ notifications, refs, setShowNotificationsMenu }) {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   function switchNotifyType(notification) {
     const { type, to, slug, content } = notification?.data;
     const { item_id } = content;

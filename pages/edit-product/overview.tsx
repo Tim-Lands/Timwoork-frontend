@@ -1,11 +1,12 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useContext } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Cookies from "js-cookie";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import API from "../../config";
 import useSWR from "swr";
 import PropTypes from "prop-types";
@@ -61,8 +62,8 @@ const MySelect = (props: any) => {
 };
 function Overview({ query }) {
   const id = query.id;
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

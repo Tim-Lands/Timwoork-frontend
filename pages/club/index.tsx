@@ -1,14 +1,15 @@
 import Layout from "@/components/Layout/HomeLayout";
-import { ReactElement, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { ReactElement } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Result } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
+import { useAppSelector } from "@/store/hooks";
+
 import router from "next/router";
 
 function Home() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <>
       <MetaTags title={getAll("Timwoork_community")} />

@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useEffect, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement, useEffect } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Cookies from "js-cookie";
 import Sidebar from "@/components/Conversations/Sidebar";
@@ -8,8 +9,8 @@ import { Empty } from "antd";
 import router from "next/router";
 import useSWR from "swr";
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

@@ -9,12 +9,11 @@ import { message } from "antd";
 import router from "next/router";
 import useSWR from "swr";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Id({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const token = Cookies.get("token_dash");
   const { data: GetData }: any = useSWR(`dashboard/types_payments/${query.id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});

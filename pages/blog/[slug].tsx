@@ -7,8 +7,6 @@ import Loading from "@/components/Loading";
 import Post from "@/components/Post/blogPost";
 import { Divider } from "antd";
 import { Image } from "antd";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
 import { BlogActions } from "../../store/blog/blogActions";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 const Blog = ({ query }) => {
@@ -23,8 +21,8 @@ const Blog = ({ query }) => {
   }, [blog.loaded, query.slug]);
   const { data: blogData, loaded } = blog;
   const { relatedBlogs } = blog;
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const { getAll } = useAppSelector((state) => state.languages);
+
   useEffect(() => {
     if (blogData.categories.length > 0)
       dispatch(

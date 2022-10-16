@@ -5,13 +5,11 @@ import useSWR from "swr";
 import Loading from "@/components/Loading";
 import ReplyContactModal from "@/components/ReplyContactModal";
 import LastSeen from "@/components/LastSeen";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Id({ query }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  const getContactUs = getSectionLanguage("contact_us");
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const { data: postsList }: any = useSWR(`dashboard/contacts/${query.id}`);
   const [isShowReplyModal, setIsShowReplyModal] = useState(false);
   return (
@@ -72,8 +70,8 @@ function Id({ query }): ReactElement {
                 <th>{getAll("Message_type")}</th>
                 <td>
                   {postsList && postsList.data.type_message == 0
-                    ? getContactUs("Inquiry")
-                    : getContactUs("Complaint")}
+                    ? getAll("Inquiry")
+                    : getAll("Complaint")}
                 </td>
               </tr>
               <tr>

@@ -3,13 +3,12 @@ import React, { ReactElement, useRef } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { Input } from "antd";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const { TextArea } = Input;
 function ConfirmText({ setIsConfirmText, text, handleFunc }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const comment = useRef(getAll("There_is_no_reason"));
 
   return (

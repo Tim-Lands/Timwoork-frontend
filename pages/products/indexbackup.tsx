@@ -12,14 +12,13 @@ import Tags from "@/components/Tags";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Pagination from "react-js-pagination";
 import Cookies from "js-cookie";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Category() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [size, setSize] = useState(4);
   const [paginationSize, setPaginationSize] = useState(8);
   let token = Cookies.get("token");

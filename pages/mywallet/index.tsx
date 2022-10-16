@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useEffect, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement, useEffect } from "react";
 import Image from "next/image";
 import router from "next/router";
 import useSWR from "swr";
@@ -9,14 +8,16 @@ import Loading from "@/components/Loading";
 import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import { Alert } from "@/components/Alert/Alert";
+import { useAppSelector } from "@/store/hooks";
+
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import { Table } from "antd";
 
 function index() {
   let token = Cookies.get("token");
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");

@@ -1,12 +1,10 @@
 import React, { ReactElement } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 
 function SetSelectThemesModal({ setIsConfirmText, title }: any): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}

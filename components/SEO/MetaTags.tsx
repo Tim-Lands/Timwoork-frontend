@@ -10,8 +10,8 @@
 */
 import Head from "next/head";
 import PropTypes from "prop-types";
-import { ReactElement, useContext } from "react";
-import { LanguageContext } from "contexts/languageContext/context";
+import { ReactElement } from "react";
+import { useAppSelector } from "@/store/hooks";
 export function MetaTags({
   title,
   metaDescription,
@@ -20,8 +20,8 @@ export function MetaTags({
   ogImage,
   ogUrl,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <>
       <Head>

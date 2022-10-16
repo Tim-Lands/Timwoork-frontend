@@ -3,17 +3,16 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export default function UploadPicture({
   pending_amount,
   withdrawable_amount,
-  darkMode,
+  // darkMode,
 }) {
   const { data: userInfo }: any = useSWR("api/me");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="col-lg-4">
       <div className="pb-1">
@@ -32,7 +31,7 @@ export default function UploadPicture({
               title={getAll("Withdrawable_balance")}
               value={withdrawable_amount}
               precision={2}
-              valueStyle={{ color: darkMode ? "#8ac557" : "#3f8600" }}
+              // valueStyle={{ color: darkMode ? "#8ac557" : "#3f8600" }}
               suffix="$"
             />
             {userInfo &&
@@ -67,7 +66,7 @@ export default function UploadPicture({
               title={getAll("Total_balance")}
               value={Number(withdrawable_amount) + Number(pending_amount)}
               precision={2}
-              valueStyle={{ color: darkMode ? "#ddd" : "#222" }}
+              // valueStyle={{ color: darkMode ? "#ddd" : "#222" }}
               suffix="$"
             />
           </div>
@@ -78,6 +77,6 @@ export default function UploadPicture({
 }
 UploadPicture.propTypes = {
   pending_amount: PropTypes.number,
-  darkMode: PropTypes.any,
+  // darkMode: PropTypes.any,
   withdrawable_amount: PropTypes.number,
 };

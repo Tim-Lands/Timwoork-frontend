@@ -3,12 +3,12 @@ import fr from "react-timeago/lib/language-strings/fr";
 import en from "react-timeago/lib/language-strings/en";
 import ar from "react-timeago/lib/language-strings/ar";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
-import { useContext } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 import PropTypes from "prop-types";
 
 export default function LastSeen({ date }) {
-  const { language } = useContext(LanguageContext);
+  const language = useAppSelector((state) => state.languages.language);
+
   const formatter = buildFormatter(which(language));
 
   return <span>{<TimeAgo date={date} formatter={formatter} />}</span>;

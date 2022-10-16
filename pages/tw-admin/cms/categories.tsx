@@ -9,12 +9,10 @@ import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Categories(): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const { data: GetData, error }: any = useSWR(`dashboard/categories`);
 
   const deleteHandle = (id: any) => {

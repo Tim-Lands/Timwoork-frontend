@@ -1,17 +1,17 @@
-import React, { ReactElement, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import PropTypes from "prop-types";
 import useSWR from "swr";
 import { Result } from "antd";
+import { useAppSelector } from "@/store/hooks";
+
 import Loading from "@/components/Loading";
 import Post from "@/components/Post/Post";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  const { language } = useContext(LanguageContext);
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const { data: popularProducts }: any = useSWR(
     `api/get_products_subcategory/${query.id}`
   );

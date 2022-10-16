@@ -1,11 +1,9 @@
 import { Result } from "antd";
 import Link from "next/link";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function NotSeller() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <div className="row justify-content-md-center">
       <div className="col-md-5">

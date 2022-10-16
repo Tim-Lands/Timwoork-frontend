@@ -5,16 +5,16 @@ import Link from "next/link";
 import API from "../../config";
 import useSWR from "swr";
 import Loading from "@/components/Loading";
+import { useAppSelector } from "@/store/hooks";
+
 import Cookies from "js-cookie";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
 
 function ChangePass() {
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");

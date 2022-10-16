@@ -8,12 +8,11 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Levels(): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const { data: GetData, error }: any = useSWR(`dashboard/levels`);
 
   const deleteHandle = (id: any) => {

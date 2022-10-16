@@ -1,5 +1,6 @@
-import React, { useState, useRef, useContext } from "react";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import React, { useState, useRef } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import PropTypes from "prop-types";
 import Subcategories from "../DropdowModal/Subcategories";
 import useOnScreen from "../../useOnScreen";
@@ -7,8 +8,8 @@ import { Dropdown } from "antd";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 function Subnavbar({ visible, postsList }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const end = useRef(null);
   const start = useRef(null);
   const middle = useRef(null);

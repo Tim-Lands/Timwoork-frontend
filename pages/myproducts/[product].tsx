@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
-import { ReactElement, useEffect, useState, useContext } from "react";
-import { LanguageContext } from "contexts/languageContext/context";
+import { ReactElement, useEffect, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import Comments from "../../components/Comments";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
@@ -42,9 +43,8 @@ let token = Cookies.get("token");
 if (!token && typeof window !== "undefined")
   token = localStorage.getItem("token");
 function Single({ query, stars }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  const { language } = useContext(LanguageContext);
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
 
   const { data: userInfo }: any = useSWR("api/me");

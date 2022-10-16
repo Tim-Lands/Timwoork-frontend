@@ -11,8 +11,7 @@ import { motion } from "framer-motion";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
 import useSWR from "swr";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const profileAvatar = (): ReactElement => {
   const { data: userInfo }: any = useSWR("api/me");
@@ -21,8 +20,8 @@ const profileAvatar = (): ReactElement => {
   const SignupSchema = Yup.object().shape({
     avatar: Yup.mixed().required(),
   });
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   // Return statement.
   return (
     <>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import { CurrencyContext } from "../../contexts/currencyContext";
 import Comments from "../../components/Comments";
-import { LanguageContext } from "../../contexts/languageContext/context";
+
 import { ReactElement, useEffect, useState, useContext } from "react";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
@@ -51,8 +51,8 @@ function Single({ query, stars, errorFetch }) {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.cart.isLoading);
   let token = Cookies.get("token");
-  const { language, getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: ProductData, errorLoad }: any = useSWR(

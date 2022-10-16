@@ -1,6 +1,6 @@
 import { Space } from "antd";
-import React, { ReactElement, useState, useContext } from "react";
-import { LanguageContext } from "../contexts/languageContext/context";
+import React, { ReactElement, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
@@ -13,8 +13,7 @@ function EditModal({
 }): ReactElement {
   const [msg, setMsg] = useState(msgValues);
   const [reason, setReason] = useState("");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}

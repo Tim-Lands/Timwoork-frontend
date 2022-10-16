@@ -9,16 +9,14 @@ import API from "../../../../config";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Prices({ query }) {
   const [product, setProduct]: any = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const token = useRef(Cookies.get("token_dash"));
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     if (!token) {

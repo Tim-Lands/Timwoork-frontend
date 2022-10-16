@@ -13,12 +13,11 @@ import {
 import router from "next/router";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 export default function MyProducts({ setStatusType, postsList, refresh }) {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

@@ -1,10 +1,9 @@
 import React from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function SidebarAdvices() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage("all");
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="add-product-advices">
       <img className="advice-img" src="/1999310.png" alt="" />

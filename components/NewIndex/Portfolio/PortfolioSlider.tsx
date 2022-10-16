@@ -1,11 +1,10 @@
 import React from "react";
 import PortfolioSlider from "@/components/Post/PortfolioSlider";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function PortfolioSliders() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="portfolios-slider">
       <div className="row">

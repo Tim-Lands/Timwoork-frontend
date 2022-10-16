@@ -1,8 +1,7 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function ContestSingleInfo({
   created_at,
@@ -13,8 +12,7 @@ function ContestSingleInfo({
   viewsCount,
   likesCount,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <div className="p-3 bg-white portfolio-sidebar single-info-portfolio-container">
       <h3 className="title">{getAll("Information_about_the")}</h3>

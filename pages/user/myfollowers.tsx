@@ -12,17 +12,14 @@ import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import FollowItem from "@/components/NewIndex/FollowItem";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function MyFollowers() {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");
-  const darkMode = userInfo && userInfo.user_details.profile.dark_mode;
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   const myLoader = () => {
     return `${userInfo.user_details.profile.avatar_path}`;
@@ -180,7 +177,6 @@ function MyFollowers() {
                   pending_amount={
                     userInfo && userInfo.user_details.profile.pending_amount
                   }
-                  darkMode={darkMode}
                 />
                 <div className="col-lg-8">
                   <div className="timlands-profile-content">

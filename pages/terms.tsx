@@ -1,12 +1,11 @@
 import Layout from "../components/Layout/HomeLayout";
 import { ReactElement } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Terms() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="py-4">
       <MetaTags

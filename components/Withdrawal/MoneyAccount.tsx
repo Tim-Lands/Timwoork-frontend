@@ -8,8 +8,7 @@ import PropTypes from "prop-types";
 import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function MoneyAccount({ token, create, setIsShowBankTransfert }) {
   const { data: Countries }: any = useSWR("api/withdrawals/countries");
@@ -139,8 +138,8 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
   //         </ul>
   //     </div>
   // );
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div

@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-// import { LanguageContext } from "../../contexts/languageContext/context";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import ContestSidebar from "@/components/NewIndex/Contests/ContestSidebar";
@@ -7,11 +6,6 @@ import ContestPost from "@/components/Post/ContestPost";
 import ContestHeader from "@/components/NewIndex/Contests/ContestHeader";
 
 function Index() {
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isSettings, setIsSettings] = useState(false);
-  // const { language, getSectionLanguage } = useContext(LanguageContext);
-  // const getLanguage = getSectionLanguage("products");
-
   return (
     <div className="container pt-4 mt-2">
       <MetaTags

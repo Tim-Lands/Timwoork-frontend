@@ -1,8 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { ReactElement, useEffect, useState, useContext } from "react";
-//import withAuth from '../../services/withAuth'
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { ReactElement, useEffect, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import { Spin } from "antd";
 import { Alert } from "antd";
 import useSWR from "swr";
@@ -14,8 +14,8 @@ import API from "../../config";
 
 function index() {
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { data: userInfo }: any = useSWR("api/me");

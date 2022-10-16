@@ -5,12 +5,11 @@ import React from "react";
 import { FaClock, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Messages({ messages, refs, setShowMessagesMenu }) {
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   return (
     <motion.div
       initial={{ y: -70, opacity: 0 }}

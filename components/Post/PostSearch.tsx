@@ -1,8 +1,7 @@
 import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function PostSearch({
   title,
@@ -106,8 +105,8 @@ function PostSearch({
       return period + getAll("Day");
     }
   }
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="timlands-post-item post-item-search">
       <div className="d-flex">

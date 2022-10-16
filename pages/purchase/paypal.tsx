@@ -8,11 +8,11 @@ import { Alert } from "@/components/Alert/Alert";
 import API from "../../config";
 import Loading from "@/components/Loading";
 import useSWR from "swr";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function Paypal({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

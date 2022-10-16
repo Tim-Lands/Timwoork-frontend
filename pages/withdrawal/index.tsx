@@ -9,6 +9,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import BankAccount from "@/components/Withdrawal/BankAccount";
 import MoneyAccount from "@/components/Withdrawal/MoneyAccount";
 import Paypal from "@/components/Withdrawal/Paypal";
+import { useAppSelector } from "@/store/hooks";
+
 import Wise from "@/components/Withdrawal/Wise";
 import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
@@ -19,8 +21,6 @@ import MoneyAccountCart from "@/components/Withdrawal/MoneyAccountCart";
 import PaypalCart from "@/components/Withdrawal/PaypalCart";
 import WiseCart from "@/components/Withdrawal/WiseCart";
 import API from "../../config";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
 function Withdrawal() {
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
@@ -41,8 +41,8 @@ function Withdrawal() {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [isPaymentAvailable, setIsPaymentAvailable]: any = useState({});
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+
+  const { getAll } = useAppSelector((state) => state.languages);
 
   const sendMoney = async () => {
     let url = "api/withdrawals/withdrawal_";

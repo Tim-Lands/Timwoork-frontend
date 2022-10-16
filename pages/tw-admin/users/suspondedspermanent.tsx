@@ -10,8 +10,7 @@ import Image from "next/image";
 import { notification, Space, Table } from "antd";
 import SuspensionInfo from "@/components/SuspensionInfo";
 import Pagination from "react-js-pagination";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function suspondedspermanent() {
   const [postsList, setPostsList] = useState({
@@ -29,8 +28,7 @@ function suspondedspermanent() {
   const [sentinel, setSentinel] = useState({ mount: true });
 
   const token = Cookies.get("token_dash");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     refreshData();

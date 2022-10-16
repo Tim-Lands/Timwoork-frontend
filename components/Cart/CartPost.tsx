@@ -3,7 +3,7 @@ import React, { ReactElement, useContext } from "react";
 import { CurrencyContext } from "../../contexts/currencyContext";
 import useSWR from "swr";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 function CartPost({
   id,
@@ -14,8 +14,7 @@ function CartPost({
   developments,
   deleteItem,
 }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const { data: userInfo }: any = useSWR("api/me");
   function DevdurationFunc(duration) {
     if (duration == 1) {

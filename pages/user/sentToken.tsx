@@ -1,12 +1,12 @@
 import React, { ReactElement } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import Link from "next/link";
 import { Result } from "antd";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
 
 const SentToken = (): ReactElement => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="row justify-content-md-center pt-5">
       <div className="col-lg-6 p-0">

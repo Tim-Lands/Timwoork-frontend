@@ -12,7 +12,6 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { PusherProvider } from "../contexts/pusherContext";
 import { CurrencyProvider } from "../contexts/currencyContext";
-import { LanguageProvider } from "../contexts/languageContext/context";
 import InnerApp from "../components/_innerApp";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
@@ -28,9 +27,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <Provider store={store}>
         <PusherProvider>
           <CurrencyProvider>
-            <LanguageProvider>
-              <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
-            </LanguageProvider>
+            <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
           </CurrencyProvider>
         </PusherProvider>
       </Provider>

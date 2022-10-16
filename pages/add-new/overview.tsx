@@ -1,15 +1,10 @@
 import Layout from "../../components/Layout/HomeLayout";
-import React, {
-  ReactElement,
-  useEffect,
-  useState,
-  useContext,
-  useRef,
-} from "react";
+import React, { ReactElement, useEffect, useState, useRef } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
 import Cookies from "js-cookie";
@@ -88,8 +83,8 @@ function Overview({ query }) {
   });
   const [userLang, setUserLang] = useState();
   const id = query.id;
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   const timeoutFunc: any = useRef();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")

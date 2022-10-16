@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import FormModal from "./FormModal";
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function FormLangsCheck({ default_lang, onChange, id }) {
   const [isShowenModal, setIsShowenModal] = useState(false);
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <>
       {isShowenModal && <FormModal setIsConfirmText={setIsShowenModal} />}

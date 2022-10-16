@@ -10,13 +10,14 @@ import useSWR from "swr";
 import Loading from "@/components/Loading";
 import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
+import { useAppSelector } from "@/store/hooks";
+
 import { MetaTags } from "@/components/SEO/MetaTags";
 import ChangePass from "@/components/ChangePass";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
 
 const personalInformations = () => {
   let token = Cookies.get("token");
+  const { getAll } = useAppSelector((state) => state.languages);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const [codes, setCodes] = useState([]);
@@ -24,8 +25,6 @@ const personalInformations = () => {
   const { data: userInfo }: any = useSWR("api/me");
   const { data: Countries }: any = useSWR("api/get_countries");
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }

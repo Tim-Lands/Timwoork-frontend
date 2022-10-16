@@ -7,7 +7,7 @@ const getData = createAsyncThunk(
       const res = await UserService.checkLogin();
       return res;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -18,7 +18,7 @@ const login = createAsyncThunk(
     try {
       const res = await UserService.login({ username, password });
 
-      return res.data.token;
+      return res?.data?.token;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -59,7 +59,50 @@ const loginGoogle = createAsyncThunk(
       });
       return res;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+const register = createAsyncThunk(
+  "user/register",
+  async (
+    args: {
+      email: string;
+      password: string;
+      password_confirmation: string;
+      username: string;
+      phone: string;
+      code_phone: string;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await UserService.signIn(args);
+      return res?.token;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+const logoutUser = createAsyncThunk(
+  "user/logout",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await UserService.logout();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+const logoutAll = createAsyncThunk(
+  "user/logout/all",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await UserService.logoutAll();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -67,4 +110,7 @@ export const UserThunkFunctions = {
   login,
   getData,
   loginGoogle,
+  register,
+  logoutUser,
+  logoutAll,
 };

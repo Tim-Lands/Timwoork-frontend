@@ -1,7 +1,8 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useEffect, useRef, useContext } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { message } from "antd";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 import router from "next/router";
 import Cookies from "js-cookie";
 import useSWR from "swr";
@@ -13,8 +14,8 @@ import Link from "next/link";
 
 function Complete({ query }) {
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

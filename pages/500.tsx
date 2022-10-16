@@ -1,10 +1,9 @@
 import Link from "next/link";
 import Head from "next/head";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 function FourOFour() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <div className="timwoork-404-page">

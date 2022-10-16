@@ -1,20 +1,13 @@
 import React, { ReactElement } from "react";
-// import { LanguageContext } from "../../contexts/languageContext/context";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
 import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
 import PortfolioSliders from "@/components/NewIndex/Portfolio/PortfolioSlider";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isSettings, setIsSettings] = useState(false);
-  // const { language, getSectionLanguage } = useContext(LanguageContext);
-  // const getLanguage = getSectionLanguage("products");
+  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <div className="container pt-4 mt-2">

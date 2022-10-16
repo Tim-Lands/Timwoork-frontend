@@ -1,11 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import { LanguageContext } from "../../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function ContestHeader() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   return (
     <div className="timlands-top-header">
       <ul className="timlands-tabs-nav me-auto">

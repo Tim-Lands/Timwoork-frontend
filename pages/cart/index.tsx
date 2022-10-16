@@ -1,11 +1,10 @@
 import Layout from "@/components/Layout/HomeLayout";
 import PostsAside from "@/components/PostsAside";
 import React, { ReactElement, useEffect, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+
 import useSWR from "swr";
 import { CurrencyContext } from "../../contexts/currencyContext";
 
-import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
 import CartPost from "@/components/Cart/CartPost";
 import { message, Spin } from "antd";
@@ -16,17 +15,14 @@ import router from "next/router";
 
 function index() {
   const dispatch = useAppDispatch();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const cart = useAppSelector((state) => state.cart);
+  const user = useAppSelector((state) => state.user);
   const { loaded, priceWithTax, itemsLength, isLoading, data, itemsTotal } =
     cart;
-  useEffect(() => {
-    if (loaded) return;
-    dispatch(CartActions.getCartData());
-  }, []);
 
   const { data: userInfo }: any = useSWR("api/me");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   const [, getCurrency] = useContext(CurrencyContext);
   const specCurrency = getCurrency(
     userInfo?.user_details?.profile?.currency?.code
@@ -34,9 +30,6 @@ function index() {
   const symbol =
     userInfo?.user_details?.profile?.currency?.symbol_native || "$";
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=4&popular"
   );
@@ -49,10 +42,10 @@ function index() {
     }
   };
   useEffect(() => {
-    // if (!token) {
-    //   router.push("/login");
-    // }
-  }, []);
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+    }
+  }, [user.isLogged]);
   return (
     <>
       <MetaTags

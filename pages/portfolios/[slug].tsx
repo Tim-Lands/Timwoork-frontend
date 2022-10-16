@@ -17,12 +17,11 @@ import Link from "next/link";
 import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
 import Portfolio from "@/components/Post/Portfolio";
 import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Index({ query }) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFavorated, setIsFavorated] = useState(false);

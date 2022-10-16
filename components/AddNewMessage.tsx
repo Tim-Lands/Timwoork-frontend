@@ -1,12 +1,12 @@
-import React, { ReactElement, useState, useContext } from "react";
+import React, { ReactElement, useState } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useAppSelector } from "@/store/hooks";
 import CreatableSelect from "react-select/creatable";
 import API from "../config";
 import SetSelectThemesModal from "./SetSelectThemesModal";
-import { LanguageContext } from "../contexts/languageContext/context";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -156,8 +156,8 @@ const Tiptap = (props: any) => {
   );
 };
 function AddNewMessage({ setIsConfirmText, title }): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [toState, setToState] = useState("");
   const [fromState, setFromState] = useState("");
   const [setSlectThemesModal, setSetSlectThemesModal] = useState(false);

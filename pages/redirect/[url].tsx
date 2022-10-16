@@ -5,8 +5,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 function Redirect() {
   const url = useRouter();
   const [go, setGo] = useState("");
@@ -18,8 +18,8 @@ function Redirect() {
       setBack(links[1]);
     }
   });
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className="py-4">
       <MetaTags title="أعادة توجيه" />

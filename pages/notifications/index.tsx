@@ -1,20 +1,21 @@
 import Layout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Loading";
 import Notification from "@/components/Notification";
-import { ReactElement, useEffect, useState, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { ReactElement, useEffect, useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import Cookies from "js-cookie";
 import router from "next/router";
 import API from "../../config";
 import { Result } from "antd";
+import { useAppSelector } from "@/store/hooks";
+
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Pagination from "react-js-pagination";
 
 function index() {
   let token = Cookies.get("token");
-  const { getSectionLanguage, language } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   const { mutate } = useSWRConfig();

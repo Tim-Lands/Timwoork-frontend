@@ -8,12 +8,9 @@ import API from "../../config";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
-
+import { useAppSelector } from "@/store/hooks";
 function CommentPost(props: any): ReactElement {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [isShowCommentForm, setIsShowCommentForm]: any = useState(false);
   let token = Cookies.get("token");

@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { CurrencyContext } from "../../contexts/currencyContext";
 import Image from "next/image";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
+
 function Post({
   title,
   thumbnail,
@@ -113,8 +114,8 @@ function Post({
       return yut.concat(yut2);
     }
   };
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   return (
     <div className={"timlands-post-item" + sizeClass()}>
       <Link href={`/p/${slug}`}>

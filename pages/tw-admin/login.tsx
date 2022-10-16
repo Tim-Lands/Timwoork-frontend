@@ -7,12 +7,11 @@ import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import API from "../../config";
 import { Alert } from "@/components/Alert/Alert";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const Login = (): ReactElement => {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   // The router object used for redirecting after login.
   const router = useRouter();
   // Redirect to user home route if user is authenticated.

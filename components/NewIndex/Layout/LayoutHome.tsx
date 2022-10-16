@@ -1,9 +1,9 @@
 import { Spin } from "antd";
 import router from "next/router";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { SWRConfig } from "swr";
 import API from "../../../config";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
 import Cookies from "js-cookie";
 import Footer from "../Footer/Footer";
@@ -12,8 +12,8 @@ import Navbar from "../Header/Navbar";
 function LayoutHome(props: any) {
   const [loading, setLoading] = useState(false);
   let token = Cookies.get("token");
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
   useEffect(() => {

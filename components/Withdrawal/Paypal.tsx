@@ -7,12 +7,11 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import { Alert } from "../Alert/Alert";
 import router from "next/router";
-import { LanguageContext } from "../../contexts/languageContext/context";
-import { useContext } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
+  const { getAll } = useAppSelector((state) => state.languages);
+
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const UpdateMoney = async (values) => {

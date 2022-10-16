@@ -4170,7 +4170,7 @@
     "ar": "نسخ رابط بروفايلي"
   },
   "Do_you_ant": {
-    "en": "Do you ant to be a seller? You can add extra information!",
+    "en": "Do you want to be a seller? You can add extra information!",
     "fr": "Voulez-vous devenir un vendeur? Vous pouvez ajouter des informations supplémentaires",
     "ar": "هل تريد أن تكون بائعا؟ يمكنك إضافة معلومات إضافية!"
   },
@@ -6105,7 +6105,7 @@
     "fr": "Envoyé",
     "ar": "تم الإرسال"
   },
-  "Create_a_seller ": {
+  "Create_a_seller": {
     "en": "Create a seller profile",
     "fr": "Créer un profile de vendeur",
     "ar": "إنشاء بروفايل بائع"

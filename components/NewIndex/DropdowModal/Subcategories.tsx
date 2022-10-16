@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
-import { LanguageContext } from "../../../contexts/languageContext/context";
+import { useAppSelector } from "@/store/hooks";
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 function Subcategories({ postsList, categoryID }) {
   const [list, setList] = useState({ subcategories: [] });
-  const { language } = useContext(LanguageContext);
+  const language = useAppSelector((state) => state.languages.language);
+
   useEffect(() => {
     postsList.forEach((posts) => {
       if (posts.id === categoryID) {

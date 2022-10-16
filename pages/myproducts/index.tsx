@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Result, Spin } from "antd";
-import React, { ReactElement, useState, useContext } from "react";
-import { LanguageContext } from "../../contexts/languageContext/context";
+import React, { ReactElement, useState } from "react";
+import { useAppSelector } from "@/store/hooks";
+
 import Link from "next/link";
 import Image from "next/image";
 import useSWR from "swr";
@@ -11,9 +12,8 @@ import Unauthorized from "@/components/Unauthorized";
 import MyProducts from "@/components/Profile/MyProducts";
 
 function index() {
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
-  const { language } = useContext(LanguageContext);
+  const { getAll, language } = useAppSelector((state) => state.languages);
+
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");

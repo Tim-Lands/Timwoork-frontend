@@ -10,8 +10,7 @@ import { GoogleLogin } from "react-google-login";
 import { message } from "antd";
 import { UserActions } from "../store/user/UserActions";
 // import { Alert } from "@/components/Alert/Alert";
-import { LanguageContext } from "../contexts/languageContext/context";
-import { useContext } from "react";
+
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 
 const clientId =
@@ -21,16 +20,6 @@ const Login = (): ReactElement => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
   const [passVisibled, setPassVisibled] = useState(false);
-  // const [validationsErrors, setValidationsErrors]: any = useState({});
-  // const [validationsGeneral, setValidationsGeneral]: any = useState({});
-  // function setValidationsErrorsHandle() {
-  //   setValidationsErrors({});
-  //   setValidationsGeneral({});
-  // }
-  /* Generate username from email and random 4 numbers
-   * ex. if email = roqaia.alrfou3@gmail.com & random 4 numbers= 1234
-   * then the username= roqaia.alrfou31234
-   */
   const generateUsername = (email: string) => {
     const result = email.indexOf("@");
     const len = email.length;
@@ -39,15 +28,9 @@ const Login = (): ReactElement => {
     const username = removeData + Math.floor(Math.random() * 100000);
     return username;
   };
+  const { getAll } = useAppSelector((state) => state.languages);
 
-  // Login with Google
-
-  // Login with Google
-  const { getSectionLanguage } = useContext(LanguageContext);
-  const getAll = getSectionLanguage();
   const onLoginSuccess = async (res) => {
-    // setValidationsErrorsHandle();
-    //أرسل هذا الريسبونس الى الباكند
     try {
       await dispatch(
         UserActions.loginGoogle({
@@ -61,14 +44,6 @@ const Login = (): ReactElement => {
         })
       ).unwrap();
 
-      // Authentication was successful.
-      // if (response.status === 200) {
-      //   Cookies.set("token", response.data.data.token, { expires: 365 });
-      //   if (!Cookies.get("token") && typeof window !== "undefined") {
-      //     localStorage.setItem("token", response.data.data.token);
-      //   }
-      //   // Cookies.set('username', );
-      //   // Cookies.set('userID', )
       message.success(getAll("Logged_in_successfully"));
 
       // }
@@ -79,12 +54,7 @@ const Login = (): ReactElement => {
 
   const onLoginFailure = () => {};
 
-  // The router object used for redirecting after login.
   const router = useRouter();
-  // Redirect to user home route if user is authenticated.
-  // let token = Cookies.get("token");
-  // if (!token && typeof window !== "undefined")
-  //   token = localStorage.getItem("token");
   useEffect(() => {
     if (user.isLogged && user.step !== null) {
       switch (user.step) {
@@ -117,7 +87,6 @@ const Login = (): ReactElement => {
       message.error(user.errorMsg);
     }
   }, [user.errorMsg]);
-  // Return statement.
   return (
     <>
       <MetaTags
@@ -131,7 +100,6 @@ const Login = (): ReactElement => {
           password: "",
         }}
         onSubmit={async (values) => {
-          // setValidationsErrors({});
           await dispatch(UserActions.login(values));
         }}
       >
@@ -140,11 +108,6 @@ const Login = (): ReactElement => {
             <div className="row justify-content-md-center">
               <div className="col-lg-5 p-0" style={{ maxWidth: 900 }}>
                 <div className="login-panel">
-                  {/* {(validationsGeneral.msg || validationsGeneral.message) && (
-                    <Alert type="error">
-                      {validationsGeneral.msg || validationsGeneral.message}
-                    </Alert>
-                  )} */}
                   <div
                     className={
                       "panel-modal-body login-panel-body auto-height" +
