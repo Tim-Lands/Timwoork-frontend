@@ -6,12 +6,10 @@ import "../styles/app-ltr.css";
 import { store } from "../store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";
-//import useSWR from "swr";
 import { ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { PusherProvider } from "../contexts/pusherContext";
-import { CurrencyProvider } from "../contexts/currencyContext";
 import InnerApp from "../components/_innerApp";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
@@ -26,9 +24,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <div>
       <Provider store={store}>
         <PusherProvider>
-          <CurrencyProvider>
-            <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
-          </CurrencyProvider>
+          <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
         </PusherProvider>
       </Provider>
     </div>

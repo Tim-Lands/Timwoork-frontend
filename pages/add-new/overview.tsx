@@ -13,11 +13,8 @@ import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
-import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-import FormModal from "@/components/NewIndex/Forms/FormModal";
-
-// import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-// import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
+import FormLangs from "@/components/Forms/FormLangs";
+import FormModal from "@/components/Forms/FormModal";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);

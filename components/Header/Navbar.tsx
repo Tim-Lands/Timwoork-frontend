@@ -1,9 +1,8 @@
 import Link from "next/link";
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useOutsideAlerter } from "../../useOutsideAlerter";
-import { useOutSide } from "../../useOutSide";
+import { useOutsideAlerter } from "../useOutsideAlerter";
+import { useOutSide } from "../useOutSide";
 import Community from "./Community";
-// import LoginForm from "@/components/NewIndex/LoginForm";
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Subnavbar from "./Subnavbar";
@@ -13,14 +12,14 @@ import Messages from "../DropdowModal/Messages";
 // import Language from "../DropdowModal/Language";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
-import { PusherContext } from "../../../contexts/pusherContext";
-import API from "../../../config";
+import { PusherContext } from "../../contexts/pusherContext";
+import API from "../../config";
 import { Badge, notification } from "antd";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import LastSeen from "@/components/LastSeen";
 import MobileMenu from "./mobileMenus";
 import router from "next/router";
-import { LanguagesActions } from "../../../store/languages/languagesActions";
+import { LanguagesActions } from "../../store/languages/languagesActions";
 
 import {
   MessageOutlined,
@@ -29,7 +28,7 @@ import {
   BellOutlined,
 } from "@ant-design/icons";
 import { darken } from "@mui/material";
-import { PRIMARY } from "../../../styles/variables";
+import { PRIMARY } from "../../styles/variables";
 function Navbar({ dark = false, MoreNav = <></> }) {
   const cartLength = useAppSelector((state) => state.cart.itemsLength);
   const user = useAppSelector((state) => state.user);
@@ -582,7 +581,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
 }
 
 Navbar.propTypes = {
-  dark: PropTypes.string,
+  dark: PropTypes.bool,
   MoreNav: PropTypes.any,
 };
 export default Navbar;

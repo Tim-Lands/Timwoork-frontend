@@ -15,6 +15,7 @@ import { useAppSelector } from "../../store/hooks";
 
 function Profile() {
   const profile = useAppSelector((state) => state.profile);
+  const currency = useAppSelector((state) => state.currency.my);
 
   const user = useAppSelector((state) => state.user);
   const [isTranslate, setIsTranslate] = useState(false);
@@ -303,7 +304,7 @@ function Profile() {
                             <p className="text-value">
                               {user.phone
                                 ? user.code_phone?.split("+")[1] + user.phone
-                                : "غير مكتمل"}
+                                : getAll("Uncompleted")}
                               {user.phone && "+"}
                             </p>
                           </div>
@@ -312,25 +313,18 @@ function Profile() {
                           <div className="content-text-item">
                             <h3 className="text-label">{getAll("Currency")}</h3>
                             <p className="text-value">
-                              {
-                                userInfo.user_details.profile.currency
-                                  .symbol_native
-                              }
+                              {currency.symbol_native}
                             </p>
                           </div>
                         </div>
-                        {userInfo.user_details.profile.country !== null && (
+                        {profile.country.name !== "" && (
                           <div className="col-sm-4">
                             <div className="content-text-item">
                               <h3 className="text-label">
                                 {getAll("Country")}
                               </h3>
                               <p className="text-value">
-                                {
-                                  userInfo.user_details.profile.country[
-                                    which(language)
-                                  ]
-                                }
+                                {profile.country.name}
                               </p>
                             </div>
                           </div>
@@ -351,9 +345,7 @@ function Profile() {
                           <div className="content-text-item">
                             <h3 className="text-label">{getAll("Birthday")}</h3>
                             <p className="text-value">
-                              {profile.date_of_birth == null
-                                ? ""
-                                : profile.date_of_birth}
+                              {profile.date_of_birth}
                             </p>
                           </div>
                         </div>
@@ -380,18 +372,7 @@ function Profile() {
     return <Loading />;
   }
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-    case "fr":
-      return "name_fr";
-  }
-};
+
 Profile.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

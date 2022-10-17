@@ -1,11 +1,8 @@
-import React, { ReactElement, useEffect, useState, useContext } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { motion } from "framer-motion";
-import useSWR from "swr";
-import Cookies from "js-cookie";
 import router from "next/router";
 import API from "../../config";
-import { CurrencyContext } from "../../contexts/currencyContext";
 import Loading from "@/components/Loading";
 import { Badge, Result, Tooltip } from "antd";
 import {
@@ -25,13 +22,14 @@ const stripePromise = loadStripe(
 
 function Bill() {
   const { getAll } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
+  const user = useAppSelector((state) => state.user);
+  const cart = useAppSelector((state) => state.cart);
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
 
   const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-    let token = Cookies.get("token");
-    if (!token && typeof window !== "undefined")
-      token = localStorage.getItem("token");
     const [validationsGeneral, setValidationsGeneral]: any = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const handleSubmit = async (event) => {
@@ -51,7 +49,7 @@ function Bill() {
           { payment_method_id: paymentMethod.id },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${user.token}`,
             },
           }
         );
@@ -93,12 +91,8 @@ function Bill() {
       </>
     );
   };
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const [billPayment, setBillPayment] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [isWalletLoading, setIsWalletLoading] = useState(false);
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [getLink, setGetLink] = useState("");
@@ -108,62 +102,47 @@ function Bill() {
     Paypal: false,
   });
 
-  const { data: cartList, error }: any = useSWR("api/cart");
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  // const { data: cartList, error }: any = useSWR("api/cart");
+  const veriedEmail = user.email_verified;
 
-  const mybalance =
-    userInfo && userInfo.user_details.profile.withdrawable_amount;
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
+  const mybalance = profile.withdrawable_amount;
 
   async function getPaypal() {
     setIsLoading(true);
-    setIsError(false);
     try {
       const res: any = await API.post(
         `api/purchase/paypal/approve`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${user.token}`,
           },
         }
       );
       if (res.status === 200) {
         setIsLoading(false);
-        setIsError(false);
         setGetLink(res.data);
       }
     } catch (error) {
-      setIsError(true);
       setIsLoading(false);
     }
   }
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-    if (cartList && cartList.data == null) {
+    if (cart.data.length > 0) {
       router.push("/mypurchases");
       return;
     }
     getPaypal();
   }, []);
   useEffect(() => {
-    if (cartList) {
-      const new_gates = {};
-      cartList.data.cart_payments.forEach(
-        (gate) => (new_gates[gate.name_en] = true)
-      );
-      setPaymentsGates(new_gates);
-    }
-  }, [cartList]);
+    const new_gates = {};
+    cart.cart_payments.forEach((gate) => (new_gates[gate.name_en] = true));
+    setPaymentsGates(new_gates);
+  }, [cart.cart_payments]);
   async function chargeWallet() {
     setIsWalletLoading(true);
     try {
@@ -172,7 +151,7 @@ function Bill() {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${user.token}`,
           },
         }
       );
@@ -196,7 +175,7 @@ function Bill() {
       />
       {veriedEmail && (
         <div style={{ maxWidth: 1350, marginInline: "auto" }}>
-          {cartList && cartList.data == null && isError && error && (
+          {cart.id && (
             <div className="row py-4 justify-content-center">
               <div className="col-md-5">
                 <Result
@@ -213,80 +192,67 @@ function Bill() {
                 <div className="app-bill-header">
                   <h3 className="title">{getAll("Finale_bill")}</h3>
                 </div>
-                {!cartList && <Loading />}
-                {cartList &&
-                  cartList.data.cart_payments.map((e, i) => (
-                    <div
-                      key={i}
-                      className="app-bill-content"
-                      style={{ marginBottom: 9 }}
-                    >
-                      {e.pivot.type_payment_id == billPayment && (
-                        <ul className="list-group">
-                          <li className="list-group-item d-flex justify-content-between align-items-center">
-                            {getAll("Services_number")}
-                            <span className="">
-                              {cartList && cartList.data.cart_items_count}
-                            </span>
-                          </li>
-                          <li
-                            style={{ fontSize: 12, fontWeight: 300 }}
-                            className="list-group-item total d-flex justify-content-between align-items-center"
-                          >
-                            {getAll("Transfer_fees_for")}
-                            {e.name_ar}{" "}
-                            <span className="me-auto">
-                              <Tooltip title={getAll("These_fees_cover")}>
-                                <Badge
-                                  style={{ color: "#52c41a " }}
-                                  count={
-                                    <span
-                                      style={{ color: "#52c41a", fontSize: 16 }}
-                                      className="material-icons"
-                                    >
-                                      info
-                                    </span>
-                                  }
-                                />
-                              </Tooltip>
-                            </span>
-                            <span className="">
-                              {specCurrency
-                                ? Math.round(e.pivot.tax * specCurrency)
-                                : e.pivot.tax}
-                              {symbol}
-                            </span>
-                          </li>
-                          <li
-                            style={{ fontSize: 12, fontWeight: 300 }}
-                            className="list-group-item total d-flex justify-content-between align-items-center"
-                          >
-                            {getAll("Total_without_fees")}
-                            <span className="">
-                              {specCurrency
-                                ? Math.round(e.pivot.total * specCurrency)
-                                : e.pivot.total}
-                              {symbol}
-                            </span>
-                          </li>
-                          <li
-                            style={{ fontSize: 12, fontWeight: 300 }}
-                            className="list-group-item total d-flex justify-content-between align-items-center"
-                          >
-                            {getAll("Total_with_fees")}
-                            <span className="">
-                              {specCurrency
-                                ? Math.round(
-                                    e.pivot.total_with_tax * specCurrency
-                                  )
-                                : e.pivot.total_with_tax}
-                              {symbol}
-                            </span>
-                          </li>
-                        </ul>
-                      )}
-                    </div>
-                  ))}
+                {cart.isLoading && <Loading />}
+                {cart.cart_payments.map((e, i) => (
+                  <div
+                    key={i}
+                    className="app-bill-content"
+                    style={{ marginBottom: 9 }}
+                  >
+                    {e.pivot.type_payment_id == billPayment && (
+                      <ul className="list-group">
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                          {getAll("Services_number")}
+                          <span className="">{cart.itemsLength}</span>
+                        </li>
+                        <li
+                          style={{ fontSize: 12, fontWeight: 300 }}
+                          className="list-group-item total d-flex justify-content-between align-items-center"
+                        >
+                          {getAll("Transfer_fees_for")}
+                          {e.name_en}{" "}
+                          <span className="me-auto">
+                            <Tooltip title={getAll("These_fees_cover")}>
+                              <Badge
+                                style={{ color: "#52c41a " }}
+                                count={
+                                  <span
+                                    style={{ color: "#52c41a", fontSize: 16 }}
+                                    className="material-icons"
+                                  >
+                                    info
+                                  </span>
+                                }
+                              />
+                            </Tooltip>
+                          </span>
+                          <span className="">
+                            {Math.round(e.pivot.tax * value) + symbol_native}
+                          </span>
+                        </li>
+                        <li
+                          style={{ fontSize: 12, fontWeight: 300 }}
+                          className="list-group-item total d-flex justify-content-between align-items-center"
+                        >
+                          {getAll("Total_without_fees")}
+                          <span className="">
+                            {Math.round(e.pivot.total * value) + symbol_native}
+                          </span>
+                        </li>
+                        <li
+                          style={{ fontSize: 12, fontWeight: 300 }}
+                          className="list-group-item total d-flex justify-content-between align-items-center"
+                        >
+                          {getAll("Total_with_fees")}
+                          <span className="">
+                            {Math.round(e.pivot.total_with_tax * value) +
+                              symbol_native}
+                          </span>
+                        </li>
+                      </ul>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="col-md-5">
@@ -294,7 +260,7 @@ function Bill() {
                 <div className="app-bill-header">
                   <h3 className="title">{getAll("Choose_payment_method")}</h3>
                 </div>
-                {cartList && cartList.data !== null && (
+                {cart.id && (
                   <div className="app-bill-payment">
                     <div className="form-check" style={{ marginBlock: 9 }}>
                       <input
@@ -372,8 +338,7 @@ function Bill() {
                         </motion.div>
                       ) : null}
                     </div>
-                    {Number(mybalance) <
-                    Number(cartList && cartList.data.price_with_tax) ? (
+                    {Number(mybalance) < Number(cart.priceWithTax) ? (
                       <>
                         <Alert type="primary">{getAll("You_cannot_buy")}</Alert>
                       </>
@@ -432,13 +397,8 @@ function Bill() {
                                       />{" "}
                                       {getAll("Buy_now")} (
                                       <span className="">
-                                        {specCurrency
-                                          ? Math.round(
-                                              cartList?.data?.total_price *
-                                                specCurrency
-                                            )
-                                          : cartList?.data?.total_price}
-                                        {symbol}
+                                        {Math.round(cart.itemsTotal * value) +
+                                          symbol_native}
                                       </span>
                                       )
                                     </>

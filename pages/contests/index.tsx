@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import ContestSidebar from "@/components/NewIndex/Contests/ContestSidebar";
+import ContestSidebar from "@/components/Contests/ContestSidebar";
 import ContestPost from "@/components/Post/ContestPost";
-import ContestHeader from "@/components/NewIndex/Contests/ContestHeader";
+import ContestHeader from "@/components/Contests/ContestHeader";
 
 function Index() {
   return (

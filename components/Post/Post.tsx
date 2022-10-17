@@ -1,8 +1,6 @@
-import React, { ReactElement, useContext } from "react";
-import useSWR from "swr";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import { CurrencyContext } from "../../contexts/currencyContext";
 import Image from "next/image";
 import { useAppSelector } from "@/store/hooks";
 
@@ -19,13 +17,8 @@ function Post({
   slug,
   rate = 2,
 }): ReactElement {
-  const { data: userInfo }: any = useSWR("api/me");
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
+
   const thumbnailUrl = `url(${thumbnail})`;
   const sizeClass = () => {
     switch (size) {
@@ -155,8 +148,7 @@ function Post({
       <div className="post-item-footer">
         <p className="post-meta-price">
           {getAll("Price_from")}
-          {specCurrency ? Math.round(price * specCurrency) : price}
-          {symbol}
+          {Math.round(price * value) + symbol_native}
         </p>
         <p className="post-meta-bayer">
           {(buyers == 0 ? buyers : buyers + getAll("Have_bought_this")) ||
@@ -177,7 +169,7 @@ Post.propTypes = {
   level: PropTypes.string,
   rate: PropTypes.any,
   buyers: PropTypes.number,
-  price: PropTypes.number,
+  price: PropTypes.string,
   product: PropTypes.any,
 };
 

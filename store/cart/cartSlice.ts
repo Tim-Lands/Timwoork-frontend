@@ -25,6 +25,16 @@ export interface cartState {
       price: number;
     }>;
   }>;
+  cart_payments: Array<{
+    name_en: string;
+    pivot: {
+      cart_id: number;
+      tax: number;
+      total: number;
+      total_with_tax: number;
+      type_payment_id: number;
+    };
+  }>;
 }
 export const initialState: cartState = {
   id: null,
@@ -35,6 +45,7 @@ export const initialState: cartState = {
   isLoading: false,
   loaded: false,
   data: [],
+  cart_payments: [],
 };
 export const cartSlice = createSlice({
   name: "cart",
@@ -60,6 +71,16 @@ export const cartSlice = createSlice({
                 price: number;
               }>;
             }>;
+            cart_payments: Array<{
+              name_en: string;
+              pivot: {
+                cart_id: number;
+                tax: number;
+                total: number;
+                total_with_tax: number;
+                type_payment_id: number;
+              };
+            }>;
             id: number;
             cart_items_count: number;
             total_price: number;
@@ -75,6 +96,7 @@ export const cartSlice = createSlice({
           total_price,
           price_with_tax,
           tax,
+          cart_payments,
         } = action.payload;
         state.data = cart_items;
         state.id = id;
@@ -82,6 +104,7 @@ export const cartSlice = createSlice({
         state.itemsTotal = total_price;
         state.priceWithTax = price_with_tax;
         state.tax = tax;
+        state.cart_payments = cart_payments;
         state.loaded = true;
       }
     );

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
+import DeleteConfirm from "@/components/Portfolio/DeleteConfirm";
 import { BsLightbulb, BsPlus } from "react-icons/bs";
 import Link from "next/link";
 import { MdSecurity } from "react-icons/md";

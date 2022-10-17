@@ -15,7 +15,6 @@ export const initialState: languagesState = {
   getAll: (name: string) => {
     if (translates[name]) return translates[name][initialState.language];
     else {
-      console.log(name);
       return "error here";
     }
   },
@@ -24,12 +23,12 @@ export const languagesSlice = createSlice({
   name: "languages",
   initialState,
   reducers: {
-    setLanguage: (state: languagesState, action: { payload: string }) => {
+    setLanguage: (state, action: { payload: string }) => {
       const lang = action.payload;
+      if (lang === state.language) return;
       typeof window !== "undefined" && localStorage.setItem("lang", lang);
       Cookies.set("lang", lang);
       API.defaults.headers["X-localization"] = lang;
-      state.language = lang;
       window.location.reload();
     },
   },

@@ -14,9 +14,9 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
+import DeleteConfirm from "@/components/Portfolio/DeleteConfirm";
 import Portfolio from "@/components/Post/Portfolio";
-import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
+import PortfolioNav from "@/components/Portfolio/PortfolioNav";
 import { useAppSelector } from "@/store/hooks";
 
 function Index({ query }) {

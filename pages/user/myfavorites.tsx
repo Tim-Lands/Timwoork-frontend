@@ -3,7 +3,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
 import PropTypes from "prop-types";
-import PortfolioProfileHeader from "@/components/NewIndex/Portfolio/PortfolioProfileHeader";
+import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
 import Link from "next/link";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import { useAppSelector } from "@/store/hooks";

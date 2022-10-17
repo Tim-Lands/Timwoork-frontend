@@ -11,7 +11,7 @@ import Sidebar from "@/components/Profile/Sidebar";
 import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
-import FollowItem from "@/components/NewIndex/FollowItem";
+import FollowItem from "@/components/FollowItem";
 import { useAppSelector } from "@/store/hooks";
 
 function MyFollowers() {

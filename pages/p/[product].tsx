@@ -1,9 +1,8 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
-import { CurrencyContext } from "../../contexts/currencyContext";
 import Comments from "../../components/Comments";
 
-import { ReactElement, useEffect, useState, useContext } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -49,6 +48,7 @@ const properties = {
 };
 function Single({ query, stars, errorFetch }) {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const isLoading = useAppSelector((state) => state.cart.isLoading);
   let token = Cookies.get("token");
   const { getAll, language } = useAppSelector((state) => state.languages);
@@ -58,14 +58,9 @@ function Single({ query, stars, errorFetch }) {
   const { data: ProductData, errorLoad }: any = useSWR(
     `api/product/${query.product}`
   );
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
 
   const { data: userInfo }: any = useSWR("api/me");
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
 
   const [quantutyCount, setQuantutyCount] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -217,7 +212,7 @@ function Single({ query, stars, errorFetch }) {
     }
   }
   const addToCart = async () => {
-    const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+    const veriedEmail = user.email_verified;
     if (!veriedEmail) {
       router.push("/email/verification");
       return;
@@ -618,7 +613,7 @@ function Single({ query, stars, errorFetch }) {
                                     className="btn butt-green butt-sm flex-center"
                                     disabled={createConversationLoading}
                                     onClick={() =>
-                                      userInfo
+                                      user.isLogged
                                         ? setIsModalVisible(true)
                                         : router.push("/login")
                                     }
@@ -791,10 +786,8 @@ function Single({ query, stars, errorFetch }) {
                                     <p className="price-duration">
                                       {getAll("The_duration_will_cost")}
                                       {DevdurationFunc(e.duration)}{" "}
-                                      {specCurrency
-                                        ? Math.round(e?.price * specCurrency)
-                                        : e?.price}
-                                      {symbol}
+                                      {Math.round(e?.price * value) +
+                                        symbol_native}
                                     </p>
                                   </label>
                                 </div>
@@ -808,10 +801,7 @@ function Single({ query, stars, errorFetch }) {
                       <div className="aside-footer-total-price">
                         <h4 className="price-total me-auto">
                           <strong>{getAll("Total")} </strong>{" "}
-                          {specCurrency
-                            ? Math.round(_totalPrice() * specCurrency)
-                            : _totalPrice()}
-                          {symbol}
+                          {Math.round(_totalPrice() * value) + symbol_native}
                         </h4>
                         <div className="bayers-count">
                           <p className="num">

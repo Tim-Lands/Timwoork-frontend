@@ -2,32 +2,28 @@ import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import FilterContent from "../../components/products";
 import { useFormik } from "formik";
-import API from "../../config";
 import PropTypes from "prop-types";
 import Slider from "@mui/material/Slider";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
-
+import { CategoriesService } from "@/services/categoriesServices";
+import { ProductService } from "@/services/productService";
+import { Services } from "@/services/index";
 import Pagination from "react-js-pagination";
-import Cookies from "js-cookie";
 import { Collapse, Result } from "antd";
-import { Alert } from "@/components/Alert/Alert";
 import CreatableSelect from "react-select/creatable";
 import Link from "next/link";
-import cookies from "next-cookies";
 import router from "next/router";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
   const [isLoadingTags, setIsLoadingTags] = useState(false);
-  const getdataTags = async (tag: string) => {
+  const getTagsData = async (tag: string) => {
     setIsLoadingTags(true);
     try {
-      const res: any = await API.get(`api/tags/filter?tag=${tag}`);
-      if (res.status === 200) {
-        setIsLoadingTags(false);
-        setDataTags(res.data.data.data);
-      }
+      const res = await Services.getTags(tag);
+      setIsLoadingTags(false);
+      setDataTags(res);
     } catch (error) {
       setIsLoadingTags(false);
     }
@@ -51,7 +47,7 @@ const MySelect = (props: any) => {
         options={dataTags}
         onKeyDown={(e: any) => {
           if (e.target.value) {
-            getdataTags(e.target.value);
+            getTagsData(e.target.value);
           }
         }}
         isMulti={true}
@@ -71,11 +67,7 @@ function Category({ products, categories, url_params }) {
   const { Panel } = Collapse;
 
   const [paginationSize, setPaginationSize] = useState(8);
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
 
-  const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [getProducts, setGetProducts]: any = useState(products);
   const [sentinel, setSentinel]: any = useState({ mount: true });
   const [subcategories, setSubCategories]: any = useState({});
@@ -97,7 +89,7 @@ function Category({ products, categories, url_params }) {
   }, [sentinel]);
 
   useEffect(() => {
-    if (categories?.data) fetchSubCategories();
+    if (categories) fetchSubCategories();
   }, [categories]);
   useEffect(() => {
     window.addEventListener("scroll", () => setIsSettings(false));
@@ -164,25 +156,21 @@ function Category({ products, categories, url_params }) {
           query ? query : url_params.query ? url_params.query : ""
         }`,
         between: delevring ? `duration,${delevring}` : null,
+
         category: url_params.categoryID,
         tags: tags_filtered.length == 0 ? null : tags_filtered.join(","),
         ratings_avg: ratting,
         seller_level,
         subcategories: url_params.subcategoryID,
       };
-      const res = await API.get(
-        `api/filter?${url_params.type}&between=price,${minprice},${maxprice}`,
-        {
-          params,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setGetProducts(res.data.data);
-        setIsLoading(false);
-      }
+      const res = await ProductService.getAll({
+        params,
+        type: url_params.type,
+        min_price: minprice,
+        max_price: maxprice,
+      });
+      setGetProducts(res);
+      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
     }
@@ -191,14 +179,13 @@ function Category({ products, categories, url_params }) {
     const promises = [];
     const temp_subCategories = {};
     const temp_subCategoriesDisplay = {};
-    categories?.data.forEach((category) =>
-      promises.push(API.get(`api/get_categories/${category.id}`))
+    categories.forEach((category) =>
+      promises.push(CategoriesService.getOne(category.id))
     );
     const sub_categories = await Promise.all(promises);
-    sub_categories.forEach((sub_category) => {
-      temp_subCategories[sub_category.data.data.id] =
-        sub_category.data.data.sub_categories;
-      temp_subCategoriesDisplay[sub_category.data.data.id] = "none";
+    sub_categories?.forEach((sub_category) => {
+      temp_subCategories[sub_category?.id] = sub_category?.sub_categories;
+      temp_subCategoriesDisplay[sub_category?.id] = "none";
     });
     setSubCategories(temp_subCategories);
     setSubCategoryDisplay(temp_subCategoriesDisplay);
@@ -210,37 +197,18 @@ function Category({ products, categories, url_params }) {
       [id]: subCategoryDisplay[id] == "none" ? "display" : "none",
     });
   };
-  /********************** price Slider **********************/
   function valuetext(value: number) {
     return `${value}$`;
   }
-  // Pricing range from 0 to 1000
-  //const minDistance = 50; // minimum distance between any two values of price
 
-  const handleChangeSlider = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number
-  ) => {
+  const handleChangeSlider = (event: Event, newValue: number | number[]) => {
     if (!Array.isArray(newValue)) {
       return;
-    }
-    if (activeThumb === 0) {
-      /*setpriceRange([
-                Math.min(newValue[0], priceRange[1] - minDistance),
-                priceRange[1],
-            ]);*/
-    } else {
-      /*setpriceRange([
-                priceRange[0],
-                Math.max(newValue[1], priceRange[0] + minDistance),
-            ]);*/
     }
     formik.setFieldValue("maxprice", -1 * newValue[0]);
     formik.setFieldValue("minprice", -1 * newValue[1]);
   };
 
-  //const { data: categories }: any = useSWR('api/get_categories')
   const formik = useFormik({
     initialValues: {
       categoryID: [],
@@ -248,7 +216,7 @@ function Category({ products, categories, url_params }) {
       maxprice: 1000,
       tags: [],
       minprice: 5,
-      query: null,
+      query: "",
       ratting: null,
       seller_level: null,
       delevring: null,
@@ -257,22 +225,7 @@ function Category({ products, categories, url_params }) {
     },
     isInitialValid: true,
     enableReinitialize: true,
-    onSubmit: async (values) => {
-      try {
-        // const res =
-        await API.post(`api/filter?paginate=12`, values, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // if (res.status === 200) {
-        // }
-      } catch (error: any) {
-        if (error.response && error.response.data) {
-          setValidationsGeneral(error.response.data);
-        }
-      }
-    },
+    onSubmit: async () => {},
   });
   const showStars = (ratecount: any) => {
     const rate = Number(ratecount).toPrecision(1) || 0;
@@ -374,9 +327,6 @@ function Category({ products, categories, url_params }) {
               <div className="filter-sidebar-title">
                 <h4 className="title">{getAll("Services_filter")}</h4>
               </div>
-              {validationsGeneral.msg && (
-                <Alert type="error">{validationsGeneral.msg}</Alert>
-              )}
 
               <div className="timlands-form">
                 <input
@@ -490,57 +440,53 @@ function Category({ products, categories, url_params }) {
                           </span>
                         </div>
                       </div>
-                      {/* يمكن تحتاجها <Loading size="sm"/> */}
 
-                      {categories &&
-                        categories.data.map((e: any) => (
-                          <>
-                            <div className="list-inner" key={e.id}>
-                              <div
-                                className={`list-cat-item ${
-                                  subCategoryDisplay[e.id]
-                                }ed`}
-                                onClick={() => toggleCateogryDisplay(e.id)}
-                              >
-                                <span className="item-cat-label">
-                                  <span className="material-icons material-icons-outlined">
-                                    {e.icon}
-                                  </span>
-                                  {e[which(language)]}
-                                </span>
-                              </div>
+                      {categories?.map((e: any) => (
+                        <div className="list-inner" key={e.id}>
+                          <div
+                            className={`list-cat-item ${
+                              subCategoryDisplay[e.id]
+                            }ed`}
+                            onClick={() => toggleCateogryDisplay(e.id)}
+                          >
+                            <span className="item-cat-label">
+                              <span className="material-icons material-icons-outlined">
+                                {e.icon}
+                              </span>
+                              {e[which(language)]}
+                            </span>
+                          </div>
 
-                              <div
-                                className={`filter-subcategories-list d-${
-                                  subCategoryDisplay[e.id]
-                                }`}
-                              >
-                                <div
-                                  className="list-subcat-item"
-                                  onClick={() => {}}
-                                >
-                                  <Link href={`/products?categoryID=${e.id}`}>
-                                    <a className="item-cat-label text-black">
-                                      {getAll("All")}
-                                    </a>
-                                  </Link>
-                                </div>
-                                {subcategories[e.id]?.map((sub_category) => (
-                                  <div
-                                    key={sub_category.id}
-                                    className="list-subcat-item"
-                                  >
-                                    <Link
-                                      href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}
-                                    >
-                                      <a>{sub_category[which(language)]}</a>
-                                    </Link>
-                                  </div>
-                                ))}
-                              </div>
+                          <div
+                            className={`filter-subcategories-list d-${
+                              subCategoryDisplay[e.id]
+                            }`}
+                          >
+                            <div
+                              className="list-subcat-item"
+                              onClick={() => {}}
+                            >
+                              <Link href={`/products?categoryID=${e.id}`}>
+                                <a className="item-cat-label text-black">
+                                  {getAll("All")}
+                                </a>
+                              </Link>
                             </div>
-                          </>
-                        ))}
+                            {subcategories[e.id]?.map((sub_category) => (
+                              <div
+                                key={sub_category.id}
+                                className="list-subcat-item"
+                              >
+                                <Link
+                                  href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}
+                                >
+                                  <a>{sub_category[which(language)]}</a>
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </Panel>
@@ -603,8 +549,8 @@ function Category({ products, categories, url_params }) {
                       <label className="form-check-label" htmlFor="ratting-1">
                         <span className="rate-stars">
                           <span className="stars-icons">
-                            {showStars(1).map((e: any) => (
-                              <span key={e.id}>{e.name}</span>
+                            {showStars(1).map((e: any, index: number) => (
+                              <span key={e.id + index}>{e.name}</span>
                             ))}
                           </span>
                           <span className="stars-count">(1)</span>
@@ -627,8 +573,8 @@ function Category({ products, categories, url_params }) {
                       <label className="form-check-label" htmlFor="ratting-2">
                         <span className="rate-stars">
                           <span className="stars-icons">
-                            {showStars(2).map((e: any) => (
-                              <span key={e.id}>{e.name}</span>
+                            {showStars(2).map((e: any, index: number) => (
+                              <span key={e.id + index}>{e.name}</span>
                             ))}
                           </span>
                           <span className="stars-count">(2)</span>
@@ -651,8 +597,8 @@ function Category({ products, categories, url_params }) {
                       <label className="form-check-label" htmlFor="ratting-3">
                         <span className="rate-stars">
                           <span className="stars-icons">
-                            {showStars(3).map((e: any) => (
-                              <span key={e.id}>{e.name}</span>
+                            {showStars(3).map((e: any, index: number) => (
+                              <span key={e.id + index}>{e.name}</span>
                             ))}
                           </span>
                           <span className="stars-count">(3)</span>
@@ -675,8 +621,8 @@ function Category({ products, categories, url_params }) {
                       <label className="form-check-label" htmlFor="ratting-4">
                         <span className="rate-stars">
                           <span className="stars-icons">
-                            {showStars(4).map((e: any) => (
-                              <span key={e.id}>{e.name}</span>
+                            {showStars(4).map((e: any, index: number) => (
+                              <span key={e.id + index}>{e.name}</span>
                             ))}
                           </span>
                           <span className="stars-count">(4)</span>
@@ -699,8 +645,8 @@ function Category({ products, categories, url_params }) {
                       <label className="form-check-label" htmlFor="ratting-5">
                         <span className="rate-stars">
                           <span className="stars-icons">
-                            {showStars(5).map((e: any) => (
-                              <span key={e.id}>{e.name}</span>
+                            {showStars(5).map((e: any, index: number) => (
+                              <span key={e.id + index}>{e.name}</span>
                             ))}
                           </span>
                           <span className="stars-count">(5)</span>
@@ -1011,7 +957,7 @@ function Category({ products, categories, url_params }) {
                     getProducts.current_page ? getProducts.current_page : 0
                   }
                   itemsCountPerPage={
-                    getProducts.per_page ? getProducts.per_page : 0
+                    getProducts.per_page ? Number(getProducts.per_page) : 0
                   }
                   totalItemsCount={getProducts.total ? getProducts.total : 0}
                   onChange={(pageNumber) => {
@@ -1033,8 +979,6 @@ function Category({ products, categories, url_params }) {
   );
 }
 export async function getServerSideProps(context) {
-  console.log("begin server side");
-  const token = cookies(context).token || "";
   const { query } = context;
   try {
     const query_params = {
@@ -1045,26 +989,20 @@ export async function getServerSideProps(context) {
       query: query.query,
     };
 
-    const [productsRes, categoriesRes] = await Promise.all([
-      API.get(`api/filter?${query.type}`, {
-        params: query_params,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      API.get(`api/get_categories`),
+    const [products, categories] = await Promise.all([
+      ProductService.getAll({ type: query.type, params: query_params }),
+      CategoriesService.getAll(),
     ]);
 
     return {
       props: {
-        products: productsRes?.data?.data,
-        categories: categoriesRes.data,
+        products: products,
+        categories,
         url_params: query,
         errorFetch: false,
       },
     };
   } catch (error) {
-    console.log(error);
     return {
       props: {
         errorFetch: true,

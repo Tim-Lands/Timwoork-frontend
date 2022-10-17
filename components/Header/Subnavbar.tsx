@@ -3,7 +3,7 @@ import { useAppSelector } from "@/store/hooks";
 
 import PropTypes from "prop-types";
 import Subcategories from "../DropdowModal/Subcategories";
-import useOnScreen from "../../useOnScreen";
+import useOnScreen from "../useOnScreen";
 import { Dropdown } from "antd";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
@@ -15,62 +15,61 @@ function Subnavbar({ visible, postsList }) {
   const middle = useRef(null);
   const scroll = useRef(null);
   const [categoryID, setCategoryID] = useState(0);
-  const categories = {
-    data: [
-      {
-        id: 8,
-        name_ar: getAll("All_services"),
-        to: "products",
-        end: true,
-      },
-      {
-        id: 1,
-        name_ar: getAll("Business"),
-        to: "products?categoryID=12",
-        start: true,
-        categoryID: 12,
-      },
-      {
-        id: 2,
-        name_ar: getAll("Programming_and_development"),
+  const categories = [
+    {
+      id: 8,
+      name_ar: getAll("All_services"),
+      to: "products",
+      end: true,
+    },
+    {
+      id: 1,
+      name_ar: getAll("Business"),
+      to: "products?categoryID=12",
+      start: true,
+      categoryID: 12,
+    },
+    {
+      id: 2,
+      name_ar: getAll("Programming_and_development"),
 
-        to: "products?categoryID=11",
-        categoryID: 11,
-      },
-      {
-        name_ar: getAll("E_marketing"),
-        id: 3,
-        to: "products?categoryID=10",
-        categoryID: 10,
-      },
-      {
-        id: 4,
-        name_ar: getAll("Online_training"),
+      to: "products?categoryID=11",
+      categoryID: 11,
+    },
+    {
+      name_ar: getAll("E_marketing"),
+      id: 3,
+      to: "products?categoryID=10",
+      categoryID: 10,
+    },
+    {
+      id: 4,
+      name_ar: getAll("Online_training"),
 
-        to: "products?categoryID=9",
-        categoryID: 9,
-      },
-      {
-        id: 5,
-        name_ar: getAll("Video_design"),
-        to: "products?categoryID=8",
-        categoryID: 8,
-      },
-      {
-        id: 6,
-        name_ar: getAll("General_design"),
+      to: "products?categoryID=9",
+      categoryID: 9,
+    },
+    {
+      id: 5,
+      name_ar: getAll("Video_design"),
+      to: "products?categoryID=8",
+      categoryID: 8,
+    },
+    {
+      id: 6,
+      name_ar: getAll("General_design"),
 
-        to: "products?categoryID=7",
-        categoryID: 7,
-      },
-      {
-        name_ar: getAll("Audio"),
-        id: 7,
-        to: "products?categoryID=6",
-        categoryID: 6,
-      },
-    ],
-  };
+      to: "products?categoryID=7",
+      categoryID: 7,
+    },
+    {
+      name_ar: getAll("Audio"),
+      id: 7,
+      to: "products?categoryID=6",
+      categoryID: 6,
+    },
+  ];
+
   const [selected, setSelected] = useState(false);
   const [showLeft, setShowLeft] = useState(true);
   const [showRight, setShowRight] = useState(true);
@@ -99,11 +98,12 @@ function Subnavbar({ visible, postsList }) {
           }}
         >
           {categories &&
-            categories.data.map((e: any, index: number) => {
+            categories.map((e: any, index: number) => {
               return e.end ? (
                 <li
                   className={`sub ${selected === e.id ? "selectedSub" : ""}`}
                   ref={e.end ? end : e.start ? start : middle}
+                  key={e.id}
                   onMouseEnter={() => {
                     if (!e.end) {
                       setSelected(e.id);

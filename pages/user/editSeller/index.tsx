@@ -15,9 +15,9 @@ import PropTypes from "prop-types";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
-import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
-import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-import FormModal from "@/components/NewIndex/Forms/FormModal";
+import FormLangsCheck from "@/components/Forms/FormLangsCheck";
+import FormLangs from "@/components/Forms/FormLangs";
+import FormModal from "@/components/Forms/FormModal";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {

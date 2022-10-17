@@ -1,17 +1,13 @@
-import Navbar from "@/components/NewIndex/Header/Navbar";
+import Navbar from "@/components/Header/Navbar";
 import { Spin } from "antd";
 import router from "next/router";
 import { useEffect, useState } from "react";
-import Footer from "../NewIndex/Footer/Footer";
+import Footer from "../Footer/Footer";
 import { useAppSelector } from "@/store/hooks";
-import Cookies from "js-cookie";
 
 function Layout(props: any) {
   const [loading, setLoading] = useState(false);
-  let token = Cookies.get("token");
   const { getAll } = useAppSelector((state) => state.languages);
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   useEffect(() => {
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);

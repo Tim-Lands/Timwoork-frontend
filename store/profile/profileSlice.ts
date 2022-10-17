@@ -31,6 +31,31 @@ export interface profileState {
   loading: boolean;
   level: { id: number; name: string };
   badge: { id: number; name: string };
+  country: { id: number; name: string };
+}
+interface payloadState {
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  avatar_url: string;
+  gender: number;
+  date_of_birth: string;
+  credit: number;
+  steps: number;
+  is_seller: number;
+  precent_rating: number;
+  country_id: number;
+  badge_id: number;
+  created_at: string;
+  full_name: string;
+  is_completed: number;
+  currency_id: number;
+  avatar_path: string;
+  withdrawable_amount: number;
+  pending_amount: number;
+  level: { id: number; name: string };
+  badge: { id: number; name: string };
+  country: { id: number; name: string };
 }
 const initialState: profileState = {
   user_id: null,
@@ -54,34 +79,10 @@ const initialState: profileState = {
   avatar_path: "/avatar.png",
   level: { id: null, name: "" },
   badge: { id: null, name: "" },
+  country: { id: null, name: "" },
   loading: false,
 };
-const assignState = (
-  state: profileState,
-  payload: {
-    user_id: number;
-    first_name: string;
-    last_name: string;
-    avatar_url: string;
-    gender: number;
-    date_of_birth: string;
-    credit: number;
-    steps: number;
-    is_seller: number;
-    precent_rating: number;
-    country_id: number;
-    badge_id: number;
-    created_at: string;
-    full_name: string;
-    is_completed: number;
-    withdrawable_amount: number;
-    pending_amount: number;
-    currency_id: number;
-    level: { id: number; name: string };
-    badge: { id: number; name: string };
-    avatar_path: string;
-  }
-) => {
+const assignState = (state: profileState, payload: payloadState) => {
   state.user_id = payload.user_id;
   state.first_name = payload.first_name;
   state.last_name = payload.last_name;
@@ -105,6 +106,8 @@ const assignState = (
   state.level.name = payload.level.name;
   state.badge.id = payload.badge.id;
   state.badge.name = payload.badge.name;
+  state.country.id = payload.country.id;
+  state.country.name = payload.country.name;
 };
 export const profileSlice = createSlice({
   name: "profile",
@@ -116,29 +119,7 @@ export const profileSlice = createSlice({
       (
         state,
         action: {
-          payload: {
-            user_id: number;
-            first_name: string;
-            last_name: string;
-            avatar_url: string;
-            gender: number;
-            date_of_birth: string;
-            credit: number;
-            steps: number;
-            is_seller: number;
-            precent_rating: number;
-            country_id: number;
-            badge_id: number;
-            created_at: string;
-            full_name: string;
-            is_completed: number;
-            currency_id: number;
-            avatar_path: string;
-            withdrawable_amount: number;
-            pending_amount: number;
-            level: { id: number; name: string };
-            badge: { id: number; name: string };
-          };
+          payload: payloadState;
         }
       ) => {
         assignState(state, action.payload);

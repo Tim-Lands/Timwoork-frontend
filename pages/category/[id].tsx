@@ -1,27 +1,37 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import PropTypes from "prop-types";
-import useSWR from "swr";
 import { Result } from "antd";
 import { useAppSelector } from "@/store/hooks";
-
+import { CategoriesService } from "@/services/categoriesServices";
 import Loading from "@/components/Loading";
 import Post from "@/components/Post/Post";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index({ query }) {
+  const [subCategories, setSubCategories]: any = useState(false);
+  const [popularProducts, setPopularProducts]: any = useState(false);
+  const [loading, setLoading] = useState(true);
   const { getAll, language } = useAppSelector((state) => state.languages);
 
-  const { data: popularProducts }: any = useSWR(
-    `api/get_products_subcategory/${query.id}`
-  );
-  const { data: subCategories }: any = useSWR(`api/get_categories/${query.id}`);
+  useEffect(() => {
+    CategoriesService.getProductsSub(query.id)
+      .then((res) => setPopularProducts(res))
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
+    CategoriesService.getOne(query.id)
+      .then((res) => setSubCategories(res))
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="row py-4 justify-content-center">
       <MetaTags
-        title={subCategories && subCategories.data[which(language)]}
-        metaDescription={subCategories && subCategories.data[which(language)]}
-        ogDescription={subCategories && subCategories.data[which(language)]}
+        title={subCategories && subCategories[which(language)]}
+        metaDescription={subCategories && subCategories[which(language)]}
+        ogDescription={subCategories && subCategories[which(language)]}
       />
       <div className="col-md-10 ">
         <div
@@ -32,16 +42,16 @@ function index({ query }) {
             <div className="app-bill-header">
               <h3 className="title">
                 <span className={"material-icons material-icons-outlined"}>
-                  {subCategories.data.icon}
+                  {subCategories.icon}
                 </span>
                 <span style={{ fontWeight: 200 }}> {getAll("Services")}</span>{" "}
-                <strong> {subCategories.data[which(language)]} </strong>
+                <strong> {subCategories[which(language)]} </strong>
               </h3>
             </div>
           )}
           <div className="app-bill-content">
-            {!popularProducts && <Loading />}
-            {popularProducts && popularProducts.data.products.length == 0 && (
+            {loading && <Loading />}
+            {!popularProducts && !loading && (
               <Result
                 status="404"
                 title={getAll("No_services")}
@@ -49,28 +59,32 @@ function index({ query }) {
               />
             )}
             <div className="row">
-              {popularProducts &&
-                popularProducts.data.length !== 0 &&
-                popularProducts.data.products.map((e: any) => (
-                  <div key={e.id} className={"col-md-3"}>
-                    <Post
-                      size="small"
-                      title={e.title}
-                      author={
-                        e.profile_seller &&
-                        e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
-                      }
-                      rate={e.ratings_avg_rating}
-                      price={e.price}
-                      slug={e.slug}
-                      username={e.profile_seller.profile.user.username}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                    />
-                  </div>
-                ))}
+              {popularProducts?.length !== 0 &&
+                popularProducts?.products?.map((e: any) => {
+                  console.log(e);
+
+                  return (
+                    <div key={e.id} className={"col-md-3"}>
+                      <Post
+                        size="small"
+                        title={e.title}
+                        author={
+                          e.profile_seller &&
+                          e.profile_seller.profile.first_name +
+                            " " +
+                            e.profile_seller.profile.last_name
+                        }
+                        rate={e.ratings_avg_rating}
+                        price={e.price}
+                        avatar={"/avatar.png"}
+                        slug={e.slug}
+                        username={e.profile_seller.profile.user.username}
+                        thumbnail={e.full_path_thumbnail}
+                        buyers={e.count_buying}
+                      />
+                    </div>
+                  );
+                })}
             </div>
           </div>
           {/*popularProducts && popularProducts.data.length !== 0 &&

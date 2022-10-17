@@ -63,35 +63,32 @@ function index({ products, isError, isLoading, size }): ReactElement {
         className="row"
         style={{ minHeight: products?.length > 12 ? 1450 : 0 }}
       >
-        {products &&
-          products.map((e: any) => (
-            <div className={"col-md-" + size} key={e.id}>
-              <Post
-                size="small"
-                avatar={
-                  e.profile_seller && e.profile_seller.profile.avatar_path
-                }
-                title={e[whichTitle(language)]}
-                level={
-                  e.profile_seller && e.profile_seller.level[which(language)]
-                }
-                author={
-                  e.profile_seller &&
-                  e.profile_seller.profile.first_name +
-                    " " +
-                    e.profile_seller.profile.last_name
-                }
-                rate={e.ratings_avg_rating}
-                price={e.price}
-                slug={e.slug}
-                username={
-                  e.profile_seller && e.profile_seller.profile.user.username
-                }
-                thumbnail={e.full_path_thumbnail}
-                buyers={e.count_buying}
-              />
-            </div>
-          ))}
+        {products?.map((e: any, index: number) => (
+          <div className={"col-md-" + size} key={e.id + index}>
+            <Post
+              size="small"
+              avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
+              title={e[whichTitle(language)]}
+              level={
+                e.profile_seller && e.profile_seller.level[which(language)]
+              }
+              author={
+                e.profile_seller &&
+                e.profile_seller.profile.first_name +
+                  " " +
+                  e.profile_seller.profile.last_name
+              }
+              rate={e.ratings_avg_rating}
+              price={e.price}
+              slug={e.slug}
+              username={
+                e.profile_seller && e.profile_seller.profile.user.username
+              }
+              thumbnail={e.full_path_thumbnail}
+              buyers={e.count_buying}
+            />
+          </div>
+        ))}
       </div>
       {products && products.length == 0 && (
         <Result

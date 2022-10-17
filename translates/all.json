@@ -4283,6 +4283,11 @@
     "fr": "Achevés",
     "ar": "مكتملة"
   },
+  "Uncompleted": {
+    "en": "Uncompleted",
+    "fr": "inachevée",
+    "ar": "غير مكتملة"
+  },
   "Buyers_number": {
     "en": "Buyers number",
     "fr": "Nombre d’acheteurs",

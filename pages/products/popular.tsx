@@ -7,34 +7,22 @@ import { Form, Formik } from "formik";
 import Pagination from "react-js-pagination";
 import Loading from "@/components/Loading";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import Cookies from "js-cookie";
-import API from "../../config";
+import { ProductService } from "@/services/productService";
 
 function Popular() {
-  let token = Cookies.get("token");
   const [size, setSize] = useState(3);
   const { getAll } = useAppSelector((state) => state.languages);
-
   const [paginationSize, setPaginationSize] = useState(8);
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-
   const [getProducts, setGetProducts]: any = useState();
   //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
   /**---------------------------------------------------------**/
   const fetchData = async (pageNumber: number = 1) => {
     try {
-      const res = await API.get(
-        `api/filter?paginate=12&page=${pageNumber}&sort=count_buying,desc`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setGetProducts(res.data.data);
-      }
+      const res = await ProductService.getAll({
+        params: { page: pageNumber, sort: "count_buying,desc", paginate: 12 },
+      });
+
+      setGetProducts(res);
     } catch (error) {
       () => {};
     }
@@ -106,21 +94,14 @@ function Popular() {
                 <h4 className="title">{getAll("Most_popular_services")}</h4>
               </div>
               {!getProducts && <Loading />}
-              <FilterContent
-                size={size}
-                products={getProducts && getProducts.data}
-              />
+              <FilterContent size={size} products={getProducts?.data} />
               {getProducts && (
                 <div>
                   <hr />
                   <Pagination
-                    activePage={
-                      getProducts.current_page ? getProducts.current_page : 0
-                    }
-                    itemsCountPerPage={
-                      getProducts.per_page ? getProducts.per_page : 0
-                    }
-                    totalItemsCount={getProducts.total ? getProducts.total : 0}
+                    activePage={getProducts.current_page || 0}
+                    itemsCountPerPage={getProducts.per_page || 0}
+                    totalItemsCount={getProducts.total || 0}
                     onChange={(pageNumber) => {
                       fetchData(pageNumber);
                     }}

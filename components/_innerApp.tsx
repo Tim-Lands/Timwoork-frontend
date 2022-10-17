@@ -8,11 +8,15 @@ import PropTypes from "prop-types";
 import { UserActions } from "../store/user/UserActions";
 import { ProfileActions } from "../store/profile/profileActions";
 import { CartActions } from "../store/cart/cartActions";
+import { CurrencyActions } from "@/store/currency/currencyActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import getSpecCurrency from "../utils/currency";
 
 const App = ({ innerApp }) => {
   const user = useAppSelector((state) => state.user);
   const language = useAppSelector((state) => state.languages.language);
+  const currencies = useAppSelector((state) => state.currency.values);
+  const currency = useAppSelector((state) => state.currency.my);
 
   const unUsed = "";
   const dispatch = useAppDispatch();
@@ -29,13 +33,23 @@ const App = ({ innerApp }) => {
     await dispatch(UserActions.setToken(user.token));
     dispatch(UserActions.getData({}));
     dispatch(ProfileActions.getProfileData());
+    dispatch(CurrencyActions.getData());
+    dispatch(CurrencyActions.getAllCurrenciesValues());
     dispatch(CartActions.getCartData());
   }
+  useEffect(() => {
+    if (currencies.loaded && currency.code) {
+      dispatch(
+        CurrencyActions.setValue(
+          getSpecCurrency(currency.code, currencies.data).value
+        )
+      );
+    }
+  }, [currencies, currency.code]);
   return (
     <SWRConfig
       value={{
         fetcher: async (url: string) => {
-          console.log(url);
           return url.includes("wp-json")
             ? await API.get(url, {
                 headers: {
@@ -45,11 +59,6 @@ const App = ({ innerApp }) => {
                 .then((r: any) => r.data)
                 .catch(() => {
                   if (url == "api/me" && token) {
-                    Cookies.remove("token");
-                    if (typeof window !== undefined) {
-                      localStorage.removeItem("token");
-                      return;
-                    }
                     router.reload();
                   }
                 })
@@ -62,11 +71,6 @@ const App = ({ innerApp }) => {
                 .then((r: any) => r.data)
                 .catch(() => {
                   if (url == "api/me" && token) {
-                    Cookies.remove("token");
-                    if (typeof window !== undefined) {
-                      localStorage.removeItem("token");
-                      return;
-                    }
                     router.reload();
                   }
                 });
@@ -80,6 +84,6 @@ const App = ({ innerApp }) => {
   );
 };
 App.propTypes = {
-  innerApp: PropTypes.func,
+  innerApp: PropTypes.node,
 };
 export default App;

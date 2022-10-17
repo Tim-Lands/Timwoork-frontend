@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FormInput } from "./Forms/Forms";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
-import API from "../../config";
+import API from "../config";
 import { GoogleLogin } from "react-google-login";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";

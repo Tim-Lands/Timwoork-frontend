@@ -2,26 +2,21 @@ import { Spin } from "antd";
 import router from "next/router";
 import { useEffect, useState } from "react";
 import { SWRConfig } from "swr";
-import API from "../../../config";
+import API from "../../config";
 import { useAppSelector } from "@/store/hooks";
-
-import Cookies from "js-cookie";
 import Footer from "../Footer/Footer";
 import Navbar from "../Header/Navbar";
 
 function LayoutHome(props: any) {
   const [loading, setLoading] = useState(false);
-  let token = Cookies.get("token");
   const { getAll } = useAppSelector((state) => state.languages);
+  const { token } = useAppSelector((state) => state.user);
 
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   useEffect(() => {
     const handleStart = (url: any) => {
       url !== router.pathname ? setLoading(true) : setLoading(false);
     };
     const handleComplete = () => setLoading(false);
-    console.log("use effect from layout home component");
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
     router.events.on("routeChangeError", handleComplete);
@@ -38,11 +33,6 @@ function LayoutHome(props: any) {
               // console.log('err')
               if (url == "api/me" && token) {
                 // console.log('cookies is undefined and will be removed')
-                Cookies.remove("token");
-                if (typeof window !== undefined) {
-                  localStorage.removeItem("token");
-                  return;
-                }
                 router.reload();
               }
             });

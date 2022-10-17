@@ -1,9 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import PostsAside from "@/components/PostsAside";
-import React, { ReactElement, useEffect, useContext } from "react";
+import React, { ReactElement, useEffect } from "react";
 
 import useSWR from "swr";
-import { CurrencyContext } from "../../contexts/currencyContext";
 
 import Loading from "@/components/Loading";
 import CartPost from "@/components/Cart/CartPost";
@@ -22,13 +21,7 @@ function index() {
   const { loaded, priceWithTax, itemsLength, isLoading, data, itemsTotal } =
     cart;
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
 
   const { data: popularProducts, popularError }: any = useSWR(
     "api/filter?paginate=4&popular"
@@ -124,19 +117,13 @@ function index() {
                             >
                               <li style={{ fontSize: 13, color: "#777" }}>
                                 <strong>{getAll("Total_2")}</strong>
-                                {specCurrency
-                                  ? Math.round(itemsTotal * specCurrency)
-                                  : itemsTotal}
-                                {symbol}
+                                {Math.round(itemsTotal * value) + symbol_native}
                               </li>
                             </ul>
                           </div>
                           <div className="cart-item-price ml-auto">
                             <h4 className="price-title-total">
-                              {specCurrency
-                                ? Math.round(itemsTotal * specCurrency)
-                                : itemsTotal}
-                              {symbol}
+                              {Math.round(itemsTotal * value) + symbol_native}
                             </h4>
                           </div>
                         </div>

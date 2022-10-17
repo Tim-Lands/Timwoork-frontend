@@ -6,36 +6,25 @@ import FilterContent from "../../components/products";
 import { Form, Formik } from "formik";
 import Pagination from "react-js-pagination";
 import Loading from "@/components/Loading";
+import { ProductService } from "@/services/productService";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import Cookies from "js-cookie";
-import API from "../../config";
 
 function Latest() {
-  /**----------------------------------------------------------**/
-  let token = Cookies.get("token");
   const { getAll } = useAppSelector((state) => state.languages);
-
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const [size, setSize] = useState(3);
   const [paginationSize, setPaginationSize] = useState(8);
 
   const [getProducts, setGetProducts]: any = useState();
-  //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
-  /**---------------------------------------------------------**/
   const fetchData = async (pageNumber: number = 1) => {
     try {
-      const res = await API.get(
-        `api/filter?paginate=12&page=${pageNumber}&sort[0]=created_at,desc`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setGetProducts(res.data.data);
-      }
+      const res = await ProductService.getAll({
+        params: {
+          page: pageNumber,
+          "sort[0]": "created_at,desc",
+          paginate: 12,
+        },
+      });
+      setGetProducts(res);
     } catch (error) {
       () => {};
     }
@@ -107,21 +96,14 @@ function Latest() {
                 <h4 className="title">{getAll("Newly_added_services")}</h4>
               </div>
               {!getProducts && <Loading />}
-              <FilterContent
-                size={size}
-                products={getProducts && getProducts.data}
-              />
+              <FilterContent size={size} products={getProducts?.data} />
               {getProducts && (
                 <div>
                   <hr />
                   <Pagination
-                    activePage={
-                      getProducts.current_page ? getProducts.current_page : 0
-                    }
-                    itemsCountPerPage={
-                      getProducts.per_page ? getProducts.per_page : 0
-                    }
-                    totalItemsCount={getProducts.total ? getProducts.total : 0}
+                    activePage={getProducts.current_page || 0}
+                    itemsCountPerPage={getProducts.per_page || 0}
+                    totalItemsCount={getProducts.total || 0}
                     onChange={(pageNumber) => {
                       fetchData(pageNumber);
                     }}

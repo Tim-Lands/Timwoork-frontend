@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
-import Navbar from "@/components/NewIndex/Header/Navbar";
-import Footer from "@/components/NewIndex/Footer/Footer";
+import Navbar from "@/components/Header/Navbar";
+import Footer from "@/components/Footer/Footer";
 import Loading from "@/components/Loading";
 import { Menu, Result } from "antd";
 import Post from "@/components/Post/blogPost";

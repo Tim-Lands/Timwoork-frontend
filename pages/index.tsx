@@ -1,15 +1,15 @@
 import { Menu, Dropdown, Button } from "antd";
 import { PRIMARY } from "../styles/variables";
-import Hero from "@/components/NewIndex/Header/Hero";
-import VideoAside from "@/components/NewIndex/VideoSection/VideoAside";
+import Hero from "@/components/Header/Hero";
+import VideoAside from "@/components/VideoSection/VideoAside";
 import Head from "next/head";
 import React, { ReactElement } from "react";
 import { useAppSelector } from "@/store/hooks";
-
+import { CategoriesService } from "@/services/categoriesServices";
 import Link from "next/link";
 import router from "next/router";
 import Categories from "@/components/Categories";
-import LayoutHome from "@/components/NewIndex/Layout/LayoutHome";
+import LayoutHome from "@/components/Layout/indexLayout";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
@@ -347,7 +347,7 @@ export async function getServerSideProps() {
   try {
     const [categories, popularProducts, latestProducts, products] =
       await Promise.all([
-        API.get("api/get_categories"),
+        CategoriesService.getAll(),
         API.get("api/filter?paginate=9&popular"),
         API.get("api/filter?paginate=9&sort[0]=created_at,desc"),
         API.get("api/filter?paginate=9&sort=count_buying,desc"),
@@ -359,7 +359,7 @@ export async function getServerSideProps() {
         products: products?.data?.data,
         popularProducts: popularProducts?.data?.data,
         latestProducts: latestProducts?.data?.data,
-        categories: categories?.data,
+        categories,
         errorFetch: false,
       },
     };

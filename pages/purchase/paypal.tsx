@@ -1,33 +1,23 @@
-import React, { ReactElement, useEffect, useState, useContext } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
-import { CurrencyContext } from "../../contexts/currencyContext";
-import Cookies from "js-cookie";
 import router from "next/router";
 import PropTypes from "prop-types";
 import { Alert } from "@/components/Alert/Alert";
 import API from "../../config";
 import Loading from "@/components/Loading";
-import useSWR from "swr";
 import { useAppSelector } from "@/store/hooks";
 
 function Paypal({ query }) {
   const { getAll } = useAppSelector((state) => state.languages);
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  const user = useAppSelector((state) => state.user);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [getBills, setGetBills]: any = useState({});
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   async function getBill() {
     setIsLoading(true);
     try {
@@ -36,7 +26,7 @@ function Paypal({ query }) {
         { token: query.token },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${user.token}`,
           },
         }
       );
@@ -54,7 +44,7 @@ function Paypal({ query }) {
     if (query.return == 1) {
       getBill();
     }
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
@@ -79,30 +69,21 @@ function Paypal({ query }) {
                   <li className="list-group-item d-flex justify-content-between align-items-center">
                     {getAll("Total_price")}
                     <span className="">
-                      {specCurrency
-                        ? Math.round(getBills?.cart?.total_price * specCurrency)
-                        : getBills?.cart?.total_price}
-                      {symbol}
+                      {Math.round(getBills?.cart?.total_price * value) +
+                        symbol_native}
                     </span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center">
                     سعر التحويل
                     <span className="">
-                      {specCurrency
-                        ? Math.round(getBills?.cart?.tax * specCurrency)
-                        : getBills?.cart?.tax}
-                      {symbol}
+                      {Math.round(getBills?.cart?.tax * value) + symbol_native}
                     </span>
                   </li>
                   <li className="list-group-item total d-flex justify-content-between align-items-center">
                     {getAll("Total_2")}
                     <span className="">
-                      {specCurrency
-                        ? Math.round(
-                            getBills?.cart?.price_with_tax * specCurrency
-                          )
-                        : getBills?.cart?.price_with_tax}
-                      {symbol}
+                      {Math.round(getBills?.cart?.price_with_tax * value) +
+                        symbol_native}
                     </span>
                   </li>
                 </ul>

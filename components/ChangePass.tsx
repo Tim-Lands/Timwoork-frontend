@@ -2,20 +2,16 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Badge, message, Spin, Tooltip } from "antd";
 import React, { ReactElement, useState } from "react";
 import API from "../config";
-import useSWR from "swr";
 import { useAppSelector } from "@/store/hooks";
 import Loading from "@/components/Loading";
-import Cookies from "js-cookie";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 
 function ChangePass() {
   const { getAll } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
   const [validationsErrors, setValidationsErrors]: any = useState({});
 
   function setValidationsErrorsHandle() {
@@ -23,8 +19,8 @@ function ChangePass() {
   }
   return (
     <>
-      {!userInfo && <Loading />}
-      {userInfo && userInfo.user_details.profile && (
+      {user.loading && <Loading />}
+      {profile && (
         <div className="timlands-profile-content my-2">
           <Formik
             initialValues={{
@@ -37,7 +33,7 @@ function ChangePass() {
               try {
                 const res = await API.post("api/password/change", values, {
                   headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${user.token}`,
                   },
                 });
                 // Authentication was successful.

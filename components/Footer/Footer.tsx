@@ -8,13 +8,13 @@ import {
   FaInstagram,
   FaTelegram,
 } from "react-icons/fa";
-import Currency from "@/components/NewIndex/DropdowModal/Currency";
-import Language from "@/components/NewIndex/DropdowModal/Language";
+import Currency from "@/components/DropdowModal/Currency";
+import Language from "@/components/DropdowModal/Language";
 import { Tooltip } from "antd";
-import { BlogActions } from "../../../store/blog/blogActions";
+import { BlogActions } from "../../store/blog/blogActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-import API from "../../../config";
+import API from "../../config";
 import Cookies from "js-cookie";
 
 function Footer() {

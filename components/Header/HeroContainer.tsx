@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hooks";
 
-import API from "../../../config";
+import API from "../../config";
 import HeroSearchContent from "./HeroSearchContent";
 
 function HeroContainer() {
@@ -24,8 +24,8 @@ function HeroContainer() {
         <div className="hero-container-search">
           <HeroSearchContent />
           <ul className="popular-search">
-            {topCategories.slice(0, 4).map((category) => (
-              <li key={category} className="pop-item ">
+            {topCategories.slice(0, 4).map((category, index) => (
+              <li key={index} className="pop-item ">
                 <Link
                   href={`/products?categoryID=${category.parent_id}&subcategoryID=${category.id}`}
                 >

@@ -1,9 +1,7 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
-import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
-import { CurrencyContext } from "../../contexts/currencyContext";
 import { useAppSelector } from "@/store/hooks";
 
 function PostInner({
@@ -18,11 +16,7 @@ function PostInner({
   slug,
   rate = 2,
 }): ReactElement {
-  const { data: userInfo }: any = useSWR("api/me");
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
   const sizeClass = () => {
     switch (size) {
       case "small":
@@ -33,8 +27,6 @@ function PostInner({
         return "";
     }
   };
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
   const showStars = () => {
     const xAr: any = [
       {
@@ -164,7 +156,7 @@ function PostInner({
       <div className="post-item-footer">
         <p className="post-meta-price">
           {getAll("Price_from")}
-          {specCurrency ? Math.round(price * specCurrency) + symbol : price}
+          {Math.round(price * value) + symbol_native}
         </p>
         <p className="post-meta-bayer">
           {(buyers == 0 ? buyers : buyers + getAll("Have_bought_this")) ||
@@ -184,7 +176,7 @@ PostInner.propTypes = {
   rate: PropTypes.any,
   buyers: PropTypes.number,
   avatar: PropTypes.string,
-  price: PropTypes.number,
+  price: PropTypes.string,
   product: PropTypes.any,
 };
 

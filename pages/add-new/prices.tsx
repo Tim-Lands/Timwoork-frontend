@@ -13,8 +13,8 @@ import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 import PropTypes from "prop-types";
-import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-import FormModal from "@/components/NewIndex/Forms/FormModal";
+import FormLangs from "@/components/Forms/FormLangs";
+import FormModal from "@/components/Forms/FormModal";
 let testTime;
 function Prices({ query }) {
   const { data: userInfo }: any = useSWR("api/me");

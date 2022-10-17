@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
-import PortfolioNav from "@/components/NewIndex/Portfolio/PortfolioNav";
-import PortfolioSliders from "@/components/NewIndex/Portfolio/PortfolioSlider";
+import PortfolioNav from "@/components/Portfolio/PortfolioNav";
+import PortfolioSliders from "@/components/Portfolio/PortfolioSlider";
 import { useAppSelector } from "@/store/hooks";
 
 function Index() {

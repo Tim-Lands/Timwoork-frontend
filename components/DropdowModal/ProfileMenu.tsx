@@ -13,8 +13,8 @@ import {
 import { FiSettings } from "react-icons/fi";
 import PropTypes from "prop-types";
 
-import { UserActions } from "../../../store/user/UserActions";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { UserActions } from "../../store/user/UserActions";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
 import { message, notification } from "antd";
 function ProfileMenu({ refs, setIsShowProfileMenu }) {

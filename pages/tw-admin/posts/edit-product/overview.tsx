@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import router from "next/router";
 import Cookies from "js-cookie";
 import API from "../../../../config";
+import { CategoriesService } from "@/services/categoriesServices";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
@@ -86,24 +87,23 @@ function Overview({ query }) {
   }, [query.id]);
   const fetchCategories = async () => {
     try {
-      const res = await API.get(`api/get_categories`);
-      setCategories(res.data.data.reduce((a, v) => ({ ...a, [v.id]: v }), {}));
-    } catch (err) {
-      console.log(err);
+      const res = await CategoriesService.getAll();
+      setCategories(res.reduce((a, v) => ({ ...a, [v.id]: v }), {}));
+    } catch {
+      () => {};
     }
   };
   const fetchSubCategories = async () => {
     const promises = [];
     let temp_subCategories = {};
     Object.keys(categories)?.forEach((key) =>
-      promises.push(API.get(`api/get_categories/${categories[key].id}`))
+      promises.push(CategoriesService.getOne(categories[key].id))
     );
     const sub_categories = await Promise.all(promises);
     sub_categories.forEach((sub_category) => {
-      console.log(sub_category.data.data.sub_categories);
       temp_subCategories = {
         ...temp_subCategories,
-        ...sub_category.data.data.sub_categories.reduce(
+        ...sub_category.sub_categories.reduce(
           (a, v) => ({ ...a, [v.id]: v }),
           {}
         ),

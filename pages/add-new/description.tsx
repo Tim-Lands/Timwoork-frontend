@@ -14,11 +14,8 @@ import { useAppSelector } from "@/store/hooks";
 // import { useEditor, EditorContent } from "@tiptap/react";
 // import StarterKit from "@tiptap/starter-kit";
 import { useFormik } from "formik";
-import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-import FormModal from "@/components/NewIndex/Forms/FormModal";
-// import FormLangs from "@/components/NewIndex/Forms/FormLangs";
-// import FormLangsCheck from "@/components/NewIndex/Forms/FormLangsCheck";
-// import cookies from "next-cookies";
+import FormLangs from "@/components/Forms/FormLangs";
+import FormModal from "@/components/Forms/FormModal";
 
 // export const MenuBar = ({ editor }) => {
 //   if (!editor) {

@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Image from "next/image";
-import DeleteConfirm from "@/components/NewIndex/Portfolio/DeleteConfirm";
+import DeleteConfirm from "@/components/Portfolio/DeleteConfirm";
 import { AiFillLike, AiOutlineComment, AiOutlineLike } from "react-icons/ai";
 import { BsCheckCircle, BsCheckCircleFill, BsPlus } from "react-icons/bs";
 
-import ContestComments from "@/components/NewIndex/Contests/ContestComments";
-import AuthorCard from "@/components/NewIndex/AuthorCard";
-import ContestSingleInfo from "@/components/NewIndex/Contests/ContestSingleInfo";
+import ContestComments from "@/components/Contests/ContestComments";
+import AuthorCard from "@/components/AuthorCard";
+import ContestSingleInfo from "@/components/Contests/ContestSingleInfo";
 import Link from "next/link";
 
 function Index({ query }) {

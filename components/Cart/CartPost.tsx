@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import React, { ReactElement, useContext } from "react";
-import { CurrencyContext } from "../../contexts/currencyContext";
-import useSWR from "swr";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { useAppSelector } from "@/store/hooks";
 
@@ -15,7 +13,7 @@ function CartPost({
   deleteItem,
 }): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const { data: userInfo }: any = useSWR("api/me");
+  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
   function DevdurationFunc(duration) {
     if (duration == 1) {
       return getAll("One_day");
@@ -30,12 +28,6 @@ function CartPost({
       return duration + getAll("Day");
     }
   }
-  const [, getCurrency] = useContext(CurrencyContext);
-  const specCurrency = getCurrency(
-    userInfo?.user_details?.profile?.currency?.code
-  )?.value;
-  const symbol =
-    userInfo?.user_details?.profile?.currency?.symbol_native || "$";
   return (
     <motion.li
       initial={{ y: 8, opacity: 0 }}
@@ -61,15 +53,11 @@ function CartPost({
               </li>
               <li style={{ fontSize: 13, color: "#777" }}>
                 <span>{getAll("Price_2")}</span>
-                {specCurrency
-                  ? Math.round(price * specCurrency) + symbol
-                  : price + symbol}
+                {Math.round(price * value) + symbol_native}
               </li>
               <li style={{ fontSize: 13, color: "#777" }}>
                 <strong>{getAll("Total")}</strong>
-                {specCurrency
-                  ? Math.round(itemTotal * specCurrency) + symbol
-                  : price + symbol}
+                {Math.round(itemTotal * value) + symbol_native}
               </li>
             </ul>
             <h4
@@ -98,9 +86,7 @@ function CartPost({
                           <p className="price-duration">
                             {getAll("The_duration_will_cost")}
                             {DevdurationFunc(e.duration)}{" "}
-                            {specCurrency
-                              ? Math.round(e?.price * specCurrency) + symbol
-                              : e?.price + symbol}
+                            {Math.round(e?.price * value) + symbol_native}
                           </p>
                         </label>
                       </div>
