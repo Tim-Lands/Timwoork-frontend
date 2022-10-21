@@ -45,7 +45,6 @@ WiseCart.getLayout = function getLayout(page: any): ReactElement {
 };
 export default WiseCart;
 WiseCart.propTypes = {
-  token: PropTypes.any,
   setIsShowBankTransfert: PropTypes.func,
   userInfo: PropTypes.object,
 };

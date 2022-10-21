@@ -1,17 +1,24 @@
 import { Statistic, Card } from "antd";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import useSWR from "swr";
+import { useEffect } from "react";
 import { Alert } from "../Alert/Alert";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { WalletActions } from "@/store/wallet/WalletActions";
 
 export default function UploadPicture({
   pending_amount,
   withdrawable_amount,
   // darkMode,
 }) {
-  const { data: userInfo }: any = useSWR("api/me");
+  const dispatch = useAppDispatch();
   const { getAll } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
+  const wallet = useAppSelector((state) => state.wallet);
+  useEffect(() => {
+    if (wallet.loaded) return;
+    dispatch(WalletActions.getWalletData());
+  }, [wallet]);
 
   return (
     <div className="col-lg-4">
@@ -34,11 +41,9 @@ export default function UploadPicture({
               // valueStyle={{ color: darkMode ? "#8ac557" : "#3f8600" }}
               suffix="$"
             />
-            {userInfo &&
-            userInfo.user_details.profile.withdrawable_amount > 9 ? (
+            {profile.withdrawable_amount > 9 ? (
               <>
-                {userInfo &&
-                userInfo.user_details.profile.wallet.is_withdrawable == true ? (
+                {wallet.is_withdrawable == true ? (
                   <div className="d-flex justify-content-end pt-1">
                     <Link href={"/withdrawal"}>
                       <a

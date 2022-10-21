@@ -3,22 +3,17 @@ import { Result, message, Spin } from "antd";
 import React, { ReactElement, useState } from "react";
 import Link from "next/link";
 import API from "../../config";
-import useSWR from "swr";
 import Loading from "@/components/Loading";
 import { useAppSelector } from "@/store/hooks";
 
-import Cookies from "js-cookie";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 
 function ChangePass() {
   const { getAll } = useAppSelector((state) => state.languages);
-
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  if (userInfo && userInfo.user_details.profile.steps < 1)
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
+  if (profile.steps < 1)
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
@@ -44,8 +39,8 @@ function ChangePass() {
   }
   return (
     <>
-      {!userInfo && <Loading />}
-      {userInfo && userInfo.user_details.profile && (
+      {user.loading && <Loading />}
+      {user.isLogged && (
         <div className="timlands-profile-content">
           <Formik
             initialValues={{
@@ -56,18 +51,12 @@ function ChangePass() {
             onSubmit={async (values) => {
               setValidationsErrors({});
               try {
-                const res = await API.post("api/password/change", values, {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                });
+                await API.post("api/password/change", values);
                 // Authentication was successful.
-                if (res.status === 200) {
-                  message.success(getAll("The_password_has"));
-                  values.old_password = "";
-                  values.password_confirmation = "";
-                  values.password = "";
-                }
+                message.success(getAll("The_password_has"));
+                values.old_password = "";
+                values.password_confirmation = "";
+                values.password = "";
               } catch (error: any) {
                 if (
                   error.response &&

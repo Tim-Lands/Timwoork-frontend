@@ -5,7 +5,6 @@ import { useAppSelector } from "@/store/hooks";
 import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 import LanguageModel from "../DropdowModal/Language";
-import useSWR from "swr";
 import { useRouter } from "next/router";
 import {
   MdOutlineShoppingCart,
@@ -20,9 +19,9 @@ import { Collapse } from "antd";
 const { Panel } = Collapse;
 const MobileMenu = ({ postsList }) => {
   const { getAll, language } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
   const [visible, setVisible] = useState(false);
-  const { data: userInfo }: any = useSWR("api/me");
   const [size, setSize] = useState("70%");
   const [query, setQuery] = useState("");
   const router = useRouter();
@@ -234,7 +233,7 @@ const MobileMenu = ({ postsList }) => {
             })}
           </div>
           <ul className="aside-navbar mt-auto mb-3">
-            {userInfo && (
+            {user.isLogged && (
               <>
                 <li className="circular-newitem">
                   <Link href={"/cart"}>

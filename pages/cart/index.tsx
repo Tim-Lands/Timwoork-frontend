@@ -37,8 +37,9 @@ function index() {
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
+      return;
     }
-  }, [user.isLogged]);
+  }, [user]);
   return (
     <>
       <MetaTags

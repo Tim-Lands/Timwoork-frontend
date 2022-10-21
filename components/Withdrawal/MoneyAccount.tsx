@@ -1,18 +1,27 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
+import { CountriesService } from "@/services/countryService";
 import API from "../../config";
 import PropTypes from "prop-types";
-import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
-function MoneyAccount({ token, create, setIsShowBankTransfert }) {
-  const { data: Countries }: any = useSWR("api/withdrawals/countries");
-  const { data: userInfo }: any = useSWR("api/me");
+function MoneyAccount({ create, setIsShowBankTransfert }) {
+  const { getAll } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
+  const [Countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    CountriesService.getWithdrawalAll()
+      .then((res) => {
+        setCountries(res);
+      })
+      .catch(() => {});
+  }, []);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const UpdateMoney = async (values) => {
@@ -20,15 +29,10 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
       const url = create
         ? "api/withdrawal/update_bank"
         : "api/withdrawal/store_bank";
-      const res = await API.post(url, values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.post(url, values);
       // Authentication was successful.
-      if (res.status === 200) {
-        message.success(getAll("The_data_has"));
-      }
+
+      message.success(getAll("The_data_has"));
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
         setValidationsErrors(error.response.data.errors);
@@ -44,58 +48,19 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
   };
   const formik = useFormik({
     initialValues: {
-      full_name:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.full_name,
-      wise_country_id:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.wise_country_id,
-      bank_swift:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.bank_swift,
-      bank_iban:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.wise_country_id,
-      bank_adress_line_one:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.bank_adress_line_one,
-      city:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.city,
-      state:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.state,
-      bank_name:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.bank_name,
-      phone_number_without_code:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.wise_country_id,
-      address_line_one:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.address_line_one,
-      code_postal:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.code_postal,
-      bank_number_account:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.bank_number_account,
-      bank_branch:
-        userInfo &&
-        userInfo.user_details.profile.bank_account &&
-        userInfo.user_details.profile.bank_account.bank_branch,
+      full_name: profile?.bank_account?.full_name,
+      wise_country_id: profile.bank_account?.wise_country_id,
+      bank_swift: profile.bank_account?.bank_swift,
+      bank_iban: profile.bank_account?.wise_country_id,
+      bank_adress_line_one: profile.bank_account?.bank_adress_line_one,
+      city: profile.bank_account?.city,
+      state: profile.bank_account?.state,
+      bank_name: profile.bank_account?.bank_name,
+      phone_number_without_code: profile.bank_account?.wise_country_id,
+      address_line_one: profile.bank_account?.address_line_one,
+      code_postal: profile.bank_account?.code_postal,
+      bank_number_account: profile.bank_account?.bank_number_account,
+      bank_branch: profile.bank_account?.bank_branch,
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -105,16 +70,10 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
         const url = create
           ? "api/withdrawals/update_bank"
           : "api/withdrawals/store_bank";
-        const res = await API.post(url, values, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_withdrawal_request"));
-          router.push("/mywallet");
-        }
+        await API.post(url, values);
+
+        message.success(getAll("The_withdrawal_request"));
+        router.push("/mywallet");
       } catch (error: any) {
         if (
           error.response &&
@@ -129,16 +88,6 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
       }
     },
   });
-  // const noteContent = (
-  //     <div>
-  //         <ul>
-  //             <li>من 5 دولار - 100 دولار مسموح له شراء الخدمة حتى 10 مرات</li>
-  //             <li>من 101 دولار - 500 دولار مسموح له شراء الخدمة حتى 2 مره فقط للخدمة </li>
-  //             <li>من 501 دولار - 1000 دولار مسموح له شراء الخدمة حتى 1 مره فقط</li>
-  //         </ul>
-  //     </div>
-  // );
-  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -380,15 +329,14 @@ function MoneyAccount({ token, create, setIsShowBankTransfert }) {
                   value={formik.values.wise_country_id}
                 >
                   <option value="">{getAll("Select_country")}</option>
-                  {!Countries && (
+                  {Countries.length === 0 && (
                     <option value="">{getAll("Please_wait")}</option>
                   )}
-                  {Countries &&
-                    Countries.data.map((e: any) => (
-                      <option value={e.id} key={e.id}>
-                        {e.ar_name}
-                      </option>
-                    ))}
+                  {Countries.map((e: any) => (
+                    <option value={e.id} key={e.id}>
+                      {e.ar_name}
+                    </option>
+                  ))}
                 </select>
                 {validationsErrors && validationsErrors.wise_country_id && (
                   <div style={{ overflow: "hidden" }}>
@@ -647,7 +595,6 @@ MoneyAccount.getLayout = function getLayout(page: any): ReactElement {
 };
 export default MoneyAccount;
 MoneyAccount.propTypes = {
-  token: PropTypes.any,
   setIsShowBankTransfert: PropTypes.func,
   create: PropTypes.any,
 };

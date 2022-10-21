@@ -102,7 +102,6 @@ function Bill() {
     Paypal: false,
   });
 
-  // const { data: cartList, error }: any = useSWR("api/cart");
   const veriedEmail = user.email_verified;
 
   const mybalance = profile.withdrawable_amount;

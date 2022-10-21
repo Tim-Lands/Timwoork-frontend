@@ -2,7 +2,6 @@ import Loading from "@/components/Loading";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import API from "../../config";
-import Cookies from "js-cookie";
 import { Result, Menu, Tooltip, Button, notification } from "antd";
 import {
   DeleteOutlined,
@@ -18,9 +17,6 @@ import { useAppSelector } from "@/store/hooks";
 export default function MyProducts({ setStatusType, postsList, refresh }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
 
@@ -45,23 +41,13 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await API.post(
-              `api/product/${id}/deleteProduct`,
-              null,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
+            await API.post(`api/product/${id}/deleteProduct`);
+            swalWithBootstrapButtons.fire(
+              getAll("Deleted"),
+              getAll("The_service_has"),
+              "success"
             );
-            if (res.status === 200) {
-              swalWithBootstrapButtons.fire(
-                getAll("Deleted"),
-                getAll("The_service_has"),
-                "success"
-              );
-              refresh();
-            }
+            refresh();
           } catch (error) {
             () => {};
           }
@@ -80,23 +66,13 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       buttonsStyling: false,
     });
     try {
-      const res = await API.post(
-        `api/my_products/${id}/disactive_product`,
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      await API.post(`api/my_products/${id}/disactive_product`);
+      swalWithBootstrapButtons.fire(
+        getAll("Disabled1"),
+        getAll("The_service_has_2"),
+        "success"
       );
-      if (res.status === 200) {
-        swalWithBootstrapButtons.fire(
-          getAll("Disabled1"),
-          getAll("The_service_has_2"),
-          "success"
-        );
-        refresh();
-      }
+      refresh();
     } catch (error) {
       notification["error"]({
         message: getAll("Error_message"),
@@ -115,19 +91,14 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
       buttonsStyling: false,
     });
     try {
-      const res = await API.post(`api/my_products/${id}/active_product`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        swalWithBootstrapButtons.fire(
-          getAll("Abled1"),
-          getAll("This_service_has"),
-          "success"
-        );
-        refresh();
-      }
+      await API.post(`api/my_products/${id}/active_product`);
+
+      swalWithBootstrapButtons.fire(
+        getAll("Abled1"),
+        getAll("This_service_has"),
+        "success"
+      );
+      refresh();
     } catch (error) {
       notification["error"]({
         message: getAll("Error_message"),

@@ -6,9 +6,15 @@ import PropTypes from "prop-types";
 import useFileUpload from "react-use-file-upload";
 import Loading from "@/components/Loading";
 import API from "../../config";
-import Cookies from "js-cookie";
 import LastSeen from "@/components/LastSeen";
-import { Progress, Rate, Result, Spin, Timeline } from "antd";
+import {
+  Progress,
+  Rate,
+  Result,
+  Spin,
+  Timeline,
+  message as AntMessage,
+} from "antd";
 import router from "next/router";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -19,12 +25,9 @@ import { useAppSelector } from "@/store/hooks";
 const Order = ({ query }) => {
   const { getAll, language } = useAppSelector((state) => state.languages);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  const user = useAppSelector((state) => state.user);
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
 
   const { data: ShowItem, errorItem }: any = useSWR(
     `api/my_purchases/${query.id}`
@@ -49,23 +52,12 @@ const Order = ({ query }) => {
     setRattingValidationsErrors({});
     setValidationsGeneral({});
     try {
-      const res = await API.post(
-        `api/order/items/${id}/rating`,
-        {
-          comment: rattingState,
-          rating: rattingCount,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setIsRattingLoading(false);
-        setValidationsGeneral({});
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/rating`, {
+        comment: rattingState,
+        rating: rattingCount,
+      });
+      setIsRattingLoading(false);
+      setValidationsGeneral({});
     } catch (error) {
       setIsRattingLoading(false);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -91,10 +83,11 @@ const Order = ({ query }) => {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(0);
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
+      return;
     }
-  }, []);
+  }, [user]);
   function switchTypeMessage(type: any) {
     switch (type) {
       case 0:
@@ -121,18 +114,8 @@ const Order = ({ query }) => {
   const item_cancelled_by_buyer = async (id: any) => {
     setCancelledBuyerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/item_cancelled_by_buyer`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/item_cancelled_by_buyer`);
+      AntMessage.success("done");
     } catch (error) {
       setCancelledBuyerLoading(false);
     }
@@ -142,18 +125,8 @@ const Order = ({ query }) => {
   const request_cancel_item_by_buyer = async (id: any) => {
     setRequestCancelItemBuyerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/request_cancel_item_by_buyer`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`);
+      AntMessage.success("done");
     } catch (error) {
       setRequestCancelItemBuyerLoading(false);
     }
@@ -163,18 +136,8 @@ const Order = ({ query }) => {
   const accepted_delivery_by_buyer = async (id: any) => {
     setAcceptedDeliveryBuyerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/accepted_delivery_by_buyer`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/accepted_delivery_by_buyer`);
+      AntMessage.success("done");
     } catch (error) {
       setAcceptedDeliveryBuyerLoading(false);
     }
@@ -184,18 +147,8 @@ const Order = ({ query }) => {
   const request_modified_by_buyer = async (id: any) => {
     setRequestModifiedBuyerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/request_modified_by_buyer`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/request_modified_by_buyer`);
+      AntMessage.success("done");
     } catch (error) {
       setRequestModifiedBuyerLoading(false);
     }
@@ -205,22 +158,12 @@ const Order = ({ query }) => {
   const createConversation = async (id: any) => {
     setCreateConversationLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/conversations/create`,
-        {
-          initial_message: message,
-          receiver_id: ShowItem && ShowItem.data.user_id,
-          title: ShowItem && ShowItem.data.title,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/conversations/create`, {
+        initial_message: message,
+        receiver_id: ShowItem && ShowItem.data.user_id,
+        title: ShowItem && ShowItem.data.title,
+      });
+      AntMessage.success("done");
     } catch (error) {
       setCreateConversationLoading(false);
     }
@@ -244,9 +187,6 @@ const Order = ({ query }) => {
         `api/conversations/${id}/sendMessage`,
         conversation,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           onUploadProgress: (uploadEvent) => {
             if (filesMsg.length !== 0)
               setMessageProgress(
@@ -255,15 +195,14 @@ const Order = ({ query }) => {
           },
         }
       );
-      if (res.status === 200) {
-        ShowItem && ShowItem.data.conversation.messages.push(res.data.data);
-        setSendMessageLoading(false);
-        myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
-        setMessage("");
-        messageRef.current.focus();
-        setMessageProgress(0);
-        clearAllFilesMsg();
-      }
+      ShowItem && ShowItem.data.conversation.messages.push(res.data.data);
+      setSendMessageLoading(false);
+      myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
+      setMessage("");
+      messageRef.current.focus();
+      setMessageProgress(0);
+      clearAllFilesMsg();
+      AntMessage.success("done");
     } catch (error) {
       setSendMessageLoading(false);
       if (error && error.response) {

@@ -1,16 +1,15 @@
 import React, { ReactElement } from "react";
-import Cookies from "js-cookie";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import API from "../../config";
 import { motion } from "framer-motion";
+import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
-import useSWR from "swr";
-import { useAppSelector } from "@/store/hooks";
 
 const NumberPhone = (): ReactElement => {
-  const { data: userInfo }: any = useSWR("api/me");
+  const user = useAppSelector((state) => state.user);
+
   const { getAll } = useAppSelector((state) => state.languages);
 
   // Redirect to user home route if user is authenticated.
@@ -20,27 +19,18 @@ const NumberPhone = (): ReactElement => {
   // Return statement.
   return (
     <>
-      {userInfo && userInfo.user_details.profile && (
+      {user.isLogged && (
         <Formik
           isInitialValid={true}
           initialValues={{
-            phone_number: userInfo.user_details.phone || "",
+            phone_number: user.phone || "",
           }}
           validationSchema={SignupSchema}
           onSubmit={async (values) => {
             try {
-              let token = Cookies.get("token");
-              if (!token && typeof window !== "undefined")
-                token = localStorage.getItem("token");
-              const res = await API.post("api/profiles/step_three", values, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
+              await API.post("api/profiles/step_three", values);
               // Authentication was successful.
-              if (res.status === 200) {
-                message.success(getAll("The_update_has"));
-              }
+              message.success(getAll("The_update_has"));
             } catch (error: any) {
               if (error.response && error.response.status === 200) {
                 message.success(getAll("The_update_has"));

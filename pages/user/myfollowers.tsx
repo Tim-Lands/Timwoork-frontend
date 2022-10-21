@@ -4,32 +4,30 @@ import React, { ReactElement, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import router from "next/router";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Sidebar from "@/components/Profile/Sidebar";
-import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import FollowItem from "@/components/FollowItem";
 import { useAppSelector } from "@/store/hooks";
 
 function MyFollowers() {
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
+
   const { getAll } = useAppSelector((state) => state.languages);
 
   const myLoader = () => {
-    return `${userInfo.user_details.profile.avatar_path}`;
+    return `${profile.avatar_path}`;
   };
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
+      return;
     }
-  }, []);
-  if (userInfo && userInfo.user_details.profile.steps < 1) {
+  }, [user]);
+  if (profile.steps < 1) {
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
@@ -51,28 +49,28 @@ function MyFollowers() {
   } else
     return (
       <div className="py-3">
-        {!userInfo && <Loading />}
-        {!token && <Unauthorized />}
-        {userInfo && userInfo.user_details.profile && (
+        {user.loading && <Loading />}
+        {!user.isLogged && !user.loading && <Unauthorized />}
+        {user.isLogged && (
           <>
             <MetaTags
               title={
                 getAll("X’s_profile") +
-                userInfo.user_details.profile.first_name +
+                profile.first_name +
                 " " +
-                userInfo.user_details.profile.last_name
+                profile.last_name
               }
               metaDescription={
                 getAll("X’s_profile") +
-                userInfo.user_details.profile.first_name +
+                profile.first_name +
                 " " +
-                userInfo.user_details.profile.last_name
+                profile.last_name
               }
               ogDescription={
                 getAll("X’s_profile") +
-                userInfo.user_details.profile.first_name +
+                profile.first_name +
                 " " +
-                userInfo.user_details.profile.last_name
+                profile.last_name
               }
             />
             <div className="userProfileCont">
@@ -81,9 +79,7 @@ function MyFollowers() {
                   <div className="profile-content-avatar">
                     <Image
                       loader={myLoader}
-                      src={
-                        userInfo && userInfo.user_details.profile.avatar_path
-                      }
+                      src={profile.avatar_path}
                       quality={1}
                       width={120}
                       height={120}
@@ -92,15 +88,10 @@ function MyFollowers() {
                     />
                   </div>
                   <div className="profile-content-head">
-                    <h4 className="title">
-                      {userInfo.user_details.profile.full_name}
-                    </h4>
+                    <h4 className="title">{profile.full_name}</h4>
                     <p className="text">
-                      @{userInfo.user_details.username} |
-                      <span className="app-label">
-                        {" "}
-                        {userInfo.user_details.profile.level.name_ar}{" "}
-                      </span>
+                      @{user.username} |
+                      <span className="app-label"> {profile.level.name} </span>
                     </p>
                     <div className="button-edit">
                       <Link href="/user/personalInformations">
@@ -118,7 +109,7 @@ function MyFollowers() {
                       className="btn butt-primary2 flex-center butt-sm"
                       onClick={() =>
                         navigator.clipboard.writeText(
-                          `https://timwoork.com/u/${userInfo.user_details.username}`
+                          `https://timwoork.com/u/${user.username}`
                         )
                       }
                     >
@@ -140,11 +131,7 @@ function MyFollowers() {
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          href={`/portfolios/user/${
-                            userInfo && userInfo.user_details.username
-                          }`}
-                        >
+                        <Link href={`/portfolios/user/${user.username}`}>
                           <a className="portfolio-item">
                             <FaImages /> معرض الأعمال
                           </a>
@@ -170,13 +157,8 @@ function MyFollowers() {
               </div>
               <div className="row">
                 <Sidebar
-                  withdrawable_amount={
-                    userInfo &&
-                    userInfo.user_details.profile.withdrawable_amount
-                  }
-                  pending_amount={
-                    userInfo && userInfo.user_details.profile.pending_amount
-                  }
+                  withdrawable_amount={profile.withdrawable_amount}
+                  pending_amount={profile.pending_amount}
                 />
                 <div className="col-lg-8">
                   <div className="timlands-profile-content">

@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
-import Cookies from "js-cookie";
 import { useAppSelector } from "@/store/hooks";
 
 import API from "../../config";
@@ -64,9 +63,6 @@ function Overview({ query }) {
   const id = query.id;
   const { getAll } = useAppSelector((state) => state.languages);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
@@ -74,8 +70,9 @@ function Overview({ query }) {
     "api/get_categories_for_add_product"
   );
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const user = useAppSelector((state) => state.user);
+
+  const veriedEmail = user.email_verified;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -99,20 +96,11 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const res = await API.post(
-          `api/product/${id}/product-step-one`,
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await API.post(`api/product/${id}/product-step-one`, values);
         // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push(`/edit-product/prices?id=${getProduct?.data?.id}`);
-        }
+
+        message.success(getAll("The_update_has"));
+        router.push(`/edit-product/prices?id=${getProduct?.data?.id}`);
       } catch (error: any) {
         if (
           error.response &&
@@ -132,11 +120,7 @@ function Overview({ query }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -149,12 +133,12 @@ function Overview({ query }) {
     }
   }
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   return (
     <>
       <MetaTags
@@ -162,7 +146,7 @@ function Overview({ query }) {
         metaDescription={getAll("Service_editing_General")}
         ogDescription={getAll("Service_editing_General")}
       />
-      {token && veriedEmail && (
+      {user.isLogged && veriedEmail && (
         <div className="container-fluid">
           {!getProduct && <div>{getAll("Please_wait")}</div>}
           <div className="row justify-content-md-center my-3">

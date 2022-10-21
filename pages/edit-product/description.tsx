@@ -7,7 +7,6 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
-import Cookies from "js-cookie";
 import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import useSWR from "swr";
@@ -120,15 +119,12 @@ const Tiptap = (props: any) => {
 function Description({ query, stars }) {
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const editor = useEditor({
@@ -167,20 +163,9 @@ function Description({ query, stars }) {
       setValidationsErrors({});
       try {
         const id = query.id;
-        const res = await API.post(
-          `api/product/${id}/product-step-three`,
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push(`/edit-product/medias?id=${getProduct?.data.id}`);
-        }
+        await API.post(`api/product/${id}/product-step-three`, values);
+        message.success(getAll("The_update_has"));
+        router.push(`/edit-product/medias?id=${getProduct?.data.id}`);
       } catch (error: any) {
         if (
           error.response &&
@@ -195,13 +180,7 @@ function Description({ query, stars }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // if (res.status === 200) {
-      // }
+      await API.get(`api/my_products/product/${query.id}`);
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");
@@ -214,12 +193,12 @@ function Description({ query, stars }) {
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   return (
     <>
       <MetaTags
@@ -227,7 +206,7 @@ function Description({ query, stars }) {
         metaDescription={getAll("Add_new_service_Description")}
         ogDescription={getAll("Add_new_service_Description")}
       />
-      {token && veriedEmail && (
+      {user.isLogged && veriedEmail && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
             <div className="col-md-7 pt-3">

@@ -7,9 +7,7 @@ import Comments from "../../components/Comments";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-//import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import Cookies from "js-cookie";
 import router from "next/router";
 import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
@@ -39,16 +37,13 @@ const properties = {
     </div>
   ),
 };
-let token = Cookies.get("token");
-if (!token && typeof window !== "undefined")
-  token = localStorage.getItem("token");
 function Single({ query, stars }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
 
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
+  const user = useAppSelector((state) => state.user);
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   const disactiveProductHandle = async (id: any) => {
     const MySwal = withReactContent(Swal);
 
@@ -60,23 +55,12 @@ function Single({ query, stars }) {
       buttonsStyling: false,
     });
     try {
-      const res = await API.post(
-        `api/my_products/${id}/disactive_product`,
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      await API.post(`api/my_products/${id}/disactive_product`);
+      swalWithBootstrapButtons.fire(
+        getAll("Disabled1"),
+        getAll("The_service_has_2"),
+        "success"
       );
-      if (res.status === 200) {
-        swalWithBootstrapButtons.fire(
-          getAll("Disabled1"),
-          getAll("The_service_has_2"),
-          "success"
-        );
-        router.reload();
-      }
     } catch (error) {
       notification["error"]({
         message: getAll("Error_message"),
@@ -108,22 +92,12 @@ function Single({ query, stars }) {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await API.post(
-              `api/product/${id}/deleteProduct`,
-              null,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
+            await API.post(`api/product/${id}/deleteProduct`);
+            swalWithBootstrapButtons.fire(
+              getAll("Deleted"),
+              getAll("The_service_has"),
+              "success"
             );
-            if (res.status === 200) {
-              swalWithBootstrapButtons.fire(
-                getAll("Deleted"),
-                getAll("The_service_has"),
-                "success"
-              );
-            }
           } catch (error) {
             () => {};
           }
@@ -143,20 +117,13 @@ function Single({ query, stars }) {
     });
     try {
       setIsProductActive(true);
-      const res = await API.post(`api/my_products/${id}/active_product`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        setIsProductActive(false);
-        swalWithBootstrapButtons.fire(
-          getAll("Abled1"),
-          getAll("This_service_has"),
-          "success"
-        );
-        router.reload();
-      }
+      await API.post(`api/my_products/${id}/active_product`);
+      setIsProductActive(false);
+      swalWithBootstrapButtons.fire(
+        getAll("Abled1"),
+        getAll("This_service_has"),
+        "success"
+      );
     } catch (error) {
       setIsProductActive(false);
       notification["error"]({
@@ -166,11 +133,11 @@ function Single({ query, stars }) {
     }
   };
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
+      return;
     }
-    //getProductData()
-  }, []);
+  }, [user]);
   const showStars = () => {
     const rate =
       Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0;

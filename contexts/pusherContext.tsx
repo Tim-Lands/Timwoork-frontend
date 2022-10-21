@@ -1,26 +1,16 @@
 import pusher from "../config/pusher";
 import { createContext, useEffect } from "react";
-import useSWR from "swr";
 import Cookies from "js-cookie";
-import API from "../config";
 import { useAppSelector } from "@/store/hooks";
 export const PusherContext = createContext(null);
 export const PusherProvider = (props) => {
-  const isLogged = useAppSelector((store) => store.user.isLogged);
+  const { isLogged, id } = useAppSelector((store) => store.user);
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")
     token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me", async (url: string) => {
-    return await API.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((r: any) => r.data);
-  });
-  const channelChat = `presence-receiver.${
-    userInfo && userInfo.user_details.id
-  }`;
-  const channelNotification = `presence-notify.${
-    userInfo && userInfo.user_details.id
-  }`;
+
+  const channelChat = `presence-receiver.${id}`;
+  const channelNotification = `presence-notify.${id}`;
   const channelCurrency = "currency";
 
   let chatPusher;

@@ -9,7 +9,7 @@ import { Alert } from "../Alert/Alert";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
-function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
+function Paypal({ create, setIsShowBankTransfert, userInfo = {} }: any) {
   const { getAll } = useAppSelector((state) => state.languages);
 
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -19,15 +19,8 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
       const url = create
         ? `api/withdrawal/store_paypal`
         : `api/withdrawal/update_paypal`;
-      const res = await API.post(`${url}`, values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // Authentication was successful.
-      if (res.status === 200) {
-        message.success(getAll("The_data_has"));
-      }
+      await API.post(`${url}`, values);
+      message.success(getAll("The_data_has"));
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
         setValidationsErrors(error.response.data.errors);
@@ -44,7 +37,7 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
   const formik = useFormik({
     initialValues: {
       amount: "",
-      email: (userInfo && userInfo.email) || "",
+      email: userInfo?.email || "",
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -55,16 +48,10 @@ function Paypal({ token, create, setIsShowBankTransfert, userInfo = {} }: any) {
           ? `api/withdrawals/update_paypal`
           : `api/withdrawals/store_paypal`;
 
-        const res = await API.post(`${url}`, values, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_withdrawal_request"));
-          router.push("/mywallet");
-        }
+        await API.post(`${url}`, values);
+
+        message.success(getAll("The_withdrawal_request"));
+        router.push("/mywallet");
       } catch (error: any) {
         if (
           error.response &&
@@ -155,7 +142,6 @@ Paypal.getLayout = function getLayout(page: any): ReactElement {
 };
 export default Paypal;
 Paypal.propTypes = {
-  token: PropTypes.any,
   setIsShowBankTransfert: PropTypes.func,
   create: PropTypes.any,
   userInfo: PropTypes.any,

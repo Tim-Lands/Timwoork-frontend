@@ -29,13 +29,11 @@ function Conversation({ query }) {
     `api/conversations/${query.id}`
   );
   const { getAll, language } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
-  const { data: profileInfo }: any = useSWR(`api/me`);
-  const channelChat = `presence-receiver.${
-    profileInfo && profileInfo.user_details.id
-  }`;
+  const channelChat = `presence-receiver.${user.id}`;
   const channel = pusher.subscribe(channelChat);
-  const veriedEmail = profileInfo && profileInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   const [messageProgress, setMessageProgress] = useState(0);
   const [messageErrors, setMessageErrors]: any = useState({});
   const [sendMessageLoading, setSendMessageLoading] = useState(false);
@@ -334,10 +332,7 @@ function Conversation({ query }) {
                           id={`msg-item-${item.id}`}
                           key={1}
                           className={
-                            (profileInfo &&
-                            profileInfo.user_details.id == item.user.id
-                              ? ""
-                              : "recieved ") +
+                            (user.id == item.user.id ? "" : "recieved ") +
                             "d-flex message-item " +
                             switchTypeMessage(item.type)
                           }
@@ -444,25 +439,24 @@ function Conversation({ query }) {
                                     }
                               }
                             />
-                            {profileInfo &&
-                              profileInfo.user_details.id == item.user.id && (
-                                <>
-                                  {item.read_at && (
-                                    <span className="readed is-readed">
-                                      <span className="material-icons material-icons-outlined">
-                                        done_all
-                                      </span>
+                            {user.id == item.user.id && (
+                              <>
+                                {item.read_at && (
+                                  <span className="readed is-readed">
+                                    <span className="material-icons material-icons-outlined">
+                                      done_all
                                     </span>
-                                  )}
-                                  {!item.read_at && (
-                                    <span className="readed is-unreaded">
-                                      <span className="material-icons material-icons-outlined">
-                                        done
-                                      </span>
+                                  </span>
+                                )}
+                                {!item.read_at && (
+                                  <span className="readed is-unreaded">
+                                    <span className="material-icons material-icons-outlined">
+                                      done
                                     </span>
-                                  )}
-                                </>
-                              )}
+                                  </span>
+                                )}
+                              </>
+                            )}
                           </div>
                         </motion.li>
                       ))}

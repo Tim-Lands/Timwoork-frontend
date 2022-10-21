@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import Layout from "@/components/Layout/HomeLayout";
 import API from "../../../config";
 import { motion } from "framer-motion";
@@ -128,9 +127,7 @@ const Tiptap = (props: any) => {
 };
 
 const EditSeller = () => {
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  const user = useAppSelector((state) => state.user);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { data: userInfo }: any = useSWR("api/me");
   const [isShowenModal, setIsShowenModal] = useState(false);
@@ -142,7 +139,7 @@ const EditSeller = () => {
   const [selectedLang, setSelectedLang] = useState("");
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
   const [userLang, setUserLang] = useState();
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   const editor = useEditor({
     extensions: [StarterKit],
     content:
@@ -184,17 +181,11 @@ const EditSeller = () => {
         if (subtitles["ar"]) values.bio = subtitles["ar"];
         if (subtitles["en"]) values.bio = subtitles["en"];
         if (subtitles["fr"]) values.bio = subtitles["fr"];
-        const res = await API.post("api/sellers/detailsStore", values, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "X-LOCALIZATION": userLang,
-          },
-        });
+        await API.post("api/sellers/detailsStore", values);
         // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push("/user/profile");
-        }
+
+        message.success(getAll("The_update_has"));
+        router.push("/user/profile");
       } catch (error: any) {
         if (
           error.response &&
@@ -207,10 +198,11 @@ const EditSeller = () => {
     },
   });
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
+      return;
     }
-  }, [token]);
+  }, [user]);
   // Return statement.
 
   const detectLang = async (txt) => {

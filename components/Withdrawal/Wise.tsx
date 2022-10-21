@@ -5,15 +5,14 @@ import { message } from "antd";
 import { motion } from "framer-motion";
 import API from "../../config";
 import PropTypes from "prop-types";
-import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
-function Wise({ token, create, setIsShowBankTransfert }) {
+function Wise({ create, setIsShowBankTransfert }) {
   const { getAll } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
 
-  const { data: userInfo }: any = useSWR("api/me");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const UpdateMoney = async (values) => {
@@ -21,15 +20,9 @@ function Wise({ token, create, setIsShowBankTransfert }) {
       const url = create
         ? "api/withdrawal/update_wise"
         : "api/withdrawal/store_wise";
-      const res = await API.post(url, values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // Authentication was successful.
-      if (res.status === 200) {
-        message.success(getAll("The_data_has"));
-      }
+      await API.post(url, values);
+
+      message.success(getAll("The_data_has"));
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
         setValidationsErrors(error.response.data.errors);
@@ -45,10 +38,7 @@ function Wise({ token, create, setIsShowBankTransfert }) {
   };
   const formik = useFormik({
     initialValues: {
-      email:
-        userInfo &&
-        userInfo.user_details.profile.wise_account &&
-        userInfo.user_details.profile.wise_account.email,
+      email: profile?.wise_account?.email,
       amount: "",
     },
     isInitialValid: true,
@@ -59,16 +49,11 @@ function Wise({ token, create, setIsShowBankTransfert }) {
         const url = create
           ? "api/withdrawals/update_wise"
           : "api/withdrawals/store_wise";
-        const res = await API.post(url, values, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await API.post(url, values);
         // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_withdrawal_request"));
-          router.push("/mywallet");
-        }
+
+        message.success(getAll("The_withdrawal_request"));
+        router.push("/mywallet");
       } catch (error: any) {
         if (
           error.response &&
@@ -159,7 +144,6 @@ Wise.getLayout = function getLayout(page: any): ReactElement {
 };
 export default Wise;
 Wise.propTypes = {
-  token: PropTypes.any,
   setIsShowBankTransfert: PropTypes.func,
   create: PropTypes.any,
 };

@@ -4,30 +4,25 @@ import router from "next/router";
 import API from "../../config";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import useSWR from "swr";
 import { message } from "antd";
-import Cookies from "js-cookie";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
 
 function EmailConfig() {
   const { getAll } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo } = useSWR("api/me");
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
     if (veriedEmail) {
       router.push("/");
     }
-  }, []);
+  }, [user]);
   return (
     <div className="row justify-content-md-center">
       <MetaTags
@@ -39,7 +34,7 @@ function EmailConfig() {
         <Formik
           isInitialValid={true}
           initialValues={{
-            email: userInfo && userInfo.user_details.email,
+            email: user.email,
             code: "",
           }}
           enableReinitialize={true}
@@ -154,7 +149,7 @@ function EmailConfig() {
                       className="btn flex-center butt-sm butt-black me-auto"
                       onClick={async () => {
                         await API.post("api/email/resend", {
-                          email: userInfo.user_details.email,
+                          email: user.email,
                         });
                         message.success("تم الارسال بنجاح");
                       }}

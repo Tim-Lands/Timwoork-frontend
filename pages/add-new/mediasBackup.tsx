@@ -1,6 +1,5 @@
 import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useState, useRef } from "react";
-import Cookies from "js-cookie";
 import API from "../../config";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
@@ -11,30 +10,22 @@ import ImageUploading from "react-images-uploading";
 import cookies from "next-cookies";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Image from "next/image";
-import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
 import { useAppSelector } from "@/store/hooks";
 
 import { CloseCircleOutlined } from "@ant-design/icons";
 function Medias({ query, stars }) {
   const { getAll } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
   const stepsView = useRef(null);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const id = query.id;
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${query.id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -56,12 +47,12 @@ function Medias({ query, stars }) {
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
 
   const [imageProgress, setImageProgress] = useState(0);
   const [featuredProgress, setFeaturedProgress] = useState(0);
@@ -96,9 +87,6 @@ function Medias({ query, stars }) {
         `api/product/${id}/upload-galaries-step-four`,
         galleries,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           onUploadProgress: (uploadEvent) => {
             setImageProgress(
               Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
@@ -131,9 +119,6 @@ function Medias({ query, stars }) {
         `api/product/${id}/upload-thumbnail-step-four`,
         imageFeature,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           onUploadProgress: (uploadEvent) => {
             setFeaturedProgress(
               Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
@@ -173,7 +158,6 @@ function Medias({ query, stars }) {
         {
           headers: {
             "content-type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -213,7 +197,7 @@ function Medias({ query, stars }) {
         metaDescription={getAll("Contact_us_Timwoork")}
         ogDescription={getAll("Contact_us_Timwoork")}
       />
-      {token && veriedEmail && (
+      {user.isLogged && veriedEmail && (
         <div
           className="row my-3"
           style={{ maxWidth: 1300, marginInline: "auto" }}

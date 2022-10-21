@@ -1,16 +1,13 @@
 import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import Cookies from "js-cookie";
 import API from "../../config";
 import { useAppSelector } from "@/store/hooks";
-
 import router from "next/router";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
 import cookies from "next-cookies";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
@@ -32,20 +29,14 @@ function Medias({ query, stars }) {
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
   const [removedImages, setRemovedImages] = useState([]);
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const id = query.id;
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const user = useAppSelector((state) => state.user);
+
+  const veriedEmail = user.email_verified;
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${query.id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -60,12 +51,12 @@ function Medias({ query, stars }) {
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [url_video, setVideourl] = useState("");
   const [temp_url_video, setTempUrlVideo] = useState("");
@@ -95,7 +86,6 @@ function Medias({ query, stars }) {
       {
         headers: {
           "content-type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -110,12 +100,7 @@ function Medias({ query, stars }) {
     //galleries.append('images[]', images)
     const res: any = await API.post(
       `api/product/${id}/upload-galaries-step-four`,
-      galleries,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      galleries
     );
     return res;
   };
@@ -128,7 +113,6 @@ function Medias({ query, stars }) {
         {
           headers: {
             "content-type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -261,15 +245,7 @@ function Medias({ query, stars }) {
   const sendRemoveRequest = async () => {
     try {
       const promises = removedImages.map((img) =>
-        API.post(
-          `api/product/${query.id}/delete_galary`,
-          { id: img },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+        API.post(`api/product/${query.id}/delete_galary`, { id: img })
       );
       await Promise.all(promises);
     } catch (error) {
@@ -287,7 +263,7 @@ function Medias({ query, stars }) {
         ogDescription={getAll("Contact_us_Timwoork")}
       />
 
-      {token && veriedEmail && (
+      {user.isLogged && veriedEmail && (
         <div className="row justify-content-md-center my-3">
           <div className="col-md-7 pt-3">
             {isRemoveModal && (

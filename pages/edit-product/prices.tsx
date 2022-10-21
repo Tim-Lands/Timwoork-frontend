@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import { message } from "antd";
-import Cookies from "js-cookie";
 import API from "../../config";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -17,25 +16,17 @@ function Prices({ query }) {
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  const user = useAppSelector((state) => state.user);
+
   const { id } = query;
   const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   async function getProductId() {
     try {
-      const res: any = await API.get(`api/my_products/product/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 422) {
-        router.push("/add-new");
-      }
+      await API.get(`api/my_products/product/${id}`);
+      router.push("/add-new");
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");
@@ -45,28 +36,15 @@ function Prices({ query }) {
       }
     }
   }
-  /* async function stepFive() {
-        try {
-            const res = await API.post(`api/product/${query.id}/product-step-five`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            if (res.status === 200) {
 
-            }
-        } catch (error: any) {
-            message.error('حدث خطأ غير متوقع');
-        }
-    } */
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   return (
     <>
       <MetaTags
@@ -74,7 +52,7 @@ function Prices({ query }) {
         metaDescription="تعديل الخدمة - السعر والمدة"
         ogDescription="تعديل الخدمة - السعر والمدة"
       />
-      {token && veriedEmail && (
+      {user.isLogged && veriedEmail && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
             <div className="col-md-7 pt-3">
@@ -90,22 +68,16 @@ function Prices({ query }) {
                 onSubmit={async (values) => {
                   setValidationsErrors({});
                   try {
-                    const res = await API.post(
+                    await API.post(
                       `api/product/${id}/product-step-two`,
-                      values,
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                        },
-                      }
+                      values
                     );
                     // Authentication was successful.
-                    if (res.status === 200) {
-                      message.success(getAll("The_update_has"));
-                      router.push(
-                        `/edit-product/description?id=${getProduct?.data.id}`
-                      );
-                    }
+
+                    message.success(getAll("The_update_has"));
+                    router.push(
+                      `/edit-product/description?id=${getProduct?.data.id}`
+                    );
                   } catch (error: any) {
                     if (
                       error.response &&

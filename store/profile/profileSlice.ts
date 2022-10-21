@@ -32,6 +32,10 @@ export interface profileState {
   level: { id: number; name: string };
   badge: { id: number; name: string };
   country: { id: number; name: string };
+  bank_transfer_detail: any;
+  bank_account: any;
+  paypal_account: any;
+  wise_account: any;
 }
 interface payloadState {
   user_id: number;
@@ -56,6 +60,10 @@ interface payloadState {
   level: { id: number; name: string };
   badge: { id: number; name: string };
   country: { id: number; name: string };
+  bank_transfer_detail: any;
+  bank_account: any;
+  paypal_account: any;
+  wise_account: any;
 }
 const initialState: profileState = {
   user_id: null,
@@ -81,6 +89,10 @@ const initialState: profileState = {
   badge: { id: null, name: "" },
   country: { id: null, name: "" },
   loading: false,
+  bank_transfer_detail: null,
+  bank_account: null,
+  paypal_account: null,
+  wise_account: null,
 };
 const assignState = (state: profileState, payload: payloadState) => {
   state.user_id = payload.user_id;
@@ -102,6 +114,10 @@ const assignState = (state: profileState, payload: payloadState) => {
   state.steps = payload.steps;
   state.withdrawable_amount = payload.withdrawable_amount;
   state.pending_amount = payload.pending_amount;
+  state.bank_transfer_detail = payload.bank_transfer_detail;
+  state.bank_account = payload.bank_account;
+  state.paypal_account = payload.paypal_account;
+  state.wise_account = payload.wise_account;
   state.level.id = payload.level.id;
   state.level.name = payload.level.name;
   state.badge.id = payload.badge.id;

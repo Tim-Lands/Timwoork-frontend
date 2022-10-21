@@ -15,6 +15,7 @@ import Link from "next/link";
 function Complete({ query }) {
   let token = Cookies.get("token");
   const { getAll } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
   const stepsView = useRef(null);
   if (!token && typeof window !== "undefined")
@@ -22,8 +23,7 @@ function Complete({ query }) {
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
 
   if (!token && !veriedEmail) return <Unauthorized />;
   if (!query) return message.error(getAll("An_error_occurred"));

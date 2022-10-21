@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import API from "../../../config";
@@ -9,19 +8,15 @@ import { motion } from "framer-motion";
 import { message } from "antd";
 import { useAppSelector } from "@/store/hooks";
 
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Unauthorized from "@/components/Unauthorized";
 
 const sellerInformations = (): ReactElement => {
   const { getAll } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
+  const user = useAppSelector((state) => state.user);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  // Redirect to user home route if user is authenticated.
   const SignupSchema = Yup.object().shape({
     first_name: Yup.string().required(getAll("This_field_is")),
     last_name: Yup.string().required(getAll("This_field_is")),
@@ -33,9 +28,9 @@ const sellerInformations = (): ReactElement => {
   // Return statement.
   return (
     <>
-      {!userInfo && <Loading />}
-      {!token && <Unauthorized />}
-      {userInfo && userInfo.profile && (
+      {user.loading && <Loading />}
+      {!user.isLogged && !user.loading && <Unauthorized />}
+      {user.isLogged && (
         <>
           <MetaTags
             title={getAll("Edit_profile")}
@@ -45,25 +40,20 @@ const sellerInformations = (): ReactElement => {
           <Formik
             isInitialValid={true}
             initialValues={{
-              first_name: userInfo.profile.first_name || "",
-              last_name: userInfo.profile.last_name || "",
-              username: userInfo.username || "",
-              date_of_birth: userInfo.profile.date_of_birth || "",
-              gender: parseInt(userInfo.profile.gender) || 1,
-              country_id: parseInt(userInfo.profile.country_id) || 1,
+              first_name: profile.first_name,
+              last_name: profile.last_name,
+              username: user.username,
+              date_of_birth: profile.date_of_birth,
+              gender: profile.gender,
+              country_id: profile.country_id,
             }}
             validationSchema={SignupSchema}
             onSubmit={async (values) => {
               try {
-                const res = await API.post("api/profiles/step_one", values, {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                });
+                await API.post("api/profiles/step_one", values);
                 // Authentication was successful.
-                if (res.status === 200) {
-                  message.success(getAll("The_update_has"));
-                }
+
+                message.success(getAll("The_update_has"));
               } catch (error: any) {
                 if (error.response && error.response.status === 200) {
                   message.success(getAll("The_update_has"));

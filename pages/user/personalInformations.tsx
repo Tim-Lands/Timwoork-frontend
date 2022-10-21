@@ -1,12 +1,11 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import Layout from "@/components/Layout/HomeLayout";
 import { Field, Form, Formik } from "formik";
 import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
 
-import useSWR from "swr";
+import { CountriesService } from "@/services/countryService";
 import Loading from "@/components/Loading";
 import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
@@ -16,14 +15,13 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import ChangePass from "@/components/ChangePass";
 
 const personalInformations = () => {
-  let token = Cookies.get("token");
   const { getAll } = useAppSelector((state) => state.languages);
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
+  const currency = useAppSelector((state) => state.currency);
+  const [Countries, setCountries] = useState([]);
   const [codes, setCodes] = useState([]);
   const [currencies, setCurrencies] = useState([]);
-  const { data: userInfo }: any = useSWR("api/me");
-  const { data: Countries }: any = useSWR("api/get_countries");
   const [validationsErrors, setValidationsErrors]: any = useState({});
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
@@ -44,10 +42,15 @@ const personalInformations = () => {
         });
       })
       .catch(() => {});
-    if (!token) {
+    CountriesService.getAll()
+      .then((data) => {
+        setCountries(data);
+      })
+      .catch(() => {});
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
-  }, [token]);
+  }, [user]);
   // Return statement.
 
   return (
@@ -57,53 +60,38 @@ const personalInformations = () => {
         metaDescription={getAll("Profile_editing")}
         ogDescription={getAll("Profile_editing")}
       />
-      {!userInfo && <Loading />}
+      {user.loading || (profile.loading && <Loading />)}
       <div className="container py-4">
-        {userInfo && userInfo.user_details.profile && (
+        {user.isLogged && !user.loading && !profile.loading && (
           <>
             <div className="row justify-content-md-center">
               <div className="col-lg-9">
                 <div className="my-3">
-                  <UploadPicture
-                    token={token}
-                    avatarPicture={userInfo.user_details.profile.avatar_path}
-                  />
+                  <UploadPicture avatarPicture={profile.avatar_path} />
                 </div>
                 <Formik
                   isInitialValid={true}
                   initialValues={{
-                    first_name: userInfo.user_details.profile.first_name || "",
-                    last_name: userInfo.user_details.profile.last_name || "",
-                    username: userInfo.user_details.username || "",
-                    date_of_birth:
-                      userInfo.user_details.profile.date_of_birth || "",
-                    gender: parseInt(userInfo.user_details.profile.gender),
-                    country_id:
-                      parseInt(userInfo.user_details.profile.country_id) || "",
-                    phone: userInfo.user_details.phone || "",
-                    currency_id:
-                      userInfo.user_details.profile.currency?.id || "",
-                    code_phone: userInfo.user_details.code_phone || "",
+                    first_name: profile.first_name,
+                    last_name: profile.last_name,
+                    username: user.username,
+                    date_of_birth: profile.date_of_birth,
+                    gender: profile.gender,
+                    country_id: profile.country_id,
+                    phone: user.phone,
+                    currency_id: currency.my.id,
+                    code_phone: user.code_phone,
                   }}
                   //validationSchema={SignupSchema}
                   onSubmit={async (values) => {
                     setValidationsErrors({});
 
                     try {
-                      const res = await API.post(
-                        "api/profiles/step_one",
-                        { ...values },
-                        {
-                          headers: {
-                            Authorization: `Bearer ${token}`,
-                          },
-                        }
-                      );
+                      await API.post("api/profiles/step_one", {
+                        ...values,
+                      });
                       // Authentication was successful.
-                      if (res.status === 200) {
-                        message.success(getAll("The_update_has"));
-                        //router.reload();
-                      }
+                      message.success(getAll("The_update_has"));
                     } catch (error: any) {
                       if (
                         error.response &&
@@ -353,12 +341,11 @@ const personalInformations = () => {
                                   <option value="">
                                     {getAll("Select_country")}
                                   </option>
-                                  {Countries &&
-                                    Countries.data.map((e: any) => (
-                                      <option key={e.id} value={e.id}>
-                                        {e.name_ar}
-                                      </option>
-                                    ))}
+                                  {Countries.map((e: any) => (
+                                    <option key={e.id} value={e.id}>
+                                      {e.name_ar}
+                                    </option>
+                                  ))}
                                 </Field>
                                 {validationsErrors &&
                                   validationsErrors.country_id && (

@@ -3,16 +3,12 @@ import { message } from "antd";
 import { ReactElement, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import router from "next/router";
-import Cookies from "js-cookie";
-//import useSWR from 'swr'
 import { MetaTags } from "@/components/SEO/MetaTags";
 import BankAccount from "@/components/Withdrawal/BankAccount";
 import MoneyAccount from "@/components/Withdrawal/MoneyAccount";
 import Paypal from "@/components/Withdrawal/Paypal";
 import { useAppSelector } from "@/store/hooks";
-
 import Wise from "@/components/Withdrawal/Wise";
-import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
 import Loading from "@/components/Loading";
 import { motion } from "framer-motion";
@@ -22,11 +18,6 @@ import PaypalCart from "@/components/Withdrawal/PaypalCart";
 import WiseCart from "@/components/Withdrawal/WiseCart";
 import API from "../../config";
 function Withdrawal() {
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  //const veriedEmail = userInfo && userInfo.user_details.email_verified_at
   const [paymentInfo, setPaymentInfo] = useState({
     bank_account: {},
     bank_transfer_detail: {},
@@ -43,6 +34,8 @@ function Withdrawal() {
   const [isPaymentAvailable, setIsPaymentAvailable]: any = useState({});
 
   const { getAll } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
 
   const sendMoney = async () => {
     let url = "api/withdrawals/withdrawal_";
@@ -61,20 +54,10 @@ function Withdrawal() {
         break;
     }
     try {
-      const res = await API.post(
-        url,
-        { amount: formik.values.amount },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await API.post(url, { amount: formik.values.amount });
       // Authentication was successful.
-      if (res.status === 200) {
-        message.success(getAll("The_withdrawal_request"));
-        router.push("/mywallet");
-      }
+      message.success(getAll("The_withdrawal_request"));
+      router.push("/mywallet");
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
         setValidationsErrors(error.response.data.errors);
@@ -93,19 +76,19 @@ function Withdrawal() {
     onSubmit: sendMoney,
   });
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-  }, []);
+  }, [user]);
   useEffect(() => {
-    if (userInfo && userInfo.user_details) {
+    if (profile) {
       const {
         bank_account,
         bank_transfer_detail,
         paypal_account,
         wise_account,
-      } = userInfo.user_details.profile;
+      } = profile;
       setPaymentInfo({
         bank_account,
         bank_transfer_detail,
@@ -119,7 +102,7 @@ function Withdrawal() {
         wise_account: wise_account ? true : false,
       });
     }
-  }, [userInfo]);
+  }, [profile]);
   const [AmountCount, setAmountCount] = useState(null);
   const allowOnlyNumericsOrDigits = (evt) => {
     const financialGoal = evt.target.validity.valid
@@ -161,7 +144,7 @@ function Withdrawal() {
         metaDescription={getAll("Withdrawal_request")}
         ogDescription={getAll("Withdrawal_request")}
       />
-      {!userInfo && <Loading />}
+      {user.loading && <Loading />}
       <div className="container-fluid transition-all pt-5 pb-5">
         <div
           className={`row transition-all ${
@@ -383,7 +366,6 @@ function Withdrawal() {
                   {isShowBankTransfert && (
                     <BankAccount
                       create={isPaymentAvailable["bank_transfer_detail"]}
-                      token={token}
                       setIsShowBankTransfert={setIsShowBankTransfert}
                     />
                   )}
@@ -400,7 +382,6 @@ function Withdrawal() {
                   {isShowMoneyTransfert && (
                     <MoneyAccount
                       create={isPaymentAvailable["bank_account"]}
-                      token={token}
                       setIsShowBankTransfert={setIsShowMoneyTransfert}
                     />
                   )}
@@ -410,7 +391,6 @@ function Withdrawal() {
                 <>
                   {!isShowWiseTransfert && (
                     <WiseCart
-                      token={token}
                       setIsShowBankTransfert={setIsShowWiseTransfert}
                       userInfo={paymentInfo.wise_account}
                     />
@@ -418,7 +398,6 @@ function Withdrawal() {
                   {isShowWiseTransfert && (
                     <Wise
                       create={isPaymentAvailable["wise_account"]}
-                      token={token}
                       setIsShowBankTransfert={setIsShowWiseTransfert}
                     />
                   )}
@@ -428,14 +407,12 @@ function Withdrawal() {
                 <>
                   {!isShowPaypalTransfert && (
                     <PaypalCart
-                      token={token}
                       setIsShowBankTransfert={setIsShowPaypalTransfert}
                       userInfo={paymentInfo.paypal_account}
                     />
                   )}
                   {isShowPaypalTransfert && (
                     <Paypal
-                      token={token}
                       create={isPaymentAvailable["paypal_account"]}
                       setIsShowBankTransfert={setIsShowPaypalTransfert}
                       userInfo={paymentInfo.paypal_account}

@@ -2,10 +2,8 @@ import Layout from "@/components/Layout/HomeLayout";
 import React, { ReactElement, useEffect } from "react";
 import Image from "next/image";
 import router from "next/router";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
-import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import { Alert } from "@/components/Alert/Alert";
 import { useAppSelector } from "@/store/hooks";
@@ -15,22 +13,21 @@ import Link from "next/link";
 import { Table } from "antd";
 
 function index() {
-  let token = Cookies.get("token");
+  const user = useAppSelector((state) => state.user);
+  const wallet = useAppSelector((state) => state.wallet);
+  const profile = useAppSelector((state) => state.profile);
   const { getAll, language } = useAppSelector((state) => state.languages);
-
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
 
   const myLoader = () => {
-    return `${userInfo.user_details.profile.avatar_path}`;
+    return `${profile.avatar_path}`;
   };
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
+      return;
     }
-  }, []);
+  }, [user]);
   function switchType(type: any, amount: number) {
     switch (type) {
       case 0:
@@ -60,8 +57,6 @@ function index() {
       dataIndex: "",
       width: 230,
       render: (e: any) => {
-        console.log(e.payload);
-
         return <>{e.payload[whichTitle(language)]}</>;
       },
     },
@@ -76,13 +71,13 @@ function index() {
       render: (created_at: any) => <LastSeen date={created_at} />,
     },
   ];
-  const data = userInfo && userInfo.user_details.profile.wallet.activities;
+  const data = wallet.activities;
   function onChange() {}
   return (
     <div className="py-3">
-      {!userInfo && <Loading />}
-      {!token && <Unauthorized />}
-      {userInfo && userInfo.user_details.profile && (
+      {user.loading && <Loading />}
+      {!user.isLogged && !user.loading && <Unauthorized />}
+      {user.isLogged && (
         <>
           <MetaTags
             title={getAll("My_portfolio")}
@@ -98,10 +93,7 @@ function index() {
                       <div className="profile-content-avatar">
                         <Image
                           loader={myLoader}
-                          src={
-                            userInfo &&
-                            userInfo.user_details.profile.avatar_path
-                          }
+                          src={profile.avatar_path}
                           quality={1}
                           width={120}
                           height={120}
@@ -110,18 +102,12 @@ function index() {
                         />
                       </div>
                       <div className="profile-content-head">
-                        <h4 className="title">
-                          {userInfo.user_details.profile.full_name}
-                        </h4>
+                        <h4 className="title">{profile.full_name}</h4>
                         <p className="text">
-                          @{userInfo.user_details.username} |
+                          @{user.username} |
                           <span className="app-label">
                             {" "}
-                            {
-                              userInfo.user_details.profile.level[
-                                which(language)
-                              ]
-                            }{" "}
+                            {profile.level.name}{" "}
                           </span>
                         </p>
                       </div>
@@ -137,8 +123,7 @@ function index() {
                               {getAll("Pending_balance")}
                             </h3>
                             <p className="text-value">
-                              {userInfo &&
-                                userInfo.user_details.profile.pending_amount}
+                              {profile.pending_amount}
                             </p>
                             <p className="text-note">
                               {getAll("Your_earnings_are")}
@@ -151,9 +136,7 @@ function index() {
                               {getAll("Withdrawable_balance")}
                             </h3>
                             <p className="text-value">
-                              {userInfo &&
-                                userInfo.user_details.profile
-                                  .withdrawable_amount}
+                              {profile.withdrawable_amount}
                             </p>
                             <p className="text-note">
                               {getAll("The_mount_you")}
@@ -166,15 +149,8 @@ function index() {
                               {getAll("Total_balance")}
                             </h3>
                             <p className="text-value">
-                              {Number(
-                                userInfo &&
-                                  userInfo.user_details.profile
-                                    .withdrawable_amount
-                              ) +
-                                Number(
-                                  userInfo &&
-                                    userInfo.user_details.profile.pending_amount
-                                )}
+                              {Number(profile.withdrawable_amount) +
+                                Number(profile.pending_amount)}
                             </p>
                             <p className="text-note">
                               {getAll("The_entire_balance")}
@@ -183,38 +159,28 @@ function index() {
                         </div>
                       </div>
                       <div className="d-flex justify-content-center py-4">
-                        {userInfo && (
+                        {profile.withdrawable_amount > 9 ? (
                           <>
-                            {userInfo &&
-                            userInfo.user_details.profile.withdrawable_amount >
-                              9 ? (
-                              <>
-                                {userInfo.user_details.profile.wallet
-                                  .is_withdrawable == true ? (
-                                  <Link href={"/withdrawal"}>
-                                    <a className="btn butt-green butt-md px-5">
-                                      {getAll("Withdrawal_request")}
-                                    </a>
-                                  </Link>
-                                ) : (
-                                  <Alert type="error">
-                                    <strong> {getAll("You_have_a")}</strong>
-                                  </Alert>
-                                )}
-                              </>
+                            {wallet.is_withdrawable == true ? (
+                              <Link href={"/withdrawal"}>
+                                <a className="btn butt-green butt-md px-5">
+                                  {getAll("Withdrawal_request")}
+                                </a>
+                              </Link>
                             ) : (
-                              <div className="row my-5 justify-content-md-center">
-                                <div className="col-md-9">
-                                  <Alert type="error">
-                                    <strong>
-                                      {" "}
-                                      {getAll("You_cannot_request")}
-                                    </strong>
-                                  </Alert>
-                                </div>
-                              </div>
+                              <Alert type="error">
+                                <strong> {getAll("You_have_a")}</strong>
+                              </Alert>
                             )}
                           </>
+                        ) : (
+                          <div className="row my-5 justify-content-md-center">
+                            <div className="col-md-9">
+                              <Alert type="error">
+                                <strong> {getAll("You_cannot_request")}</strong>
+                              </Alert>
+                            </div>
+                          </div>
                         )}
                       </div>
                       <div className="page-header xs">
@@ -240,18 +206,7 @@ function index() {
     </div>
   );
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-    case "fr":
-      return "name_fr";
-  }
-};
+
 const whichTitle = (language) => {
   switch (language) {
     case "ar":

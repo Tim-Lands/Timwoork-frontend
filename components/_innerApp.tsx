@@ -13,12 +13,11 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import getSpecCurrency from "../utils/currency";
 
 const App = ({ innerApp }) => {
+  const unused = "";
   const user = useAppSelector((state) => state.user);
   const language = useAppSelector((state) => state.languages.language);
   const currencies = useAppSelector((state) => state.currency.values);
   const currency = useAppSelector((state) => state.currency.my);
-
-  const unUsed = "";
   const dispatch = useAppDispatch();
   let token = Cookies.get("token");
   if (!token && typeof window !== "undefined")

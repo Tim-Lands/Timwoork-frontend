@@ -5,7 +5,6 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
-import Cookies from "js-cookie";
 import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import useSWR from "swr";
@@ -121,6 +120,8 @@ import FormModal from "@/components/Forms/FormModal";
 let testTime;
 
 function Description({ query }) {
+  const user = useAppSelector((state) => state.user);
+
   const [checkedLangsDesc, setCheckedLangsDesc] = useState({
     ar: false,
     fr: false,
@@ -163,12 +164,8 @@ function Description({ query }) {
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   // const editor = useEditor({
   //   extensions: [StarterKit],
   //   content: stars && stars.data.content,
@@ -234,20 +231,11 @@ function Description({ query }) {
           body["content_en"] = subtitlesDesc["en"];
         if (!isSubtitlesDesc["ar"] && setSubtitlesDesc["fr"])
           body["content_fr"] = subtitlesDesc["fr"];
-        const res = await API.post(
-          `api/product/${id}/product-step-three`,
-          {
-            ...body,
-            content: values.content.replace(/\n/g, "<br />"),
-            buyer_instruct: values.buyer_instruct.replace(/\n/g, "<br />"),
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "X-LOCALIZATION": userLang,
-            },
-          }
-        );
+        const res = await API.post(`api/product/${id}/product-step-three`, {
+          ...body,
+          content: values.content.replace(/\n/g, "<br />"),
+          buyer_instruct: values.buyer_instruct.replace(/\n/g, "<br />"),
+        });
         // Authentication was successful.
         if (res.status === 200) {
           message.success(getAll("The_update_has"));
@@ -277,11 +265,7 @@ function Description({ query }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${query.id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -298,12 +282,12 @@ function Description({ query }) {
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   return (
     <>
       <MetaTags
@@ -311,7 +295,7 @@ function Description({ query }) {
         metaDescription={getAll("Add_new_service_Description")}
         ogDescription={getAll("Add_new_service_Description")}
       />
-      {token && (
+      {user.isLogged && (
         <div className="container-fluid">
           <div
             className="row my-3"

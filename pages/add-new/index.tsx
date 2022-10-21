@@ -2,46 +2,35 @@ import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { ReactElement, useEffect, useState } from "react";
 import { useAppSelector } from "@/store/hooks";
-
 import { Spin } from "antd";
 import { Alert } from "antd";
-import useSWR from "swr";
 import NotSeller from "@/components/NotSeller";
-import Cookies from "js-cookie";
 import Unauthorized from "@/components/Unauthorized";
 import router from "next/router";
 import API from "../../config";
 
 function index() {
-  let token = Cookies.get("token");
+  const user = useAppSelector((state) => state.user);
+  const profile = useAppSelector((state) => state.profile);
+
   const { getAll } = useAppSelector((state) => state.languages);
 
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [isLoading, setIsLoading]: any = useState(false);
 
   const addNewProduct = async () => {
     setIsLoading(true);
     try {
-      const res = await API.get("api/product/store", {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await API.get("api/product/store");
+
+      setIsLoading(false);
+      router.push({
+        pathname: `/add-new/overview`,
+        query: {
+          id: res.data.data.id, // pass the id
         },
       });
-      // If Activate Network
-      // Authentication was successful.
-      if (res.status === 200) {
-        setIsLoading(false);
-        router.push({
-          pathname: `/add-new/overview`,
-          query: {
-            id: res.data.data.id, // pass the id
-          },
-        });
-      }
     } catch (error) {
       setIsLoading(false);
       if (error.response && error.response.data) {
@@ -50,15 +39,13 @@ function index() {
     }
   };
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-  }, []);
-  if (!token) return <Unauthorized />;
-  const { data: userData }: any = useSWR(`api/me`);
-  if (userData && userData.user_details.profile.is_seller == 0)
-    return <NotSeller />;
+  }, [user]);
+  if (!user.isLogged && !user.loading) return <Unauthorized />;
+  if (profile.is_seller == 0) return <NotSeller />;
   return (
     <>
       <MetaTags
@@ -67,7 +54,7 @@ function index() {
         ogDescription={getAll("Add_new_service")}
       />
       <div className="container">
-        {token && veriedEmail && (
+        {user.isLogged && veriedEmail && (
           <div className="row justify-content-center my-3">
             <div className="col-md-7">
               <Spin spinning={isLoading}>
@@ -87,7 +74,7 @@ function index() {
                   <div className="timlands-add-new-body mt-3">
                     <h3 className="title">{getAll("Add_new_service")}</h3>
                     <p className="text">{getAll("Super!_You_have")}</p>
-                    {!userData && (
+                    {!user.isLogged && (
                       <div className="add-butts">
                         <button
                           type="button"
@@ -99,7 +86,7 @@ function index() {
                         </button>
                       </div>
                     )}
-                    {userData && userData.user_details.profile.is_seller == 1 && (
+                    {profile.is_seller == 1 && (
                       <div className="add-butts">
                         <button
                           type="button"

@@ -3,10 +3,11 @@ import { useState } from "react";
 import { message, Progress } from "antd";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { ProfileActions } from "@/store/profile/profileActions";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
-export default function UploadPicture({ token, avatarPicture }) {
+export default function UploadPicture({ avatarPicture }) {
+  const dispatch = useAppDispatch();
   const [picture, setPicture] = useState(null);
   const [imgData, setImgData] = useState(avatarPicture);
   const [imageProgress, setImageProgress] = useState(0);
@@ -24,9 +25,6 @@ export default function UploadPicture({ token, avatarPicture }) {
 
   const onUploadPicture = () => {
     const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       onUploadProgress: (uploadEvent) => {
         setImageProgress(
           Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
@@ -39,7 +37,7 @@ export default function UploadPicture({ token, avatarPicture }) {
     API.post("https://api.timwoork.com/api/profiles/step_two", fd, config)
       .then(() => {
         message.success(getAll("The_profile_picture"));
-        router.reload();
+        dispatch(ProfileActions.getProfileData());
       })
       .catch(() => {});
   };
@@ -88,6 +86,5 @@ export default function UploadPicture({ token, avatarPicture }) {
   );
 }
 UploadPicture.propTypes = {
-  token: PropTypes.string,
   avatarPicture: PropTypes.string,
 };

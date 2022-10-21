@@ -1,63 +1,46 @@
 import Layout from "../../components/Layout/HomeLayout";
-import { ReactElement, useState } from "react";
-//import { useFormik } from 'formik';
+import { ReactElement, useState, useEffect } from "react";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import API from "../../config";
 import PropTypes from "prop-types";
-import useSWR from "swr";
 import { Alert } from "../Alert/Alert";
 import UploadImageForm from "../UploadImageForm";
+import { CountriesService } from "@/services/countryService";
 import { useAppSelector } from "@/store/hooks";
 
-function BankAccount({ token, create, setIsShowBankTransfert }: any) {
-  const { data: Countries }: any = useSWR("dashboard/countries");
-  const { data: userInfo }: any = useSWR("api/me");
+function BankAccount({ create, setIsShowBankTransfert }: any) {
+  const { getAll } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
 
+  const [Countries, setCountries] = useState([]);
   const [isLoading, setisLoading]: any = useState(false);
-
+  useEffect(() => {
+    CountriesService.getWithdrawalAll()
+      .then((res) => {
+        setCountries(res);
+      })
+      .catch(() => {});
+  }, []);
   const [full_name, setfull_name]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.full_name
+    profile?.bank_transfer_detail?.full_name
   );
   const [country_id, setcountry_id]: any = useState("");
-  const [city, setcity]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.city
-  );
+  const [city, setcity]: any = useState(profile?.bank_transfer_detail?.city);
   const [id_type, setid_type]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.id_type
+    profile?.bank_transfer_detail?.id_type
   );
-  const [state, setstate]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.state
-  );
+  const [state, setstate]: any = useState(profile?.bank_transfer_detail?.state);
   const [country_code_phone, setcountry_code_phone]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.country_code_phone
+    profile?.bank_transfer_detail?.country_code_phone
   );
   const [phone_number_without_code, setphone_number_without_code]: any =
-    useState(
-      userInfo &&
-        userInfo.user_details.profile.bank_transfer_detail &&
-        userInfo.user_details.profile.bank_transfer_detail
-          .phone_number_without_code
-    );
+    useState(profile?.bank_transfer_detail?.phone_number_without_code);
   const [address_line_one, setaddress_line_one]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.address_line_one
+    profile?.bank_transfer_detail?.address_line_one
   );
   const [code_postal, setcode_postal]: any = useState(
-    userInfo &&
-      userInfo.user_details.profile.bank_transfer_detail &&
-      userInfo.user_details.profile.bank_transfer_detail.code_postal
+    profile?.bank_transfer_detail?.code_postal
   );
   const [attachments, setattachments]: any = useState(null);
 
@@ -84,16 +67,10 @@ function BankAccount({ token, create, setIsShowBankTransfert }: any) {
       const url = create
         ? "api/withdrawals/update_bank_transfer"
         : "api/withdrawals/store_bank_transfer";
-      const res = await API.post(url, formdata, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.post(url, formdata);
       // Authentication was successful.
-      if (res.status === 200) {
-        message.success(getAll("The_data_has"));
-        setisLoading(false);
-      }
+      message.success(getAll("The_data_has"));
+      setisLoading(false);
     } catch (error: any) {
       setisLoading(false);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -109,7 +86,6 @@ function BankAccount({ token, create, setIsShowBankTransfert }: any) {
     setValidationsGeneral({});
     setValidationsErrors({});
   };
-  const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <form onSubmit={UpdateMoney}>
@@ -183,15 +159,14 @@ function BankAccount({ token, create, setIsShowBankTransfert }: any) {
                   value={country_id}
                 >
                   <option value="">{getAll("Select_country")}</option>
-                  {!Countries && (
+                  {Countries.length === 0 && (
                     <option value="">{getAll("Please_wait")}</option>
                   )}
-                  {Countries &&
-                    Countries.data.map((e: any) => (
-                      <option value={e.id} key={e.id}>
-                        {e.name_ar}
-                      </option>
-                    ))}
+                  {Countries.map((e: any) => (
+                    <option value={e.id} key={e.id}>
+                      {e.name_ar}
+                    </option>
+                  ))}
                 </select>
                 {validationsErrors && validationsErrors.country_id && (
                   <div style={{ overflow: "hidden" }}>
@@ -505,7 +480,6 @@ BankAccount.getLayout = function getLayout(page: any): ReactElement {
 };
 export default BankAccount;
 BankAccount.propTypes = {
-  token: PropTypes.any,
   setIsShowBankTransfert: PropTypes.func,
   create: PropTypes.any,
 };
