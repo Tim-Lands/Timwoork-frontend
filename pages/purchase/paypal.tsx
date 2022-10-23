@@ -48,7 +48,7 @@ function Paypal({ query }) {
       router.push("/login");
       return;
     }
-  }, []);
+  }, [user]);
   return (
     <div className="row py-4 justify-content-center">
       {veriedEmail && (

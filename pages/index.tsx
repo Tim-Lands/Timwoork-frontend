@@ -3,8 +3,8 @@ import { PRIMARY } from "../styles/variables";
 import Hero from "@/components/Header/Hero";
 import VideoAside from "@/components/VideoSection/VideoAside";
 import Head from "next/head";
-import React, { ReactElement } from "react";
-import { useAppSelector } from "@/store/hooks";
+import { ReactElement, useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { CategoriesService } from "@/services/categoriesServices";
 import Link from "next/link";
 import router from "next/router";
@@ -13,16 +13,25 @@ import LayoutHome from "@/components/Layout/indexLayout";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import API from "../config";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
+import { ProductsActions } from "@/store/products/productActions";
 import PostInner from "@/components/Post/PostInner";
-function index({ products, latestProducts, categories, popularProducts }) {
+function index({ categories }) {
+  const dispatch = useAppDispatch();
   const { getAll, language } = useAppSelector((state) => state.languages);
+  const { popular, best_seller, latest } = useAppSelector(
+    (state) => state.products
+  );
+  useEffect(() => {
+    if (!popular.loaded) dispatch(ProductsActions.getPopularProducts());
+    if (!latest.loaded) dispatch(ProductsActions.getLatestProducts());
+    if (!best_seller.loaded) dispatch(ProductsActions.getSellingProducts());
+  }, [popular, latest, best_seller]);
 
   const menu = (
     <Menu>
@@ -81,12 +90,9 @@ function index({ products, latestProducts, categories, popularProducts }) {
         href={`/products?categoryID=`}
         categories={categories}
       />
-      {products &&
-        popularProducts &&
-        latestProducts &&
-        products.length !== 0 &&
-        popularProducts.length !== 0 &&
-        latestProducts.length !== 0 && (
+      {best_seller.data.length !== 0 &&
+        popular.data.length !== 0 &&
+        latest.data.length !== 0 && (
           <>
             <div
               className="container "
@@ -133,32 +139,31 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 style={{ direction: "rtl" }}
                 dir={"rtl"}
               >
-                {latestProducts &&
-                  latestProducts.data.map((e: any) => {
-                    return (
-                      <SwiperSlide key={e.id}>
-                        <PostInner
-                          title={e[which(language)]}
-                          author={
-                            e.profile_seller &&
-                            e.profile_seller.profile.first_name +
-                              " " +
-                              e.profile_seller.profile.last_name
-                          }
-                          rate={e.ratings_avg_rating}
-                          username={
-                            e.profile_seller &&
-                            e.profile_seller.profile.user.username
-                          }
-                          price={e.price}
-                          slug={e.slug}
-                          thumbnail={e.full_path_thumbnail}
-                          buyers={e.count_buying}
-                          avatar={e.profile_seller.profile.avatar_path}
-                        />
-                      </SwiperSlide>
-                    );
-                  })}
+                {latest.data.map((e: any) => {
+                  return (
+                    <SwiperSlide key={e.id}>
+                      <PostInner
+                        title={e[which(language)]}
+                        author={
+                          e.profile_seller &&
+                          e.profile_seller.profile.first_name +
+                            " " +
+                            e.profile_seller.profile.last_name
+                        }
+                        rate={e.ratings_avg_rating}
+                        username={
+                          e.profile_seller &&
+                          e.profile_seller.profile.user.username
+                        }
+                        price={e.price}
+                        slug={e.slug}
+                        thumbnail={e.full_path_thumbnail}
+                        buyers={e.count_buying}
+                        avatar={e.profile_seller.profile.avatar_path}
+                      />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </div>
             <div
@@ -205,30 +210,29 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 dir={"rtl"}
                 style={{ direction: "rtl" }}
               >
-                {products &&
-                  products.data.map((e: any) => (
-                    <SwiperSlide key={e.id}>
-                      <PostInner
-                        title={e[which(language)]}
-                        author={
-                          e.profile_seller &&
-                          e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
-                        }
-                        rate={e.ratings_avg_rating}
-                        username={
-                          e.profile_seller &&
-                          e.profile_seller.profile.user.username
-                        }
-                        price={e.price}
-                        slug={e.slug}
-                        thumbnail={e.full_path_thumbnail}
-                        buyers={e.count_buying}
-                        avatar={e.profile_seller.profile.avatar_path}
-                      />
-                    </SwiperSlide>
-                  ))}
+                {best_seller.data.map((e: any) => (
+                  <SwiperSlide key={e.id}>
+                    <PostInner
+                      title={e[which(language)]}
+                      author={
+                        e.profile_seller &&
+                        e.profile_seller.profile.first_name +
+                          " " +
+                          e.profile_seller.profile.last_name
+                      }
+                      rate={e.ratings_avg_rating}
+                      username={
+                        e.profile_seller &&
+                        e.profile_seller.profile.user.username
+                      }
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                      avatar={e.profile_seller.profile.avatar_path}
+                    />
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
             <div className="container " style={{ direction: "rtl" }}>
@@ -272,30 +276,29 @@ function index({ products, latestProducts, categories, popularProducts }) {
                 dir={"rtl"}
                 className="mySwiper "
               >
-                {popularProducts &&
-                  popularProducts.data.map((e: any) => (
-                    <SwiperSlide key={e.id}>
-                      <PostInner
-                        title={e[which(language)]}
-                        author={
-                          e.profile_seller &&
-                          e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
-                        }
-                        rate={e.ratings_avg_rating}
-                        username={
-                          e.profile_seller &&
-                          e.profile_seller.profile.user.username
-                        }
-                        price={e.price}
-                        slug={e.slug}
-                        thumbnail={e.full_path_thumbnail}
-                        buyers={e.count_buying}
-                        avatar={e.profile_seller.profile.avatar_path}
-                      />
-                    </SwiperSlide>
-                  ))}
+                {popular.data.map((e: any) => (
+                  <SwiperSlide key={e.id}>
+                    <PostInner
+                      title={e[which(language)]}
+                      author={
+                        e.profile_seller &&
+                        e.profile_seller.profile.first_name +
+                          " " +
+                          e.profile_seller.profile.last_name
+                      }
+                      rate={e.ratings_avg_rating}
+                      username={
+                        e.profile_seller &&
+                        e.profile_seller.profile.user.username
+                      }
+                      price={e.price}
+                      slug={e.slug}
+                      thumbnail={e.full_path_thumbnail}
+                      buyers={e.count_buying}
+                      avatar={e.profile_seller.profile.avatar_path}
+                    />
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
           </>
@@ -345,20 +348,11 @@ index.getLayout = function getLayout(page: any): ReactElement {
 
 export async function getServerSideProps() {
   try {
-    const [categories, popularProducts, latestProducts, products] =
-      await Promise.all([
-        CategoriesService.getAll(),
-        API.get("api/filter?paginate=9&popular"),
-        API.get("api/filter?paginate=9&sort[0]=created_at,desc"),
-        API.get("api/filter?paginate=9&sort=count_buying,desc"),
-      ]);
+    const categories = await CategoriesService.getAll();
 
     // Pass data to the page via props
     return {
       props: {
-        products: products?.data?.data,
-        popularProducts: popularProducts?.data?.data,
-        latestProducts: latestProducts?.data?.data,
         categories,
         errorFetch: false,
       },

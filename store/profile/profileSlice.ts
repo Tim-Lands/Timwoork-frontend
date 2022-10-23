@@ -118,12 +118,12 @@ const assignState = (state: profileState, payload: payloadState) => {
   state.bank_account = payload.bank_account;
   state.paypal_account = payload.paypal_account;
   state.wise_account = payload.wise_account;
-  state.level.id = payload.level.id;
-  state.level.name = payload.level.name;
-  state.badge.id = payload.badge.id;
-  state.badge.name = payload.badge.name;
-  state.country.id = payload.country.id;
-  state.country.name = payload.country.name;
+  state.level.id = payload.level?.id;
+  state.level.name = payload.level?.name;
+  state.badge.id = payload.badge?.id;
+  state.badge.name = payload.badge?.name;
+  state.country.id = payload.country?.id;
+  state.country.name = payload.country?.name;
 };
 export const profileSlice = createSlice({
   name: "profile",

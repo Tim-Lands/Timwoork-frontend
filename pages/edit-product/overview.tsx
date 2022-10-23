@@ -21,10 +21,8 @@ const MySelect = (props: any) => {
     setIsLoadingTags(true);
     try {
       const res: any = await API.get(`api/tags/filter?tag=${tag}`);
-      if (res.status === 200) {
-        setIsLoadingTags(false);
-        setDataTags(res.data.data.data);
-      }
+      setIsLoadingTags(false);
+      setDataTags(res.data.data.data);
     } catch (error) {
       setIsLoadingTags(false);
     }
@@ -61,7 +59,10 @@ const MySelect = (props: any) => {
 };
 function Overview({ query }) {
   const id = query.id;
-  const { getAll } = useAppSelector((state) => state.languages);
+  const {
+    user,
+    languages: { getAll },
+  } = useAppSelector((state) => state);
 
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
@@ -69,8 +70,6 @@ function Overview({ query }) {
   const { data: categories, categoriesError }: any = useSWR(
     "api/get_categories_for_add_product"
   );
-
-  const user = useAppSelector((state) => state.user);
 
   const veriedEmail = user.email_verified;
   const [validationsErrors, setValidationsErrors]: any = useState({});

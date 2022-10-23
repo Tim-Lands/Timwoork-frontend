@@ -15,7 +15,7 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import { notification, Spin } from "antd";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import { ProductService } from "@/services/productService";
 const properties = {
   duration: 5000,
   transitionDuration: 500,
@@ -37,7 +37,7 @@ const properties = {
     </div>
   ),
 };
-function Single({ query, stars }) {
+function Single({ query, product }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
 
   const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
@@ -274,11 +274,11 @@ function Single({ query, stars }) {
   return (
     <>
       <MetaTags
-        title={stars.data.title + ` - ${getAll("Timwoork")}`}
-        metaDescription={stars.data.content}
-        ogDescription={stars.data.content}
-        ogImage={stars.data.full_path_thumbnail}
-        ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
+        title={product.title + ` - ${getAll("Timwoork")}`}
+        metaDescription={product.content}
+        ogDescription={product.content}
+        ogImage={product.full_path_thumbnail}
+        ogUrl={`https://timwoork.com/p/${product.slug}`}
       />
       {ProductData && veriedEmail && (
         <div className="timwoork-single">
@@ -590,14 +590,10 @@ const which = (language) => {
 };
 export default Single;
 export async function getServerSideProps({ query }) {
-  const uriString = encodeURI(`api/product/${query.product}`);
-  // Fetch data from external API
-  const res = await API.get(uriString);
-
-  // Pass data to the page via props
-  return { props: { stars: res.data, query } };
+  const product = await ProductService.getOne(query.product);
+  return { props: { product, query } };
 }
 Single.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  product: PropTypes.any,
 };

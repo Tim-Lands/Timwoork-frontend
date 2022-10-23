@@ -78,8 +78,6 @@ function Category({ products, categories, url_params }) {
     most_selling: getAll("Top_selling_services"),
     popular: getAll("Most_popular_services"),
   };
-  //const { data: getProducts }: any = useSWR(`api/filter?paginate=12&sort=count_buying,desc`);
-  /**----------------------------------------------------------**/
   useEffect(() => {
     setGetProducts(products);
   }, [products]);

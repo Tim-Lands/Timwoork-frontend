@@ -7,11 +7,10 @@ import chat from "./chat/chatSlice";
 import wallet from "./wallet/walletSlice";
 import currency from "./currency/currencySlice";
 import languages from "./languages/languagesSlice";
-import sales from "./sales/salesSlice";
 import profile from "./profile/profileSlice";
 import products from "./products/productsSlice";
 import purchase from "./purchases/purchasesSlice";
-import myServices from "./myServices/myServicesSlice";
+import myServices from "./myProducts/myProductsSlice";
 export const store = configureStore({
   reducer: {
     user,
@@ -22,7 +21,6 @@ export const store = configureStore({
     wallet,
     currency,
     languages,
-    sales,
     profile,
     products,
     purchase,

@@ -4,7 +4,6 @@ import { message } from "antd";
 import { useAppSelector } from "@/store/hooks";
 
 import router from "next/router";
-import Cookies from "js-cookie";
 import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -13,28 +12,21 @@ import API from "../../config";
 import Link from "next/link";
 
 function Complete({ query }) {
-  let token = Cookies.get("token");
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
 
   const stepsView = useRef(null);
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
   const veriedEmail = user.email_verified;
 
-  if (!token && !veriedEmail) return <Unauthorized />;
+  if (!user.isLogged && !veriedEmail) return <Unauthorized />;
   if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${query.id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -48,33 +40,23 @@ function Complete({ query }) {
   }
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   async function stepFive() {
     try {
-      const res = await API.post(
-        `api/product/${query.id}/product-step-five`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await API.post(`api/product/${query.id}/product-step-five`);
       // Authentication was successful.
-      if (res.status === 200) {
-        message.success(getAll("The_update_has"));
-        router.push({
-          pathname: "/myproducts",
-          query: {
-            id: query.id, // pass the id
-          },
-        });
-      }
+      message.success(getAll("The_update_has"));
+      router.push({
+        pathname: "/myproducts",
+        query: {
+          id: query.id, // pass the id
+        },
+      });
     } catch (error: any) {
       message.error(getAll("An_unexpected_error_occurred"));
     }

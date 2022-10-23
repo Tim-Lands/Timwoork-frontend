@@ -5,23 +5,19 @@ import { Table } from "antd";
 import Link from "next/link";
 import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
-import Cookies from "js-cookie";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
 function index() {
   const { getAll, language } = useAppSelector((state) => state.languages);
+  const user = useAppSelector((state) => state.user);
 
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const { data: buysList }: any = useSWR(`api/my_purchases`);
 
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
 
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
   }, []);

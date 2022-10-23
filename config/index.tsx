@@ -4,7 +4,10 @@ const lang =
   Cookies.get("lang") || typeof window !== "undefined"
     ? localStorage.getItem("lang")
     : "ar";
-const token = Cookies.get("token");
+const token =
+  Cookies.get("token") || typeof window !== "undefined"
+    ? localStorage.getItem("token")
+    : "";
 export default axios.create({
   baseURL: "https://api.timwoork.com/", //api.timwoork.com
   headers: { "X-localization": lang, Authorization: `Bearer ${token}` },

@@ -1,29 +1,30 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Table } from "antd";
 import Link from "next/link";
-import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
-import Cookies from "js-cookie";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
+import { SalesService } from "@/services/salesService";
 
 function index() {
   const { getAll, language } = useAppSelector((state) => state.languages);
-
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
-
+  const user = useAppSelector((state) => state.user);
+  const veriedEmail = user.email_verified;
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
+  }, [user]);
+  useEffect(() => {
+    SalesService.getAll()
+      .then((res) => setData(res))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
-  const { data: buysList }: any = useSWR(`api/my_sales`);
 
   const statusLabel = (status: any) => {
     switch (status) {
@@ -143,7 +144,6 @@ function index() {
       render: (created_at: any) => <LastSeen date={created_at} />,
     },
   ];
-  const data = buysList && buysList.data;
   function onChange() {}
   return (
     <>
@@ -166,6 +166,7 @@ function index() {
                     columns={columns}
                     onChange={onChange}
                     dataSource={data}
+                    loading={loading}
                     bordered
                     size="small"
                   />
@@ -190,6 +191,7 @@ const whichTitle = (language) => {
       return "title_fr";
   }
 };
+
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

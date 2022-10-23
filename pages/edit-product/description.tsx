@@ -13,7 +13,6 @@ import useSWR from "swr";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import cookies from "next-cookies";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -116,7 +115,7 @@ const Tiptap = (props: any) => {
     />
   );
 };
-function Description({ query, stars }) {
+function Description({ query, product }) {
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
@@ -129,13 +128,12 @@ function Description({ query, stars }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const editor = useEditor({
     extensions: [StarterKit],
-    content: stars && stars.data.content,
+    content: product && product.data.content,
   });
   const buyerInstruct = useEditor({
     extensions: [StarterKit],
-    content: stars && stars.data.buyer_instruct,
+    content: product && product.data.buyer_instruct,
   });
-  console.log(stars);
   const html = editor && editor.getHTML();
   const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML();
   /* async function stepFive() {
@@ -428,20 +426,14 @@ Description.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token || "";
   const uriString = `api/my_products/product/${ctx.query.id}`;
-  // Fetch data from external API
-  const res = await API.get(uriString, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await API.get(uriString);
 
-  return { props: { query: ctx.query, stars: res.data } };
+  return { props: { query: ctx.query, product: res.data } };
 }
 Description.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  product: PropTypes.any,
 };
 MenuBar.propTypes = {
   editor: PropTypes.any,

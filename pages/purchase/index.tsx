@@ -136,7 +136,7 @@ function Bill() {
       return;
     }
     getPaypal();
-  }, []);
+  }, [user]);
   useEffect(() => {
     const new_gates = {};
     cart.cart_payments.forEach((gate) => (new_gates[gate.name_en] = true));

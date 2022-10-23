@@ -17,7 +17,7 @@ function Popular() {
   const fetchData = async (pageNumber: number = 1) => {
     try {
       const res = await ProductService.getAll({
-        params: { page: pageNumber, sort: "count_buying,desc", paginate: 12 },
+        params: { page: pageNumber, type: "popular", paginate: 12 },
       });
 
       setGetProducts(res);

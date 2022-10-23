@@ -7,7 +7,6 @@ import SidebarAdvices from "./SidebarAdvices";
 import { useAppSelector } from "@/store/hooks";
 
 import { message } from "antd";
-import Cookies from "js-cookie";
 import API from "../../config";
 import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -17,7 +16,6 @@ import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
 let testTime;
 function Prices({ query }) {
-  const { data: userInfo }: any = useSWR("api/me");
   const [userLang, setUserLang] = useState();
   const [checkedLangs, setCheckedLangs] = useState({
     ar: false,
@@ -31,29 +29,25 @@ function Prices({ query }) {
   const [isSubtitle, setIsSubtitle] = useState([
     { ar: false, fr: false, en: false },
   ]);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const {
+    user,
+    languages: { language, getAll },
+  } = useAppSelector((state) => state);
 
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const { id } = query;
   const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  const veriedEmail = user.email_verified;
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${query.id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -85,8 +79,6 @@ function Prices({ query }) {
   };
 
   const addSubtitle = (subtitle) => {
-    console.log(subtitle);
-    console.log(selectedLang);
     switch (selectedLang) {
       case "ar":
         setSubtitles([...subtitles, { ...subtitles[dvlpindex], ar: subtitle }]);
@@ -103,12 +95,12 @@ function Prices({ query }) {
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
 
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     getProductId();
-  }, []);
+  }, [user]);
   const detectLang = async (txt) => {
     const res = await API.post(`/api/detectLang`, { sentence: txt });
     setCheckedLangs({ ...checkedLangs, [res.data.data]: false });
@@ -121,7 +113,7 @@ function Prices({ query }) {
         metaDescription="إضافة خدمة جديدة - السعر والمدة "
         ogDescription="إضافة خدمة جديدة - السعر والمدة"
       />
-      {token && veriedEmail && (
+      {user.token && veriedEmail && (
         <div className="container-fluid">
           <div
             className="row my-3"
@@ -167,26 +159,18 @@ function Prices({ query }) {
                       if (!isSubtitle[indx]["fr"] && subtitles[indx]["fr"])
                         val.title_fr = subtitles["fr"];
                     });
-                    const res = await API.post(
+                    await API.post(
                       `api/product/${id}/product-step-two`,
-                      values,
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                          "X-LOCALIZATION": userLang,
-                        },
-                      }
+                      values
                     );
                     // Authentication was successful.
-                    if (res.status === 200) {
-                      message.success(getAll("The_update_has"));
-                      router.push({
-                        pathname: "/add-new/description",
-                        query: {
-                          id: id, // pass the id
-                        },
-                      });
-                    }
+                    message.success(getAll("The_update_has"));
+                    router.push({
+                      pathname: "/add-new/description",
+                      query: {
+                        id: id, // pass the id
+                      },
+                    });
                   } catch (error: any) {
                     console.log(error);
                     if (

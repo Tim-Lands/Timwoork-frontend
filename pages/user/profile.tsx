@@ -66,7 +66,7 @@ function Profile() {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
-  }, [user.isLogged]);
+  }, [user]);
   if (!user.email_verified && !user.loading) {
     return (
       <div className="row justify-content-md-center">

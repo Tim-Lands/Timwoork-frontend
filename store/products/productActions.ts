@@ -1,6 +1,6 @@
 import { ProductsThunkFunctions } from "./thunkFunctions";
 import { productsSlice } from "./productsSlice";
-export const SalesActions = {
+export const ProductsActions = {
   ...ProductsThunkFunctions,
   ...productsSlice.actions,
 };

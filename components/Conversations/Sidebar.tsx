@@ -100,7 +100,7 @@ function Sidebar({ RouterId }) {
         </div>
         <ul className="conversations-items-list">
           {conversationsList &&
-            conversationsList.data.data.map((item: any) => (
+            conversationsList.data.data.map((item: any) => {
               <li
                 onClick={() => {
                   mutate(`api/conversations?paginate=6&page=${pageNumber}`);
@@ -119,7 +119,7 @@ function Sidebar({ RouterId }) {
                           width={50}
                           height={50}
                           src={item.members[0].profile.avatar_path}
-                          alt="Abdelhamid Boumegouas"
+                          alt={item.members[0].username}
                         />
                       </div>
                       <div className="conv-item-body">
@@ -139,8 +139,8 @@ function Sidebar({ RouterId }) {
                     </div>
                   </a>
                 </Link>
-              </li>
-            ))}
+              </li>;
+            })}
         </ul>
         <Pagination
           activePage={pageNumber}

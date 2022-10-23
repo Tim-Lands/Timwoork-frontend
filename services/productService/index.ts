@@ -19,4 +19,8 @@ async function getAll({
   });
   return res.data.data;
 }
-export const ProductService = { getAll };
+async function getOne(id: string) {
+  const res = await API.get(`api/product/${id}`);
+  return res?.data?.data;
+}
+export const ProductService = { getAll, getOne };

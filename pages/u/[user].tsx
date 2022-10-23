@@ -4,22 +4,22 @@ import Image from "next/image";
 import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Card } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import useSWR from "swr";
 import { useAppSelector } from "@/store/hooks";
+import { Services } from "../../services";
 
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
-import API from "../../config";
 import PostInner from "@/components/Post/PostInner";
 
-const User = ({ query, stars }) => {
-  // Return statement.
-  const { data: userInfo }: any = useSWR(`api/profiles/${query.user}`);
-  const { data: currentUserInfo }: any = useSWR("api/me");
+const User = ({ query, profile }) => {
+  const {
+    user,
+    languages: { getAll, language },
+  } = useAppSelector((state) => state);
   const router = useRouter();
-  const User = userInfo && userInfo.data;
-  const userId = User && User.id;
-  const currentUserId = currentUserInfo && currentUserInfo.user_details.id;
+  const User = profile;
+  const userId = User && User?.id;
+  const currentUserId = user.id;
   const APIURL = "";
   const myLoader = () => {
     return `${APIURL}${User.profile.avatar_path}`;
@@ -28,7 +28,6 @@ const User = ({ query, stars }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
-  const { getAll, language } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     setIsOverflow(
@@ -42,20 +41,18 @@ const User = ({ query, stars }) => {
   return (
     <div className="py-3 mt-3">
       <MetaTags
-        title={stars.data.profile.full_name}
+        title={profile.profile.full_name}
         metaDescription={
-          stars.data.profile.profile_seller &&
-          stars.data.profile.profile_seller.bio
+          profile.profile.profile_seller && profile.profile.profile_seller.bio
         }
         ogDescription={
-          stars.data.profile.profile_seller &&
-          stars.data.profile.profile_seller.bio
+          profile.profile.profile_seller && profile.profile.profile_seller.bio
         }
-        ogImage={stars.data.profile.avatar_path}
-        ogUrl={`https://timwoork.com/u/${stars.data.username}`}
+        ogImage={profile.profile.avatar_path}
+        ogUrl={`https://timwoork.com/u/${profile.username}`}
       />
-      {!userInfo && <Loading />}
-      {userInfo && User.profile && (
+      {!profile && <Loading />}
+      {User.profile && (
         <>
           <div className="container">
             <div className="timlands-profile-content py-3">
@@ -269,12 +266,9 @@ User.getLayout = function getLayout(page: any): ReactElement {
 };
 export async function getServerSideProps({ query }) {
   try {
-    const uriString = encodeURI(`api/profiles/${query.user}`);
-    // Fetch data from external API
-    const res = await API.get(uriString);
+    const profile = await Services.getProfile(query.user);
 
-    // Pass data to the page via props
-    return { props: { stars: res.data, query, errorFetch: false } };
+    return { props: { profile, query, errorFetch: false } };
   } catch (error) {
     return { props: { stars: null, query, errorFetch: true } };
   }
@@ -311,5 +305,5 @@ const whichBio = (language) => {
 };
 User.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  profile: PropTypes.any,
 };

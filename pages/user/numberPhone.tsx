@@ -1,8 +1,10 @@
-import React, { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import API from "../../config";
 import { motion } from "framer-motion";
+import router from "next/router";
+
 import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
@@ -17,6 +19,12 @@ const NumberPhone = (): ReactElement => {
     phone_number: Yup.number().required(getAll("This_field_is")),
   });
   // Return statement.
+  useEffect(() => {
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   return (
     <>
       {user.isLogged && (

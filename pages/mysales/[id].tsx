@@ -2,16 +2,15 @@ import React, { ReactElement, useState, useRef, useEffect } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { Alert } from "@/components/Alert/Alert";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import useSWR from "swr";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Link from "next/link";
 import API from "../../config";
-import Cookies from "js-cookie";
 import LastSeen from "@/components/LastSeen";
-import { Modal, Progress, Result, Spin, Timeline } from "antd";
+import { Modal, Progress, Spin, Timeline } from "antd";
 import useFileUpload from "react-use-file-upload";
 import { motion } from "framer-motion";
+import { SalesService } from "@/services/salesService";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
@@ -19,16 +18,16 @@ import { useAppSelector } from "@/store/hooks";
 
 const User = ({ query }) => {
   const { getAll, language } = useAppSelector((state) => state.languages);
-
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: ShowItem, errorItem }: any = useSWR(`api/my_sales/${query.id}`);
+  const user = useAppSelector((state) => state.user);
+  const [ShowItem, setShowItem]: any = useState(false);
   const inputRef: any = useRef();
   const inputRefMsg: any = useRef();
-  const { data: userInfo }: any = useSWR("api/me");
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
-
+  const veriedEmail = user.email_verified;
+  useEffect(() => {
+    SalesService.getOne(query.id)
+      .then((res) => setShowItem(res))
+      .catch(() => {});
+  }, [query.id]);
   const [imageProgress, setImageProgress] = useState(0);
   const [messageProgress, setMessageProgress] = useState(0);
   const [messageErrors, setMessageErrors]: any = useState({});
@@ -39,27 +38,15 @@ const User = ({ query }) => {
   const rejectMessageCause = async (messageText: any, typeCause = 2) => {
     setBySellerMSGLoading(true);
     try {
-      const id = ShowItem && ShowItem.data.conversation.id;
+      const id = ShowItem?.conversation?.id;
       const conversation: any = new FormData();
       conversation.append("type", typeCause);
       conversation.append("message", messageText);
-      const res = await API.post(
-        `api/conversations/${id}/sendMessage`,
-        conversation,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        //router.reload()
-        setBySellerMSGLoading(false);
-        setIsModalVisible(false);
-        setModalVisibleRejectModified(false);
-        setModalVisibleReject(false);
-        router.reload();
-      }
+      await API.post(`api/conversations/${id}/sendMessage`, conversation);
+      setBySellerMSGLoading(false);
+      setIsModalVisible(false);
+      setModalVisibleRejectModified(false);
+      setModalVisibleReject(false);
     } catch (error) {
       if (error && error.response) {
         setMessageErrors(error.response.data.errors);
@@ -67,10 +54,10 @@ const User = ({ query }) => {
     }
   };
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
-  }, []);
+  }, [user]);
 
   const { files, fileNames, totalSize, setFiles, removeFile } = useFileUpload();
   const {
@@ -135,18 +122,7 @@ const User = ({ query }) => {
   const item_accepted_by_seller = async (id: any) => {
     setAcceptedBySellerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/item_accepted_by_seller`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/item_accepted_by_seller`);
     } catch (error) {
       setAcceptedBySellerLoading(false);
     }
@@ -154,19 +130,10 @@ const User = ({ query }) => {
   const item_rejected_by_seller = async (id: any) => {
     setRejectedBySellerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/item_rejected_by_seller`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        rejectMessageCause(message);
-        setModalVisibleReject(false);
-      }
+      await API.post(`api/order/items/${id}/item_rejected_by_seller`);
+
+      rejectMessageCause(message);
+      setModalVisibleReject(false);
     } catch (error) {
       setRejectedBySellerLoading(false);
     }
@@ -175,18 +142,9 @@ const User = ({ query }) => {
   const reject_cancel_request_by_seller = async (id: any) => {
     setRejectCancelRequestBySellerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/reject_cancel_request_by_seller`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        rejectMessageCause(message);
-      }
+      await API.post(`api/order/items/${id}/reject_cancel_request_by_seller`);
+
+      rejectMessageCause(message);
     } catch (error) {
       setRejectCancelRequestBySellerLoading(false);
     }
@@ -198,23 +156,13 @@ const User = ({ query }) => {
     try {
       const attachments: any = new FormData();
       files.map((file: any) => attachments.append("item_attachments[]", file));
-      const res = await API.post(
-        `api/order/items/${id}/dilevered_by_seller`,
-        attachments,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          onUploadProgress: (uploadEvent) => {
-            setImageProgress(
-              Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
-            );
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/dilevered_by_seller`, attachments, {
+        onUploadProgress: (uploadEvent) => {
+          setImageProgress(
+            Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
+          );
+        },
+      });
     } catch (error) {
       setDileveredSellerLoading(false);
     }
@@ -224,18 +172,7 @@ const User = ({ query }) => {
   const accept_cancel_request_by_seller = async (id: any) => {
     setAcceptCancelRequestBySellerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/accept_cancel_request_by_seller`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/accept_cancel_request_by_seller`);
     } catch (error) {
       setAcceptCancelRequestBySellerLoading(false);
     }
@@ -245,18 +182,9 @@ const User = ({ query }) => {
   const resolve_the_conflict_between_them_in_rejected = async (id: any) => {
     setResolveConflictBetweenRejectedLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/resolve_the_conflict_between_them_in_rejected`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      await API.post(
+        `api/order/items/${id}/resolve_the_conflict_between_them_in_rejected`
       );
-      if (res.status === 200) {
-        router.reload();
-      }
     } catch (error) {
       setResolveConflictBetweenRejectedLoading(false);
     }
@@ -265,18 +193,7 @@ const User = ({ query }) => {
   const accept_modified_by_seller = async (id: any) => {
     setAcceptModifiedSellerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/accept_modified_by_seller`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/accept_modified_by_seller`);
     } catch (error) {
       setAcceptModifiedSellerLoading(false);
     }
@@ -287,18 +204,7 @@ const User = ({ query }) => {
   const reject_modified_by_seller = async (id: any) => {
     setRejectModifiedSellerLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/reject_modified_by_seller`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/reject_modified_by_seller`);
     } catch (error) {
       setRejectModifiedSellerLoading(false);
     }
@@ -308,18 +214,9 @@ const User = ({ query }) => {
   const resolve_the_conflict_between_them_in_modified = async (id: any) => {
     setResolveConflictBetweenThemModifiedLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/resolve_the_conflict_between_them_in_modified`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      await API.post(
+        `api/order/items/${id}/resolve_the_conflict_between_them_in_modified`
       );
-      if (res.status === 200) {
-        router.reload();
-      }
     } catch (error) {
       setResolveConflictBetweenThemModifiedLoading(false);
     }
@@ -329,22 +226,11 @@ const User = ({ query }) => {
   const createConversation = async (id: any) => {
     setCreateConversationLoading(true);
     try {
-      const res = await API.post(
-        `api/order/items/${id}/conversations/create`,
-        {
-          initial_message: message,
-          receiver_id: ShowItem && ShowItem.data.order.cart.user.id,
-          title: ShowItem && ShowItem.data.title,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        router.reload();
-      }
+      await API.post(`api/order/items/${id}/conversations/create`, {
+        initial_message: message,
+        receiver_id: ShowItem?.order?.cart?.user.id,
+        title: ShowItem?.title,
+      });
     } catch (error) {
       setCreateConversationLoading(false);
     }
@@ -359,7 +245,7 @@ const User = ({ query }) => {
     setSendMessageLoading(true);
     setMessageErrors({});
     try {
-      const id = ShowItem && ShowItem.data.conversation.id;
+      const id = ShowItem?.conversation?.id;
       const conversation: any = new FormData();
       filesMsg.map((file: any) => conversation.append("attachments[]", file));
       conversation.append("type", messageType);
@@ -368,9 +254,6 @@ const User = ({ query }) => {
         `api/conversations/${id}/sendMessage`,
         conversation,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           onUploadProgress: (uploadEvent) => {
             if (filesMsg.length !== 0)
               setMessageProgress(
@@ -379,15 +262,14 @@ const User = ({ query }) => {
           },
         }
       );
-      if (res.status === 200) {
-        ShowItem && ShowItem.data.conversation.messages.push(res.data.data);
-        setSendMessageLoading(false);
-        myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
-        setMessage("");
-        messageRef.current.focus();
-        setMessageProgress(0);
-        clearAllFilesMsg();
-      }
+
+      ShowItem?.conversation?.messages?.push(res.data.data);
+      setSendMessageLoading(false);
+      myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
+      setMessage("");
+      messageRef.current.focus();
+      setMessageProgress(0);
+      clearAllFilesMsg();
     } catch (error) {
       setSendMessageLoading(false);
       if (error && error.response) {
@@ -631,17 +513,17 @@ const User = ({ query }) => {
     }
   };
   function durationFunc() {
-    if (ShowItem.data.duration == 1) {
+    if (ShowItem?.duration == 1) {
       return getAll("One_day");
     }
-    if (ShowItem.data.duration == 2) {
+    if (ShowItem?.duration == 2) {
       return getAll("2_days");
     }
-    if (ShowItem.data.duration > 2 && ShowItem.data.duration < 11) {
-      return ShowItem.data.duration + getAll("Days");
+    if (ShowItem?.duration > 2 && ShowItem?.duration < 11) {
+      return ShowItem?.duration + getAll("Days");
     }
-    if (ShowItem.data.duration >= 11) {
-      return ShowItem.data.duration + getAll("Day");
+    if (ShowItem?.duration >= 11) {
+      return ShowItem?.duration + getAll("Day");
     }
   }
   // console.log()
@@ -655,15 +537,12 @@ const User = ({ query }) => {
       />
       {veriedEmail && (
         <div style={{ backgroundColor: "#f6f6f6" }} className="my-3">
-          {errorItem && !ShowItem.data && (
-            <Result status="warning" title={getAll("An_unexpected_error")} />
-          )}
           {!ShowItem && <Loading />}
           <Modal
             title={getAll("Rejection_reason")}
             visible={isModalVisibleReject}
             okText={getAll("I’m_sure")}
-            onOk={() => item_rejected_by_seller(ShowItem.data.id)}
+            onOk={() => item_rejected_by_seller(ShowItem?.id)}
             onCancel={() => setModalVisibleReject(false)}
             cancelText={getAll("Cancel")}
           >
@@ -702,7 +581,7 @@ const User = ({ query }) => {
             title={getAll("Rejection_reason")}
             visible={isModalVisible}
             okText={getAll("I’m_sure")}
-            onOk={() => reject_cancel_request_by_seller(ShowItem.data.id)}
+            onOk={() => reject_cancel_request_by_seller(ShowItem?.id)}
             onCancel={() => setIsModalVisible(false)}
             cancelText={getAll("Cancel")}
           >
@@ -741,7 +620,7 @@ const User = ({ query }) => {
             title={getAll("Rejection_reason")}
             visible={isModalVisibleRejectModified}
             okText={getAll("I’m_sure")}
-            onOk={() => reject_modified_by_seller(ShowItem.data.id)}
+            onOk={() => reject_modified_by_seller(ShowItem?.id)}
             onCancel={() => setModalVisibleRejectModified(false)}
             cancelText={getAll("Cancel")}
           >
@@ -781,7 +660,7 @@ const User = ({ query }) => {
             title={getAll("Confirmation_message")}
             visible={isModalVisibleDilevered}
             okText={getAll("I’m_sure")}
-            onOk={() => dilevered_by_seller(ShowItem.data.id)}
+            onOk={() => dilevered_by_seller(ShowItem?.id)}
             onCancel={() => setModalVisibleDilevered(false)}
             cancelText={getAll("Cancel")}
           >
@@ -809,7 +688,7 @@ const User = ({ query }) => {
                         <Link
                           href={`/u/${
                             ShowItem &&
-                            ShowItem.data.profile_seller.profile.user.username
+                            ShowItem.profile_seller.profile.user.username
                           }`}
                         >
                           <a className="order-user-info d-flex flex-center">
@@ -817,8 +696,7 @@ const User = ({ query }) => {
                               <img
                                 src={
                                   ShowItem &&
-                                  ShowItem.data.profile_seller.profile
-                                    .avatar_path
+                                  ShowItem.profile_seller.profile.avatar_path
                                 }
                                 width={50}
                                 height={50}
@@ -827,14 +705,13 @@ const User = ({ query }) => {
                             <div className="order-user-content">
                               <h2 className="user-title">
                                 {ShowItem &&
-                                  ShowItem.data.profile_seller.profile
-                                    .full_name}
+                                  ShowItem.profile_seller.profile.full_name}
                               </h2>
                               <p className="meta">
                                 <span className="badge bg-light text-dark">
                                   {ShowItem &&
-                                    ShowItem.data.profile_seller.level &&
-                                    ShowItem.data.profile_seller.level[
+                                    ShowItem.profile_seller.level &&
+                                    ShowItem.profile_seller.level[
                                       which(language)
                                     ]}
                                 </span>
@@ -854,16 +731,13 @@ const User = ({ query }) => {
                         <div className="aside-header">
                           <h3 className="title">{getAll("Buyer")}</h3>
                         </div>
-                        <Link
-                          href={`/u/${ShowItem.data.order.cart.user.username}`}
-                        >
+                        <Link href={`/u/${ShowItem.order.cart.user.username}`}>
                           <a className="order-user-info d-flex flex-center">
                             <div className="order-user-avatar">
                               <img
                                 src={
                                   ShowItem &&
-                                  ShowItem.data.order.cart.user.profile
-                                    .avatar_path
+                                  ShowItem.order.cart.user.profile.avatar_path
                                 }
                                 width={50}
                                 height={50}
@@ -872,15 +746,13 @@ const User = ({ query }) => {
                             <div className="order-user-content">
                               <h2 className="user-title">
                                 {ShowItem &&
-                                  ShowItem.data.order.cart.user.profile
-                                    .full_name}
+                                  ShowItem.order.cart.user.profile.full_name}
                               </h2>
                               <p className="meta">
                                 <span className="badge bg-light text-dark">
                                   {ShowItem &&
-                                    ShowItem.data.order.cart.user.profile
-                                      .level &&
-                                    ShowItem.data.order.cart.user.profile.level[
+                                    ShowItem.order.cart.user.profile.level &&
+                                    ShowItem.order.cart.user.profile.level[
                                       which(language)
                                     ]}
                                 </span>
@@ -889,7 +761,7 @@ const User = ({ query }) => {
                           </a>
                         </Link>
                       </div>
-                      {ShowItem && ShowItem.data.attachments && (
+                      {ShowItem && ShowItem.attachments && (
                         <>
                           <div style={{ backgroundColor: "#fff", padding: 9 }}>
                             <div className="aside-header">
@@ -899,7 +771,7 @@ const User = ({ query }) => {
                             </div>
                             <div className="aside-attachments">
                               <Timeline>
-                                {ShowItem.data.attachments.map((e: any, i) => (
+                                {ShowItem.attachments.map((e: any, i) => (
                                   <Timeline.Item
                                     key={i}
                                     dot={<>{switchFileTypes(e.mime_type)}</>}
@@ -939,11 +811,11 @@ const User = ({ query }) => {
                       </div>
                     </div>
                     <div className="col-lg-6">
-                      {ShowItem && ShowItem.data.status == 4 && (
+                      {ShowItem && ShowItem.status == 4 && (
                         <>
                           {ShowItem &&
-                            ShowItem.data.item_rejected &&
-                            ShowItem.data.item_rejected.status == 2 && (
+                            ShowItem.item_rejected &&
+                            ShowItem.item_rejected.status == 2 && (
                               <Alert type="error">
                                 <p className="text">
                                   {getAll("You_must_reach")}
@@ -954,7 +826,7 @@ const User = ({ query }) => {
                       )}
                       <div className="aside-header">
                         <h3 className="title">
-                          {ShowItem.data[whichTitle(language)]}
+                          {ShowItem[whichTitle(language)]}
                         </h3>
                       </div>
                       <div style={{ backgroundColor: "#fff", padding: 9 }}>
@@ -975,7 +847,7 @@ const User = ({ query }) => {
                           />
                         </div>
                       </div>
-                      {ShowItem && ShowItem.data.conversation && (
+                      {ShowItem && ShowItem.conversation && (
                         <>
                           <div className="aside-header">
                             <h3 className="title">{getAll("Conversation")}</h3>
@@ -993,7 +865,7 @@ const User = ({ query }) => {
                                 overflowY: "scroll",
                               }}
                             >
-                              {ShowItem.data.conversation.messages.map(
+                              {ShowItem.conversation.messages.map(
                                 (item: any) => {
                                   return (
                                     <motion.li
@@ -1001,9 +873,7 @@ const User = ({ query }) => {
                                       animate={{ y: 0, opacity: 1 }}
                                       key={item.id}
                                       className={
-                                        (ShowItem &&
-                                        userInfo?.user_details?.id ===
-                                          item.user.id
+                                        (ShowItem && user.id === item.user.id
                                           ? ""
                                           : "recieved ") +
                                         "d-flex message-item align-item-center" +
@@ -1112,7 +982,7 @@ const User = ({ query }) => {
                                           }}
                                         />
                                         {ShowItem &&
-                                          ShowItem.data.profile_seller.id ==
+                                          ShowItem.profile_seller.id ==
                                             item.user.id && (
                                             <>
                                               {item.read_at && (
@@ -1319,7 +1189,7 @@ const User = ({ query }) => {
                           </div>
                         </>
                       )}
-                      {ShowItem && ShowItem.data.conversation == null && (
+                      {ShowItem && ShowItem.conversation == null && (
                         <>
                           <div className="conversation-start">
                             <div className="icon">
@@ -1345,9 +1215,7 @@ const User = ({ query }) => {
                                 type="button"
                                 disabled={createConversationLoading}
                                 onClick={() =>
-                                  createConversation(
-                                    ShowItem && ShowItem.data.id
-                                  )
+                                  createConversation(ShowItem && ShowItem.id)
                                 }
                                 className="btn butt-lg butt-primary"
                               >
@@ -1370,12 +1238,12 @@ const User = ({ query }) => {
                           <h3 className="title">{getAll("Tools")}</h3>
                         </div>
                         <div className="d-grid gap-2">
-                          {ShowItem && ShowItem.data.status == 0 && (
+                          {ShowItem && ShowItem.status == 0 && (
                             <>
                               <button
                                 disabled={acceptedBySellerLoadingLoading}
                                 onClick={() =>
-                                  item_accepted_by_seller(ShowItem.data.id)
+                                  item_accepted_by_seller(ShowItem.id)
                                 }
                                 className="btn butt-md butt-green mx-1 flex-center-just"
                               >
@@ -1396,7 +1264,7 @@ const User = ({ query }) => {
                               </button>
                             </>
                           )}
-                          {ShowItem && ShowItem.data.status == 1 && (
+                          {ShowItem && ShowItem.status == 1 && (
                             <>
                               <div className="box-note red">
                                 <p className="text">
@@ -1405,14 +1273,14 @@ const User = ({ query }) => {
                               </div>
                             </>
                           )}
-                          {ShowItem && ShowItem.data.status == 2 && (
+                          {ShowItem && ShowItem.status == 2 && (
                             <div className="box-note warning">
                               <p className="text">
                                 {getAll("You_have_rejected")}
                               </p>
                             </div>
                           )}
-                          {ShowItem && ShowItem.data.status == 3 && (
+                          {ShowItem && ShowItem.status == 3 && (
                             <>
                               <div className="order-uploader-files">
                                 <div className="uploader-header">
@@ -1490,9 +1358,9 @@ const User = ({ query }) => {
                               </button>
                             </>
                           )}
-                          {ShowItem && ShowItem.data.status == 4 && (
+                          {ShowItem && ShowItem.status == 4 && (
                             <>
-                              {ShowItem.data.item_rejected.status == 0 && (
+                              {ShowItem.item_rejected.status == 0 && (
                                 <>
                                   <button
                                     disabled={
@@ -1500,7 +1368,7 @@ const User = ({ query }) => {
                                     }
                                     onClick={() =>
                                       accept_cancel_request_by_seller(
-                                        ShowItem.data.id
+                                        ShowItem.id
                                       )
                                     }
                                     className="btn butt-md butt-green mx-1 flex-center-just"
@@ -1526,33 +1394,33 @@ const User = ({ query }) => {
                               )}
                             </>
                           )}
-                          {ShowItem && ShowItem.data.status == 5 && (
+                          {ShowItem && ShowItem.status == 5 && (
                             <div className="box-note warning">
                               <p className="text">
                                 {getAll("You_have_cancelled")}
                               </p>
                             </div>
                           )}
-                          {ShowItem && ShowItem.data.status == 6 && (
+                          {ShowItem && ShowItem.status == 6 && (
                             <div className="box-note primary">
                               <p className="text">
                                 {getAll("Operation_receipt_in")}
                               </p>
                             </div>
                           )}
-                          {ShowItem && ShowItem.data.status == 7 && (
+                          {ShowItem && ShowItem.status == 7 && (
                             <div className="box-note green-fill">
                               <p className="text">
                                 <strong>{getAll("Complete_operation")}</strong>
                               </p>
                             </div>
                           )}
-                          {ShowItem && ShowItem.data.status == 8 && (
+                          {ShowItem && ShowItem.status == 8 && (
                             <button
                               disabled={resolveConflictBetweenRejectedLoading}
                               onClick={() =>
                                 resolve_the_conflict_between_them_in_rejected(
-                                  ShowItem.data.id
+                                  ShowItem.id
                                 )
                               }
                               className="btn butt-md butt-green mx-1 flex-center-just"
@@ -1564,43 +1432,40 @@ const User = ({ query }) => {
                             </button>
                           )}
 
-                          {ShowItem && ShowItem.data.status == 9 && (
+                          {ShowItem && ShowItem.status == 9 && (
                             <>
-                              {ShowItem &&
-                                ShowItem.data.item_modified.status == 0 && (
-                                  <>
-                                    <button
-                                      disabled={acceptModifiedSellerLoading}
-                                      onClick={() =>
-                                        accept_modified_by_seller(
-                                          ShowItem.data.id
-                                        )
-                                      }
-                                      className="btn butt-md butt-green mx-1 flex-center-just"
-                                    >
-                                      <span className="material-icons material-icons-outlined">
-                                        done_all
-                                      </span>{" "}
-                                      {getAll("Amendment_request_receipt")}
-                                    </button>
-                                    <button
-                                      disabled={rejectModifiedSellerLoading}
-                                      onClick={() =>
-                                        setModalVisibleRejectModified(true)
-                                      }
-                                      className="btn butt-md butt-red mx-1 flex-center-just"
-                                    >
-                                      <span className="material-icons material-icons-outlined">
-                                        highlight_off
-                                      </span>{" "}
-                                      {getAll("Reject_the_amendment")}
-                                    </button>
-                                  </>
-                                )}
+                              {ShowItem && ShowItem.item_modified.status == 0 && (
+                                <>
+                                  <button
+                                    disabled={acceptModifiedSellerLoading}
+                                    onClick={() =>
+                                      accept_modified_by_seller(ShowItem.id)
+                                    }
+                                    className="btn butt-md butt-green mx-1 flex-center-just"
+                                  >
+                                    <span className="material-icons material-icons-outlined">
+                                      done_all
+                                    </span>{" "}
+                                    {getAll("Amendment_request_receipt")}
+                                  </button>
+                                  <button
+                                    disabled={rejectModifiedSellerLoading}
+                                    onClick={() =>
+                                      setModalVisibleRejectModified(true)
+                                    }
+                                    className="btn butt-md butt-red mx-1 flex-center-just"
+                                  >
+                                    <span className="material-icons material-icons-outlined">
+                                      highlight_off
+                                    </span>{" "}
+                                    {getAll("Reject_the_amendment")}
+                                  </button>
+                                </>
+                              )}
                             </>
                           )}
 
-                          {ShowItem && ShowItem.data.status == 10 && (
+                          {ShowItem && ShowItem.status == 10 && (
                             <>
                               <div className="box-note red">
                                 <p className="text">{getAll("If_you_reach")}</p>
@@ -1611,7 +1476,7 @@ const User = ({ query }) => {
                                 }
                                 onClick={() =>
                                   resolve_the_conflict_between_them_in_modified(
-                                    ShowItem.data.id
+                                    ShowItem.id
                                   )
                                 }
                                 className="btn butt-md butt-green mx-1 flex-center-just"
@@ -1637,20 +1502,20 @@ const User = ({ query }) => {
                               <th>{getAll("Operation_number1")}</th>
                             </tr>
                             <tr>
-                              <td>{ShowItem.data.uuid}</td>
+                              <td>{ShowItem.uuid}</td>
                             </tr>
                             <tr>
                               <th>{getAll("Operation_status")}</th>
                             </tr>
                             <tr>
-                              <td>{statusLabel(ShowItem.data.status)}</td>
+                              <td>{statusLabel(ShowItem.status)}</td>
                             </tr>
                             <tr>
                               <th>{getAll("Date_of_operation")}</th>
                             </tr>
                             <tr>
                               <td>
-                                <LastSeen date={ShowItem.data.created_at} />
+                                <LastSeen date={ShowItem.created_at} />
                               </td>
                             </tr>
                             <tr>
@@ -1663,7 +1528,7 @@ const User = ({ query }) => {
                               <th>{getAll("Order_price")}</th>
                             </tr>
                             <tr>
-                              <td>${ShowItem.data.price_product}</td>
+                              <td>${ShowItem.price_product}</td>
                             </tr>
                           </tbody>
                         </table>

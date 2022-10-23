@@ -19,7 +19,7 @@ function Medias({ query, stars }) {
   const id = query.id;
   const user = useAppSelector((state) => state.user);
 
-  const veriedEmail = user.isLogged;
+  const veriedEmail = user.email_verified;
 
   async function getProductId() {
     try {

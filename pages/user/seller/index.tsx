@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import Link from "next/link";
 import { Field, Form, Formik } from "formik";
@@ -11,6 +11,7 @@ import { useAppSelector } from "@/store/hooks";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Unauthorized from "@/components/Unauthorized";
+import router from "next/router";
 
 const sellerInformations = (): ReactElement => {
   const { getAll } = useAppSelector((state) => state.languages);
@@ -25,6 +26,12 @@ const sellerInformations = (): ReactElement => {
     username: Yup.string().required(getAll("This_field_is")),
     country_id: Yup.number().required(getAll("This_field_is")),
   });
+  useEffect(() => {
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   // Return statement.
   return (
     <>

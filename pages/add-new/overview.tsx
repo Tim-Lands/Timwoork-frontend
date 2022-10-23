@@ -4,10 +4,9 @@ import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import { useAppSelector } from "@/store/hooks";
-
+import { CategoriesService } from "@/services/categoriesServices";
 import router from "next/router";
 import SidebarAdvices from "./SidebarAdvices";
-import Cookies from "js-cookie";
 import API from "../../config";
 import useSWR from "swr";
 import PropTypes from "prop-types";
@@ -23,10 +22,8 @@ const MySelect = (props: any) => {
     setIsLoadingTags(true);
     try {
       const res: any = await API.get(`api/tags/filter?tag=${tag}`);
-      if (res.status === 200) {
-        setIsLoadingTags(false);
-        setDataTags(res.data.data.data);
-      }
+      setIsLoadingTags(false);
+      setDataTags(res.data.data.data);
     } catch (error) {
       setIsLoadingTags(false);
     }
@@ -64,7 +61,8 @@ const MySelect = (props: any) => {
 let testTime;
 
 function Overview({ query }) {
-  const { data: userInfo }: any = useSWR("api/me");
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories]: any = useState(false);
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [checkedLangs, setCheckedLangs] = useState({
     ar: false,
@@ -80,19 +78,27 @@ function Overview({ query }) {
   });
   const [userLang, setUserLang] = useState();
   const id = query.id;
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const {
+    user,
+    languages: { language, getAll },
+  } = useAppSelector((state) => state);
 
   const timeoutFunc: any = useRef();
-  let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
   const { data: getProduct }: any = useSWR(
     `api/my_products/product/${query.id}`
   );
-  const { data: categories, categoriesError }: any = useSWR(
-    "api/get_categories_for_add_product"
-  );
-  const veriedEmail = userInfo && userInfo.user_details.email_verified_at;
+  useEffect(() => {
+    CategoriesService.getProductsCategories()
+      .then((res) => setCategories(res))
+      .catch(() => {});
+  });
+  useEffect(() => {
+    CategoriesService.getProductsSubCategories(formik.values.catetory)
+      .then((res) => setSubCategories(res))
+      .catch(() => {});
+  });
+
+  const veriedEmail = user.email_verified;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -114,17 +120,10 @@ function Overview({ query }) {
   const formik = useFormik({
     initialValues: {
       content: "ejrferjgh erfkerh whgferg",
-      catetory:
-        getProduct &&
-        getProduct.data.subcategory &&
-        getProduct.data.subcategory.category &&
-        getProduct.data.subcategory.category.id,
-      title: getProduct && getProduct.data.title,
-      subcategory:
-        getProduct &&
-        getProduct.data.subcategory &&
-        getProduct.data.subcategory.id,
-      tags: getProduct && getProduct.data.product_tag,
+      catetory: getProduct?.data?.subcategory?.category?.id,
+      title: getProduct?.data?.title,
+      subcategory: getProduct?.data?.subcategory?.id,
+      tags: getProduct?.data?.product_tag,
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -138,21 +137,15 @@ function Overview({ query }) {
           body.title_en = subtitles["en"];
         if (!isSubtitle["fr"] && subtitles["fr"])
           body.title_fr = subtitles["fr"];
-        const res = await API.post(`api/product/${id}/product-step-one`, body, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        await API.post(`api/product/${id}/product-step-one`, body);
+        // Authentication was successful.
+        message.success(getAll("The_update_has"));
+        router.push({
+          pathname: "/add-new/prices",
+          query: {
+            id: id, // pass the id
           },
         });
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push({
-            pathname: "/add-new/prices",
-            query: {
-              id: id, // pass the id
-            },
-          });
-        }
       } catch (error: any) {
         if (
           error.response &&
@@ -164,19 +157,12 @@ function Overview({ query }) {
       }
     },
   });
-  const { data: subCategories, subCategoriesError }: any = useSWR(
-    `api/get_categories_for_add_product/${formik.values.catetory}`
-  );
 
   if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.get(`api/my_products/product/${id}`);
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -189,13 +175,13 @@ function Overview({ query }) {
     }
   }
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     timeoutFunc.current = setTimeout(() => console.log("test time out "), 3000);
     getProductId();
-  }, []);
+  }, [user]);
 
   const detectLang = async (txt) => {
     const res = await API.post(`/api/detectLang`, { sentence: txt });
@@ -209,7 +195,7 @@ function Overview({ query }) {
         metaDescription={getAll("Service_editing_General")}
         ogDescription={getAll("Service_editing_General")}
       />
-      {token && veriedEmail && (
+      {user.token && veriedEmail && (
         <div className="container-fluid">
           {!getProduct && <div>{getAll("Please_wait")}</div>}
           <div
@@ -360,7 +346,6 @@ function Overview({ query }) {
                           >
                             {getAll("Choose_the_principal")}
                           </label>
-                          {categoriesError && getAll("An_error_occured")}
                           <select
                             id="input-catetory"
                             name="catetory"
@@ -374,15 +359,14 @@ function Overview({ query }) {
                             <option value="">
                               {getAll("Choose_the_principal")}
                             </option>
-                            {!categories && (
+                            {categories.length === 0 && (
                               <option value="">{getAll("Please_wait")}</option>
                             )}
-                            {categories &&
-                              categories.data.map((e: any) => (
-                                <option value={e.id} key={e.id}>
-                                  {e[which(language)]}
-                                </option>
-                              ))}
+                            {categories.map((e: any) => (
+                              <option value={e.id} key={e.id}>
+                                {e[which(language)]}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -411,20 +395,15 @@ function Overview({ query }) {
                             <option value={0}>
                               {getAll("Choose_a_subcategory")}
                             </option>
-                            {subCategoriesError && (
-                              <option value="">
-                                {getAll("An_error_occured")}
-                              </option>
-                            )}
+
                             {!subCategories && (
                               <option value="">{getAll("Please_wait")}</option>
                             )}
-                            {subCategories &&
-                              subCategories.data.subcategories.map((e: any) => (
-                                <option value={e.id} key={e.id}>
-                                  {e[which(language)]}
-                                </option>
-                              ))}
+                            {subCategories.subcategories.map((e: any) => (
+                              <option value={e.id} key={e.id}>
+                                {e[which(language)]}
+                              </option>
+                            ))}
                           </select>
                           {validationsErrors && validationsErrors.subcategory && (
                             <div style={{ overflow: "hidden" }}>

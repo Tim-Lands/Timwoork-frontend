@@ -1,9 +1,7 @@
 import Layout from "@/components/Layout/HomeLayout";
 import PostsAside from "@/components/PostsAside";
 import React, { ReactElement, useEffect } from "react";
-
-import useSWR from "swr";
-
+import { ProductsActions } from "@/store/products/productActions";
 import Loading from "@/components/Loading";
 import CartPost from "@/components/Cart/CartPost";
 import { message, Spin } from "antd";
@@ -22,10 +20,11 @@ function index() {
     cart;
 
   const { value, symbol_native } = useAppSelector((state) => state.currency.my);
-
-  const { data: popularProducts, popularError }: any = useSWR(
-    "api/filter?paginate=4&popular"
-  );
+  const { popular } = useAppSelector((state) => state.products);
+  useEffect(() => {
+    if (popular.loaded) return;
+    dispatch(ProductsActions.getPopularProducts());
+  }, [popular.loaded]);
 
   const buyNowBtn = () => {
     if (itemsLength === 0 || priceWithTax === 0) {
@@ -150,8 +149,7 @@ function index() {
       <div className="container">
         <PostsAside
           title={getAll("Most_popular_services")}
-          PostData={popularProducts && popularProducts.data.data}
-          isError={popularError}
+          PostData={popular.data}
           more={getAll("More")}
           linkURL="/products/popular"
         />

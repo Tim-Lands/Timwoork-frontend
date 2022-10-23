@@ -6,7 +6,6 @@ import { ReactElement, useEffect, useState } from "react";
 import API from "../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import useSWR from "swr";
 import { CartActions } from "../../store/cart/cartActions";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import Loading from "@/components/Loading";
@@ -23,9 +22,9 @@ import {
 } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
-import Cookies from "js-cookie";
 import router from "next/router";
 import NotFound from "@/components/NotFound";
+import { ProductService } from "@/services/productService";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
 import ReactPlayer from "react-player";
@@ -46,26 +45,33 @@ const properties = {
     </div>
   ),
 };
-function Single({ query, stars, errorFetch }) {
+function Single({ query, product, errorFetch }) {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [ProductData, setProductData]: any = useState(false);
   const isLoading = useAppSelector((state) => state.cart.isLoading);
-  let token = Cookies.get("token");
   const { getAll, language } = useAppSelector((state) => state.languages);
+  const profile = useAppSelector((state) => state.profile);
+  useEffect(() => {
+    ProductService.getOne(query.product)
+      .then((res) => setProductData(res))
+      .catch(() => {
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [query.product]);
 
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { data: ProductData, errorLoad }: any = useSWR(
-    `api/product/${query.product}`
-  );
   const { value, symbol_native } = useAppSelector((state) => state.currency.my);
-
-  const { data: userInfo }: any = useSWR("api/me");
 
   const [quantutyCount, setQuantutyCount] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [createConversationLoading, setCreateConversationLoading] =
     useState(false);
+  console.log(loading, ProductData);
 
   useEffect(() => {
     if (errorFetch) {
@@ -74,8 +80,7 @@ function Single({ query, stars, errorFetch }) {
   }, []);
 
   const showStars = () => {
-    const rate =
-      Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0;
+    const rate = Number(ProductData?.ratings_avg_rating).toPrecision(1) || 0;
     const xAr: any = [
       {
         id: 1,
@@ -161,7 +166,7 @@ function Single({ query, stars, errorFetch }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.data.slug}&display=popup&ref=plugin&src=share_button`}
+            href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.slug}&display=popup&ref=plugin&src=share_button`}
           >
             {getAll("Share_on_Facebook")}
           </a>
@@ -172,7 +177,7 @@ function Single({ query, stars, errorFetch }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.data.slug}&text=`}
+            href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.slug}&text=`}
           >
             {getAll("Share_on_Twitter")}
           </a>
@@ -186,27 +191,14 @@ function Single({ query, stars, errorFetch }) {
   async function startConversation(message: string) {
     setCreateConversationLoading(true);
     try {
-      const res = await API.post(
-        `api/product/${
-          ProductData && ProductData.data.id
-        }/conversations/create`,
-        {
-          initial_message: message,
-          receiver_id:
-            ProductData && ProductData.data.profile_seller.profile.user_id,
-          title: ProductData && ProductData.data.title,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setIsModalVisible(false);
-        router.push("/conversations");
-        setHasConversation(true);
-      }
+      await API.post(`api/product/${ProductData?.id}/conversations/create`, {
+        initial_message: message,
+        receiver_id: ProductData?.profile_seller?.profile?.user_id,
+        title: ProductData?.title,
+      });
+      setIsModalVisible(false);
+      router.push("/conversations");
+      setHasConversation(true);
     } catch (error) {
       setCreateConversationLoading(false);
     }
@@ -217,12 +209,12 @@ function Single({ query, stars, errorFetch }) {
       router.push("/email/verification");
       return;
     }
-    if (token) {
+    if (user.isLogged) {
       try {
         await dispatch(
           CartActions.addProduct({
             quantity: Number(quantutyCount),
-            product_id: ProductData.data.id,
+            product_id: ProductData?.id,
             developments: theIDs,
           })
         ).unwrap();
@@ -262,17 +254,17 @@ function Single({ query, stars, errorFetch }) {
     }
   };
   function durationFunc() {
-    if (ProductData.data.duration == 1) {
+    if (ProductData?.duration == 1) {
       return getAll("One_day");
     }
-    if (ProductData.data.duration == 2) {
+    if (ProductData?.duration == 2) {
       return getAll("Two_days");
     }
-    if (ProductData.data.duration > 2 && ProductData.data.duration < 11) {
-      return ProductData.data.duration + getAll("Days");
+    if (ProductData?.duration > 2 && ProductData?.duration < 11) {
+      return ProductData?.duration + getAll("Days");
     }
-    if (ProductData.data.duration >= 11) {
-      return ProductData.data.duration + getAll("Day");
+    if (ProductData?.duration >= 11) {
+      return ProductData?.duration + getAll("Day");
     }
   }
   function DevdurationFunc(duration) {
@@ -307,7 +299,7 @@ function Single({ query, stars, errorFetch }) {
     let __checkedDevelopments_sum = 0;
     const b = [],
       c = checkedDevelopments,
-      a = ProductData && ProductData.data.developments.map((e) => e.id);
+      a = ProductData?.developments.map((e) => e.id);
 
     for (let i = 0; i < a.length; i++) {
       for (let j = 0; j < c.length; j++) {
@@ -319,10 +311,10 @@ function Single({ query, stars, errorFetch }) {
     for (let i = 0; i < b.length; i++) {
       __checkedDevelopments_sum =
         __checkedDevelopments_sum +
-        parseInt(ProductData && ProductData.data.developments[b[i]].price);
+        parseInt(ProductData?.developments[b[i]].price);
     }
     const total_price =
-      (parseInt(ProductData.data.price) + __checkedDevelopments_sum) *
+      (parseInt(ProductData?.price) + __checkedDevelopments_sum) *
       quantutyCount;
     return Math.abs(total_price);
   }
@@ -342,16 +334,16 @@ function Single({ query, stars, errorFetch }) {
 
   return (
     <>
-      {!ProductData && <Loading />}
-      {errorLoad && <NotFound />}
+      {loading && <Loading />}
+      {error && !loading && <NotFound />}
       {!errorFetch && (
         <MetaTags
-          title={stars.data.title}
-          keywords={stars.data.product_tag}
-          metaDescription={stars.data.content}
-          ogDescription={stars.data.content}
-          ogImage={stars.data.full_path_thumbnail}
-          ogUrl={`https://timwoork.com/p/${stars.data.slug}`}
+          title={product.title}
+          keywords={product.product_tag}
+          metaDescription={product.content}
+          ogDescription={product.content}
+          ogImage={product.full_path_thumbnail}
+          ogUrl={`https://timwoork.com/p/${product.slug}`}
         />
       )}
       {ProductData && (
@@ -382,41 +374,31 @@ function Single({ query, stars, errorFetch }) {
             <div className="col-lg-8">
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">
-                  <h1 className="title">
-                    {ProductData.data[whichTitle(language)]}
-                  </h1>
+                  <h1 className="title">{ProductData[whichTitle(language)]}</h1>
 
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav ">
                       <li className="user-item">
                         <Link
-                          href={`/u/${ProductData.data.profile_seller.profile.user.username}`}
+                          href={`/u/${ProductData.profile_seller.profile.user.username}`}
                         >
                           <a className="user-link">
                             <Image
                               className="circular-center tiny-size"
                               src={
-                                ProductData.data.profile_seller.profile
-                                  .avatar_path
+                                ProductData.profile_seller.profile.avatar_path
                               }
                               quality={80}
                               width={32}
                               height={32}
-                              alt={
-                                ProductData.data.profile_seller.profile
-                                  .full_name
-                              }
+                              alt={ProductData.profile_seller.profile.full_name}
                               placeholder="blur"
                               blurDataURL={
-                                ProductData.data.profile_seller.profile
-                                  .avatar_path
+                                ProductData.profile_seller.profile.avatar_path
                               }
                             />
                             <span className="pe-2">
-                              {
-                                ProductData.data.profile_seller.profile
-                                  .full_name
-                              }
+                              {ProductData.profile_seller.profile.full_name}
                             </span>
                           </a>
                         </Link>
@@ -425,23 +407,19 @@ function Single({ query, stars, errorFetch }) {
                         <span className="material-icons material-icons-outlined">
                           label
                         </span>
-                        {ProductData &&
-                          ProductData.data.subcategory.category[
-                            which(language)
-                          ]}
+                        {ProductData.subcategory.category[which(language)]}
                         <span style={{ marginInline: 5 }}>||</span>
                         <small>
                           <Link
                             href={`/category/${
-                              ProductData && ProductData.data.subcategory.id
+                              ProductData && ProductData.subcategory.id
                             }`}
                           >
                             <a
                               style={{ marginInline: 5 }}
                               className="category-link"
                             >
-                              {ProductData &&
-                                ProductData.data.subcategory[which(language)]}
+                              {ProductData.subcategory[which(language)]}
                             </a>
                           </Link>
                         </small>
@@ -455,17 +433,14 @@ function Single({ query, stars, errorFetch }) {
                           ))}
                         </span>
                         <span className="stars-count">
-                          ({ProductData.data.ratings_count})
+                          ({ProductData.ratings_count})
                         </span>
                       </li>
                       <li className="level-item">
                         <span className="text-level">{getAll("Level")}:</span>
                         <span className="value-level">
-                          {ProductData &&
-                            ProductData.data.profile_seller.level !== null &&
-                            ProductData.data.profile_seller.level[
-                              which(language)
-                            ]}
+                          {ProductData.profile_seller.level !== null &&
+                            ProductData.profile_seller.level[which(language)]}
                         </span>
                       </li>
                     </ul>
@@ -474,31 +449,30 @@ function Single({ query, stars, errorFetch }) {
                 <div className="timwoork-single-content">
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
-                      {ProductData &&
-                        ProductData.data.galaries.map((each: any, index) => (
-                          <>
-                            {each.url_video == null ? (
-                              <div key={index} className="each-slide">
-                                <div
-                                  className="images-slider"
-                                  style={{
-                                    backgroundImage: `url(${APIURL2}${each.path})`,
-                                  }}
-                                ></div>
-                              </div>
-                            ) : (
-                              ""
-                            )}
-                          </>
-                        ))}
+                      {ProductData.galaries.map((each: any, index) => (
+                        <>
+                          {each.url_video == null ? (
+                            <div key={index} className="each-slide">
+                              <div
+                                className="images-slider"
+                                style={{
+                                  backgroundImage: `url(${APIURL2}${each.path})`,
+                                }}
+                              ></div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      ))}
                       <div
-                        key={ProductData?.data.galaries.length}
+                        key={ProductData.galaries.length}
                         className="each-slide"
                       >
                         <div
                           className="images-slider"
                           style={{
-                            backgroundImage: `url(${APIURL2}${ProductData.data.full_path_thumbnail})`,
+                            backgroundImage: `url(${APIURL2}${ProductData.full_path_thumbnail})`,
                           }}
                         ></div>
                       </div>
@@ -506,14 +480,14 @@ function Single({ query, stars, errorFetch }) {
                     <div
                       className="timwoork-single-product-detailts p"
                       dangerouslySetInnerHTML={{
-                        __html: ProductData.data[whichContent(language)],
+                        __html: ProductData[whichContent(language)],
                       }}
                     />
-                    {ProductData.data.product_tag && (
+                    {ProductData.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
                           <li className="title">{getAll("Key_words")}:</li>
-                          {ProductData.data.product_tag.map((e: any) => (
+                          {ProductData.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
                             </li>
@@ -521,7 +495,7 @@ function Single({ query, stars, errorFetch }) {
                         </ul>
                       </div>
                     )}
-                    {ProductData.data.video && (
+                    {ProductData.video && (
                       <div className="py-3">
                         <ReactPlayer
                           style={{
@@ -530,11 +504,11 @@ function Single({ query, stars, errorFetch }) {
                             marginTop: 6,
                           }}
                           width="100%"
-                          url={ProductData.data.video.url_video}
+                          url={ProductData.video.url_video}
                         />
                       </div>
                     )}
-                    {ProductData.data.profile_seller && (
+                    {ProductData.profile_seller && (
                       <div className="timwoork-single-seller-info">
                         <div className="seller-info-header">
                           <h4 className="title">{getAll("About_Seller")}</h4>
@@ -545,46 +519,38 @@ function Single({ query, stars, errorFetch }) {
                               <Image
                                 className="circular-img huge-size"
                                 src={
-                                  ProductData &&
-                                  ProductData.data.profile_seller.profile
-                                    .avatar_path
+                                  ProductData.profile_seller.profile.avatar_path
                                 }
                                 quality={80}
                                 width={100}
                                 alt={
-                                  ProductData.data.profile_seller.profile
-                                    .full_name
+                                  ProductData.profile_seller.profile.full_name
                                 }
                                 placeholder="blur"
                                 blurDataURL={
-                                  ProductData.data.profile_seller.profile
-                                    .avatar_path
+                                  ProductData.profile_seller.profile.avatar_path
                                 }
                                 height={100}
                               />
                             </div>
                             <div className="seller-info-content">
                               <h4 className="user-title">
-                                {ProductData.data.profile_seller.profile
-                                  .first_name +
+                                {ProductData.profile_seller.profile.first_name +
                                   " " +
-                                  ProductData.data.profile_seller.profile
-                                    .last_name}
+                                  ProductData.profile_seller.profile.last_name}
                               </h4>
                               <ul className="user-meta nav">
                                 <li>
                                   <span className="material-icons material-icons-outlined">
                                     badge
                                   </span>{" "}
-                                  {ProductData &&
-                                    ProductData.data.profile_seller.level !==
-                                      null &&
-                                    ProductData.data.profile_seller.level[
+                                  {ProductData.profile_seller.level !== null &&
+                                    ProductData.profile_seller.level[
                                       which(language)
                                     ]}
                                 </li>
-                                {ProductData.data.profile_seller.profile
-                                  .country !== null && (
+                                {ProductData.profile_seller.profile.country !==
+                                  null && (
                                   <li>
                                     <span className="material-icons material-icons-outlined">
                                       place
@@ -597,7 +563,7 @@ function Single({ query, stars, errorFetch }) {
                                 <Link
                                   href={
                                     "/u/" +
-                                    ProductData.data.profile_seller.profile.user
+                                    ProductData.profile_seller.profile.user
                                       .username
                                   }
                                 >
@@ -652,13 +618,11 @@ function Single({ query, stars, errorFetch }) {
                         <div className="single-comments-body">
                           <Comments
                             canReply={
-                              userInfo &&
-                              userInfo.user_details.profile.id ==
-                                ProductData.data.profile_seller.id
+                              profile.user_id == ProductData.profile_seller.id
                             }
-                            comments={ProductData.data.ratings}
+                            comments={ProductData.ratings}
                           />
-                          {ProductData.data.ratings.length == 0 && (
+                          {ProductData.ratings.length == 0 && (
                             <Alert type="primary">
                               <p className="text">{getAll("There_is_no_2")}</p>
                             </Alert>
@@ -753,20 +717,20 @@ function Single({ query, stars, errorFetch }) {
                         </select>
                       </div>
                     </div>
-                    {ProductData.data.developments && (
+                    {ProductData.developments && (
                       <div className="panel-aside-body">
                         <div className="add-devloppers-header">
                           <h4 className="title">
                             {getAll("Available_upgrades")}
                           </h4>
                         </div>
-                        {ProductData.data.developments.length == 0 && (
+                        {ProductData.developments.length == 0 && (
                           <div className="nothing-note">
                             <p className="text">{getAll("No_upgrades_in")}</p>
                           </div>
                         )}
                         <ul className="add-devloppers-nav">
-                          {ProductData.data.developments.map((e: any) => {
+                          {ProductData.developments.map((e: any) => {
                             return (
                               <li key={e.id} className="devloppers-item">
                                 <div className="form-check">
@@ -806,7 +770,7 @@ function Single({ query, stars, errorFetch }) {
                         <div className="bayers-count">
                           <p className="num">
                             <span className="count">
-                              {ProductData && ProductData.data.count_buying}{" "}
+                              {ProductData.count_buying}{" "}
                             </span>
 
                             <span className="text">
@@ -847,14 +811,12 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 export default Single;
 export async function getServerSideProps({ query }) {
   try {
-    const uriString = encodeURI(`api/product/${query.product}`);
-    // Fetch data from external API
-    const res = await API.get(uriString);
+    const product = await ProductService.getOne(query.product);
 
     // Pass data to the page via props
-    return { props: { stars: res.data, query, errorFetch: false } };
+    return { props: { product, query, errorFetch: false } };
   } catch (error) {
-    return { props: { stars: null, query, errorFetch: true } };
+    return { props: { product: null, query, errorFetch: true } };
   }
 }
 const which = (language) => {
@@ -893,6 +855,6 @@ function whichContent(language) {
 }
 Single.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  product: PropTypes.any,
   errorFetch: PropTypes.bool,
 };

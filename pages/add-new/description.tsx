@@ -7,7 +7,6 @@ import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
-import useSWR from "swr";
 import { useAppSelector } from "@/store/hooks";
 
 // import { useEditor, EditorContent } from "@tiptap/react";
@@ -161,9 +160,6 @@ function Description({ query }) {
 
   const { getAll, language } = useAppSelector((state) => state.languages);
 
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const veriedEmail = user.email_verified;
   // const editor = useEditor({
@@ -570,10 +566,6 @@ function Description({ query }) {
                             </button>
                             <button
                               type="submit"
-                              disabled={
-                                (!getProduct ? true : false) ||
-                                formik.isSubmitting
-                              }
                               className="btn flex-center butt-green ml-auto butt-sm"
                             >
                               <span className="text">

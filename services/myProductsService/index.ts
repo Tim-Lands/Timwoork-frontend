@@ -1,3 +1,3 @@
 import API from "../../config";
 async function getData() {}
-export const MyServicesService = { getData };
+export const MyProductsService = { getData };

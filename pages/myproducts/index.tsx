@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Result, Spin } from "antd";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import { useAppSelector } from "@/store/hooks";
+import router from "next/router";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -47,6 +48,12 @@ function index() {
   const myLoader = () => {
     return `${profile.avatar_path}`;
   };
+  useEffect(() => {
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   return (
     <div className="py-3">
       {!user.isLogged && !user.loading && <Unauthorized />}

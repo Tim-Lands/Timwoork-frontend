@@ -1,10 +1,11 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { Result, message, Spin } from "antd";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import Link from "next/link";
 import API from "../../config";
 import Loading from "@/components/Loading";
 import { useAppSelector } from "@/store/hooks";
+import router from "next/router";
 
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
@@ -13,6 +14,12 @@ function ChangePass() {
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
   const profile = useAppSelector((state) => state.profile);
+  useEffect(() => {
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   if (profile.steps < 1)
     return (
       <div className="row justify-content-md-center">
