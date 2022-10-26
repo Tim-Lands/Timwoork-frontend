@@ -127,7 +127,9 @@ export const userSlice = createSlice({
       });
       state.signInError = errors;
     });
-    builder.addMatcher(isUserActionPending, (state) => {
+    builder.addMatcher(isUserActionPending, (state, action) => {
+      if (action.type.split("/")[0] == "currency") return;
+
       state.errorMsg = "";
       state.loading = true;
     });

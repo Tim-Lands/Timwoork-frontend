@@ -16,13 +16,14 @@ import ChangePass from "@/components/ChangePass";
 
 const personalInformations = () => {
   const { getAll } = useAppSelector((state) => state.languages);
+  const currencies = useAppSelector((state) => state.currency.currencies.data);
   const user = useAppSelector((state) => state.user);
   const profile = useAppSelector((state) => state.profile);
+  const [validationsErrors, setValidationsErrors]: any = useState({});
+
   const currency = useAppSelector((state) => state.currency);
   const [Countries, setCountries] = useState([]);
   const [codes, setCodes] = useState([]);
-  const [currencies, setCurrencies] = useState([]);
-  const [validationsErrors, setValidationsErrors]: any = useState({});
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }
@@ -31,13 +32,6 @@ const personalInformations = () => {
     API.get("/api/phone_codes")
       .then((data) => {
         setCodes(() => {
-          return data.data.data;
-        });
-      })
-      .catch(() => {});
-    API.get("/api/currency")
-      .then((data) => {
-        setCurrencies(() => {
           return data.data.data;
         });
       })

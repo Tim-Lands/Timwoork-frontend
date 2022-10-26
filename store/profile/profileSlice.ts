@@ -2,7 +2,7 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { ProfileThunkFunctions } from "./thunkFunctions";
 import { CustomMatchers } from "./matchers";
 
-const { getProfileData } = ProfileThunkFunctions;
+const { getProfileData, getProfileSellerData } = ProfileThunkFunctions;
 const {
   isProfileActionFulfilled,
   isProfileActionPending,
@@ -36,6 +36,10 @@ export interface profileState {
   bank_account: any;
   paypal_account: any;
   wise_account: any;
+  profile_seller: {
+    data: { id: number; level: { name: string }; bio: any; portfolio: string };
+    loaded: boolean;
+  };
 }
 interface payloadState {
   user_id: number;
@@ -88,11 +92,15 @@ const initialState: profileState = {
   level: { id: null, name: "" },
   badge: { id: null, name: "" },
   country: { id: null, name: "" },
-  loading: false,
+  loading: true,
   bank_transfer_detail: null,
   bank_account: null,
   paypal_account: null,
   wise_account: null,
+  profile_seller: {
+    data: { id: null, level: { name: "" }, bio: "", portfolio: "" },
+    loaded: false,
+  },
 };
 const assignState = (state: profileState, payload: payloadState) => {
   state.user_id = payload.user_id;
@@ -141,7 +149,15 @@ export const profileSlice = createSlice({
         assignState(state, action.payload);
       }
     );
-    builder.addMatcher(isProfileActionPending, (state) => {
+    builder.addCase(
+      getProfileSellerData.fulfilled,
+      (state: profileState, action: { payload: any }) => {
+        state.profile_seller.data = action.payload;
+        state.profile_seller.loaded = true;
+      }
+    );
+    builder.addMatcher(isProfileActionPending, (state, action) => {
+      if (action.type.split("/")[0] == "profile") return;
       state.loading = true;
     });
     builder.addMatcher(

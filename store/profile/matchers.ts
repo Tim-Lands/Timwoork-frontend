@@ -6,8 +6,11 @@ import {
   isRejected,
 } from "@reduxjs/toolkit";
 import { ProfileThunkFunctions } from "./thunkFunctions";
-const { getProfileData } = ProfileThunkFunctions;
-const isProfileActions = isAsyncThunkAction(getProfileData);
+const { getProfileData, getProfileSellerData } = ProfileThunkFunctions;
+const isProfileActions = isAsyncThunkAction(
+  getProfileData,
+  getProfileSellerData
+);
 const isProfileActionPending = isAllOf(isProfileActions, isPending);
 const isProfileActionFulfilled = isAllOf(isProfileActions, isFulfilled);
 const isProfileActionRejected = isAllOf(isProfileActions, isRejected);

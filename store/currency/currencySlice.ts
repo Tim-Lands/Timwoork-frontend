@@ -125,7 +125,9 @@ export const currencySlice = createSlice({
         state.values.loaded = true;
       }
     );
-    builder.addMatcher(isCurrencyPending, (state: currencyState) => {
+    builder.addMatcher(isCurrencyPending, (state: currencyState, action) => {
+      if (action.type.split("/")[0] == "currency") return;
+
       state.my.loading = true;
     });
     builder.addMatcher(
@@ -134,18 +136,24 @@ export const currencySlice = createSlice({
         state.my.loading = false;
       }
     );
-    builder.addMatcher(isCurrenciesPending, (state: currencyState) => {
+    builder.addMatcher(isCurrenciesPending, (state: currencyState, action) => {
+      if (action.type.split("/")[0] == "currency") return;
+
       state.currencies.loading = true;
     });
     builder.addMatcher(
       isAnyOf(isCurrenciesFulfilled, isCurrenciesRejected),
-      (state: currencyState) => {
+      (state: currencyState, action) => {
         state.currencies.loaded = false;
       }
     );
-    builder.addMatcher(isCurrenciesValuesPending, (state: currencyState) => {
-      state.values.loading = true;
-    });
+    builder.addMatcher(
+      isCurrenciesValuesPending,
+      (state: currencyState, action) => {
+        if (action.type.split("/")[0] == "currency") return;
+        state.values.loading = true;
+      }
+    );
     builder.addMatcher(
       isAnyOf(isCurrenciesValuesFulfilled, isCurrenciesValuesRejected),
       (state: currencyState) => {

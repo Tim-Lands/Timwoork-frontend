@@ -21,20 +21,13 @@ function Paypal({ query }) {
   async function getBill() {
     setIsLoading(true);
     try {
-      const res: any = await API.post(
-        `api/purchase/paypal/charge`,
-        { token: query.token },
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setIsLoading(false);
-        setIsError(false);
-        setGetBills(res.data.data);
-      }
+      const res: any = await API.post(`api/purchase/paypal/charge`, {
+        token: query.token,
+      });
+
+      setIsLoading(false);
+      setIsError(false);
+      setGetBills(res.data.data);
     } catch (error) {
       setIsLoading(false);
       setIsError(true);

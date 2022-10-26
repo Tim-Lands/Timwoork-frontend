@@ -1,15 +1,14 @@
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
-
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
-import useSWR from "swr";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -115,25 +114,33 @@ const Tiptap = (props: any) => {
     />
   );
 };
-function Description({ query, product }) {
+function Description({ query }) {
+  const dispatch = useAppDispatch();
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
-
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+  useEffect(() => {
+    if (getProduct.loaded || getProduct.id == query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, [getProduct]);
   const veriedEmail = user.email_verified;
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: product && product.data.content,
-  });
-  const buyerInstruct = useEditor({
-    extensions: [StarterKit],
-    content: product && product.data.buyer_instruct,
-  });
+  const editor = useEditor(
+    {
+      extensions: [StarterKit],
+      content: getProduct.content,
+    },
+    [getProduct]
+  );
+  const buyerInstruct = useEditor(
+    {
+      extensions: [StarterKit],
+      content: getProduct.buyer_instruct,
+    },
+    [getProduct]
+  );
   const html = editor && editor.getHTML();
   const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML();
   /* async function stepFive() {
@@ -163,7 +170,7 @@ function Description({ query, product }) {
         const id = query.id;
         await API.post(`api/product/${id}/product-step-three`, values);
         message.success(getAll("The_update_has"));
-        router.push(`/edit-product/medias?id=${getProduct?.data.id}`);
+        router.push(`/edit-product/medias?id=${getProduct.id}`);
       } catch (error: any) {
         if (
           error.response &&
@@ -231,7 +238,7 @@ function Description({ query, product }) {
                       </div>
                       <div
                         className={`timlands-step-item ${
-                          getProduct?.data.current_step < 1 && "pe-none"
+                          getProduct.current_step < 1 && "pe-none"
                         }`}
                       >
                         <h3 className="text">
@@ -248,7 +255,7 @@ function Description({ query, product }) {
                       </div>
                       <div
                         className={`timlands-step-item active ${
-                          getProduct?.data.current_step < 2 && "pe-none"
+                          getProduct.current_step < 2 && "pe-none"
                         }`}
                         ref={stepsView}
                       >
@@ -266,7 +273,7 @@ function Description({ query, product }) {
                       </div>
                       <div
                         className={`timlands-step-item ${
-                          getProduct?.data.current_step < 3 && "pe-none"
+                          getProduct?.current_step < 3 && "pe-none"
                         }`}
                       >
                         <h3 className="text">
@@ -284,7 +291,7 @@ function Description({ query, product }) {
                       <div className="timlands-step-item ">
                         <h3 className="text">
                           <Link
-                            href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                            href={`/edit-product/complete?id=${getProduct?.id}`}
                           >
                             <a>
                               <span className="icon-circular">
@@ -401,7 +408,7 @@ function Description({ query, product }) {
                           <button
                             type="submit"
                             disabled={
-                              (!getProduct ? true : false) ||
+                              (!getProduct.id ? true : false) ||
                               formik.isSubmitting
                             }
                             className="btn flex-center butt-green ml-auto butt-sm"
@@ -425,15 +432,11 @@ export default Description;
 Description.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
-export async function getServerSideProps(ctx) {
-  const uriString = `api/my_products/product/${ctx.query.id}`;
-  const res = await API.get(uriString);
-
-  return { props: { query: ctx.query, product: res.data } };
+export async function getServerSideProps({ query }) {
+  return { props: { query } };
 }
 Description.propTypes = {
   query: PropTypes.any,
-  product: PropTypes.any,
 };
 MenuBar.propTypes = {
   editor: PropTypes.any,

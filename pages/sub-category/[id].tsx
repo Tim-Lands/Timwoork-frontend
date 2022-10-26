@@ -13,12 +13,10 @@ function SubCategory({ subCategories }): ReactElement {
   }, [subCategories]);
 
   return (
-    <>
-      <Categories
-        onClickCategory={(id) => router.push(`/category/${id}`)}
-        categories={subCategoriesState}
-      />
-    </>
+    <Categories
+      onClickCategory={(id) => router.push(`/category/${id}`)}
+      categories={subCategoriesState}
+    />
   );
 }
 SubCategory.getLayout = function getLayout(page: any): ReactElement {

@@ -1,21 +1,19 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import { ReactElement, useEffect, useState } from "react";
-import { useAppSelector } from "@/store/hooks";
-
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import Loading from "components/Loading";
 import Comments from "../../components/Comments";
-import API from "../../config";
+import PropTypes from "prop-types";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import PropTypes from "prop-types";
 import router from "next/router";
-import useSWR from "swr";
 import { Alert } from "@/components/Alert/Alert";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { notification, Spin } from "antd";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { ProductService } from "@/services/productService";
 const properties = {
   duration: 5000,
   transitionDuration: 500,
@@ -37,14 +35,20 @@ const properties = {
     </div>
   ),
 };
-function Single({ query, product }) {
+function Single({ query }) {
+  const dispatch = useAppDispatch();
+
   const { getAll, language } = useAppSelector((state) => state.languages);
-
-  const { data: ProductData }: any = useSWR(`api/my_products/${query.product}`);
+  const product = useAppSelector((state) => state.myProducts.product);
   const user = useAppSelector((state) => state.user);
-
+  useEffect(() => {
+    dispatch(MyProductsActions.getProduct({ id: query.product }));
+  }, []);
+  useEffect(() => {
+    if (!product.id && !product.loading) router.push("/myproducts");
+  }, [product]);
   const veriedEmail = user.email_verified;
-  const disactiveProductHandle = async (id: any) => {
+  const disactiveProductHandle = async () => {
     const MySwal = withReactContent(Swal);
 
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -55,7 +59,13 @@ function Single({ query, product }) {
       buttonsStyling: false,
     });
     try {
-      await API.post(`api/my_products/${id}/disactive_product`);
+      await dispatch(
+        MyProductsActions.updateProduct({
+          is_active: false,
+          id: query.product,
+          updateProduct: true,
+        })
+      ).unwrap();
       swalWithBootstrapButtons.fire(
         getAll("Disabled1"),
         getAll("The_service_has_2"),
@@ -68,7 +78,7 @@ function Single({ query, product }) {
       });
     }
   };
-  const deleteHandle = (id: any) => {
+  const deleteHandle = () => {
     const MySwal = withReactContent(Swal);
 
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -92,7 +102,9 @@ function Single({ query, product }) {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await API.post(`api/product/${id}/deleteProduct`);
+            await dispatch(
+              MyProductsActions.deleteProduct({ id: query.product })
+            ).unwrap();
             swalWithBootstrapButtons.fire(
               getAll("Deleted"),
               getAll("The_service_has"),
@@ -105,7 +117,7 @@ function Single({ query, product }) {
       });
   };
   const [isProductActive, setIsProductActive] = useState(false);
-  const activeProductHandle = async (id: any) => {
+  const activeProductHandle = async () => {
     const MySwal = withReactContent(Swal);
 
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -117,7 +129,13 @@ function Single({ query, product }) {
     });
     try {
       setIsProductActive(true);
-      await API.post(`api/my_products/${id}/active_product`);
+      await dispatch(
+        MyProductsActions.updateProduct({
+          is_active: true,
+          id: query.product,
+          updateProduct: true,
+        })
+      ).unwrap();
       setIsProductActive(false);
       swalWithBootstrapButtons.fire(
         getAll("Abled1"),
@@ -139,8 +157,7 @@ function Single({ query, product }) {
     }
   }, [user]);
   const showStars = () => {
-    const rate =
-      Number(ProductData.data.ratings_avg_rating).toPrecision(1) || 0;
+    const rate = Number(product.ratings_avg_rating).toPrecision(1) || 0;
     const xAr: any = [
       {
         id: 1,
@@ -221,17 +238,17 @@ function Single({ query, product }) {
   };
 
   function durationFunc() {
-    if (ProductData.data.duration == 1) {
+    if (product.duration == 1) {
       return getAll("One_day");
     }
-    if (ProductData.data.duration == 2) {
+    if (product.duration == 2) {
       return getAll("2_days");
     }
-    if (ProductData.data.duration > 2 && ProductData.data.duration < 11) {
-      return ProductData.data.duration + getAll("Days");
+    if (product.duration > 2 && product.duration < 11) {
+      return product.duration + getAll("Days");
     }
-    if (ProductData.data.duration >= 11) {
-      return ProductData.data.duration + getAll("Day");
+    if (product.duration >= 11) {
+      return product.duration + getAll("Day");
     }
   }
   function DevdurationFunc(duration) {
@@ -251,7 +268,7 @@ function Single({ query, product }) {
 
   const routeToCurrentStep = () => {
     let page_name = "";
-    switch (ProductData.data.current_step) {
+    switch (product.current_step) {
       case 1:
         page_name = "overview";
         break;
@@ -265,12 +282,12 @@ function Single({ query, product }) {
         page_name = "medias";
         break;
     }
-    router.push(`/edit-product/${page_name}?id=${ProductData.data.id}`);
+    router.push(`/edit-product/${page_name}?id=${product.id}`);
   };
 
   const APIURL2 =
     "https://timwoork-space.ams3.digitaloceanspaces.com/products/galaries-images/";
-
+  if (product.loading) return <Loading />;
   return (
     <>
       <MetaTags
@@ -280,13 +297,13 @@ function Single({ query, product }) {
         ogImage={product.full_path_thumbnail}
         ogUrl={`https://timwoork.com/p/${product.slug}`}
       />
-      {ProductData && veriedEmail && (
+      {product && veriedEmail && (
         <div className="timwoork-single">
-          {ProductData.data.is_active == null && (
+          {product.is_active == null && (
             <div style={{ marginTop: 27 }}>
               <Alert type="warning">
                 {getAll("This_service_is")}{" "}
-                <Link href={`/edit-product/overview?id=${ProductData.data.id}`}>
+                <Link href={`/edit-product/overview?id=${product.id}`}>
                   <a>{getAll("Edit")}</a>
                 </Link>
               </Alert>
@@ -296,19 +313,16 @@ function Single({ query, product }) {
             <div className="col-lg-8">
               <div className="timwoork-single-post">
                 <div className="timwoork-single-header">
-                  <h1 className="title">{ProductData.data.title}</h1>
+                  <h1 className="title">{product.title}</h1>
                   <div className="timwoork-single-header-meta d-flex">
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
                         <Link
-                          href={`/u/${ProductData.data.profile_seller.profile.user.username}`}
+                          href={`/u/${product.profile_seller?.profile?.user?.username}`}
                         >
                           <a className="user-link">
                             <span className="pe-2">
-                              {
-                                ProductData.data.profile_seller.profile
-                                  .full_name
-                              }
+                              {product.profile_seller?.profile?.full_name}
                             </span>
                           </a>
                         </Link>
@@ -316,23 +330,20 @@ function Single({ query, product }) {
                       <li className="category-item">
                         <Link
                           href={`/category/${
-                            ProductData && ProductData.data.subcategory.id
+                            product && product.subcategory.id
                           }`}
                         >
                           <a className="category-link">
                             <span className="material-icons material-icons-outlined">
                               label
                             </span>
-                            {ProductData &&
-                              ProductData.data.subcategory[which(language)]}
+                            {product && product.subcategory[which(language)]}
                           </a>
                         </Link>{" "}
                         <span style={{ marginInline: 5 }}>|</span>
                         <small style={{ marginInline: 5 }}>
-                          {ProductData &&
-                            ProductData.data.subcategory.category[
-                              which(language)
-                            ]}
+                          {product &&
+                            product.subcategory.category[which(language)]}
                         </small>
                       </li>
                     </ul>
@@ -344,17 +355,15 @@ function Single({ query, product }) {
                           ))}
                         </span>
                         <span className="stars-count">
-                          ({ProductData.data.ratings_count})
+                          ({product.ratings_count})
                         </span>
                       </li>
                       <li className="level-item">
                         <span className="text-level">{getAll("Level")}</span>
                         <span className="value-level">
-                          {ProductData &&
-                            ProductData.data.profile_seller.level !== null &&
-                            ProductData.data.profile_seller.level[
-                              which(language)
-                            ]}
+                          {product &&
+                            product.profile_seller.level !== null &&
+                            product.profile_seller.level[which(language)]}
                         </span>
                       </li>
                     </ul>
@@ -363,35 +372,33 @@ function Single({ query, product }) {
                 <div className="timwoork-single-content">
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
-                      {ProductData &&
-                        ProductData.data.galaries.map((each: any, index) => (
-                          <>
-                            {each.url_video == null ? (
-                              <div key={index} className="each-slide">
-                                <div
-                                  className="images-slider"
-                                  style={{
-                                    backgroundImage: `url(${APIURL2}${each.path})`,
-                                  }}
-                                ></div>
-                              </div>
-                            ) : (
-                              ""
-                            )}
-                          </>
-                        ))}
+                      {product &&
+                        product.galleries.map((each: any, index) => {
+                          return each.url_video == null ? (
+                            <div key={index} className="each-slide">
+                              <div
+                                className="images-slider"
+                                style={{
+                                  backgroundImage: `url(${APIURL2}${each.path})`,
+                                }}
+                              ></div>
+                            </div>
+                          ) : (
+                            ""
+                          );
+                        })}
                     </Slide>
                     <div
                       className="timwoork-single-product-detailts"
                       dangerouslySetInnerHTML={{
-                        __html: ProductData.data.content,
+                        __html: product.content,
                       }}
                     />
-                    {ProductData.data.product_tag && (
+                    {product.product_tag && (
                       <div className="timwoork-single-tags">
                         <ul className="single-tags-list">
                           <li className="title">{getAll("Tags")}</li>
-                          {ProductData.data.product_tag.map((e: any) => (
+                          {product.product_tag.map((e: any) => (
                             <li key={e.id}>
                               <span>{e.name}</span>
                             </li>
@@ -414,11 +421,13 @@ function Single({ query, product }) {
                         <div className="single-comments-body">
                           <Comments
                             canReply={true}
-                            comments={ProductData.data.ratings}
+                            comments={product.ratings}
                           />
-                          {ProductData.data.ratings.length == 0 && (
+                          {product.ratings.length == 0 && (
                             <Alert type="primary">
-                              <p className="text">{getAll("There_is_no_2")}</p>
+                              <span className="text">
+                                {getAll("There_is_no_2")}
+                              </span>
                             </Alert>
                           )}
                         </div>
@@ -430,11 +439,9 @@ function Single({ query, product }) {
             </div>
             <div className="col-lg-4">
               <div className="single-sidebar">
-                {ProductData.data.is_active == 1 && (
+                {product.is_active == 1 && (
                   <div className="d-flex">
-                    <Link
-                      href={`/edit-product/overview?id=${ProductData.data.id}`}
-                    >
+                    <Link href={`/edit-product/overview?id=${product.id}`}>
                       <a className="btn butt-md butt-green flex-center-just mb-1 mx-1">
                         <span className="material-icons material-icons-outlined">
                           create
@@ -443,7 +450,7 @@ function Single({ query, product }) {
                       </a>
                     </Link>
                     <button
-                      onClick={() => deleteHandle(ProductData.data.id)}
+                      onClick={() => deleteHandle()}
                       className="btn butt-md butt-red flex-center-just mb-1 mx-1"
                     >
                       <span className="material-icons material-icons-outlined">
@@ -453,7 +460,7 @@ function Single({ query, product }) {
                     </button>
                   </div>
                 )}
-                {ProductData.data.is_active == null && (
+                {product.is_active == null && (
                   <div className="d-flex">
                     <button
                       className="btn butt-md butt-green flex-center-just mb-1 mx-1"
@@ -484,14 +491,14 @@ function Single({ query, product }) {
                       </li>
                     </ul>
                   </div>
-                  {ProductData.data.developments && (
+                  {product.developments && (
                     <div className="panel-aside-body">
                       <div className="add-devloppers-header">
                         <h4 className="title">
                           {getAll("Available_developments")}
                         </h4>
                       </div>
-                      {ProductData.data.developments.length == 0 && (
+                      {product.developments.length == 0 && (
                         <div className="nothing-note">
                           <p className="text">
                             {getAll("This_service_contains")}
@@ -499,7 +506,7 @@ function Single({ query, product }) {
                         </div>
                       )}
                       <ul className="add-devloppers-nav">
-                        {ProductData.data.developments.map((e: any) => {
+                        {product.developments.map((e: any) => {
                           return (
                             <li key={e.id} className="devloppers-item">
                               <div className="form-check">
@@ -524,12 +531,12 @@ function Single({ query, product }) {
                     <div className="aside-footer-total-price">
                       <h4 className="price-total me-auto">
                         <strong>{getAll("Service_price")}</strong>{" "}
-                        {ProductData && ProductData.data.price}$
+                        {product && product.price}$
                       </h4>
                       <div className="bayers-count">
                         <p className="num">
                           <span className="count">
-                            {ProductData && ProductData.data.count_buying}{" "}
+                            {product && product.count_buying}{" "}
                           </span>
                           <span className="text">
                             {" "}
@@ -539,15 +546,12 @@ function Single({ query, product }) {
                       </div>
                     </div>
                   </div>
-                  {ProductData.data.status !== null && (
+                  {product.status !== null && (
                     <Spin spinning={isProductActive}>
-                      {ProductData.data.is_active == 0 &&
-                      ProductData.data.is_completed == 1 ? (
+                      {product.is_active == 0 && product.is_completed == 1 ? (
                         <button
                           disabled={isProductActive}
-                          onClick={() =>
-                            activeProductHandle(ProductData.data.id)
-                          }
+                          onClick={() => activeProductHandle()}
                           className="btn butt-sm butt-green"
                         >
                           تفعيل
@@ -556,9 +560,7 @@ function Single({ query, product }) {
                         <button
                           disabled={isProductActive}
                           style={{ width: "100%", marginTop: 5 }}
-                          onClick={() =>
-                            disactiveProductHandle(ProductData.data.id)
-                          }
+                          onClick={() => disactiveProductHandle()}
                           className="btn butt-sm butt-red"
                         >
                           {getAll("Disable_this_service")}
@@ -578,6 +580,12 @@ function Single({ query, product }) {
 Single.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
+export async function getServerSideProps({ query }) {
+  return { props: { query } };
+}
+Single.propTypes = {
+  query: PropTypes.any,
+};
 const which = (language) => {
   switch (language) {
     default:
@@ -589,11 +597,3 @@ const which = (language) => {
   }
 };
 export default Single;
-export async function getServerSideProps({ query }) {
-  const product = await ProductService.getOne(query.product);
-  return { props: { product, query } };
-}
-Single.propTypes = {
-  query: PropTypes.any,
-  product: PropTypes.any,
-};

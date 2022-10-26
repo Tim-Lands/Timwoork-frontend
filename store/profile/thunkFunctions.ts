@@ -11,6 +11,18 @@ const getProfileData = createAsyncThunk(
     }
   }
 );
+const getProfileSellerData = createAsyncThunk(
+  "profile/seller/data",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await ProfileService.getSeller();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 export const ProfileThunkFunctions = {
   getProfileData,
+  getProfileSellerData,
 };

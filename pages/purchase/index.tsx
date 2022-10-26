@@ -44,18 +44,10 @@ function Bill() {
       });
       setIsLoading(true);
       try {
-        const res: any = await API.post(
-          `api/purchase/stripe/charge`,
-          { payment_method_id: paymentMethod.id },
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
-        if (res.status === 200) {
-          router.push("/mypurchases");
-        }
+        await API.post(`api/purchase/stripe/charge`, {
+          payment_method_id: paymentMethod.id,
+        });
+        router.push("/mypurchases");
       } catch (error) {
         setIsLoading(false);
 

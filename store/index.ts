@@ -10,7 +10,8 @@ import languages from "./languages/languagesSlice";
 import profile from "./profile/profileSlice";
 import products from "./products/productsSlice";
 import purchase from "./purchases/purchasesSlice";
-import myServices from "./myProducts/myProductsSlice";
+import myProducts from "./myProducts/myProductsSlice";
+import mySales from "./sales/salesSlice";
 export const store = configureStore({
   reducer: {
     user,
@@ -24,7 +25,8 @@ export const store = configureStore({
     profile,
     products,
     purchase,
-    myServices,
+    myProducts,
+    mySales,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

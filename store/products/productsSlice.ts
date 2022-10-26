@@ -13,23 +13,7 @@ interface dataState {
   popular;
   best_seller;
   latest: {
-    data: Array<{
-      profile_seller: {
-        profile: {
-          first_name: string;
-          last_name: string;
-          avatar_path: string;
-          user: { username: string };
-        };
-      };
-      title: string;
-      full_path_thumbnail: string;
-      count_buying: string;
-      price: number;
-      username: string;
-      slug: string;
-      ratings_avg_rating: number;
-    }>;
+    data;
   };
 }
 export interface productsState extends dataState {

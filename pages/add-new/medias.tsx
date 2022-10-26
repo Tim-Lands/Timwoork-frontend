@@ -2,13 +2,12 @@ import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useState } from "react";
 import API from "../../config";
 import router from "next/router";
-import SidebarAdvices from "./SidebarAdvices";
+import SidebarAdvices from "@/components/add-new/SidebarAdvices";
 import { useAppSelector } from "@/store/hooks";
 
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
-import cookies from "next-cookies";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -16,15 +15,13 @@ import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
 
-function Medias({ query, stars }) {
+function Medias({ query }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const { getAll, language } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
 
-  const [featuredMedia, setFeaturedImages]: any = useState(
-    stars.data.full_path_thumbnail
-  );
-  const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries);
+  const [featuredMedia, setFeaturedImages]: any = useState("");
+  const [galleryMedia, setGalleryMedia]: any = useState([]);
   const [isFeaturedChanged, setIsFeaturedChanged] = useState(false);
   const [isGalleryChanged, setIsGalleryChanged] = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
@@ -35,7 +32,8 @@ function Medias({ query, stars }) {
   const veriedEmail = user.email_verified;
   async function getProductId() {
     try {
-      await API.get(`api/my_products/product/${query.id}`);
+      // await API.get(`api/my_products/product/${query.id}`);
+      //! check if id not exist
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");
@@ -452,20 +450,10 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 
-export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token || "";
-  const uriString = `api/my_products/product/${ctx.query.id}`;
-  // Fetch data from external API
-  const res = await API.get(uriString, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return { props: { query: ctx.query, stars: res.data } };
+export async function getServerSideProps({ query }) {
+  return { props: { query } };
 }
 export default Medias;
 Medias.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
 };

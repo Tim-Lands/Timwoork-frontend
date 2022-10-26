@@ -19,8 +19,8 @@ async function getProductsCategories() {
   const res = await API.get("api/get_categories_for_add_product");
   return res.data.data;
 }
-async function getProductsSubCategories(id: string) {
-  const res = await API.get("api/get_categories_for_add_product" + id);
+async function getProductsSubCategories(id: number) {
+  const res = await API.get("api/get_categories_for_add_product/" + id);
   return res.data.data;
 }
 export const CategoriesService = {

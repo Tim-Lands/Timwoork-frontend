@@ -8,63 +8,38 @@ import {
   FaInstagram,
   FaTelegram,
 } from "react-icons/fa";
-import Currency from "@/components/DropdowModal/Currency";
 import Language from "@/components/DropdowModal/Language";
 import { Tooltip } from "antd";
-import { BlogActions } from "../../store/blog/blogActions";
+import { BlogActions } from "@/store/blog/blogActions";
+import { ProductsActions } from "@/store/products/productActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import API from "../../config";
-import Cookies from "js-cookie";
 
 function Footer() {
   const dispatch = useAppDispatch();
+  const { popular } = useAppSelector((state) => state.products);
   const footer = useAppSelector((state) => state.blog.footer);
+  const isLogged = useAppSelector((state) => state.user.isLogged);
+  const currency = useAppSelector((state) => state.currency.my);
   useEffect(() => {
     if (!footer.loaded) dispatch(BlogActions.getFooterData({ per_page: 5 }));
-  }, [footer.loaded]);
-
-  const [isCurrencyVisible, setIsCurrencyVisible] = useState(false);
+    if (!popular.loaded) dispatch(ProductsActions.getPopularProducts());
+  }, [footer, popular]);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [popularProducts, setPopularProducts] = useState([]);
-  const [currency, setCurrency]: any = useState({
-    name: "Dollar",
-    symbol: "$",
-  });
-  const [isLogged, setIsLogged] = useState(false);
   const { getAll, language } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const token = Cookies.get("token") || localStorage.getItem("token");
-    API.get("api/me", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        setIsLogged(true);
-        setCurrency(res?.data?.user_details?.profile?.currency);
-      })
-      .catch(() => {});
-    const [categoriesRes, popularProductsRes] = await Promise.all([
-      API.get("api/top_main_categories"),
-      API.get("api/filter?paginate=5&popular"),
-    ]).then((responses) => responses.map((res) => res?.data));
-    setCategories(categoriesRes?.data);
-    setPopularProducts(popularProductsRes?.data?.data);
+    API.get("api/top_main_categories").then((res) =>
+      setCategories(res?.data?.data)
+    );
   };
   return (
     <>
-      {isCurrencyVisible && (
-        <Currency
-          currencies={currency}
-          setIsConfirmText={setIsCurrencyVisible}
-        />
-      )}
       {isLanguageVisible && (
         <Language setIsConfirmText={setIsLanguageVisible} />
       )}
@@ -113,7 +88,8 @@ function Footer() {
           <div className="footer-item">
             <h3 className="title">{getAll("Most_popular_services")}</h3>
             <ul className="footerlist">
-              {popularProducts.map((product) => {
+              {popular.data.map((product, index) => {
+                if (index > 4) return;
                 return (
                   <li key={product.id} style={{ width: 350 }}>
                     <Link href={`/p/${product.slug}`}>

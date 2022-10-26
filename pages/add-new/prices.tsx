@@ -3,12 +3,12 @@ import { Field, FieldArray, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
-import SidebarAdvices from "./SidebarAdvices";
-import { useAppSelector } from "@/store/hooks";
+import SidebarAdvices from "../../components/add-new/SidebarAdvices";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 import { message } from "antd";
 import API from "../../config";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 import PropTypes from "prop-types";
@@ -16,6 +16,12 @@ import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
 let testTime;
 function Prices({ query }) {
+  const dispatch = useAppDispatch();
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+  useEffect(() => {
+    if (getProduct.loaded && getProduct.id === query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, []);
   const [userLang, setUserLang] = useState();
   const [checkedLangs, setCheckedLangs] = useState({
     ar: false,
@@ -38,7 +44,6 @@ function Prices({ query }) {
   const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
   const { id } = query;
-  const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const veriedEmail = user.email_verified;
   const clearValidationHandle = () => {
@@ -46,10 +51,7 @@ function Prices({ query }) {
   };
   async function getProductId() {
     try {
-      // const res: any =
-      await API.get(`api/my_products/product/${query.id}`);
-      // if (res.status === 200) {
-      // }
+      //! check if id not exist
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");
@@ -59,23 +61,18 @@ function Prices({ query }) {
       }
     }
   }
-  const [priceCount, setPriceCount] = useState(
-    getProduct && getProduct.data.price
-  );
-  const [durationCount, setDurationCount] = useState(
-    getProduct && getProduct.data.duration
-  );
+
   const allowOnlyNumericsOrDigits = (evt) => {
     const financialGoal = evt.target.validity.valid
       ? evt.target.value
-      : priceCount;
-    setPriceCount(financialGoal);
+      : getProduct.price;
+    dispatch(MyProductsActions.setPrice(financialGoal));
   };
   const allowOnlyNumericsOrDigitsDuration = (evt) => {
     const financialGoal = evt.target.validity.valid
       ? evt.target.value
-      : durationCount;
-    setDurationCount(financialGoal);
+      : getProduct.duration;
+    dispatch(MyProductsActions.setDuration(financialGoal));
   };
 
   const addSubtitle = (subtitle) => {
@@ -140,29 +137,27 @@ function Prices({ query }) {
               <Formik
                 isInitialValid={true}
                 initialValues={{
-                  price: getProduct && getProduct.data.price,
-                  duration: getProduct && getProduct.data.duration,
-                  developments:
-                    (getProduct && getProduct.data.developments) || [],
+                  price: getProduct.price,
+                  duration: getProduct.duration,
+                  developments: getProduct.developments,
                 }}
                 enableReinitialize={true}
                 onSubmit={async (values) => {
-                  console.log("submiting");
                   setValidationsErrors({});
                   try {
-                    console.log(values);
                     values.developments.forEach((val, indx) => {
                       if (!isSubtitle[indx]["ar"] && subtitles[indx]["ar"])
-                        val.title_ar = subtitles["ar"];
+                        val.title = subtitles["ar"];
                       if (!isSubtitle[indx]["en"] && subtitles[indx]["en"])
-                        val.title_en = subtitles["en"];
+                        val.title = subtitles["en"];
                       if (!isSubtitle[indx]["fr"] && subtitles[indx]["fr"])
-                        val.title_fr = subtitles["fr"];
+                        val.title = subtitles["fr"];
                     });
-                    await API.post(
-                      `api/product/${id}/product-step-two`,
-                      values
-                    );
+                    await API.post(`api/product/${id}/product-step-two`, {
+                      ...values,
+                      price: getProduct.price,
+                      duration: getProduct.duration,
+                    });
                     // Authentication was successful.
                     message.success(getAll("The_update_has"));
                     router.push({
@@ -263,7 +258,12 @@ function Prices({ query }) {
                                 name="price"
                                 maxLength={9}
                                 onInput={allowOnlyNumericsOrDigits}
-                                value={priceCount}
+                                value={getProduct.price}
+                                onChange={(e) => {
+                                  dispatch(
+                                    MyProductsActions.setPrice(e.target.value)
+                                  );
+                                }}
                                 pattern="[0-9]*"
                                 disabled={!getProduct ? true : false}
                                 onKeyUp={clearValidationHandle}
@@ -302,9 +302,16 @@ function Prices({ query }) {
                                   id="input-duration"
                                   maxLength={4}
                                   onInput={allowOnlyNumericsOrDigitsDuration}
-                                  value={durationCount}
+                                  value={getProduct.duration}
                                   pattern="[0-9]*"
                                   name="duration"
+                                  onChange={(e) => {
+                                    dispatch(
+                                      MyProductsActions.setDuration(
+                                        e.target.value
+                                      )
+                                    );
+                                  }}
                                   disabled={!getProduct ? true : false}
                                   onKeyUp={clearValidationHandle}
                                   className={

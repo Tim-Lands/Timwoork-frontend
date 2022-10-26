@@ -27,11 +27,9 @@ function Overview() {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const res = await API.post(`api/contactus`, values);
+        await API.post(`api/contactus`, values);
         // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-        }
+        message.success(getAll("The_update_has"));
       } catch (error: any) {
         if (
           error.response &&

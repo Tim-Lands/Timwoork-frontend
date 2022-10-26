@@ -4,10 +4,10 @@ import API from "../../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
 import "antd/dist/antd.min.css";
-import useSWR from "swr";
 import Loading from "@/components/Loading";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { ProfileActions } from "@/store/profile/profileActions";
 
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
@@ -127,9 +127,16 @@ const Tiptap = (props: any) => {
 };
 
 const EditSeller = () => {
+  const dispatch = useAppDispatch();
+
+  const { profile_seller, loading } = useAppSelector((state) => state.profile);
+  useEffect(() => {
+    if (!profile_seller.loaded) {
+      dispatch(ProfileActions.getProfileSellerData());
+    }
+  }, [profile_seller]);
   const user = useAppSelector((state) => state.user);
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const { data: userInfo }: any = useSWR("api/me");
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [checkedLangs, setCheckedLangs] = useState({
     ar: false,
@@ -140,13 +147,13 @@ const EditSeller = () => {
   const [subtitles, setSubtitles] = useState({ ar: null, fr: null, en: null });
   const [userLang, setUserLang] = useState();
   const veriedEmail = user.email_verified;
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content:
-      userInfo &&
-      userInfo.user_details.profile.profile_seller &&
-      userInfo.user_details.profile.profile_seller.bio,
-  });
+  const editor = useEditor(
+    {
+      extensions: [StarterKit],
+      content: profile_seller.data.bio,
+    },
+    [profile_seller]
+  );
   const { getAll } = useAppSelector((state) => state.languages);
 
   const html = editor && editor.getHTML();
@@ -168,10 +175,7 @@ const EditSeller = () => {
   const formik = useFormik({
     initialValues: {
       bio: html,
-      portfolio:
-        userInfo &&
-        userInfo.user_details.profile.profile_seller &&
-        userInfo.user_details.profile.profile_seller.portfolio,
+      portfolio: profile_seller.data.portfolio,
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -219,131 +223,69 @@ const EditSeller = () => {
       />
       {veriedEmail && (
         <>
-          {!userInfo && <Loading />}
-          {userInfo &&
-            userInfo.user_details.profile &&
-            userInfo.user_details.profile.profile_seller !== null && (
-              <>
-                <div className="row justify-content-md-center mt-3">
-                  <div className="col-lg-7">
-                    {isShowenModal && (
-                      <FormModal
-                        onSubmit={(txt) => addSubtitle(txt)}
-                        setIsConfirmText={setIsShowenModal}
-                      />
-                    )}
+          {loading && <Loading />}
+          {profile_seller.data.id !== null && (
+            <>
+              <div className="row justify-content-md-center mt-3">
+                <div className="col-lg-7">
+                  {isShowenModal && (
+                    <FormModal
+                      onSubmit={(txt) => addSubtitle(txt)}
+                      setIsConfirmText={setIsShowenModal}
+                    />
+                  )}
 
-                    <form onSubmit={formik.handleSubmit}>
-                      <div className="login-panel update-form">
-                        <div
-                          className={
-                            "panel-modal-body login-panel-body auto-height" +
-                            (formik.isSubmitting ? " is-loading" : "")
-                          }
-                        >
-                          {!formik.isSubmitting ? (
-                            ""
-                          ) : (
-                            <motion.div
-                              initial={{ opacity: 0, y: 50 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="is-loading"
-                            >
-                              <div className="spinner-border" role="status">
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            </motion.div>
-                          )}
-                          <div className="update-form-header">
-                            <h1 className="title">تعديل المعلومات البائع</h1>
-                          </div>
-                          <div className="row">
-                            <div className="col-md-12">
-                              <div className="timlands-form">
-                                <label
-                                  className="label-block"
-                                  htmlFor="portfolio"
-                                >
-                                  رابط أعمالك
-                                </label>
-                                <input
-                                  id="portfolio"
-                                  name="portfolio"
-                                  placeholder="رابط أعمالك..."
-                                  onChange={formik.handleChange}
-                                  value={formik.values.portfolio}
-                                  className={
-                                    "timlands-inputs " +
-                                    (validationsErrors &&
-                                      validationsErrors.portfolio &&
-                                      " has-error")
-                                  }
-                                  autoComplete="off"
-                                />
-                                {validationsErrors &&
-                                  validationsErrors.portfolio && (
-                                    <div style={{ overflow: "hidden" }}>
-                                      <motion.div
-                                        initial={{ y: -70, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        className="timlands-form-note form-note-error"
-                                      >
-                                        <p className="text">
-                                          {validationsErrors.portfolio[0]}
-                                        </p>
-                                      </motion.div>
-                                    </div>
-                                  )}
-                              </div>
+                  <form onSubmit={formik.handleSubmit}>
+                    <div className="login-panel update-form">
+                      <div
+                        className={
+                          "panel-modal-body login-panel-body auto-height" +
+                          (formik.isSubmitting ? " is-loading" : "")
+                        }
+                      >
+                        {!formik.isSubmitting ? (
+                          ""
+                        ) : (
+                          <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="is-loading"
+                          >
+                            <div className="spinner-border" role="status">
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
                             </div>
-                            <div className="col-md-12">
-                              <div className="timlands-form">
-                                <label className="label-block" htmlFor="bio">
-                                  {getAll("Brief_me_about")}
-                                </label>
-                                <div className="app-content-editor">
-                                  <FormLangsCheck
-                                    id={1}
-                                    default_lang={userLang}
-                                    onChange={(e) => {
-                                      setCheckedLangs({
-                                        ...checkedLangs,
-                                        [e.target.value]: e.target.checked,
-                                      });
-                                      if (!e.target.checked)
-                                        setSubtitles({
-                                          ...subtitles,
-                                          [e.target.value]: null,
-                                        });
-                                    }}
-                                  />
-                                  <MenuBar editor={editor} />
-                                  <Tiptap
-                                    value={formik.values.bio}
-                                    changeHandle={formik.handleChange}
-                                    editor={editor}
-                                    onKeyDown={() => {
-                                      clearTimeout(testTime);
-                                    }}
-                                    onKeyUp={() => {
-                                      testTime = setTimeout(
-                                        () => detectLang(formik.values["bio"]),
-                                        3000
-                                      );
-                                    }}
-                                  />
-                                  <FormLangs
-                                    onClick={(lang) => {
-                                      setIsShowenModal(true);
-                                      setSelectedLang(lang);
-                                    }}
-                                    checkedLangs={checkedLangs}
-                                    default_lang={userLang}
-                                  />
-                                </div>
-                                {validationsErrors && validationsErrors.bio && (
+                          </motion.div>
+                        )}
+                        <div className="update-form-header">
+                          <h1 className="title">تعديل المعلومات البائع</h1>
+                        </div>
+                        <div className="row">
+                          <div className="col-md-12">
+                            <div className="timlands-form">
+                              <label
+                                className="label-block"
+                                htmlFor="portfolio"
+                              >
+                                رابط أعمالك
+                              </label>
+                              <input
+                                id="portfolio"
+                                name="portfolio"
+                                placeholder="رابط أعمالك..."
+                                onChange={formik.handleChange}
+                                value={formik.values.portfolio}
+                                className={
+                                  "timlands-inputs " +
+                                  (validationsErrors &&
+                                    validationsErrors.portfolio &&
+                                    " has-error")
+                                }
+                                autoComplete="off"
+                              />
+                              {validationsErrors &&
+                                validationsErrors.portfolio && (
                                   <div style={{ overflow: "hidden" }}>
                                     <motion.div
                                       initial={{ y: -70, opacity: 0 }}
@@ -351,32 +293,91 @@ const EditSeller = () => {
                                       className="timlands-form-note form-note-error"
                                     >
                                       <p className="text">
-                                        {validationsErrors.bio[0]}
+                                        {validationsErrors.portfolio[0]}
                                       </p>
                                     </motion.div>
                                   </div>
                                 )}
-                              </div>
                             </div>
                           </div>
-                          <div className="panel-modal-footer">
-                            <div className="d-flex">
-                              <button
-                                type="submit"
-                                disabled={formik.isSubmitting}
-                                className="btn me-auto butt-primary butt-md"
-                              >
-                                {getAll("Update_basic_information")}
-                              </button>
+                          <div className="col-md-12">
+                            <div className="timlands-form">
+                              <label className="label-block" htmlFor="bio">
+                                {getAll("Brief_me_about")}
+                              </label>
+                              <div className="app-content-editor">
+                                <FormLangsCheck
+                                  id={1}
+                                  default_lang={userLang}
+                                  onChange={(e) => {
+                                    setCheckedLangs({
+                                      ...checkedLangs,
+                                      [e.target.value]: e.target.checked,
+                                    });
+                                    if (!e.target.checked)
+                                      setSubtitles({
+                                        ...subtitles,
+                                        [e.target.value]: null,
+                                      });
+                                  }}
+                                />
+                                <MenuBar editor={editor} />
+                                <Tiptap
+                                  value={formik.values.bio}
+                                  changeHandle={formik.handleChange}
+                                  editor={editor}
+                                  onKeyDown={() => {
+                                    clearTimeout(testTime);
+                                  }}
+                                  onKeyUp={() => {
+                                    testTime = setTimeout(
+                                      () => detectLang(formik.values["bio"]),
+                                      3000
+                                    );
+                                  }}
+                                />
+                                <FormLangs
+                                  onClick={(lang) => {
+                                    setIsShowenModal(true);
+                                    setSelectedLang(lang);
+                                  }}
+                                  default_lang={userLang}
+                                />
+                              </div>
+                              {validationsErrors && validationsErrors.bio && (
+                                <div style={{ overflow: "hidden" }}>
+                                  <motion.div
+                                    initial={{ y: -70, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    className="timlands-form-note form-note-error"
+                                  >
+                                    <p className="text">
+                                      {validationsErrors.bio[0]}
+                                    </p>
+                                  </motion.div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
+                        <div className="panel-modal-footer">
+                          <div className="d-flex">
+                            <button
+                              type="submit"
+                              disabled={formik.isSubmitting}
+                              className="btn me-auto butt-primary butt-md"
+                            >
+                              {getAll("Update_basic_information")}
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 </div>
-              </>
-            )}
+              </div>
+            </>
+          )}
         </>
       )}
     </>

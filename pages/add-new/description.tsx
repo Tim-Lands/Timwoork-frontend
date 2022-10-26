@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import router from "next/router";
-import SidebarAdvices from "./SidebarAdvices";
+import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
@@ -260,10 +260,7 @@ function Description({ query }) {
 
   async function getProductId() {
     try {
-      // const res: any =
-      await API.get(`api/my_products/product/${query.id}`);
-      // if (res.status === 200) {
-      // }
+      //! check if id not exist
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");
@@ -600,21 +597,8 @@ Description.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export async function getServerSideProps(ctx) {
-  // const token = cookies(ctx).token || "";
-  // const uriString = `api/my_products/product/${ctx.query.id}`;
-  // // Fetch data from external API
-  // const res = await API.get(uriString, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // });
-
   return { props: { query: ctx.query } };
 }
 Description.propTypes = {
   query: PropTypes.any,
-  // stars: PropTypes.any,
 };
-// MenuBar.propTypes = {
-//   editor: PropTypes.any,
-// };

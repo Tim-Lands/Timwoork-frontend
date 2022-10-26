@@ -3,13 +3,14 @@ import React, { ReactElement, useEffect, useState, useRef } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { CategoriesService } from "@/services/categoriesServices";
 import router from "next/router";
-import SidebarAdvices from "./SidebarAdvices";
+import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import API from "../../config";
-import useSWR from "swr";
 import PropTypes from "prop-types";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
+
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import FormLangs from "@/components/Forms/FormLangs";
@@ -61,8 +62,17 @@ const MySelect = (props: any) => {
 let testTime;
 
 function Overview({ query }) {
+  const dispatch = useAppDispatch();
   const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories]: any = useState(false);
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+  useEffect(() => {
+    if (getProduct.loaded && getProduct.id == query.id) return;
+
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, []);
+  const [subCategories, setSubCategories]: any = useState({
+    subCategories: { subcategories: {} },
+  });
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [checkedLangs, setCheckedLangs] = useState({
     ar: false,
@@ -84,19 +94,20 @@ function Overview({ query }) {
   } = useAppSelector((state) => state);
 
   const timeoutFunc: any = useRef();
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
+
   useEffect(() => {
     CategoriesService.getProductsCategories()
       .then((res) => setCategories(res))
       .catch(() => {});
-  });
+  }, []);
   useEffect(() => {
-    CategoriesService.getProductsSubCategories(formik.values.catetory)
+    if (!getProduct?.subcategory?.category?.id) return;
+    CategoriesService.getProductsSubCategories(
+      getProduct?.subcategory?.category?.id
+    )
       .then((res) => setSubCategories(res))
       .catch(() => {});
-  });
+  }, [getProduct]);
 
   const veriedEmail = user.email_verified;
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -120,10 +131,9 @@ function Overview({ query }) {
   const formik = useFormik({
     initialValues: {
       content: "ejrferjgh erfkerh whgferg",
-      catetory: getProduct?.data?.subcategory?.category?.id,
-      title: getProduct?.data?.title,
-      subcategory: getProduct?.data?.subcategory?.id,
-      tags: getProduct?.data?.product_tag,
+      title: getProduct?.title,
+      subcategory: getProduct?.subcategory?.id,
+      tags: getProduct?.product_tag,
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -162,8 +172,9 @@ function Overview({ query }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${id}`);
+      // await API.get(`api/my_products/product/${id}`);
       // if (res.status === 200) {
+      //! check if id not exist
       // }
     } catch (error) {
       if (error.response && error.response.status === 422) {
@@ -179,7 +190,7 @@ function Overview({ query }) {
       router.push("/login");
       return;
     }
-    timeoutFunc.current = setTimeout(() => console.log("test time out "), 3000);
+    timeoutFunc.current = setTimeout(() => {}, 3000);
     getProductId();
   }, [user]);
 
@@ -311,7 +322,7 @@ function Overview({ query }) {
                               );
                             }}
                             onChange={formik.handleChange}
-                            value={formik.values.title}
+                            value={formik.values.title || ""}
                           />
                           <FormLangs
                             onClick={(lang) => {
@@ -352,9 +363,14 @@ function Overview({ query }) {
                             className="timlands-inputs select"
                             autoComplete="off"
                             disabled={!getProduct ? true : false}
-                            onChange={formik.handleChange}
-                            value={formik.values.catetory}
-                            //onChange={() => setmainCat(values.catetory)}
+                            value={getProduct?.subcategory?.category?.id || ""}
+                            onChange={(e) => {
+                              dispatch(
+                                MyProductsActions.changeSubCategory(
+                                  e.target.value
+                                )
+                              );
+                            }}
                           >
                             <option value="">
                               {getAll("Choose_the_principal")}
@@ -399,7 +415,7 @@ function Overview({ query }) {
                             {!subCategories && (
                               <option value="">{getAll("Please_wait")}</option>
                             )}
-                            {subCategories.subcategories.map((e: any) => (
+                            {subCategories?.subcategories?.map((e: any) => (
                               <option value={e.id} key={e.id}>
                                 {e[which(language)]}
                               </option>

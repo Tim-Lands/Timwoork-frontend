@@ -2,7 +2,7 @@ import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useRef } from "react";
 import { message } from "antd";
 import router from "next/router";
-import SidebarAdvices from "./SidebarAdvices";
+import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import { useAppSelector } from "@/store/hooks";
 
 import PropTypes from "prop-types";
@@ -22,10 +22,7 @@ function Complete({ query }) {
   if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
     try {
-      // const res: any =
-      await API.get(`api/my_products/product/${query.id}`);
-      // if (res.status === 200) {
-      // }
+      //! check if id not exist
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");

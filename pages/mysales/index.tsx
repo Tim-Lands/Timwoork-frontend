@@ -1,30 +1,27 @@
 import Layout from "@/components/Layout/HomeLayout";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Table } from "antd";
 import Link from "next/link";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
-import { SalesService } from "@/services/salesService";
-
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { SalesThunkFunctions } from "store/sales/thunkFunctions";
 function index() {
+  const dispatch = useAppDispatch();
   const { getAll, language } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
+  const sales = useAppSelector((state) => state.mySales.sales);
   const veriedEmail = user.email_verified;
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
   }, [user]);
   useEffect(() => {
-    SalesService.getAll()
-      .then((res) => setData(res))
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+    if (sales.loaded) return;
+    dispatch(SalesThunkFunctions.getData());
+  }, [sales]);
 
   const statusLabel = (status: any) => {
     switch (status) {
@@ -165,8 +162,8 @@ function index() {
                     className="innerTable"
                     columns={columns}
                     onChange={onChange}
-                    dataSource={data}
-                    loading={loading}
+                    dataSource={sales.data}
+                    loading={sales.loading}
                     bordered
                     size="small"
                   />

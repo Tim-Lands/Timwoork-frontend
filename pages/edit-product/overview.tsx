@@ -4,7 +4,8 @@ import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 
 import API from "../../config";
 import useSWR from "swr";
@@ -64,9 +65,12 @@ function Overview({ query }) {
     languages: { getAll },
   } = useAppSelector((state) => state);
 
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (getProduct.loaded || getProduct.id == query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, [getProduct]);
   const { data: categories, categoriesError }: any = useSWR(
     "api/get_categories_for_add_product"
   );
@@ -78,17 +82,10 @@ function Overview({ query }) {
   };
   const formik = useFormik({
     initialValues: {
-      catetory:
-        getProduct &&
-        getProduct.data.subcategory &&
-        getProduct.data.subcategory.category &&
-        getProduct.data.subcategory.category.id,
-      title: getProduct && getProduct.data.title,
-      subcategory:
-        getProduct &&
-        getProduct.data.subcategory &&
-        getProduct.data.subcategory.id,
-      tags: getProduct && getProduct.data.product_tag,
+      catetory: getProduct?.subcategory?.category?.id,
+      title: getProduct?.title,
+      subcategory: getProduct?.subcategory?.id,
+      tags: getProduct?.product_tag,
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -99,7 +96,7 @@ function Overview({ query }) {
         // Authentication was successful.
 
         message.success(getAll("The_update_has"));
-        router.push(`/edit-product/prices?id=${getProduct?.data?.id}`);
+        router.push(`/edit-product/prices?id=${getProduct?.id}`);
       } catch (error: any) {
         if (
           error.response &&
@@ -119,7 +116,7 @@ function Overview({ query }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${id}`);
+      //! check if id not exist
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -174,7 +171,7 @@ function Overview({ query }) {
                       </div>
                       <div
                         className={`timlands-step-item ${
-                          getProduct?.data.current_step < 1 && "pe-none"
+                          getProduct?.current_step < 1 && "pe-none"
                         }`}
                       >
                         <h3 className="text">
@@ -192,7 +189,7 @@ function Overview({ query }) {
                       </div>
                       <div
                         className={`timlands-step-item ${
-                          getProduct?.data.current_step < 2 && "pe-none"
+                          getProduct.current_step < 2 && "pe-none"
                         }`}
                       >
                         <h3 className="text">
@@ -210,7 +207,7 @@ function Overview({ query }) {
                       </div>
                       <div
                         className={`timlands-step-item ${
-                          getProduct?.data.current_step < 3 && "pe-none"
+                          getProduct?.current_step < 3 && "pe-none"
                         }`}
                       >
                         <h3 className="text">
@@ -229,7 +226,7 @@ function Overview({ query }) {
                       <div className="timlands-step-item ">
                         <h3 className="text">
                           <Link
-                            href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                            href={`/edit-product/complete?id=${getProduct?.id}`}
                           >
                             <a>
                               <span className="icon-circular">

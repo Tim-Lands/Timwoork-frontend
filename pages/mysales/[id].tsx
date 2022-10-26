@@ -10,24 +10,17 @@ import LastSeen from "@/components/LastSeen";
 import { Modal, Progress, Spin, Timeline } from "antd";
 import useFileUpload from "react-use-file-upload";
 import { motion } from "framer-motion";
-import { SalesService } from "@/services/salesService";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
-//import { pusher } from "../../config/pusher";
-
 const User = ({ query }) => {
   const { getAll, language } = useAppSelector((state) => state.languages);
+  const ShowItem = useAppSelector((state) => state.mySales.oneSale);
   const user = useAppSelector((state) => state.user);
-  const [ShowItem, setShowItem]: any = useState(false);
   const inputRef: any = useRef();
   const inputRefMsg: any = useRef();
   const veriedEmail = user.email_verified;
-  useEffect(() => {
-    SalesService.getOne(query.id)
-      .then((res) => setShowItem(res))
-      .catch(() => {});
-  }, [query.id]);
+
   const [imageProgress, setImageProgress] = useState(0);
   const [messageProgress, setMessageProgress] = useState(0);
   const [messageErrors, setMessageErrors]: any = useState({});
@@ -777,7 +770,7 @@ const User = ({ query }) => {
                                     dot={<>{switchFileTypes(e.mime_type)}</>}
                                   >
                                     <a
-                                      href={e.full_path}
+                                      href={e.mime_type}
                                       rel="noreferrer"
                                       target="_blank"
                                     >
@@ -840,8 +833,8 @@ const User = ({ query }) => {
                             className="timwoork-single-product-detailts"
                             dangerouslySetInnerHTML={{
                               __html:
-                                ShowItem?.data?.profile_seller?.products[0] &&
-                                ShowItem?.data?.profile_seller?.products[0]
+                                ShowItem?.profile_seller?.products[0] &&
+                                ShowItem?.profile_seller?.products[0]
                                   .buyer_instruct,
                             }}
                           />

@@ -1,24 +1,26 @@
 import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useRef } from "react";
 import { message } from "antd";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import router from "next/router";
-import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Unauthorized from "@/components/Unauthorized";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 import API from "../../config";
 import Link from "next/link";
 
 function Complete({ query }) {
+  const dispatch = useAppDispatch();
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
-
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+  useEffect(() => {
+    if (getProduct.loaded || getProduct.id == query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, [getProduct]);
   const stepsView = useRef(null);
-  const { data: getProduct }: any = useSWR(
-    `api/my_products/product/${query.id}`
-  );
   const veriedEmail = user.email_verified;
 
   if (!user.isLogged && !veriedEmail) return <Unauthorized />;
@@ -26,8 +28,8 @@ function Complete({ query }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`);
       // if (res.status === 200) {
+      //! check if id not exist
       // }
     } catch (error) {
       if (error.response && error.response.status === 422) {
@@ -79,7 +81,7 @@ function Complete({ query }) {
                   <div className="timlands-step-item">
                     <h3 className="text">
                       <Link
-                        href={`/edit-product/overview?id=${getProduct?.data.id}`}
+                        href={`/edit-product/overview?id=${getProduct?.id}`}
                       >
                         <a>
                           <span className="icon-circular">
@@ -94,9 +96,7 @@ function Complete({ query }) {
                   </div>
                   <div className="timlands-step-item">
                     <h3 className="text">
-                      <Link
-                        href={`/edit-product/prices?id=${getProduct?.data.id}`}
-                      >
+                      <Link href={`/edit-product/prices?id=${getProduct?.id}`}>
                         <a>
                           <span className="icon-circular">
                             <span className="material-icons material-icons-outlined">
@@ -111,7 +111,7 @@ function Complete({ query }) {
                   <div className="timlands-step-item">
                     <h3 className="text">
                       <Link
-                        href={`/edit-product/description?id=${getProduct?.data.id}`}
+                        href={`/edit-product/description?id=${getProduct?.id}`}
                       >
                         <a>
                           <span className="icon-circular">
@@ -126,9 +126,7 @@ function Complete({ query }) {
                   </div>
                   <div className="timlands-step-item ">
                     <h3 className="text">
-                      <Link
-                        href={`/edit-product/medias?id=${getProduct?.data.id}`}
-                      >
+                      <Link href={`/edit-product/medias?id=${getProduct?.id}`}>
                         <a>
                           <span className="icon-circular">
                             <span className="material-icons material-icons-outlined">
@@ -143,7 +141,7 @@ function Complete({ query }) {
                   <div className="timlands-step-item active" ref={stepsView}>
                     <h3 className="text">
                       <Link
-                        href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                        href={`/edit-product/complete?id=${getProduct?.id}`}
                       >
                         <a>
                           <span className="icon-circular">

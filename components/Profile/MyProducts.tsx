@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useAppSelector } from "@/store/hooks";
 
-export default function MyProducts({ setStatusType, postsList, refresh }) {
+export default function MyProducts({ setStatusType, postsList }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
 
   const deleteHandle = (id: any) => {
@@ -47,7 +47,6 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
               getAll("The_service_has"),
               "success"
             );
-            refresh();
           } catch (error) {
             () => {};
           }
@@ -72,7 +71,6 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
         getAll("The_service_has_2"),
         "success"
       );
-      refresh();
     } catch (error) {
       notification["error"]({
         message: getAll("Error_message"),
@@ -98,7 +96,6 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
         getAll("This_service_has"),
         "success"
       );
-      refresh();
     } catch (error) {
       notification["error"]({
         message: getAll("Error_message"),
@@ -164,23 +161,38 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
         <Menu.Item key="all" onClick={() => setStatusType("")}>
           {getAll("All")}
         </Menu.Item>
-        <Menu.Item key="mail" onClick={() => setStatusType("/published")}>
+        <Menu.Item
+          key="mail"
+          onClick={() => setStatusType({ type: "published" })}
+        >
           {getAll("Active")}
         </Menu.Item>
-        <Menu.Item key="app" onClick={() => setStatusType("/rejected")}>
+        <Menu.Item
+          key="app"
+          onClick={() => setStatusType({ type: "rejected" })}
+        >
           {getAll("Rejected")}
         </Menu.Item>
-        <Menu.Item key="waiting" onClick={() => setStatusType("/pending")}>
+        <Menu.Item
+          key="waiting"
+          onClick={() => setStatusType({ type: "pending" })}
+        >
           {getAll("PEnding")}
         </Menu.Item>
-        <Menu.Item key="drafts" onClick={() => setStatusType("/drafts")}>
+        <Menu.Item
+          key="drafts"
+          onClick={() => setStatusType({ type: "drafts" })}
+        >
           {getAll("Draft")}
         </Menu.Item>
-        <Menu.Item key="alipay" onClick={() => setStatusType("/paused")}>
+        <Menu.Item
+          key="alipay"
+          onClick={() => setStatusType({ type: "paused" })}
+        >
           {getAll("Disabled")}
         </Menu.Item>
       </Menu>
-      {postsList && postsList.data.length == 0 ? (
+      {postsList.length == 0 ? (
         <Result
           status="404"
           title={getAll("You_have_no")}
@@ -207,100 +219,97 @@ export default function MyProducts({ setStatusType, postsList, refresh }) {
               </tr>
             </thead>
             <tbody>
-              {postsList &&
-                postsList.data.map((e: any) => (
-                  <tr key={e.id}>
-                    <td>
-                      {e.is_completed == 1 ? (
-                        <Link href={`/myproducts/${e.slug}`}>
-                          <a>{e[which(language)] || "لا يوجد ترجمة"}</a>
-                        </Link>
-                      ) : (
-                        <p>{e.title}</p>
-                      )}
-                    </td>
-                    <td>
-                      {e.is_completed == 0 ? (
-                        <span className="badge bg-danger">{getAll("No")}</span>
-                      ) : (
-                        <span className="badge bg-success">
-                          {getAll("Yes")}
-                        </span>
-                      )}
-                    </td>
-                    <td>{e.count_buying}</td>
-                    <td>
-                      {e.is_active == 0 ? (
-                        <span className="badge bg-danger">
-                          {getAll("Disabled")}
-                        </span>
-                      ) : (
-                        <span className="badge bg-success">
-                          {getAll("Abled")}
-                        </span>
-                      )}
-                    </td>
-                    <td>{statusProduct(e.status)}</td>
-                    <td>
-                      <Tooltip title={getAll("Delete_this_service")}>
-                        <Button
-                          danger
-                          type="primary"
-                          color="red"
-                          size="small"
-                          shape="circle"
-                          icon={<DeleteOutlined />}
-                          onClick={() => deleteHandle(e.id)}
-                        />
-                      </Tooltip>
-                      {e.status !== null && (
-                        <>
-                          {e.is_active == 0 && e.is_completed == 1 ? (
-                            <Tooltip title={getAll("Able_this_service")}>
-                              <Button
-                                type="primary"
-                                color="orange"
-                                style={{
-                                  marginInline: 2,
-                                  backgroundColor: "green",
-                                }}
-                                size="small"
-                                shape="circle"
-                                icon={<PlayCircleOutlined />}
-                                onClick={() => activeProductHandle(e.id)}
-                              />
-                            </Tooltip>
-                          ) : (
-                            <Tooltip title={getAll("Disable_this_service")}>
-                              <Button
-                                type="primary"
-                                color="orange"
-                                style={{
-                                  marginInline: 2,
-                                  backgroundColor: "orange",
-                                }}
-                                size="small"
-                                shape="circle"
-                                icon={<PauseCircleOutlined />}
-                                onClick={() => disactiveProductHandle(e.id)}
-                              />
-                            </Tooltip>
-                          )}
-                        </>
-                      )}
-                      <Tooltip title={getAll("Service_editing")}>
-                        <Button
-                          type="default"
-                          color="orange"
-                          size="small"
-                          shape="circle"
-                          icon={<EditOutlined />}
-                          onClick={() => routeToCurrentStep(e)}
-                        />
-                      </Tooltip>
-                    </td>
-                  </tr>
-                ))}
+              {postsList.map((e: any) => (
+                <tr key={e.id}>
+                  <td>
+                    {e.is_completed == 1 ? (
+                      <Link href={`/myproducts/${e.id}`}>
+                        <a>{e[which(language)] || "لا يوجد ترجمة"}</a>
+                      </Link>
+                    ) : (
+                      <p>{e.title}</p>
+                    )}
+                  </td>
+                  <td>
+                    {e.is_completed == 0 ? (
+                      <span className="badge bg-danger">{getAll("No")}</span>
+                    ) : (
+                      <span className="badge bg-success">{getAll("Yes")}</span>
+                    )}
+                  </td>
+                  <td>{e.count_buying}</td>
+                  <td>
+                    {e.is_active == 0 ? (
+                      <span className="badge bg-danger">
+                        {getAll("Disabled")}
+                      </span>
+                    ) : (
+                      <span className="badge bg-success">
+                        {getAll("Abled")}
+                      </span>
+                    )}
+                  </td>
+                  <td>{statusProduct(e.status)}</td>
+                  <td>
+                    <Tooltip title={getAll("Delete_this_service")}>
+                      <Button
+                        danger
+                        type="primary"
+                        color="red"
+                        size="small"
+                        shape="circle"
+                        icon={<DeleteOutlined />}
+                        onClick={() => deleteHandle(e.id)}
+                      />
+                    </Tooltip>
+                    {e.status !== null && (
+                      <>
+                        {e.is_active == 0 && e.is_completed == 1 ? (
+                          <Tooltip title={getAll("Able_this_service")}>
+                            <Button
+                              type="primary"
+                              color="orange"
+                              style={{
+                                marginInline: 2,
+                                backgroundColor: "green",
+                              }}
+                              size="small"
+                              shape="circle"
+                              icon={<PlayCircleOutlined />}
+                              onClick={() => activeProductHandle(e.id)}
+                            />
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title={getAll("Disable_this_service")}>
+                            <Button
+                              type="primary"
+                              color="orange"
+                              style={{
+                                marginInline: 2,
+                                backgroundColor: "orange",
+                              }}
+                              size="small"
+                              shape="circle"
+                              icon={<PauseCircleOutlined />}
+                              onClick={() => disactiveProductHandle(e.id)}
+                            />
+                          </Tooltip>
+                        )}
+                      </>
+                    )}
+                    <Tooltip title={getAll("Service_editing")}>
+                      <Button
+                        type="default"
+                        color="orange"
+                        size="small"
+                        shape="circle"
+                        icon={<EditOutlined />}
+                        onClick={() => routeToCurrentStep(e)}
+                      />
+                    </Tooltip>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           {!postsList && <Loading />}
@@ -324,5 +333,4 @@ const which = (language) => {
 MyProducts.propTypes = {
   setStatusType: PropTypes.func,
   postsList: PropTypes.any,
-  refresh: PropTypes.func,
 };

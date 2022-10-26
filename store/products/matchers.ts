@@ -17,6 +17,7 @@ const isProductActions = isAsyncThunkAction(
 const isProductActionPending = isAllOf(isProductActions, isPending);
 const isProductActionFulfilled = isAllOf(isProductActions, isFulfilled);
 const isProductActionRejected = isAllOf(isProductActions, isRejected);
+
 export const CustomMatchers = {
   isProductActionPending,
   isProductActionFulfilled,

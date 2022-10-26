@@ -1,32 +1,36 @@
 import { ReactElement, useEffect, useState, useRef } from "react";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 import { Field, FieldArray, Form, Formik } from "formik";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import { message } from "antd";
 import API from "../../config";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Link from "next/link";
 import PropTypes from "prop-types";
 
 function Prices({ query }) {
+  const dispatch = useAppDispatch();
+  const getProduct = useAppSelector((state) => state.myProducts.product);
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
-
+  useEffect(() => {
+    if (getProduct.loaded || getProduct.id == query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, [getProduct]);
   const user = useAppSelector((state) => state.user);
 
   const { id } = query;
-  const { data: getProduct }: any = useSWR(`api/my_products/product/${id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
 
   const veriedEmail = user.email_verified;
   async function getProductId() {
     try {
-      await API.get(`api/my_products/product/${id}`);
-      router.push("/add-new");
+      //! check if id not exist
+      // router.push("/add-new");
     } catch (error) {
       if (error.response && error.response.status === 422) {
         router.push("/add-new");
@@ -59,10 +63,9 @@ function Prices({ query }) {
               <Formik
                 isInitialValid={true}
                 initialValues={{
-                  price: getProduct && getProduct.data.price,
-                  duration: getProduct && getProduct.data.duration,
-                  developments:
-                    (getProduct && getProduct.data.developments) || null,
+                  price: getProduct.price,
+                  duration: getProduct.duration,
+                  developments: getProduct.developments || null,
                 }}
                 enableReinitialize={true}
                 onSubmit={async (values) => {
@@ -76,7 +79,7 @@ function Prices({ query }) {
 
                     message.success(getAll("The_update_has"));
                     router.push(
-                      `/edit-product/description?id=${getProduct?.data.id}`
+                      `/edit-product/description?id=${getProduct?.id}`
                     );
                   } catch (error: any) {
                     if (
@@ -114,7 +117,7 @@ function Prices({ query }) {
                           </div>
                           <div
                             className={`timlands-step-item ${
-                              getProduct?.data.current_step < 1 && "pe-none"
+                              getProduct?.current_step < 1 && "pe-none"
                             } active`}
                             ref={stepsView}
                           >
@@ -133,7 +136,7 @@ function Prices({ query }) {
                           </div>
                           <div
                             className={`timlands-step-item ${
-                              getProduct?.data.current_step < 2 && "pe-none"
+                              getProduct?.current_step < 2 && "pe-none"
                             }`}
                           >
                             <h3 className="text">
@@ -151,7 +154,7 @@ function Prices({ query }) {
                           </div>
                           <div
                             className={`timlands-step-item ${
-                              getProduct?.data.current_step < 3 && "pe-none"
+                              getProduct?.current_step < 3 && "pe-none"
                             }`}
                           >
                             <h3 className="text">
@@ -170,7 +173,7 @@ function Prices({ query }) {
                           <div className="timlands-step-item ">
                             <h3 className="text">
                               <Link
-                                href={`/edit-product/complete?id=${getProduct?.data.id}`}
+                                href={`/edit-product/complete?id=${getProduct?.id}`}
                               >
                                 <a>
                                   <span className="icon-circular">

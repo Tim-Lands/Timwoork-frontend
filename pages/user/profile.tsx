@@ -6,46 +6,46 @@ import Image from "next/image";
 import Loading from "@/components/Loading";
 import router from "next/router";
 import API from "../../config";
-import useSWR from "swr";
+import { ProfileActions } from "@/store/profile/profileActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Sidebar from "@/components/Profile/Sidebar";
 import MyProducts from "@/components/Profile/MyProducts";
+import { MyProductsActions } from "@/store/myProducts/myProductsActions";
 import Unauthorized from "@/components/Unauthorized";
-import { useAppSelector } from "../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
 function Profile() {
+  const dispatch = useAppDispatch();
   const profile = useAppSelector((state) => state.profile);
+  const profile_seller = useAppSelector(
+    (state) => state.profile.profile_seller
+  );
   const currency = useAppSelector((state) => state.currency.my);
+  const products = useAppSelector((state) => state.myProducts.products);
+  const [statusType, setStatusType] = useState({});
+  useEffect(() => {
+    if (!products.loaded) {
+      dispatch(MyProductsActions.getMyProducts({ params: statusType }));
+    }
+    if (!profile_seller.loaded) {
+      dispatch(ProfileActions.getProfileSellerData());
+    }
+  }, [products, profile_seller]);
 
   const user = useAppSelector((state) => state.user);
-  const [isTranslate, setIsTranslate] = useState(false);
-  const { data: userInfo }: any = useSWR("api/me");
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
 
   const myLoader = () => {
     return `${profile.avatar_path}`;
   };
-  const [statusType, setStatusType] = useState("");
-  const {
-    data: postsList,
-    isValidating,
-    mutate,
-  }: any = useSWR(`api/my_products${statusType}`);
 
   const [isLoadingSeler, setIsLoadingSeler] = useState(false);
   const beseller = async () => {
     setIsLoadingSeler(true);
     try {
-      const res = await API.post("api/sellers/store", null, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      // Authentication was successful.
-      if (res.status === 200) {
-        setIsLoadingSeler(false);
-        router.push("/user/editSeller");
-      }
+      await API.post("api/sellers/store");
+      setIsLoadingSeler(false);
+      router.push("/user/editSeller");
     } catch (error: any) {
       message.error(getAll("An_unexpected_error"));
       setIsLoadingSeler(false);
@@ -109,7 +109,7 @@ function Profile() {
     return (
       <div className="py-3">
         {!user.isLogged && <Unauthorized />}
-        {profile && userInfo && (
+        {profile && profile_seller.data.id && (
           <>
             <MetaTags
               title={
@@ -187,7 +187,7 @@ function Profile() {
                 />
                 <div className="col-lg-8">
                   <div className="timlands-profile-content">
-                    {!userInfo.user_details.profile.profile_seller && (
+                    {!profile_seller.data.id && (
                       <div className="be-seller-aside mb-2">
                         <h3 className="title">{getAll("Become_a_seller")}</h3>
                         <p className="text">{getAll("Do_you_ant")}</p>
@@ -201,7 +201,7 @@ function Profile() {
                         </button>
                       </div>
                     )}
-                    {userInfo.user_details.profile.profile_seller && (
+                    {profile_seller.data.id && (
                       <>
                         <div className="pb-1 mb-2">
                           <Card
@@ -221,19 +221,9 @@ function Profile() {
                               className={
                                 "user-bro " + (isLess ? "is-less" : "")
                               }
-                              dangerouslySetInnerHTML={
-                                isTranslate
-                                  ? {
-                                      __html:
-                                        userInfo.user_details.profile
-                                          .profile_seller[`bio_${language}`],
-                                    }
-                                  : {
-                                      __html:
-                                        userInfo.user_details.profile
-                                          .profile_seller.bio,
-                                    }
-                              }
+                              dangerouslySetInnerHTML={{
+                                __html: profile_seller.data.bio,
+                              }}
                             />
 
                             {isOverflow && (
@@ -251,19 +241,6 @@ function Profile() {
                                   : getAll("Read_less")}
                               </button>
                             )}
-                            <div className="d-flex justify-content-center">
-                              <button
-                                className="btn butt-sm butt-primary-text flex-center"
-                                onClick={() => setIsTranslate(!isTranslate)}
-                              >
-                                <span className="material-icons material-icons-outlined">
-                                  translate
-                                </span>
-                                {isTranslate
-                                  ? "إعادة الى اللغة الاصلية"
-                                  : "ترجمة"}
-                              </button>
-                            </div>
                           </Card>
                         </div>
                       </>
@@ -354,12 +331,11 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              {userInfo.user_details.profile.profile_seller && (
-                <Spin spinning={isValidating}>
+              {profile_seller.data.id && (
+                <Spin spinning={products.loading}>
                   <MyProducts
-                    refresh={mutate}
                     setStatusType={setStatusType}
-                    postsList={postsList}
+                    postsList={products.data}
                   />
                 </Spin>
               )}

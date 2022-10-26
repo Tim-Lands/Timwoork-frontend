@@ -1,12 +1,12 @@
 import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import API from "../../config";
-import { useAppSelector } from "@/store/hooks";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import router from "next/router";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
-import cookies from "next-cookies";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -15,15 +15,21 @@ import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries"
 import RemoveImageModal from "@/components/removeImageModal";
 import Link from "next/link";
 
-function Medias({ query, stars }) {
+function Medias({ query }) {
+  const dispatch = useAppDispatch();
+  const getProduct = useAppSelector((state) => state.myProducts.product);
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
+  const galleryMedia = getProduct.galleries;
+  useEffect(() => {
+    if (getProduct.loaded || getProduct.id == query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }));
+  }, [getProduct]);
 
   const [validationsErrors, setValidationsErrors]: any = useState({});
-  const [featuredMedia, setFeaturedImages]: any = useState(
-    stars.data.full_path_thumbnail
-  );
-  const [galleryMedia, setGalleryMedia]: any = useState(stars.data.galaries);
+  // const [featuredMedia, setFeaturedImages]: any = useState(
+  //   product.data.full_path_thumbnail
+  // );
   const [isGalleryChanged, setIsGalleryChanged]: any = useState(false);
   const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
@@ -36,7 +42,7 @@ function Medias({ query, stars }) {
   async function getProductId() {
     try {
       // const res: any =
-      await API.get(`api/my_products/product/${query.id}`);
+      //! check if id not exist
       // if (res.status === 200) {
       // }
     } catch (error) {
@@ -78,7 +84,7 @@ function Medias({ query, stars }) {
   }
   const loadFeatureImage: any = async () => {
     const imageFeature = new FormData();
-    imageFeature.append("thumbnail", featuredMedia[0].file);
+    imageFeature.append("thumbnail", getProduct.full_path_thumbnail[0].file);
     imageFeature.append("url_video", url_video);
     const res = await API.post(
       `api/product/${id}/upload-thumbnail-step-four`,
@@ -144,7 +150,10 @@ function Medias({ query, stars }) {
       return;
     }
 
-    if (isFeaturedChanged && !(featuredMedia instanceof Array)) {
+    if (
+      isFeaturedChanged &&
+      !(getProduct.full_path_thumbnail instanceof Array)
+    ) {
       notification.open({
         message: getAll("An_error_occurred"),
         description: getAll("Add_a_profil_picture"),
@@ -233,11 +242,15 @@ function Medias({ query, stars }) {
   const onRemoveSubmit = async (image_id, index) => {
     if (image_id) {
       setRemovedImages([...removedImages, image_id]);
-      setGalleryMedia(galleryMedia.filter((media) => media.id !== image_id));
+      dispatch(
+        MyProductsActions.setGalleries(
+          galleryMedia.filter((media) => media.id !== image_id)
+        )
+      );
     } else {
       const temp_arr = galleryMedia;
       temp_arr.splice(index, 1);
-      setGalleryMedia(temp_arr);
+      dispatch(MyProductsActions.setGalleries(temp_arr));
     }
     setIsRemoveModal(false);
   };
@@ -360,12 +373,18 @@ function Medias({ query, stars }) {
                 <div className="col-xl-10">
                   <FeaturedUploadingGalleries
                     setIsChanged={setIsFeaturedChanged}
-                    setImage={setFeaturedImages}
-                    full_path_thumbnail={featuredMedia || "/seo.png"}
+                    setImage={(e) =>
+                      dispatch(MyProductsActions.setThumbnail(e))
+                    }
+                    full_path_thumbnail={
+                      getProduct.full_path_thumbnail || "/seo.png"
+                    }
                   />
                   <ImagesUploadingGalleries
                     setIsChanged={setIsGalleryChanged}
-                    setGalleryMedia={setGalleryMedia}
+                    setGalleryMedia={(e) => {
+                      dispatch(MyProductsActions.setGalleries(e));
+                    }}
                     galaries={galleryMedia}
                     callback={removeImage}
                   />
@@ -446,19 +465,19 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
 };
 
 export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token || "";
-  const uriString = `api/my_products/product/${ctx.query.id}`;
-  // Fetch data from external API
-  const res = await API.get(uriString, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  // const token = cookies(ctx).token || "";
+  // const uriString = `api/my_products/product/${ctx.query.id}`;
+  // // Fetch data from external API
+  // const res = await API.get(uriString, {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // });
 
-  return { props: { query: ctx.query, stars: res.data } };
+  return { props: { query: ctx.query } };
 }
 export default Medias;
 Medias.propTypes = {
   query: PropTypes.any,
-  stars: PropTypes.any,
+  product: PropTypes.any,
 };

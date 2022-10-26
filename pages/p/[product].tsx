@@ -71,7 +71,6 @@ function Single({ query, product, errorFetch }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [createConversationLoading, setCreateConversationLoading] =
     useState(false);
-  console.log(loading, ProductData);
 
   useEffect(() => {
     if (errorFetch) {
@@ -449,22 +448,20 @@ function Single({ query, product, errorFetch }) {
                 <div className="timwoork-single-content">
                   <div className="timwoork-single-content-body">
                     <Slide {...properties}>
-                      {ProductData.galaries.map((each: any, index) => (
-                        <>
-                          {each.url_video == null ? (
-                            <div key={index} className="each-slide">
-                              <div
-                                className="images-slider"
-                                style={{
-                                  backgroundImage: `url(${APIURL2}${each.path})`,
-                                }}
-                              ></div>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </>
-                      ))}
+                      {ProductData.galaries.map((each: any, index) => {
+                        return each.url_video == null ? (
+                          <div key={index} className="each-slide">
+                            <div
+                              className="images-slider"
+                              style={{
+                                backgroundImage: `url(${APIURL2}${each.path})`,
+                              }}
+                            ></div>
+                          </div>
+                        ) : (
+                          ""
+                        );
+                      })}
                       <div
                         key={ProductData.galaries.length}
                         className="each-slide"
@@ -811,9 +808,8 @@ Single.getLayout = function getLayout(page: any): ReactElement {
 export default Single;
 export async function getServerSideProps({ query }) {
   try {
-    const product = await ProductService.getOne(query.product);
+    const product = await ProductService.getOne(encodeURI(query.product));
 
-    // Pass data to the page via props
     return { props: { product, query, errorFetch: false } };
   } catch (error) {
     return { props: { product: null, query, errorFetch: true } };
