@@ -2,16 +2,15 @@ import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import Comments from "../../components/Comments";
 
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import API from "../../config";
+import Loading from "components/Loading";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import { CartActions } from "../../store/cart/cartActions";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import Loading from "@/components/Loading";
 import {
   Dropdown,
-  message,
   Spin,
   Menu,
   notification,
@@ -23,7 +22,6 @@ import {
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import router from "next/router";
-import NotFound from "@/components/NotFound";
 import { ProductService } from "@/services/productService";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
@@ -45,39 +43,31 @@ const properties = {
     </div>
   ),
 };
-function Single({ query, product, errorFetch }) {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [ProductData, setProductData]: any = useState(false);
-  const isLoading = useAppSelector((state) => state.cart.isLoading);
-  const { getAll, language } = useAppSelector((state) => state.languages);
-  const profile = useAppSelector((state) => state.profile);
-  useEffect(() => {
-    ProductService.getOne(query.product)
-      .then((res) => setProductData(res))
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [query.product]);
+function Single({ id }) {
+  const [ProductData, setProductData]: any = useState({});
 
-  const { value, symbol_native } = useAppSelector((state) => state.currency.my);
+  const dispatch = useAppDispatch();
+  const {
+    user,
+    profile,
+    languages: { getAll },
+    cart: { isLoading },
+    currency: {
+      my: { value, symbol_native },
+    },
+  } = useAppSelector((state) => state);
 
   const [quantutyCount, setQuantutyCount] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [createConversationLoading, setCreateConversationLoading] =
     useState(false);
-
   useEffect(() => {
-    if (errorFetch) {
-      router.push("/404");
-    }
-  }, []);
-
+    ProductService.getOne(encodeURI(id))
+      .then((res) => setProductData(res))
+      .catch(() => {
+        router.push("/404");
+      });
+  }, [id]);
   const showStars = () => {
     const rate = Number(ProductData?.ratings_avg_rating).toPrecision(1) || 0;
     const xAr: any = [
@@ -217,6 +207,7 @@ function Single({ query, product, errorFetch }) {
             developments: theIDs,
           })
         ).unwrap();
+
         const key = `open${Date.now()}`;
         const btn = (
           <button
@@ -238,15 +229,11 @@ function Single({ query, product, errorFetch }) {
           key,
         });
       } catch (error: any) {
-        if (error.msg) {
-          notification.warning({
-            message: getAll("Alert"),
-            description: error.msg,
-            placement: "topLeft",
-          });
-        } else {
-          message.error(getAll("An_unexpected_error"));
-        }
+        notification.error({
+          message: getAll("Alert"),
+          description: error.msg || getAll("An_unexpected_error"),
+          placement: "topLeft",
+        });
       }
     } else {
       router.push("/login");
@@ -330,196 +317,63 @@ function Single({ query, product, errorFetch }) {
       </Text>
     </div>
   );
-
-  return (
-    <>
-      {loading && <Loading />}
-      {error && !loading && <NotFound />}
-      {!errorFetch && (
+  if (!ProductData.id) return <Loading />;
+  else
+    return (
+      <>
         <MetaTags
-          title={product.title}
-          keywords={product.product_tag}
-          metaDescription={product.content}
-          ogDescription={product.content}
-          ogImage={product.full_path_thumbnail}
-          ogUrl={`https://timwoork.com/p/${product.slug}`}
+          title={ProductData.title}
+          keywords={ProductData.product_tag}
+          metaDescription={ProductData.content}
+          ogDescription={ProductData.content}
+          ogImage={ProductData.full_path_thumbnail}
+          ogUrl={`https://timwoork.com/p/${ProductData.slug}`}
         />
-      )}
-      {ProductData && (
-        <div className="timwoork-single">
-          <Modal
-            title={getAll("Create_a_conversation")}
-            visible={isModalVisible}
-            confirmLoading={createConversationLoading}
-            onOk={() => startConversation(messageConv)}
-            cancelText={getAll("Cancel")}
-            okText={getAll("Start_conversation")}
-            onCancel={() => setIsModalVisible(false)}
-          >
-            <textarea
-              name="messageConv"
-              className="timlands-inputs"
-              placeholder={getAll("Write_an_initial")}
-              style={{ height: 180 }}
-              disabled={createConversationLoading}
-              value={messageConv}
-              onChange={(e: any) => setMessageConv(e.target.value)}
-            ></textarea>
-          </Modal>
-          <div
-            className="row"
-            style={{ maxWidth: 1300, marginInline: "auto", marginTop: 10 }}
-          >
-            <div className="col-lg-8">
-              <div className="timwoork-single-post">
-                <div className="timwoork-single-header">
-                  <h1 className="title">{ProductData[whichTitle(language)]}</h1>
+        {ProductData && (
+          <div className="timwoork-single">
+            <Modal
+              title={getAll("Create_a_conversation")}
+              visible={isModalVisible}
+              confirmLoading={createConversationLoading}
+              onOk={() => startConversation(messageConv)}
+              cancelText={getAll("Cancel")}
+              okText={getAll("Start_conversation")}
+              onCancel={() => setIsModalVisible(false)}
+            >
+              <textarea
+                name="messageConv"
+                className="timlands-inputs"
+                placeholder={getAll("Write_an_initial")}
+                style={{ height: 180 }}
+                disabled={createConversationLoading}
+                value={messageConv}
+                onChange={(e: any) => setMessageConv(e.target.value)}
+              ></textarea>
+            </Modal>
+            <div
+              className="row"
+              style={{ maxWidth: 1300, marginInline: "auto", marginTop: 10 }}
+            >
+              <div className="col-lg-8">
+                <div className="timwoork-single-post">
+                  <div className="timwoork-single-header">
+                    <h1 className="title">{ProductData.title}</h1>
 
-                  <div className="timwoork-single-header-meta d-flex">
-                    <ul className="single-header-meta nav ">
-                      <li className="user-item">
-                        <Link
-                          href={`/u/${ProductData.profile_seller.profile.user.username}`}
-                        >
-                          <a className="user-link">
-                            <Image
-                              className="circular-center tiny-size"
-                              src={
-                                ProductData.profile_seller.profile.avatar_path
-                              }
-                              quality={80}
-                              width={32}
-                              height={32}
-                              alt={ProductData.profile_seller.profile.full_name}
-                              placeholder="blur"
-                              blurDataURL={
-                                ProductData.profile_seller.profile.avatar_path
-                              }
-                            />
-                            <span className="pe-2">
-                              {ProductData.profile_seller.profile.full_name}
-                            </span>
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="category-item">
-                        <span className="material-icons material-icons-outlined">
-                          label
-                        </span>
-                        {ProductData.subcategory.category[which(language)]}
-                        <span style={{ marginInline: 5 }}>||</span>
-                        <small>
+                    <div className="timwoork-single-header-meta d-flex">
+                      <ul className="single-header-meta nav ">
+                        <li className="user-item">
                           <Link
-                            href={`/category/${
-                              ProductData && ProductData.subcategory.id
-                            }`}
+                            href={`/u/${ProductData.profile_seller.profile.user?.username}`}
                           >
-                            <a
-                              style={{ marginInline: 5 }}
-                              className="category-link"
-                            >
-                              {ProductData.subcategory[which(language)]}
-                            </a>
-                          </Link>
-                        </small>
-                      </li>
-                    </ul>
-                    <ul className="single-header-meta nav ml-auto">
-                      <li className="rate-stars">
-                        <span className="stars-icons">
-                          {showStars().map((e: any) => (
-                            <span key={e.id}>{e.name}</span>
-                          ))}
-                        </span>
-                        <span className="stars-count">
-                          ({ProductData.ratings_count})
-                        </span>
-                      </li>
-                      <li className="level-item">
-                        <span className="text-level">{getAll("Level")}:</span>
-                        <span className="value-level">
-                          {ProductData.profile_seller.level !== null &&
-                            ProductData.profile_seller.level[which(language)]}
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="timwoork-single-content">
-                  <div className="timwoork-single-content-body">
-                    <Slide {...properties}>
-                      {ProductData.galaries.map((each: any, index) => {
-                        return each.url_video == null ? (
-                          <div key={index} className="each-slide">
-                            <div
-                              className="images-slider"
-                              style={{
-                                backgroundImage: `url(${APIURL2}${each.path})`,
-                              }}
-                            ></div>
-                          </div>
-                        ) : (
-                          ""
-                        );
-                      })}
-                      <div
-                        key={ProductData.galaries.length}
-                        className="each-slide"
-                      >
-                        <div
-                          className="images-slider"
-                          style={{
-                            backgroundImage: `url(${APIURL2}${ProductData.full_path_thumbnail})`,
-                          }}
-                        ></div>
-                      </div>
-                    </Slide>
-                    <div
-                      className="timwoork-single-product-detailts p"
-                      dangerouslySetInnerHTML={{
-                        __html: ProductData[whichContent(language)],
-                      }}
-                    />
-                    {ProductData.product_tag && (
-                      <div className="timwoork-single-tags">
-                        <ul className="single-tags-list">
-                          <li className="title">{getAll("Key_words")}:</li>
-                          {ProductData.product_tag.map((e: any) => (
-                            <li key={e.id}>
-                              <span>{e.name}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {ProductData.video && (
-                      <div className="py-3">
-                        <ReactPlayer
-                          style={{
-                            borderRadius: 6,
-                            overflow: "hidden",
-                            marginTop: 6,
-                          }}
-                          width="100%"
-                          url={ProductData.video.url_video}
-                        />
-                      </div>
-                    )}
-                    {ProductData.profile_seller && (
-                      <div className="timwoork-single-seller-info">
-                        <div className="seller-info-header">
-                          <h4 className="title">{getAll("About_Seller")}</h4>
-                        </div>
-                        <div className="seller-info-container">
-                          <div className="d-flex">
-                            <div className="seller-info-avatar">
+                            <a className="user-link">
                               <Image
-                                className="circular-img huge-size"
+                                className="circular-center tiny-size"
                                 src={
                                   ProductData.profile_seller.profile.avatar_path
                                 }
                                 quality={80}
-                                width={100}
+                                width={32}
+                                height={32}
                                 alt={
                                   ProductData.profile_seller.profile.full_name
                                 }
@@ -527,330 +381,427 @@ function Single({ query, product, errorFetch }) {
                                 blurDataURL={
                                   ProductData.profile_seller.profile.avatar_path
                                 }
-                                height={100}
                               />
+                              <span className="pe-2">
+                                {ProductData.profile_seller.profile.full_name}
+                              </span>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="category-item">
+                          <span className="material-icons material-icons-outlined">
+                            label
+                          </span>
+                          {ProductData.subcategory?.category?.name}
+                          <span style={{ marginInline: 5 }}>||</span>
+                          <small>
+                            <Link
+                              href={`/category/${
+                                ProductData && ProductData.subcategory?.id
+                              }`}
+                            >
+                              <a
+                                style={{ marginInline: 5 }}
+                                className="category-link"
+                              >
+                                {ProductData.subcategory?.name}
+                              </a>
+                            </Link>
+                          </small>
+                        </li>
+                      </ul>
+                      <ul className="single-header-meta nav ml-auto">
+                        <li className="rate-stars">
+                          <span className="stars-icons">
+                            {showStars().map((e: any) => (
+                              <span key={e.id}>{e.name}</span>
+                            ))}
+                          </span>
+                          <span className="stars-count">
+                            ({ProductData.ratings_count})
+                          </span>
+                        </li>
+                        <li className="level-item">
+                          <span className="text-level">{getAll("Level")}:</span>
+                          <span className="value-level">
+                            {ProductData.profile_seller.level !== null &&
+                              ProductData.profile_seller.level.name}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="timwoork-single-content">
+                    <div className="timwoork-single-content-body">
+                      <Slide {...properties}>
+                        {ProductData.galaries.map((each: any, index) => {
+                          return each.url_video == null ? (
+                            <div key={index} className="each-slide">
+                              <div
+                                className="images-slider"
+                                style={{
+                                  backgroundImage: `url(${APIURL2}${each.path})`,
+                                }}
+                              ></div>
                             </div>
-                            <div className="seller-info-content">
-                              <h4 className="user-title">
-                                {ProductData.profile_seller.profile.first_name +
-                                  " " +
-                                  ProductData.profile_seller.profile.last_name}
-                              </h4>
-                              <ul className="user-meta nav">
-                                <li>
-                                  <span className="material-icons material-icons-outlined">
-                                    badge
-                                  </span>{" "}
-                                  {ProductData.profile_seller.level !== null &&
-                                    ProductData.profile_seller.level[
-                                      which(language)
-                                    ]}
-                                </li>
-                                {ProductData.profile_seller.profile.country !==
-                                  null && (
+                          ) : (
+                            ""
+                          );
+                        })}
+                        <div
+                          key={ProductData.galaries.length}
+                          className="each-slide"
+                        >
+                          <div
+                            className="images-slider"
+                            style={{
+                              backgroundImage: `url(${APIURL2}${ProductData.full_path_thumbnail})`,
+                            }}
+                          ></div>
+                        </div>
+                      </Slide>
+                      <div
+                        className="timwoork-single-product-detailts p"
+                        dangerouslySetInnerHTML={{
+                          __html: ProductData.content,
+                        }}
+                      />
+                      {ProductData.product_tag && (
+                        <div className="timwoork-single-tags">
+                          <ul className="single-tags-list">
+                            <li className="title">{getAll("Key_words")}:</li>
+                            {ProductData.product_tag.map((e: any) => (
+                              <li key={e.id}>
+                                <span>{e.name}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {ProductData.video && (
+                        <div className="py-3">
+                          <ReactPlayer
+                            style={{
+                              borderRadius: 6,
+                              overflow: "hidden",
+                              marginTop: 6,
+                            }}
+                            width="100%"
+                            url={ProductData.video.url_video}
+                          />
+                        </div>
+                      )}
+                      {ProductData.profile_seller && (
+                        <div className="timwoork-single-seller-info">
+                          <div className="seller-info-header">
+                            <h4 className="title">{getAll("About_Seller")}</h4>
+                          </div>
+                          <div className="seller-info-container">
+                            <div className="d-flex">
+                              <div className="seller-info-avatar">
+                                <Image
+                                  className="circular-img huge-size"
+                                  src={
+                                    ProductData.profile_seller.profile
+                                      .avatar_path
+                                  }
+                                  quality={80}
+                                  width={100}
+                                  alt={
+                                    ProductData.profile_seller.profile.full_name
+                                  }
+                                  placeholder="blur"
+                                  blurDataURL={
+                                    ProductData.profile_seller.profile
+                                      .avatar_path
+                                  }
+                                  height={100}
+                                />
+                              </div>
+                              <div className="seller-info-content">
+                                <h4 className="user-title">
+                                  {ProductData.profile_seller.profile
+                                    .first_name +
+                                    " " +
+                                    ProductData.profile_seller.profile
+                                      .last_name}
+                                </h4>
+                                <ul className="user-meta nav">
                                   <li>
                                     <span className="material-icons material-icons-outlined">
-                                      place
+                                      badge
                                     </span>{" "}
-                                    الجزائر
+                                    {ProductData.profile_seller.level !==
+                                      null &&
+                                      ProductData.profile_seller.level.name}
                                   </li>
-                                )}
-                              </ul>
-                              <div className="seller-info-butts d-flex">
-                                <Link
-                                  href={
-                                    "/u/" +
-                                    ProductData.profile_seller.profile.user
-                                      .username
-                                  }
-                                >
-                                  <a className="btn butt-primary butt-sm flex-center">
-                                    <i className="material-icons material-icons-outlined">
-                                      account_circle
-                                    </i>{" "}
-                                    {getAll("Profile")}
-                                  </a>
-                                </Link>
-                                {!hasConversation && (
-                                  <button
-                                    className="btn butt-green butt-sm flex-center"
-                                    disabled={createConversationLoading}
-                                    onClick={() =>
-                                      user.isLogged
-                                        ? setIsModalVisible(true)
-                                        : router.push("/login")
+                                  {ProductData.profile_seller.profile
+                                    .country !== null && (
+                                    <li>
+                                      <span className="material-icons material-icons-outlined">
+                                        place
+                                      </span>{" "}
+                                      الجزائر
+                                    </li>
+                                  )}
+                                </ul>
+                                <div className="seller-info-butts d-flex">
+                                  <Link
+                                    href={
+                                      "/u/" +
+                                      ProductData.profile_seller.profile.user
+                                        ?.username
                                     }
                                   >
-                                    <i className="material-icons material-icons-outlined">
-                                      email
-                                    </i>{" "}
-                                    {getAll("Contact_seller_one")}
-                                    {createConversationLoading && (
-                                      <span
-                                        className="spinner-border spinner-border-sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                      ></span>
-                                    )}
-                                  </button>
-                                )}
+                                    <a className="btn butt-primary butt-sm flex-center">
+                                      <i className="material-icons material-icons-outlined">
+                                        account_circle
+                                      </i>{" "}
+                                      {getAll("Profile")}
+                                    </a>
+                                  </Link>
+                                  {!hasConversation && (
+                                    <button
+                                      className="btn butt-green butt-sm flex-center"
+                                      disabled={createConversationLoading}
+                                      onClick={() =>
+                                        user.isLogged
+                                          ? setIsModalVisible(true)
+                                          : router.push("/login")
+                                      }
+                                    >
+                                      <i className="material-icons material-icons-outlined">
+                                        email
+                                      </i>{" "}
+                                      {getAll("Contact_seller_one")}
+                                      {createConversationLoading && (
+                                        <span
+                                          className="spinner-border spinner-border-sm"
+                                          role="status"
+                                          aria-hidden="true"
+                                        ></span>
+                                      )}
+                                    </button>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                    <div className="timwoork-single-comments">
-                      <div className="timwoork-single-comments-inner">
-                        <div className="single-comments-header">
-                          <div className="flex-center">
-                            <h4 className="title">
-                              <span className="material-icons material-icons-outlined">
-                                question_answer
-                              </span>
-                              {getAll("Customer_reviews")}
-                            </h4>
+                      )}
+                      <div className="timwoork-single-comments">
+                        <div className="timwoork-single-comments-inner">
+                          <div className="single-comments-header">
+                            <div className="flex-center">
+                              <h4 className="title">
+                                <span className="material-icons material-icons-outlined">
+                                  question_answer
+                                </span>
+                                {getAll("Customer_reviews")}
+                              </h4>
+                            </div>
                           </div>
-                        </div>
-                        <div className="single-comments-body">
-                          <Comments
-                            canReply={
-                              profile.user_id == ProductData.profile_seller.id
-                            }
-                            comments={ProductData.ratings}
-                          />
-                          {ProductData.ratings.length == 0 && (
-                            <Alert type="primary">
-                              <p className="text">{getAll("There_is_no_2")}</p>
-                            </Alert>
-                          )}
+                          <div className="single-comments-body">
+                            <Comments
+                              canReply={
+                                profile.user_id == ProductData.profile_seller.id
+                              }
+                              comments={ProductData.ratings}
+                            />
+                            {ProductData.ratings.length == 0 && (
+                              <Alert type="primary">
+                                <p className="text">
+                                  {getAll("There_is_no_2")}
+                                </p>
+                              </Alert>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="single-sidebar">
-                <Spin spinning={isLoading}>
-                  <div className="single-panel-aside">
-                    <div className="panel-aside-header">
-                      <ul className="nav top-aside-nav">
-                        <li className="delevr-time me-auto">
-                          <span className="material-icons material-icons-outlined">
-                            timer
-                          </span>{" "}
-                          {getAll("Delivery_term")}: {durationFunc()}
-                        </li>
-                        <li className="cat-post ml-auto">
-                          <Dropdown overlay={menu}>
-                            <span>
-                              <span className="material-icons material-icons-outlined">
-                                share
-                              </span>{" "}
-                              {getAll("Share_service")}
-                            </span>
-                          </Dropdown>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="row mx-auto py-2">
-                      <div className="col-7">
-                        <p className="text-quatity">
-                          {" "}
-                          {getAll("Number_of_purchases")}:
-                          <span className="me-auto">
-                            <Popover
-                              content={noteContent}
-                              trigger="hover"
-                              placement="bottom"
-                            >
-                              <Badge
-                                style={{ color: "#52c41a " }}
-                                count={
-                                  <span
-                                    style={{ color: "#52c41a", fontSize: 16 }}
-                                    className="material-icons"
-                                  >
-                                    info
-                                  </span>
-                                }
-                              />
-                            </Popover>
-                          </span>
-                        </p>
-                      </div>
-                      <div className="col-5">
-                        {/* <input
-                          type="text"
-                          maxLength={2}
-                          onInput={allowOnlyNumericsOrDigits}
-                          pattern="[0-9]*"
-                          value={quantutyCount}
-                          name="quantity_count"
-                          className="timlands-inputs sm"
-                        //onChange={(e: any) => setQuantutyCount(e.target.value)}
-                        /> */}
-                        <select
-                          name="quantity_count"
-                          id="quantity_count"
-                          value={quantutyCount}
-                          className="timlands-inputs sm"
-                          onChange={(e: any) =>
-                            setQuantutyCount(e.target.value)
-                          }
-                        >
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                          <option value={4}>4</option>
-                          <option value={5}>5</option>
-                          <option value={6}>6</option>
-                          <option value={7}>7</option>
-                          <option value={8}>8</option>
-                          <option value={9}>9</option>
-                          <option value={10}>10</option>
-                        </select>
-                      </div>
-                    </div>
-                    {ProductData.developments && (
-                      <div className="panel-aside-body">
-                        <div className="add-devloppers-header">
-                          <h4 className="title">
-                            {getAll("Available_upgrades")}
-                          </h4>
-                        </div>
-                        {ProductData.developments.length == 0 && (
-                          <div className="nothing-note">
-                            <p className="text">{getAll("No_upgrades_in")}</p>
-                          </div>
-                        )}
-                        <ul className="add-devloppers-nav">
-                          {ProductData.developments.map((e: any) => {
-                            return (
-                              <li key={e.id} className="devloppers-item">
-                                <div className="form-check">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id={"flexCheckDefault-id" + e.id}
-                                    value={e.id}
-                                    onChange={handleOnChangeAddID}
-                                    // {..._totalPrice()}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor={"flexCheckDefault-id" + e.id}
-                                  >
-                                    {e[whichTitle(language)]}
-                                    <p className="price-duration">
-                                      {getAll("The_duration_will_cost")}
-                                      {DevdurationFunc(e.duration)}{" "}
-                                      {Math.round(e?.price * value) +
-                                        symbol_native}
-                                    </p>
-                                  </label>
-                                </div>
-                              </li>
-                            );
-                          })}
+              <div className="col-lg-4">
+                <div className="single-sidebar">
+                  <Spin spinning={isLoading}>
+                    <div className="single-panel-aside">
+                      <div className="panel-aside-header">
+                        <ul className="nav top-aside-nav">
+                          <li className="delevr-time me-auto">
+                            <span className="material-icons material-icons-outlined">
+                              timer
+                            </span>{" "}
+                            {getAll("Delivery_term")}: {durationFunc()}
+                          </li>
+                          <li className="cat-post ml-auto">
+                            <Dropdown overlay={menu}>
+                              <span>
+                                <span className="material-icons material-icons-outlined">
+                                  share
+                                </span>{" "}
+                                {getAll("Share_service")}
+                              </span>
+                            </Dropdown>
+                          </li>
                         </ul>
                       </div>
-                    )}
-                    <div className="panel-aside-footer ">
-                      <div className="aside-footer-total-price">
-                        <h4 className="price-total me-auto">
-                          <strong>{getAll("Total")} </strong>{" "}
-                          {Math.round(_totalPrice() * value) + symbol_native}
-                        </h4>
-                        <div className="bayers-count">
-                          <p className="num">
-                            <span className="count">
-                              {ProductData.count_buying}{" "}
-                            </span>
-
-                            <span className="text">
-                              {" "}
-                              {getAll("boght_this")}
+                      <div className="row mx-auto py-2">
+                        <div className="col-7">
+                          <p className="text-quatity">
+                            {" "}
+                            {getAll("Number_of_purchases")}:
+                            <span className="me-auto">
+                              <Popover
+                                content={noteContent}
+                                trigger="hover"
+                                placement="bottom"
+                              >
+                                <Badge
+                                  style={{ color: "#52c41a " }}
+                                  count={
+                                    <span
+                                      style={{ color: "#52c41a", fontSize: 16 }}
+                                      className="material-icons"
+                                    >
+                                      info
+                                    </span>
+                                  }
+                                />
+                              </Popover>
                             </span>
                           </p>
                         </div>
+                        <div className="col-5">
+                          {/* <input
+                      type="text"
+                      maxLength={2}
+                      onInput={allowOnlyNumericsOrDigits}
+                      pattern="[0-9]*"
+                      value={quantutyCount}
+                      name="quantity_count"
+                      className="timlands-inputs sm"
+                    //onChange={(e: any) => setQuantutyCount(e.target.value)}
+                    /> */}
+                          <select
+                            name="quantity_count"
+                            id="quantity_count"
+                            value={quantutyCount}
+                            className="timlands-inputs sm"
+                            onChange={(e: any) =>
+                              setQuantutyCount(e.target.value)
+                            }
+                          >
+                            <option value={1}>1</option>
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
+                            <option value={8}>8</option>
+                            <option value={9}>9</option>
+                            <option value={10}>10</option>
+                          </select>
+                        </div>
                       </div>
-                      <div className="aside-footer-addtocart mt-3">
-                        <button
-                          onClick={addToCart}
-                          className="btn butt-primary butt-lg"
-                        >
-                          <span className="material-icons material-icons-outlined">
-                            add_shopping_cart
-                          </span>
-                          {getAll("Add_to_cart")}
-                        </button>
+                      {ProductData.developments && (
+                        <div className="panel-aside-body">
+                          <div className="add-devloppers-header">
+                            <h4 className="title">
+                              {getAll("Available_upgrades")}
+                            </h4>
+                          </div>
+                          {ProductData.developments.length == 0 && (
+                            <div className="nothing-note">
+                              <p className="text">{getAll("No_upgrades_in")}</p>
+                            </div>
+                          )}
+                          <ul className="add-devloppers-nav">
+                            {ProductData.developments.map((e: any) => {
+                              return (
+                                <li key={e.id} className="devloppers-item">
+                                  <div className="form-check">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      id={"flexCheckDefault-id" + e.id}
+                                      value={e.id}
+                                      onChange={handleOnChangeAddID}
+                                      // {..._totalPrice()}
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor={"flexCheckDefault-id" + e.id}
+                                    >
+                                      {e.title}
+                                      <p className="price-duration">
+                                        {getAll("The_duration_will_cost")}
+                                        {DevdurationFunc(e.duration)}{" "}
+                                        {Math.round(e?.price * value) +
+                                          symbol_native}
+                                      </p>
+                                    </label>
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      )}
+                      <div className="panel-aside-footer ">
+                        <div className="aside-footer-total-price">
+                          <h4 className="price-total me-auto">
+                            <strong>{getAll("Total")} </strong>{" "}
+                            {Math.round(_totalPrice() * value) + symbol_native}
+                          </h4>
+                          <div className="bayers-count">
+                            <p className="num">
+                              <span className="count">
+                                {ProductData.count_buying}{" "}
+                              </span>
+
+                              <span className="text">
+                                {" "}
+                                {getAll("boght_this")}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <div className="aside-footer-addtocart mt-3">
+                          <button
+                            onClick={addToCart}
+                            className="btn butt-primary butt-lg"
+                          >
+                            <span className="material-icons material-icons-outlined">
+                              add_shopping_cart
+                            </span>
+                            {getAll("Add_to_cart")}
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Spin>
+                  </Spin>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      {/*<div className="container">
-        <PostsAside title="خدمات ذات صلة" PostData={testServices} />
-    </div>*/}
-    </>
-  );
+        )}
+        {/*<div className="container">
+    <PostsAside title="خدمات ذات صلة" PostData={testServices} />
+</div>*/}
+      </>
+    );
 }
 Single.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Single;
 export async function getServerSideProps({ query }) {
-  try {
-    const product = await ProductService.getOne(encodeURI(query.product));
+  return { props: { id: query.product } };
+}
 
-    return { props: { product, query, errorFetch: false } };
-  } catch (error) {
-    return { props: { product: null, query, errorFetch: true } };
-  }
-}
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
-function whichContent(language) {
-  switch (language) {
-    default:
-      return "content_en";
-    case "ar":
-      return "content_ar";
-    case "en":
-      return "content_en";
-    case "fr":
-      return "content_fr";
-  }
-}
 Single.propTypes = {
-  query: PropTypes.any,
   product: PropTypes.any,
   errorFetch: PropTypes.bool,
 };

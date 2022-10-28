@@ -30,9 +30,7 @@ function LayoutHome(props: any) {
           })
             .then((r: any) => r.data)
             .catch(() => {
-              // console.log('err')
               if (url == "api/me" && token) {
-                // console.log('cookies is undefined and will be removed')
                 router.reload();
               }
             });

@@ -3,12 +3,12 @@ import { ReactElement, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
+import { CategoriesService } from "@/services/categoriesServices";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
 
 import API from "../../config";
-import useSWR from "swr";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
@@ -62,18 +62,18 @@ function Overview({ query }) {
   const id = query.id;
   const {
     user,
+    myProducts: { product: getProduct },
+    categories: { product: categories },
     languages: { getAll },
   } = useAppSelector((state) => state);
-
-  const getProduct = useAppSelector((state) => state.myProducts.product);
+  const [subCategories, setSubCategories]: any = useState({
+    subCategories: { subcategories: {} },
+  });
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (getProduct.loaded || getProduct.id == query.id) return;
     dispatch(MyProductsActions.getProduct({ id: query.id }));
   }, [getProduct]);
-  const { data: categories, categoriesError }: any = useSWR(
-    "api/get_categories_for_add_product"
-  );
 
   const veriedEmail = user.email_verified;
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -108,9 +108,12 @@ function Overview({ query }) {
       }
     },
   });
-  const { data: subCategories, subCategoriesError }: any = useSWR(
-    `api/get_categories_for_add_product/${formik.values.catetory}`
-  );
+  useEffect(() => {
+    if (!formik.values.catetory) return;
+    CategoriesService.getProductsSubCategories(formik.values.catetory)
+      .then((res) => setSubCategories(res))
+      .catch(() => {});
+  }, [formik.values]);
 
   if (!query) return message.error(getAll("An_error_occurred"));
   async function getProductId() {
@@ -293,7 +296,6 @@ function Overview({ query }) {
                           >
                             {getAll("Choose_the_principal")}
                           </label>
-                          {categoriesError && getAll("An_error_occured")}
                           <select
                             id="input-catetory"
                             name="catetory"
@@ -311,12 +313,11 @@ function Overview({ query }) {
                             {!categories && (
                               <option value="">{getAll("Please_wait")}</option>
                             )}
-                            {categories &&
-                              categories.data.map((e: any) => (
-                                <option value={e.id} key={e.id}>
-                                  {e.name_ar}
-                                </option>
-                              ))}
+                            {categories.map((e: any) => (
+                              <option value={e.id} key={e.id}>
+                                {e.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -346,20 +347,14 @@ function Overview({ query }) {
                               {" "}
                               {getAll("Choose_a_subcategory")}
                             </option>
-                            {subCategoriesError && (
-                              <option value="">
-                                {getAll("An_error_occured")}
-                              </option>
-                            )}
                             {!subCategories && (
                               <option value="">{getAll("Please_wait")}</option>
                             )}
-                            {subCategories &&
-                              subCategories.data.subcategories.map((e: any) => (
-                                <option value={e.id} key={e.id}>
-                                  {e.name_ar}
-                                </option>
-                              ))}
+                            {subCategories?.subcategories?.map((e: any) => (
+                              <option value={e.id} key={e.id}>
+                                {e.name}
+                              </option>
+                            ))}
                           </select>
                           {validationsErrors && validationsErrors.subcategory && (
                             <div style={{ overflow: "hidden" }}>

@@ -38,7 +38,8 @@ const updateProduct = createAsyncThunk(
     const { is_active, id, params, updateProduct } = args;
     try {
       const res = await MyProductsService.updateOne(id, is_active);
-      dispatch(getMyProducts(params));
+
+      dispatch(getMyProducts({ params }));
       updateProduct && dispatch(getProduct({ id }));
       return res;
     } catch (error) {
@@ -48,10 +49,10 @@ const updateProduct = createAsyncThunk(
 );
 const deleteProduct = createAsyncThunk(
   "myProducts/delete/one",
-  async (args: { id: number }, { rejectWithValue }) => {
+  async (args: { id: number; params?: any }, { rejectWithValue, dispatch }) => {
     try {
       const res = await MyProductsService.deleteOne(args.id);
-      getMyProducts({});
+      dispatch(getMyProducts({ params: args.params }));
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);

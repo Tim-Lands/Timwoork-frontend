@@ -1,5 +1,4 @@
 import React from "react";
-import { useAppSelector } from "@/store/hooks";
 import PropTypes from "prop-types";
 import Link from "next/link";
 const placeholders = [
@@ -53,8 +52,6 @@ const placeholders = [
   },
 ];
 function Categories({ categories, onClickCategory, href }) {
-  const language = useAppSelector((state) => state.languages.language);
-
   return (
     <div className="container">
       <div className="app-bill bg-transparent my-5" style={{ borderRadius: 7 }}>
@@ -105,7 +102,7 @@ function Categories({ categories, onClickCategory, href }) {
                         </span>
                       </div>
                       <div className="main-category-item-title">
-                        <h3 className="title">{e[which(language)]}</h3>
+                        <h3 className="title">{e.name}</h3>
                       </div>
                     </div>
                   </div>
@@ -118,18 +115,6 @@ function Categories({ categories, onClickCategory, href }) {
   );
 }
 export default Categories;
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-    case "fr":
-      return "name_fr";
-  }
-};
 Categories.propTypes = {
   categories: PropTypes.any,
   onClickCategory: PropTypes.func,

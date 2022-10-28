@@ -13,7 +13,6 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
   function switchNotifyType(notification) {
     const { type, to, slug, content } = notification?.data;
     const { item_id } = content;
-    console.log(type);
     switch (type) {
       case "order":
         if (to == "seller") {

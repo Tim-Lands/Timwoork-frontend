@@ -7,6 +7,7 @@ import API from "../config";
 import PropTypes from "prop-types";
 import { UserActions } from "../store/user/UserActions";
 import { ProfileActions } from "../store/profile/profileActions";
+import { CategoriesActions } from "../store/categories/categoriesActions";
 import { CartActions } from "../store/cart/cartActions";
 import { CurrencyActions } from "@/store/currency/currencyActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -16,12 +17,14 @@ const App = ({ innerApp }) => {
   const unused = "";
   const user = useAppSelector((state) => state.user);
   const language = useAppSelector((state) => state.languages.language);
+
   const currencies = useAppSelector((state) => state.currency.values);
   const currency = useAppSelector((state) => state.currency.my);
   const dispatch = useAppDispatch();
   let token = Cookies.get("token");
-  if (!token && typeof window !== "undefined")
+  if (!token && typeof window !== "undefined") {
     token = localStorage.getItem("token");
+  }
   useEffect(() => {
     if (user.token) initialize();
     else {
@@ -35,6 +38,7 @@ const App = ({ innerApp }) => {
     dispatch(CurrencyActions.getData());
     dispatch(CurrencyActions.getAllCurrenciesValues());
     dispatch(CartActions.getCartData());
+    dispatch(CategoriesActions.getProductCategories());
   }
   useEffect(() => {
     if (currencies.loaded && currency.code) {
@@ -45,6 +49,12 @@ const App = ({ innerApp }) => {
       );
     }
   }, [currencies, currency.code]);
+  useEffect(() => {
+    dispatch(CategoriesActions.getAllCategories());
+    dispatch(CategoriesActions.getTopCategories());
+    dispatch(CategoriesActions.getTopMainCategories());
+  }, []);
+
   return (
     <SWRConfig
       value={{
@@ -76,9 +86,13 @@ const App = ({ innerApp }) => {
         },
       }}
     >
-      <ConfigProvider direction={`${language === "ar" ? "rtl" : "ltr"}`}>
-        <div className={`${language === "ar" ? "rtl" : "ltr"}`}>{innerApp}</div>
-      </ConfigProvider>
+      {language && (
+        <ConfigProvider direction={`${language === "ar" ? "rtl" : "ltr"}`}>
+          <div className={`${language === "ar" ? "rtl" : "ltr"}`}>
+            {innerApp}
+          </div>
+        </ConfigProvider>
+      )}
     </SWRConfig>
   );
 };

@@ -1,10 +1,7 @@
 import CommentPost from "./CommentPost";
 import PropTypes from "prop-types";
-import { useAppSelector } from "@/store/hooks";
 
 function index({ comments, canReply }) {
-  const language = useAppSelector((state) => state.languages.language);
-
   return (
     <div className="timwoork-single-comments">
       <div className="timwoork-single-comments-inner">
@@ -22,7 +19,7 @@ function index({ comments, canReply }) {
                   author={
                     e.user.profile.first_name + " " + e.user.profile.last_name
                   }
-                  content={e[whichComment(language)]}
+                  content={e.comment}
                   canReply={canReply}
                 />
               ))}
@@ -32,18 +29,6 @@ function index({ comments, canReply }) {
       </div>
     </div>
   );
-}
-function whichComment(language) {
-  switch (language) {
-    default:
-      return "comment_en";
-    case "ar":
-      return "comment_ar";
-    case "en":
-      return "comment_en";
-    case "fr":
-      return "comment_fr";
-  }
 }
 
 export default index;

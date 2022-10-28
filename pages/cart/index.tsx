@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect } from "react";
 import { ProductsActions } from "@/store/products/productActions";
 import Loading from "@/components/Loading";
 import CartPost from "@/components/Cart/CartPost";
-import { message, Spin } from "antd";
+import { message, Spin, notification } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { CartActions } from "../../store/cart/cartActions";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
@@ -94,10 +94,20 @@ function index() {
                           title={e.product_title}
                           price={e.price_product_origine}
                           itemTotal={e.price_product}
-                          deleteItem={(id: number) =>
-                            dispatch(CartActions.deleteProduct({ id }))
-                          }
-                          // updateItem={updateItem}
+                          deleteItem={async (id: number) => {
+                            try {
+                              await dispatch(
+                                CartActions.deleteProduct({ id })
+                              ).unwrap();
+                            } catch (error) {
+                              notification.error({
+                                message: getAll("Alert"),
+                                description:
+                                  error.msg || getAll("An_unexpected_error"),
+                                placement: "topLeft",
+                              });
+                            }
+                          }}
                           developments={e.cart_item_developments}
                         />
                       ))}

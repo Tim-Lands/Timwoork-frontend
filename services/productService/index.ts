@@ -14,13 +14,13 @@ async function getAll({
     min_price && max_price
       ? `${type || ""}&between=price,${min_price},${max_price}`
       : type || "";
-  const res = await API.get("api/filter?" + query, {
+  const res = await API.get("api/new/products?" + query, {
     params,
   });
   return res.data.data;
 }
 async function getOne(id: string) {
-  const res = await API.get(`api/product/${id}`);
+  const res = await API.get(`api/new/product/${id}`);
   return res?.data?.data;
 }
 export const ProductService = { getAll, getOne };

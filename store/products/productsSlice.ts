@@ -63,9 +63,14 @@ export const productsSlice = createSlice({
         state.best_seller.loaded = true;
       }
     );
-    builder.addMatcher(isProductActionPending, (state: productsState) => {
-      state.loading = true;
-    });
+    builder.addMatcher(
+      isProductActionPending,
+      (state: productsState, action) => {
+        if (action.type.split("/")[0] !== "products") return;
+
+        state.loading = true;
+      }
+    );
     builder.addMatcher(
       isAnyOf(isProductActionFulfilled, isProductActionRejected),
       (state: productsState) => {

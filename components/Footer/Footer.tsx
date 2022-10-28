@@ -14,30 +14,22 @@ import { BlogActions } from "@/store/blog/blogActions";
 import { ProductsActions } from "@/store/products/productActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-import API from "../../config";
-
 function Footer() {
   const dispatch = useAppDispatch();
-  const { popular } = useAppSelector((state) => state.products);
-  const footer = useAppSelector((state) => state.blog.footer);
-  const isLogged = useAppSelector((state) => state.user.isLogged);
-  const currency = useAppSelector((state) => state.currency.my);
+  const {
+    products: { popular },
+    blog: { footer },
+    user: { isLogged },
+    currency: { my: currency },
+    categories: { main: categories },
+  } = useAppSelector((state) => state);
   useEffect(() => {
     if (!footer.loaded) dispatch(BlogActions.getFooterData({ per_page: 5 }));
     if (!popular.loaded) dispatch(ProductsActions.getPopularProducts());
   }, [footer, popular]);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    API.get("api/top_main_categories").then((res) =>
-      setCategories(res?.data?.data)
-    );
-  };
   return (
     <>
       {isLanguageVisible && (
@@ -78,7 +70,7 @@ function Footer() {
                 return (
                   <li key={category.id}>
                     <Link href={`/products?categoryID=${category?.id}`}>
-                      {category[which(language)]}
+                      {category.name}
                     </Link>
                   </li>
                 );
@@ -93,9 +85,7 @@ function Footer() {
                 return (
                   <li key={product.id} style={{ width: 350 }}>
                     <Link href={`/p/${product.slug}`}>
-                      <a className="text-truncate">
-                        {product[whichTitle(language)]}
-                      </a>
+                      <a className="text-truncate">{product.title}</a>
                     </Link>
                   </li>
                 );
@@ -235,26 +225,5 @@ function Footer() {
     </>
   );
 }
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
+
 export default Footer;

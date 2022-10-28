@@ -73,6 +73,7 @@ export interface myProductsState {
       slug: string;
       status: number;
     }>;
+    type: string;
     loaded: boolean;
     loading: boolean;
   };
@@ -106,7 +107,7 @@ export const initialState: myProductsState = {
     loaded: false,
     loading: true,
   },
-  products: { data: [], loaded: false, loading: false },
+  products: { data: [], loaded: false, loading: false, type: "" },
 };
 export const myProductsSlice = createSlice({
   name: "myProducts",
@@ -132,6 +133,9 @@ export const myProductsSlice = createSlice({
     },
     setGalleries: (state: myProductsState, action) => {
       state.product.galleries = action.payload;
+    },
+    changeType: (state: myProductsState, action) => {
+      state.products.type = action.payload;
     },
   },
   extraReducers(builder) {
@@ -177,7 +181,7 @@ export const myProductsSlice = createSlice({
       }
     );
     builder.addMatcher(isMyProductPending, (state: myProductsState, action) => {
-      if (action.type.split("/")[0] == "myProducts") return;
+      if (action.type.split("/")[0] !== "myProducts") return;
 
       state.product.loading = true;
     });

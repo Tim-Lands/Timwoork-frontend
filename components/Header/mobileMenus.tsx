@@ -18,7 +18,7 @@ import Link from "next/link";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 const MobileMenu = ({ postsList }) => {
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
 
   const [visible, setVisible] = useState(false);
@@ -210,7 +210,7 @@ const MobileMenu = ({ postsList }) => {
                       borderBottom: 0,
                     }}
                   >
-                    <Panel header={post[which(language)]} key={post.id}>
+                    <Panel header={post.name} key={post.id}>
                       {post.subcategories.map((category) => {
                         return (
                           <Link
@@ -221,7 +221,7 @@ const MobileMenu = ({ postsList }) => {
                               onClick={() => setVisible(false)}
                               className="sideSubCat"
                             >
-                              {category[which(language)]}
+                              {category.name}
                             </a>
                           </Link>
                         );
@@ -273,16 +273,7 @@ function whichSize(width) {
   else if (width < 350) return "90%";
   else return "80%";
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
+
 MobileMenu.propTypes = {
   postsList: PropTypes.array,
 };

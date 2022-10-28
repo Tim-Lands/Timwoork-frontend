@@ -82,7 +82,7 @@ export const walletSlice = createSlice({
       }
     );
     builder.addMatcher(isWalletActionPending, (state, action) => {
-      if (action.type.split("/")[0] == "wallet") return;
+      if (action.type.split("/")[0] !== "wallet") return;
 
       state.loading = true;
     });

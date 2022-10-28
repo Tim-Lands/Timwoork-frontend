@@ -31,9 +31,12 @@ import { darken } from "@mui/material";
 import { PRIMARY } from "../../styles/variables";
 function Navbar({ dark = false, MoreNav = <></> }) {
   const cartLength = useAppSelector((state) => state.cart.itemsLength);
-  const user = useAppSelector((state) => state.user);
-  const profile = useAppSelector((state) => state.profile);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const {
+    languages: { getAll, language },
+    user,
+    profile,
+    categories: { all: postsList },
+  } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
@@ -44,7 +47,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
 
   const [visible, setVisible] = useState(true);
   const [notifications, setNotifications] = useState([]);
-  const [postsList, setPostsList]: any = useState([]);
   const [messages, setMessages] = useState([]);
 
   const [sentinel, setSentinel] = useState({ mount: true });
@@ -92,11 +94,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   useOutsideAlerter(profileRef, hideProfile, profileBtn);
 
   useEffect(() => {
-    API.get(`api/categories`)
-      .then((res) => {
-        setPostsList(res.data.data);
-      })
-      .catch(() => {});
     if (user.token) fetchData();
   }, [user.token]);
   useEffect(() => {
@@ -207,7 +204,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         }
       });
       notificationPusher?.bind("notification.sent", (data) => {
-        console.log(data);
         const today = new Date();
         const date = `${today.getFullYear()}_${
           today.getMonth() + 1

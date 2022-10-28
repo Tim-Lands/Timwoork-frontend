@@ -1,9 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
-import { Badge, Result, Spin } from "antd";
-import React, { ReactElement, useState, useEffect } from "react";
+import { Badge, Result } from "antd";
+import React, { ReactElement, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import router from "next/router";
-import { MyProductsActions } from "@/store/myProducts/myProductsActions";
 import { ProfileActions } from "@/store/profile/profileActions";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,16 +18,10 @@ function index() {
 
   const dispatch = useAppDispatch();
 
-  const [statusType, setStatusType] = useState({});
-  const products = useAppSelector((state) => state.myProducts.products);
   useEffect(() => {
-    if (!products.loaded) {
-      dispatch(MyProductsActions.getMyProducts({ params: statusType }));
-    }
-    if (!profile_seller.loaded) {
-      dispatch(ProfileActions.getProfileSellerData());
-    }
-  }, [products, profile_seller]);
+    if (profile_seller.loaded) return;
+    dispatch(ProfileActions.getProfileSellerData());
+  }, [profile_seller]);
 
   const user = useAppSelector((state) => state.user);
   const profile = useAppSelector((state) => state.profile);
@@ -109,14 +102,7 @@ function index() {
                 </p>
               </div>
             </div>
-            <Spin spinning={products.loading}>
-              {veriedEmail && (
-                <MyProducts
-                  setStatusType={setStatusType}
-                  postsList={products.data}
-                />
-              )}
-            </Spin>
+            {veriedEmail && <MyProducts />}
           </div>
         </div>
       </>

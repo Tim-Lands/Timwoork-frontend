@@ -5,7 +5,6 @@ import VideoAside from "@/components/VideoSection/VideoAside";
 import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { CategoriesService } from "@/services/categoriesServices";
 import Link from "next/link";
 import router from "next/router";
 import Categories from "@/components/Categories";
@@ -21,9 +20,12 @@ import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import { ProductsActions } from "@/store/products/productActions";
 import PostInner from "@/components/Post/PostInner";
-function index({ categories }) {
+function index() {
   const dispatch = useAppDispatch();
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const {
+    categories: { all: categories },
+    languages: { getAll, language },
+  } = useAppSelector((state) => state);
   const { popular, best_seller, latest } = useAppSelector(
     (state) => state.products
   );
@@ -32,7 +34,6 @@ function index({ categories }) {
     if (!latest.loaded) dispatch(ProductsActions.getLatestProducts());
     if (!best_seller.loaded) dispatch(ProductsActions.getSellingProducts());
   }, [popular, latest, best_seller]);
-
   const menu = (
     <Menu>
       <Menu.Item>
@@ -143,7 +144,7 @@ function index({ categories }) {
                   return (
                     <SwiperSlide key={e.id}>
                       <PostInner
-                        title={e[which(language)]}
+                        title={e.title}
                         author={
                           e.profile_seller &&
                           e.profile_seller.profile.first_name +
@@ -153,7 +154,7 @@ function index({ categories }) {
                         rate={e.ratings_avg_rating}
                         username={
                           e.profile_seller &&
-                          e.profile_seller.profile.user.username
+                          e.profile_seller.profile.user?.username
                         }
                         price={e.price}
                         slug={e.slug}
@@ -213,7 +214,7 @@ function index({ categories }) {
                 {best_seller.data.map((e: any) => (
                   <SwiperSlide key={e.id}>
                     <PostInner
-                      title={e[which(language)]}
+                      title={e.title}
                       author={
                         e.profile_seller &&
                         e.profile_seller.profile.first_name +
@@ -223,7 +224,7 @@ function index({ categories }) {
                       rate={e.ratings_avg_rating}
                       username={
                         e.profile_seller &&
-                        e.profile_seller.profile.user.username
+                        e.profile_seller.profile.user?.username
                       }
                       price={e.price}
                       slug={e.slug}
@@ -279,7 +280,7 @@ function index({ categories }) {
                 {popular.data.map((e: any) => (
                   <SwiperSlide key={e.id}>
                     <PostInner
-                      title={e[which(language)]}
+                      title={e.title}
                       author={
                         e.profile_seller &&
                         e.profile_seller.profile.first_name +
@@ -289,7 +290,7 @@ function index({ categories }) {
                       rate={e.ratings_avg_rating}
                       username={
                         e.profile_seller &&
-                        e.profile_seller.profile.user.username
+                        e.profile_seller.profile.user?.username
                       }
                       price={e.price}
                       slug={e.slug}
@@ -330,35 +331,9 @@ function index({ categories }) {
     </>
   );
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
+
 index.getLayout = function getLayout(page: any): ReactElement {
   return <LayoutHome dark={true}>{page}</LayoutHome>;
 };
 
-export async function getServerSideProps() {
-  try {
-    const categories = await CategoriesService.getAll();
-
-    // Pass data to the page via props
-    return {
-      props: {
-        categories,
-        errorFetch: false,
-      },
-    };
-  } catch (error) {
-    return { props: { errorFetch: true } };
-  }
-}
 export default index;

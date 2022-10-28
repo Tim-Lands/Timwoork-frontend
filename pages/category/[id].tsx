@@ -12,7 +12,7 @@ function index({ query }) {
   const [subCategories, setSubCategories]: any = useState(false);
   const [popularProducts, setPopularProducts]: any = useState(false);
   const [loading, setLoading] = useState(true);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
 
   useEffect(() => {
     CategoriesService.getProductsSub(query.id)
@@ -29,9 +29,9 @@ function index({ query }) {
   return (
     <div className="row py-4 justify-content-center">
       <MetaTags
-        title={subCategories && subCategories[which(language)]}
-        metaDescription={subCategories && subCategories[which(language)]}
-        ogDescription={subCategories && subCategories[which(language)]}
+        title={subCategories && subCategories.name}
+        metaDescription={subCategories && subCategories.name}
+        ogDescription={subCategories && subCategories.name}
       />
       <div className="col-md-10 ">
         <div
@@ -45,7 +45,7 @@ function index({ query }) {
                   {subCategories.icon}
                 </span>
                 <span style={{ fontWeight: 200 }}> {getAll("Services")}</span>{" "}
-                <strong> {subCategories[which(language)]} </strong>
+                <strong> {subCategories.name} </strong>
               </h3>
             </div>
           )}
@@ -102,16 +102,7 @@ index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default index;
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
+
 index.propTypes = {
   query: PropTypes.any,
 };

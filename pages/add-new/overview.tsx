@@ -63,8 +63,12 @@ let testTime;
 
 function Overview({ query }) {
   const dispatch = useAppDispatch();
-  const [categories, setCategories] = useState([]);
   const getProduct = useAppSelector((state) => state.myProducts.product);
+  const {
+    user,
+    categories: { product: categories },
+    languages: { language, getAll },
+  } = useAppSelector((state) => state);
   useEffect(() => {
     if (getProduct.loaded && getProduct.id == query.id) return;
 
@@ -88,18 +92,9 @@ function Overview({ query }) {
   });
   const [userLang, setUserLang] = useState();
   const id = query.id;
-  const {
-    user,
-    languages: { language, getAll },
-  } = useAppSelector((state) => state);
 
   const timeoutFunc: any = useRef();
 
-  useEffect(() => {
-    CategoriesService.getProductsCategories()
-      .then((res) => setCategories(res))
-      .catch(() => {});
-  }, []);
   useEffect(() => {
     if (!getProduct?.subcategory?.category?.id) return;
     CategoriesService.getProductsSubCategories(
@@ -380,7 +375,7 @@ function Overview({ query }) {
                             )}
                             {categories.map((e: any) => (
                               <option value={e.id} key={e.id}>
-                                {e[which(language)]}
+                                {e.name}
                               </option>
                             ))}
                           </select>
@@ -417,7 +412,7 @@ function Overview({ query }) {
                             )}
                             {subCategories?.subcategories?.map((e: any) => (
                               <option value={e.id} key={e.id}>
-                                {e[which(language)]}
+                                {e.name}
                               </option>
                             ))}
                           </select>
@@ -502,18 +497,7 @@ Overview.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Overview;
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-    case "fr":
-      return "name_fr";
-  }
-};
+
 Overview.getInitialProps = ({ query }) => {
   return { query };
 };

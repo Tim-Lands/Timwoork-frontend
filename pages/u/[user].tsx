@@ -11,13 +11,12 @@ import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import PostInner from "@/components/Post/PostInner";
 
-const User = ({ query, profile }) => {
+const User = ({ query, profile: User }) => {
   const {
     user,
-    languages: { getAll, language },
+    languages: { getAll },
   } = useAppSelector((state) => state);
   const router = useRouter();
-  const User = profile;
   const userId = User && User?.id;
   const currentUserId = user.id;
   const APIURL = "";
@@ -38,20 +37,21 @@ const User = ({ query, profile }) => {
       [detectHeight, detectHeight.current];
     if (userId && userId == currentUserId) router.push("/user/profile");
   }, [detectHeight]);
+
   return (
     <div className="py-3 mt-3">
       <MetaTags
-        title={profile.profile.full_name}
+        title={User.profile.full_name}
         metaDescription={
-          profile.profile.profile_seller && profile.profile.profile_seller.bio
+          User.profile.profile_seller && User.profile.profile_seller.bio
         }
         ogDescription={
-          profile.profile.profile_seller && profile.profile.profile_seller.bio
+          User.profile.profile_seller && User.profile.profile_seller.bio
         }
-        ogImage={profile.profile.avatar_path}
-        ogUrl={`https://timwoork.com/u/${profile.username}`}
+        ogImage={User.profile.avatar_path}
+        ogUrl={`https://timwoork.com/u/${User.username}`}
       />
-      {!profile && <Loading />}
+      {!User && <Loading />}
       {User.profile && (
         <>
           <div className="container">
@@ -91,7 +91,7 @@ const User = ({ query, profile }) => {
                       {User &&
                         User.profile &&
                         User.profile.level &&
-                        User.profile.level[which(language)]}{" "}
+                        User.profile.level.name}{" "}
                     </span>
                   </p>
                 </div>
@@ -129,9 +129,7 @@ const User = ({ query, profile }) => {
                             ref={detectHeight}
                             className={"user-bro " + (isLess ? "is-less" : "")}
                             dangerouslySetInnerHTML={{
-                              __html:
-                                User &&
-                                User.profile.profile_seller[whichBio(language)],
+                              __html: User && User.profile.profile_seller.bio,
                             }}
                           />
                           {isOverflow && (
@@ -185,7 +183,7 @@ const User = ({ query, profile }) => {
                           <div className="content-text-item">
                             <h3 className="text-label">{getAll("Country")}</h3>
                             <p className="text-value">
-                              {User.profile.country[which(language)]}
+                              {User.profile.country.name}
                             </p>
                           </div>
                         </div>
@@ -230,7 +228,7 @@ const User = ({ query, profile }) => {
                           <PostInner
                             avatar={`/avatar.png`}
                             size="small"
-                            title={e[whichTitle(language)]}
+                            title={e.title}
                             author={
                               e.profile_seller &&
                               e.profile_seller.profile.first_name +
@@ -273,36 +271,7 @@ export async function getServerSideProps({ query }) {
     return { props: { stars: null, query, errorFetch: true } };
   }
 }
-const whichTitle = (language) => {
-  switch (language) {
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
-const which = (language) => {
-  switch (language) {
-    case "fr":
-      return "name_fr";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
-const whichBio = (language) => {
-  switch (language) {
-    case "ar":
-      return "bio_ar";
-    case "en":
-      return "bio_en";
-    case "fr":
-      return "bio_fr";
-  }
-};
+
 User.propTypes = {
   query: PropTypes.any,
   profile: PropTypes.any,

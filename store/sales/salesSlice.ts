@@ -104,7 +104,7 @@ export const salesSlice = createSlice({
       }
     );
     builder.addMatcher(isSalesPending, (state, action) => {
-      if (action.type.split("/")[0] == "sales") return;
+      if (action.type.split("/")[0] !== "sales") return;
       state.sales.loading = true;
     });
     builder.addMatcher(isAnyOf(isSalesFulfilled, isSalesRejected), (state) => {

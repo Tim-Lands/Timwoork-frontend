@@ -9,9 +9,7 @@ export interface languagesState {
 export const initialState: languagesState = {
   language: Cookies.get("lang")
     ? Cookies.get("lang")
-    : typeof window === "undefined"
-    ? "ar"
-    : localStorage.getItem("lang"),
+    : typeof window !== "undefined" && localStorage.getItem("lang"),
   getAll: (name: string) => {
     if (translates[name]) return translates[name][initialState.language];
     else {

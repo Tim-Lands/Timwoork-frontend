@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/store/hooks";
 
-import API from "../../config";
 import HeroSearchContent from "./HeroSearchContent";
 
 function HeroContainer() {
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const {
+    languages: { getAll },
+    categories: { top: topCategories },
+  } = useAppSelector((state) => state);
 
-  const [topCategories, setTopCaegories] = useState([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    const res = await API.get("api/top_categories");
-    setTopCaegories(res?.data);
-  };
   return (
     <div className="hero-container">
       <div className="inner">
@@ -29,7 +22,7 @@ function HeroContainer() {
                 <Link
                   href={`/products?categoryID=${category.parent_id}&subcategoryID=${category.id}`}
                 >
-                  <a className="">{category[which(language)]}</a>
+                  <a className="">{category.name}</a>
                 </Link>
               </li>
             ))}
@@ -39,14 +32,5 @@ function HeroContainer() {
     </div>
   );
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
+
 export default HeroContainer;

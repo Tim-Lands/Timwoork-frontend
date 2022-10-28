@@ -157,7 +157,7 @@ export const profileSlice = createSlice({
       }
     );
     builder.addMatcher(isProfileActionPending, (state, action) => {
-      if (action.type.split("/")[0] == "profile") return;
+      if (action.type.split("/")[0] !== "profile") return;
       state.loading = true;
     });
     builder.addMatcher(

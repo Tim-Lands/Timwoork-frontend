@@ -12,6 +12,7 @@ import products from "./products/productsSlice";
 import purchase from "./purchases/purchasesSlice";
 import myProducts from "./myProducts/myProductsSlice";
 import mySales from "./sales/salesSlice";
+import categories from "./categories/categoriesSlice";
 export const store = configureStore({
   reducer: {
     user,
@@ -27,6 +28,7 @@ export const store = configureStore({
     purchase,
     myProducts,
     mySales,
+    categories,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

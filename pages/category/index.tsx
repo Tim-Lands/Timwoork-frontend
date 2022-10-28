@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { CategoriesService } from "@/services/categoriesServices";
+import React, { ReactElement } from "react";
 import { useAppSelector } from "@/store/hooks";
 
 import Layout from "@/components/Layout/HomeLayout";
@@ -8,22 +7,10 @@ import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 
 function index() {
-  const { getAll, language } = useAppSelector((state) => state.languages);
-  const [categories, setCategories]: any = useState([]);
-
-  useEffect(() => {
-    CategoriesService.getAllWithSub()
-      .then((res) =>
-        setCategories(
-          res?.sort((a, b) => {
-            if (a.subcategories.length < b.subcategories.length) {
-              return -1;
-            }
-          })
-        )
-      )
-      .catch(() => {});
-  }, []);
+  const {
+    languages: { getAll },
+    categories: { all: categories, loading },
+  } = useAppSelector((state) => state);
 
   return (
     <div className="row py-4 d-flex justify-content-center align-items-center">
@@ -38,9 +25,9 @@ function index() {
             <h3 className="title">{getAll("Categories")}</h3>
           </div>
           <div className="app-bill-content">
-            {!categories && <Loading />}
+            {loading && <Loading />}
             <div className="row">
-              {categories?.map((e: any) => (
+              {categories.map((e: any) => (
                 <div className="col-md-3" key={e.id}>
                   <div className="category-item">
                     <div className="category-item-title">
@@ -49,7 +36,7 @@ function index() {
                           className={"material-icons material-icons-outlined"}
                         >
                           {e.icon}
-                        </span>{" "}
+                        </span>
                         {e.name_ar}
                       </h3>
                     </div>
@@ -61,7 +48,7 @@ function index() {
                               <Link
                                 href={`products?categoryID=${item.parent_id}&subcategoryID=${item.id}`}
                               >
-                                {item[which(language)]}
+                                {item.name}
                               </Link>
                             </li>
                           );
@@ -77,16 +64,6 @@ function index() {
     </div>
   );
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

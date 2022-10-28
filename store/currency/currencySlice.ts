@@ -150,7 +150,7 @@ export const currencySlice = createSlice({
     builder.addMatcher(
       isCurrenciesValuesPending,
       (state: currencyState, action) => {
-        if (action.type.split("/")[0] == "currency") return;
+        if (action.type.split("/")[0] !== "currency") return;
         state.values.loading = true;
       }
     );

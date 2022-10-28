@@ -58,17 +58,20 @@ const MySelect = (props: any) => {
     </div>
   );
 };
-function Category({ products, categories, url_params }) {
+function Category({ url_params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSettings, setIsSettings] = useState(false);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const {
+    languages: { getAll },
+    categories: { all: categories },
+  } = useAppSelector((state) => state);
 
   const [size, setSize] = useState(4);
   const { Panel } = Collapse;
 
   const [paginationSize, setPaginationSize] = useState(8);
 
-  const [getProducts, setGetProducts]: any = useState(products);
+  const [getProducts, setGetProducts]: any = useState(false);
   const [sentinel, setSentinel]: any = useState({ mount: true });
   const [subcategories, setSubCategories]: any = useState({});
   const [subCategoryDisplay, setSubCategoryDisplay]: any = useState({});
@@ -79,8 +82,22 @@ function Category({ products, categories, url_params }) {
     popular: getAll("Most_popular_services"),
   };
   useEffect(() => {
-    setGetProducts(products);
-  }, [products]);
+    ProductService.getAll({
+      type: url_params.type,
+      params: {
+        paginate: 12,
+        page: url_params.pageNumber,
+        category: url_params.categoryID,
+        subcategories: url_params.subcategoryID,
+        query: url_params.query,
+        type: url_params.type,
+      },
+    })
+      .then((res) => setGetProducts(res))
+      .catch(() => {
+        router.push("/404");
+      });
+  }, [url_params]);
 
   useEffect(() => {
     fetchData();
@@ -167,6 +184,7 @@ function Category({ products, categories, url_params }) {
         min_price: minprice,
         max_price: maxprice,
       });
+
       setGetProducts(res);
       setIsLoading(false);
     } catch (error) {
@@ -451,7 +469,7 @@ function Category({ products, categories, url_params }) {
                               <span className="material-icons material-icons-outlined">
                                 {e.icon}
                               </span>
-                              {e[which(language)]}
+                              {e.name}
                             </span>
                           </div>
 
@@ -478,7 +496,7 @@ function Category({ products, categories, url_params }) {
                                 <Link
                                   href={`/products?categoryID=${e.id}&subcategoryID=${sub_category.id}`}
                                 >
-                                  <a>{sub_category[which(language)]}</a>
+                                  <a>{sub_category.name}</a>
                                 </Link>
                               </div>
                             ))}
@@ -935,11 +953,13 @@ function Category({ products, categories, url_params }) {
                 )}
               </div>
             </div>
-            <FilterContent
-              products={getProducts && getProducts.data}
-              isLoading={isLoading}
-              size={size}
-            />
+            {getProducts?.data && (
+              <FilterContent
+                products={getProducts && getProducts.data}
+                isLoading={isLoading}
+                size={size}
+              />
+            )}
             {getProducts && getProducts.data == null && (
               <Result
                 status="404"
@@ -978,50 +998,19 @@ function Category({ products, categories, url_params }) {
 }
 export async function getServerSideProps(context) {
   const { query } = context;
-  try {
-    const query_params = {
-      paginate: 12,
-      page: query.pageNumber,
-      category: query.categoryID,
-      subcategories: query.subcategoryID,
-      query: query.query,
-    };
 
-    const [products, categories] = await Promise.all([
-      ProductService.getAll({ type: query.type, params: query_params }),
-      CategoriesService.getAll(),
-    ]);
-
-    return {
-      props: {
-        products: products,
-        categories,
-        url_params: query,
-        errorFetch: false,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        errorFetch: true,
-      },
-    };
-  }
+  return {
+    props: {
+      url_params: query,
+    },
+  };
 }
+
 Category.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Category;
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
+
 Category.propTypes = {
   query: PropTypes.any,
   products: PropTypes.any,

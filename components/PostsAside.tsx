@@ -20,7 +20,7 @@ function PostsAside({
   linkURL,
   more,
 }): ReactElement {
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
   if (isError)
     return (
       <div className="posts-aside error">
@@ -124,7 +124,7 @@ function PostsAside({
                 <SwiperSlide key={e.id}>
                   <div className="post-resposive-with-desktop">
                     <PostInner
-                      title={e[whichTitle(language)]}
+                      title={e.title}
                       avatar={
                         e.profile_seller && e.profile_seller.profile.avatar_path
                       }
@@ -137,7 +137,7 @@ function PostsAside({
                       rate={e.ratings_avg_rating}
                       username={
                         e.profile_seller &&
-                        e.profile_seller.profile.user.username
+                        e.profile_seller.profile.user?.username
                       }
                       price={e.price}
                       slug={e.slug}
@@ -152,7 +152,7 @@ function PostsAside({
                         e.profile_seller && e.profile_seller.profile.avatar_path
                       }
                       title={e.title}
-                      level={e.profile_seller && e.profile_seller.level.name_ar}
+                      level={e.profile_seller && e.profile_seller.level?.name}
                       author={
                         e.profile_seller &&
                         e.profile_seller.profile.first_name +
@@ -162,7 +162,7 @@ function PostsAside({
                       rate={e.ratings_avg_rating}
                       username={
                         e.profile_seller &&
-                        e.profile_seller.profile.user.username
+                        e.profile_seller.profile.user?.username
                       }
                       price={e.price}
                       slug={e.slug}
@@ -179,18 +179,7 @@ function PostsAside({
     </>
   );
 }
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
+
 export default PostsAside;
 PostsAside.propTypes = {
   title: PropTypes.string,

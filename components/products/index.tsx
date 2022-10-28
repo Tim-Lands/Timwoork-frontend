@@ -5,7 +5,7 @@ import Post from "../Post/Post";
 import { useAppSelector } from "@/store/hooks";
 
 function index({ products, isError, isLoading, size }): ReactElement {
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
 
   if (isError) message.error(getAll("An_error_occurred_while"));
   if (isLoading)
@@ -68,10 +68,8 @@ function index({ products, isError, isLoading, size }): ReactElement {
             <Post
               size="small"
               avatar={e.profile_seller && e.profile_seller.profile.avatar_path}
-              title={e[whichTitle(language)]}
-              level={
-                e.profile_seller && e.profile_seller.level[which(language)]
-              }
+              title={e.title}
+              level={e.profile_seller && e.profile_seller.level?.name}
               author={
                 e.profile_seller &&
                 e.profile_seller.profile.first_name +
@@ -82,7 +80,7 @@ function index({ products, isError, isLoading, size }): ReactElement {
               price={e.price}
               slug={e.slug}
               username={
-                e.profile_seller && e.profile_seller.profile.user.username
+                e.profile_seller && e.profile_seller.profile.user?.username
               }
               thumbnail={e.full_path_thumbnail}
               buyers={e.count_buying}
@@ -100,30 +98,7 @@ function index({ products, isError, isLoading, size }): ReactElement {
     </>
   );
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-    case "fr":
-      return "name_fr";
-  }
-};
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
+
 export default index;
 index.propTypes = {
   products: PropTypes.array,

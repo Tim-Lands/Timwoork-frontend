@@ -115,7 +115,7 @@ export const cartSlice = createSlice({
       }
     );
     builder.addMatcher(isCartActionPending, (state: cartState, action) => {
-      if (action.type.split("/")[0] == "cart") return;
+      if (action.type.split("/")[0] !== "cart") return;
 
       state.isLoading = true;
     });

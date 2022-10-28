@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout/HomeLayout";
-import { Result, message, Card, Spin } from "antd";
+import { Result, message, Card } from "antd";
 import React, { createRef, ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +10,6 @@ import { ProfileActions } from "@/store/profile/profileActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Sidebar from "@/components/Profile/Sidebar";
 import MyProducts from "@/components/Profile/MyProducts";
-import { MyProductsActions } from "@/store/myProducts/myProductsActions";
 import Unauthorized from "@/components/Unauthorized";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
@@ -21,16 +20,10 @@ function Profile() {
     (state) => state.profile.profile_seller
   );
   const currency = useAppSelector((state) => state.currency.my);
-  const products = useAppSelector((state) => state.myProducts.products);
-  const [statusType, setStatusType] = useState({});
   useEffect(() => {
-    if (!products.loaded) {
-      dispatch(MyProductsActions.getMyProducts({ params: statusType }));
-    }
-    if (!profile_seller.loaded) {
-      dispatch(ProfileActions.getProfileSellerData());
-    }
-  }, [products, profile_seller]);
+    if (profile_seller.loaded) return;
+    dispatch(ProfileActions.getProfileSellerData());
+  }, [profile_seller]);
 
   const user = useAppSelector((state) => state.user);
   const { getAll } = useAppSelector((state) => state.languages);
@@ -331,14 +324,7 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              {profile_seller.data.id && (
-                <Spin spinning={products.loading}>
-                  <MyProducts
-                    setStatusType={setStatusType}
-                    postsList={products.data}
-                  />
-                </Spin>
-              )}
+              {profile_seller.data.id && <MyProducts />}
             </div>
           </>
         )}
