@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { ConfigProvider } from "antd";
 import { SWRConfig } from "swr";
 import router from "next/router";
-import Cookies from "js-cookie";
-
+import Cookies from "js-cookie"; // import {
+import { MessageOutlined, BellOutlined } from "@ant-design/icons";
+import moment from "moment";
+import { notification } from "antd";
 import API from "../config";
 import PropTypes from "prop-types";
 import { UserActions } from "../store/user/UserActions";
@@ -23,7 +25,7 @@ const App = ({ innerApp }) => {
   const dispatch = useAppDispatch();
   const {
     user,
-    languages: { language },
+    languages: { language, getAll },
     currency: { my: currency, values: currencies },
     chat: { all: chats, one: singleChat },
     notifications: { all: notifications },
@@ -95,18 +97,115 @@ const App = ({ innerApp }) => {
           ChatActions.getSingleChat({ id: data.message.conversation_id })
         );
       }
+      notification.open({
+        message: getAll("You_havea"),
+        description: (
+          <div className="msg-notification">
+            <a
+              style={{ fontWeight: 300 }}
+              onClick={() =>
+                router.push(`/conversations/${data.message.conversation.id}`)
+              }
+            >
+              <p className="meta">
+                {moment(data.message.created_at).fromNow()}
+              </p>
+              <h4 className="title">{data.message.message}</h4>
+            </a>
+            <p className="text">
+              <small className="ml-1">
+                <strong>{getAll("From") + " "}</strong>
+              </small>
+              <a
+                style={{ color: "#108ee9" }}
+                onClick={() =>
+                  router.push(
+                    data.message.user.username
+                      ? `/u/${data.message.user.username}`
+                      : "/notifications"
+                  )
+                }
+              >
+                <a style={{ fontWeight: 300 }}>
+                  <span style={{ fontWeight: 300 }}>
+                    {data.message.user.profile.full_name}
+                  </span>
+                </a>
+              </a>
+            </p>
+          </div>
+        ),
+        icon: <MessageOutlined style={{ color: "#108ee9" }} />,
+        placement: "bottomLeft",
+      });
     });
     pusher.bindCurrency(() => {
       dispatch(CurrencyActions.getAllCurrenciesValues());
     });
-    pusher.bindNotifications(() => {
+    pusher.bindNotifications(async (data) => {
       const effect = new Audio("/bell.mp3");
       effect.play();
-      dispatch(
+      await dispatch(
         NotificationsActions.getNotificationsData({
           pageNumber: notifications.pageNumber,
         })
       );
+      notification.open({
+        message: getAll("You_have_a_new_alert"),
+        description: (
+          <div className="msg-notification">
+            {data.to == "seller" && (
+              <a
+                onClick={() =>
+                  router.push(
+                    data.content.item_id
+                      ? `/mysales/${data.content.item_id}`
+                      : "/mysales"
+                  )
+                }
+                style={{ fontWeight: 300 }}
+              >
+                <h4 className="title">{data.title}</h4>
+              </a>
+            )}
+            {data.to == "buyer" && (
+              <a
+                onClick={() =>
+                  router.push(
+                    data.content.item_id
+                      ? `/mypurchases/${data.content.item_id}`
+                      : "/mypurchases"
+                  )
+                }
+                style={{ fontWeight: 300 }}
+              >
+                <h4 className="title">{data.title}</h4>
+              </a>
+            )}
+            <p className="text">
+              <small className="ml-1">
+                <strong>{getAll("From") + " "}</strong>
+              </small>
+              <a
+                onClick={() => {
+                  router.push(
+                    data?.user_sender?.username
+                      ? `/u/${data.user_sender.username}`
+                      : "/notifications"
+                  );
+                }}
+                style={{ fontWeight: 300 }}
+              >
+                <span style={{ fontWeight: 300, color: "#108ee9" }}>
+                  {data.user_sender.full_name}
+                </span>
+              </a>
+            </p>
+          </div>
+        ),
+        icon: <BellOutlined style={{ color: "#108ee9" }} />,
+        placement: "bottomRight",
+      });
     });
   }
 

@@ -11,7 +11,6 @@ export interface notificationsState {
   all: {
     data: Array<{
       id: number;
-      avatar: string;
       created_at: Date;
       data: {
         title_ar: string;
