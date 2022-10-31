@@ -21,7 +21,6 @@ import { PusherService } from "services/pusherService";
 import getSpecCurrency from "../utils/currency";
 
 const App = ({ innerApp }) => {
-  const unused = "";
   const dispatch = useAppDispatch();
   const {
     user,
