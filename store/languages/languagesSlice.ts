@@ -29,6 +29,21 @@ export const languagesSlice = createSlice({
       API.defaults.headers["X-localization"] = lang;
       window.location.reload();
     },
+    setLanguageManually: (
+      state: languagesState,
+      action: { payload: string }
+    ) => {
+      const lang = action.payload;
+      state.language = lang;
+      (state.getAll = (name: string) => {
+        if (translates[name]) return translates[name][lang];
+        else {
+          return "error here";
+        }
+      }),
+        typeof window !== "undefined" && localStorage.setItem("lang", lang);
+      Cookies.set("lang", lang);
+    },
   },
   extraReducers() {},
 });

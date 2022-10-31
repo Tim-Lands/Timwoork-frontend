@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useOutsideAlerter } from "../useOutsideAlerter";
 import { useOutSide } from "../useOutSide";
 import Community from "./Community";
@@ -12,21 +12,21 @@ import Messages from "../DropdowModal/Messages";
 // import Language from "../DropdowModal/Language";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
-import { PusherContext } from "../../contexts/pusherContext";
+// import { PusherContext } from "../../contexts/pusherContext";
 import API from "../../config";
-import { Badge, notification } from "antd";
+import { Badge } from "antd";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import LastSeen from "@/components/LastSeen";
+// import LastSeen from "@/components/LastSeen";
 import MobileMenu from "./mobileMenus";
 import router from "next/router";
 import { LanguagesActions } from "../../store/languages/languagesActions";
 
-import {
-  MessageOutlined,
-  InfoCircleOutlined,
-  CloseCircleOutlined,
-  BellOutlined,
-} from "@ant-design/icons";
+// import {
+//   MessageOutlined,
+//   InfoCircleOutlined,
+//   CloseCircleOutlined,
+//   BellOutlined,
+// } from "@ant-design/icons";
 import { darken } from "@mui/material";
 import { PRIMARY } from "../../styles/variables";
 function Navbar({ dark = false, MoreNav = <></> }) {
@@ -46,12 +46,9 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   const [isShowProfileMenu, setIsShowProfileMenu] = useState(false);
 
   const [visible, setVisible] = useState(true);
-  const [notifications, setNotifications] = useState([]);
-  const [messages, setMessages] = useState([]);
 
-  const [sentinel, setSentinel] = useState({ mount: true });
   const [query, setQuery] = useState("");
-  const [chatPusher, notificationPusher] = useContext(PusherContext);
+  // const [chatPusher, notificationPusher] = useContext(PusherContext);
 
   const handleScroll = () => {
     window?.pageYOffset === 0 ? setVisible(true) : setVisible(false);
@@ -94,183 +91,162 @@ function Navbar({ dark = false, MoreNav = <></> }) {
   useOutsideAlerter(profileRef, hideProfile, profileBtn);
 
   useEffect(() => {
-    if (user.token) fetchData();
-  }, [user.token]);
-  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-  useEffect(() => {
-    if (user.isLogged) {
-      chatPusher?.bind("message.sent", (data) => {
-        const message = {
-          members: [data?.message?.user],
-          id: data?.message?.conversation_id,
-          ...data?.message?.conversation,
-        };
-        setMessages([
-          message,
-          ...messages.filter((msg) => msg.id != data?.message?.conversation_id),
-        ]);
-        const effect = new Audio("/effect.mp3");
-        effect.play();
-        if (data.message.type == 0) {
-          notification.open({
-            message: getAll("You_havea"),
-            description: (
-              <div className="msg-notification">
-                <a
-                  href={`/conversations/${data.message.conversation.id}#msg-item-${data.message.id}`}
-                  style={{ color: "#666", fontWeight: 300 }}
-                >
-                  <p className="meta">
-                    <LastSeen date={data.message.created_at} />
-                  </p>
-                  <h4 className="title">{data.message.message}</h4>
-                </a>
-                <p className="text">
-                  <small className="ml-1">
-                    <strong>{getAll("From")}</strong>
-                  </small>
-                  <Link href={`/u/${data.message.user.username}`}>
-                    <a style={{ color: "#666", fontWeight: 300 }}>
-                      <span style={{ color: "#666", fontWeight: 300 }}>
-                        {data.message.user.profile.full_name}
-                      </span>
-                    </a>
-                  </Link>
-                </p>
-              </div>
-            ),
-            icon: <MessageOutlined style={{ color: "#108ee9" }} />,
-            placement: "bottomLeft",
-          });
-        }
-        if (data.message.type == 1) {
-          notification["info"]({
-            message: getAll("You_have_a_new"),
-            description: (
-              <div className="msg-notification">
-                <p className="meta">
-                  <LastSeen date={data.message.created_at} />
-                </p>
-                <h4 className="title">{data.message.message}</h4>
-                <p className="text">
-                  <small className="ml-1">
-                    <strong>{getAll("From")}</strong>
-                  </small>
-                  <Link href={`/u/${data.message.user.username}`}>
-                    <a style={{ color: "#666", fontWeight: 300 }}>
-                      <span style={{ color: "#666", fontWeight: 300 }}>
-                        {data.message.user.profile.full_name}
-                      </span>
-                    </a>
-                  </Link>
-                </p>
-              </div>
-            ),
-            icon: <InfoCircleOutlined style={{ color: "#80c26c" }} />,
-            placement: "bottomLeft",
-          });
-        }
-        if (data.message.type == 2) {
-          notification["error"]({
-            message: getAll("You_have_a_cancellation"),
-            description: (
-              <div className="msg-notification">
-                <p className="meta">
-                  <LastSeen date={data.message.created_at} />
-                </p>
-                <h4 className="title">{data.message.message}</h4>
-                <p className="text">
-                  <small className="ml-1">
-                    <strong>{getAll("From")}</strong>
-                  </small>
-                  <Link href={`/u/${data.message.user.username}`}>
-                    <a style={{ color: "#666", fontWeight: 300 }}>
-                      <span style={{ color: "#666", fontWeight: 300 }}>
-                        {data.message.user.profile.full_name}
-                      </span>
-                    </a>
-                  </Link>
-                </p>
-              </div>
-            ),
-            icon: <CloseCircleOutlined style={{ color: "#d33232" }} />,
-            placement: "bottomLeft",
-          });
-        }
-      });
-      notificationPusher?.bind("notification.sent", (data) => {
-        const today = new Date();
-        const date = `${today.getFullYear()}_${
-          today.getMonth() + 1
-        }-${today.getDate()}`;
-        setNotifications([{ created_at: date, data }, ...notifications]);
-        const NotifyEffect = new Audio("/bell.mp3");
-        NotifyEffect.play();
-        notification.open({
-          message: getAll("You_have_a_new_alert"),
-          description: (
-            <div className="msg-notification">
-              {data.to == "seller" && (
-                <a
-                  href={`/mysales/${data.content.item_id}`}
-                  style={{ color: "#666", fontWeight: 300 }}
-                >
-                  <h4 className="title">{data.title}</h4>
-                </a>
-              )}
-              {data.to == "buyer" && (
-                <a
-                  href={`/mypurchases/${data.content.item_id}`}
-                  style={{ color: "#666", fontWeight: 300 }}
-                >
-                  <h4 className="title">{data.title}</h4>
-                </a>
-              )}
-              <p className="text">
-                <small className="ml-1">
-                  <strong>{getAll("From")}</strong>
-                </small>
-                <Link href={`/u/${data.user_sender.username}`}>
-                  <a style={{ color: "#666", fontWeight: 300 }}>
-                    <span style={{ color: "#666", fontWeight: 300 }}>
-                      {data.user_sender.full_name}
-                    </span>
-                  </a>
-                </Link>
-              </p>
-            </div>
-          ),
-          icon: <BellOutlined style={{ color: "#108ee9" }} />,
-          placement: "bottomRight",
-        });
-      });
-    }
-  }, [notificationPusher]);
-  const fetchData = async () => {
-    try {
-      const notificationsData = await API.get("api/notifications?page=1", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const messagesData = await API.get("api/conversations", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+  // useEffect(() => {
+  //   if (user.isLogged) {
+  //     chatPusher?.bind("message.sent", (data) => {
+  //       console.log(data);
+  //       const message = {
+  //         members: [data?.message?.user],
+  //         id: data?.message?.conversation_id,
+  //         ...data?.message?.conversation,
+  //       };
+  //       setMessages([
+  //         message,
+  //         ...messages.filter((msg) => msg.id != data?.message?.conversation_id),
+  //       ]);
+  //       const effect = new Audio("/effect.mp3");
+  //       effect.play();
+  //       if (data.message.type == 0) {
+  //         notification.open({
+  //           message: getAll("You_havea"),
+  //           description: (
+  //             <div className="msg-notification">
+  //               <a
+  //                 href={`/conversations/${data.message.conversation.id}#msg-item-${data.message.id}`}
+  //                 style={{ color: "#666", fontWeight: 300 }}
+  //               >
+  //                 <p className="meta">
+  //                   <LastSeen date={data.message.created_at} />
+  //                 </p>
+  //                 <h4 className="title">{data.message.message}</h4>
+  //               </a>
+  //               <p className="text">
+  //                 <small className="ml-1">
+  //                   <strong>{getAll("From")}</strong>
+  //                 </small>
+  //                 <Link href={`/u/${data.message.user.username}`}>
+  //                   <a style={{ color: "#666", fontWeight: 300 }}>
+  //                     <span style={{ color: "#666", fontWeight: 300 }}>
+  //                       {data.message.user.profile.full_name}
+  //                     </span>
+  //                   </a>
+  //                 </Link>
+  //               </p>
+  //             </div>
+  //           ),
+  //           icon: <MessageOutlined style={{ color: "#108ee9" }} />,
+  //           placement: "bottomLeft",
+  //         });
+  //       }
+  //       if (data.message.type == 1) {
+  //         notification["info"]({
+  //           message: getAll("You_have_a_new"),
+  //           description: (
+  //             <div className="msg-notification">
+  //               <p className="meta">
+  //                 <LastSeen date={data.message.created_at} />
+  //               </p>
+  //               <h4 className="title">{data.message.message}</h4>
+  //               <p className="text">
+  //                 <small className="ml-1">
+  //                   <strong>{getAll("From")}</strong>
+  //                 </small>
+  //                 <Link href={`/u/${data.message.user.username}`}>
+  //                   <a style={{ color: "#666", fontWeight: 300 }}>
+  //                     <span style={{ color: "#666", fontWeight: 300 }}>
+  //                       {data.message.user.profile.full_name}
+  //                     </span>
+  //                   </a>
+  //                 </Link>
+  //               </p>
+  //             </div>
+  //           ),
+  //           icon: <InfoCircleOutlined style={{ color: "#80c26c" }} />,
+  //           placement: "bottomLeft",
+  //         });
+  //       }
+  //       if (data.message.type == 2) {
+  //         notification["error"]({
+  //           message: getAll("You_have_a_cancellation"),
+  //           description: (
+  //             <div className="msg-notification">
+  //               <p className="meta">
+  //                 <LastSeen date={data.message.created_at} />
+  //               </p>
+  //               <h4 className="title">{data.message.message}</h4>
+  //               <p className="text">
+  //                 <small className="ml-1">
+  //                   <strong>{getAll("From")}</strong>
+  //                 </small>
+  //                 <Link href={`/u/${data.message.user.username}`}>
+  //                   <a style={{ color: "#666", fontWeight: 300 }}>
+  //                     <span style={{ color: "#666", fontWeight: 300 }}>
+  //                       {data.message.user.profile.full_name}
+  //                     </span>
+  //                   </a>
+  //                 </Link>
+  //               </p>
+  //             </div>
+  //           ),
+  //           icon: <CloseCircleOutlined style={{ color: "#d33232" }} />,
+  //           placement: "bottomLeft",
+  //         });
+  //       }
+  //     });
+  //     notificationPusher?.bind("notification.sent", (data) => {
+  //       const today = new Date();
+  //       const date = `${today.getFullYear()}_${
+  //         today.getMonth() + 1
+  //       }-${today.getDate()}`;
+  //       setNotifications([{ created_at: date, data }, ...notifications]);
+  //       const NotifyEffect = new Audio("/bell.mp3");
+  //       NotifyEffect.play();
+  //       notification.open({
+  //         message: getAll("You_have_a_new_alert"),
+  //         description: (
+  //           <div className="msg-notification">
+  //             {data.to == "seller" && (
+  //               <a
+  //                 href={`/mysales/${data.content.item_id}`}
+  //                 style={{ color: "#666", fontWeight: 300 }}
+  //               >
+  //                 <h4 className="title">{data.title}</h4>
+  //               </a>
+  //             )}
+  //             {data.to == "buyer" && (
+  //               <a
+  //                 href={`/mypurchases/${data.content.item_id}`}
+  //                 style={{ color: "#666", fontWeight: 300 }}
+  //               >
+  //                 <h4 className="title">{data.title}</h4>
+  //               </a>
+  //             )}
+  //             <p className="text">
+  //               <small className="ml-1">
+  //                 <strong>{getAll("From")}</strong>
+  //               </small>
+  //               <Link href={`/u/${data.user_sender.username}`}>
+  //                 <a style={{ color: "#666", fontWeight: 300 }}>
+  //                   <span style={{ color: "#666", fontWeight: 300 }}>
+  //                     {data.user_sender.full_name}
+  //                   </span>
+  //                 </a>
+  //               </Link>
+  //             </p>
+  //           </div>
+  //         ),
+  //         icon: <BellOutlined style={{ color: "#108ee9" }} />,
+  //         placement: "bottomRight",
+  //       });
+  //     });
+  //   }
+  // }, [notificationPusher, user]);
 
-      setMessages(messagesData?.data?.data?.data);
-      setNotifications(notificationsData?.data?.data?.data);
-      setSentinel({ ...sentinel });
-    } catch {
-      () => {};
-    }
-  };
   const LanguageMenu = () => {
     return (
       <ul
@@ -467,7 +443,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                       {showMessagesMenu && (
                         <Messages
                           refs={messagesRef}
-                          messages={messages}
                           setShowMessagesMenu={setShowMessagesMenu}
                         />
                       )}
@@ -499,7 +474,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                       </Badge>
                       {showNotificationsMenu && (
                         <Notifications
-                          notifications={notifications}
                           setShowNotificationsMenu={setShowNotificationsMenu}
                           refs={notificationsRef}
                         />

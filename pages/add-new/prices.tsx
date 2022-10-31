@@ -18,10 +18,17 @@ let testTime;
 function Prices({ query }) {
   const dispatch = useAppDispatch();
   const getProduct = useAppSelector((state) => state.myProducts.product);
+  const id = query.id;
   useEffect(() => {
-    if (getProduct.loaded && getProduct.id === query.id) return;
-    dispatch(MyProductsActions.getProduct({ id: query.id }));
-  }, []);
+    if (!id) return;
+    if (getProduct.loaded && getProduct.id == id) return;
+    dispatch(MyProductsActions.getProduct({ id: id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [id]);
   const [userLang, setUserLang] = useState();
   const [checkedLangs, setCheckedLangs] = useState({
     ar: false,
@@ -43,24 +50,11 @@ function Prices({ query }) {
   const [isShowenModal, setIsShowenModal] = useState(false);
   const [dvlpindex, setDvlpindex] = useState(0);
   const stepsView = useRef(null);
-  const { id } = query;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const veriedEmail = user.email_verified;
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
-  async function getProductId() {
-    try {
-      //! check if id not exist
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
 
   const allowOnlyNumericsOrDigits = (evt) => {
     const financialGoal = evt.target.validity.valid
@@ -96,7 +90,6 @@ function Prices({ query }) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
   const detectLang = async (txt) => {
     const res = await API.post(`/api/detectLang`, { sentence: txt });
@@ -153,11 +146,18 @@ function Prices({ query }) {
                       if (!isSubtitle[indx]["fr"] && subtitles[indx]["fr"])
                         val.title = subtitles["fr"];
                     });
-                    await API.post(`api/product/${id}/product-step-two`, {
-                      ...values,
-                      price: getProduct.price,
-                      duration: getProduct.duration,
-                    });
+
+                    await dispatch(
+                      MyProductsActions.modifySteps({
+                        url: `api/product/${id}/product-step-two`,
+                        body: {
+                          ...values,
+                          price: getProduct.price,
+                          duration: getProduct.duration,
+                        },
+                        id,
+                      })
+                    ).unwrap();
                     // Authentication was successful.
                     message.success(getAll("The_update_has"));
                     router.push({
@@ -167,13 +167,8 @@ function Prices({ query }) {
                       },
                     });
                   } catch (error: any) {
-                    console.log(error);
-                    if (
-                      error.response &&
-                      error.response.data &&
-                      error.response.data.errors
-                    ) {
-                      setValidationsErrors(error.response.data.errors);
+                    if (error.errors) {
+                      setValidationsErrors(error.errors);
                     }
                   }
                 }}

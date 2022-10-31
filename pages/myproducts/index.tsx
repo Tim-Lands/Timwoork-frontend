@@ -38,7 +38,7 @@ function index() {
     }
   }, [user]);
   if (profile.loading || user.loading) return <Loading />;
-  if (profile.steps < 1 && !profile.loading) {
+  if (profile.steps < 1 && !profile.loading && !user.loading) {
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">

@@ -73,7 +73,7 @@ function index() {
                   <img src="/img/g10.png" alt="" className="add-new-image" />
                   <div className="timlands-add-new-body mt-3">
                     <h3 className="title">{getAll("Add_new_service")}</h3>
-                    <p className="text">{getAll("Super!_You_have")}</p>
+                    <p className="text">{getAll("Super_You_have")}</p>
                     {!user.isLogged && (
                       <div className="add-butts">
                         <button

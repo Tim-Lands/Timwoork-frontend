@@ -3,6 +3,7 @@ import { ConfigProvider } from "antd";
 import { SWRConfig } from "swr";
 import router from "next/router";
 import Cookies from "js-cookie";
+
 import API from "../config";
 import PropTypes from "prop-types";
 import { UserActions } from "../store/user/UserActions";
@@ -10,21 +11,35 @@ import { ProfileActions } from "../store/profile/profileActions";
 import { CategoriesActions } from "../store/categories/categoriesActions";
 import { CartActions } from "../store/cart/cartActions";
 import { CurrencyActions } from "@/store/currency/currencyActions";
+import { LanguagesActions } from "@/store/languages/languagesActions";
+import { NotificationsActions } from "@/store/notifications/notificationsActions";
+import { ChatActions } from "store/chat/chatActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { PusherService } from "services/pusherService";
 import getSpecCurrency from "../utils/currency";
 
 const App = ({ innerApp }) => {
   const unused = "";
-  const user = useAppSelector((state) => state.user);
-  const language = useAppSelector((state) => state.languages.language);
-
-  const currencies = useAppSelector((state) => state.currency.values);
-  const currency = useAppSelector((state) => state.currency.my);
   const dispatch = useAppDispatch();
+  const {
+    user,
+    languages: { language },
+    currency: { my: currency, values: currencies },
+    chat: { all: chats, one: singleChat },
+    notifications: { all: notifications },
+  } = useAppSelector((state) => state);
+
   let token = Cookies.get("token");
+  let lang = undefined;
   if (!token && typeof window !== "undefined") {
     token = localStorage.getItem("token");
+    lang = localStorage.getItem("lang");
   }
+  useEffect(() => {
+    dispatch(CategoriesActions.getAllCategories());
+    dispatch(CategoriesActions.getTopCategories());
+    dispatch(CategoriesActions.getTopMainCategories());
+  }, []);
   useEffect(() => {
     if (user.token) initialize();
     else {
@@ -41,6 +56,18 @@ const App = ({ innerApp }) => {
     dispatch(CategoriesActions.getProductCategories());
   }
   useEffect(() => {
+    if (user.token)
+      dispatch(
+        NotificationsActions.getNotificationsData({
+          pageNumber: notifications.pageNumber,
+        })
+      );
+  }, [notifications.pageNumber, user.token]);
+  useEffect(() => {
+    if (user.token)
+      dispatch(ChatActions.getChatsData({ pageNumber: chats.page_number }));
+  }, [chats.page_number, user.token]);
+  useEffect(() => {
     if (currencies.loaded && currency.code) {
       dispatch(
         CurrencyActions.setValue(
@@ -50,10 +77,38 @@ const App = ({ innerApp }) => {
     }
   }, [currencies, currency.code]);
   useEffect(() => {
-    dispatch(CategoriesActions.getAllCategories());
-    dispatch(CategoriesActions.getTopCategories());
-    dispatch(CategoriesActions.getTopMainCategories());
-  }, []);
+    if (Cookies.get("lang") === undefined || lang === undefined)
+      dispatch(LanguagesActions.setLanguageManually("ar"));
+  }, [Cookies.get("lang"), lang]);
+  useEffect(() => {
+    if (user.id) startSocket();
+  }, [user.id]);
+  async function startSocket() {
+    const pusher = await PusherService.Initialize(user.id);
+    pusher.subscription();
+    pusher.bindMessages((data) => {
+      const effect = new Audio("/effect.mp3");
+      effect.play();
+      dispatch(ChatActions.getChatsData({ pageNumber: chats.page_number }));
+      if (singleChat.id == data.message.conversation_id) {
+        dispatch(
+          ChatActions.getSingleChat({ id: data.message.conversation_id })
+        );
+      }
+    });
+    pusher.bindCurrency(() => {
+      dispatch(CurrencyActions.getAllCurrenciesValues());
+    });
+    pusher.bindNotifications(() => {
+      const effect = new Audio("/bell.mp3");
+      effect.play();
+      dispatch(
+        NotificationsActions.getNotificationsData({
+          pageNumber: notifications.pageNumber,
+        })
+      );
+    });
+  }
 
   return (
     <SWRConfig

@@ -7,9 +7,11 @@ import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { useAppSelector } from "@/store/hooks";
 
-function Notifications({ notifications, refs, setShowNotificationsMenu }) {
-  const { getAll, language } = useAppSelector((state) => state.languages);
-
+function Notifications({ refs, setShowNotificationsMenu }) {
+  const {
+    languages: { getAll, language },
+    notifications: { all: notification },
+  } = useAppSelector((state) => state);
   function switchNotifyType(notification) {
     const { type, to, slug, content } = notification?.data;
     const { item_id } = content;
@@ -36,19 +38,25 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
   function switchNotifyContent(notification) {
     switch (notification?.data?.type) {
       case "system":
-        return notification?.data[whichTitle(language)];
+        return (
+          notification?.data[`title_${language}`] || notification?.data?.title
+        );
       case "order":
         return (
           <>
-            {notification?.data[whichTitle(language)]}{" "}
-            <strong>{notification?.data?.content[whichTitle(language)]}</strong>
+            {notification?.data[`title_${language}`] ||
+              notification?.data?.title}{" "}
+            <strong>
+              {notification?.data?.content[`title_${language}`] |
+                notification?.data?.content?.cause}
+            </strong>
           </>
         );
       case "rating":
         return (
           <>
-            {notification?.data[whichTitle(language)]}
-            <strong>{notification?.data?.content[whichTitle(language)]}</strong>
+            {notification?.data[`title_${language}`]}
+            <strong>{notification?.data?.content[`title_${language}`]}</strong>
           </>
         );
     }
@@ -69,7 +77,7 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
         <div className="popup-dropdown-body">
           <div className="popup-dropdown-content">
             <ul className="popup-dropdown-content-list">
-              {notifications.map((notification) => (
+              {notification.data.map((notification) => (
                 <li
                   key={notification.id}
                   onClick={() => setShowNotificationsMenu(false)}
@@ -118,20 +126,8 @@ function Notifications({ notifications, refs, setShowNotificationsMenu }) {
     </motion.div>
   );
 }
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
+
 Notifications.propTypes = {
-  notifications: PropTypes.array,
   refs: PropTypes.any,
   setShowNotificationsMenu: PropTypes.func,
 };

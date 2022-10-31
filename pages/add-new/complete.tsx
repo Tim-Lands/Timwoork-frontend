@@ -3,16 +3,28 @@ import { ReactElement, useEffect, useRef } from "react";
 import { message } from "antd";
 import router from "next/router";
 import SidebarAdvices from "../../components/add-new/SidebarAdvices";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 import PropTypes from "prop-types";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Unauthorized from "@/components/Unauthorized";
-import API from "../../config";
 
 function Complete({ query }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+
+  useEffect(() => {
+    if (getProduct.loaded && getProduct.id === query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/add-new");
+      });
+  }, []);
 
   const stepsView = useRef(null);
 
@@ -20,30 +32,22 @@ function Complete({ query }) {
 
   if (!user.token && !veriedEmail) return <Unauthorized />;
   if (!query) return message.error(getAll("An_error_occurred"));
-  async function getProductId() {
-    try {
-      //! check if id not exist
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
+
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
     if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
   async function stepFive() {
     try {
-      await API.post(`api/product/${query.id}/product-step-five`);
-      // Authentication was successful.
+      await dispatch(
+        MyProductsActions.modifySteps({
+          url: `api/product/${query.id}/product-step-five`,
+          id: query.id,
+        })
+      ).unwrap();
       message.success(getAll("The_update_has"));
       router.push({
         pathname: "/myproducts",

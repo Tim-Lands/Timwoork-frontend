@@ -1,38 +1,38 @@
 import Layout from "@/components/Layout/HomeLayout";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
+import { ChatActions } from "store/chat/chatActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
-import API from "../../config";
-import Cookies from "js-cookie";
 import useFileUpload from "react-use-file-upload";
-import useSWR, { useSWRConfig } from "swr";
 import Sidebar from "@/components/Conversations/Sidebar";
 import { Progress } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Loading from "@/components/Loading";
-import pusher from "../../config/pusher";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 let testTime;
 
 function Conversation({ query }) {
-  let token = Cookies.get("token");
-  const [userLang, setUserLang] = useState();
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { mutate } = useSWRConfig();
+  const {
+    languages: { getAll, language },
+    user,
+    chat: { one: conversationsSingle },
+  } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (query.id === null) return;
+    dispatch(ChatActions.setId(query.id));
+  }, [query.id]);
+  useEffect(() => {
+    if (conversationsSingle.id === null) return;
+    dispatch(ChatActions.getSingleChat({ id: conversationsSingle.id }));
+  }, [conversationsSingle.id]);
+  const [userLang] = useState();
   const inputRefMsg: any = useRef();
   const messageCont = useRef(null);
-  const { data: conversationsSingle }: any = useSWR(
-    `api/conversations/${query.id}`
-  );
-  const { getAll, language } = useAppSelector((state) => state.languages);
-  const user = useAppSelector((state) => state.user);
 
-  const channelChat = `presence-receiver.${user.id}`;
-  const channel = pusher.subscribe(channelChat);
   const veriedEmail = user.email_verified;
   const [messageProgress, setMessageProgress] = useState(0);
   const [messageErrors, setMessageErrors]: any = useState({});
@@ -41,18 +41,15 @@ function Conversation({ query }) {
   const [messageType, setMessageType] = useState(0);
   const [isTranslate, setIsTranslate] = useState({});
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
-  }, []);
+  }, [user]);
   useEffect(() => {
     if (messageCont.current) {
       messageCont.current.scrollTop = 100000000000;
     }
   });
-  useEffect(() => {
-    mutate("api/me");
-  }, [conversationsSingle]);
 
   const {
     files: filesMsg,
@@ -75,45 +72,41 @@ function Conversation({ query }) {
       filesMsg.map((file: any) => conversation.append("attachments[]", file));
       conversation.append("type", messageType);
       conversation.append("message", message);
-      const res = await API.post(
-        `api/conversations/${id}/sendMessage`,
-        conversation,
-        {
+      setSendMessageLoading(true);
+      await dispatch(
+        ChatActions.sendMessage({
+          id,
+          body: conversation,
           headers: {
-            Authorization: `Bearer ${token}`,
-            "X-LOCALIZATION": userLang,
+            headers: {
+              "X-LOCALIZATION": userLang,
+            },
+            onUploadProgress: (uploadEvent) => {
+              if (filesMsg.length !== 0)
+                setMessageProgress(
+                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
+                );
+            },
           },
-          onUploadProgress: (uploadEvent) => {
-            if (filesMsg.length !== 0)
-              setMessageProgress(
-                Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
-              );
-          },
-        }
-      );
-      if (res.status === 200) {
-        setSendMessageLoading(false);
+        })
+      ).unwrap();
 
-        conversationsSingle.data.messages.push(res.data.data);
-        setMessage("");
-        messageRef.current.focus();
-        setMessageProgress(0);
-        clearAllFilesMsg();
-      }
+      setMessage("");
+      messageRef.current.focus();
+      setMessageProgress(0);
+      clearAllFilesMsg();
     } catch (error) {
-      setSendMessageLoading(false);
-      if (error && error.response) {
-        setMessageErrors(error.response.data.errors);
+      if (error) {
+        setMessageErrors(error.errors);
       }
+    } finally {
+      setSendMessageLoading(false);
     }
   };
-  channel?.bind("message.sent", () => {
-    mutate(`api/conversations/${query.id}`);
-  });
 
-  const detectLang = async (txt) => {
-    const res = await API.post(`/api/detectLang`, { sentence: txt });
-    setUserLang(res.data.data);
+  const detectLang = async () => {
+    // const res = await API.post(`/api/detectLang`, { sentence: txt });
+    // setUserLang(res.data.data);
   };
   function switchTypeMessage(type: any) {
     switch (type) {
@@ -290,9 +283,7 @@ function Conversation({ query }) {
   return (
     <>
       <MetaTags
-        title={`${getAll("Conversations")} - ${
-          conversationsSingle && conversationsSingle.data.title
-        }`}
+        title={`${getAll("Conversations")} - ${conversationsSingle.title}`}
         metaDescription={getAll("My_sells_Timwoork")}
         ogDescription={getAll("My_sells_Timwoork")}
       />
@@ -307,12 +298,10 @@ function Conversation({ query }) {
             </div>
             <div className="col-lg-8 mt-4">
               <div className="app-bill conv" ref={messageCont}>
-                {!conversationsSingle && <Loading />}
+                {conversationsSingle.loading && <Loading />}
                 <div className="conversations-list">
                   <div className="conversations-title">
-                    <h4 className="title">
-                      {conversationsSingle && conversationsSingle.data.title}
-                    </h4>
+                    <h4 className="title">{conversationsSingle.title}</h4>
                   </div>
                   <ul
                     className="conversations-items"
@@ -324,142 +313,141 @@ function Conversation({ query }) {
                       display: "flex",
                     }}
                   >
-                    {conversationsSingle &&
-                      conversationsSingle.data.messages.map((item: any) => (
-                        <motion.li
-                          initial={{ y: -4, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          id={`msg-item-${item.id}`}
-                          key={1}
-                          className={
-                            (user.id == item.user.id ? "" : "recieved ") +
-                            "d-flex message-item " +
-                            switchTypeMessage(item.type)
-                          }
-                          style={{ marginBlock: 9 }}
+                    {conversationsSingle.data.map((item: any) => (
+                      <motion.li
+                        initial={{ y: -4, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        id={`msg-item-${item.id}`}
+                        key={item.id}
+                        className={
+                          (user.id == item.user.id ? "" : "recieved ") +
+                          "d-flex message-item " +
+                          switchTypeMessage(item.type)
+                        }
+                        style={{ marginBlock: 9 }}
+                      >
+                        <div
+                          className="item-avatar"
+                          style={{ marginInline: 9 }}
                         >
-                          <div
-                            className="item-avatar"
-                            style={{ marginInline: 9 }}
+                          <img
+                            src={item.user.profile.avatar_path}
+                            width={60}
+                            height={60}
+                            className="rounded-pill"
+                            alt=""
+                          />
+                        </div>
+
+                        <div className="item-content">
+                          <button
+                            className="btn butt-sm butt-primary-text btn-translate flex-center"
+                            onClick={() =>
+                              setIsTranslate({
+                                ...isTranslate,
+                                [item.id]: !isTranslate[item.id],
+                              })
+                            }
                           >
-                            <img
-                              src={item.user.profile.avatar_path}
-                              width={60}
-                              height={60}
-                              className="rounded-pill"
-                              alt=""
-                            />
-                          </div>
-
-                          <div className="item-content">
-                            <button
-                              className="btn butt-sm butt-primary-text btn-translate flex-center"
-                              onClick={() =>
-                                setIsTranslate({
-                                  ...isTranslate,
-                                  [item.id]: !isTranslate[item.id],
-                                })
-                              }
+                            <span className="material-icons material-icons-outlined">
+                              translate
+                            </span>
+                            {isTranslate[item.id]
+                              ? "إعادة النص للترجمة الاصلية"
+                              : "ترجمة"}
+                          </button>
+                          <LastSeen date={item.created_at} />
+                          {item.type == 1 && (
+                            <span
+                              className="bg-success text-light d-inline-block"
+                              style={{
+                                paddingInline: 9,
+                                paddingBlock: 3,
+                                borderRadius: "4px 4px 0 4px",
+                                fontSize: 12,
+                                marginBottom: 5,
+                              }}
                             >
-                              <span className="material-icons material-icons-outlined">
-                                translate
-                              </span>
-                              {isTranslate[item.id]
-                                ? "إعادة النص للترجمة الاصلية"
-                                : "ترجمة"}
-                            </button>
-                            <LastSeen date={item.created_at} />
-                            {item.type == 1 && (
-                              <span
-                                className="bg-success text-light d-inline-block"
-                                style={{
-                                  paddingInline: 9,
-                                  paddingBlock: 3,
-                                  borderRadius: "4px 4px 0 4px",
-                                  fontSize: 12,
-                                  marginBottom: 5,
-                                }}
-                              >
-                                {getAll("Instructions")}
-                              </span>
-                            )}
-                            {item.type == 2 && (
-                              <span
-                                className="bg-danger text-light d-inline-block"
-                                style={{
-                                  paddingInline: 9,
-                                  paddingBlock: 3,
-                                  borderRadius: "4px 4px 0 4px",
-                                  fontSize: 12,
-                                  marginBottom: 5,
-                                }}
-                              >
-                                {getAll("Cancellation_reason")}
-                              </span>
-                            )}
-                            <p className="text" style={{ margin: 0 }}>
-                              {item.user.profile.full_name}
-                            </p>
-                            {item.attachments && (
-                              <div
-                                className="attach-items"
-                                style={{
-                                  marginBlock: 4,
-                                  fontSize: 12,
-                                  fontWeight: 200,
-                                }}
-                              >
-                                {item.attachments.map((att: any, i: number) => (
-                                  <div className="att-item" key={att.id}>
-                                    <a
-                                      href={att.full_path}
-                                      rel="noreferrer"
-                                      target="_blank"
-                                    >
-                                      {switchFileTypes(att.mime_type)}{" "}
-                                      {getAll("Upload_file")}
-                                      {i + 1}#
-                                    </a>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-
+                              {getAll("Instructions")}
+                            </span>
+                          )}
+                          {item.type == 2 && (
+                            <span
+                              className="bg-danger text-light d-inline-block"
+                              style={{
+                                paddingInline: 9,
+                                paddingBlock: 3,
+                                borderRadius: "4px 4px 0 4px",
+                                fontSize: 12,
+                                marginBottom: 5,
+                              }}
+                            >
+                              {getAll("Cancellation_reason")}
+                            </span>
+                          )}
+                          <p className="text" style={{ margin: 0 }}>
+                            {item.user.profile.full_name}
+                          </p>
+                          {item.attachments && (
                             <div
-                              dangerouslySetInnerHTML={
-                                isTranslate[item.id]
-                                  ? {
-                                      __html: linkify(
-                                        item[`message_${language}`] || "",
-                                        query
-                                      ),
-                                    }
-                                  : {
-                                      __html: linkify(item.message, query),
-                                    }
-                              }
-                            />
-                            {user.id == item.user.id && (
-                              <>
-                                {item.read_at && (
-                                  <span className="readed is-readed">
-                                    <span className="material-icons material-icons-outlined">
-                                      done_all
-                                    </span>
+                              className="attach-items"
+                              style={{
+                                marginBlock: 4,
+                                fontSize: 12,
+                                fontWeight: 200,
+                              }}
+                            >
+                              {item.attachments.map((att: any, i: number) => (
+                                <div className="att-item" key={att.id}>
+                                  <a
+                                    href={att.full_path}
+                                    rel="noreferrer"
+                                    target="_blank"
+                                  >
+                                    {switchFileTypes(att.mime_type)}{" "}
+                                    {getAll("Upload_file")}
+                                    {i + 1}#
+                                  </a>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          <div
+                            dangerouslySetInnerHTML={
+                              isTranslate[item.id]
+                                ? {
+                                    __html: linkify(
+                                      item[`message_${language}`] || "",
+                                      query
+                                    ),
+                                  }
+                                : {
+                                    __html: linkify(item.message, query),
+                                  }
+                            }
+                          />
+                          {user.id == item.user.id && (
+                            <>
+                              {item.read_at && (
+                                <span className="readed is-readed">
+                                  <span className="material-icons material-icons-outlined">
+                                    done_all
                                   </span>
-                                )}
-                                {!item.read_at && (
-                                  <span className="readed is-unreaded">
-                                    <span className="material-icons material-icons-outlined">
-                                      done
-                                    </span>
+                                </span>
+                              )}
+                              {!item.read_at && (
+                                <span className="readed is-unreaded">
+                                  <span className="material-icons material-icons-outlined">
+                                    done
                                   </span>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        </motion.li>
-                      ))}
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </motion.li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -584,10 +572,7 @@ function Conversation({ query }) {
                         }}
                         onKeyUp={() => {
                           setMessageErrors({});
-                          testTime = setTimeout(
-                            () => detectLang(message),
-                            3000
-                          );
+                          testTime = setTimeout(() => detectLang(), 3000);
                         }}
                         placeholder={getAll("Message_text")}
                         className={

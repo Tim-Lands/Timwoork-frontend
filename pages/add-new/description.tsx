@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import router from "next/router";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
 import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
@@ -7,7 +8,7 @@ import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 // import { useEditor, EditorContent } from "@tiptap/react";
 // import StarterKit from "@tiptap/starter-kit";
@@ -119,6 +120,18 @@ import FormModal from "@/components/Forms/FormModal";
 let testTime;
 
 function Description({ query }) {
+  const dispatch = useAppDispatch();
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+
+  useEffect(() => {
+    if (getProduct.loaded && getProduct.id === query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/add-new");
+      });
+  }, []);
   const user = useAppSelector((state) => state.user);
 
   const [checkedLangsDesc, setCheckedLangsDesc] = useState({
@@ -227,28 +240,29 @@ function Description({ query }) {
           body["content_en"] = subtitlesDesc["en"];
         if (!isSubtitlesDesc["ar"] && setSubtitlesDesc["fr"])
           body["content_fr"] = subtitlesDesc["fr"];
-        const res = await API.post(`api/product/${id}/product-step-three`, {
-          ...body,
-          content: values.content.replace(/\n/g, "<br />"),
-          buyer_instruct: values.buyer_instruct.replace(/\n/g, "<br />"),
-        });
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push({
-            pathname: "/add-new/medias",
-            query: {
-              id: id, // pass the id
+
+        await dispatch(
+          MyProductsActions.modifySteps({
+            url: `api/product/${id}/product-step-three`,
+            id,
+            body: {
+              ...body,
+              content: values.content.replace(/\n/g, "<br />"),
+              buyer_instruct: values.buyer_instruct.replace(/\n/g, "<br />"),
             },
-          });
-        }
+          })
+        ).unwrap();
+        // Authentication was successful.
+        message.success(getAll("The_update_has"));
+        router.push({
+          pathname: "/add-new/medias",
+          query: {
+            id: id, // pass the id
+          },
+        });
       } catch (error: any) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          setValidationsErrors(error.response.data.errors);
+        if (error.errors) {
+          setValidationsErrors(error.errors);
         }
       }
     },

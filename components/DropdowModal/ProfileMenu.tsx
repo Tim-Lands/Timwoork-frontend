@@ -19,16 +19,19 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { message, notification } from "antd";
 function ProfileMenu({ refs, setIsShowProfileMenu }) {
   // let token = Cookies.get("token");
-  const profile = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
-  const { getAll } = useAppSelector((state) => state.languages);
+  const {
+    languages: { getAll },
+    profile,
+    user,
+  } = useAppSelector((state) => state);
 
   // if (!token && typeof window !== "undefined")
   //   token = localStorage.getItem("token");
 
   const logout_all = async () => {
     try {
-      await dispatch(UserActions.logoutAll()).unwrap();
+      await dispatch(UserActions.logoutAll({ id: user.id })).unwrap();
       message.success(getAll("Successfully_signed_out"));
     } catch {
       notification.open({
@@ -37,7 +40,7 @@ function ProfileMenu({ refs, setIsShowProfileMenu }) {
     }
   };
   const logout = async () => {
-    dispatch(UserActions.logoutUser());
+    dispatch(UserActions.logoutUser({ id: user.id }));
   };
   return (
     <motion.div

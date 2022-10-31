@@ -41,12 +41,18 @@ function Single({ query }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
   const product = useAppSelector((state) => state.myProducts.product);
   const user = useAppSelector((state) => state.user);
+
   useEffect(() => {
-    dispatch(MyProductsActions.getProduct({ id: query.product }));
-  }, []);
-  useEffect(() => {
-    if (!product.id && !product.loading) router.push("/myproducts");
-  }, [product]);
+    if (!query.id) return;
+    if (product.loaded && product.id === query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [query.id]);
+
   const veriedEmail = user.email_verified;
   const disactiveProductHandle = async () => {
     const MySwal = withReactContent(Swal);

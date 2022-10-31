@@ -71,10 +71,15 @@ function Overview({ query }) {
   });
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (getProduct.loaded || getProduct.id == query.id) return;
-    dispatch(MyProductsActions.getProduct({ id: query.id }));
-  }, [getProduct]);
-
+    if (!id) return;
+    if (getProduct.loaded && getProduct.id == id) return;
+    dispatch(MyProductsActions.getProduct({ id: id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [id]);
   const veriedEmail = user.email_verified;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
@@ -82,7 +87,7 @@ function Overview({ query }) {
   };
   const formik = useFormik({
     initialValues: {
-      catetory: getProduct?.subcategory?.category?.id,
+      category: getProduct?.subcategory?.category?.id,
       title: getProduct?.title,
       subcategory: getProduct?.subcategory?.id,
       tags: getProduct?.product_tag,
@@ -92,51 +97,37 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        await API.post(`api/product/${id}/product-step-one`, values);
-        // Authentication was successful.
+        await dispatch(
+          MyProductsActions.modifySteps({
+            url: `api/product/${id}/product-step-one`,
+            id,
+            body: values,
+          })
+        ).unwrap();
 
         message.success(getAll("The_update_has"));
         router.push(`/edit-product/prices?id=${getProduct?.id}`);
       } catch (error: any) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          setValidationsErrors(error.response.data.errors);
+        if (error.errors) {
+          setValidationsErrors(error.errors);
         }
       }
     },
   });
   useEffect(() => {
-    if (!formik.values.catetory) return;
-    CategoriesService.getProductsSubCategories(formik.values.catetory)
+    if (!formik.values.category) return;
+    CategoriesService.getProductsSubCategories(formik.values.category)
       .then((res) => setSubCategories(res))
       .catch(() => {});
-  }, [formik.values]);
+  }, [formik.values.category]);
 
   if (!query) return message.error(getAll("An_error_occurred"));
-  async function getProductId() {
-    try {
-      // const res: any =
-      //! check if id not exist
-      // if (res.status === 200) {
-      // }
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/myproducts");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/myproducts");
-      }
-    }
-  }
+
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
   return (
     <>
@@ -298,12 +289,12 @@ function Overview({ query }) {
                           </label>
                           <select
                             id="input-catetory"
-                            name="catetory"
+                            name="category"
                             className="timlands-inputs select"
                             disabled={!getProduct ? true : false}
                             autoComplete="off"
                             onChange={formik.handleChange}
-                            value={formik.values.catetory}
+                            value={formik.values.category}
                             //onChange={() => setmainCat(values.catetory)}
                           >
                             <option value="">

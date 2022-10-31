@@ -69,6 +69,6 @@ export class PusherService {
     this.pusher.unsubscribe(this.notificationChanel);
     this.pusher.unsubscribe(this.chatChannel);
     this.pusher.unsubscribe(this.currencyChannel);
-    PusherService.userId = null;
+    PusherService.instance = null;
   }
 }

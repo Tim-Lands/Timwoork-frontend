@@ -9,9 +9,11 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { SalesThunkFunctions } from "store/sales/thunkFunctions";
 function index() {
   const dispatch = useAppDispatch();
-  const { getAll, language } = useAppSelector((state) => state.languages);
-  const user = useAppSelector((state) => state.user);
-  const sales = useAppSelector((state) => state.mySales.sales);
+  const {
+    languages: { getAll, language },
+    mySales: { sales },
+    user,
+  } = useAppSelector((state) => state);
   const veriedEmail = user.email_verified;
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
