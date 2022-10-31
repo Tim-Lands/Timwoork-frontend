@@ -9,24 +9,15 @@ import Subnavbar from "./Subnavbar";
 import Notifications from "../DropdowModal/Notifications";
 import PropTypes from "prop-types";
 import Messages from "../DropdowModal/Messages";
-// import Language from "../DropdowModal/Language";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
-// import { PusherContext } from "../../contexts/pusherContext";
 import API from "../../config";
 import { Badge } from "antd";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-// import LastSeen from "@/components/LastSeen";
 import MobileMenu from "./mobileMenus";
 import router from "next/router";
 import { LanguagesActions } from "../../store/languages/languagesActions";
 
-// import {
-//   MessageOutlined,
-//   InfoCircleOutlined,
-//   CloseCircleOutlined,
-//   BellOutlined,
-// } from "@ant-design/icons";
 import { darken } from "@mui/material";
 import { PRIMARY } from "../../styles/variables";
 function Navbar({ dark = false, MoreNav = <></> }) {

@@ -31,7 +31,7 @@ const App = ({ innerApp }) => {
   } = useAppSelector((state) => state);
 
   let token = Cookies.get("token");
-  let lang = undefined;
+  let lang = Cookies.get("lang");
   if (!token && typeof window !== "undefined") {
     token = localStorage.getItem("token");
     lang = localStorage.getItem("lang");
