@@ -78,7 +78,7 @@ function index({ products, isError, isLoading, size }): ReactElement {
               }
               rate={e.ratings_avg_rating}
               price={e.price}
-              slug={e.slug}
+              slug={e.id}
               username={
                 e.profile_seller && e.profile_seller.profile.user?.username
               }

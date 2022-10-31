@@ -84,7 +84,7 @@ function Footer() {
                 if (index > 4) return;
                 return (
                   <li key={product.id} style={{ width: 350 }}>
-                    <Link href={`/p/${product.slug}`}>
+                    <Link href={`/p/${product.id}`}>
                       <a className="text-truncate">{product.title}</a>
                     </Link>
                   </li>

@@ -110,7 +110,6 @@ function index() {
                         e.data.content[`title_${language}`] ||
                         e.data?.content?.cause
                       }
-                      slug={e.data.content.slug}
                     />
                   );
                 })}

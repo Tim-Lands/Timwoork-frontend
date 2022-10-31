@@ -13,7 +13,7 @@ function Notifications({ refs, setShowNotificationsMenu }) {
     notifications: { all: notification },
   } = useAppSelector((state) => state);
   function switchNotifyType(notification) {
-    const { type, to, slug, content } = notification?.data;
+    const { type, to, content } = notification?.data;
     const { item_id } = content;
     switch (type) {
       case "order":
@@ -25,7 +25,7 @@ function Notifications({ refs, setShowNotificationsMenu }) {
         }
         break;
       case "rating":
-        return `/p/${slug}`;
+        return `/p/${item_id}`;
 
       case "system":
         return content?.product_id ? `/p/${content?.product_id}:` : "";

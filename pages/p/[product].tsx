@@ -155,7 +155,7 @@ function Single({ id }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.slug}&display=popup&ref=plugin&src=share_button`}
+            href={`https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https://timwoork.com/p/${ProductData.id}&display=popup&ref=plugin&src=share_button`}
           >
             {getAll("Share_on_Facebook")}
           </a>
@@ -166,7 +166,7 @@ function Single({ id }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.slug}&text=`}
+            href={`https://twitter.com/intent/tweet?url=https://timwoork.com/p/${ProductData.id}&text=`}
           >
             {getAll("Share_on_Twitter")}
           </a>
@@ -327,7 +327,7 @@ function Single({ id }) {
           metaDescription={ProductData.content}
           ogDescription={ProductData.content}
           ogImage={ProductData.full_path_thumbnail}
-          ogUrl={`https://timwoork.com/p/${ProductData.slug}`}
+          ogUrl={`https://timwoork.com/p/${ProductData.id}`}
         />
         {ProductData && (
           <div className="timwoork-single">
@@ -541,7 +541,6 @@ function Single({ id }) {
                                       <span className="material-icons material-icons-outlined">
                                         place
                                       </span>{" "}
-                                      الجزائر
                                     </li>
                                   )}
                                 </ul>

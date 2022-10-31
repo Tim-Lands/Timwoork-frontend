@@ -301,7 +301,7 @@ function Single({ query }) {
         metaDescription={product.content}
         ogDescription={product.content}
         ogImage={product.full_path_thumbnail}
-        ogUrl={`https://timwoork.com/p/${product.slug}`}
+        ogUrl={`https://timwoork.com/p/${product.id}`}
       />
       {product && veriedEmail && (
         <div className="timwoork-single">
