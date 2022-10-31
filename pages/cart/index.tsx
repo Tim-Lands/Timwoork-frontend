@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout/HomeLayout";
 import PostsAside from "@/components/PostsAside";
 import React, { ReactElement, useEffect } from "react";
-import { ProductsActions } from "@/store/products/productActions";
 import Loading from "@/components/Loading";
 import CartPost from "@/components/Cart/CartPost";
 import { message, Spin, notification } from "antd";
@@ -21,10 +20,6 @@ function index() {
 
   const { value, symbol_native } = useAppSelector((state) => state.currency.my);
   const { popular } = useAppSelector((state) => state.products);
-  useEffect(() => {
-    if (popular.loaded) return;
-    dispatch(ProductsActions.getPopularProducts());
-  }, [popular.loaded]);
 
   const buyNowBtn = () => {
     if (itemsLength === 0 || priceWithTax === 0) {

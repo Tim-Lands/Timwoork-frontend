@@ -30,10 +30,10 @@ function index() {
     (state) => state.products
   );
   useEffect(() => {
-    if (!popular.loaded) dispatch(ProductsActions.getPopularProducts());
     if (!latest.loaded) dispatch(ProductsActions.getLatestProducts());
     if (!best_seller.loaded) dispatch(ProductsActions.getSellingProducts());
-  }, [popular, latest, best_seller]);
+  }, [latest, best_seller]);
+
   const menu = (
     <Menu>
       <Menu.Item>

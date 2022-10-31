@@ -12,6 +12,7 @@ import { UserActions } from "../store/user/UserActions";
 import { ProfileActions } from "../store/profile/profileActions";
 import { CategoriesActions } from "../store/categories/categoriesActions";
 import { CartActions } from "../store/cart/cartActions";
+import { ProductsActions } from "store/products/productActions";
 import { CurrencyActions } from "@/store/currency/currencyActions";
 import { LanguagesActions } from "@/store/languages/languagesActions";
 import { NotificationsActions } from "@/store/notifications/notificationsActions";
@@ -55,6 +56,7 @@ const App = ({ innerApp }) => {
     dispatch(CurrencyActions.getAllCurrenciesValues());
     dispatch(CartActions.getCartData());
     dispatch(CategoriesActions.getProductCategories());
+    dispatch(ProductsActions.getPopularProducts());
   }
   useEffect(() => {
     if (user.token)
