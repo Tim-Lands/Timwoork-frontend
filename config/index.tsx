@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 const lang =
-  Cookies.get("lang") !== undefined
-    ? Cookies.get("lang")
-    : typeof window !== "undefined"
+  Cookies.get("lang") ||
+  (typeof window !== "undefined" && localStorage.getItem("lang")
     ? localStorage.getItem("lang")
-    : "ar";
+    : "ar");
+
 const token =
   typeof window !== "undefined"
     ? localStorage.getItem("token")

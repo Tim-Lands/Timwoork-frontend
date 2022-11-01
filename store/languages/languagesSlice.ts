@@ -7,9 +7,7 @@ export interface languagesState {
   getAll: Function;
 }
 export const initialState: languagesState = {
-  language: Cookies.get("lang")
-    ? Cookies.get("lang")
-    : typeof window !== "undefined" && localStorage.getItem("lang"),
+  language: undefined,
   getAll: (name: string) => {
     if (translates[name]) return translates[name][initialState.language];
     else {
@@ -23,10 +21,8 @@ export const languagesSlice = createSlice({
   reducers: {
     setLanguage: (state, action: { payload: string }) => {
       const lang = action.payload;
-      if (lang === state.language) return;
-      typeof window !== "undefined" && localStorage.setItem("lang", lang);
       Cookies.set("lang", lang);
-      API.defaults.headers["X-localization"] = lang;
+      typeof window !== "undefined" && localStorage.setItem("lang", lang);
       window.location.reload();
     },
     setLanguageManually: (
@@ -35,14 +31,12 @@ export const languagesSlice = createSlice({
     ) => {
       const lang = action.payload;
       state.language = lang;
-      (state.getAll = (name: string) => {
+      state.getAll = (name: string) => {
         if (translates[name]) return translates[name][lang];
         else {
           return "error here";
         }
-      }),
-        typeof window !== "undefined" && localStorage.setItem("lang", lang);
-      Cookies.set("lang", lang);
+      };
     },
   },
   extraReducers() {},

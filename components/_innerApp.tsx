@@ -80,8 +80,20 @@ const App = ({ innerApp }) => {
     }
   }, [currencies, currency.code]);
   useEffect(() => {
-    if (Cookies.get("lang") === undefined || lang === undefined)
+    if (
+      Cookies.get("lang") ||
+      (typeof window !== "undefined" && localStorage.getItem("lang"))
+    ) {
+      dispatch(
+        LanguagesActions.setLanguageManually(
+          Cookies.get("lang") ||
+            (typeof window !== "undefined" && localStorage.getItem("lang"))
+        )
+      );
+    } else {
+      console.log("else");
       dispatch(LanguagesActions.setLanguageManually("ar"));
+    }
   }, [Cookies.get("lang"), lang]);
   useEffect(() => {
     if (user.id) startSocket();
@@ -209,7 +221,6 @@ const App = ({ innerApp }) => {
       });
     });
   }
-
   return (
     <SWRConfig
       value={{
