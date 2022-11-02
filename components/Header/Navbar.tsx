@@ -383,6 +383,8 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                   >
                     <Image
                       src={profile.avatar_path}
+                      placeholder="blur"
+                      blurDataURL="/avatar2.jpg"
                       width={31}
                       height={31}
                       alt={""}

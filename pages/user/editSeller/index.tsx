@@ -185,18 +185,13 @@ const EditSeller = () => {
         if (subtitles["ar"]) values.bio = subtitles["ar"];
         if (subtitles["en"]) values.bio = subtitles["en"];
         if (subtitles["fr"]) values.bio = subtitles["fr"];
-        await API.post("api/sellers/detailsStore", values);
-        // Authentication was successful.
+        await dispatch(ProfileActions.updateProfileSeller(values)).unwrap();
 
         message.success(getAll("The_update_has"));
         router.push("/user/profile");
       } catch (error: any) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          setValidationsErrors(error.response.data.errors);
+        if (error.errors) {
+          setValidationsErrors(error.errors);
         }
       }
     },
@@ -259,7 +254,9 @@ const EditSeller = () => {
                           </motion.div>
                         )}
                         <div className="update-form-header">
-                          <h1 className="title">تعديل المعلومات البائع</h1>
+                          <h1 className="title">
+                            {getAll("Edit_seller’s_information")}
+                          </h1>
                         </div>
                         <div className="row">
                           <div className="col-md-12">
@@ -268,12 +265,12 @@ const EditSeller = () => {
                                 className="label-block"
                                 htmlFor="portfolio"
                               >
-                                رابط أعمالك
+                                {getAll("Your_business_link")}
                               </label>
                               <input
                                 id="portfolio"
                                 name="portfolio"
-                                placeholder="رابط أعمالك..."
+                                placeholder={getAll("Your_business_link")}
                                 onChange={formik.handleChange}
                                 value={formik.values.portfolio}
                                 className={

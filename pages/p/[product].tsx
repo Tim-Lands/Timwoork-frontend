@@ -437,12 +437,10 @@ function Single({ id }) {
                         {ProductData.galaries.map((each: any, index) => {
                           return each.url_video == null ? (
                             <div key={index} className="each-slide">
-                              <div
+                              <img
                                 className="images-slider"
-                                style={{
-                                  backgroundImage: `url(${APIURL2}${each.path})`,
-                                }}
-                              ></div>
+                                src={`${APIURL2}${each.path}`}
+                              />
                             </div>
                           ) : (
                             ""
@@ -452,12 +450,10 @@ function Single({ id }) {
                           key={ProductData.galaries.length}
                           className="each-slide"
                         >
-                          <div
+                          <img
                             className="images-slider"
-                            style={{
-                              backgroundImage: `url(${APIURL2}${ProductData.full_path_thumbnail})`,
-                            }}
-                          ></div>
+                            src={`${APIURL2}${ProductData.full_path_thumbnail}`}
+                          />
                         </div>
                       </Slide>
                       <div

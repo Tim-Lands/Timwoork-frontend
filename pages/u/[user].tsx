@@ -5,7 +5,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Card } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
-import { Services } from "../../services";
+import { ProfileService } from "../../services/profileService";
 import cookies from "next-cookies";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
@@ -266,7 +266,7 @@ export async function getServerSideProps(ctx) {
   const { query } = ctx;
   try {
     const lang = cookies(ctx).lang || "";
-    const profile = await Services.getProfile(query.user, lang);
+    const profile = await ProfileService.getOne(query.user, lang);
     return { props: { profile, query, errorFetch: false } };
   } catch (error) {
     return { props: { stars: null, query, errorFetch: true } };
