@@ -52,7 +52,6 @@ function Single({ query }) {
         router.push("/myproducts");
       });
   }, [query.product]);
-  console.log(product);
   const veriedEmail = user.email_verified;
   const disactiveProductHandle = async () => {
     const MySwal = withReactContent(Swal);
