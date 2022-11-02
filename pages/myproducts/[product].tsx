@@ -43,16 +43,16 @@ function Single({ query }) {
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (!query.id) return;
-    if (product.loaded && product.id === query.id) return;
-    dispatch(MyProductsActions.getProduct({ id: query.id }))
+    if (!query.product) return;
+    if (product.loaded && product.id == query.product) return;
+    dispatch(MyProductsActions.getProduct({ id: query.product }))
       .unwrap()
       .then(() => {})
       .catch(() => {
         router.push("/myproducts");
       });
-  }, [query.id]);
-
+  }, [query.product]);
+  console.log(product);
   const veriedEmail = user.email_verified;
   const disactiveProductHandle = async () => {
     const MySwal = withReactContent(Swal);

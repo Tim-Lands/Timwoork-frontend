@@ -31,6 +31,7 @@ export const languagesSlice = createSlice({
     ) => {
       const lang = action.payload;
       state.language = lang;
+      !Cookies.get("lang") && Cookies.set("lang", lang);
       state.getAll = (name: string) => {
         if (translates[name]) return translates[name][lang];
         else {

@@ -19,7 +19,6 @@ function Post({
 }): ReactElement {
   const { value, symbol_native } = useAppSelector((state) => state.currency.my);
 
-  const thumbnailUrl = `url(${thumbnail})`;
   const sizeClass = () => {
     switch (size) {
       case "small":
@@ -112,11 +111,12 @@ function Post({
   return (
     <div className={"timlands-post-item" + sizeClass()}>
       <Link href={`/p/${slug}`}>
-        <a
-          href={`/p/${slug}`}
+        <img
+          // href={`/p/${slug}`}
           className="post-item-img"
-          style={{ backgroundImage: thumbnailUrl }}
-        ></a>
+          src={thumbnail}
+          style={{ width: "100%" }}
+        />
       </Link>
       <div className="post-item-content">
         <Link href={`/u/${username}`}>

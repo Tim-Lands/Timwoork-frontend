@@ -91,7 +91,6 @@ const App = ({ innerApp }) => {
         )
       );
     } else {
-      console.log("else");
       dispatch(LanguagesActions.setLanguageManually("ar"));
     }
   }, [Cookies.get("lang"), lang]);
