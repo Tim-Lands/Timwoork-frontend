@@ -13,6 +13,7 @@ import purchase from "./purchases/purchasesSlice";
 import myProducts from "./myProducts/myProductsSlice";
 import mySales from "./sales/salesSlice";
 import categories from "./categories/categoriesSlice";
+import dashboardUsers  from "./tw-admin/users/userSlice";
 export const store = configureStore({
   reducer: {
     user,
@@ -29,6 +30,7 @@ export const store = configureStore({
     myProducts,
     mySales,
     categories,
+    dashboardUsers
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

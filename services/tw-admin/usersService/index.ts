@@ -13,7 +13,7 @@ async function getAll({
         params:{
             page,
             like:[`username,${search}`,`email,${search}`],
-            is_banned
+            is_banned:Number(is_banned)
         }
     })
     return res?.data
