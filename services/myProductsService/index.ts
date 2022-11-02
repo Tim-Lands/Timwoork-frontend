@@ -4,7 +4,7 @@ async function getAll(params?: any) {
   return res.data.data;
 }
 async function getOne(id: number) {
-  const res = await API.get("api/my_products/product/" + id);
+  const res = await API.get("api/new/me/products/" + id);
   return res.data.data;
 }
 async function updateOne(id: number, is_active: boolean) {

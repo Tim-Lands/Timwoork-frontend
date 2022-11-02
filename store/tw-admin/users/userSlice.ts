@@ -61,7 +61,7 @@ export const dashboardUserSlice = createSlice({
     reducers: {
     },
     extraReducers(builder) {
-        builder.addCase(getAllUsers.pending,(state, action:any)=>{
+       /*  builder.addCase(getAllUsers.pending,(state, action:any)=>{
             const payload:any = action.payload
             state.page = payload.page,
             state.curr_user = payload.current_page
@@ -70,7 +70,10 @@ export const dashboardUserSlice = createSlice({
             state.total = payload.total
             state.users = payload.data
             state.loading = false
+        console.log(action)
         })
+ */
+        
     },
 });
 export default dashboardUserSlice.reducer;

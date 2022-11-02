@@ -38,19 +38,19 @@ function index() {
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
   const { getAll } = useAppSelector((state) => state.languages);
-  const usersState = useAppSelector(state=>state.dashboardUsers)
   const dispatch = useAppDispatch()
-  console.log(usersState)
-  
+  dispatch(UserActions.getAllUsers({}))
   useEffect(() => {
     refreshData();
   }, [pageNumber, sentinel]);
 
   useEffect(()=>{
-    dispatch(UserActions.getAllUsers({}))
+    
   },[])
 
   useEffect(() => {
+    console.log('dispatching')
+    
     if (window.innerWidth < 550) {
       setPaginationSize(2);
     }
