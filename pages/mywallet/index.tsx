@@ -6,28 +6,35 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Unauthorized from "@/components/Unauthorized";
 import { Alert } from "@/components/Alert/Alert";
-import { useAppSelector } from "@/store/hooks";
-
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { WalletActions } from "store/wallet/WalletActions";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import { Table } from "antd";
 
 function index() {
-  const user = useAppSelector((state) => state.user);
-  const wallet = useAppSelector((state) => state.wallet);
-  const profile = useAppSelector((state) => state.profile);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch();
+  const {
+    languages: { getAll },
+    wallet,
+    user,
+    profile,
+  } = useAppSelector((state) => state);
   const veriedEmail = user.email_verified;
-
   const myLoader = () => {
     return `${profile.avatar_path}`;
   };
+  useEffect(() => {
+    if (wallet.loaded) return;
+    dispatch(WalletActions.getWalletData());
+  }, [wallet]);
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
   }, [user]);
+
   function switchType(type: any, amount: number) {
     switch (type) {
       case 0:
@@ -57,13 +64,13 @@ function index() {
       dataIndex: "",
       width: 230,
       render: (e: any) => {
-        return <>{e.payload[whichTitle(language)]}</>;
+        return <>{e.payload.title}</>;
       },
     },
     {
       title: getAll("Payment_method"),
       dataIndex: "",
-      render: (e: any) => <>{e.payload[whichPayment(language)]}</>,
+      render: (e: any) => <>{e.payload.payment_method}</>,
     },
     {
       title: getAll("Date"),
@@ -77,7 +84,7 @@ function index() {
     <div className="py-3">
       {user.loading && <Loading />}
       {!user.isLogged && !user.loading && <Unauthorized />}
-      {user.isLogged && (
+      {user.isLogged && !user.loading && (
         <>
           <MetaTags
             title={getAll("My_portfolio")}
@@ -207,26 +214,6 @@ function index() {
   );
 }
 
-const whichTitle = (language) => {
-  switch (language) {
-    case "ar":
-      return "title";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
-const whichPayment = (language) => {
-  switch (language) {
-    case "ar":
-      return "payment_method_ar";
-    case "en":
-      return "payment_method_en";
-    case "fr":
-      return "payment_method_fr";
-  }
-};
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };

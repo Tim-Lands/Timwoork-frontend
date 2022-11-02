@@ -1,18 +1,18 @@
 import Layout from "@/components/Layout/HomeLayout";
 import React, { ReactElement, useEffect } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import cookies from "next-cookies";
 import { Table } from "antd";
+import API from "../../config";
 import Link from "next/link";
-import useSWR from "swr";
+import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
-function index() {
+function index({ buysList }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
-
-  const { data: buysList }: any = useSWR(`api/my_purchases`);
 
   const veriedEmail = user.email_verified;
 
@@ -182,7 +182,25 @@ const whichTitle = (language) => {
       return "title_fr";
   }
 };
+export async function getServerSideProps(ctx) {
+  const token = cookies(ctx).token || "";
+  const uriString = `api/my_purchases`;
+  try {
+    const res = await API.get(uriString, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { props: { buysList: res.data, errorItem: true } };
+  } catch (error) {
+    return { props: { buysList: null, errorItem: true } };
+  }
+}
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
+};
+index.propTypes = {
+  ShowItem: PropTypes.any,
+  errorItem: PropTypes.bool,
 };
 export default index;

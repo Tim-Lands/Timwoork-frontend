@@ -113,16 +113,18 @@ function Medias({ query }) {
 
   const loadVideoUrl: any = async () => {
     try {
-      const res = await API.post(
-        `api/product/${id}/product-step-four`,
-        { url_video: url_video },
-        {
+      await dispatch(
+        MyProductsActions.modifySteps({
+          url: `api/product/${id}/product-step-four`,
+          id,
+          body: { url_video: url_video },
           headers: {
-            "content-type": "multipart/form-data",
+            headers: {
+              "content-type": "multipart/form-data",
+            },
           },
-        }
-      );
-      return res;
+        })
+      ).unwrap();
     } catch (e) {
       () => {};
     }

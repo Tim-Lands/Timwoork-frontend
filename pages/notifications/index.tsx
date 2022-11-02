@@ -2,70 +2,42 @@ import Layout from "@/components/Layout/HomeLayout";
 import Loading from "@/components/Loading";
 import Notification from "@/components/Notification";
 import { ReactElement, useEffect, useState } from "react";
-import useSWR, { useSWRConfig } from "swr";
-import Cookies from "js-cookie";
 import router from "next/router";
+import { NotificationsActions } from "store/notifications/notificationsActions";
 import API from "../../config";
 import { Result } from "antd";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Pagination from "react-js-pagination";
 
 function index() {
-  let token = Cookies.get("token");
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch();
+  const {
+    languages: { getAll, language },
+    user,
+    notifications: { all: notification },
+  } = useAppSelector((state) => state);
 
-  if (!token && typeof window !== "undefined")
-    token = localStorage.getItem("token");
-  const { mutate } = useSWRConfig();
-  const [pageNumber, setPageNumber] = useState(1);
-  const { data: notifications }: any = useSWR(
-    `api/notifications?page=${pageNumber}`
-  );
   const [, setSize] = useState(4);
 
   const [paginationSize, setPaginationSize] = useState(8);
-  // const fetchData = async (pageNumber: number = 1) => {
-  //   try {
-  //     // const res =
-  //     await API.get(`api/filter?paginate=12&page=${pageNumber}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     // if (res.status === 200) {
-  //     // }
-  //   } catch (error) {
-  //     () => {};
-  //   }
-  // };
+
   async function markAllRead() {
     try {
       // const res =
-      await API.post(
-        `api/notifications/markAllAsRead`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      mutate("api/me");
+      await API.post(`api/notifications/markAllAsRead`);
     } catch (error) {
       () => {};
     }
-
-    mutate("api/me");
   }
   useEffect(() => {
-    if (!token) {
+    if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     markAllRead();
-  }, []);
+  }, [user]);
   useEffect(() => {
     if (window.innerWidth > 950) {
       setSize(4);
@@ -118,45 +90,38 @@ function index() {
         <div className="col-md-6">
           <div className="app-bill">
             <div className="app-bill-header"></div>
-            {!notifications && <Loading />}
-            {notifications && notifications.data.data.length == 0 && (
+            {notification.loading && <Loading />}
+            {notification.data.length == 0 && !notification.loading && (
               <Result status="404" subTitle={getAll("You_have_no_2")} />
             )}
             <div className="notifications-panel">
               <div className="list-group">
-                {notifications &&
-                  notifications.data.data.map((e: any) => {
-                    return (
-                      <Notification
-                        key={e.id}
-                        title={e.data[whichTitle(language)]}
-                        type={e.data.type}
-                        item_id={e.data.content.item_id}
-                        to={e.data.to}
-                        avatar={e.data.user_sender.avatar_path}
-                        created_at={e.created_at}
-                        product_title={e.data.content[whichTitle(language)]}
-                        slug={e.data.content.slug}
-                      />
-                    );
-                  })}
+                {notification.data.map((e: any) => {
+                  return (
+                    <Notification
+                      key={e.id}
+                      title={e.data[`title_${language}`] || e.data.title}
+                      type={e.data.type}
+                      item_id={e.data.content.item_id}
+                      to={e.data.to}
+                      avatar={e.data.user_sender.avatar_path}
+                      created_at={e.created_at}
+                      product_title={
+                        e.data.content[`title_${language}`] ||
+                        e.data?.content?.cause
+                      }
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
           <Pagination
-            activePage={
-              notifications?.data?.current_page
-                ? notifications?.data?.current_page
-                : 0
-            }
-            itemsCountPerPage={
-              notifications?.data?.per_page ? notifications?.data?.per_page : 0
-            }
-            totalItemsCount={
-              notifications?.data?.total ? notifications?.data?.total : 0
-            }
+            activePage={notification.current_page}
+            itemsCountPerPage={notification.per_page}
+            totalItemsCount={notification.total}
             onChange={(pageNumber) => {
-              setPageNumber(pageNumber);
+              dispatch(NotificationsActions.setPage(pageNumber));
             }}
             pageRangeDisplayed={paginationSize}
             itemClass="page-item"
@@ -168,18 +133,7 @@ function index() {
     </div>
   );
 }
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
+
 index.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };

@@ -11,7 +11,6 @@ function Notification({
   to,
   type,
   item_id,
-  slug,
 }): ReactElement {
   function switchNotifyType() {
     switch (type) {
@@ -24,7 +23,7 @@ function Notification({
         }
         break;
       case "rating":
-        return `/p/${slug}`;
+        return `/p/${item_id}`;
 
       case "system":
         return ``;
@@ -68,6 +67,5 @@ Notification.propTypes = {
   product_title: PropTypes.string,
   type: PropTypes.string,
   to: PropTypes.string,
-  slug: PropTypes.string,
   item_id: PropTypes.any,
 };

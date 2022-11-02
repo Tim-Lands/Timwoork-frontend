@@ -11,7 +11,6 @@ import {
 import Language from "@/components/DropdowModal/Language";
 import { Tooltip } from "antd";
 import { BlogActions } from "@/store/blog/blogActions";
-import { ProductsActions } from "@/store/products/productActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 function Footer() {
@@ -25,8 +24,7 @@ function Footer() {
   } = useAppSelector((state) => state);
   useEffect(() => {
     if (!footer.loaded) dispatch(BlogActions.getFooterData({ per_page: 5 }));
-    if (!popular.loaded) dispatch(ProductsActions.getPopularProducts());
-  }, [footer, popular]);
+  }, [footer]);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const { getAll } = useAppSelector((state) => state.languages);
 
@@ -84,7 +82,7 @@ function Footer() {
                 if (index > 4) return;
                 return (
                   <li key={product.id} style={{ width: 350 }}>
-                    <Link href={`/p/${product.slug}`}>
+                    <Link href={`/p/${product.id}`}>
                       <a className="text-truncate">{product.title}</a>
                     </Link>
                   </li>

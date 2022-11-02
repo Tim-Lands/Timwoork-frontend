@@ -57,9 +57,8 @@ export const userSlice = createSlice({
       const token = action.payload;
       if (token) {
         API.defaults.headers.Authorization = `Bearer ${token}`;
-        typeof window !== "undefined"
-          ? localStorage.setItem("token", token)
-          : Cookies.set("token", token);
+        typeof window !== "undefined" && localStorage.setItem("token", token);
+        Cookies.set("token", token);
       }
     },
     clearErrors: (state: UserState) => {
@@ -89,18 +88,18 @@ export const userSlice = createSlice({
     });
     builder.addCase(logoutUser.fulfilled, (state) => {
       API.defaults.headers.Authorization = ``;
-      typeof window !== "undefined"
-        ? localStorage.setItem("token", "")
-        : Cookies.remove("token");
+      typeof window !== "undefined" && localStorage.setItem("token", "");
+      Cookies.remove("token");
       state.token = "";
+      state.id = null;
       state.isLogged = false;
     });
     builder.addCase(logoutAll.fulfilled, (state) => {
       API.defaults.headers.Authorization = ``;
-      typeof window !== "undefined"
-        ? localStorage.setItem("token", "")
-        : Cookies.remove("token");
+      typeof window !== "undefined" && localStorage.setItem("token", "");
+      Cookies.remove("token");
       state.token = "";
+      state.id = null;
       state.isLogged = false;
     });
     builder.addCase(

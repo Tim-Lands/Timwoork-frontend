@@ -41,12 +41,17 @@ function Single({ query }) {
   const { getAll, language } = useAppSelector((state) => state.languages);
   const product = useAppSelector((state) => state.myProducts.product);
   const user = useAppSelector((state) => state.user);
+
   useEffect(() => {
-    dispatch(MyProductsActions.getProduct({ id: query.product }));
-  }, []);
-  useEffect(() => {
-    if (!product.id && !product.loading) router.push("/myproducts");
-  }, [product]);
+    if (!query.product) return;
+    if (product.loaded && product.id == query.product) return;
+    dispatch(MyProductsActions.getProduct({ id: query.product }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [query.product]);
   const veriedEmail = user.email_verified;
   const disactiveProductHandle = async () => {
     const MySwal = withReactContent(Swal);
@@ -295,7 +300,7 @@ function Single({ query }) {
         metaDescription={product.content}
         ogDescription={product.content}
         ogImage={product.full_path_thumbnail}
-        ogUrl={`https://timwoork.com/p/${product.slug}`}
+        ogUrl={`https://timwoork.com/p/${product.id}`}
       />
       {product && veriedEmail && (
         <div className="timwoork-single">

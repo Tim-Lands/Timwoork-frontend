@@ -6,15 +6,13 @@ import { Alert } from "../Alert/Alert";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { WalletActions } from "@/store/wallet/WalletActions";
 
-export default function UploadPicture({
-  pending_amount,
-  withdrawable_amount,
-  // darkMode,
-}) {
+export default function UploadPicture({ pending_amount, withdrawable_amount }) {
   const dispatch = useAppDispatch();
-  const { getAll } = useAppSelector((state) => state.languages);
-  const profile = useAppSelector((state) => state.profile);
-  const wallet = useAppSelector((state) => state.wallet);
+  const {
+    languages: { getAll },
+    wallet,
+    profile,
+  } = useAppSelector((state) => state);
   useEffect(() => {
     if (wallet.loaded) return;
     dispatch(WalletActions.getWalletData());

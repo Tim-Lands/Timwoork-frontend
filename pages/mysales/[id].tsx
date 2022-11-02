@@ -229,7 +229,6 @@ const User = ({ query }) => {
     }
   };
   // دالة إرسال الرسالة
-  //const scrollToRef = (ref) => window.scrollTo(5764, ref.current.offsetTop)
 
   const messageRef: any = useRef();
 
@@ -519,7 +518,6 @@ const User = ({ query }) => {
       return ShowItem?.duration + getAll("Day");
     }
   }
-  // console.log()
 
   return (
     <>

@@ -30,10 +30,10 @@ function index() {
     (state) => state.products
   );
   useEffect(() => {
-    if (!popular.loaded) dispatch(ProductsActions.getPopularProducts());
     if (!latest.loaded) dispatch(ProductsActions.getLatestProducts());
     if (!best_seller.loaded) dispatch(ProductsActions.getSellingProducts());
-  }, [popular, latest, best_seller]);
+  }, [latest, best_seller]);
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -157,7 +157,7 @@ function index() {
                           e.profile_seller.profile.user?.username
                         }
                         price={e.price}
-                        slug={e.slug}
+                        slug={e.id}
                         thumbnail={e.full_path_thumbnail}
                         buyers={e.count_buying}
                         avatar={e.profile_seller.profile.avatar_path}
@@ -227,7 +227,7 @@ function index() {
                         e.profile_seller.profile.user?.username
                       }
                       price={e.price}
-                      slug={e.slug}
+                      slug={e.id}
                       thumbnail={e.full_path_thumbnail}
                       buyers={e.count_buying}
                       avatar={e.profile_seller.profile.avatar_path}
@@ -293,7 +293,7 @@ function index() {
                         e.profile_seller.profile.user?.username
                       }
                       price={e.price}
-                      slug={e.slug}
+                      slug={e.id}
                       thumbnail={e.full_path_thumbnail}
                       buyers={e.count_buying}
                       avatar={e.profile_seller.profile.avatar_path}

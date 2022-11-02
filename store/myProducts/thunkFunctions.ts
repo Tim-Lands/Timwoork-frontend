@@ -59,10 +59,33 @@ const deleteProduct = createAsyncThunk(
     }
   }
 );
+const modifySteps = createAsyncThunk(
+  "myProducts/steps/modify",
+  async (
+    args: {
+      url: string;
+      body?: any;
+      headers?: any;
+      id: number;
+    },
+    { rejectWithValue, dispatch }
+  ) => {
+    const { url, body, headers, id } = args;
+    try {
+      const res = await MyProductsService.steps(url, body, headers);
+      dispatch(getMyProducts({}));
+      dispatch(getProduct({ id }));
+      return res;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const MyProductsThunkFunctions = {
   getMyProducts,
   getProduct,
   updateProduct,
   deleteProduct,
+  modifySteps,
 };

@@ -165,6 +165,7 @@ export const myProductsSlice = createSlice({
         state.product = {
           ...action.payload,
           galleries: action.payload.galaries,
+          loaded: true,
         };
       }
     );

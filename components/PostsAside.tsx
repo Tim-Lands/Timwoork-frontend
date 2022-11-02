@@ -140,7 +140,7 @@ function PostsAside({
                         e.profile_seller.profile.user?.username
                       }
                       price={e.price}
-                      slug={e.slug}
+                      slug={e.id}
                       thumbnail={e.full_path_thumbnail}
                       buyers={e.count_buying}
                     />
@@ -165,7 +165,7 @@ function PostsAside({
                         e.profile_seller.profile.user?.username
                       }
                       price={e.price}
-                      slug={e.slug}
+                      slug={e.id}
                       thumbnail={e.full_path_thumbnail}
                       buyers={e.count_buying}
                     />

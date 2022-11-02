@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
-import { useAppSelector } from "@/store/hooks";
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 function Subcategories({ postsList, categoryID }) {
   const [list, setList] = useState({ subcategories: [] });
-  const language = useAppSelector((state) => state.languages.language);
 
   useEffect(() => {
     postsList.forEach((posts) => {
@@ -29,7 +27,7 @@ function Subcategories({ postsList, categoryID }) {
                 <Link
                   href={`/products?categoryID=${categoryID}&subcategoryID=${item.id}`}
                 >
-                  <a className="sub">{item[which(language)]}</a>
+                  <a className="sub">{item.name}</a>
                 </Link>
               </li>
             );
@@ -39,16 +37,7 @@ function Subcategories({ postsList, categoryID }) {
     </motion.div>
   );
 }
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
+
 Subcategories.propTypes = {
   postsList: PropTypes.array,
   categoryID: PropTypes.number,

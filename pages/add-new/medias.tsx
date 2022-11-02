@@ -3,7 +3,8 @@ import { ReactElement, useEffect, useState } from "react";
 import API from "../../config";
 import router from "next/router";
 import SidebarAdvices from "@/components/add-new/SidebarAdvices";
-import { useAppSelector } from "@/store/hooks";
+import { MyProductsActions } from "store/myProducts/myProductsActions";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
@@ -17,6 +18,18 @@ import RemoveImageModal from "@/components/removeImageModal";
 
 function Medias({ query }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
+  const dispatch = useAppDispatch();
+  const getProduct = useAppSelector((state) => state.myProducts.product);
+
+  useEffect(() => {
+    if (getProduct.loaded && getProduct.id === query.id) return;
+    dispatch(MyProductsActions.getProduct({ id: query.id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/add-new");
+      });
+  }, []);
   const { getAll, language } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
 
@@ -30,25 +43,12 @@ function Medias({ query }) {
 
   const id = query.id;
   const veriedEmail = user.email_verified;
-  async function getProductId() {
-    try {
-      // await API.get(`api/my_products/product/${query.id}`);
-      //! check if id not exist
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
+
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
 
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
@@ -93,16 +93,18 @@ function Medias({ query }) {
 
   const loadVideoUrl: any = async () => {
     try {
-      const res = await API.post(
-        `api/product/${id}/product-step-four`,
-        { url_video: url_video },
-        {
+      await dispatch(
+        MyProductsActions.modifySteps({
+          url: `api/product/${id}/product-step-four`,
+          id,
+          body: { url_video: url_video },
           headers: {
-            "content-type": "multipart/form-data",
+            headers: {
+              "content-type": "multipart/form-data",
+            },
           },
-        }
-      );
-      return res;
+        })
+      ).unwrap();
     } catch (e) {
       () => {};
     }

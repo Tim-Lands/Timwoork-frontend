@@ -17,4 +17,14 @@ async function deleteOne(id: number) {
   const res = await API.delete(`/api/new/me/products/${id}`);
   return res.data.data;
 }
-export const MyProductsService = { getAll, getOne, updateOne, deleteOne };
+async function steps(url: string, body?: any, headers?: any) {
+  const res = await API.post(url, body, headers);
+  return res.data.data;
+}
+export const MyProductsService = {
+  getAll,
+  getOne,
+  updateOne,
+  deleteOne,
+  steps,
+};

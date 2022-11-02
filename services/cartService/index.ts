@@ -8,7 +8,7 @@ async function addOne(
   developments: Array<string>,
   quantity: number
 ) {
-  const res = await API.put("new/me/cart/items", {
+  const res = await API.put("api/new/me/cart/items", {
     product_id,
     developments,
     quantity,
@@ -16,7 +16,7 @@ async function addOne(
   return res.data;
 }
 async function deleteOne(id: number) {
-  const res = await API.delete(`new/me/cart/items/${id}`);
+  const res = await API.delete(`api/new/me/cart/items/${id}`);
   return res.data;
 }
 export const CartService = { getAll, addOne, deleteOne };

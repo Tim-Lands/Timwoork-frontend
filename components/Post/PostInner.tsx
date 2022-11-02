@@ -134,6 +134,7 @@ function PostInner({
                         height={20}
                         src={avatar}
                         alt={username}
+                        blurDataURL={"/1.png"}
                       />{" "}
                       <span>{author}</span>
                     </a>

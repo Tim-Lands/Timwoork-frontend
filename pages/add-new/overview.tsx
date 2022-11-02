@@ -71,8 +71,12 @@ function Overview({ query }) {
   } = useAppSelector((state) => state);
   useEffect(() => {
     if (getProduct.loaded && getProduct.id == query.id) return;
-
-    dispatch(MyProductsActions.getProduct({ id: query.id }));
+    dispatch(MyProductsActions.getProduct({ id: query.id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/add-new");
+      });
   }, []);
   const [subCategories, setSubCategories]: any = useState({
     subCategories: { subcategories: {} },
@@ -142,8 +146,13 @@ function Overview({ query }) {
           body.title_en = subtitles["en"];
         if (!isSubtitle["fr"] && subtitles["fr"])
           body.title_fr = subtitles["fr"];
-        await API.post(`api/product/${id}/product-step-one`, body);
-        // Authentication was successful.
+        await dispatch(
+          MyProductsActions.modifySteps({
+            url: `api/product/${id}/product-step-one`,
+            id,
+            body,
+          })
+        ).unwrap();
         message.success(getAll("The_update_has"));
         router.push({
           pathname: "/add-new/prices",
@@ -152,41 +161,22 @@ function Overview({ query }) {
           },
         });
       } catch (error: any) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          setValidationsErrors(error.response.data.errors);
+        console.log(error);
+        if (error.errors) {
+          setValidationsErrors(error.errors);
         }
       }
     },
   });
 
   if (!query) return message.error(getAll("An_error_occurred"));
-  async function getProductId() {
-    try {
-      // const res: any =
-      // await API.get(`api/my_products/product/${id}`);
-      // if (res.status === 200) {
-      //! check if id not exist
-      // }
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
+
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
     timeoutFunc.current = setTimeout(() => {}, 3000);
-    getProductId();
   }, [user]);
 
   const detectLang = async (txt) => {

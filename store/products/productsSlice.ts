@@ -19,7 +19,6 @@ interface dataState {
 export interface productsState extends dataState {
   popular: {
     data;
-    loaded: boolean;
   };
   best_seller: {
     data;
@@ -32,7 +31,7 @@ export interface productsState extends dataState {
   loading: boolean;
 }
 export const initialState: productsState = {
-  popular: { data: [], loaded: false },
+  popular: { data: [] },
   best_seller: { data: [], loaded: false },
   latest: { data: [], loaded: false },
   loading: false,
@@ -46,7 +45,6 @@ export const productsSlice = createSlice({
       getPopularProducts.fulfilled,
       (state: productsState, action) => {
         state.popular.data = action.payload;
-        state.popular.loaded = true;
       }
     );
     builder.addCase(

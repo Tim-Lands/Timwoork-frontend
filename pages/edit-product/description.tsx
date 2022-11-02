@@ -117,15 +117,21 @@ const Tiptap = (props: any) => {
 function Description({ query }) {
   const dispatch = useAppDispatch();
   const stepsView = useRef(null);
+  const id = query.id;
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
   const getProduct = useAppSelector((state) => state.myProducts.product);
   useEffect(() => {
-    if (getProduct.loaded || getProduct.id == query.id) return;
-    dispatch(MyProductsActions.getProduct({ id: query.id }));
-  }, [getProduct]);
+    if (!id) return;
+    if (getProduct.loaded && getProduct.id == id) return;
+    dispatch(MyProductsActions.getProduct({ id: id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [id]);
   const veriedEmail = user.email_verified;
-  const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const editor = useEditor(
     {
@@ -167,17 +173,18 @@ function Description({ query }) {
     onSubmit: async (values) => {
       setValidationsErrors({});
       try {
-        const id = query.id;
-        await API.post(`api/product/${id}/product-step-three`, values);
+        await dispatch(
+          MyProductsActions.modifySteps({
+            url: `api/product/${id}/product-step-three`,
+            id,
+            body: values,
+          })
+        ).unwrap();
         message.success(getAll("The_update_has"));
         router.push(`/edit-product/medias?id=${getProduct.id}`);
       } catch (error: any) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          setValidationsErrors(error.response.data.errors);
+        if (error.errors) {
+          setValidationsErrors(error.errors);
         }
       }
     },

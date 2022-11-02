@@ -1,3 +1,4 @@
+import { PusherService } from "services/pusherService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { UserService } from "../../services/userService";
 const getData = createAsyncThunk(
@@ -86,9 +87,11 @@ const register = createAsyncThunk(
 );
 const logoutUser = createAsyncThunk(
   "user/logout",
-  async (args, { rejectWithValue }) => {
+  async (args: { id: number }, { rejectWithValue }) => {
     try {
       const res = await UserService.logout();
+      const pusher = await PusherService.Initialize(args.id);
+      pusher.unsubscribe();
       return res;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -97,9 +100,11 @@ const logoutUser = createAsyncThunk(
 );
 const logoutAll = createAsyncThunk(
   "user/logout/all",
-  async (args, { rejectWithValue }) => {
+  async (args: { id: number }, { rejectWithValue }) => {
     try {
       const res = await UserService.logoutAll();
+      const pusher = await PusherService.Initialize(args.id);
+      pusher.unsubscribe();
       return res;
     } catch (error) {
       return rejectWithValue(error?.response?.data);

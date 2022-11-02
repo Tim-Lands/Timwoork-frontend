@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import useSWR from "swr";
+import cookies from "next-cookies";
 import PropTypes from "prop-types";
 import useFileUpload from "react-use-file-upload";
 import Loading from "@/components/Loading";
@@ -22,16 +22,13 @@ import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
 import { useAppSelector } from "@/store/hooks";
 
-const Order = ({ query }) => {
+const Order = ({ ShowItem, errorItem }) => {
   const { getAll, language } = useAppSelector((state) => state.languages);
 
   const user = useAppSelector((state) => state.user);
 
   const veriedEmail = user.email_verified;
 
-  const { data: ShowItem, errorItem }: any = useSWR(
-    `api/my_purchases/${query.id}`
-  );
   const inputRefMsg: any = useRef();
   const myRef = useRef(null);
 
@@ -533,7 +530,7 @@ const Order = ({ query }) => {
                     <Link
                       href={`/u/${
                         ShowItem &&
-                        ShowItem.data.profile_seller.profile.user.username
+                        ShowItem.data.profile_seller.profile.user?.username
                       }`}
                     >
                       <a className="order-user-info d-flex flex-center">
@@ -1346,9 +1343,21 @@ export default Order;
 Order.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
-Order.getInitialProps = async ({ query }) => {
-  return { query };
-};
+export async function getServerSideProps(ctx) {
+  const token = cookies(ctx).token || "";
+  const uriString = `api/my_purchases/${ctx.query.id}`;
+  try {
+    const res = await API.get(uriString, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { props: { ShowItem: res.data, errorItem: true } };
+  } catch (error) {
+    return { props: { ShowItem: null, errorItem: true } };
+  }
+}
 Order.propTypes = {
-  query: PropTypes.any,
+  ShowItem: PropTypes.any,
+  errorItem: PropTypes.bool,
 };

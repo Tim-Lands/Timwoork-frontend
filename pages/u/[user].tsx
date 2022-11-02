@@ -6,19 +6,19 @@ import { Badge, Card } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
 import { Services } from "../../services";
-
+import cookies from "next-cookies";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import PostInner from "@/components/Post/PostInner";
 
 const User = ({ query, profile: User }) => {
   const {
-    user,
+    user: me_user,
     languages: { getAll },
   } = useAppSelector((state) => state);
   const router = useRouter();
   const userId = User && User?.id;
-  const currentUserId = user.id;
+  const currentUserId = me_user.id;
   const APIURL = "";
   const myLoader = () => {
     return `${APIURL}${User.profile.avatar_path}`;
@@ -241,7 +241,7 @@ const User = ({ query, profile: User }) => {
                               e.profile_seller.profile.user.username
                             }
                             price={e.price}
-                            slug={e.slug}
+                            slug={e.id}
                             thumbnail={e.full_path_thumbnail}
                             buyers={e.count_buying}
                           />
@@ -262,10 +262,11 @@ export default User;
 User.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps(ctx) {
+  const { query } = ctx;
   try {
-    const profile = await Services.getProfile(query.user);
-
+    const lang = cookies(ctx).lang || "";
+    const profile = await Services.getProfile(query.user, lang);
     return { props: { profile, query, errorFetch: false } };
   } catch (error) {
     return { props: { stars: null, query, errorFetch: true } };

@@ -8,49 +8,45 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Unauthorized from "@/components/Unauthorized";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
-import API from "../../config";
 import Link from "next/link";
 
 function Complete({ query }) {
   const dispatch = useAppDispatch();
+  const id = query.id;
   const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
   const getProduct = useAppSelector((state) => state.myProducts.product);
   useEffect(() => {
-    if (getProduct.loaded || getProduct.id == query.id) return;
-    dispatch(MyProductsActions.getProduct({ id: query.id }));
-  }, [getProduct]);
+    if (!id) return;
+    if (getProduct.loaded && getProduct.id == id) return;
+    dispatch(MyProductsActions.getProduct({ id: id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [id]);
   const stepsView = useRef(null);
   const veriedEmail = user.email_verified;
 
   if (!user.isLogged && !veriedEmail) return <Unauthorized />;
   if (!query) return message.error(getAll("An_error_occurred"));
-  async function getProductId() {
-    try {
-      // const res: any =
-      // if (res.status === 200) {
-      //! check if id not exist
-      // }
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
+
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
     if (!user.isLogged && !user.loading) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
   async function stepFive() {
     try {
-      await API.post(`api/product/${query.id}/product-step-five`);
+      await dispatch(
+        MyProductsActions.modifySteps({
+          url: `api/product/${query.id}/product-step-five`,
+          id,
+        })
+      ).unwrap();
       // Authentication was successful.
       message.success(getAll("The_update_has"));
       router.push({

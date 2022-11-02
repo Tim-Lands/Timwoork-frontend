@@ -7,39 +7,31 @@ import { motion } from "framer-motion";
 import Layout from "@/components/Layout/HomeLayout";
 import router from "next/router";
 import { message } from "antd";
-import API from "../../config";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Link from "next/link";
 import PropTypes from "prop-types";
 
 function Prices({ query }) {
   const dispatch = useAppDispatch();
+  const id = query.id;
   const getProduct = useAppSelector((state) => state.myProducts.product);
   const stepsView = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
   useEffect(() => {
-    if (getProduct.loaded || getProduct.id == query.id) return;
-    dispatch(MyProductsActions.getProduct({ id: query.id }));
-  }, [getProduct]);
+    if (!id) return;
+    if (getProduct.loaded && getProduct.id == id) return;
+    dispatch(MyProductsActions.getProduct({ id: id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/myproducts");
+      });
+  }, [id]);
   const user = useAppSelector((state) => state.user);
 
-  const { id } = query;
   const [validationsErrors, setValidationsErrors]: any = useState({});
 
   const veriedEmail = user.email_verified;
-  async function getProductId() {
-    try {
-      //! check if id not exist
-      // router.push("/add-new");
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
 
   useEffect(() => {
     stepsView.current && stepsView.current.scrollIntoView();
@@ -47,7 +39,6 @@ function Prices({ query }) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
   return (
     <>
@@ -71,10 +62,13 @@ function Prices({ query }) {
                 onSubmit={async (values) => {
                   setValidationsErrors({});
                   try {
-                    await API.post(
-                      `api/product/${id}/product-step-two`,
-                      values
-                    );
+                    await dispatch(
+                      MyProductsActions.modifySteps({
+                        url: `api/product/${id}/product-step-two`,
+                        id,
+                        body: values,
+                      })
+                    ).unwrap();
                     // Authentication was successful.
 
                     message.success(getAll("The_update_has"));
@@ -82,12 +76,8 @@ function Prices({ query }) {
                       `/edit-product/description?id=${getProduct?.id}`
                     );
                   } catch (error: any) {
-                    if (
-                      error.response &&
-                      error.response.data &&
-                      error.response.data.errors
-                    ) {
-                      setValidationsErrors(error.response.data.errors);
+                    if (error.errors) {
+                      setValidationsErrors(error.errors);
                     }
                   }
                 }}

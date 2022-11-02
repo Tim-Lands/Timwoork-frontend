@@ -9,7 +9,6 @@ import PropTypes from "prop-types";
 import { ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { PusherProvider } from "../contexts/pusherContext";
 import InnerApp from "../components/_innerApp";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
@@ -23,9 +22,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <div>
       <Provider store={store}>
-        <PusherProvider>
-          <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
-        </PusherProvider>
+        <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
       </Provider>
     </div>
   );
