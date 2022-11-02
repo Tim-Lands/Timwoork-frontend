@@ -4,30 +4,31 @@ import { Field, Form, Formik } from "formik";
 import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
-
 import { CountriesService } from "@/services/countryService";
 import Loading from "@/components/Loading";
 import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
-import { useAppSelector } from "@/store/hooks";
-
+import { useAppSelector, useAppDispatch } from "store/hooks";
+import { ProfileActions } from "store/profile/profileActions";
+import { CurrencyActions } from "store/currency/currencyActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import ChangePass from "@/components/ChangePass";
 
 const personalInformations = () => {
-  const { getAll } = useAppSelector((state) => state.languages);
-  const currencies = useAppSelector((state) => state.currency.currencies.data);
-  const user = useAppSelector((state) => state.user);
-  const profile = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
+  const {
+    profile,
+    currency: { my: currency, currencies },
+    user,
+    languages: { getAll, language },
+  } = useAppSelector((state) => state);
   const [validationsErrors, setValidationsErrors]: any = useState({});
 
-  const currency = useAppSelector((state) => state.currency);
   const [Countries, setCountries] = useState([]);
   const [codes, setCodes] = useState([]);
   function setValidationsErrorsHandle() {
     setValidationsErrors({});
   }
-  // Redirect to user home route if user is authenticated.
   useEffect(() => {
     API.get("/api/phone_codes")
       .then((data) => {
@@ -41,12 +42,15 @@ const personalInformations = () => {
         setCountries(data);
       })
       .catch(() => {});
+
     if (!user.isLogged && !user.loading) {
       router.push("/login");
     }
   }, [user]);
-  // Return statement.
-
+  useEffect(() => {
+    if (currencies.loaded) return;
+    dispatch(CurrencyActions.getAllCurrencies());
+  }, []);
   return (
     <>
       <MetaTags
@@ -73,7 +77,7 @@ const personalInformations = () => {
                     gender: profile.gender,
                     country_id: profile.country_id,
                     phone: user.phone,
-                    currency_id: currency.my.id,
+                    currency_id: currency.id,
                     code_phone: user.code_phone,
                   }}
                   //validationSchema={SignupSchema}
@@ -81,18 +85,16 @@ const personalInformations = () => {
                     setValidationsErrors({});
 
                     try {
-                      await API.post("api/profiles/step_one", {
-                        ...values,
-                      });
-                      // Authentication was successful.
+                      await dispatch(
+                        ProfileActions.updateProfile(values)
+                      ).unwrap();
+                      if (values.currency_id !== currency.id)
+                        dispatch(CurrencyActions.getData());
                       message.success(getAll("The_update_has"));
+                      router.push("/user/profile");
                     } catch (error: any) {
-                      if (
-                        error.response &&
-                        error.response.data &&
-                        error.response.data.errors
-                      ) {
-                        setValidationsErrors(error.response.data.errors);
+                      if (error.errors) {
+                        setValidationsErrors(error.errors);
                       }
                     }
                   }}
@@ -337,7 +339,7 @@ const personalInformations = () => {
                                   </option>
                                   {Countries.map((e: any) => (
                                     <option key={e.id} value={e.id}>
-                                      {e.name_ar}
+                                      {e[`name_${language}`]}
                                     </option>
                                   ))}
                                 </Field>
@@ -440,14 +442,15 @@ const personalInformations = () => {
                                 >
                                   <option
                                     value={
-                                      currencies?.find((e) => e.code == "USD")
-                                        ?.id
+                                      currencies.data.find(
+                                        (e) => e.code == "USD"
+                                      )?.id
                                     }
                                   >
                                     {getAll("Virtual")}
                                   </option>
 
-                                  {currencies.map((e: any) => (
+                                  {currencies.data.map((e: any) => (
                                     <option key={e?.id} value={e?.id}>
                                       {e?.code}
                                     </option>
