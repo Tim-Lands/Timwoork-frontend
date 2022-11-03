@@ -13,7 +13,8 @@ import SuspensionPermanent from "@/components/SuspensionPermanent";
 import Pagination from "react-js-pagination";
 import EmailModalCause from "@/components/EmailModalCause";
 import SendNotification from "@/components/SendNotification";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { UserActions } from "@/store/tw-admin/users/UserActions";
 
 function index() {
   const [postsList, setPostsList] = useState({
@@ -37,12 +38,19 @@ function index() {
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const token = Cookies.get("token_dash");
   const { getAll } = useAppSelector((state) => state.languages);
-
+  const dispatch = useAppDispatch()
+  dispatch(UserActions.getAllUsers({}))
   useEffect(() => {
     refreshData();
   }, [pageNumber, sentinel]);
 
+  useEffect(()=>{
+    
+  },[])
+
   useEffect(() => {
+    console.log('dispatching')
+    
     if (window.innerWidth < 550) {
       setPaginationSize(2);
     }

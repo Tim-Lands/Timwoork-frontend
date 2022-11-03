@@ -27,7 +27,7 @@ const User = ({ query, profile: User }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
-
+  console.log(User)
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
@@ -223,22 +223,23 @@ const User = ({ query, profile: User }) => {
                     {User &&
                       User.profile.profile_seller &&
                       User.profile.profile_seller.products &&
-                      User.profile.profile_seller.products.map((e: any) => (
+                      User.profile.profile_seller.products.map((e: any) =>{ console.log(e); return(
+                        
                         <div key={e.id} className={"col-sm-6 col-lg-4"}>
                           <PostInner
-                            avatar={`/avatar.png`}
+                            avatar={User.profile.avatar_path}
                             size="small"
                             title={e.title}
                             author={
-                              e.profile_seller &&
-                              e.profile_seller.profile.first_name +
+                              User.profile &&
+                              User.profile.first_name +
                                 " " +
-                                e.profile_seller.profile.last_name
+                                User.profile.last_name
                             }
                             rate={e.ratings_avg_rating}
                             username={
-                              e.profile_seller &&
-                              e.profile_seller.profile.user.username
+                              User.profile.profile_seller &&
+                              User.username
                             }
                             price={e.price}
                             slug={e.id}
@@ -246,7 +247,7 @@ const User = ({ query, profile: User }) => {
                             buyers={e.count_buying}
                           />
                         </div>
-                      ))}
+                      )})}
                   </div>
                 </div>
               </div>

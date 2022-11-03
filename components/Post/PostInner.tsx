@@ -16,6 +16,7 @@ function PostInner({
   slug,
   rate = 2,
 }): ReactElement {
+  
   const { value, symbol_native } = useAppSelector((state) => state.currency.my);
   const sizeClass = () => {
     switch (size) {

@@ -28,7 +28,7 @@ async function updateSeller(data: { bio: string; portfolio: string }) {
   return res.data.data;
 }
 async function getOne(id, lang?: string) {
-  const res = await API.get(`api/profiles/${id}`, {
+  const res = await API.get(`api/new/profiles/${id}`, {
     headers: { "X-localization": lang },
   });
   return res.data.data;
