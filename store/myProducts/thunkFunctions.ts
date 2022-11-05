@@ -52,7 +52,7 @@ const deleteProduct = createAsyncThunk(
   async (args: { id: number; params?: any }, { rejectWithValue, dispatch }) => {
     try {
       const res = await MyProductsService.deleteOne(args.id);
-      dispatch(getMyProducts({ params: args.params }));
+      dispatch(getMyProducts(args.params ? { params: args.params } : {}));
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);

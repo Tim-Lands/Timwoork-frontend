@@ -115,6 +115,7 @@ function Single({ query }) {
               getAll("The_service_has"),
               "success"
             );
+            router.push("/myproducts");
           } catch (error) {
             () => {};
           }
