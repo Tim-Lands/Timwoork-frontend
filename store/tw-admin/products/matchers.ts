@@ -11,11 +11,11 @@ ProductsThunkFunctions;
 const isProductActions = isAsyncThunkAction(
     getAll, getAllActive, getAllArchieved, getAllPending, getAllReject
 );
-const isProductActionPending = isAllOf(isProductActions, isPending);
-const isProductActionFulfilled = isAllOf(isProductActions, isFulfilled);
-const isProductActionRejected = isAllOf(isProductActions, isRejected);
+const isProductsActionPending = isAllOf(isProductActions, isPending);
+const isProductsActionFulfilled = isAllOf(isProductActions, isFulfilled);
+const isProductsActionRejected = isAllOf(isProductActions, isRejected);
 export const CustomMatchers = {
-    isProductActionPending,
-    isProductActionFulfilled,
-    isProductActionRejected,
+    isProductsActionPending,
+    isProductsActionFulfilled,
+    isProductsActionRejected,
 };

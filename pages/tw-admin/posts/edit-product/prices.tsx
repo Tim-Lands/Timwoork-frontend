@@ -9,35 +9,25 @@ import API from "../../../../config";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
 function Prices({ query }) {
-  const [product, setProduct]: any = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const token = useRef(Cookies.get("token_dash"));
   const { getAll } = useAppSelector((state) => state.languages);
+  const productState = useAppSelector(state=>state.dashboardProducts.currProduct)
+  const product = productState.data
+  const dispatch = useAppDispatch()
+
 
   useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login");
       return;
     }
-    fetchData();
+    dispatch(ProductsActions.getOne({id:query.id}))
   }, [query.id]);
-  const fetchData = async () => {
-    try {
-      const res = await API.get(`dashboard/products/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token.current}`,
-        },
-      });
-      setProduct(res?.data?.data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <>
       <MetaTags
@@ -45,7 +35,7 @@ function Prices({ query }) {
         metaDescription={getAll("Service_editing_Price")}
         ogDescription={getAll("Service_editing_Price")}
       />
-      {token && !isLoading && (
+      {token && !productState.loading && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
             <div className="col-md-8 pt-3">

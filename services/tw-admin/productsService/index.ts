@@ -34,7 +34,7 @@ async function getArchieved({ page, search = "" }: { page: number, search?: stri
     return res?.data
 }
 
-async function getOne(id: number) {
+async function getOne(id: number|string) {
     const res = await API.get(`dashboard/new/products/${id}`)
     return res?.data
 }

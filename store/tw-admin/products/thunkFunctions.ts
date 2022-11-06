@@ -5,9 +5,9 @@ const getAll = createAsyncThunk('admin/products/all',
     async (args: { search?: string, page?: number }, { rejectWithValue }) => {
         try {
             console.log('get thunk all products')
-            let page = 1,search = '';
-            ({ page, search} = { page, search, ...args })
-            
+            let page = 1, search = '';
+            ({ page, search } = { page, search, ...args })
+
             const res = await ProductsService.getAll({
                 page,
                 search
@@ -27,7 +27,7 @@ const getAllActive = createAsyncThunk('admin/products/actived',
             const res = await ProductsService.getAll({
                 page,
                 search,
-                status:EProductStatus.ACTIVE
+                status: EProductStatus.ACTIVE
             })
             return res?.data
         }
@@ -43,7 +43,7 @@ const getAllReject = createAsyncThunk('admin/products/rejected',
             const res = await ProductsService.getAll({
                 page,
                 search,
-                status:EProductStatus.REJECTED
+                status: EProductStatus.REJECTED
             })
             return res?.data
         }
@@ -59,7 +59,7 @@ const getAllPending = createAsyncThunk('admin/products/pending',
             const res = await ProductsService.getAll({
                 page,
                 search,
-                status:EProductStatus.PENDING
+                status: EProductStatus.PENDING
             })
             return res?.data
         }
@@ -72,10 +72,24 @@ const getAllArchieved = createAsyncThunk('admin/products/archieved',
     async (args: { search: string, page: number }, { rejectWithValue }) => {
         try {
             const { search, page } = args
-            const res = await ProductsService.getArchieved({page, search})
+            const res = await ProductsService.getArchieved({ page, search })
             return res?.data
         }
         catch (err) {
+            return rejectWithValue(err)
+        }
+    })
+
+const getOne = createAsyncThunk('admin/products/{id}',
+    async (args: { id: number|string }, { rejectWithValue }) => {
+        try {
+            console.log('get one thunk')
+            const { id } = args
+            const res = await ProductsService.getOne(id)
+            return res?.data
+        }
+        catch (err) {
+            console.log(err)
             return rejectWithValue(err)
         }
     })
@@ -85,5 +99,6 @@ export const ProductsThunkFunctions = {
     getAllActive,
     getAllReject,
     getAllPending,
-    getAllArchieved
+    getAllArchieved,
+    getOne
 }

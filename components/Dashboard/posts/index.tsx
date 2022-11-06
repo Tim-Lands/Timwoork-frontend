@@ -1,6 +1,6 @@
 import API from "../../../config";
 import { motion } from "framer-motion";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { message, Table } from "antd";
@@ -62,6 +62,8 @@ function index({
         router.reload();
       }
     } catch (error) {
+  
+      console.log(error)
     }
   }
   async function onRejectClick(id: any) {

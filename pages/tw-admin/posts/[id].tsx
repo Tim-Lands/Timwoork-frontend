@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import { ReactElement, useEffect } from "react";
-import API from "../../../config";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 //import { useTranslation } from "react-i18next";
@@ -9,11 +8,10 @@ import Loading from "@/components/Loading";
 import { Dropdown, Menu } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
-import router from "next/router";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import Cookies from "js-cookie";
-import cookies from "next-cookies";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
 const properties = {
   duration: 5000,
@@ -36,13 +34,16 @@ const properties = {
     </div>
   ),
 };
-function Id({ ProductData, errorFetch }: any) {
-  const token = Cookies.get("token_dash");
+function Id() {
+  const ProductData = useAppSelector(state=>state.dashboardProducts.currProduct)
+  const dispatch = useAppDispatch()
+  const router = useRouter();
+  const { id }:any = router.query;
+  console.log(ProductData)
   useEffect(() => {
-    if (errorFetch) {
-      router.push("/404");
-    }
-  }, [token]);
+    if (id)
+    dispatch(ProductsActions.getOne({id}))
+  }, [id]);
 
   const showStars = () => {
     const rate = Number(ProductData?.data.ratings_count) || 0;
@@ -128,7 +129,7 @@ function Id({ ProductData, errorFetch }: any) {
 
   const menu = (
     <Menu>
-      {ProductData && (
+      {!ProductData.loading && (
         <Menu.Item key="1" icon={<i className="fa fa-facebook"></i>}>
           <a
             target="_blank"
@@ -139,7 +140,7 @@ function Id({ ProductData, errorFetch }: any) {
           </a>
         </Menu.Item>
       )}
-      {ProductData && (
+      {!ProductData.loading && (
         <Menu.Item key="2" icon={<i className="fa fa-facebook"></i>}>
           <a
             target="_blank"
@@ -186,8 +187,8 @@ function Id({ ProductData, errorFetch }: any) {
     "https://timwoork-space.ams3.digitaloceanspaces.com/products/galaries-images/";
   return (
     <>
-      {!ProductData && <Loading />}
-      {!errorFetch && (
+      {ProductData.loading && <Loading />}
+      {!ProductData.loading && (
         <MetaTags
           title={ProductData.data.title + ` - ${getAll("Timwoork")}`}
           metaDescription={ProductData.data.content}
@@ -197,7 +198,7 @@ function Id({ ProductData, errorFetch }: any) {
         />
       )}
 
-      {ProductData && (
+      {!ProductData.loading && (
         <div className="timwoork-single">
           <div className="row">
             <div className="col-lg-8">
@@ -502,24 +503,7 @@ Id.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Id;
-export async function getServerSideProps(ctx) {
-  const { query } = ctx;
-  try {
-    const token = cookies(ctx).token_dash || "";
-    const uriString = encodeURI(`dashboard/products/${query.id}`);
-    // Fetch data from external API
-    const res = await API.get(uriString, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
 
-    // Pass data to the page via props
-    return { props: { ProductData: res.data, query, errorFetch: false } };
-  } catch (error) {
-    return { props: { ProductData: null, query, errorFetch: true } };
-  }
-}
 Id.propTypes = {
   query: PropTypes.any,
   ProductData: PropTypes.any,
