@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import Navbar from "components/productModify/navbar";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
@@ -9,7 +10,6 @@ import { message } from "antd";
 import Layout from "@/components/Layout/HomeLayout";
 import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
-import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -228,90 +228,16 @@ function Description({ query }) {
                     "timlands-panel" + (formik.isSubmitting ? " is-loader" : "")
                   }
                 >
-                  <div className="timlands-steps-cont">
-                    <div className="timlands-steps">
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <Link href={`/edit-product/overview?id=${id}`}>
-                            <a>
-                              <span className="icon-circular">
-                                <span className="material-icons material-icons-outlined">
-                                  collections_bookmark
-                                </span>
-                              </span>
-                            </a>
-                          </Link>
-                        </h3>
-                      </div>
-                      <div
-                        className={`timlands-step-item ${
-                          getProduct.current_step < 1 && "pe-none"
-                        }`}
-                      >
-                        <h3 className="text">
-                          <Link href={`/edit-product/prices?id=${id}`}>
-                            <a>
-                              <span className="icon-circular">
-                                <span className="material-icons material-icons-outlined">
-                                  payments
-                                </span>
-                              </span>
-                            </a>
-                          </Link>
-                        </h3>
-                      </div>
-                      <div
-                        className={`timlands-step-item active ${
-                          getProduct.current_step < 2 && "pe-none"
-                        }`}
-                        ref={stepsView}
-                      >
-                        <h3 className="text">
-                          <Link href={`/edit-product/description?id=${id}`}>
-                            <a>
-                              <span className="icon-circular">
-                                <span className="material-icons material-icons-outlined">
-                                  description
-                                </span>
-                              </span>
-                            </a>
-                          </Link>
-                        </h3>
-                      </div>
-                      <div
-                        className={`timlands-step-item ${
-                          getProduct?.current_step < 3 && "pe-none"
-                        }`}
-                      >
-                        <h3 className="text">
-                          <Link href={`/edit-product/medias?id=${id}`}>
-                            <a>
-                              <span className="icon-circular">
-                                <span className="material-icons material-icons-outlined">
-                                  mms
-                                </span>
-                              </span>
-                            </a>
-                          </Link>
-                        </h3>
-                      </div>
-                      <div className="timlands-step-item ">
-                        <h3 className="text">
-                          <Link
-                            href={`/edit-product/complete?id=${getProduct?.id}`}
-                          >
-                            <a>
-                              <span className="icon-circular">
-                                <span className="material-icons material-icons-outlined">
-                                  publish
-                                </span>
-                              </span>
-                            </a>
-                          </Link>
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
+                  <Navbar
+                    active="description"
+                    navigate={true}
+                    url="edit-product"
+                    id={id}
+                    priceClass={getProduct.current_step < 1 && "pe-none"}
+                    descriptionClass={getProduct.current_step < 2 && "pe-none"}
+                    galleryClass={getProduct.current_step < 3 && "pe-none"}
+                  />
+
                   <div className="timlands-panel-header mt-3">
                     <div className="flex-center">
                       <h2 className="title">

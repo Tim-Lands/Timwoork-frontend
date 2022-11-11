@@ -3,6 +3,12 @@ import "antd/dist/antd.css";
 import "../styles/app.css";
 import "../styles/app-rtl.css";
 import "../styles/app-ltr.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "swiper/css/autoplay";
+
 import { store } from "../store";
 import { Provider } from "react-redux";
 import PropTypes from "prop-types";

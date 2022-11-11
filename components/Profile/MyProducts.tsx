@@ -218,7 +218,7 @@ export default function MyProducts() {
             {getAll("Disabled")}
           </Menu.Item>
         </Menu>
-        {data.length == 0 ? (
+        {data.length == 0 && !loading ? (
           <Result
             status="404"
             title={getAll("You_have_no")}

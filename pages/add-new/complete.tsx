@@ -4,6 +4,7 @@ import { message } from "antd";
 import router from "next/router";
 import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import Navbar from "components/productModify/navbar";
 
 import PropTypes from "prop-types";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
@@ -76,60 +77,8 @@ function Complete({ query }) {
           </div>
           <div className="col-md-8 pt-3">
             <div className={"timlands-panel"}>
-              <div className="timlands-steps-cont">
-                <div className="timlands-steps">
-                  <div className="timlands-step-item">
-                    <h4 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          collections_bookmark
-                        </span>
-                      </span>
-                      {getAll("General_information")}
-                    </h4>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h4 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          payments
-                        </span>
-                      </span>
-                      {getAll("Upgrades_price")}
-                    </h4>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h4 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          description
-                        </span>
-                      </span>
-                      {getAll("Description_and_instructions")}
-                    </h4>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h4 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          mms
-                        </span>
-                      </span>
-                      {getAll("Gallery_and_folders")}
-                    </h4>
-                  </div>
-                  <div className="timlands-step-item active" ref={stepsView}>
-                    <h4 className="text">
-                      <span className="icon-circular">
-                        <span className="material-icons material-icons-outlined">
-                          publish
-                        </span>
-                      </span>
-                      {getAll("Publish_service")}
-                    </h4>
-                  </div>
-                </div>
-              </div>
+              <Navbar active="publish" navigate={false} url="" />
+
               <div className="timlands-add-new">
                 <div className="timlands-add-new-icon">
                   <span className="material-icons material-icons-outlined">

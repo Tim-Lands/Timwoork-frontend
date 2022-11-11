@@ -1809,6 +1809,12 @@
   transition: all 0.3s;
   right: 0px !important;
 }
+.ltr .swiper-button-next::after {
+  transform: scale(-1);
+}
+.ltr .swiper-button-prev::after {
+  transform: scale(-1);
+}
 @media (max-width: 768px) {
   .ltr .hidden-tem {
     display: none !important;

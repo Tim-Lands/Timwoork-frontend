@@ -3,7 +3,7 @@ import { Result, message, Card } from "antd";
 import React, { createRef, ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Loading from "@/components/Loading";
+import Loading from "components/Loading";
 import router from "next/router";
 import API from "../../config";
 import { ProfileActions } from "@/store/profile/profileActions";

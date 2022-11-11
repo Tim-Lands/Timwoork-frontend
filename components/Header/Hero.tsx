@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
-
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/autoplay";
+
 import HeroContent from "./HeroContent";
 import Link from "next/link";
 

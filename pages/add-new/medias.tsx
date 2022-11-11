@@ -5,6 +5,7 @@ import router from "next/router";
 import SidebarAdvices from "@/components/add-new/SidebarAdvices";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import Navbar from "components/productModify/navbar";
 
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
@@ -294,58 +295,8 @@ function Medias({ query }) {
                 <div
                   className={"timlands-panel" + (loading ? " is-loader" : "")}
                 >
-                  <div className="timlands-steps">
-                    <div className="timlands-step-item">
-                      <h3 className="text">
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            collections_bookmark
-                          </span>
-                        </span>
-                        {getAll("General_information")}
-                      </h3>
-                    </div>
-                    <div className="timlands-step-item">
-                      <h3 className="text">
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            payments
-                          </span>
-                        </span>
-                        {getAll("Upgrades_price")}
-                      </h3>
-                    </div>
-                    <div className="timlands-step-item">
-                      <h3 className="text">
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            description
-                          </span>
-                        </span>
-                        {getAll("Description_and_instructions")}
-                      </h3>
-                    </div>
-                    <div className="timlands-step-item active">
-                      <h3 className="text">
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            mms
-                          </span>
-                        </span>
-                        {getAll("Gallery_and_folders")}
-                      </h3>
-                    </div>
-                    <div className="timlands-step-item">
-                      <h3 className="text">
-                        <span className="icon-circular">
-                          <span className="material-icons material-icons-outlined">
-                            publish
-                          </span>
-                        </span>
-                        {getAll("Publish_service")}
-                      </h3>
-                    </div>
-                  </div>
+                  <Navbar active="gallery" navigate={false} url="" />
+
                   {validationsGeneral.msg && (
                     <Alert type="error">{validationsGeneral.msg}</Alert>
                   )}

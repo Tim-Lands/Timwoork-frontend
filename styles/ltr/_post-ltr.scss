@@ -577,3 +577,9 @@
     }
   }
 }
+.swiper-button-next::after {
+  transform: scale(-1);
+}
+.swiper-button-prev::after {
+  transform: scale(-1);
+}

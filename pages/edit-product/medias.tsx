@@ -2,6 +2,7 @@ import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import API from "../../config";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
+import Navbar from "components/productModify/navbar";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import router from "next/router";
 import { message, notification } from "antd";
@@ -13,7 +14,6 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
-import Link from "next/link";
 
 function Medias({ query }) {
   const dispatch = useAppDispatch();
@@ -294,80 +294,12 @@ function Medias({ query }) {
                             <img src={item['data_url']} alt="" width={200} height={100} />
                         ))} */}
             <div className={"timlands-panel" + (loading ? " is-loader" : "")}>
-              <div className="timlands-steps-cont">
-                <div className="timlands-steps">
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <Link href={`/edit-product/overview?id=${id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              collections_bookmark
-                            </span>
-                          </span>
-                          {getAll("General_information")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <Link href={`/edit-product/prices?id=${id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              payments
-                            </span>
-                          </span>
-                          {getAll("Upgrades_price")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <Link href={`/edit-product/description?id=${id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              description
-                            </span>
-                          </span>
-                          {getAll("Description_and_instructions")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item active" ref={stepsView}>
-                    <h3 className="text">
-                      <Link href={`/edit-product/medias?id=${id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              mms
-                            </span>
-                          </span>
-                          {getAll("Gallery_and_folders")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item ">
-                    <h3 className="text">
-                      <Link href={`/edit-product/complete?id=${id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              publish
-                            </span>
-                          </span>
-                          {getAll("Publish_service")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                </div>
-              </div>
+              <Navbar
+                active="complete"
+                navigate={true}
+                url="edit-product"
+                id={id}
+              />
               {validationsGeneral.msg && (
                 <Alert type="error">{validationsGeneral.msg}</Alert>
               )}

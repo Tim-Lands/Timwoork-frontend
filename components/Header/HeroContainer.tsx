@@ -8,7 +8,6 @@ function HeroContainer() {
     languages: { getAll },
     categories: { top: topCategories },
   } = useAppSelector((state) => state);
-
   return (
     <div className="hero-container">
       <div className="inner">

@@ -1,30 +1,21 @@
 import { Menu, Dropdown, Button } from "antd";
 import { PRIMARY } from "../styles/variables";
+import PostsAside from "@/components/PostsAside";
 import Hero from "@/components/Header/Hero";
 import VideoAside from "@/components/VideoSection/VideoAside";
 import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import Link from "next/link";
 import router from "next/router";
 import Categories from "@/components/Categories";
 import LayoutHome from "@/components/Layout/indexLayout";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/autoplay";
+
 import { ProductsActions } from "@/store/products/productActions";
-import PostInner from "@/components/Post/PostInner";
 function index() {
   const dispatch = useAppDispatch();
   const {
     categories: { all: categories },
-    languages: { getAll, language },
+    languages: { getAll },
   } = useAppSelector((state) => state);
   const { popular, best_seller, latest } = useAppSelector(
     (state) => state.products
@@ -95,213 +86,24 @@ function index() {
         popular.data.length !== 0 &&
         latest.data.length !== 0 && (
           <>
-            <div
-              className="container "
-              style={{ direction: language === "ar" ? "rtl" : "ltr" }}
-            >
-              <div
-                className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header w-100"
-                style={{ direction: language === "ar" ? "rtl" : "ltr" }}
-              >
-                <h6 className="title   fw-bold" style={{ fontSize: 19 }}>
-                  {getAll("Newly_added_services")}
-                </h6>
-                <Link href="/products/latest">
-                  <button>{getAll("More")}</button>
-                </Link>
-              </div>
-
-              <Swiper
-                pagination={{
-                  type: "progressbar",
-                }}
-                // dir={language === "ar" ? "rtl" : "ltr"}
-                navigation={true}
-                modules={[Pagination, Navigation]}
-                breakpoints={{
-                  1000: {
-                    slidesPerView: 4,
-                    spaceBetween: 15,
-                  },
-                  770: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                  },
-                  600: {
-                    slidesPerView: 2,
-                    spaceBetween: 15,
-                  },
-                  100: {
-                    slidesPerView: 1,
-                    spaceBetween: 15,
-                  },
-                }}
-                className="mySwiper"
-                style={{ direction: "rtl" }}
-                dir={"rtl"}
-              >
-                {latest.data.map((e: any) => {
-                  return (
-                    <SwiperSlide key={e.id}>
-                      <PostInner
-                        title={e.title}
-                        author={
-                          e.profile_seller &&
-                          e.profile_seller.profile.first_name +
-                            " " +
-                            e.profile_seller.profile.last_name
-                        }
-                        rate={e.ratings_avg_rating}
-                        username={
-                          e.profile_seller &&
-                          e.profile_seller.profile.user?.username
-                        }
-                        price={e.price}
-                        slug={e.id}
-                        thumbnail={e.full_path_thumbnail}
-                        buyers={e.count_buying}
-                        avatar={e.profile_seller.profile.avatar_path}
-                      />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
-            </div>
-            <div
-              className="container "
-              style={{ marginBlock: 90, direction: "rtl" }}
-            >
-              <div
-                className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header w-100"
-                style={{ direction: language === "ar" ? "rtl" : "ltr" }}
-              >
-                <h6 className="title   fw-bold" style={{ fontSize: 19 }}>
-                  {getAll("Top_selling_services")}
-                </h6>
-                <Link href="/products/best-seller">
-                  <button>{getAll("More")}</button>
-                </Link>
-              </div>
-              <Swiper
-                pagination={{
-                  type: "progressbar",
-                }}
-                // dir={language === "en" ? "ltr" : "rtl"}
-                navigation={true}
-                modules={[Pagination, Navigation]}
-                breakpoints={{
-                  1000: {
-                    slidesPerView: 4,
-                    spaceBetween: 15,
-                  },
-                  770: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                  },
-                  600: {
-                    slidesPerView: 2,
-                    spaceBetween: 15,
-                  },
-                  100: {
-                    slidesPerView: 1,
-                    spaceBetween: 15,
-                  },
-                }}
-                className="mySwiper"
-                dir={"rtl"}
-                style={{ direction: "rtl" }}
-              >
-                {best_seller.data.map((e: any) => (
-                  <SwiperSlide key={e.id}>
-                    <PostInner
-                      title={e.title}
-                      author={
-                        e.profile_seller &&
-                        e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
-                      }
-                      rate={e.ratings_avg_rating}
-                      username={
-                        e.profile_seller &&
-                        e.profile_seller.profile.user?.username
-                      }
-                      price={e.price}
-                      slug={e.id}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                      avatar={e.profile_seller.profile.avatar_path}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-            <div className="container " style={{ direction: "rtl" }}>
-              <div
-                className="d-flex align-items-center justify-content-between mb-5 mt-5 index-product-header w-100"
-                style={{ direction: language === "ar" ? "rtl" : "ltr" }}
-              >
-                <h6 className="title   fw-bold" style={{ fontSize: 19 }}>
-                  {getAll("Most_popular_services")}
-                </h6>
-                <button>
-                  <Link href="/products/popular">{getAll("More")}</Link>
-                </button>
-              </div>
-              <Swiper
-                // dir={language === "ar" ? "rtl" : ""}
-                pagination={{
-                  type: "progressbar",
-                }}
-                navigation={true}
-                modules={[Pagination, Navigation]}
-                breakpoints={{
-                  1000: {
-                    slidesPerView: 4,
-                    spaceBetween: 15,
-                  },
-                  770: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                  },
-                  600: {
-                    slidesPerView: 2,
-                    spaceBetween: 15,
-                  },
-                  100: {
-                    slidesPerView: 1,
-                    spaceBetween: 15,
-                  },
-                }}
-                style={{ direction: "rtl" }}
-                dir={"rtl"}
-                className="mySwiper "
-              >
-                {popular.data.map((e: any) => (
-                  <SwiperSlide key={e.id}>
-                    <PostInner
-                      title={e.title}
-                      author={
-                        e.profile_seller &&
-                        e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
-                      }
-                      rate={e.ratings_avg_rating}
-                      username={
-                        e.profile_seller &&
-                        e.profile_seller.profile.user?.username
-                      }
-                      price={e.price}
-                      slug={e.id}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                      avatar={e.profile_seller.profile.avatar_path}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
+            <PostsAside
+              PostData={latest.data}
+              title={getAll("Newly_added_services")}
+              linkURL="/products/latest"
+              more={getAll("More")}
+            />
+            <PostsAside
+              PostData={best_seller.data}
+              title={getAll("Top_selling_services")}
+              linkURL="/products/best-seller"
+              more={getAll("More")}
+            />
+            <PostsAside
+              PostData={popular.data}
+              title={getAll("Most_popular_services")}
+              linkURL="/products/popular"
+              more={getAll("More")}
+            />
           </>
         )}
       <div
