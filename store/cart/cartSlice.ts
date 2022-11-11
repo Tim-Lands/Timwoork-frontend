@@ -36,6 +36,7 @@ export interface cartState {
     };
   }>;
 }
+
 export const initialState: cartState = {
   id: null,
   itemsLength: null,
@@ -47,6 +48,7 @@ export const initialState: cartState = {
   data: [],
   cart_payments: [],
 };
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -121,4 +123,5 @@ export const cartSlice = createSlice({
     });
   },
 });
+
 export default cartSlice.reducer;

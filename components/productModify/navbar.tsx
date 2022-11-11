@@ -40,7 +40,6 @@ function Navbar({
         gallery.current.scrollIntoView();
         return;
       case "publish":
-        console.log("should scroll", publish.current);
         publish.current.scrollIntoView();
         return;
     }

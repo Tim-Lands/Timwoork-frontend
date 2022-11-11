@@ -91,7 +91,7 @@ function Prices({ query }) {
                       }
                     >
                       <Navbar
-                        active="description"
+                        active="price"
                         navigate={true}
                         url="edit-product"
                         id={id}

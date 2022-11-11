@@ -131,9 +131,9 @@ function Bill() {
   }, [user]);
   useEffect(() => {
     const new_gates = {};
-    cart.cart_payments.forEach((gate) => (new_gates[gate.name_en] = true));
+    cart?.cart_payments?.forEach((gate) => (new_gates[gate.name_en] = true));
     setPaymentsGates(new_gates);
-  }, [cart.cart_payments]);
+  }, [cart?.cart_payments]);
   async function chargeWallet() {
     setIsWalletLoading(true);
     try {

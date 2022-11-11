@@ -148,7 +148,7 @@ function Overview({ query }) {
                   }
                 >
                   <Navbar
-                    active="description"
+                    active="general"
                     navigate={true}
                     url="edit-product"
                     id={id}

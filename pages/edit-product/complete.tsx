@@ -72,7 +72,7 @@ function Complete({ query }) {
           <div className="col-md-7 pt-3">
             <div className={"timlands-panel"}>
               <Navbar
-                active="complete"
+                active="publish"
                 navigate={true}
                 url="edit-product"
                 id={id}

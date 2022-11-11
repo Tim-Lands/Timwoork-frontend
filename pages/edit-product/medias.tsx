@@ -295,7 +295,7 @@ function Medias({ query }) {
                         ))} */}
             <div className={"timlands-panel" + (loading ? " is-loader" : "")}>
               <Navbar
-                active="complete"
+                active="gallery"
                 navigate={true}
                 url="edit-product"
                 id={id}
