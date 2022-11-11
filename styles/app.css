@@ -1548,7 +1548,7 @@
   height: 250px;
   overflow: hidden;
   border-radius: 7px;
-  margin: 10px 6px;
+  margin: 0px !important;
   position: relative;
   transition: all 0.3s;
 }
