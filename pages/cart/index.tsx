@@ -34,7 +34,6 @@ function index() {
       return;
     }
   }, [user]);
-  console.log(itemsTotal, value, symbol_native);
   return (
     <>
       <MetaTags
