@@ -34,6 +34,7 @@ function index() {
       return;
     }
   }, [user]);
+  console.log(itemsTotal, value, symbol_native);
   return (
     <>
       <MetaTags
@@ -122,20 +123,22 @@ function index() {
                             >
                               <li style={{ fontSize: 13, color: "#777" }}>
                                 <strong>{getAll("Total_2")}</strong>
-                                {Math.round(itemsTotal * value) + symbol_native}
+                                {Math.round(itemsTotal * value)}
+                                {symbol_native}
                               </li>
                             </ul>
                           </div>
                           <div className="cart-item-price ml-auto">
                             <h4 className="price-title-total">
-                              {Math.round(itemsTotal * value) + symbol_native}
+                              {Math.round(itemsTotal * value)}
+                              {symbol_native}
                             </h4>
                           </div>
                         </div>
                       </li>
                     </ul>
                   </div>
-                  {itemsLength === 0 && (
+                  {itemsLength !== 0 && (
                     <div className="cart-list-continue">
                       <button
                         onClick={buyNowBtn}
@@ -151,14 +154,12 @@ function index() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <PostsAside
-          title={getAll("Most_popular_services")}
-          PostData={popular.data}
-          more={getAll("More")}
-          linkURL="/products/popular"
-        />
-      </div>
+      <PostsAside
+        title={getAll("Most_popular_services")}
+        PostData={popular.data}
+        more={getAll("More")}
+        linkURL="/products/popular"
+      />
     </>
   );
 }
