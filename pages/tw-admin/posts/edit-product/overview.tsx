@@ -11,7 +11,8 @@ import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import Link from "next/link";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -60,14 +61,14 @@ const MySelect = (props: any) => {
 };
 function Overview({ query }) {
   const { getAll } = useAppSelector((state) => state.languages);
-
-  const [product, setProduct]: any = useState({});
+  const productState = useAppSelector(state=>state.dashboardProducts.currProduct)
+  const product = productState.data
   const [categories, setCategories] = useState({});
   const [subCategories, setSubCategories]: any = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const id = query.id;
   const token = useRef(Cookies.get("token_dash"));
-
+  const dispatch = useAppDispatch()
+  console.log(product)
   useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login");
@@ -83,7 +84,7 @@ function Overview({ query }) {
       router.push("/tw-admin/login");
       return;
     }
-    fetchData();
+    dispatch(ProductsActions.getOne({id:query.id}))
   }, [query.id]);
   const fetchCategories = async () => {
     try {
@@ -111,20 +112,8 @@ function Overview({ query }) {
     });
     setSubCategories(temp_subCategories);
   };
-  const fetchData = async () => {
-    try {
-      const res = await API.get(`dashboard/products/${query.id}`, {
-        headers: {
-          Authorization: `Bearer ${token.current}`,
-        },
-      });
-      setProduct(res?.data?.data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
+  //console.log( subCategories[product.category_id]?.parent_id)
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -180,7 +169,7 @@ function Overview({ query }) {
       />
       {token && (
         <div className="container-fluid">
-          {isLoading && <div>{getAll("Please_wait…")}</div>}
+          {productState.loading && <div>{getAll("Please_wait…")}</div>}
           <div className="row justify-content-md-center my-3">
             <div className="col-md-8 pt-3">
               <form onSubmit={formik.handleSubmit}>
@@ -359,7 +348,7 @@ function Overview({ query }) {
                                   value={categories[key].id}
                                   key={categories[key].id}
                                 >
-                                  {categories[key].name_ar}
+                                  {categories[key].name}
                                 </option>
                               ))}
                           </select>
@@ -406,7 +395,7 @@ function Overview({ query }) {
                                     value={subCategories[key].id}
                                     key={subCategories[key].id}
                                   >
-                                    {subCategories[key].name_ar}
+                                    {subCategories[key].name}
                                   </option>
                                 ))}
                           </select>

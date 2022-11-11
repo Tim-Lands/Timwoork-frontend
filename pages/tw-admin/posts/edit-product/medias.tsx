@@ -5,7 +5,7 @@ import router from "next/router";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
-import cookies from "next-cookies";
+import Cookies from "js-cookie";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { Alert } from "@/components/Alert/Alert";
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -13,19 +13,25 @@ import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
 import Link from "next/link";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
-function Medias({ query, product, token }) {
+function Medias({ query }) {
+  const token = useRef(Cookies.get("token_dash"));
+  const productState = useAppSelector(state=>state.dashboardProducts.currProduct)
+  const product = productState.data
+  const dispatch = useAppDispatch()
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
-    product.full_path_thumbnail
+    product?.full_path_thumbnail
   );
-  const [galleryMedia, setGalleryMedia]: any = useState(product.galaries);
+  const [galleryMedia, setGalleryMedia]: any = useState(product?.galaries);
   const [isGalleryChanged, setIsGalleryChanged]: any = useState(false);
   const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
   const [removedImages, setRemovedImages] = useState([]);
+
   const id = query.id;
   const { getAll } = useAppSelector((state) => state.languages);
 
@@ -34,7 +40,14 @@ function Medias({ query, product, token }) {
       router.push("/login");
       return;
     }
-  }, []);
+    //if(!productState.loading)
+    dispatch(ProductsActions.getOne({id:query.id}))
+  }, [query.id]);
+
+  useEffect(()=>{
+    setFeaturedImages(product.full_path_thumbnail)
+    setGalleryMedia(product.galaries)
+  },[product])
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [url_video, setVideourl] = useState("");
   const [temp_url_video, setTempUrlVideo] = useState("");
@@ -439,18 +452,9 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 
-export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token_dash || "";
-  const uriString = `dashboard/products/${ctx.query.id}`;
-  // Fetch data from external API
-  const res = await API.get(uriString, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return { props: { query: ctx.query, product: res.data.data, token } };
-}
+Medias.getInitialProps = ({ query }) => {
+  return { query };
+};
 export default Medias;
 Medias.propTypes = {
   query: PropTypes.any,

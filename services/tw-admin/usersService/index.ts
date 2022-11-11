@@ -1,19 +1,31 @@
-import API from "../../../config";
+import {AdminAPI as API} from "../../../config";
 
 async function getAll({
     page = 1,
     search = "",
-    is_banned
+    is_banned,
+    is_banned_temporrary,
+    is_banned_permanent
 }:{
     page: number,
     search: string,
-    is_banned?: boolean
+    is_banned?: boolean,
+    is_banned_temporrary?:boolean,
+    is_banned_permanent?:boolean
+
 }){
-    const res = await API.get('dashboard/new/users',{
+    let prefix = ""
+    if (is_banned && is_banned_temporrary)
+        prefix = '?ban_tamporary'
+
+    else if (is_banned && is_banned_permanent)
+        prefix = '?ban_permanent'
+
+    const res = await API.get(`dashboard/new/users${prefix}`,{
         params:{
             page,
             like:[`username,${search}`,`email,${search}`],
-            is_banned:Number(is_banned)
+            is_banned: is_banned ? Number(is_banned) : undefined
         }
     })
     return res?.data

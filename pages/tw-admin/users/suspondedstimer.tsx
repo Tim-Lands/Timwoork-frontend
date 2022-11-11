@@ -1,37 +1,30 @@
 import { Alert } from "@/components/Alert/Alert";
-import API from "../../../config";
 import { motion } from "framer-motion";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import Cookies from "js-cookie";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
 import Image from "next/image";
-import { notification, Space, Table } from "antd";
+import { message, Space, Table } from "antd";
 import SuspensionInfo from "@/components/SuspensionInfo";
 import Pagination from "react-js-pagination";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { UserActions } from "@/store/tw-admin/users/UserActions";
 
 function suspondedstimer() {
-  const [postsList, setPostsList] = useState({
-    data: [],
-    per_page: 10,
-    total: 0,
-  });
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const [isShowSuspensionInfo, setIsShowSuspensionInfo] = useState(false);
   const [paginationSize, setPaginationSize] = useState(8);
   const [selectedUser, setSelectedUser]: any = useState(null);
   const [pageNumber, setPageNumber]: any = useState(1);
-  const [username, setUsername] = useState("");
+  const [search, setSearch] = useState("");
   const [sentinel, setSentinel] = useState({ mount: true });
-  const token = Cookies.get("token_dash");
+  const usersState = useAppSelector(state=>state.dashboardUsers)
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    refreshData();
-  }, [pageNumber, sentinel]);
-
+  useEffect(()=>{
+    dispatch(UserActions.getAllUsers({is_banned:true, is_banned_temporrary:true, page:pageNumber}))
+  },[pageNumber, sentinel])
   useEffect(() => {
     if (window.innerWidth < 550) {
       setPaginationSize(2);
@@ -143,56 +136,14 @@ function suspondedstimer() {
 
   const unSuspend = async (id) => {
     try {
-      const res = await API.post(
-        `dashboard/users/${id}/unban`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        notification.success({
-          message: getAll("The_user_has"),
-        });
-        setPostsList((posts) => ({
-          ...posts,
-          data: posts.data.filter((post) => post.id != id),
-        }));
-      }
+      dispatch(UserActions.unbanUser({id}))
     } catch (err) {
-      () => {};
+      console.log(err)
+      message.error(err.message)
     }
   };
 
-  const refreshData = async () => {
-    setIsLoading(true);
-    const params = {
-      page: pageNumber,
-      like:
-        username.length > 0
-          ? [`username,${username}`, `email,${username}`]
-          : null,
-    };
-    try {
-      const res: any = await API.get(
-        "dashboard/users/get_users_banned?ban_tamporary",
-        {
-          params,
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res) {
-        setIsLoading(false);
-        setPostsList(res.data.data);
-        setIsError(false);
-      }
-    } catch (error) {
-      setIsError(true);
-      setIsLoading(false);
-    }
-  };
+  
 
   // Return statement.
   return (
@@ -222,8 +173,8 @@ function suspondedstimer() {
                   name="sQuery"
                   placeholder={getAll("Search_in_table")}
                   className="timlands-inputs"
-                  onChange={(e) => setUsername(e.target.value)}
-                  value={username}
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
                   onKeyDown={(e) =>
                     e.keyCode === 13 &&
                     setSentinel({ ...sentinel, mount: true })
@@ -235,16 +186,17 @@ function suspondedstimer() {
         </div>
         <Table
           columns={columns}
-          dataSource={postsList.data}
+          dataSource={usersState.users}
           pagination={false}
           bordered
+          loading = {usersState.loading}
         />
         <div>
           <hr />
           <Pagination
             activePage={pageNumber}
-            itemsCountPerPage={postsList.per_page}
-            totalItemsCount={postsList.total ? postsList.total : 0}
+            itemsCountPerPage={usersState.per_page}
+            totalItemsCount={usersState.total}
             onChange={() => setPageNumber((pageNO) => pageNO + 1)}
             pageRangeDisplayed={paginationSize}
             itemClass="page-item"
@@ -254,7 +206,7 @@ function suspondedstimer() {
             lastPageText={getAll("Last_page")}
           />
         </div>
-        {isError && (
+        {usersState.error && (
           <Alert type="error">
             <p className="text">
               <span className="material-icons">warning_amber</span>{" "}
@@ -262,7 +214,7 @@ function suspondedstimer() {
             </p>
           </Alert>
         )}
-        {isLoading && (
+        {usersState.loading && (
           <motion.div
             initial={{ opacity: 0, y: 29 }}
             animate={{ opacity: 1, y: 0 }}

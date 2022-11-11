@@ -11,8 +11,8 @@ import API from "../../../../config";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import cookies from "next-cookies";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -115,12 +115,15 @@ const Tiptap = (props: any) => {
     />
   );
 };
-function Description({ query, product }) {
+function Description({query}) {
   const { getAll } = useAppSelector((state) => state.languages);
 
   const token = useRef(Cookies.get("token_dash"));
   const id = query.id;
   const [validationsErrors, setValidationsErrors]: any = useState({});
+  const productState = useAppSelector(state=>state.dashboardProducts.currProduct)
+  const product = productState.data
+  const dispatch = useAppDispatch()
   const editor = useEditor({
     extensions: [StarterKit],
     content: product && product.content,
@@ -137,6 +140,7 @@ function Description({ query, product }) {
       router.push("/tw-admin/login");
       return;
     }
+    dispatch(ProductsActions.getOne({id: query.id}))
   }, [query.id]);
 
   const formik = useFormik({
@@ -182,7 +186,7 @@ function Description({ query, product }) {
         metaDescription={getAll("Add_new_service_Description")}
         ogDescription={getAll("Add_new_service_Description")}
       />
-      {token && (
+      {token && !productState.loading && (
         <div className="container-fluid">
           <div className="row justify-content-md-center my-3">
             <div className="col-md-8 pt-3">
@@ -418,19 +422,9 @@ export default Description;
 Description.getLayout = function getLayout(page): ReactElement {
   return <Layout>{page}</Layout>;
 };
-export async function getServerSideProps(ctx) {
-  console.log("serverside");
-  const token = cookies(ctx).token_dash || "";
-  const uriString = `dashboard/products/${ctx.query.id}`;
-  // Fetch data from external API
-  const res = await API.get(uriString, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return { props: { query: ctx.query, product: res.data.data } };
-}
+Description.getInitialProps = ({ query }) => {
+  return { query };
+};
 Description.propTypes = {
   query: PropTypes.any,
   product: PropTypes.any,

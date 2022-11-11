@@ -1,9 +1,9 @@
 import API from "../../../config";
 import { motion } from "framer-motion";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { Table } from "antd";
+import { message, Table } from "antd";
 import Pagination from "react-js-pagination";
 import RejectProductCause from "@/components/RejectProductCause";
 import ReplyContactModal from "@/components/ReplyContactModal";
@@ -15,16 +15,18 @@ import { useAppSelector } from "@/store/hooks";
 function index({
   postsList = { last_page: 1, per_page: 10, data: [] },
   status,
+  onSearchSubmit,
+  onPageChange,
+  isLoading
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const router = useRouter();
-  const [pageNumber, setPageNumber] = useState(router?.query?.pageNumber);
+  const [pageNumber, setPageNumber] = useState(1);
   const [cause, setCause] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isReplyModalVisible, setIsReplyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const [isDisactiveModalVisible, setIsDisactiveModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const token = Cookies.get("token_dash");
@@ -42,19 +44,12 @@ function index({
     getAll
   );
 
-  useEffect(() => {
-    setIsLoading(false);
-  }, [postsList]);
-  function onSearchSubmit(search) {
-    router.push(`${router.pathname}?pageNumber=${pageNumber}&search=${search}`);
-  }
   function onSendEmailClick(post) {
     setSelectedUser(post.profile_seller.profile.user);
     setIsReplyModalVisible(true);
   }
 
   async function activateProduct(id: any) {
-    setIsLoading(true);
     try {
       const res: any = await API.post(
         `dashboard/products/${id}/activeProduct`,
@@ -64,11 +59,11 @@ function index({
         }
       );
       if (res.status == 200) {
-        setIsLoading(false);
         router.reload();
       }
     } catch (error) {
-      setIsLoading(false);
+  
+      console.log(error)
     }
   }
   async function onRejectClick(id: any) {
@@ -96,7 +91,6 @@ function index({
   }
 
   async function rejectProduct(body) {
-    setIsLoading(true);
     try {
       const res: any = await API.post(
         `dashboard/products/${selectedProductId}/rejectProduct`,
@@ -106,12 +100,11 @@ function index({
         }
       );
       if (res.status === 200) {
-        setIsLoading(false);
         setIsModalVisible(false);
         //router.reload()
       }
     } catch (error) {
-      setIsLoading(false);
+      message.error(error.message)
     }
   }
   return (
@@ -196,12 +189,11 @@ function index({
         <div>
           <hr />
           <Pagination
-            activePage={Number(pageNumber)}
+            activePage={pageNumber}
             itemsCountPerPage={postsList?.per_page || 0}
-            totalItemsCount={postsList?.per_page * postsList?.last_page}
+            totalItemsCount={postsList?.total}
             onChange={(pageNumber) => {
-              setIsLoading(true);
-              router.push(`/tw-admin/posts?pageNumber=${pageNumber}`);
+              onPageChange(pageNumber)
               setPageNumber(pageNumber);
             }}
             pageRangeDisplayed={8}
