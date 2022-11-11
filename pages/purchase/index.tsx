@@ -123,15 +123,18 @@ function Bill() {
       router.push("/login");
       return;
     }
-    if (cart.data.length > 0) {
-      router.push("/mypurchases");
-      return;
-    }
     getPaypal();
   }, [user]);
   useEffect(() => {
+    if (cart.data.length === 0 && !cart.isLoading) {
+      router.push("/mypurchases");
+
+      return;
+    }
+  }, [cart]);
+  useEffect(() => {
     const new_gates = {};
-    cart?.cart_payments?.forEach((gate) => (new_gates[gate.name_en] = true));
+    cart?.cart_payments?.forEach((gate) => (new_gates[gate.name] = true));
     setPaymentsGates(new_gates);
   }, [cart?.cart_payments]);
   async function chargeWallet() {
@@ -166,7 +169,7 @@ function Bill() {
       />
       {veriedEmail && (
         <div style={{ maxWidth: 1350, marginInline: "auto" }}>
-          {cart.id && (
+          {!cart.id && !cart.isLoading && (
             <div className="row py-4 justify-content-center">
               <div className="col-md-5">
                 <Result
@@ -201,7 +204,7 @@ function Bill() {
                           className="list-group-item total d-flex justify-content-between align-items-center"
                         >
                           {getAll("Transfer_fees_for")}
-                          {e.name_en}{" "}
+                          {e.name}{" "}
                           <span className="me-auto">
                             <Tooltip title={getAll("These_fees_cover")}>
                               <Badge

@@ -11,6 +11,9 @@ export default function UploadPicture({ pending_amount, withdrawable_amount }) {
   const dispatch = useAppDispatch();
   const {
     languages: { getAll },
+    currency: {
+      my: { symbol_native, value },
+    },
     wallet,
     profile,
   } = useAppSelector((state) => state);
@@ -31,6 +34,15 @@ export default function UploadPicture({ pending_amount, withdrawable_amount }) {
               valueStyle={{ color: "#cf1322" }}
               suffix="$"
             />
+            {Number(pending_amount) > 0 && (
+              <Statistic
+                value={Number(pending_amount) * value}
+                precision={2}
+                valueStyle={{ color: "gray", fontSize: 15 }}
+                // valueStyle={{ color: darkMode ? "#ddd" : "#222" }}
+                suffix={symbol_native}
+              />
+            )}
           </div>
           {wallet.loading ? (
             <Loading />
@@ -43,6 +55,15 @@ export default function UploadPicture({ pending_amount, withdrawable_amount }) {
                 // valueStyle={{ color: darkMode ? "#8ac557" : "#3f8600" }}
                 suffix="$"
               />
+              {Number(withdrawable_amount) > 0 && (
+                <Statistic
+                  value={Number(withdrawable_amount) * value}
+                  precision={2}
+                  valueStyle={{ color: "gray", fontSize: 15 }}
+                  // valueStyle={{ color: darkMode ? "#ddd" : "#222" }}
+                  suffix={symbol_native}
+                />
+              )}
               {profile.withdrawable_amount > 9 ? (
                 <>
                   {wallet.is_withdrawable == true ? (
@@ -77,6 +98,17 @@ export default function UploadPicture({ pending_amount, withdrawable_amount }) {
               // valueStyle={{ color: darkMode ? "#ddd" : "#222" }}
               suffix="$"
             />
+            {Number(withdrawable_amount) + Number(pending_amount) > 0 && (
+              <Statistic
+                value={
+                  (Number(withdrawable_amount) + Number(pending_amount)) * value
+                }
+                precision={2}
+                valueStyle={{ color: "gray", fontSize: 15 }}
+                // valueStyle={{ color: darkMode ? "#ddd" : "#222" }}
+                suffix={symbol_native}
+              />
+            )}
           </div>
         </Card>
       </div>

@@ -26,7 +26,7 @@ export interface cartState {
     }>;
   }>;
   cart_payments: Array<{
-    name_en: string;
+    name: string;
     pivot: {
       cart_id: number;
       tax: number;
@@ -74,7 +74,7 @@ export const cartSlice = createSlice({
               }>;
             }>;
             cart_payments: Array<{
-              name_en: string;
+              name: string;
               pivot: {
                 cart_id: number;
                 tax: number;
