@@ -1,23 +1,26 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import API from "config";
 import { motion } from "framer-motion";
 
 import Link from "next/link";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Cookies from "js-cookie";
 import { message } from "antd";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { TypesPaymentActions } from "@/store/tw-admin/typesPayment/typespaymentActions";
 
 function Countries(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-
-  const { data: GetData, error }: any = useSWR(`dashboard/types_payments`);
-
   const token = Cookies.get("token_dash");
+  const types_payments = useAppSelector(state=> state.dashboardTypespaymentSlice)
+  const dispatch = useAppDispatch()
+  console.log(types_payments)
+  useEffect(()=>{
+    dispatch(TypesPaymentActions.getAll({}))
+  },[])
   /*     const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
@@ -136,8 +139,8 @@ function Countries(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {!types_payments.loading &&
+                types_payments.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -177,7 +180,7 @@ function Countries(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {types_payments.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -185,7 +188,7 @@ function Countries(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {types_payments.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

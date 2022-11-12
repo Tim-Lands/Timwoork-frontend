@@ -1,4 +1,12 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
+
+export interface ITypePayment{
+    name_ar: string,
+    name_en: string,
+    name_fr: string,
+    precent_of_payment: string,
+    value_of_cent: string
+}
 
 async function getAll() {
     const res = await API.get(`dashboard/types_payments`)
@@ -10,51 +18,19 @@ async function getOne(id: number) {
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr,
-    percent_of_payment,
-    value_of_cent
-}: {
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    percent_of_payment: string,
-    value_of_cent: string
-}) {
-    const res = await API.post(`dashboard/types_payments`, {
-        name_ar,
-        name_en,
-        name_fr,
-        percent_of_payment,
-        value_of_cent
-    })
+async function createOne(typePayment:ITypePayment) {
+    const res = await API.post(`dashboard/types_payments`, typePayment)
     return res?.data
 }
 
 async function updateOne({
     id,
-    name_ar,
-    name_en,
-    name_fr,
-    percent_of_payment,
-    value_of_cent
+    typePayment
 }:{
     id:number,
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    percent_of_payment: string,
-    value_of_cent: string
+    typePayment:ITypePayment
 }) {
-    const res = await API.patch(`dashboard/types_payments/${id}`,{
-        name_ar,
-        name_en,
-        name_fr,
-        percent_of_payment,
-        value_of_cent
-    })
+    const res = await API.patch(`dashboard/types_payments/${id}`,typePayment)
     return res?.data
 }
 

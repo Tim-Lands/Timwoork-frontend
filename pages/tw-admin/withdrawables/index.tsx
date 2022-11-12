@@ -1,39 +1,21 @@
 import { Alert } from "@/components/Alert/Alert";
-import API from "../../../config";
 import { motion } from "framer-motion";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect} from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import Cookies from "js-cookie";
 import { Result } from "antd";
 import LastSeen from "@/components/LastSeen";
 import Link from "next/link";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { WithdrawalActions } from "@/store/tw-admin/withdrawals/withdrawalActions";
 
 function index(): ReactElement {
-  const [postsList, setPostsList] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const withdrawalsState = useAppSelector(state=> state.dashboardWithdrawals)
+  const data = withdrawalsState.data
+  const dispatch = useAppDispatch()
 
-  const token = Cookies.get("token_dash");
-  const refreshData = async () => {
-    setIsLoading(true);
-    try {
-      const res: any = await API.get("dashboard/withdrawals?type=0", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res) {
-        setIsLoading(false);
-        setPostsList(res.data.data.data);
-        setIsError(false);
-      }
-    } catch (error) {
-      setIsError(true);
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    refreshData();
-  }, []);
+  useEffect(()=>{
+    dispatch(WithdrawalActions.getAll({}))
+  },[])
 
   const catVariants = {
     visible: (i: number) => ({
@@ -71,8 +53,8 @@ function index(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {postsList &&
-                postsList.map((e: any, i) => (
+              {data &&
+                data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -95,7 +77,7 @@ function index(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {postsList && postsList.length == 0 && (
+          {data && data.length == 0 && (
             <Result
               status="404"
               title={getAll("No_withdrawal_requests")}
@@ -103,7 +85,7 @@ function index(): ReactElement {
             />
           )}
 
-          {isError && (
+          {withdrawalsState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -111,7 +93,7 @@ function index(): ReactElement {
               </p>
             </Alert>
           )}
-          {isLoading && (
+          {withdrawalsState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

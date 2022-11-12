@@ -2,12 +2,12 @@ import { ReactElement, useState, useEffect, useRef } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import LastSeen from "@/components/LastSeen";
 import Image from "next/image";
-import API from "../../../config";
-import Cookies from "js-cookie";
 import Pagination from "react-js-pagination";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ActivitiesActions } from "@/store/tw-admin/activities/activityActions";
 
 const ActivityData = (activity, getAll) => {
+
   switch (activity.data.type) {
     case "order":
       return (
@@ -53,47 +53,16 @@ function index() {
   const { getAll } = useAppSelector((state) => state.languages);
 
   const [pageNumber, setPagenNumber]: any = useState(1);
-  const [activities, setActivities]: any = useState({
-    data: [],
-    last_page: 1,
-    per_page: 12,
-  });
-  const token = useRef(Cookies.get("token_dash"));
-  const [sentinel, setSentinel] = useState({ mount: true });
-  const search = useRef(null);
-  useEffect(() => {
-    fetchData();
-  }, [pageNumber, sentinel]);
-  const fetchData = async () => {
-    try {
-      const params = {
-        page: pageNumber,
-        search: search.current,
-      };
-      const data = await API.get(`dashboard/activities/get_all_notifications`, {
-        params,
-        headers: {
-          Authorization: `Bearer ${token.current} `,
-        },
-      });
 
-      setActivities({
-        ...activities,
-        last_page: data.data.data.last_page,
-        per_page: data.data.data.per_page,
-        data: data.data.data.data.map((not) => ({
-          data: JSON.parse(not.data),
-          email: not.email,
-          created_at: not.created_at,
-          user_id: not.user_id,
-          username: not.username,
-        })),
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  console.log(activities);
+  const [sentinel, setSentinel] = useState({ mount: true });
+  const search:any = useRef(null);
+
+  const {notifications} = useAppSelector(state=>state.dashboardActivitiesSlice)
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(ActivitiesActions.getNotifications({page:pageNumber, search:search.current}))
+  }, [pageNumber, sentinel]);
+
 
   return (
     <>
@@ -132,14 +101,14 @@ function index() {
             </div>
             <div className="activities-items">
               <ul className="activities-items-list">
-                {activities?.data?.map((activity) => (
+                {notifications?.data?.map((activity) => (
                   <li key={activity.id}>
                     <span className="item-link">
                       <div className="activity-item-img">
                         <Image
                           src={
-                            activity.data.user_sender.avatar_path ||
-                            activity.data.user_sender.avatar_url ||
+                            activity.data.user_sender?.avatar_path ||
+                            activity.data.user_sender?.avatar_url ||
                             "/avatar.png"
                           }
                           width={50}
@@ -164,8 +133,8 @@ function index() {
               <hr />
               <Pagination
                 activePage={pageNumber}
-                itemsCountPerPage={activities.per_page || 0}
-                totalItemsCount={activities?.per_page * activities?.last_page}
+                itemsCountPerPage={notifications.per_page || 0}
+                totalItemsCount={notifications?.total}
                 onChange={(pageNumber) => {
                   setPagenNumber(pageNumber);
                 }}

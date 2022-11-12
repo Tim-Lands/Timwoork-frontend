@@ -9,32 +9,25 @@ import API from "../../../../config";
 import Cookies from "js-cookie";
 import { notification } from "antd";
 import EditModal from "@/components/EditModal";
+import { useAppSelector } from "@/store/hooks";
+import { useDispatch } from "react-redux";
+import { ActivitiesActions } from "@/store/tw-admin/activities/activityActions";
+import Loading from "@/components/Loading";
 
 function Single({ query }: any) {
   const [isConfirmText, setIsConfirmText] = useState(false);
-  const [conversation, setConversation] = useState({ data: [] });
-  const [participants, setParticipants] = useState([]);
   const [selectedMessageId, setSelectedMessageId] = useState(-1);
   const token = useRef(Cookies.get("token_dash"));
+  const { current_conversation } = useAppSelector(
+    (state) => state.dashboardActivitiesSlice
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchData();
+    dispatch(ActivitiesActions.getOneConversation({ id: query.id }));
   }, []);
-  const fetchData = async () => {
-    try {
-      const { id } = query;
-      const res = await API.get(`dashboard/activities/${id}/conversation`, {
-        headers: {
-          Authorization: `Bearer ${token.current}`,
-        },
-      });
-      setConversation({ ...conversation, data: res?.data?.data?.conversation });
-      setParticipants(res?.data?.data?.members);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+
   const deleteMsg = async (body) => {
     try {
       const res = await API.post(
@@ -49,12 +42,12 @@ function Single({ query }: any) {
         }
       );
       if (res.status == 200) {
-        setConversation({
+       /*  setConversation({
           ...conversation,
           data: conversation.data.filter(
             (message) => message.id != selectedMessageId
           ),
-        });
+        }); */
 
         notification.success({
           message: "تم حذف الرسالة بنجاح",
@@ -78,14 +71,14 @@ function Single({ query }: any) {
         }
       );
       if (res.status == 200) {
-        setConversation({
+        /* setConversation({
           ...conversation,
           data: conversation.data.map((message) =>
             message.id == selectedMessageId
               ? { ...message, message: body.message }
               : message
           ),
-        });
+        }); */
         setIsShowEdit(false);
         notification.success({
           message: "تم تعديل الرسالة بنجاح",
@@ -96,8 +89,7 @@ function Single({ query }: any) {
     }
   };
   const [isShowEdit, setIsShowEdit] = useState(false);
-  console.log(conversation);
-  return (
+  return current_conversation.loading?(<Loading/>):(
     <div className="timlands-panel">
       {isConfirmText && (
         <ConfirmText
@@ -113,7 +105,7 @@ function Single({ query }: any) {
           handleFunc={editMsg}
           title="التعديل على الرسالة"
           msgValues={
-            conversation?.data.find((elm) => elm.id == selectedMessageId)
+            current_conversation?.data.conversation.find((elm) => elm.id == selectedMessageId)
               .message
           }
         />
@@ -125,11 +117,11 @@ function Single({ query }: any) {
           </span>
           محادثة بين{" "}
           <a href="" rel="noreferrer" target="_blank">
-            {participants[0]?.username}
+            {current_conversation.data.members[0]?.username}
           </a>{" "}
           و{" "}
           <a href="" rel="noreferrer" target="_blank">
-            {participants[1]?.username}
+            {current_conversation.data.members[1]?.username}
           </a>
         </h2>
       </div>
@@ -137,12 +129,12 @@ function Single({ query }: any) {
         <div className="col-xl-8">
           <div className="conversation-items">
             <ul className="conversation-items-list">
-              {conversation?.data?.map((message) => {
+              {current_conversation.data?.conversation?.map((message) => {
                 return (
                   <li key={message.id}>
                     <span
                       className={`item-link user-${
-                        participants[0]?.user_id == message.user.id
+                        current_conversation.data.members[0]?.user_id == message.user.id
                           ? "from"
                           : "to"
                       }`}
