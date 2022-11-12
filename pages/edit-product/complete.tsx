@@ -2,13 +2,12 @@ import Layout from "../../components/Layout/HomeLayout";
 import { ReactElement, useEffect, useRef } from "react";
 import { message } from "antd";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-
+import Navbar from "components/productModify/navbar";
 import router from "next/router";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Unauthorized from "@/components/Unauthorized";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
-import Link from "next/link";
 
 function Complete({ query }) {
   const dispatch = useAppDispatch();
@@ -72,86 +71,12 @@ function Complete({ query }) {
         <div className="row justify-content-md-center my-3">
           <div className="col-md-7 pt-3">
             <div className={"timlands-panel"}>
-              <div className="timlands-steps-cont">
-                <div className="timlands-steps">
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <Link
-                        href={`/edit-product/overview?id=${getProduct?.id}`}
-                      >
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              collections_bookmark
-                            </span>
-                          </span>
-                          {getAll("General_information")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <Link href={`/edit-product/prices?id=${getProduct?.id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              payments
-                            </span>
-                          </span>
-                          {getAll("Upgrades_price")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item">
-                    <h3 className="text">
-                      <Link
-                        href={`/edit-product/description?id=${getProduct?.id}`}
-                      >
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              description
-                            </span>
-                          </span>
-                          {getAll("Description_and_instructions")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item ">
-                    <h3 className="text">
-                      <Link href={`/edit-product/medias?id=${getProduct?.id}`}>
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              mms
-                            </span>
-                          </span>
-                          {getAll("Gallery_and_folders")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                  <div className="timlands-step-item active" ref={stepsView}>
-                    <h3 className="text">
-                      <Link
-                        href={`/edit-product/complete?id=${getProduct?.id}`}
-                      >
-                        <a>
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              publish
-                            </span>
-                          </span>
-                          {getAll("Publish_service")}
-                        </a>
-                      </Link>
-                    </h3>
-                  </div>
-                </div>
-              </div>
+              <Navbar
+                active="publish"
+                navigate={true}
+                url="edit-product"
+                id={id}
+              />
               <div className="timlands-add-new">
                 <div className="timlands-add-new-icon">
                   <span className="material-icons material-icons-outlined">

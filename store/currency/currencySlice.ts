@@ -88,7 +88,7 @@ export const currencySlice = createSlice({
         state.my.id = id;
         state.my.name = name;
         state.my.symbol = symbol;
-        state.my.symbol_native = symbol_native;
+        if (symbol_native) state.my.symbol_native = symbol_native;
       }
     );
     builder.addCase(

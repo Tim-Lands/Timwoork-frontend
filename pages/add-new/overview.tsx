@@ -10,7 +10,7 @@ import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import API from "../../config";
 import PropTypes from "prop-types";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
-
+import Navbar from "components/productModify/navbar";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import FormLangs from "@/components/Forms/FormLangs";
@@ -130,9 +130,9 @@ function Overview({ query }) {
   const formik = useFormik({
     initialValues: {
       content: "ejrferjgh erfkerh whgferg",
-      title: getProduct?.title,
-      subcategory: getProduct?.subcategory?.id,
-      tags: getProduct?.product_tag,
+      title: "",
+      subcategory: null,
+      tags: [],
     },
     isInitialValid: true,
     enableReinitialize: true,
@@ -161,7 +161,6 @@ function Overview({ query }) {
           },
         });
       } catch (error: any) {
-        console.log(error);
         if (error.errors) {
           setValidationsErrors(error.errors);
         }
@@ -222,61 +221,7 @@ function Overview({ query }) {
                     "timlands-panel" + (formik.isSubmitting ? " is-loader" : "")
                   }
                 >
-                  <div className="timlands-steps-cont">
-                    <div className="timlands-steps">
-                      <div className="timlands-step-item active">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              collections_bookmark
-                            </span>
-                          </span>
-                          {getAll("General_information")}
-                        </h3>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              payments
-                            </span>
-                          </span>
-                          {getAll("Upgrades_price")}
-                        </h3>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              description
-                            </span>
-                          </span>
-                          {getAll("Description_and_instructions")}
-                        </h3>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              mms
-                            </span>
-                          </span>
-                          {getAll("Gallery_and_folders")}
-                        </h3>
-                      </div>
-                      <div className="timlands-step-item">
-                        <h3 className="text">
-                          <span className="icon-circular">
-                            <span className="material-icons material-icons-outlined">
-                              publish
-                            </span>
-                          </span>
-                          {getAll("Publish_service")}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-
+                  <Navbar active="general" navigate={false} url="" />
                   <div className="timlands-content-form">
                     <div className="row">
                       <div className="col-md-12">

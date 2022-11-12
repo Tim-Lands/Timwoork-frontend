@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import router from "next/router";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
 import SidebarAdvices from "../../components/add-new/SidebarAdvices";
+import Navbar from "components/productModify/navbar";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import { message } from "antd";
@@ -272,18 +273,6 @@ function Description({ query }) {
     callback(res.data.data);
   };
 
-  async function getProductId() {
-    try {
-      //! check if id not exist
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        router.push("/add-new");
-      }
-      if (error.response && error.response.status === 404) {
-        router.push("/add-new");
-      }
-    }
-  }
   const stepsView = useRef(null);
 
   useEffect(() => {
@@ -293,7 +282,6 @@ function Description({ query }) {
       router.push("/login");
       return;
     }
-    getProductId();
   }, [user]);
   return (
     <>
@@ -353,63 +341,7 @@ function Description({ query }) {
                       />
                     )}
 
-                    <div className="timlands-steps-cont">
-                      <div className="timlands-steps">
-                        <div className="timlands-step-item">
-                          <h4 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                collections_bookmark
-                              </span>
-                            </span>
-                            {getAll("General_information")}
-                          </h4>
-                        </div>
-                        <div className="timlands-step-item">
-                          <h4 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                payments
-                              </span>
-                            </span>
-                            {getAll("Upgrades_price")}
-                          </h4>
-                        </div>
-                        <div
-                          className="timlands-step-item active"
-                          ref={stepsView}
-                        >
-                          <h4 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                description
-                              </span>
-                            </span>
-                            {getAll("Description_and_instructions")}
-                          </h4>
-                        </div>
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                mms
-                              </span>
-                            </span>
-                            {getAll("Gallery_and_folders")}
-                          </h3>
-                        </div>
-                        <div className="timlands-step-item">
-                          <h3 className="text">
-                            <span className="icon-circular">
-                              <span className="material-icons material-icons-outlined">
-                                publish
-                              </span>
-                            </span>
-                            {getAll("Publish_service")}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
+                    <Navbar active="description" navigate={false} url="" />
 
                     <div className="timlands-content-form">
                       <div className="row">

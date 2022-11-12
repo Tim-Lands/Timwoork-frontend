@@ -1637,7 +1637,6 @@
   height: 250px;
   overflow: hidden;
   border-radius: 7px;
-  margin: 10px 6px;
   position: relative;
   transition: all 0.3s;
 }
@@ -1808,6 +1807,12 @@
   left: auto !important;
   transition: all 0.3s;
   right: 0px !important;
+}
+.ltr .swiper-button-next::after {
+  transform: scale(-1);
+}
+.ltr .swiper-button-prev::after {
+  transform: scale(-1);
 }
 @media (max-width: 768px) {
   .ltr .hidden-tem {

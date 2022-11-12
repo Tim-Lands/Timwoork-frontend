@@ -33,7 +33,7 @@ function PostsAside({
       </div>
     );
   return (
-    <>
+    <div className="container">
       {/* {!PostData && (
         <div className="posts-aside loading">
           <div className="posts-aside-header">
@@ -95,9 +95,6 @@ function PostsAside({
             <Swiper
               slidesPerView={1}
               spaceBetween={0}
-              pagination={{
-                type: "progressbar",
-              }}
               navigation={true}
               modules={[Navigation]}
               breakpoints={{
@@ -176,7 +173,7 @@ function PostsAside({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
