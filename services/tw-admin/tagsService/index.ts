@@ -1,25 +1,10 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
 
-async function getAll(page:number){
-    const res = await API.get(`dashboard/new/tags`,{params:{page}})
+async function getAll({page, filter}:{page:number, filter:string}){
+    const res = await API.get(`dashboard/new/tags`,{params:{page, filter}})
     return res?.data
 }
 
-async function filter({
-    page,
-    filter
-}:{
-    page:number,
-    filter:string
-}){
-    const res = await API.get(`dashboard/new/tags`,{
-        params:{
-            page,
-            filter
-        }
-    })
-    return res?.data
-}
 
 async function getOne(id:number){
     const res = await API.get(`dashboard/new/tags/${id}`)
@@ -53,7 +38,6 @@ async function deleteOne(id:number){
 
 export const TagsService = {
     getAll,
-    filter,
     getOne,
     createOne,
     updateOne,

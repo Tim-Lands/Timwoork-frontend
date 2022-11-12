@@ -1,7 +1,6 @@
 import { AdminAPI as API } from '../../../config'
 
 async function getAllNotifications({ page, search }: { page: number, search: string }) {
-    console.log(search)
     const res = await API.get('dashboard/new/activities/notifications', { params: { page, search } })
     return res?.data
 }

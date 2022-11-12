@@ -1,7 +1,13 @@
-import API from '../../../config'
+import {AdminAPI as  API} from '../../../config'
 
-async function getAll(page: number) {
-    const res = await API.get(`dashboard/new/badges`, { params: { page } })
+export interface IBadge{
+    name_ar: string,
+    name_en: string,
+    name_fr: string,
+    precent_deducation: number
+}
+async function getAll() {
+    const res = await API.get(`dashboard/new/badges`)
     return res?.data
 }
 
@@ -10,45 +16,19 @@ async function getOne(id: number) {
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr,
-    precent_deducation
-}: {
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    precent_deducation: number
-}) {
-    const res = await API.post(`dashboard/new/badges`, {
-        name_ar,
-        name_en,
-        name_fr,
-        precent_deducation
-    })
+async function createOne(badge: IBadge) {
+    const res = await API.post(`dashboard/new/badges`, badge)
     return res?.data
 }
 
 async function updateOne({
     id,
-    name_ar,
-    name_en,
-    name_fr,
-    precent_deducation
+    badge
 }:{
     id:number,
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    precent_deducation: number
+    badge:IBadge
 }) {
-    const res = await API.patch(`dashboard/new/badges/${id}`,{
-        name_ar,
-        name_en,
-        name_fr,
-        precent_deducation
-    })
+    const res = await API.patch(`dashboard/new/badges/${id}`,badge)
     return res?.data
 }
 

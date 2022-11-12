@@ -1,7 +1,13 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
 
-async function getAll(){
-    const res = await API.get(`dashboard/new/skills`)
+export interface ISkill{
+    name_ar:string,
+    name_en:string,
+    name_fr:string
+}
+
+async function getAll(page:number){
+    const res = await API.get(`dashboard/new/skills`, {params:{page}})
     return res?.data
 }
 
@@ -10,39 +16,19 @@ async function getOne(id:number){
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr
-}:{
-    name_ar:string,
-    name_en:string,
-    name_fr:string
-}){
-    const res = await API.post(`dashboard/new/skills`,{
-        name_ar,
-        name_en,
-        name_fr
-    })
+async function createOne(skill: ISkill){
+    const res = await API.post(`dashboard/new/skills`, skill)
     return res?.data
 }
 
 async function updateOne({
     id,
-    name_ar,
-    name_en,
-    name_fr
+    skill
 }:{
     id:number,
-    name_ar:string,
-    name_en:string,
-    name_fr:string
+    skill: ISkill
 }){
-    const res = await API.patch(`dashboard/new/skills/${id}`,{
-        name_ar,
-        name_en,
-        name_fr
-    })
+    const res = await API.patch(`dashboard/new/skills/${id}`, skill)
     return res?.data
 }
 

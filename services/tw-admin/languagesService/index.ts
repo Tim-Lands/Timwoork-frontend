@@ -1,4 +1,10 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
+
+export interface ILanguage {
+    name_ar:string,
+    name_en:string,
+    name_fr:string
+}
 
 async function getAll(){
     const res = await API.get(`dashboard/new/languages`)
@@ -10,39 +16,19 @@ async function getOne(id:number){
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr
-}:{
-    name_ar:string,
-    name_en:string,
-    name_fr:string
-}){
-    const res = await API.post(`dashboard/new/languages`,{
-        name_ar,
-        name_en,
-        name_fr
-    })
+async function createOne(language: ILanguage){
+    const res = await API.post(`dashboard/new/languages`, language)
     return res?.data
 }
 
 async function updateOne({
     id,
-    name_ar,
-    name_en,
-    name_fr
+    language
 }:{
     id:number,
-    name_ar:string,
-    name_en:string,
-    name_fr:string
+    language: ILanguage
 }){
-    const res = await API.patch(`dashboard/new/languages/${id}`,{
-        name_ar,
-        name_en,
-        name_fr
-    })
+    const res = await API.patch(`dashboard/new/languages/${id}`,language)
     return res?.data
 }
 

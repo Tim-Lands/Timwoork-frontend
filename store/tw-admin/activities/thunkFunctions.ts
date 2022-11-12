@@ -5,7 +5,6 @@ const getNotifications = createAsyncThunk('admin/activities/notifications',
     async (args: { page: number, search: string }, { rejectWithValue }) => {
         try {
             const { page, search } = args
-            console.log(search)
             const res = await ActivitiesService.getAllNotifications({ page, search })
             return res?.data
         }

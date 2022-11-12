@@ -1,4 +1,11 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
+
+export interface ICountry{
+    name_ar: string,
+    name_en: string,
+    name_fr: string,
+    code_phone: number
+}
 
 async function getAll(page) {
     const res = await API.get(`dashboard/new/countries`, {
@@ -14,45 +21,19 @@ async function getOne(id: number) {
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr,
-    code_phone
-}: {
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    code_phone: number
-}) {
-    const res = await API.post(`dashboard/new/countries`, {
-        name_ar,
-        name_en,
-        name_fr,
-        code_phone
-    })
+async function createOne(country: ICountry) {
+    const res = await API.post(`dashboard/new/countries`, country)
     return res?.data
 }
 
 async function updateOne({
     id,
-    name_ar,
-    name_en,
-    name_fr,
-    code_phone
+    country
 }: {
     id:number
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    code_phone: number
+    country: ICountry
 }){
-    const res = await API.patch(`dashboard/new/countries/${id}`, {
-        name_ar,
-        name_en,
-        name_fr,
-        code_phone
-    })
+    const res = await API.patch(`dashboard/new/countries/${id}`, country)
     return res?.data
 }
 
