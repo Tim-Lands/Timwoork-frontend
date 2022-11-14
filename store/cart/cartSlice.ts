@@ -43,7 +43,7 @@ export const initialState: cartState = {
   itemsTotal: null,
   tax: null,
   priceWithTax: null,
-  isLoading: false,
+  isLoading: true,
   loaded: false,
   data: [],
   cart_payments: [],

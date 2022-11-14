@@ -21,7 +21,7 @@ const stripePromise = loadStripe(
 );
 
 function Bill() {
-  const { getAll } = useAppSelector((state) => state.languages);
+  const { getAll, language } = useAppSelector((state) => state.languages);
   const profile = useAppSelector((state) => state.profile);
   const user = useAppSelector((state) => state.user);
   const cart = useAppSelector((state) => state.cart);
@@ -134,7 +134,23 @@ function Bill() {
   }, [cart]);
   useEffect(() => {
     const new_gates = {};
-    cart?.cart_payments?.forEach((gate) => (new_gates[gate.name] = true));
+    cart?.cart_payments?.forEach((gate) => {
+      if (language !== "ar") {
+        new_gates[gate.name] = true;
+      } else {
+        switch (gate.name) {
+          case "محفظة":
+            new_gates["Wallet"] = true;
+            return;
+          case "سترايب":
+            new_gates["Stripe"] = true;
+            return;
+          case "بايبال":
+            new_gates["Paypal"] = true;
+            return;
+        }
+      }
+    });
     setPaymentsGates(new_gates);
   }, [cart?.cart_payments]);
   async function chargeWallet() {
