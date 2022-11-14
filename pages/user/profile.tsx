@@ -15,38 +15,23 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
 function Profile() {
   const dispatch = useAppDispatch();
-  const profile = useAppSelector((state) => state.profile);
-  const profile_seller = useAppSelector(
-    (state) => state.profile.profile_seller
-  );
-  const currency = useAppSelector((state) => state.currency.my);
+
+  const {
+    user,
+    languages: { getAll },
+    profile,
+    currency: { my: currency },
+  } = useAppSelector((state) => state);
+  const { profile_seller } = profile;
+  const [isLoadingSeler, setIsLoadingSeler] = useState(false);
+  const [isLess, setIsLess] = useState(true);
+  const detectHeight: any = createRef();
+  const [isOverflow, setIsOverflow] = useState(false);
+
   useEffect(() => {
     if (profile_seller.loaded) return;
     dispatch(ProfileActions.getProfileSellerData());
   }, [profile_seller]);
-
-  const user = useAppSelector((state) => state.user);
-  const { getAll } = useAppSelector((state) => state.languages);
-
-  const myLoader = () => {
-    return `${profile.avatar_path}`;
-  };
-
-  const [isLoadingSeler, setIsLoadingSeler] = useState(false);
-  const beseller = async () => {
-    setIsLoadingSeler(true);
-    try {
-      await API.post("api/sellers/store");
-      setIsLoadingSeler(false);
-      router.push("/user/editSeller");
-    } catch (error: any) {
-      message.error(getAll("An_unexpected_error"));
-      setIsLoadingSeler(false);
-    }
-  };
-  const [isLess, setIsLess] = useState(true);
-  const detectHeight: any = createRef();
-  const [isOverflow, setIsOverflow] = useState(false);
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
@@ -60,6 +45,23 @@ function Profile() {
       router.push("/login");
     }
   }, [user]);
+
+  const myLoader = () => {
+    return `${profile.avatar_path}`;
+  };
+
+  const beseller = async () => {
+    setIsLoadingSeler(true);
+    try {
+      await API.post("api/sellers/store");
+      setIsLoadingSeler(false);
+      router.push("/user/editSeller");
+    } catch (error: any) {
+      message.error(getAll("An_unexpected_error"));
+      setIsLoadingSeler(false);
+    }
+  };
+
   if (!user.email_verified && !user.loading) {
     return (
       <div className="row justify-content-md-center">
@@ -98,7 +100,7 @@ function Profile() {
         </div>
       </div>
     );
-  } else if (!user.loading)
+  } else if (!user.loading && !profile.loading)
     return (
       <div className="py-3">
         {!user.isLogged && <Unauthorized />}
