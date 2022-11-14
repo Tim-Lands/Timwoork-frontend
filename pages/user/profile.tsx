@@ -102,7 +102,7 @@ function Profile() {
     return (
       <div className="py-3">
         {!user.isLogged && <Unauthorized />}
-        {profile && profile_seller.data.id && (
+        {profile && (
           <>
             <MetaTags
               title={
@@ -178,151 +178,157 @@ function Profile() {
                   pending_amount={profile.pending_amount}
                   // darkMode={darkMode}
                 />
-                <div className="col-lg-8">
-                  <div className="timlands-profile-content">
-                    {!profile_seller.data.id && (
-                      <div className="be-seller-aside mb-2">
-                        <h3 className="title">{getAll("Become_a_seller")}</h3>
-                        <p className="text">{getAll("Do_you_ant")}</p>
-                        <button
-                          onClick={beseller}
-                          disabled={isLoadingSeler}
-                          className="btn butt-green butt-md"
-                          style={{ width: "100%" }}
-                        >
-                          {getAll("Create_a_seller")}
-                        </button>
-                      </div>
-                    )}
-                    {profile_seller.data.id && (
-                      <>
-                        <div className="pb-1 mb-2">
-                          <Card
-                            title={getAll("Brief_me_about")}
-                            extra={
-                              <Link href="/user/editSeller">
-                                <a className="edit-button flex-center">
-                                  <span className="material-icons material-icons-outlined">
-                                    edit
-                                  </span>
-                                </a>
-                              </Link>
-                            }
+                {profile_seller && (
+                  <div className="col-lg-8">
+                    <div className="timlands-profile-content">
+                      {!profile_seller.data.id && (
+                        <div className="be-seller-aside mb-2">
+                          <h3 className="title">{getAll("Become_a_seller")}</h3>
+                          <p className="text">{getAll("Do_you_ant")}</p>
+                          <button
+                            onClick={beseller}
+                            disabled={isLoadingSeler}
+                            className="btn butt-green butt-md"
+                            style={{ width: "100%" }}
                           >
-                            <div
-                              ref={detectHeight}
-                              className={
-                                "user-bro " + (isLess ? "is-less" : "")
+                            {getAll("Create_a_seller")}
+                          </button>
+                        </div>
+                      )}
+                      {profile_seller.data.id && (
+                        <>
+                          <div className="pb-1 mb-2">
+                            <Card
+                              title={getAll("Brief_me_about")}
+                              extra={
+                                <Link href="/user/editSeller">
+                                  <a className="edit-button flex-center">
+                                    <span className="material-icons material-icons-outlined">
+                                      edit
+                                    </span>
+                                  </a>
+                                </Link>
                               }
-                              dangerouslySetInnerHTML={{
-                                __html: profile_seller.data.bio,
-                              }}
-                            />
-
-                            {isOverflow && (
-                              <button
-                                onClick={() => {
-                                  setIsLess(!isLess);
-                                }}
-                                type="button"
+                            >
+                              <div
+                                ref={detectHeight}
                                 className={
-                                  "read-more-btn " + (isLess ? "is-less" : "")
+                                  "user-bro " + (isLess ? "is-less" : "")
                                 }
-                              >
-                                {isLess
-                                  ? getAll("Read_more")
-                                  : getAll("Read_less")}
-                              </button>
-                            )}
-                          </Card>
-                        </div>
-                      </>
-                    )}
-                    <div className="profile-content-body">
-                      <div className="content-title">
-                        <div className="d-flex">
-                          <h3 className="title flex-center">
-                            <span className="material-icons material-icons-outlined">
-                              account_circle
-                            </span>
-                            {getAll("Personal_information")}
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-4">
-                          <div className="content-text-item">
-                            <h3 className="text-label">
-                              {getAll("First_name")}
+                                dangerouslySetInnerHTML={{
+                                  __html: profile_seller.data.bio,
+                                }}
+                              />
+
+                              {isOverflow && (
+                                <button
+                                  onClick={() => {
+                                    setIsLess(!isLess);
+                                  }}
+                                  type="button"
+                                  className={
+                                    "read-more-btn " + (isLess ? "is-less" : "")
+                                  }
+                                >
+                                  {isLess
+                                    ? getAll("Read_more")
+                                    : getAll("Read_less")}
+                                </button>
+                              )}
+                            </Card>
+                          </div>
+                        </>
+                      )}
+                      <div className="profile-content-body">
+                        <div className="content-title">
+                          <div className="d-flex">
+                            <h3 className="title flex-center">
+                              <span className="material-icons material-icons-outlined">
+                                account_circle
+                              </span>
+                              {getAll("Personal_information")}
                             </h3>
-                            <p className="text-value">{profile.first_name}</p>
                           </div>
                         </div>
-                        <div className="col-sm-4">
-                          <div className="content-text-item">
-                            <h3 className="text-label">
-                              {getAll("Last_name")}
-                            </h3>
-                            <p className="text-value">{profile.last_name}</p>
-                          </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="content-text-item">
-                            <h3 className="text-label">
-                              {getAll("Phone_number")}
-                            </h3>
-                            <p className="text-value">
-                              {user.phone
-                                ? user.code_phone?.split("+")[1] + user.phone
-                                : getAll("Uncompleted")}
-                              {user.phone && "+"}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="content-text-item">
-                            <h3 className="text-label">{getAll("Currency")}</h3>
-                            <p className="text-value">
-                              {currency.symbol_native}
-                            </p>
-                          </div>
-                        </div>
-                        {profile.country.name !== "" && (
+                        <div className="row">
                           <div className="col-sm-4">
                             <div className="content-text-item">
                               <h3 className="text-label">
-                                {getAll("Country")}
+                                {getAll("First_name")}
+                              </h3>
+                              <p className="text-value">{profile.first_name}</p>
+                            </div>
+                          </div>
+                          <div className="col-sm-4">
+                            <div className="content-text-item">
+                              <h3 className="text-label">
+                                {getAll("Last_name")}
+                              </h3>
+                              <p className="text-value">{profile.last_name}</p>
+                            </div>
+                          </div>
+                          <div className="col-sm-4">
+                            <div className="content-text-item">
+                              <h3 className="text-label">
+                                {getAll("Phone_number")}
                               </h3>
                               <p className="text-value">
-                                {profile.country.name}
+                                {user.phone
+                                  ? user.code_phone?.split("+")[1] + user.phone
+                                  : getAll("Uncompleted")}
+                                {user.phone && "+"}
                               </p>
                             </div>
                           </div>
-                        )}
-                        <div className="col-sm-4">
-                          <div className="content-text-item">
-                            <h3 className="text-label">{getAll("Gender")}</h3>
-                            <p className="text-value">
-                              {profile.gender == null
-                                ? ""
-                                : profile.gender == 0
-                                ? getAll("woman")
-                                : getAll("Man")}
-                            </p>
+                          <div className="col-sm-4">
+                            <div className="content-text-item">
+                              <h3 className="text-label">
+                                {getAll("Currency")}
+                              </h3>
+                              <p className="text-value">
+                                {currency.symbol_native}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="content-text-item">
-                            <h3 className="text-label">{getAll("Birthday")}</h3>
-                            <p className="text-value">
-                              {profile.date_of_birth}
-                            </p>
+                          {profile.country.name !== "" && (
+                            <div className="col-sm-4">
+                              <div className="content-text-item">
+                                <h3 className="text-label">
+                                  {getAll("Country")}
+                                </h3>
+                                <p className="text-value">
+                                  {profile.country.name}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                          <div className="col-sm-4">
+                            <div className="content-text-item">
+                              <h3 className="text-label">{getAll("Gender")}</h3>
+                              <p className="text-value">
+                                {profile.gender == null
+                                  ? ""
+                                  : profile.gender == 0
+                                  ? getAll("woman")
+                                  : getAll("Man")}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="col-sm-4">
+                            <div className="content-text-item">
+                              <h3 className="text-label">
+                                {getAll("Birthday")}
+                              </h3>
+                              <p className="text-value">
+                                {profile.date_of_birth}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
               {profile_seller.data.id && <MyProducts />}
             </div>
