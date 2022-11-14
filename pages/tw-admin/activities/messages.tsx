@@ -4,53 +4,24 @@ import LastSeen from "@/components/LastSeen";
 import Image from "next/image";
 import Link from "next/link";
 import Pagination from "react-js-pagination";
-import API from "../../../config";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ActivitiesActions } from "@/store/tw-admin/activities/activityActions";
 
 function index() {
   const { getAll } = useAppSelector((state) => state.languages);
-
-  const [messages, setMessages] = useState({
-    last_page: 1,
-    per_page: 12,
-    data: [],
-  });
   const [pageNumber, setPageNumber] = useState(1);
   const [sentinel, setSentinel] = useState({ mount: true });
   const email = useRef(null);
-  const token = useRef(Cookies.get("token_dash"));
   const router = useRouter();
 
+  const {conversations} = useAppSelector(state=> state.dashboardActivitiesSlice)
+  const dispatch = useAppDispatch()
+  console.log(conversations)
   useEffect(() => {
-    console.log("email changed");
-    fetchData();
+    dispatch(ActivitiesActions.getConversations({page:pageNumber, email:email.current}))
   }, [pageNumber, email.current]);
-  const fetchData = async () => {
-    try {
-      const params = {
-        page: pageNumber,
-        email: email.current,
-      };
-      const res = await API.get(`dashboard/activities/get_all_conversations`, {
-        params,
-        headers: {
-          Authorization: `Bearer ${token.current}`,
-        },
-      });
-      setMessages({
-        ...messages,
-        per_page: res?.data?.data?.per_page,
-        last_page: res?.data?.data?.last_page,
-        data: res?.data?.data?.data,
-      });
-
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  
   return (
     <>
       <div className="timlands-panel">
@@ -86,7 +57,7 @@ function index() {
             </div>
             <div className="activities-items">
               <ul className="activities-items-list">
-                {messages?.data?.map((message) => (
+                {conversations?.data?.map((message) => (
                   <li
                     key={message.id}
                     onClick={(e) => {
@@ -140,8 +111,8 @@ function index() {
             <hr />
             <Pagination
               activePage={pageNumber}
-              itemsCountPerPage={messages.per_page || 0}
-              totalItemsCount={messages?.per_page * messages?.last_page}
+              itemsCountPerPage={conversations.per_page || 0}
+              totalItemsCount={conversations?.total}
               onChange={(pageNumber) => {
                 setPageNumber(pageNumber);
               }}

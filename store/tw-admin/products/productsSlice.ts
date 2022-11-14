@@ -2,7 +2,7 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { ProductsThunkFunctions } from "./thunkFunctions";
 import { CustomMatchers } from "./matchers";
 
-const { getAll, getOne, getAllActive, getAllArchieved, getAllPending, getAllReject} =
+const { getOne} =
 ProductsThunkFunctions;
 const { isProductsActionPending, isProductsActionFulfilled, isProductsActionRejected } =
     CustomMatchers;

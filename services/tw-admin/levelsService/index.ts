@@ -1,18 +1,27 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
 
 export enum ELevelTypes {
     BUYER = 0,
     SELLER = 1
 }
 
+export interface ILevel{
+    name_ar: string,
+    name_en: string,
+    name_fr: string,
+    type: ELevelTypes,
+    number_developments: number,
+    price_developments: number,
+    number_sales: number,
+    value_bayer: number
+}
+
 async function getAll({
-    page,
     type
 }: {
-    page: number,
     type: ELevelTypes
 }) {
-    const res = await API.get(`dashboard/new/levels_sellers`, { params: { page, type } })
+    const res = await API.get(`dashboard/new/levels_sellers`, { params: { type } })
     return res?.data
 }
 
@@ -21,69 +30,19 @@ async function getOne(id: number) {
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr,
-    type,
-    number_developments,
-    price_developments,
-    number_sales,
-    value_bayer
-}: {
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    type: ELevelTypes,
-    number_developments: number,
-    price_developments: number,
-    number_sales: number,
-    value_bayer: number
-}) {
-    const res = await API.post(`dashboard/new/levels_sellers`, {
-        name_ar,
-        name_en,
-        name_fr,
-        type,
-        number_developments,
-        price_developments,
-        number_sales,
-        value_bayer
-    })
+async function createOne(level:ILevel) {
+    const res = await API.post(`dashboard/new/levels_sellers`, level)
     return res?.data
 }
 
 async function updateOne({
-    id,
-    name_ar,
-    name_en,
-    name_fr,
-    type,
-    number_developments,
-    price_developments,
-    number_sales,
-    value_bayer
+  id,
+  level
 }: {
     id: number,
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    type: ELevelTypes,
-    number_developments: number,
-    price_developments: number,
-    number_sales: number,
-    value_bayer: number
+    level: ILevel
 }) {
-    const res = await API.patch(`dashboard/new/levels_sellers/${id}`, {
-        name_ar,
-        name_en,
-        name_fr,
-        type,
-        number_developments,
-        price_developments,
-        number_sales,
-        value_bayer
-    })
+    const res = await API.patch(`dashboard/new/levels_sellers/${id}`, level)
     return res?.data
 }
 

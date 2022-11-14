@@ -1,24 +1,29 @@
 import API from "../../../config";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Cookies from "js-cookie";
-import useSWR from "swr";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
 import { message, Spin } from "antd";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Loading from "@/components/Loading";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { WithdrawalActions } from "@/store/tw-admin/withdrawals/withdrawalActions";
 
 function Id({ query }) {
   const token = Cookies.get("token_dash");
-  const { data: getData }: any = useSWR(`dashboard/withdrawals/${query.id}`);
   const [isShowCause, setIsShowCause] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cause, setCause] = useState("");
   const { getAll } = useAppSelector((state) => state.languages);
+  const curr_withdrawal = useAppSelector(state=> state.dashboardWithdrawals.curr_withdrawal)
+  const dispatch = useAppDispatch()
 
+  useEffect(()=>{
+    if (query.id)
+    dispatch(WithdrawalActions.getOne({id:query.id}))
+  },[query.id])
   const AcceptAmount = async (id: any) => {
     try {
       const res: any = await API.post(
@@ -56,7 +61,7 @@ function Id({ query }) {
     }
   };
   function switchType() {
-    switch (getData && getData.data.type) {
+    switch (curr_withdrawal && curr_withdrawal.data?.type) {
       case 3:
         return getAll("Money_transfer");
       case 2:
@@ -71,7 +76,7 @@ function Id({ query }) {
   }
   return (
     <>
-      {!getData && <Loading />}
+      {curr_withdrawal.loading && <Loading />}
 
       <div className="timlands-panel">
         {isShowCause && (
@@ -124,7 +129,7 @@ function Id({ query }) {
 
             <button
               className="btn butt-xs butt-green mx-1"
-              onClick={() => AcceptAmount(getData && getData.data.id)}
+              onClick={() => AcceptAmount(curr_withdrawal && curr_withdrawal.data?.id)}
             >
               {getAll("Accept_this_request")}
             </button>
@@ -137,12 +142,12 @@ function Id({ query }) {
                 {getAll("Financial_transaction_information")}
               </h4>
             </div>
-            {getData && getData.data.type == 2 && (
+            {curr_withdrawal.data && curr_withdrawal.data?.type == 2 && (
               <table className="table">
                 <tbody>
                   <tr>
                     <th>{getAll("Amount_to_transfer")}</th>
-                    <td>{getData && getData.data.amount}$</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.amount}$</td>
                   </tr>
                   <tr>
                     <th>{getAll("Transfer_type")}</th>
@@ -151,77 +156,77 @@ function Id({ query }) {
                   <tr>
                     <th>{getAll("Withdrawal_date")}</th>
                     <td>
-                      <LastSeen date={getData && getData.data.created_at} />
+                      <LastSeen date={curr_withdrawal && curr_withdrawal.data?.created_at} />
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("Personnal_address")}</th>
                     <td>
-                      {getData && getData.data.withdrawalable.address_line_one}
+                      {curr_withdrawal && curr_withdrawal.data?.withdrawalable.address_line_one}
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("Bank_address")}</th>
                     <td>
-                      {getData &&
-                        getData.data.withdrawalable.bank_adress_line_one}
+                      {curr_withdrawal &&
+                        curr_withdrawal.data?.withdrawalable.bank_adress_line_one}
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("Bank_branch")}</th>
                     <td>
-                      {getData && getData.data.withdrawalable.bank_branch}
+                      {curr_withdrawal && curr_withdrawal.data?.withdrawalable.bank_branch}
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("IBAN")}</th>
-                    <td>{getData && getData.data.withdrawalable.bank_iban}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable.bank_iban}</td>
                   </tr>
-                  <tr>
+                  <tr>  
                     <th>{getAll("Bank_name")}</th>
-                    <td>{getData && getData.data.withdrawalable.bank_name}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable.bank_name}</td>
                   </tr>
                   <tr>
                     <th>{getAll("Bank_account")}</th>
                     <td>
-                      {getData &&
-                        getData.data.withdrawalable.bank_number_account}
+                      {curr_withdrawal &&
+                        curr_withdrawal.data?.withdrawalable.bank_number_account}
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("Swift_code")}</th>
-                    <td>{getData && getData.data.withdrawalable.bank_swift}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable.bank_swift}</td>
                   </tr>
                   <tr>
                     <th>{getAll("City")}</th>
-                    <td>{getData && getData.data.withdrawalable.city}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable.city}</td>
                   </tr>
                   <tr>
                     <th>{getAll("Postal_code")}</th>
                     <td>
-                      {getData && getData.data.withdrawalable.code_postal}
+                      {curr_withdrawal && curr_withdrawal.data?.withdrawalable.code_postal}
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("Full_name")}</th>
-                    <td>{getData && getData.data.withdrawalable.full_name}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable.full_name}</td>
                   </tr>
                   <tr>
                     <th>{getAll("Phone_number")}</th>
                     <td>
-                      {getData &&
-                        getData.data.withdrawalable.phone_number_without_code}
+                      {curr_withdrawal &&
+                        curr_withdrawal.data?.withdrawalable.phone_number_without_code}
                     </td>
                   </tr>
                 </tbody>
               </table>
             )}
-            {getData && getData.data.type == 1 && (
+            {curr_withdrawal.data && curr_withdrawal.data?.type == 1 && (
               <table className="table">
                 <tbody>
                   <tr>
                     <th>{getAll("Amount_to_transfer")}</th>
-                    <td>{getData && getData.data.amount}$</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.amount}$</td>
                   </tr>
                   <tr>
                     <th>{getAll("Transfer_type")}</th>
@@ -230,22 +235,22 @@ function Id({ query }) {
                   <tr>
                     <th>{getAll("Withdrawal_date")}</th>
                     <td>
-                      <LastSeen date={getData && getData.data.created_at} />
+                      <LastSeen date={curr_withdrawal && curr_withdrawal.data?.created_at} />
                     </td>
                   </tr>
                   <tr>
                     <th>{getAll("E_mail")}</th>
-                    <td>{getData && getData.data.withdrawalable.email}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable.email}</td>
                   </tr>
                 </tbody>
               </table>
             )}
-            {getData && getData.data.type == 0 && (
+            {curr_withdrawal.data && curr_withdrawal.data?.type == 0 && (
               <table className="table">
                 <tbody>
                   <tr>
                     <th>{getAll("Amount_to_transfer")}</th>
-                    <td>{getData && getData.data.amount}$</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.amount}$</td>
                   </tr>
                   <tr>
                     <th>{getAll("Transfer_type")}</th>
@@ -254,12 +259,12 @@ function Id({ query }) {
                   <tr>
                     <th>{getAll("Withdrawal_date")}</th>
                     <td>
-                      <LastSeen date={getData && getData.data.created_at} />
+                      <LastSeen date={curr_withdrawal && curr_withdrawal.data?.created_at} />
                     </td>
                   </tr>
                   <tr>
                     <th>البريد الإلكتروني: </th>
-                    <td>{getData && getData.data.withdrawalable.email}</td>
+                    <td>{curr_withdrawal && curr_withdrawal.data?.withdrawalable?.email}</td>
                   </tr>
                 </tbody>
               </table>
@@ -278,7 +283,7 @@ function Id({ query }) {
                   <td>
                     <Link
                       href={`/u/${
-                        getData && getData.data.withdrawalable.profile.user_id
+                        curr_withdrawal.data && curr_withdrawal.data?.withdrawalable?.profile?.user_id
                       }`}
                     >
                       <a>
@@ -287,16 +292,16 @@ function Id({ query }) {
                           height={20}
                           style={{ marginInline: 4, borderRadius: "50%" }}
                           src={
-                            getData &&
-                            getData.data.withdrawalable.profile.avatar_path
+                            curr_withdrawal.data &&
+                            curr_withdrawal.data?.withdrawalable.profile.avatar_path
                           }
                           alt={
-                            getData &&
-                            getData.data.withdrawalable.profile.full_name
+                            curr_withdrawal.data &&
+                            curr_withdrawal.data?.withdrawalable.profile.full_name
                           }
                         />
-                        {getData &&
-                          getData.data.withdrawalable.profile.full_name}
+                        {curr_withdrawal.data &&
+                          curr_withdrawal.data?.withdrawalable.profile.full_name}
                       </a>
                     </Link>
                   </td>
@@ -304,23 +309,23 @@ function Id({ query }) {
                 <tr>
                   <th>{getAll("Withdrawable_balance")}</th>
                   <td>
-                    {getData &&
-                      getData.data.withdrawalable.profile.withdrawable_amount}
+                    {curr_withdrawal.data &&
+                      curr_withdrawal.data?.withdrawalable.profile.withdrawable_amount}
                   </td>
                 </tr>
                 <tr>
                   <th>{getAll("His_her_level")}</th>
                   <td>
-                    {getData &&
-                      getData.data.withdrawalable.profile.level &&
-                      getData.data.withdrawalable.profile.level.name_ar}
+                    {curr_withdrawal.data &&
+                      curr_withdrawal.data?.withdrawalable.profile.level &&
+                      curr_withdrawal.data?.withdrawalable.profile.level.name_ar}
                   </td>
                 </tr>
                 <tr>
                   <th>{getAll("Birthday")}</th>
                   <td>
-                    {getData &&
-                      getData.data.withdrawalable.profile.date_of_birth}{" "}
+                    {curr_withdrawal.data &&
+                      curr_withdrawal.data?.withdrawalable.profile.date_of_birth}{" "}
                   </td>
                 </tr>
               </tbody>

@@ -1,18 +1,29 @@
-import API from '../../../config'
-enum EWithdrawalsStatus {
+import {AdminAPI as API} from '../../../config'
+export enum EWithdrawalsStatus {
     PENDING = 0,
-    ACCEPTED = 1
+    ACCEPTED = 1,
+    CANCELED = 2
+}
+
+export enum EWithdrawalsType{
+    PAYPAL = 0,
+    WISE = 1,
+    BANK = 2,
+    BANK_TRANSFER = 3
 }
 async function getAll({
     page,
+    status,
     type
 }: {
     page: number,
-    type: EWithdrawalsStatus
+    status: EWithdrawalsStatus,
+    type: EWithdrawalsType
 }) {
     const res = await API.get('dashboard/withdrawals', {
         params: {
             page,
+            status,
             type
         }
     })
@@ -20,6 +31,7 @@ async function getAll({
 }
 
 async function getOne(id: number) {
+    console.log(id)
     const res = await API.get(`dashboard/withdrawals/${id}`)
     return res?.data
 }

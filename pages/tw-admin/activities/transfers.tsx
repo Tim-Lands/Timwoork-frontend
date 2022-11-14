@@ -2,11 +2,10 @@ import { ReactElement, useState, useEffect, useRef } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Image from "next/image";
 import Link from "next/link";
-import API from "../../../config";
-import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import Pagination from "react-js-pagination";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ActivitiesActions } from "@/store/tw-admin/activities/activityActions";
 
 const Amount = ({ transfer }: any) => {
   switch (transfer.status) {
@@ -47,48 +46,15 @@ Amount.propTypes = {
 };
 function index() {
   const { getAll } = useAppSelector((state) => state.languages);
-
   const [pageNumber, setPageNumber]: any = useState(1);
-  const [transfers, setTransfers]: any = useState({
-    data: [],
-    last_page: 1,
-    per_page: 12,
-  });
   const [sentinel, setSentinel] = useState({ mount: true });
   const search = useRef(null);
-  const token = useRef(Cookies.get("token_dash"));
+  const {transactions} = useAppSelector(state=>state.dashboardActivitiesSlice)
+  const dispatch = useAppDispatch()
   useEffect(() => {
-    fetchData();
+    dispatch(ActivitiesActions.getTransactions({page:pageNumber, search:search.current}))
   }, [pageNumber, sentinel]);
-  const fetchData = async () => {
-    console.log("fetching");
-    try {
-      const params = {
-        page: pageNumber,
-        search: search.current,
-      };
-      const data = await API.get(
-        `dashboard/activities/all_financial_transactions`,
-        {
-          params,
-          headers: {
-            Authorization: `Bearer ${token.current} `,
-          },
-        }
-      );
-      console.log(data);
-      setTransfers({
-        ...transfers,
-        last_page: data?.data?.data?.last_page,
-        per_page: data?.data?.data?.per_page,
-        data: data?.data?.data?.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
-  console.log(transfers);
   return (
     <>
       <div className="timlands-panel">
@@ -137,7 +103,7 @@ function index() {
                     </tr>
                   </thead>
                   <tbody>
-                    {transfers?.data?.map((transfer) => (
+                    {transactions?.data?.map((transfer) => (
                       <tr key={transfer.id}>
                         <td>
                           <Amount transfer={transfer} />
@@ -172,8 +138,8 @@ function index() {
             <hr />
             <Pagination
               activePage={pageNumber}
-              itemsCountPerPage={transfers.per_page || 0}
-              totalItemsCount={transfers?.per_page * transfers?.last_page}
+              itemsCountPerPage={transactions.per_page || 0}
+              totalItemsCount={transactions.total}
               onChange={(pageNumber) => {
                 setPageNumber(pageNumber);
               }}

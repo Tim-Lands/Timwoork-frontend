@@ -15,6 +15,17 @@ import mySales from "./sales/salesSlice";
 import categories from "./categories/categoriesSlice";
 import dashboardUsers  from "./tw-admin/users/userSlice";
 import dashboardProducts from './tw-admin/products/productsSlice'
+import dashboardWithdrawals from './tw-admin/withdrawals/withdrawalsSlice'
+import dashboardActivitiesSlice from "./tw-admin/activities/activitiesSlice";
+import dashboardTypespaymentSlice  from "./tw-admin/typesPayment/typesPaymentSlice";
+import dashboardBadgesSlice from "./tw-admin/badges/badgesSlice";
+import dashboardCountriesSlice from "./tw-admin/countries/countriesSlice";
+import dashboardLanguagesSlice from "./tw-admin/languages/languagesSlice";
+import dashboardLevelsSlice from "./tw-admin/levels/levelsSlice";
+import dashboardSkillsSlice from "./tw-admin/skills/skillsSlice";
+import dashboardTagsSlice from "./tw-admin/tags/tagsSlice";
+
+
 export const store = configureStore({
   reducer: {
     user,
@@ -32,7 +43,16 @@ export const store = configureStore({
     mySales,
     categories,
     dashboardUsers,
-    dashboardProducts
+    dashboardProducts,
+    dashboardWithdrawals,
+    dashboardActivitiesSlice,
+    dashboardTypespaymentSlice,
+    dashboardBadgesSlice,
+    dashboardCountriesSlice,
+    dashboardLanguagesSlice,
+    dashboardLevelsSlice,
+    dashboardSkillsSlice,
+    dashboardTagsSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

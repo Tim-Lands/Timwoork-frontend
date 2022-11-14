@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import API from "config";
 import { motion } from "framer-motion";
@@ -7,25 +7,29 @@ import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { message } from "antd";
 import router from "next/router";
-import useSWR from "swr";
 import PropTypes from "prop-types";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { TypesPaymentActions } from "@/store/tw-admin/typesPayment/typespaymentActions";
 
 function Id({ query }) {
   const { getAll } = useAppSelector((state) => state.languages);
-
   const token = Cookies.get("token_dash");
-  const { data: GetData }: any = useSWR(`dashboard/types_payments/${query.id}`);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
+  const {current_type} = useAppSelector(state=> state.dashboardTypespaymentSlice)
+  const dispatch = useAppDispatch()
+  useEffect(()=>{
+    dispatch(TypesPaymentActions.getOne({id:query.id}))
+  },[])
+
   const formik = useFormik({
     initialValues: {
-      name_ar: GetData && GetData.data.name_ar,
-      name_en: GetData && GetData.data.name_en,
-      precent_of_payment: GetData && GetData.data.precent_of_payment,
-      value_of_cent: GetData && GetData.data.value_of_cent,
+      name_ar: !current_type.loading && current_type.data.name_ar,
+      name_en:  !current_type.loading && current_type.data.name_en,
+      precent_of_payment:  !current_type.loading && current_type.data.precent_of_payment,
+      value_of_cent:  !current_type.loading && current_type.data.value_of_cent,
     },
     isInitialValid: true,
     enableReinitialize: true,
