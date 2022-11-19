@@ -20,9 +20,9 @@ function Profile() {
     user,
     languages: { getAll },
     profile,
+    profile: { profile_seller },
     currency: { my: currency },
   } = useAppSelector((state) => state);
-  const { profile_seller } = profile;
   const [isLoadingSeler, setIsLoadingSeler] = useState(false);
   const [isLess, setIsLess] = useState(true);
   const detectHeight: any = createRef();

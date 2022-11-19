@@ -2,24 +2,14 @@ import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Alert } from "./Alert/Alert";
 import Link from "next/link";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { useAppSelector } from "@/store/hooks";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import PostInner from "./Post/PostInner";
 import Post from "./Post/Post";
-// import required modules
-function PostsAside({
-  PostData,
-  title,
-  // colNumber,
-  isError,
-  linkURL,
-  more,
-}): ReactElement {
+function PostsAside({ PostData, title, isError, linkURL, more }): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   if (isError)
     return (
@@ -81,7 +71,7 @@ function PostsAside({
           </div>
         </div>
       )} */}
-      {PostData && PostData.length !== 0 && (
+      {PostData.length !== 0 && (
         <div className="posts-aside">
           <div className="posts-aside-header">
             <h1 className="title me-auto">{title}</h1>
@@ -117,58 +107,75 @@ function PostsAside({
               }}
               className="mySwiper"
             >
-              {PostData.map((e: any) => (
-                <SwiperSlide key={e.id}>
-                  <div className="post-resposive-with-desktop">
-                    <PostInner
-                      title={e.title}
-                      avatar={
-                        e.profile_seller && e.profile_seller.profile.avatar_path
-                      }
-                      author={
-                        e.profile_seller &&
-                        e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
-                      }
-                      rate={e.ratings_avg_rating}
-                      username={
-                        e.profile_seller &&
-                        e.profile_seller.profile.user?.username
-                      }
-                      price={e.price}
-                      slug={e.id}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                    />
-                  </div>
-                  <div className="post-resposive-with-smart">
-                    <Post
-                      size="small"
-                      avatar={
-                        e.profile_seller && e.profile_seller.profile.avatar_path
-                      }
-                      title={e.title}
-                      level={e.profile_seller && e.profile_seller.level?.name}
-                      author={
-                        e.profile_seller &&
-                        e.profile_seller.profile.first_name +
-                          " " +
-                          e.profile_seller.profile.last_name
-                      }
-                      rate={e.ratings_avg_rating}
-                      username={
-                        e.profile_seller &&
-                        e.profile_seller.profile.user?.username
-                      }
-                      price={e.price}
-                      slug={e.id}
-                      thumbnail={e.full_path_thumbnail}
-                      buyers={e.count_buying}
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
+              {PostData.map(
+                (element: {
+                  title: string;
+                  id: string;
+                  price: string;
+                  full_path_thumbnail: string;
+                  count_buying: number;
+                  ratings_avg_rating: number;
+                  profile_seller: {
+                    level: { name: string };
+                    profile: {
+                      avatar_path: string;
+                      first_name: string;
+                      last_name: string;
+                      user: { username: string };
+                    };
+                  };
+                }) => {
+                  const {
+                    title,
+                    id,
+                    price,
+                    full_path_thumbnail,
+                    count_buying,
+                    ratings_avg_rating,
+                    profile_seller: {
+                      level: { name },
+                      profile: {
+                        avatar_path,
+                        first_name,
+                        last_name,
+                        user: { username },
+                      },
+                    },
+                  } = element;
+                  return (
+                    <SwiperSlide key={id}>
+                      <div className="post-resposive-with-desktop">
+                        <PostInner
+                          title={title}
+                          avatar={avatar_path}
+                          author={first_name + " " + last_name}
+                          rate={ratings_avg_rating}
+                          username={username}
+                          price={price}
+                          slug={id}
+                          thumbnail={full_path_thumbnail}
+                          buyers={count_buying}
+                        />
+                      </div>
+                      <div className="post-resposive-with-smart">
+                        <Post
+                          size="small"
+                          avatar={avatar_path}
+                          title={title}
+                          level={name}
+                          author={first_name + " " + last_name}
+                          rate={ratings_avg_rating}
+                          username={username}
+                          price={price}
+                          slug={id}
+                          thumbnail={full_path_thumbnail}
+                          buyers={count_buying}
+                        />
+                      </div>
+                    </SwiperSlide>
+                  );
+                }
+              )}
             </Swiper>
           </div>
         </div>

@@ -42,6 +42,7 @@ const App = ({ innerApp }) => {
     dispatch(CategoriesActions.getAllCategories());
     dispatch(CategoriesActions.getTopCategories());
     dispatch(CategoriesActions.getTopMainCategories());
+    dispatch(ProductsActions.getPopularProducts());
   }, []);
   useEffect(() => {
     if (user.token) initialize();
@@ -57,7 +58,6 @@ const App = ({ innerApp }) => {
     dispatch(CurrencyActions.getAllCurrenciesValues());
     dispatch(CartActions.getCartData());
     dispatch(CategoriesActions.getProductCategories());
-    dispatch(ProductsActions.getPopularProducts());
   }
   useEffect(() => {
     if (user.token)
