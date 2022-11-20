@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewBadge from "./Modals/AddNewBadge";
-import API from "../../../config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -10,6 +9,7 @@ import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { BadgesThunkFunctions } from "@/store/tw-admin/badges/thunkFunctions";
+import { BadgesActions } from "@/store/tw-admin/badges/badgesActions";
 
 function Badges(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
@@ -41,7 +41,7 @@ function Badges(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await API.post(`dashboard/badges/${id}/delete`);
+            await dispatch(BadgesActions.deleteOne({id}))
           } catch (error) {
             () => {};
           }

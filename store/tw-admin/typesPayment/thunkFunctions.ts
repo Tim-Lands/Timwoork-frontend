@@ -61,10 +61,11 @@ const deleteOne = createAsyncThunk('admin/typesPayment/{id}/delete',
     })
 
 const activateOne = createAsyncThunk('admin/typesPayment/{id}/activate',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number }, { rejectWithValue, dispatch }) => {
         try {
             const { id } = args
             const res = await TypesPaymentService.activateOne(id)
+            dispatch(getAll({}))
             return res?.data
         }
         catch (err) {
@@ -73,10 +74,11 @@ const activateOne = createAsyncThunk('admin/typesPayment/{id}/activate',
     })
 
 const disactiveOne = createAsyncThunk('admin/typesPayment/{id}/disactive',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number }, { rejectWithValue, dispatch }) => {
         try {
             const { id } = args
             const res = await TypesPaymentService.disactiveOne(id)
+            dispatch(getAll({}))
             return res?.data
         }
         catch (err) {

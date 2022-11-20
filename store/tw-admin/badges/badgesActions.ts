@@ -1,6 +1,6 @@
 import { BadgesThunkFunctions } from "./thunkFunctions";
 import { dashboardBadgesSlice } from "./badgesSlice";
-export const TypesPaymentActions = {
+export const BadgesActions = {
   ...dashboardBadgesSlice.actions,
   ...BadgesThunkFunctions,
 };

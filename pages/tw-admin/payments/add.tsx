@@ -1,19 +1,18 @@
 import { ReactElement, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import API from "config";
 import { motion } from "framer-motion";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useFormik } from "formik";
-import Cookies from "js-cookie";
 import { message } from "antd";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { TypesPaymentActions } from "@/store/tw-admin/typesPayment/typespaymentActions";
+import { ITypePayment } from "@/services/tw-admin/typesPaymentService";
 
 function Countries(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-
-  const token = Cookies.get("token_dash");
   const [validationsErrors, setValidationsErrors]: any = useState({});
+  const dispatch = useAppDispatch()
   const clearValidationHandle = () => {
     setValidationsErrors({});
   };
@@ -21,24 +20,18 @@ function Countries(): ReactElement {
     initialValues: {
       name_ar: "",
       name_en: "",
+      name_fr:"",
       precent_of_payment: "",
       value_of_cent: "",
     },
     isInitialValid: true,
     enableReinitialize: true,
-    onSubmit: async (values) => {
+    onSubmit: async (values:ITypePayment) => {
       try {
         setValidationsErrors({});
-        const res = await API.post(`dashboard/types_payments/store`, values, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_gateaway_had"));
-          router.push(`/tw-admin/payments`);
-        }
+        await dispatch(TypesPaymentActions.createOne({typePayment:values}))
+        message.success(getAll("The_gateaway_had"));
+        router.push(`/tw-admin/payments`); 
       } catch (error: any) {
         if (
           error.response &&

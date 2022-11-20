@@ -1,32 +1,25 @@
-import API from "../../../../../config";
 import { ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { BadgesActions } from "@/store/tw-admin/badges/badgesActions";
 
 export default function Id(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-
   const router = useRouter();
-  const id = router.query.id;
-
-  const [isLoading, setIsLoading] = useState(false);
-  const refreshData = async () => {
-    setIsLoading(true);
-    try {
-      const res: any = await API.get(`dashboard/badges/${id}`);
-      if (res.data) {
-        setIsLoading(false);
-        setPerson(res.data.data);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
+  const id:any = router.query.id;
+  const {current_badge} = useAppSelector(state=> state.dashboardBadgesSlice)
+  const dispatch = useAppDispatch()
   useEffect(() => {
-    refreshData();
-  }, []);
+    if (id)
+      dispatch(BadgesActions.getOne({id}))
+  }, [id]);
+
+  useEffect(()=>{
+    if (!current_badge.loading)
+      setPerson({...current_badge.data, precent_deducation:0})
+  },[current_badge.data])
 
   const [person, setPerson] = useState({
     name_ar: "",
@@ -64,23 +57,10 @@ export default function Id(): ReactElement {
   }
   const saveData = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      setIsLoading(false);
-      const res = await API.post(`dashboard/badges/${id}/update`, person);
-      // If Activate Network
-      // Authentication was successful.
-      if (
-        res.status == 201 ||
-        res.status == 200 ||
-        res.status == 202 ||
-        res.status == 203
-      ) {
-        //alert(getAll("Added_successfully"))
-        router.push("/tw-admin/cms/Badges");
-      } else {
-        alert("Error");
-      }
+      await dispatch(BadgesActions.updateOne({id, badge:person}))
+      router.push("/tw-admin/cms/Badges");
+
     } catch (error) {
       alert("Error Network");
     }
@@ -106,7 +86,7 @@ export default function Id(): ReactElement {
           </div>
         </div>
         <form onSubmit={saveData}>
-          {isLoading && getAll("Please_wait")}
+          {current_badge.loading && getAll("Please_wait")}
           <div className={"panel-modal-body auto-height"}>
             <div className="row">
               <div className="col-sm-4">

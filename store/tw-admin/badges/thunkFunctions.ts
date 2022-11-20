@@ -25,10 +25,11 @@ const getOne = createAsyncThunk('admin/badges/{id}',
     })
 
 const createOne = createAsyncThunk('admin/badges/store',
-    async (args: { badge: IBadge }, { rejectWithValue }) => {
+    async (args: { badge: IBadge }, { rejectWithValue, dispatch }) => {
         try {
             const { badge } = args
             const res = await BadgesService.createOne(badge)
+            dispatch(getAll({}))
             return res?.data
         }
         catch (err) {
@@ -49,10 +50,11 @@ const updateOne = createAsyncThunk('admin/badges/{id}/update',
     })
 
 const deleteOne = createAsyncThunk('admin/badges/{id}/delete',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number }, { rejectWithValue, dispatch }) => {
         try {
             const { id } = args
             const res = await BadgesService.deleteOne(id)
+            dispatch(getAll({}))
             return res?.data
         }
         catch (err) {

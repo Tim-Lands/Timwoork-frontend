@@ -1,17 +1,18 @@
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { BadgesActions } from "@/store/tw-admin/badges/badgesActions";
+import { IBadge } from "@/services/tw-admin/badgesService";
 
 // const SignupSchema =
 export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-
+  const dispatch = useAppDispatch()
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -46,8 +47,8 @@ export default function AddNewUser({
               .lessThan(101, "النسبة المئوية يجب أن تكون أقل من 100")
               .required(getAll("This_field_is")),
           })}
-          onSubmit={async (values) => {
-            await API.post("dashboard/badges/store", values);
+          onSubmit={async (values:IBadge) => {
+            await dispatch(BadgesActions.createOne({badge:values}))
             setIsModalHiddenHandle();
           }}
         >

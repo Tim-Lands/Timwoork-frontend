@@ -1,20 +1,16 @@
 import { ReactElement, useEffect } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
-import API from "config";
 import { motion } from "framer-motion";
 
 import Link from "next/link";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import Cookies from "js-cookie";
 import { message } from "antd";
-import router from "next/router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { TypesPaymentActions } from "@/store/tw-admin/typesPayment/typespaymentActions";
 
 function Countries(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const token = Cookies.get("token_dash");
   const types_payments = useAppSelector(state=> state.dashboardTypespaymentSlice)
   const dispatch = useAppDispatch()
   console.log(types_payments)
@@ -59,34 +55,18 @@ function Countries(): ReactElement {
     } */
   const activateHandle = async (id: any) => {
     try {
-      const res = await API.post(
-        `dashboard/types_payments/${id}/active_payment`,
-        null,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.status === 200) {
+        await dispatch(TypesPaymentActions.activateOne({id}))
         message.success(getAll("The_gateway_had"));
-        router.reload();
-      }
+      
     } catch (error) {
       message.success(getAll("Unfortunately_the_gateway"));
     }
   };
   const disactivateHandle = async (id: any) => {
     try {
-      const res = await API.post(
-        `dashboard/types_payments/${id}/disactive_payment`,
-        null,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.status === 200) {
+        dispatch(TypesPaymentActions.disactiveOne({id}))
         message.success(getAll("The_gateway_has"));
-        router.reload();
-      }
+      
     } catch (error) {
       message.success(getAll("Unfortunately_the_gateway_2"));
     }
