@@ -14,12 +14,10 @@ import { ProductsActions } from "@/store/products/productActions";
 function index() {
   const dispatch = useAppDispatch();
   const {
+    products: { popular, best_seller, latest },
     categories: { all: categories },
     languages: { getAll },
   } = useAppSelector((state) => state);
-  const { popular, best_seller, latest } = useAppSelector(
-    (state) => state.products
-  );
   useEffect(() => {
     if (!latest.loaded) dispatch(ProductsActions.getLatestProducts());
     if (!best_seller.loaded) dispatch(ProductsActions.getSellingProducts());
@@ -82,30 +80,30 @@ function index() {
         href={`/products?categoryID=`}
         categories={categories}
       />
-      {best_seller.data.length !== 0 &&
-        popular.data.length !== 0 &&
-        latest.data.length !== 0 && (
-          <>
-            <PostsAside
-              PostData={latest.data}
-              title={getAll("Newly_added_services")}
-              linkURL="/products/latest"
-              more={getAll("More")}
-            />
-            <PostsAside
-              PostData={best_seller.data}
-              title={getAll("Top_selling_services")}
-              linkURL="/products/best-seller"
-              more={getAll("More")}
-            />
-            <PostsAside
-              PostData={popular.data}
-              title={getAll("Most_popular_services")}
-              linkURL="/products/popular"
-              more={getAll("More")}
-            />
-          </>
-        )}
+      {best_seller.data.length !== 0 && (
+        <PostsAside
+          PostData={best_seller.data}
+          title={getAll("Top_selling_services")}
+          linkURL="/products/best-seller"
+          more={getAll("More")}
+        />
+      )}
+      {popular.data.length !== 0 && (
+        <PostsAside
+          PostData={popular.data}
+          title={getAll("Most_popular_services")}
+          linkURL="/products/popular"
+          more={getAll("More")}
+        />
+      )}
+      {latest.data.length !== 0 && (
+        <PostsAside
+          PostData={latest.data}
+          title={getAll("Newly_added_services")}
+          linkURL="/products/latest"
+          more={getAll("More")}
+        />
+      )}
       <div
         className="shadow"
         style={{
