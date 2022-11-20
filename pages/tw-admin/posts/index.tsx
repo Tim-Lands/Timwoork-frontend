@@ -3,6 +3,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Posts from "@/components/Dashboard/posts";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
+import { EProductStateType } from "@/store/tw-admin/products/thunkFunctions";
 function index(): ReactElement {
   const productsState = useAppSelector(state=> state.dashboardProducts)
   const [page, setPage] = useState(1)
@@ -15,7 +16,7 @@ function index(): ReactElement {
   return (
     <>
       <div className="timlands-panel">
-        <Posts postsList={productsState.all} isLoading={productsState.all.loading} onPageChange={setPage} onSearchSubmit={setSearch} />
+        <Posts postsType={EProductStateType.ALL} postsList={productsState.all} isLoading={productsState.all.loading} onPageChange={setPage} onSearchSubmit={setSearch} />
       </div>
     </>
   );

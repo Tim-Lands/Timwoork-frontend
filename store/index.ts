@@ -24,7 +24,7 @@ import dashboardLanguagesSlice from "./tw-admin/languages/languagesSlice";
 import dashboardLevelsSlice from "./tw-admin/levels/levelsSlice";
 import dashboardSkillsSlice from "./tw-admin/skills/skillsSlice";
 import dashboardTagsSlice from "./tw-admin/tags/tagsSlice";
-
+import dashboardCategoriesSlice from "./tw-admin/categories/categoriesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -52,7 +52,8 @@ export const store = configureStore({
     dashboardLanguagesSlice,
     dashboardLevelsSlice,
     dashboardSkillsSlice,
-    dashboardTagsSlice
+    dashboardTagsSlice,
+    dashboardCategoriesSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

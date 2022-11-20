@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 import { Spin } from "antd";
 import PropTypes from "prop-types";
@@ -16,7 +16,10 @@ function FeaturedUploadingGalleries({
       data_url: full_path_thumbnail,
     },
   ]);
-
+  useEffect(()=>{
+    if (full_path_thumbnail)
+    setFeaturedImages([{data_url:full_path_thumbnail}])
+  },[full_path_thumbnail])
   const onChangeFeatured = (imageListc) => {
     // data for submit
     setFeaturedImages(imageListc);

@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 import { message } from "antd";
 import Layout from "@/components/Layout/DashboardLayout";
 import Cookies from "js-cookie";
-import API from "../../../../config";
 import Link from "next/link";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -127,11 +126,11 @@ function Description({query}) {
   const editor = useEditor({
     extensions: [StarterKit],
     content: product && product.content,
-  });
+  },[product]);
   const buyerInstruct = useEditor({
     extensions: [StarterKit],
     content: product && product.buyer_instruct,
-  });
+  },[product]);
 
   const html = editor && editor.getHTML();
   const buyerInstructhtml = buyerInstruct && buyerInstruct.getHTML();
@@ -154,20 +153,15 @@ function Description({query}) {
       setValidationsErrors({});
       try {
         const { id } = query;
-        const res = await API.post(
-          `dashboard/products/${id}/step_three`,
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${token.current}`,
-            },
-          }
-        );
+        const {buyer_instruct, content} = values
+        await dispatch(ProductsActions.updateStepThree({
+          id,
+          buyer_instruct,
+          content
+        }))
         // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push(`/tw-admin/posts/edit-product/medias?id=${product.id}`);
-        }
+        message.success(getAll("The_update_has"));
+        
       } catch (error: any) {
         if (
           error.response &&

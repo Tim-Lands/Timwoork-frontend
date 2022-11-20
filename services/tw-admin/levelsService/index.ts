@@ -19,7 +19,7 @@ export interface ILevel{
 async function getAll({
     type
 }: {
-    type: ELevelTypes
+    type?: ELevelTypes
 }) {
     const res = await API.get(`dashboard/new/levels_sellers`, { params: { type } })
     return res?.data

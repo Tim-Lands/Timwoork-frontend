@@ -1,5 +1,5 @@
 import API from "../../../../../config";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement,  useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
@@ -12,21 +12,6 @@ export default function Id(): ReactElement {
   const id = router.query.id;
 
   const [isLoading, setIsLoading] = useState(false);
-  const refreshData = async () => {
-    setIsLoading(true);
-    try {
-      const res: any = await API.get(`dashboard/tags/${id}`);
-      if (res.data) {
-        setIsLoading(false);
-        setPerson(res.data.data);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    refreshData();
-  }, [id]);
 
   const [person, setPerson] = useState({
     name_ar: "",

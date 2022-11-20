@@ -1,4 +1,14 @@
-import API from '../../../config'
+import {AdminAPI as API} from '../../../config'
+
+export interface ICategory{
+    name_ar: string,
+    name_en: string,
+    name_fr: string,
+    description_ar: string,
+    description_en: string,
+    description_fr: string,
+    icon: string
+}
 
 async function getAll() {
     const res = await API.get(`dashboard/new/categories`)
@@ -15,63 +25,19 @@ async function getOneSubCategory(id: number) {
     return res?.data
 }
 
-async function createOne({
-    name_ar,
-    name_en,
-    name_fr,
-    description_ar,
-    description_en,
-    description_fr,
-    icon
-}: {
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    description_ar: string,
-    description_en: string,
-    description_fr: string,
-    icon: string
-}) {
-    const res = await API.post(`dashboard/new/categories`, {
-        name_ar,
-        name_en,
-        name_fr,
-        description_ar,
-        description_en,
-        description_fr,
-        icon
-    })
+async function createOne(category:ICategory) {
+    const res = await API.post(`dashboard/new/categories`, category)
     return res?.data
 }
 
 async function updateOne({
     id,
-    name_ar,
-    name_en,
-    name_fr,
-    description_ar,
-    description_en,
-    description_fr,
-    icon
+    category
 }: {
     id: number
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    description_ar: string,
-    description_en: string,
-    description_fr: string,
-    icon: string
+    category:ICategory
 }) {
-    const res = await API.patch(`dashboard/new/categories/${id}`, {
-        name_ar,
-        name_en,
-        name_fr,
-        description_ar,
-        description_en,
-        description_fr,
-        icon
-    })
+    const res = await API.patch(`dashboard/new/categories/${id}`, category)
     return res?.data
 }
 
@@ -82,34 +48,13 @@ async function deleteOne(id: number) {
 
 async function createSubCategory({
     id,
-    name_ar,
-    name_en,
-    name_fr,
-    description_ar,
-    description_en,
-    description_fr,
-    icon
+    category
 
 }: {
     id: number
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    description_ar: string,
-    description_en: string,
-    description_fr: string,
-    icon: string
+    category:ICategory
 }) {
-    const res = await API.put(`dashboard/new/categories/${id}/subcategories`, {
-        name_ar,
-        name_en,
-        name_fr,
-        description_ar,
-        description_en,
-        description_fr,
-        icon
-
-    })
+    const res = await API.put(`dashboard/new/categories/${id}/subcategories`, category)
     return res?.data
 }
 
@@ -120,34 +65,13 @@ async function deleteSubCategory(id:number) {
 
 async function updateSubCategory({
     id,
-    name_ar,
-    name_en,
-    name_fr,
-    description_ar,
-    description_en,
-    description_fr,
-    icon
+    category
 
 }: {
     id: number
-    name_ar: string,
-    name_en: string,
-    name_fr: string,
-    description_ar: string,
-    description_en: string,
-    description_fr: string,
-    icon: string
+    category:ICategory
 }){
-    const res = await API.put(`dashboard/new/subcategories/${id}`, {
-        name_ar,
-        name_en,
-        name_fr,
-        description_ar,
-        description_en,
-        description_fr,
-        icon
-
-    })
+    const res = await API.put(`dashboard/new/subcategories/${id}`, category)
     return res?.data
 }
 

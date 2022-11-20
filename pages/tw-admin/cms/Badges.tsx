@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewBadge from "./Modals/AddNewBadge";
@@ -7,15 +7,18 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { BadgesThunkFunctions } from "@/store/tw-admin/badges/thunkFunctions";
 
 function Badges(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
 
-  const { data: GetData, error }: any = useSWR(`dashboard/badges`);
-
+  const badgesState = useAppSelector(state=>state.dashboardBadgesSlice)
+  const dispatch = useAppDispatch()
+  useEffect(()=>{
+    dispatch(BadgesThunkFunctions.getAll({}))
+  },[])
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -108,8 +111,8 @@ function Badges(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {!badgesState.loading &&
+                badgesState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -140,7 +143,7 @@ function Badges(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {badgesState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -148,7 +151,7 @@ function Badges(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {badgesState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

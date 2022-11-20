@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewSkill from "./Modals/AddNewSkill";
@@ -7,14 +7,18 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
-import useSWR from "swr";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { SkillsActions } from "@/store/tw-admin/skills/skillsActions";
 
 function Skills(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
 
-  const { data: GetData, error }: any = useSWR(`dashboard/skills`);
+  const skillsState = useAppSelector(state=> state.dashboardSkillsSlice)
+  const dispatch = useAppDispatch()
 
+  useEffect(()=>{
+    dispatch(SkillsActions.getAll({page:1}))
+  },[])
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -102,8 +106,8 @@ function Skills(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {!skillsState.loading &&
+                skillsState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -133,7 +137,7 @@ function Skills(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {skillsState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -141,7 +145,7 @@ function Skills(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {skillsState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

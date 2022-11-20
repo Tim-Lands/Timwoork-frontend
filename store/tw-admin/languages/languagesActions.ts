@@ -1,6 +1,6 @@
 import { LanguagesThunkFunctions } from "./thunkFunctions";
 import { dashboardLanguagesSlice } from "./languagesSlice";
-export const TypesPaymentActions = {
+export const LanguagestActions = {
   ...dashboardLanguagesSlice.actions,
   ...LanguagesThunkFunctions,
 };

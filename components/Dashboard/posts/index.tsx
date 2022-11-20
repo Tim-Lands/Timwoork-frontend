@@ -1,8 +1,5 @@
-import API from "../../../config";
 import { motion } from "framer-motion";
 import { ReactElement, useState } from "react";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 import { message, Table } from "antd";
 import Pagination from "react-js-pagination";
 import RejectProductCause from "@/components/RejectProductCause";
@@ -10,27 +7,29 @@ import ReplyContactModal from "@/components/ReplyContactModal";
 import EmailModalCause from "@/components/EmailModalCause";
 import DisactiveProductCause from "@/components/DisactiveProductCause";
 import { generatecolumns } from "./PostsService";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
 function index({
   postsList = { last_page: 1, per_page: 10, data: [] },
   status,
   onSearchSubmit,
   onPageChange,
-  isLoading
+  isLoading,
+  postsType
 }: any): ReactElement {
+  console.log('posts type: ', postsType)
   const { getAll } = useAppSelector((state) => state.languages);
-  const router = useRouter();
   const [pageNumber, setPageNumber] = useState(1);
   const [cause, setCause] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isReplyModalVisible, setIsReplyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const [isDisactiveModalVisible, setIsDisactiveModalVisible] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedProductId, setSelectedProductId]:any = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
-  const token = Cookies.get("token_dash");
 
+  const dispatch = useAppDispatch()
   const columns: any = generatecolumns(
     {
       status,
@@ -51,18 +50,10 @@ function index({
 
   async function activateProduct(id: any) {
     try {
-      const res: any = await API.post(
-        `dashboard/products/${id}/activeProduct`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.status == 200) {
-        router.reload();
-      }
+      await dispatch(ProductsActions.activateOne({id,revalidatedType:postsType}))
+      message.success(getAll('This_service_has'))
     } catch (error) {
-  
+
       console.log(error)
     }
   }
@@ -76,36 +67,20 @@ function index({
   }
   async function disactiveProduct() {
     try {
-      await API.post(
-        `dashboard/products/${selectedProductId}/disactive_product`,
-        { cause },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setIsDisactiveModalVisible(false);
-      router.reload();
+      await dispatch(ProductsActions.disactivateOne({cause ,id: selectedProductId, revalidatedType:postsType}))
+      setIsDisactiveModalVisible(false)
+      message.info(getAll('The_service_has_2'))
     } catch (err) {
       console.log(err);
     }
   }
 
   async function rejectProduct(body) {
-    try {
-      const res: any = await API.post(
-        `dashboard/products/${selectedProductId}/rejectProduct`,
-        body,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.status === 200) {
-        setIsModalVisible(false);
-        //router.reload()
-      }
-    } catch (error) {
-      message.error(error.message)
-    }
+    const {cause} = body
+    const id = selectedProductId
+    const revalidatedType = postsType
+    await dispatch(ProductsActions.rejectOne({cause, id, revalidatedType}))
+    message.info(getAll('Rejected_succesufully'))
   }
   return (
     <>
@@ -181,6 +156,7 @@ function index({
         )}
         <Table
           columns={columns}
+          rowKey='id'
           dataSource={postsList?.data}
           pagination={false}
           bordered

@@ -1,6 +1,6 @@
 import { CountriesThunkFunctions } from "./thunkFunctions";
 import { dashboardCountriesSlice } from "./countriesSlice";
-export const TypesPaymentActions = {
+export const CountriesActions = {
   ...dashboardCountriesSlice.actions,
   ...CountriesThunkFunctions,
 };

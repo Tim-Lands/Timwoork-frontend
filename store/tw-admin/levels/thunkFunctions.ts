@@ -2,7 +2,7 @@ import { ELevelTypes, ILevel, LevelsService } from "@/services/tw-admin/levelsSe
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const getAll = createAsyncThunk('admin/levels',
-    async (args: {type: ELevelTypes}, { rejectWithValue }) => {
+    async (args: {type?: ELevelTypes}, { rejectWithValue }) => {
         try {
             const {type} = args
             const res = await LevelsService.getAll({type})

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ActivitiesService } from "@/services/tw-admin/activitiesService";
-
+import { ActivitiesState } from "./activitiesSlice";
 const getNotifications = createAsyncThunk('admin/activities/notifications',
     async (args: { page: number, search: string }, { rejectWithValue }) => {
         try {
@@ -50,10 +50,16 @@ const getOneConversation = createAsyncThunk('admin/activities/conversations/{id}
     })
 
 const deleteConversation = createAsyncThunk('admin/activities/conversations/{id}/delete',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number }, { rejectWithValue, getState, dispatch }) => {
         try {
             const { id } = args
+            const state:any = getState()
+            const activitiesState:ActivitiesState = state.dashboardActivitiesSlice
+            const conversationsState = activitiesState.conversations
+            const {filter} = conversationsState
+            const {page} = conversationsState
             const res = await ActivitiesService.deleteOneConversation(id)
+            dispatch(getConversations({page, email:filter.search}))
             return res?.data
         }
         catch (error) {
@@ -62,10 +68,14 @@ const deleteConversation = createAsyncThunk('admin/activities/conversations/{id}
     })
 
 const deleteMessage = createAsyncThunk('admin/activities/messages/{id}/delete',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number, cause:string }, { rejectWithValue,  getState, dispatch }) => {
         try {
-            const { id } = args
-            const res = await ActivitiesService.deleteOneMessage(id)
+            const { id, cause } = args
+            const state:any = getState()
+            const activitiesState:ActivitiesState = state.dashboardActivitiesSlice
+            const conversationsState = activitiesState.current_conversation
+            const res = await ActivitiesService.deleteOneMessage({id, cause})
+            dispatch(getOneConversation({id:conversationsState.data.conversation[0].conversation_id}))
             return res?.data
         }
         catch (error) {
@@ -74,10 +84,14 @@ const deleteMessage = createAsyncThunk('admin/activities/messages/{id}/delete',
     })
 
 const editMessage = createAsyncThunk('admin/activities/messages/{id}/patch',
-    async (args: { id: number, cause:string, message:string }, { rejectWithValue }) => {
+    async (args: { id: number, cause:string, message:string }, { rejectWithValue, getState, dispatch }) => {
         try {
             const { id, cause, message } = args
+            const state:any = getState()
+            const activitiesState:ActivitiesState = state.dashboardActivitiesSlice
+            const conversationsState = activitiesState.current_conversation
             const res = await ActivitiesService.updateOneMessage({id, cause, message})
+            dispatch(getOneConversation({id:conversationsState.data.conversation[0].conversation_id}))
             return res?.data
         }
         catch (error) {

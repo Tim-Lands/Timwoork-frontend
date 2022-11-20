@@ -40,10 +40,10 @@ const accept = createAsyncThunk('admin/withdrawals/{id}/accept',
     })
 
 const cancel = createAsyncThunk('admin/withdrawals/{id}/cancel',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number, cause:string }, { rejectWithValue }) => {
         try {
-            const { id } = args
-            const res = await WithdrawalsService.cancel(id);
+            const { id, cause } = args
+            const res = await WithdrawalsService.cancel({id, cause});
             return res?.data
         }
         catch (err) {

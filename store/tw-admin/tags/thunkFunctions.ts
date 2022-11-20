@@ -2,9 +2,10 @@ import { TagsService } from "@/services/tw-admin/tagsService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const getAll = createAsyncThunk('admin/tags',
-    async (args: {page: number, filter:string}, { rejectWithValue }) => {
+    async (args: {page?: number, filter?:string}, { rejectWithValue }) => {
         try {
-            const {page, filter} = args
+            let page = 1, filter=undefined;
+            ({page, filter} = {page, filter,...args})
             const res = await TagsService.getAll({page, filter})
             return res?.data
         }

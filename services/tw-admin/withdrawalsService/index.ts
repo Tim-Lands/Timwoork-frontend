@@ -41,8 +41,8 @@ async function accept(id: number) {
     return res?.data
 }
 
-async function cancel(id: number) {
-    const res = await API.post(`dashboard/withdrawals/${id}/cancel`)
+async function cancel({id, cause}:{id:number, cause:string}) {
+    const res = await API.post(`dashboard/withdrawals/${id}/cancel`,{cause})
     return res?.data
 }
 

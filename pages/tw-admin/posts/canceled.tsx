@@ -3,6 +3,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Posts from "@/components/Dashboard/posts";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
+import { EProductStateType } from "@/store/tw-admin/products/thunkFunctions";
 function index(): ReactElement {
   const productsState = useAppSelector((state) => state.dashboardProducts);
   const [page, setPage] = useState(1);
@@ -19,6 +20,7 @@ function index(): ReactElement {
         <Posts
           postsList={productsState.rejected}
           isLoading={productsState.rejected.loading}
+          postsType={EProductStateType.REJECTED}
           onPageChange={setPage}
           onSearchSubmit={setSearch}
         />

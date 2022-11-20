@@ -5,7 +5,6 @@ import Layout from "@/components/Layout/DashboardLayout";
 import router from "next/router";
 import { message } from "antd";
 import Cookies from "js-cookie";
-import API from "../../../../config";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Link from "next/link";
 import PropTypes from "prop-types";
@@ -51,22 +50,16 @@ function Prices({ query }) {
                   setValidationsErrors({});
                   const { id } = query;
                   try {
-                    const res = await API.post(
-                      `dashboard/products/${id}/step_two`,
-                      values,
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token.current}`,
-                        },
-                      }
-                    );
+                     const {price, duration, developments} = values
+                     await dispatch(ProductsActions.updateStepTwo({
+                      id,
+                      price,
+                      duration,
+                      developments
+                     }))
                     // Authentication was successful.
-                    if (res.status === 200) {
                       message.success(getAll("The_update_has"));
-                      router.push(
-                        `/tw-admin/posts/edit-product/description?id=${product?.id}`
-                      );
-                    }
+                    
                   } catch (error: any) {
                     if (
                       error.response &&

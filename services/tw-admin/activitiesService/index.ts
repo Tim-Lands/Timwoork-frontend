@@ -25,8 +25,8 @@ async function deleteOneConversation(id: number) {
     return res?.data
 }
 
-async function deleteOneMessage(id: number) {
-    const res = await API.delete(`dashboard/new/activities/messages/${id}`)
+async function deleteOneMessage({id, cause}:{id: number, cause:string}) {
+    const res = await API.delete(`dashboard/new/activities/messages/${id}`,{data:{cause}})
     return res?.data
 }
 

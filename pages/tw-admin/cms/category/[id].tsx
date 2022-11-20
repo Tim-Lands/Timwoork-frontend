@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewSubCategory from "../Modals/AddNewSubCategory";
@@ -6,17 +6,19 @@ import API from "../../../../config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { CategoriesActions } from "@/store/tw-admin/categories/categoriesActions";
 
 function Category({ query }): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const {current_category} = useAppSelector(state=>state.dashboardCategoriesSlice)
+  const dispatch = useAppDispatch()
 
-  const { data: GetData, error }: any = useSWR(
-    `dashboard/categories/${query.id}`
-  );
+  useEffect(()=>{
+    dispatch(CategoriesActions.getOne({id:query.id}))
+  },[])
 
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
@@ -85,9 +87,9 @@ function Category({ query }): ReactElement {
         <div className="timlands-panel-header d-flex align-items-center">
           <h2 className="title">
             <span className="material-icons material-icons-outlined">
-              {GetData.icon}
+              {current_category?.data?.icon}
             </span>
-            {GetData.name_ar}
+            {current_category.data?.name}
           </h2>
           <div className="header-butt">
             <button
@@ -110,8 +112,8 @@ function Category({ query }): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.subcategories.map((e: any, i) => (
+              {current_category.data &&
+                current_category.data.subcategories.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -120,7 +122,7 @@ function Category({ query }): ReactElement {
                     key={e.id}
                   >
                     <td>
-                      <p className="with-icon">{e.name_ar}</p>
+                      <p className="with-icon">{e.name}</p>
                     </td>
                     <td className="tools-col">
                       <button className="table-del success">
@@ -141,7 +143,7 @@ function Category({ query }): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {current_category.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -149,7 +151,7 @@ function Category({ query }): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {current_category.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

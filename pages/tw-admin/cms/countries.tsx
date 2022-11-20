@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewCountry from "./Modals/AddNewCountry";
@@ -7,15 +7,18 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { CountriesActions } from "@/store/tw-admin/countries/countriesActions";
 
 function Countries(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const countriesState = useAppSelector(state=>state.dashboardCountriesSlice)
+  const dispatch = useAppDispatch()
 
-  const { data: GetData, error }: any = useSWR(`dashboard/countries?page=1`);
-
+  useEffect(()=>{
+    dispatch(CountriesActions.getAll({page:1}))
+  },[])
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -107,8 +110,8 @@ function Countries(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {!countriesState.loading &&
+                countriesState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -116,7 +119,7 @@ function Countries(): ReactElement {
                     custom={i}
                     key={e.id}
                   >
-                    <td>{e.name_ar}</td>
+                    <td>{e.name}</td>
                     <td>{e.code_phone}</td>
                     <td className="tools-col">
                       <Link href={`/tw-admin/cms/category/edit/${e.id}`}>
@@ -139,7 +142,7 @@ function Countries(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {countriesState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -147,7 +150,7 @@ function Countries(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {countriesState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

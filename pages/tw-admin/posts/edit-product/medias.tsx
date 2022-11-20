@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout/DashboardLayout";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import API from "../../../../config";
 import router from "next/router";
 import { message, notification } from "antd";
 import ReactPlayer from "react-player";
@@ -23,15 +22,13 @@ function Medias({ query }) {
   const dispatch = useAppDispatch()
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
-    product?.full_path_thumbnail
+    product?.full_path_thumbnail|| "/seo.png"
   );
   const [galleryMedia, setGalleryMedia]: any = useState(product?.galaries);
   const [isGalleryChanged, setIsGalleryChanged]: any = useState(false);
   const [isFeaturedChanged, setIsFeaturedChanged]: any = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
-  const [removedImages, setRemovedImages] = useState([]);
-
   const id = query.id;
   const { getAll } = useAppSelector((state) => state.languages);
 
@@ -42,11 +39,14 @@ function Medias({ query }) {
     }
     //if(!productState.loading)
     dispatch(ProductsActions.getOne({id:query.id}))
-  }, [query.id]);
+  }, []);
 
   useEffect(()=>{
-    setFeaturedImages(product.full_path_thumbnail)
-    setGalleryMedia(product.galaries)
+    if (product){
+    setFeaturedImages(product?.full_path_thumbnail)
+    console.log(product?.full_path_thumbnail)
+    setGalleryMedia(product?.galaries)
+    }
   },[product])
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [url_video, setVideourl] = useState("");
@@ -68,54 +68,27 @@ function Medias({ query }) {
     setValidationsGeneral({});
   }
   const loadFeatureImage: any = async () => {
-    console.log("load featured called");
     const imageFeature = new FormData();
     imageFeature.append("thumbnail", featuredMedia[0].file);
     imageFeature.append("url_video", url_video);
-    const res = await API.post(
-      `dashboard/products/${id}/upload_thumbnail`,
-      imageFeature,
-      {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return res;
+    await dispatch(ProductsActions.editThumbnail({id, form_data: imageFeature}))
+  
   };
 
   const loadGalleryImages: any = async () => {
     const galleries = new FormData();
+    console.log(galleryMedia)
     galleryMedia.map(
       (e: any) => e.file && galleries.append("images[]", e.file)
     );
+    console.log(galleries)
     //galleries.append('images[]', images)
-    const res: any = await API.post(
-      `dashboard/products/${id}/upload_galaries`,
-      galleries,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return res;
+    await dispatch(ProductsActions.editGallery({ id, form_data: galleries}))
   };
 
   const loadVideoUrl: any = async () => {
     try {
-      const res = await API.post(
-        `dashboard/products/${id}/step_four`,
-        { url_video: url_video },
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return res;
+      dispatch(ProductsActions.updateStepFour({id, url_video}))
     } catch (e) {
       () => {};
     }
@@ -169,7 +142,6 @@ function Medias({ query }) {
       else if (isFeaturedChanged) await uploadFeatured();
       else if (isGalleryChanged) await uploadGallery();
       await uploadVideoUrl();
-      await sendRemoveRequest();
       router.push(`/tw-admin/posts`);
     } catch (error: any) {
       setLoading(false);
@@ -231,8 +203,9 @@ function Medias({ query }) {
   };
   const onRemoveSubmit = async (image_id, index) => {
     if (image_id) {
-      setRemovedImages([...removedImages, image_id]);
       setGalleryMedia(galleryMedia.filter((media) => media.id !== image_id));
+      dispatch(ProductsActions.deleteGallary({id:id, gallery_id:image_id}))
+
     } else {
       const temp_arr = galleryMedia;
       temp_arr.splice(index, 1);
@@ -241,27 +214,7 @@ function Medias({ query }) {
     setIsRemoveModal(false);
   };
 
-  const sendRemoveRequest = async () => {
-    try {
-      const promises = removedImages.map((img) =>
-        API.post(
-          `dashboard/products/${id}/delete_galary`,
-          { id: img },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-      );
-      await Promise.all(promises);
-    } catch (error) {
-      notification.open({
-        message: getAll("An_error_occured"),
-        icon: <CloseCircleOutlined style={{ color: "#c21c1c" }} />,
-      });
-    }
-  };
+ 
   return (
     <div className="container-fluid">
       <MetaTags
@@ -270,7 +223,7 @@ function Medias({ query }) {
         ogDescription={getAll("Contact_us_Timwoork")}
       />
 
-      {token && (
+      {token &&!productState.loading &&(
         <div className="row justify-content-md-center my-3">
           <div className="col-md-8 pt-3">
             {isRemoveModal && (
@@ -372,7 +325,7 @@ function Medias({ query }) {
                   <FeaturedUploadingGalleries
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}
-                    full_path_thumbnail={featuredMedia || "/seo.png"}
+                    full_path_thumbnail={featuredMedia}
                   />
                   <ImagesUploadingGalleries
                     setIsChanged={setIsGalleryChanged}

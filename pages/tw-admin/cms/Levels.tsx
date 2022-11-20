@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewLevel from "./Modals/AddNewLevel";
@@ -6,14 +6,19 @@ import API from "config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { LevelsThunkFunctions } from "@/store/tw-admin/levels/thunkFunctions";
 
 function Levels(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
 
-  const { data: GetData, error }: any = useSWR(`dashboard/levels`);
+  const levelsState = useAppSelector(state=> state.dashboardLevelsSlice)
+  const dispatch = useAppDispatch()
+
+  useEffect(()=>{
+    dispatch(LevelsThunkFunctions.getAll({}))
+  },[])
 
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
@@ -108,8 +113,8 @@ function Levels(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {!levelsState.loading &&
+                levelsState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -138,7 +143,7 @@ function Levels(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {levelsState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -146,7 +151,7 @@ function Levels(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {levelsState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

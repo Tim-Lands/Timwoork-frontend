@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewLanguage from "./Modals/AddNewLanguage";
@@ -7,14 +7,18 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { LanguagestActions } from "@/store/tw-admin/languages/languagesActions";
 
 function Languages(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const languagesState = useAppSelector(state=> state.dashboardLanguagesSlice)
+  const dispatch = useAppDispatch()
 
-  const { data: GetData, error }: any = useSWR(`dashboard/languages`);
+  useEffect(()=>{
+    dispatch(LanguagestActions.getAll({}))
+  },[])
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -107,8 +111,8 @@ function Languages(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {!languagesState.loading &&
+                languagesState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -138,7 +142,7 @@ function Languages(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {languagesState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -146,7 +150,7 @@ function Languages(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {languagesState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

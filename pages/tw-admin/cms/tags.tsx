@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewTag from "./Modals/AddNewTag";
@@ -7,13 +7,18 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
-import useSWR, { mutate } from "swr";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 
 function index(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const tagsState = useAppSelector(state=>state.dashboardTagsSlice)
+  const dispatch = useAppDispatch()
 
-  const { data: GetData, error }: any = useSWR(`dashboard/tags`);
+  useEffect(()=>{
+    dispatch(TagsActions.getAll({}))
+  },[])
+
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
@@ -37,7 +42,6 @@ function index(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           if (id) {
-            mutate("dashboard/tags", [...GetData, { id: id }]);
             await API.post(`dashboard/tags/${id}/delete`);
           }
           swalWithBootstrapButtons.fire(
@@ -98,8 +102,8 @@ function index(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {tagsState &&
+                tagsState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -107,7 +111,7 @@ function index(): ReactElement {
                     custom={i}
                     key={e.id}
                   >
-                    <td>{e.name_ar}</td>
+                    <td>{e.name}</td>
                     <td className="tools-col">
                       <Link href={`/tw-admin/cms/edit/tags/${e.id}`}>
                         <button className="table-del success">
@@ -129,7 +133,7 @@ function index(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {tagsState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -137,7 +141,7 @@ function index(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {tagsState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

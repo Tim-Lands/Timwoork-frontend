@@ -5,7 +5,6 @@ import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Cookies from "js-cookie";
-import API from "../../../../config";
 import { CategoriesService } from "@/services/categoriesServices";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -13,20 +12,18 @@ import CreatableSelect from "react-select/creatable";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
+import { ProductsService } from "@/services/tw-admin/productsService";
+import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 
 const MySelect = (props: any) => {
-  const [dataTags, setDataTags] = useState([]);
-  const [isLoadingTags, setIsLoadingTags] = useState(false);
+  const tagsState = useAppSelector(state=>state.dashboardTagsSlice)
+  console.log(tagsState)
+  const dispatch = useAppDispatch()
   const getdataTags = async (tag: string) => {
-    setIsLoadingTags(true);
     try {
-      const res: any = await API.get(`api/tags/filter?tag=${tag}`);
-      if (res.status === 200) {
-        setIsLoadingTags(false);
-        setDataTags(res.data.data.data);
-      }
+      dispatch(TagsActions.getAll({filter:tag}))
     } catch (error) {
-      setIsLoadingTags(false);
+      console.log(error)
     }
   };
   const handleChange = (value) => {
@@ -40,12 +37,12 @@ const MySelect = (props: any) => {
       className="select-tags-form"
       style={{ margin: "1rem 0", position: "relative" }}
     >
-      {isLoadingTags && (
+      {tagsState.loading && (
         <span className="spinner-border spinner-border-sm" role="status"></span>
       )}
       <CreatableSelect
         id="color"
-        options={dataTags}
+        options={tagsState.data}
         onKeyDown={(e: any) => {
           if (e.target.value) {
             getdataTags(e.target.value);
@@ -61,14 +58,16 @@ const MySelect = (props: any) => {
 };
 function Overview({ query }) {
   const { getAll } = useAppSelector((state) => state.languages);
-  const productState = useAppSelector(state=>state.dashboardProducts.currProduct)
-  const product = productState.data
+  const productState = useAppSelector(
+    (state) => state.dashboardProducts.currProduct
+  );
+  const product = productState.data;
   const [categories, setCategories] = useState({});
   const [subCategories, setSubCategories]: any = useState({});
   const id = query.id;
   const token = useRef(Cookies.get("token_dash"));
-  const dispatch = useAppDispatch()
-  console.log(product)
+  const dispatch = useAppDispatch();
+  console.log(product);
   useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login");
@@ -79,12 +78,12 @@ function Overview({ query }) {
   useEffect(() => {
     if (Object.keys(categories).length > 0) fetchSubCategories();
   }, [categories]);
+
   useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login");
-      return;
     }
-    dispatch(ProductsActions.getOne({id:query.id}))
+    dispatch(ProductsActions.getOne({ id: query.id }));
   }, [query.id]);
   const fetchCategories = async () => {
     try {
@@ -133,20 +132,12 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const res = await API.post(
-          `dashboard/products/${query.id}/step_one`,
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${token.current}`,
-            },
-          }
-        );
-        // Authentication was successful.
-        if (res.status === 200) {
-          message.success(getAll("The_update_has"));
-          router.push(`/tw-admin/posts/edit-product/prices?id=${product?.id}`);
-        }
+        const {title, subcategory, tags} = values
+        await ProductsService.editProductStepOne({
+          id, title, subcategory,tags
+        });
+        message.success(getAll("The_update_has"));
+        router.push(`/tw-admin/posts/edit-product/prices?id=${product?.id}`);
       } catch (error: any) {
         if (
           error.response &&

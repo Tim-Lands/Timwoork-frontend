@@ -9,10 +9,10 @@ const { isProductsActionPending, isProductsActionFulfilled, isProductsActionReje
 
 export interface State{
     all:ProductsState,
-    actived:ProductsState,
+    active:ProductsState,
     rejected: ProductsState,
     pending: ProductsState,
-    archieved: ProductsState,
+    archieve: ProductsState,
     currProduct:{
         loading:boolean,
         error?:string,
@@ -27,6 +27,9 @@ export interface ProductsState {
     per_page: number,
     loading: boolean,
     data: ProductState[],
+    filter:{
+        search?:string
+    }
     error?: string,
 
 }
@@ -64,14 +67,17 @@ const initialProductState: ProductsState = {
     total: 0,
     per_page: 0,
     loading: true,
+    filter:{
+        search:""
+    },
     data: [],
 };
 
 const initialState :State = {
     all:initialProductState,
-    actived:initialProductState,
+    active:initialProductState,
     pending:initialProductState,
-    archieved:initialProductState,
+    archieve:initialProductState,
     rejected:initialProductState,
     currProduct:{
         loading:true,
@@ -96,13 +102,15 @@ export const dashboardProductSlice = createSlice({
         builder.addMatcher(isProductsActionFulfilled, (state, action: any) => {
             const payload: any = action.payload
             const state_name = action.type.split('/').at(-2)
+            const {search} = action.meta.arg
             state[state_name].page = payload.current_page,
             state[state_name].per_page = payload.per_page
             state[state_name].to = payload.to
             state[state_name].total = payload.total
             state[state_name].data = payload.data
             state[state_name].loading = false
-
+            state[state_name].filter = {search}
+            console.log(search)
         })
 
          builder.addMatcher(isProductsActionPending, (state, action:any) => {

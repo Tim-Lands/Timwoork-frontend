@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewCategory from "./Modals/AddNewCategory";
@@ -7,14 +7,18 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Link from "next/link";
-import useSWR from "swr";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { CategoriesActions } from "@/store/tw-admin/categories/categoriesActions";
 
 function Categories(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const { data: GetData, error }: any = useSWR(`dashboard/categories`);
-
+  const categoriesState = useAppSelector(state=> state.dashboardCategoriesSlice)
+  const dispatch = useAppDispatch()
+  console.log(categoriesState)
+  useEffect(()=>{
+    dispatch(CategoriesActions.getAll({}))
+  },[])
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
 
@@ -108,8 +112,8 @@ function Categories(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {GetData &&
-                GetData.data.map((e: any, i) => (
+              {categoriesState&&!categoriesState.loading &&
+                categoriesState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
                     variants={catVariants}
@@ -124,7 +128,7 @@ function Categories(): ReactElement {
                             <span className="material-icons material-icons-outlined">
                               {e.icon}
                             </span>
-                            {e.name_ar}
+                            {e.name}
                           </a>
                         </Link>
                       </p>
@@ -150,7 +154,7 @@ function Categories(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {error && (
+          {categoriesState&&categoriesState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -158,7 +162,7 @@ function Categories(): ReactElement {
               </p>
             </Alert>
           )}
-          {!GetData && (
+          {categoriesState&&categoriesState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

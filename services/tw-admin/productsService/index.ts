@@ -64,7 +64,7 @@ async function disactiveProduct({
     id: number,
     cause: string
 }) {
-    const res = await API.post(`dashboard/new/products/${id}/disactiveProduct`, {
+    const res = await API.post(`dashboard/new/products/${id}/disactive_product`, {
         cause
     })
     return res?.data
@@ -95,11 +95,13 @@ async function editProductStepOne({
     subcategory,
     title_ar,
     title_en,
-    title_fr
+    title_fr,
+    tags
 }: {
     id: number,
     title: string,
     subcategory: number,
+    tags:string[],
     title_ar?: string,
     title_en?: string,
     title_fr?: string
@@ -109,7 +111,8 @@ async function editProductStepOne({
         subcategory,
         title_ar,
         title_en,
-        title_fr
+        title_fr,
+        tags
     })
     return res?.data
 }
@@ -117,15 +120,18 @@ async function editProductStepOne({
 async function editProductStepTwo({
     id,
     price,
-    duration
+    duration,
+    developments
 }: {
     id: number,
     price: number,
-    duration: number
+    duration: number,
+    developments:string[]
 }) {
     const res = await API.post(`dashboard/new/products/${id}/step_two`, {
         price,
-        duration
+        duration,
+        developments
     })
     return res?.data
 }
@@ -151,7 +157,7 @@ async function editProductStepFour({
     url_video
 }: {
     id: number,
-    url_video: number
+    url_video: string
 }) {
     const res = await API.post(`dashboard/new/products/${id}/step_four`, {
         url_video
@@ -166,7 +172,8 @@ async function editThumbnail({
     id: number,
     form_data: FormData
 }) {
-    const res = await API.post(`dashboard/new/products/${id}/upload_thumbnail`, form_data)
+    form_data.append('_method','put')
+    const res = await API.post(`dashboard/new/products/${id}/thumbnail`, form_data)
     return res?.data
 }
 
@@ -177,20 +184,22 @@ async function editGallary({
     id: number,
     form_data: FormData
 }) {
-    const res = await API.post(`dashboard/new/products/${id}/upload/gallary`, form_data)
+    console.log(form_data)
+    form_data.append('_method','put')
+    const res = await API.post(`dashboard/new/products/${id}/galaries`, form_data)
     return res?.data
 }
 
 async function deleteGallary({
     id,
-    gallary_id
+    gallery_id
 }: {
     id: number,
-    gallary_id: number
+    gallery_id: number
 }) {
     const res = await API.delete(`dashboard/new/products/${id}/galaries`, {
         data: {
-            id: gallary_id
+            id: gallery_id
         }
     })
     return res?.data

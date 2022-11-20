@@ -1,7 +1,5 @@
-import API from "../../../config";
 import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import Cookies from "js-cookie";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
 import { message, Spin } from "antd";
@@ -12,7 +10,6 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { WithdrawalActions } from "@/store/tw-admin/withdrawals/withdrawalActions";
 
 function Id({ query }) {
-  const token = Cookies.get("token_dash");
   const [isShowCause, setIsShowCause] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cause, setCause] = useState("");
@@ -26,16 +23,9 @@ function Id({ query }) {
   },[query.id])
   const AcceptAmount = async (id: any) => {
     try {
-      const res: any = await API.post(
-        `dashboard/withdrawals/${id}/accept`,
-        null,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.status === 200) {
+        await dispatch(WithdrawalActions.accept({id}))
         router.push("/tw-admin/withdrawables");
-      }
+      
     } catch (error) {
       message.error(getAll("Unfortunately_its_rejected"));
     }
@@ -43,18 +33,9 @@ function Id({ query }) {
   const cancelAmount = async () => {
     setIsLoading(true);
     try {
-      const res: any = await API.post(
-        `dashboard/withdrawals/${query.id}/cancel`,
-        { cause: cause },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      if (res.status === 200) {
-        router.push("/tw-admin/withdrawables");
-        message.success(getAll("Rejected_succesufully"));
-        setIsLoading(false);
-      }
+      dispatch(WithdrawalActions.cancel({id:query.id, cause}))
+      router.push("/tw-admin/withdrawables");
+        
     } catch (error) {
       message.error(getAll("Unfortunately_it_was"));
       setIsLoading(false);

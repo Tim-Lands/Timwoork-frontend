@@ -1,12 +1,10 @@
-import React, { ReactElement, useState, useEffect, useRef } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import LastSeen from "@/components/LastSeen";
 import Image from "next/image";
 import Link from "next/link";
 import ConfirmText from "@/components/ConfirmText";
-import API from "../../../../config";
-import Cookies from "js-cookie";
 import { notification } from "antd";
 import EditModal from "@/components/EditModal";
 import { useAppSelector } from "@/store/hooks";
@@ -17,11 +15,11 @@ import Loading from "@/components/Loading";
 function Single({ query }: any) {
   const [isConfirmText, setIsConfirmText] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(-1);
-  const token = useRef(Cookies.get("token_dash"));
   const { current_conversation } = useAppSelector(
     (state) => state.dashboardActivitiesSlice
   );
-  const dispatch = useDispatch();
+  console.log(current_conversation)
+  const dispatch = useDispatch(); 
 
   useEffect(() => {
     dispatch(ActivitiesActions.getOneConversation({ id: query.id }));
@@ -30,60 +28,26 @@ function Single({ query }: any) {
 
   const deleteMsg = async (body) => {
     try {
-      const res = await API.post(
-        `dashboard/activities/message/${selectedMessageId}/delete`,
-        {
-          ...body,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token.current}`,
-          },
-        }
-      );
-      if (res.status == 200) {
-       /*  setConversation({
-          ...conversation,
-          data: conversation.data.filter(
-            (message) => message.id != selectedMessageId
-          ),
-        }); */
-
-        notification.success({
-          message: "تم حذف الرسالة بنجاح",
+      const{comment} = body
+      await dispatch(ActivitiesActions.deleteMessage({id:selectedMessageId, cause:comment}))
+      notification.success({
+      message: "تم حذف الرسالة بنجاح",
         });
-      }
+      
     } catch (err) {
       console.log(err);
     }
   };
   const editMsg = async (body) => {
     try {
-      const res = await API.post(
-        `dashboard/activities/message/${selectedMessageId}/update`,
-        {
-          ...body,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token.current}`,
-          },
-        }
-      );
-      if (res.status == 200) {
-        /* setConversation({
-          ...conversation,
-          data: conversation.data.map((message) =>
-            message.id == selectedMessageId
-              ? { ...message, message: body.message }
-              : message
-          ),
-        }); */
+        const {message, cause} = body
+        const id = selectedMessageId
+        await dispatch(ActivitiesActions.editMessage({id, cause, message}))
         setIsShowEdit(false);
         notification.success({
           message: "تم تعديل الرسالة بنجاح",
         });
-      }
+      
     } catch (err) {
       console.log(err);
     }

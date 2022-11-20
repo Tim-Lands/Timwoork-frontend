@@ -3,28 +3,17 @@ import { ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { CategoriesActions } from "@/store/tw-admin/categories/categoriesActions";
 
 export default function EditCategory(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const router = useRouter();
-  const id = router.query.id;
-
-  const [isLoading, setIsLoading] = useState(false);
-  const refreshData = async () => {
-    setIsLoading(true);
-    try {
-      const res: any = await API.get(`dashboard/categories/${id}`);
-      if (res.data) {
-        setIsLoading(false);
-        setPerson(res.data.data);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
+  const id:any = router.query.id;
+  const current_category = useAppSelector(state=> state.dashboardCategoriesSlice)
+  const dispatch = useAppDispatch()
   useEffect(() => {
-    refreshData();
+    dispatch(CategoriesActions.getOne({id}));
   }, []);
 
   const [person, setPerson] = useState({
@@ -126,7 +115,7 @@ export default function EditCategory(): ReactElement {
           </div>
         </div>
         <form onSubmit={saveData}>
-          {isLoading && getAll("Please_wait")}
+          {current_category.loading && getAll("Please_wait")}
           <div className={"panel-modal-body auto-height"}>
             <div className="row">
               <div className="col-sm-4">

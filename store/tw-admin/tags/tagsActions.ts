@@ -1,6 +1,6 @@
 import { TagsThunkFunctions } from "./thunkFunctions";
 import { dashboardTagsSlice } from "./tagsSlice";
-export const TypesPaymentActions = {
+export const TagsActions = {
   ...dashboardTagsSlice.actions,
   ...TagsThunkFunctions,
 };

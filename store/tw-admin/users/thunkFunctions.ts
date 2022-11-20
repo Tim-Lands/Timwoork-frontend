@@ -54,6 +54,7 @@ const banUser = createAsyncThunk('users/{id}/ban',
             dispatch(revalidate({}))
             return res.data;
         } catch (error) {
+            console.log(error)
             return rejectWithValue(error?.response?.data);
         }
     })
@@ -73,6 +74,18 @@ const unbanUser = createAsyncThunk('users/{id}/unban',
         }
     })
 
+/* const notifyUser = createAsyncThunk('admin/users/{id}/notify',
+async(args:{id:number, cause:string}, {rejectWithValue})=>{
+    try{
+    const {id, cause} = args
+    const res = UsersService.sendNotification({id, cause})
+    return res?.data
+    }
+    catch(error){
+        return rejectWithValue(error.data)
+    }
+})
+ */
 const revalidate = createAsyncThunk('admin/users/revaldidate',
     async (args: {}, { getState, dispatch }) => {
         try{
@@ -88,6 +101,7 @@ const revalidate = createAsyncThunk('admin/users/revaldidate',
             console.log(err)
         }
     })
+
 
 export const UsersThunkFunctions = {
     getAllUsers,
