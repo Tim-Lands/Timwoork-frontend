@@ -1,15 +1,17 @@
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { LevelsActions } from "@/store/tw-admin/levels/levelsAction";
+import { ILevel } from "@/services/tw-admin/levelsService";
 
 export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch()
 
   return (
     <>
@@ -36,10 +38,10 @@ export default function AddNewUser({
             name_en: "",
             name_fr: "",
             type: 1,
-            number_developments: "",
-            price_developments: "",
-            number_sales: "",
-            value_bayer: "",
+            number_developments: 0,
+            price_developments: 0,
+            number_sales: 0,
+            value_bayer: 0,
           }}
           validationSchema={Yup.object().shape({
             name_ar: Yup.string().required(getAll("This_field_is")),
@@ -53,17 +55,11 @@ export default function AddNewUser({
             number_sales: Yup.number().required(getAll("This_field_is")),
             value_bayer: Yup.number().required(getAll("This_field_is")),
           })}
-          onSubmit={async (values) => {
+          onSubmit={async (values:ILevel) => {
             try {
-              const res = await API.post("dashboard/levels/store", values);
-              // If Activate Network
-              // Authentication was successful.
-              if (res.status == 201 || res.status == 200) {
-                //alert(getAll("Added_successfully"))
-                setIsModalHiddenHandle();
-              } else {
-                alert("Error");
-              }
+              console.log(values)
+              await dispatch(LevelsActions.createOne({level:values}))
+              setIsModalHiddenHandle()
             } catch (error) {
               alert("Error Network");
             }
@@ -174,7 +170,7 @@ export default function AddNewUser({
                       <Field
                         as="select"
                         id="input-state"
-                        name="address.state"
+                        name="type"
                         className="timlands-inputs select"
                       >
                         <option value="">اختر نوع المستوى</option>

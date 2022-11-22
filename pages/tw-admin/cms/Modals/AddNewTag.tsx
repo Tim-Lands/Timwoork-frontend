@@ -1,16 +1,16 @@
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 
 export default function AddNewTag({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-
+  const dispatch = useAppDispatch()
   return (
     <>
       <div className="panel-modal-overlay"></div>
@@ -43,15 +43,8 @@ export default function AddNewTag({
           })}
           onSubmit={async (values) => {
             try {
-              const res = await API.post("dashboard/tags/store", values);
-              // If Activate Network
-              // Authentication was successful.
-              if (res.status == 201 || res.status == 200) {
-                //alert(getAll("Added_successfully"))
-                setIsModalHiddenHandle();
-              } else {
-                alert("Error");
-              }
+              await dispatch(TagsActions.createOne({name:values.name_ar}))
+              setIsModalHiddenHandle()
             } catch (error) {
               alert("Error Network");
             }

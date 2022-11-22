@@ -1,15 +1,17 @@
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { LanguagestActions } from "@/store/tw-admin/languages/languagesActions";
 
 export default function AddNewLanguage({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch()
+
 
   return (
     <>
@@ -43,15 +45,8 @@ export default function AddNewLanguage({
           })}
           onSubmit={async (values) => {
             try {
-              const res = await API.post("dashboard/languages/store", values);
-              // If Activate Network
-              // Authentication was successful.
-              if (res.status == 201 || res.status == 200) {
-                //alert(getAll("Added_successfully"))
-                setIsModalHiddenHandle();
-              } else {
-                alert("Error");
-              }
+              await dispatch(LanguagestActions.createOne({language: values}))
+              setIsModalHiddenHandle()
             } catch (error) {
               alert("Error Network");
             }

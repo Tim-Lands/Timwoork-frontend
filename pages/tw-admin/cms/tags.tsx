@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewTag from "./Modals/AddNewTag";
-import API from "config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -14,7 +13,7 @@ function index(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const tagsState = useAppSelector(state=>state.dashboardTagsSlice)
   const dispatch = useAppDispatch()
-
+  console.log(tagsState)
   useEffect(()=>{
     dispatch(TagsActions.getAll({}))
   },[])
@@ -42,7 +41,7 @@ function index(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           if (id) {
-            await API.post(`dashboard/tags/${id}/delete`);
+            await dispatch(TagsActions.getAll({}))
           }
           swalWithBootstrapButtons.fire(
             getAll("Deleted"),

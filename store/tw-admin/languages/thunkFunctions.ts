@@ -25,10 +25,11 @@ const getOne = createAsyncThunk('admin/languages/{id}',
     })
 
 const createOne = createAsyncThunk('admin/languages/store',
-    async (args: { language: ILanguage }, { rejectWithValue }) => {
+    async (args: { language: ILanguage }, { rejectWithValue, dispatch }) => {
         try {
             const { language } = args
             const res = await LanguagesService.createOne(language)
+            dispatch(getAll({}))
             return res?.data
         }
         catch (err) {
@@ -49,10 +50,11 @@ const updateOne = createAsyncThunk('admin/languages/{id}/update',
     })
 
 const deleteOne = createAsyncThunk('admin/languages/{id}/delete',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number }, { rejectWithValue, dispatch }) => {
         try {
             const { id } = args
             const res = await LanguagesService.deleteOne(id)
+            dispatch(revalidate({}))
             return res?.data
         }
         catch (err) {
@@ -60,6 +62,10 @@ const deleteOne = createAsyncThunk('admin/languages/{id}/delete',
         }
     })
 
+const revalidate = createAsyncThunk('admin/languages/revalidate',
+async(args:{}, {dispatch})=>{
+    dispatch(getAll({}))
+})
 
 export const LanguagesThunkFunctions = {
     getAll,

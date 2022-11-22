@@ -1,32 +1,26 @@
-import API from "../../../../../config";
 import { ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { LanguagestActions } from "@/store/tw-admin/languages/languagesActions";
 
 export default function Id(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
 
   const router = useRouter();
-  const id = router.query.id;
-
-  const [isLoading, setIsLoading] = useState(false);
-  const refreshData = async () => {
-    setIsLoading(true);
-    try {
-      const res: any = await API.get(`dashboard/languages/${id}`);
-      if (res.data) {
-        setIsLoading(false);
-        setPerson(res.data.data);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
+  const id:any = router.query.id;
+  const {current_language} = useAppSelector(state=>state.dashboardLanguagesSlice)
+  const dispatch = useAppDispatch()
+ 
   useEffect(() => {
-    refreshData();
-  }, [id]);
+    dispatch(LanguagestActions.getOne({id}))
+  }, []);
+
+  useEffect(()=>{
+    if(current_language.data)
+      setPerson(current_language.data)
+  },[current_language.data])
 
   const [person, setPerson] = useState({
     name_ar: "",
@@ -56,23 +50,8 @@ export default function Id(): ReactElement {
   }
   const saveData = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      setIsLoading(false);
-      const res = await API.post(`dashboard/languages/${id}/update`, person);
-      // If Activate Network
-      // Authentication was successful.
-      if (
-        res.status == 201 ||
-        res.status == 200 ||
-        res.status == 202 ||
-        res.status == 203
-      ) {
-        //alert(getAll("Added_successfully"))
-        router.push("/tw-admin/cms/languages");
-      } else {
-        alert("Error");
-      }
+      dispatch(LanguagestActions.updateOne({id, language:person}))
     } catch (error) {
       alert("Error Network");
     }
@@ -98,7 +77,7 @@ export default function Id(): ReactElement {
           </div>
         </div>
         <form onSubmit={saveData}>
-          {isLoading && getAll("Please_wait")}
+          {current_language.loading && getAll("Please_wait")}
           <div className={"panel-modal-body auto-height"}>
             <div className="row">
               <div className="col-sm-4">

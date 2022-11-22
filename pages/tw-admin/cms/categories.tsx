@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewCategory from "./Modals/AddNewCategory";
-import API from "config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -43,7 +42,7 @@ function Categories(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await API.post(`dashboard/categories/${id}/delete`);
+            await dispatch(CategoriesActions.deleteOne({id}))
           } catch (error) {
             () => {};
           }

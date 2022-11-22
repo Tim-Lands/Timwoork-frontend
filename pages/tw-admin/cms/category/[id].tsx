@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewSubCategory from "../Modals/AddNewSubCategory";
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -43,7 +42,7 @@ function Category({ query }): ReactElement {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          API.post(`dashboard/subcategories/${id}/delete`);
+          dispatch(CategoriesActions.deleteOne({id}))
           swalWithBootstrapButtons.fire(
             getAll("Deleted"),
             getAll("The_service_has"),

@@ -26,10 +26,11 @@ const getOne = createAsyncThunk('admin/levels/{id}',
     })
 
 const createOne = createAsyncThunk('admin/levels/store',
-    async (args: { level: ILevel }, { rejectWithValue }) => {
+    async (args: { level: ILevel }, { rejectWithValue, dispatch }) => {
         try {
             const { level } = args
             const res = await LevelsService.createOne(level)
+            dispatch(revalidate({}))
             return res?.data
         }
         catch (err) {
@@ -50,14 +51,26 @@ const updateOne = createAsyncThunk('admin/levels/{id}/update',
     })
 
 const deleteOne = createAsyncThunk('admin/levels/{id}/delete',
-    async (args: { id: number }, { rejectWithValue }) => {
+    async (args: { id: number }, { rejectWithValue, dispatch }) => {
         try {
             const { id } = args
             const res = await LevelsService.deleteOne(id)
+            dispatch(revalidate({}))
             return res?.data
         }
         catch (err) {
             return rejectWithValue(err)
+        }
+    })
+
+    const revalidate = createAsyncThunk('admin/products/{id}/revalidate',
+    async (args: { }, {dispatch }) => {
+        try {
+            dispatch(getAll({}))
+        }
+        catch (err) {
+            console.log(err)
+            console.log(args)
         }
     })
 

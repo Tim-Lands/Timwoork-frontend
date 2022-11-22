@@ -1,4 +1,3 @@
-import API from "../../../../../config";
 import { ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
@@ -9,13 +8,21 @@ import { CategoriesActions } from "@/store/tw-admin/categories/categoriesActions
 export default function EditCategory(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const router = useRouter();
-  const id:any = router.query.id;
-  const current_category = useAppSelector(state=> state.dashboardCategoriesSlice)
-  const dispatch = useAppDispatch()
+  const id: any = router.query.id;
+  const {current_category} = useAppSelector(
+    (state) => state.dashboardCategoriesSlice
+  );
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(CategoriesActions.getOne({id}));
-  }, []);
+    console.log(id)
+    if(id)
+      dispatch(CategoriesActions.getOne({ id }));
+  }, [id]);
 
+  useEffect(()=>{
+    if(current_category.data)
+      setPerson(current_category.data)
+  },[current_category.data])
   const [person, setPerson] = useState({
     name_ar: "",
     name_en: "",
@@ -74,20 +81,8 @@ export default function EditCategory(): ReactElement {
   const saveData = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post(`dashboard/categories/${id}/update`, person);
-      // If Activate Network
-      // Authentication was successful.
-      if (
-        res.status == 201 ||
-        res.status == 200 ||
-        res.status == 202 ||
-        res.status == 203
-      ) {
-        //alert(getAll("Added_successfully"))
-        router.push("/tw-admin/cms/categories");
-      } else {
-        alert("Error");
-      }
+      await dispatch(CategoriesActions.updateOne({ id, category: person }));
+      router.push("/tw-admin/cms/categories");
     } catch (error) {
       alert("Error Network");
     }

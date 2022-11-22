@@ -1,15 +1,17 @@
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { CountriesActions } from "@/store/tw-admin/countries/countriesActions";
 
 export default function AddNewCategory({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+
+  const dispatch = useAppDispatch()
 
   return (
     <>
@@ -45,15 +47,8 @@ export default function AddNewCategory({
           })}
           onSubmit={async (values) => {
             try {
-              const res = await API.post("dashboard/countries/store", values);
-              // If Activate Network
-              // Authentication was successful.
-              if (res.status == 201 || res.status == 200) {
-                //alert(getAll("Added_successfully"))
-                setIsModalHiddenHandle();
-              } else {
-                alert("Error");
-              }
+              await dispatch(CountriesActions.createOne({country:values}))
+              setIsModalHiddenHandle()
             } catch (error) {
               alert("Error Network");
             }

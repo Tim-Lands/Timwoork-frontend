@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewCountry from "./Modals/AddNewCountry";
-import API from "config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -42,7 +41,7 @@ function Countries(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await API.post(`dashboard/countries/${id}/delete`);
+            await dispatch(CountriesActions.deleteOne({id}))
           } catch (error) {
             () => {};
           }

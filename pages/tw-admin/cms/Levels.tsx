@@ -2,13 +2,13 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { Alert } from "@/components/Alert/Alert";
 import AddNewLevel from "./Modals/AddNewLevel";
-import API from "config";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { LevelsThunkFunctions } from "@/store/tw-admin/levels/thunkFunctions";
+import { LevelsActions } from "@/store/tw-admin/levels/levelsAction";
 
 function Levels(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
@@ -43,7 +43,8 @@ function Levels(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await API.post(`dashboard/levels/${id}/delete`);
+            await dispatch(LevelsActions.deleteOne({id}))
+            
           } catch (error) {
             () => {};
           }

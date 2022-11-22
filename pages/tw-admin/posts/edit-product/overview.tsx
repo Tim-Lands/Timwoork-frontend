@@ -21,7 +21,7 @@ const MySelect = (props: any) => {
   const dispatch = useAppDispatch()
   const getdataTags = async (tag: string) => {
     try {
-      dispatch(TagsActions.getAll({filter:tag}))
+      dispatch(TagsActions.getAll({name:tag}))
     } catch (error) {
       console.log(error)
     }

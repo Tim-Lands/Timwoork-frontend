@@ -1,7 +1,7 @@
 import {AdminAPI as API} from '../../../config'
 
-async function getAll({page, filter}:{page:number, filter:string}){
-    const res = await API.get(`dashboard/new/tags`,{params:{page, filter}})
+async function getAll({page, name}:{page:number, name:string}){
+    const res = await API.get(`dashboard/new/tags`,{params:{page, name}})
     return res?.data
 }
 

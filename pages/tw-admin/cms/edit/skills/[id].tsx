@@ -1,19 +1,26 @@
-import API from "../../../../../config";
-import { ReactElement,  useState } from "react";
+import { ReactElement,  useEffect,  useState } from "react";
 import PropTypes from "prop-types";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { SkillsActions } from "@/store/tw-admin/skills/skillsActions";
 
 export default function Id(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
 
   const router = useRouter();
-  const id = router.query.id;
+  const id:any = router.query.id;
+  const {current_skill} = useAppSelector(state=>state.dashboardSkillsSlice)
+  const dispatch = useAppDispatch()
 
-  const [isLoading, setIsLoading] = useState(false);
+  useEffect(()=>{
+    dispatch(SkillsActions.getOne({id}))
+  },[])
 
-
+  useEffect(()=>{
+    if(current_skill.data)
+      setPerson(current_skill.data)
+  },[current_skill.data])
   const [person, setPerson] = useState({
     name_ar: "",
     name_en: "",
@@ -42,23 +49,9 @@ export default function Id(): ReactElement {
   }
   const saveData = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      setIsLoading(false);
-      const res = await API.post(`dashboard/skills/${id}/update`, person);
-      // If Activate Network
-      // Authentication was successful.
-      if (
-        res.status == 201 ||
-        res.status == 200 ||
-        res.status == 202 ||
-        res.status == 203
-      ) {
-        //alert(getAll("Added_successfully"))
+        await dispatch(SkillsActions.updateOne({id, skill:person}))
         router.push("/tw-admin/cms/skills");
-      } else {
-        alert("Error");
-      }
     } catch (error) {
       alert("Error Network");
     }
@@ -84,7 +77,7 @@ export default function Id(): ReactElement {
           </div>
         </div>
         <form onSubmit={saveData}>
-          {isLoading && getAll("Please_wait")}
+          {current_skill.loading && getAll("Please_wait")}
           <div className={"panel-modal-body auto-height"}>
             <div className="row">
               <div className="col-sm-4">

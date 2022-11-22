@@ -2,7 +2,7 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { TagsThunkFunctions } from "./thunkFunctions";
 //import { CustomMatchers } from "./matchers";
 
-const { getAll, getOne } =
+const { getAll, getOne, updateOne } =
 TagsThunkFunctions;
 
 export interface TagsState {
@@ -17,6 +17,9 @@ export interface TagsState {
         error?: string,
 
     },
+    filter:{
+        name:string
+    },
     data: TagState[],
     error?: string,
 
@@ -24,8 +27,9 @@ export interface TagsState {
 
 export interface TagState {
     id: number,
-    name:string
-
+    name_ar:string,
+    name_en:string,
+    name_fr:string
 
 }
 const initialState: TagsState = {
@@ -37,6 +41,9 @@ const initialState: TagsState = {
     current_tag: {
         loading: true,
         data: null
+    },
+    filter:{
+        name:''
     },
     data: [],
 
@@ -50,7 +57,15 @@ export const dashboardTagsSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(getAll.fulfilled, (state, action: any) => {
             const payload: any = action.payload
-            state.data = payload
+            const {name} = action.meta.arg
+            state.page = payload.current_page,
+            state.per_page = payload.per_page
+            state.to = payload.to
+            state.total = payload.total
+            state.data = payload.data
+            state.loading = false
+            state.filter = {name}
+            state.data = payload.data
             state.loading = false
         })
 
@@ -66,11 +81,11 @@ export const dashboardTagsSlice = createSlice({
             state.current_tag.data = action.payload
         })
 
-        builder.addMatcher(isAnyOf(getOne.fulfilled, getOne.rejected), (state) => {
+        builder.addMatcher(isAnyOf(getOne.fulfilled, getOne.rejected, updateOne.fulfilled, updateOne.rejected), (state) => {
             state.current_tag.loading = false
         })
 
-        builder.addMatcher(isAnyOf(getOne.pending), (state) => {
+        builder.addMatcher(isAnyOf(getOne.pending, updateOne.pending), (state) => {
             state.current_tag.loading = true
         })
 

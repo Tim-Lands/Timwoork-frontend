@@ -1,15 +1,16 @@
-import API from "../../../../config";
 import { motion } from "framer-motion";
 import { ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { SkillsActions } from "@/store/tw-admin/skills/skillsActions";
 
 export default function AddNewSkill({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch()
 
   return (
     <>
@@ -43,15 +44,8 @@ export default function AddNewSkill({
           })}
           onSubmit={async (values) => {
             try {
-              const res = await API.post("dashboard/skills/store", values);
-              // If Activate Network
-              // Authentication was successful.
-              if (res.status == 201 || res.status == 200) {
-                //alert(getAll("Added_successfully"))
-                setIsModalHiddenHandle();
-              } else {
-                alert("Error");
-              }
+              await dispatch(SkillsActions.createOne({skill:values}))
+              setIsModalHiddenHandle()
             } catch (error) {
               alert("Error Network");
             }
