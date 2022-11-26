@@ -8,7 +8,10 @@ function Sidebar({ RouterId }) {
   const dispatch = useAppDispatch();
   const {
     languages: { getAll },
-    chat: { all: conversationsList },
+    chat: {
+      all: conversationsList,
+      unReadConversation: { data },
+    },
   } = useAppSelector((state) => state);
 
   return (
@@ -87,7 +90,10 @@ function Sidebar({ RouterId }) {
                         {item.messages_count !== 0 && RouterId != item.id && (
                           <Badge
                             className="msg-count"
-                            count={item.messages_count}
+                            count={
+                              data.find((el) => item.id == el.id)
+                                ?.messages_count || 0
+                            }
                           />
                         )}
                       </div>

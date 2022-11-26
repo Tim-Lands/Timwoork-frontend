@@ -12,12 +12,24 @@ const getChatsData = createAsyncThunk(
     }
   }
 );
+const unreadMessagesCount = createAsyncThunk(
+  "chat/all/messages/count",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await ChatService.unreaded();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 const getSingleChat = createAsyncThunk(
   "Chat/one/data",
-  async (args: { id: number }, { rejectWithValue }) => {
+  async (args: { id: number }, { rejectWithValue, dispatch }) => {
     const { id } = args;
     try {
       const res = await ChatService.getOne(id);
+      dispatch(unreadMessagesCount());
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -42,6 +54,7 @@ const sendMessage = createAsyncThunk(
 
 export const ChatThunkFunctions = {
   getChatsData,
+  unreadMessagesCount,
   getSingleChat,
   sendMessage,
 };

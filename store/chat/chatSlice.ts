@@ -1,7 +1,8 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { ChatThunkFunctions } from "./thunkFunctions";
 import { AllMatchers, SingleMatchers } from "./matchers";
-const { getChatsData, getSingleChat, sendMessage } = ChatThunkFunctions;
+const { getChatsData, getSingleChat, sendMessage, unreadMessagesCount } =
+  ChatThunkFunctions;
 const { isChatsActionFulfilled, isChatsActionPending, isChatsActionRejected } =
   AllMatchers;
 const {
@@ -38,12 +39,18 @@ export interface chatState {
     }>;
     loading: boolean;
   };
-  unReadConversation: number;
+  unReadConversation: {
+    data: Array<{
+      id: number;
+      messages_count: number;
+    }>;
+    count: number;
+  };
 }
 export const initialState: chatState = {
   all: { data: [], last_page: 0, loading: true, page_number: 1 },
   one: { id: null, title: "", data: [], loading: false },
-  unReadConversation: null,
+  unReadConversation: { data: [], count: 0 },
 };
 export const chatSlice = createSlice({
   name: "chat",
@@ -131,6 +138,11 @@ export const chatSlice = createSlice({
         state.one.data = [...state.one.data, action.payload];
       }
     );
+    builder.addCase(unreadMessagesCount.fulfilled, (state, action) => {
+      console.log(action.payload);
+
+      state.unReadConversation = action.payload;
+    });
     builder.addMatcher(isChatsActionPending, (state, action) => {
       if (action.type.split("/")[0] !== "chat" || state.all.data.length === 0)
         return;

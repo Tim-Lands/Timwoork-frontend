@@ -16,7 +16,6 @@ import { ProductsActions } from "store/products/productActions";
 import { CurrencyActions } from "@/store/currency/currencyActions";
 import { LanguagesActions } from "@/store/languages/languagesActions";
 import { NotificationsActions } from "@/store/notifications/notificationsActions";
-// import { SalesActions } from "store/sales/salesActions";
 import { ChatActions } from "store/chat/chatActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { PusherService } from "services/pusherService";
@@ -55,6 +54,8 @@ const App = ({ innerApp }) => {
     dispatch(UserActions.getData({}));
     dispatch(ProfileActions.getProfileData());
     dispatch(CurrencyActions.getData());
+    dispatch(NotificationsActions.getNotificationsCount());
+    dispatch(ChatActions.unreadMessagesCount());
     dispatch(CurrencyActions.getAllCurrenciesValues());
     dispatch(CartActions.getCartData());
     dispatch(CategoriesActions.getProductCategories());
@@ -101,7 +102,8 @@ const App = ({ innerApp }) => {
   async function startSocket() {
     const pusher = await PusherService.Initialize(user.id);
     pusher.subscription();
-    pusher.bindMessages((data) => {
+    pusher.bindMessages(async (data) => {
+      await dispatch(ChatActions.unreadMessagesCount());
       const effect = new Audio("/effect.mp3");
       effect.play();
       dispatch(ChatActions.getChatsData({ pageNumber: chats.page_number }));
@@ -163,6 +165,7 @@ const App = ({ innerApp }) => {
           pageNumber: notifications.pageNumber,
         })
       );
+      await dispatch(NotificationsActions.getNotificationsCount());
       notification.open({
         message: getAll("You_have_a_new_alert"),
         description: (

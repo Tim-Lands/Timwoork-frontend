@@ -11,7 +11,6 @@ import PropTypes from "prop-types";
 import Messages from "../DropdowModal/Messages";
 import Image from "next/image";
 import ProfileMenu from "../DropdowModal/ProfileMenu";
-import API from "../../config";
 import { Badge } from "antd";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import MobileMenu from "./mobileMenus";
@@ -20,6 +19,7 @@ import { LanguagesActions } from "../../store/languages/languagesActions";
 
 import { darken } from "@mui/material";
 import { PRIMARY } from "../../styles/variables";
+import { NotificationsActions } from "@/store/notifications/notificationsActions";
 function Navbar({ dark = false, MoreNav = <></> }) {
   const cartLength = useAppSelector((state) => state.cart.itemsLength);
   const {
@@ -27,6 +27,12 @@ function Navbar({ dark = false, MoreNav = <></> }) {
     user,
     profile,
     categories: { all: postsList },
+    notifications: {
+      all: { unread: notifyCount },
+    },
+    chat: {
+      unReadConversation: { count: conversationCount },
+    },
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
@@ -87,156 +93,6 @@ function Navbar({ dark = false, MoreNav = <></> }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-  // useEffect(() => {
-  //   if (user.isLogged) {
-  //     chatPusher?.bind("message.sent", (data) => {
-  //       console.log(data);
-  //       const message = {
-  //         members: [data?.message?.user],
-  //         id: data?.message?.conversation_id,
-  //         ...data?.message?.conversation,
-  //       };
-  //       setMessages([
-  //         message,
-  //         ...messages.filter((msg) => msg.id != data?.message?.conversation_id),
-  //       ]);
-  //       const effect = new Audio("/effect.mp3");
-  //       effect.play();
-  //       if (data.message.type == 0) {
-  //         notification.open({
-  //           message: getAll("You_havea"),
-  //           description: (
-  //             <div className="msg-notification">
-  //               <a
-  //                 href={`/conversations/${data.message.conversation.id}#msg-item-${data.message.id}`}
-  //                 style={{ color: "#666", fontWeight: 300 }}
-  //               >
-  //                 <p className="meta">
-  //                   <LastSeen date={data.message.created_at} />
-  //                 </p>
-  //                 <h4 className="title">{data.message.message}</h4>
-  //               </a>
-  //               <p className="text">
-  //                 <small className="ml-1">
-  //                   <strong>{getAll("From")}</strong>
-  //                 </small>
-  //                 <Link href={`/u/${data.message.user.username}`}>
-  //                   <a style={{ color: "#666", fontWeight: 300 }}>
-  //                     <span style={{ color: "#666", fontWeight: 300 }}>
-  //                       {data.message.user.profile.full_name}
-  //                     </span>
-  //                   </a>
-  //                 </Link>
-  //               </p>
-  //             </div>
-  //           ),
-  //           icon: <MessageOutlined style={{ color: "#108ee9" }} />,
-  //           placement: "bottomLeft",
-  //         });
-  //       }
-  //       if (data.message.type == 1) {
-  //         notification["info"]({
-  //           message: getAll("You_have_a_new"),
-  //           description: (
-  //             <div className="msg-notification">
-  //               <p className="meta">
-  //                 <LastSeen date={data.message.created_at} />
-  //               </p>
-  //               <h4 className="title">{data.message.message}</h4>
-  //               <p className="text">
-  //                 <small className="ml-1">
-  //                   <strong>{getAll("From")}</strong>
-  //                 </small>
-  //                 <Link href={`/u/${data.message.user.username}`}>
-  //                   <a style={{ color: "#666", fontWeight: 300 }}>
-  //                     <span style={{ color: "#666", fontWeight: 300 }}>
-  //                       {data.message.user.profile.full_name}
-  //                     </span>
-  //                   </a>
-  //                 </Link>
-  //               </p>
-  //             </div>
-  //           ),
-  //           icon: <InfoCircleOutlined style={{ color: "#80c26c" }} />,
-  //           placement: "bottomLeft",
-  //         });
-  //       }
-  //       if (data.message.type == 2) {
-  //         notification["error"]({
-  //           message: getAll("You_have_a_cancellation"),
-  //           description: (
-  //             <div className="msg-notification">
-  //               <p className="meta">
-  //                 <LastSeen date={data.message.created_at} />
-  //               </p>
-  //               <h4 className="title">{data.message.message}</h4>
-  //               <p className="text">
-  //                 <small className="ml-1">
-  //                   <strong>{getAll("From")}</strong>
-  //                 </small>
-  //                 <Link href={`/u/${data.message.user.username}`}>
-  //                   <a style={{ color: "#666", fontWeight: 300 }}>
-  //                     <span style={{ color: "#666", fontWeight: 300 }}>
-  //                       {data.message.user.profile.full_name}
-  //                     </span>
-  //                   </a>
-  //                 </Link>
-  //               </p>
-  //             </div>
-  //           ),
-  //           icon: <CloseCircleOutlined style={{ color: "#d33232" }} />,
-  //           placement: "bottomLeft",
-  //         });
-  //       }
-  //     });
-  //     notificationPusher?.bind("notification.sent", (data) => {
-  //       const today = new Date();
-  //       const date = `${today.getFullYear()}_${
-  //         today.getMonth() + 1
-  //       }-${today.getDate()}`;
-  //       setNotifications([{ created_at: date, data }, ...notifications]);
-  //       const NotifyEffect = new Audio("/bell.mp3");
-  //       NotifyEffect.play();
-  //       notification.open({
-  //         message: getAll("You_have_a_new_alert"),
-  //         description: (
-  //           <div className="msg-notification">
-  //             {data.to == "seller" && (
-  //               <a
-  //                 href={`/mysales/${data.content.item_id}`}
-  //                 style={{ color: "#666", fontWeight: 300 }}
-  //               >
-  //                 <h4 className="title">{data.title}</h4>
-  //               </a>
-  //             )}
-  //             {data.to == "buyer" && (
-  //               <a
-  //                 href={`/mypurchases/${data.content.item_id}`}
-  //                 style={{ color: "#666", fontWeight: 300 }}
-  //               >
-  //                 <h4 className="title">{data.title}</h4>
-  //               </a>
-  //             )}
-  //             <p className="text">
-  //               <small className="ml-1">
-  //                 <strong>{getAll("From")}</strong>
-  //               </small>
-  //               <Link href={`/u/${data.user_sender.username}`}>
-  //                 <a style={{ color: "#666", fontWeight: 300 }}>
-  //                   <span style={{ color: "#666", fontWeight: 300 }}>
-  //                     {data.user_sender.full_name}
-  //                   </span>
-  //                 </a>
-  //               </Link>
-  //             </p>
-  //           </div>
-  //         ),
-  //         icon: <BellOutlined style={{ color: "#108ee9" }} />,
-  //         placement: "bottomRight",
-  //       });
-  //     });
-  //   }
-  // }, [notificationPusher, user]);
 
   const LanguageMenu = () => {
     return (
@@ -275,22 +131,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
       </ul>
     );
   };
-  async function markAllRead() {
-    try {
-      // const res =
-      await API.post(
-        `api/notifications/markAllAsRead`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-    } catch (error) {
-      () => {};
-    }
-  }
+
   return (
     <nav
       className="app-new-navbar-cont"
@@ -419,7 +260,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                     <li className="circular-newitem" ref={messagesBtn}>
                       <Badge
                         // count={userInfo?.unread_messages_count}
-                        count={0}
+                        count={conversationCount}
                         offset={language === "ar" ? [5, 5] : [-6, 5]}
                         style={{ fontSize: 10, zIndex: 1000 }}
                         size="small"
@@ -444,12 +285,13 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                       className="circular-newitem"
                       ref={notificationsBtn}
                       onClick={() => {
-                        if (!showNotificationsMenu) markAllRead();
+                        if (!showNotificationsMenu)
+                          dispatch(NotificationsActions.notificationsReaded());
                       }}
                     >
                       <Badge
                         // count={userInfo?.unread_notifications_count}
-                        count={0}
+                        count={notifyCount}
                         offset={language === "ar" ? [5, 5] : [-6, 5]}
                         style={{ fontSize: 10, zIndex: 1000 }}
                         size="small"

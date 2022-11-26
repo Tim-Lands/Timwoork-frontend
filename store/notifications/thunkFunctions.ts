@@ -12,4 +12,31 @@ const getNotificationsData = createAsyncThunk(
     }
   }
 );
-export const notificationsThunkFunctions = { getNotificationsData };
+const getNotificationsCount = createAsyncThunk(
+  "notification/count",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await NotificationsService.getCount();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+const notificationsReaded = createAsyncThunk(
+  "notifications/read",
+  async (args, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await NotificationsService.readAll();
+      dispatch(getNotificationsCount());
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+export const notificationsThunkFunctions = {
+  getNotificationsData,
+  getNotificationsCount,
+  notificationsReaded,
+};

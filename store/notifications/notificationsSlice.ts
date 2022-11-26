@@ -1,7 +1,8 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { notificationsThunkFunctions } from "./thunkFunctions";
 import { CustomMatchers } from "./matchers";
-const { getNotificationsData } = notificationsThunkFunctions;
+const { getNotificationsData, getNotificationsCount } =
+  notificationsThunkFunctions;
 const {
   isNotificationActionFulfilled,
   isNotificationActionPending,
@@ -32,6 +33,7 @@ export interface notificationsState {
     per_page: number;
     total: number;
     pageNumber: number;
+    unread: number;
   };
 }
 export const initialState: notificationsState = {
@@ -42,6 +44,7 @@ export const initialState: notificationsState = {
     total: 0,
     pageNumber: 1,
     per_page: 0,
+    unread: 0,
   },
 };
 export const notificationsSlice = createSlice({
@@ -75,6 +78,9 @@ export const notificationsSlice = createSlice({
         state.all.current_page = current_page;
       }
     );
+    builder.addCase(getNotificationsCount.fulfilled, (state, action) => {
+      state.all.unread = action.payload;
+    });
     builder.addMatcher(isNotificationActionPending, (state, action) => {
       if (
         action.type.split("/")[0] !== "notifications" ||

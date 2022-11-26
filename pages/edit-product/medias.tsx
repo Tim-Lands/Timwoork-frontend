@@ -97,7 +97,6 @@ function Medias({ query }) {
     );
     return res;
   };
-
   const loadGalleryImages: any = async () => {
     const galleries = new FormData();
     galleryMedia.map(
@@ -110,7 +109,6 @@ function Medias({ query }) {
     );
     return res;
   };
-
   const loadVideoUrl: any = async () => {
     try {
       await dispatch(
@@ -236,7 +234,6 @@ function Medias({ query }) {
       message.success(getAll("The_update_has"));
     }
   };
-
   const removeImage = async (image, index) => {
     setIsRemoveModal(true);
     setRemovedImage({ id: image.id, index });
@@ -256,7 +253,6 @@ function Medias({ query }) {
     }
     setIsRemoveModal(false);
   };
-
   const sendRemoveRequest = async () => {
     try {
       const promises = removedImages.map((img) =>
@@ -399,15 +395,6 @@ Medias.getLayout = function getLayout(page: any): ReactElement {
 };
 
 export async function getServerSideProps(ctx) {
-  // const token = cookies(ctx).token || "";
-  // const uriString = `api/my_products/product/${ctx.query.id}`;
-  // // Fetch data from external API
-  // const res = await API.get(uriString, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // });
-
   return { props: { query: ctx.query } };
 }
 export default Medias;
