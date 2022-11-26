@@ -105,6 +105,7 @@ function index() {
       title: getAll("Title"),
       dataIndex: "",
       render: (e: any) => {
+        console.log(e)
         return (
           <Link href={`/mysales/${e.id}`}>
             <a>{e[whichTitle(language)]}</a>

@@ -1,169 +1,12 @@
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
-import Link from "next/link";
+  import Link from "next/link";
 import LastSeen from "@/components/LastSeen";
 import { Space } from "antd";
-import Cookies from "js-cookie";
-import API from "../../../config";
+import { EProductStateType } from "@/store/tw-admin/products/thunkFunctions";
 
-export async function archieveHandle(id,getAll) {
-  const token = Cookies.get("token_dash");
 
-  const MySwal = withReactContent(Swal);
-
-  const swalWithBootstrapButtons = MySwal.mixin({
-    customClass: {
-      confirmButton: "btn butt-red butt-sm me-1",
-      cancelButton: "btn butt-green butt-sm",
-    },
-    buttonsStyling: false,
-  });
-
-  swalWithBootstrapButtons
-    .fire({
-      title: getAll("Are_you_sure1"),
-      text: getAll("Are_you_sur"),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: getAll("Yes_I_want"),
-      cancelButtonText: "لا",
-      reverseButtons: true,
-    })
-    .then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const res: any = await API.post(
-            `dashboard/products/${id}/delete `,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          console.log(res);
-          if (res.status == 200) {
-            console.log("res success");
-            location.reload();
-          }
-        } catch (error) {
-          console.log("err");
-        }
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire(
-          getAll("Cancelled_2"),
-          getAll("Cancelled"),
-          getAll("Error")
-        );
-      }
-    });
-}
-
-async function forceDelete(id, getAll) {
-  const token = Cookies.get("token_dash");
-  const MySwal = withReactContent(Swal);
-
-  const swalWithBootstrapButtons = MySwal.mixin({
-    customClass: {
-      confirmButton: "btn butt-red butt-sm me-1",
-      cancelButton: "btn butt-green butt-sm",
-    },
-    buttonsStyling: false,
-  });
-
-  swalWithBootstrapButtons
-    .fire({
-      title: getAll("Are_you_sure1"),
-      text: getAll("Are_you_sur1"),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: getAll("Yes_I_ant"),
-      cancelButtonText: "لا",
-      reverseButtons: true,
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        try {
-          const res: any = API.post(
-            `dashboard/products/${id}/force_delete_product`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (res) {
-            console.log("res success");
-            location.reload();
-          }
-        } catch (error) {
-          console.log("err");
-        }
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire(
-          getAll("Cancelled_2"),
-          getAll("Cancelled"),
-          getAll("Error")
-        );
-      }
-    });
-}
-
-async function restoreArchieved(id, getAll) {
-  const token = Cookies.get("token_dash");
-  const MySwal = withReactContent(Swal);
-
-  const swalWithBootstrapButtons = MySwal.mixin({
-    customClass: {
-      confirmButton: "btn butt-red butt-sm me-1",
-      cancelButton: "btn butt-green butt-sm",
-    },
-    buttonsStyling: false,
-  });
-
-  swalWithBootstrapButtons
-    .fire({
-      title: getAll("Are_you_sure1"),
-      text: getAll("Are_you_sur1"),
-      icon: "success",
-      showCancelButton: true,
-      confirmButtonText: getAll("Yes_I_ant_2"),
-      cancelButtonText: "لا",
-      reverseButtons: true,
-    })
-    .then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          console.log("going delete");
-          const res: any = await API.post(
-            `dashboard/products/${id}/restore_product_deleted`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (res.status == 200) {
-            console.log("res success");
-            location.reload();
-          }
-        } catch (error) {
-          console.log("err");
-        }
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire(
-          getAll("Cancelled_2"),
-          getAll("Cancelled"),
-          getAll("Error")
-        );
-      }
-    });
-}
 
 export const generatecolumns = ({ status, callbacks }, getAll) => {
+  console.log(status)
   const switchStatus = (status, getAll) => {
     switch (status) {
       case null:
@@ -242,10 +85,13 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
     onSendNotificationClick,
     onSendEmailClick,
     onDisactiveClick,
+    forceDelete,
+    restoreArchieved,
+    archieveHandle
   } = callbacks;
   return (
     <Space>
-      {!["activated", "archieved"].includes(status) &&
+      {![EProductStateType.ACTIVE, EProductStateType.ARCHIEVE].includes(status) &&
       (post.status == 0 || post.status == null) ? (
         <button
           title={getAll("Able_this_service")}
@@ -268,7 +114,7 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
       ) : (
         ""
       )}
-      {status == "archieved" && (
+      {status == EProductStateType.ARCHIEVE && (
         <>
           {" "}
           <button
@@ -287,7 +133,7 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
           </button>
         </>
       )}
-      {status != "archieved" && (
+      {status != EProductStateType.ARCHIEVE && (
         <button
           title="أرشفة هذه الخدمة"
           className="btn butt-xs2 butt-red"
@@ -296,7 +142,7 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
           أرشفة
         </button>
       )}
-      {status != "cancelled" && (post.status == 2 || post.status == null) && (
+      {status != EProductStateType.REJECTED && (post.status == 2 || post.status == null) && (
         <button
           title="رفض الخدمة"
           className="btn butt-xs2 butt-orange"
