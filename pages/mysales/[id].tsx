@@ -65,7 +65,12 @@ const User = ({ query }) => {
     }
   }, [user]);
   useEffect(() => {
-    dispatch(SalesActions.getOneSale({ id: query.id }));
+    dispatch(SalesActions.getOneSale({ id: query.id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/mysales");
+      });
   }, [query.id]);
   const { files, fileNames, totalSize, setFiles, removeFile } = useFileUpload();
   const {

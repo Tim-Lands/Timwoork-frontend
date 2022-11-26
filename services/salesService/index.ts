@@ -1,6 +1,6 @@
 import API from "../../config";
 async function getAll() {
-  const res = await API.get("api/my_sales");
+  const res = await API.get("api/new/me/items/sales");
   return res?.data?.data;
 }
 async function getOne(id) {

@@ -6,7 +6,7 @@ import Link from "next/link";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { SalesThunkFunctions } from "store/sales/thunkFunctions";
+import { SalesActions } from "store/sales/salesActions";
 function index() {
   const dispatch = useAppDispatch();
   const {
@@ -22,7 +22,7 @@ function index() {
   }, [user]);
   useEffect(() => {
     if (sales.loaded) return;
-    dispatch(SalesThunkFunctions.getData());
+    dispatch(SalesActions.getData());
   }, [sales]);
 
   const statusLabel = (status: any) => {
