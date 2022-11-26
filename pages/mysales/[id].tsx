@@ -5,17 +5,22 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
 import Link from "next/link";
-import API from "../../config";
 import LastSeen from "@/components/LastSeen";
 import { Modal, Progress, Spin, Timeline } from "antd";
 import useFileUpload from "react-use-file-upload";
 import { motion } from "framer-motion";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { SalesActions } from "@/store/sales/salesActions";
+import { ChatActions } from "@/store/chat/chatActions";
 
 const User = ({ query }) => {
-  const { getAll, language } = useAppSelector((state) => state.languages);
-  const ShowItem = useAppSelector((state) => state.mySales.oneSale);
+  const unused = "";
+  const dispatch = useAppDispatch();
+  const {
+    languages: { getAll, language },
+    mySales: { oneSale: ShowItem },
+  } = useAppSelector((state) => state);
   const user = useAppSelector((state) => state.user);
   const inputRef: any = useRef();
   const inputRefMsg: any = useRef();
@@ -25,7 +30,6 @@ const User = ({ query }) => {
   const [messageProgress, setMessageProgress] = useState(0);
   const [messageErrors, setMessageErrors]: any = useState({});
   const [BySellerMSGLoading, setBySellerMSGLoading]: any = useState(false);
-
   const myRef: any = useRef();
   // Send Message function
   const rejectMessageCause = async (messageText: any, typeCause = 2) => {
@@ -35,14 +39,24 @@ const User = ({ query }) => {
       const conversation: any = new FormData();
       conversation.append("type", typeCause);
       conversation.append("message", messageText);
-      await API.post(`api/conversations/${id}/sendMessage`, conversation);
+      await dispatch(
+        ChatActions.sendMessage({
+          id,
+          body: conversation,
+          headers: {
+            headers: {
+              "X-LOCALIZATION": language,
+            },
+          },
+        })
+      ).unwrap();
       setBySellerMSGLoading(false);
       setIsModalVisible(false);
       setModalVisibleRejectModified(false);
       setModalVisibleReject(false);
     } catch (error) {
-      if (error && error.response) {
-        setMessageErrors(error.response.data.errors);
+      if (error.errors) {
+        setMessageErrors(error.errors);
       }
     }
   };
@@ -51,7 +65,9 @@ const User = ({ query }) => {
       router.push("/login");
     }
   }, [user]);
-
+  useEffect(() => {
+    dispatch(SalesActions.getOneSale({ id: query.id }));
+  }, [query.id]);
   const { files, fileNames, totalSize, setFiles, removeFile } = useFileUpload();
   const {
     files: filesMsg,
@@ -115,7 +131,12 @@ const User = ({ query }) => {
   const item_accepted_by_seller = async (id: any) => {
     setAcceptedBySellerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/item_accepted_by_seller`);
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/item_accepted_by_seller`,
+        })
+      ).unwrap();
     } catch (error) {
       setAcceptedBySellerLoading(false);
     }
@@ -123,8 +144,12 @@ const User = ({ query }) => {
   const item_rejected_by_seller = async (id: any) => {
     setRejectedBySellerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/item_rejected_by_seller`);
-
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/item_rejected_by_seller`,
+        })
+      ).unwrap();
       rejectMessageCause(message);
       setModalVisibleReject(false);
     } catch (error) {
@@ -135,7 +160,12 @@ const User = ({ query }) => {
   const reject_cancel_request_by_seller = async (id: any) => {
     setRejectCancelRequestBySellerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/reject_cancel_request_by_seller`);
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/reject_cancel_request_by_seller`,
+        })
+      ).unwrap();
 
       rejectMessageCause(message);
     } catch (error) {
@@ -149,13 +179,21 @@ const User = ({ query }) => {
     try {
       const attachments: any = new FormData();
       files.map((file: any) => attachments.append("item_attachments[]", file));
-      await API.post(`api/order/items/${id}/dilevered_by_seller`, attachments, {
-        onUploadProgress: (uploadEvent) => {
-          setImageProgress(
-            Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
-          );
-        },
-      });
+
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/dilevered_by_seller`,
+          body: attachments,
+          headers: {
+            onUploadProgress: (uploadEvent) => {
+              setImageProgress(
+                Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
+              );
+            },
+          },
+        })
+      ).unwrap();
     } catch (error) {
       setDileveredSellerLoading(false);
     }
@@ -165,7 +203,12 @@ const User = ({ query }) => {
   const accept_cancel_request_by_seller = async (id: any) => {
     setAcceptCancelRequestBySellerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/accept_cancel_request_by_seller`);
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/accept_cancel_request_by_seller`,
+        })
+      ).unwrap();
     } catch (error) {
       setAcceptCancelRequestBySellerLoading(false);
     }
@@ -175,9 +218,12 @@ const User = ({ query }) => {
   const resolve_the_conflict_between_them_in_rejected = async (id: any) => {
     setResolveConflictBetweenRejectedLoading(true);
     try {
-      await API.post(
-        `api/order/items/${id}/resolve_the_conflict_between_them_in_rejected`
-      );
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/resolve_the_conflict_between_them_in_rejected`,
+        })
+      ).unwrap();
     } catch (error) {
       setResolveConflictBetweenRejectedLoading(false);
     }
@@ -186,7 +232,12 @@ const User = ({ query }) => {
   const accept_modified_by_seller = async (id: any) => {
     setAcceptModifiedSellerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/accept_modified_by_seller`);
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/accept_modified_by_seller`,
+        })
+      ).unwrap();
     } catch (error) {
       setAcceptModifiedSellerLoading(false);
     }
@@ -197,7 +248,12 @@ const User = ({ query }) => {
   const reject_modified_by_seller = async (id: any) => {
     setRejectModifiedSellerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/reject_modified_by_seller`);
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/reject_modified_by_seller`,
+        })
+      ).unwrap();
     } catch (error) {
       setRejectModifiedSellerLoading(false);
     }
@@ -207,9 +263,12 @@ const User = ({ query }) => {
   const resolve_the_conflict_between_them_in_modified = async (id: any) => {
     setResolveConflictBetweenThemModifiedLoading(true);
     try {
-      await API.post(
-        `api/order/items/${id}/resolve_the_conflict_between_them_in_modified`
-      );
+      await dispatch(
+        SalesActions.updateSale({
+          id,
+          query: `api/order/items/${id}/resolve_the_conflict_between_them_in_modified`,
+        })
+      ).unwrap();
     } catch (error) {
       setResolveConflictBetweenThemModifiedLoading(false);
     }
@@ -219,11 +278,17 @@ const User = ({ query }) => {
   const createConversation = async (id: any) => {
     setCreateConversationLoading(true);
     try {
-      await API.post(`api/order/items/${id}/conversations/create`, {
-        initial_message: message,
-        receiver_id: ShowItem?.order?.cart?.user.id,
-        title: ShowItem?.title,
-      });
+      await dispatch(
+        ChatActions.createChat({
+          id,
+          body: {
+            initial_message: message,
+            receiver_id: ShowItem?.order?.cart?.user.id,
+            title: ShowItem?.title,
+          },
+        })
+      ).unwrap();
+      dispatch(SalesActions.getOneSale({ id: query.id }));
     } catch (error) {
       setCreateConversationLoading(false);
     }
@@ -242,20 +307,26 @@ const User = ({ query }) => {
       filesMsg.map((file: any) => conversation.append("attachments[]", file));
       conversation.append("type", messageType);
       conversation.append("message", message);
-      const res = await API.post(
-        `api/conversations/${id}/sendMessage`,
-        conversation,
-        {
-          onUploadProgress: (uploadEvent) => {
-            if (filesMsg.length !== 0)
-              setMessageProgress(
-                Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
-              );
-          },
-        }
-      );
 
-      ShowItem?.conversation?.messages?.push(res.data.data);
+      const res = await dispatch(
+        ChatActions.sendMessage({
+          id,
+          body: conversation,
+          headers: {
+            headers: {
+              "X-LOCALIZATION": language,
+            },
+            onUploadProgress: (uploadEvent) => {
+              if (filesMsg.length !== 0)
+                setMessageProgress(
+                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
+                );
+            },
+          },
+        })
+      ).unwrap();
+
+      ShowItem?.conversation?.messages?.push(res);
       setSendMessageLoading(false);
       myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
       setMessage("");
@@ -264,8 +335,8 @@ const User = ({ query }) => {
       clearAllFilesMsg();
     } catch (error) {
       setSendMessageLoading(false);
-      if (error && error.response) {
-        setMessageErrors(error.response.data.errors);
+      if (error.errors) {
+        setMessageErrors(error.errors);
       }
     }
   };
@@ -518,6 +589,7 @@ const User = ({ query }) => {
       return ShowItem?.duration + getAll("Day");
     }
   }
+  console.log(ShowItem);
 
   return (
     <>
@@ -528,7 +600,7 @@ const User = ({ query }) => {
       />
       {veriedEmail && (
         <div style={{ backgroundColor: "#f6f6f6" }} className="my-3">
-          {!ShowItem && <Loading />}
+          {ShowItem.loading && <Loading />}
           <Modal
             title={getAll("Rejection_reason")}
             visible={isModalVisibleReject}
@@ -646,7 +718,6 @@ const User = ({ query }) => {
               </div>
             </Spin>
           </Modal>
-
           <Modal
             title={getAll("Confirmation_message")}
             visible={isModalVisibleDilevered}
@@ -657,7 +728,7 @@ const User = ({ query }) => {
           >
             <Alert type="error">{getAll("Are_you_sure")}</Alert>
           </Modal>
-          {ShowItem && (
+          {!ShowItem.loading && (
             <div className="row py-4 justify-content-center">
               <div className="col-md-12" style={{ maxWidth: 1300 }}>
                 <div
@@ -679,7 +750,7 @@ const User = ({ query }) => {
                         <Link
                           href={`/u/${
                             ShowItem &&
-                            ShowItem.profile_seller.profile.user.username
+                            ShowItem.profile_seller?.profile.user.username
                           }`}
                         >
                           <a className="order-user-info d-flex flex-center">
@@ -687,7 +758,7 @@ const User = ({ query }) => {
                               <img
                                 src={
                                   ShowItem &&
-                                  ShowItem.profile_seller.profile.avatar_path
+                                  ShowItem.profile_seller?.profile.avatar_path
                                 }
                                 width={50}
                                 height={50}
@@ -696,14 +767,14 @@ const User = ({ query }) => {
                             <div className="order-user-content">
                               <h2 className="user-title">
                                 {ShowItem &&
-                                  ShowItem.profile_seller.profile.full_name}
+                                  ShowItem.profile_seller?.profile.full_name}
                               </h2>
                               <p className="meta">
                                 <span className="badge bg-light text-dark">
                                   {ShowItem &&
-                                    ShowItem.profile_seller.level &&
+                                    ShowItem.profile_seller?.level &&
                                     ShowItem.profile_seller.level[
-                                      which(language)
+                                      `name_${language}`
                                     ]}
                                 </span>
                               </p>
@@ -744,7 +815,7 @@ const User = ({ query }) => {
                                   {ShowItem &&
                                     ShowItem.order.cart.user.profile.level &&
                                     ShowItem.order.cart.user.profile.level[
-                                      which(language)
+                                      `name_${language}`
                                     ]}
                                 </span>
                               </p>
@@ -816,9 +887,7 @@ const User = ({ query }) => {
                         </>
                       )}
                       <div className="aside-header">
-                        <h3 className="title">
-                          {ShowItem[whichTitle(language)]}
-                        </h3>
+                        <h3 className="title">{ShowItem.title}</h3>
                       </div>
                       <div style={{ backgroundColor: "#fff", padding: 9 }}>
                         <div className="aside-header">
@@ -864,7 +933,7 @@ const User = ({ query }) => {
                                       animate={{ y: 0, opacity: 1 }}
                                       key={item.id}
                                       className={
-                                        (ShowItem && user.id === item.user.id
+                                        (ShowItem && user?.id === item.user?.id
                                           ? ""
                                           : "recieved ") +
                                         "d-flex message-item align-item-center" +
@@ -973,7 +1042,7 @@ const User = ({ query }) => {
                                           }}
                                         />
                                         {ShowItem &&
-                                          ShowItem.profile_seller.id ==
+                                          ShowItem.profile_seller?.id ==
                                             item.user.id && (
                                             <>
                                               {item.read_at && (
@@ -1255,11 +1324,11 @@ const User = ({ query }) => {
                               </button>
                             </>
                           )}
-                          {ShowItem && ShowItem.status == 1 && (
+                          {ShowItem.status == 1 && (
                             <>
                               <div className="box-note red">
                                 <p className="text">
-                                  {getAll("This_operation_was")}
+                                  {getAll("This_operation_was ")}
                                 </p>
                               </div>
                             </>
@@ -1535,28 +1604,7 @@ const User = ({ query }) => {
     </>
   );
 };
-const which = (language) => {
-  switch (language) {
-    default:
-      return "name_en";
-    case "ar":
-      return "name_ar";
-    case "en":
-      return "name_en";
-  }
-};
-const whichTitle = (language) => {
-  switch (language) {
-    default:
-      return "title_en";
-    case "ar":
-      return "title_ar";
-    case "en":
-      return "title_en";
-    case "fr":
-      return "title_fr";
-  }
-};
+
 function linkify(text, query) {
   const urlRegex =
     /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;

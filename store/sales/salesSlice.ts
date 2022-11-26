@@ -1,8 +1,15 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { SalesThunkFunctions } from "./thunkFunctions";
 import { SalesMatchers } from "./matchers";
-const { isSalesPending, isSalesFulfilled, isSalesRejected } = SalesMatchers;
-const { getData } = SalesThunkFunctions;
+const {
+  isSalesPending,
+  isSalesFulfilled,
+  isSalesRejected,
+  isSalePending,
+  isSaleFulfilled,
+  isSaleRejected,
+} = SalesMatchers;
+const { getData, getOneSale } = SalesThunkFunctions;
 export interface salesState {
   sales: {
     data: Array<{
@@ -54,6 +61,7 @@ export interface salesState {
       products: Array<any>;
     };
     attachments: Array<{ mime_type: string; id: number }>;
+    loading: boolean;
   };
 }
 export const initialState: salesState = {
@@ -89,6 +97,7 @@ export const initialState: salesState = {
       products: [],
     },
     attachments: [],
+    loading: false,
   },
 };
 export const salesSlice = createSlice({
@@ -103,12 +112,22 @@ export const salesSlice = createSlice({
         state.sales.loaded = true;
       }
     );
+    builder.addCase(getOneSale.fulfilled, (state, action) => {
+      state.oneSale = action.payload;
+    });
     builder.addMatcher(isSalesPending, (state, action) => {
       if (action.type.split("/")[0] !== "sales") return;
       state.sales.loading = true;
     });
     builder.addMatcher(isAnyOf(isSalesFulfilled, isSalesRejected), (state) => {
       state.sales.loading = false;
+    });
+    builder.addMatcher(isSalePending, (state, action) => {
+      if (action.type.split("/")[0] !== "sales") return;
+      state.oneSale.loading = true;
+    });
+    builder.addMatcher(isAnyOf(isSaleFulfilled, isSaleRejected), (state) => {
+      state.oneSale.loading = false;
     });
   },
 });

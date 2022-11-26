@@ -4,7 +4,11 @@ async function getAll() {
   return res?.data?.data;
 }
 async function getOne(id) {
-  const res = await API.get("api/my_sales/" + id);
+  const res = await API.get("/api/new/me/items/sales/" + id);
   return res?.data?.data;
 }
-export const SalesService = { getAll, getOne };
+async function updateOne(query: string, body = {}, headers = {}) {
+  const res = await API.post(query, body, headers);
+  return res.data.data;
+}
+export const SalesService = { getAll, getOne, updateOne };

@@ -1,5 +1,26 @@
 import { ChatService } from "services/chatService";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+const createChat = createAsyncThunk(
+  "Chat/create",
+  async (
+    args: {
+      id: number;
+      body: { receiver_id: number; initial_message: string; title: string };
+    },
+    { dispatch, rejectWithValue }
+  ) => {
+    const { id, body } = args;
+    try {
+      const res = await ChatService.create(id, body);
+      dispatch(getChatsData({ pageNumber: 1 }));
+      return res;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const getChatsData = createAsyncThunk(
   "Chat/all/data",
   async (args: { pageNumber: number }, { rejectWithValue }) => {
@@ -53,6 +74,7 @@ const sendMessage = createAsyncThunk(
 );
 
 export const ChatThunkFunctions = {
+  createChat,
   getChatsData,
   unreadMessagesCount,
   getSingleChat,

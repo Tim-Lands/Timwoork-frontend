@@ -47,7 +47,7 @@ function Notifications({ refs, setShowNotificationsMenu }) {
             {notification?.data[`title_${language}`] ||
               notification?.data?.title}{" "}
             <strong>
-              {notification?.data?.content[`title_${language}`] |
+              {notification?.data?.content[`title_${language}`] ||
                 notification?.data?.content?.cause}
             </strong>
           </>

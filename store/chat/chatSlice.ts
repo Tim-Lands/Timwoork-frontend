@@ -139,8 +139,6 @@ export const chatSlice = createSlice({
       }
     );
     builder.addCase(unreadMessagesCount.fulfilled, (state, action) => {
-      console.log(action.payload);
-
       state.unReadConversation = action.payload;
     });
     builder.addMatcher(isChatsActionPending, (state, action) => {

@@ -26,6 +26,7 @@ import { ProductService } from "@/services/productService";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
 import ReactPlayer from "react-player";
+import { ChatActions } from "@/store/chat/chatActions";
 
 const { Text } = Typography;
 const properties = {
@@ -180,11 +181,16 @@ function Single({ id }) {
   async function startConversation(message: string) {
     setCreateConversationLoading(true);
     try {
-      await API.post(`api/product/${ProductData?.id}/conversations/create`, {
-        initial_message: message,
-        receiver_id: ProductData?.profile_seller?.profile?.user_id,
-        title: ProductData?.title,
-      });
+      await dispatch(
+        ChatActions.createChat({
+          id: ProductData?.id,
+          body: {
+            initial_message: message,
+            receiver_id: ProductData?.profile_seller?.profile?.user_id,
+            title: ProductData?.title,
+          },
+        })
+      ).unwrap();
       setIsModalVisible(false);
       router.push("/conversations");
       setHasConversation(true);

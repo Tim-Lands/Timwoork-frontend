@@ -20,12 +20,16 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
-import { useAppSelector } from "@/store/hooks";
+import { ChatActions } from "@/store/chat/chatActions";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 const Order = ({ ShowItem, errorItem }) => {
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const dispatch = useAppDispatch();
 
-  const user = useAppSelector((state) => state.user);
+  const {
+    languages: { getAll, language },
+    user,
+  } = useAppSelector((state) => state);
 
   const veriedEmail = user.email_verified;
 
@@ -155,11 +159,16 @@ const Order = ({ ShowItem, errorItem }) => {
   const createConversation = async (id: any) => {
     setCreateConversationLoading(true);
     try {
-      await API.post(`api/order/items/${id}/conversations/create`, {
-        initial_message: message,
-        receiver_id: ShowItem && ShowItem.data.user_id,
-        title: ShowItem && ShowItem.data.title,
-      });
+      await dispatch(
+        ChatActions.createChat({
+          id,
+          body: {
+            initial_message: message,
+            receiver_id: ShowItem?.data.user_id,
+            title: ShowItem?.data.title,
+          },
+        })
+      ).unwrap();
       AntMessage.success("done");
     } catch (error) {
       setCreateConversationLoading(false);

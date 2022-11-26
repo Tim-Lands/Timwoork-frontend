@@ -85,7 +85,7 @@ function index() {
   }, []);
   return (
     <div className="my-2 py-4">
-      <MetaTags />
+      <MetaTags title={getAll("All_notifications")} />
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="app-bill">
@@ -104,7 +104,7 @@ function index() {
                       type={e.data.type}
                       item_id={e.data.content.item_id}
                       to={e.data.to}
-                      avatar={e.data.user_sender.avatar_path}
+                      avatar={e.data.user_sender?.avatar_path || "/avatar.png"}
                       created_at={e.created_at}
                       product_title={
                         e.data.content[`title_${language}`] ||
