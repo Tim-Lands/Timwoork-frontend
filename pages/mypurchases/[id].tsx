@@ -22,7 +22,7 @@ import { ChatActions } from "@/store/chat/chatActions";
 import { PurchasesActions } from "store/purchases/purchasesActions";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
-const Order = ({ query }) => {
+const Order = ({ id }) => {
   const dispatch = useAppDispatch();
 
   const {
@@ -31,13 +31,13 @@ const Order = ({ query }) => {
     purchase: { onePurchase: ShowItem },
   } = useAppSelector((state) => state);
   useEffect(() => {
-    dispatch(PurchasesActions.getOnePurchase({ id: query.id }))
+    dispatch(PurchasesActions.getOnePurchase({ id }))
       .unwrap()
       .then(() => {})
       .catch(() => {
         router.push("/mypurchases");
       });
-  }, [query.id]);
+  }, [id]);
   const veriedEmail = user.email_verified;
 
   const inputRefMsg: any = useRef();
@@ -1364,9 +1364,8 @@ Order.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export async function getServerSideProps({ query }) {
-  return { props: { query } };
+  return { props: { id: query.id } };
 }
 Order.propTypes = {
-  ShowItem: PropTypes.any,
-  errorItem: PropTypes.bool,
+  id: PropTypes.number,
 };
