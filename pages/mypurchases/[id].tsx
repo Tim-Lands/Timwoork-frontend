@@ -1,11 +1,9 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import cookies from "next-cookies";
 import PropTypes from "prop-types";
 import useFileUpload from "react-use-file-upload";
 import Loading from "@/components/Loading";
-import API from "../../config";
 import LastSeen from "@/components/LastSeen";
 import {
   Progress,
@@ -21,16 +19,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
 import { ChatActions } from "@/store/chat/chatActions";
+import { PurchasesActions } from "store/purchases/purchasesActions";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
-const Order = ({ ShowItem, errorItem }) => {
+const Order = ({ id }) => {
   const dispatch = useAppDispatch();
 
   const {
     languages: { getAll, language },
     user,
+    purchase: { onePurchase: ShowItem },
   } = useAppSelector((state) => state);
-
+  useEffect(() => {
+    dispatch(PurchasesActions.getOnePurchase({ id }))
+      .unwrap()
+      .then(() => {})
+      .catch(() => {
+        router.push("/mypurchases");
+      });
+  }, [id]);
   const veriedEmail = user.email_verified;
 
   const inputRefMsg: any = useRef();
@@ -53,19 +60,22 @@ const Order = ({ ShowItem, errorItem }) => {
     setRattingValidationsErrors({});
     setValidationsGeneral({});
     try {
-      await API.post(`api/order/items/${id}/rating`, {
-        comment: rattingState,
-        rating: rattingCount,
-      });
+      await dispatch(
+        PurchasesActions.updatePurchase({
+          id,
+          query: `api/order/items/${id}/rating`,
+          body: { comment: rattingState, rating: rattingCount },
+        })
+      ).unwrap();
       setIsRattingLoading(false);
       setValidationsGeneral({});
     } catch (error) {
       setIsRattingLoading(false);
-      if (error.response && error.response.data && error.response.data.errors) {
+      if (error.errors) {
         setRattingValidationsErrors(error.response.data.errors);
       }
-      if (error.response && error.response.data) {
-        setValidationsGeneral(error.response.data);
+      if (error) {
+        setValidationsGeneral(error);
       }
     }
   }
@@ -115,7 +125,12 @@ const Order = ({ ShowItem, errorItem }) => {
   const item_cancelled_by_buyer = async (id: any) => {
     setCancelledBuyerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/item_cancelled_by_buyer`);
+      await dispatch(
+        PurchasesActions.updatePurchase({
+          id,
+          query: `api/order/items/${id}/item_cancelled_by_buyer`,
+        })
+      ).unwrap();
       AntMessage.success("done");
     } catch (error) {
       setCancelledBuyerLoading(false);
@@ -126,7 +141,12 @@ const Order = ({ ShowItem, errorItem }) => {
   const request_cancel_item_by_buyer = async (id: any) => {
     setRequestCancelItemBuyerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/request_cancel_item_by_buyer`);
+      await dispatch(
+        PurchasesActions.updatePurchase({
+          id,
+          query: `api/order/items/${id}/request_cancel_item_by_buyer`,
+        })
+      ).unwrap();
       AntMessage.success("done");
     } catch (error) {
       setRequestCancelItemBuyerLoading(false);
@@ -137,7 +157,12 @@ const Order = ({ ShowItem, errorItem }) => {
   const accepted_delivery_by_buyer = async (id: any) => {
     setAcceptedDeliveryBuyerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/accepted_delivery_by_buyer`);
+      await dispatch(
+        PurchasesActions.updatePurchase({
+          id,
+          query: `api/order/items/${id}/accepted_delivery_by_buyer`,
+        })
+      ).unwrap();
       AntMessage.success("done");
     } catch (error) {
       setAcceptedDeliveryBuyerLoading(false);
@@ -148,7 +173,12 @@ const Order = ({ ShowItem, errorItem }) => {
   const request_modified_by_buyer = async (id: any) => {
     setRequestModifiedBuyerLoading(true);
     try {
-      await API.post(`api/order/items/${id}/request_modified_by_buyer`);
+      await dispatch(
+        PurchasesActions.updatePurchase({
+          id,
+          query: `api/order/items/${id}/request_modified_by_buyer`,
+        })
+      ).unwrap();
       AntMessage.success("done");
     } catch (error) {
       setRequestModifiedBuyerLoading(false);
@@ -164,8 +194,8 @@ const Order = ({ ShowItem, errorItem }) => {
           id,
           body: {
             initial_message: message,
-            receiver_id: ShowItem?.data.user_id,
-            title: ShowItem?.data.title,
+            receiver_id: ShowItem?.order.cart.user_id,
+            title: ShowItem?.title,
           },
         })
       ).unwrap();
@@ -184,24 +214,30 @@ const Order = ({ ShowItem, errorItem }) => {
     setSendMessageLoading(true);
     setMessageErrors({});
     try {
-      const id = ShowItem && ShowItem.data.conversation.id;
+      const id = ShowItem.conversation.id;
       const conversation: any = new FormData();
       filesMsg.map((file: any) => conversation.append("attachments[]", file));
       conversation.append("type", messageType);
       conversation.append("message", message);
-      const res = await API.post(
-        `api/conversations/${id}/sendMessage`,
-        conversation,
-        {
-          onUploadProgress: (uploadEvent) => {
-            if (filesMsg.length !== 0)
-              setMessageProgress(
-                Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
-              );
+
+      const res = await dispatch(
+        ChatActions.sendMessage({
+          id,
+          body: conversation,
+          headers: {
+            headers: {
+              "X-LOCALIZATION": language,
+            },
+            onUploadProgress: (uploadEvent) => {
+              if (filesMsg.length !== 0)
+                setMessageProgress(
+                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
+                );
+            },
           },
-        }
-      );
-      ShowItem && ShowItem.data.conversation.messages.push(res.data.data);
+        })
+      ).unwrap();
+      ShowItem.conversation.messages.push(res);
       setSendMessageLoading(false);
       myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
       setMessage("");
@@ -211,8 +247,8 @@ const Order = ({ ShowItem, errorItem }) => {
       AntMessage.success("done");
     } catch (error) {
       setSendMessageLoading(false);
-      if (error && error.response) {
-        setMessageErrors(error.response.data.errors);
+      if (error && error.errors) {
+        setMessageErrors(error.errors);
       }
     }
   };
@@ -448,17 +484,17 @@ const Order = ({ ShowItem, errorItem }) => {
     }
   };
   function durationFunc() {
-    if (ShowItem.data.duration == 1) {
+    if (ShowItem.duration == 1) {
       return getAll("One_day");
     }
-    if (ShowItem.data.duration == 2) {
+    if (ShowItem.duration == 2) {
       return getAll("2_days");
     }
-    if (ShowItem.data.duration > 2 && ShowItem.data.duration < 11) {
-      return ShowItem.data.duration + getAll("Days");
+    if (ShowItem.duration > 2 && ShowItem.duration < 11) {
+      return ShowItem.duration + getAll("Days");
     }
-    if (ShowItem.data.duration >= 11) {
-      return ShowItem.data.duration + getAll("Day");
+    if (ShowItem.duration >= 11) {
+      return ShowItem.duration + getAll("Day");
     }
   }
   return (
@@ -468,14 +504,14 @@ const Order = ({ ShowItem, errorItem }) => {
         metaDescription={getAll("View_order")}
         ogDescription={getAll("View_order")}
       />
-      {errorItem && !ShowItem.data && (
+      {!ShowItem.id && !ShowItem.loading && (
         <Result
           status="warning"
           title={getAll("An_unexpected_error_occurred")}
         />
       )}
-      {!ShowItem && <Loading />}
-      {ShowItem && veriedEmail && (
+      {ShowItem.loading && <Loading />}
+      {ShowItem.id && !ShowItem.loading && veriedEmail && (
         <div className="row py-4 justify-content-center">
           <div className="col-md-12">
             <div className="app-bill" style={{ backgroundColor: "#f6f6f6" }}>
@@ -491,18 +527,11 @@ const Order = ({ ShowItem, errorItem }) => {
                     <div className="aside-header">
                       <h3 className="title">{getAll("Buyer")}</h3>
                     </div>
-                    <Link
-                      href={`/u/${
-                        ShowItem && ShowItem.data.order.cart.user.username
-                      }`}
-                    >
+                    <Link href={`/u/${ShowItem.order.cart.user.username}`}>
                       <a className="order-user-info d-flex flex-center">
                         <div className="order-user-avatar">
                           <Image
-                            src={
-                              ShowItem &&
-                              ShowItem.data.order.cart.user.profile.avatar_path
-                            }
+                            src={ShowItem.order.cart.user.profile.avatar_path}
                             width={50}
                             height={50}
                             quality={80}
@@ -511,13 +540,13 @@ const Order = ({ ShowItem, errorItem }) => {
                         <div className="order-user-content">
                           <h2 className="user-title">
                             {ShowItem &&
-                              ShowItem.data.order.cart.user.profile.full_name}
+                              ShowItem.order.cart.user.profile.full_name}
                           </h2>
                           <p className="meta">
                             <span className="badge bg-light text-dark">
                               {ShowItem &&
-                                ShowItem.data.order.cart.user.profile.level &&
-                                ShowItem.data.order.cart.user.profile.level[
+                                ShowItem.order.cart.user.profile.level &&
+                                ShowItem.order.cart.user.profile.level[
                                   which(language)
                                 ]}
                             </span>
@@ -539,7 +568,7 @@ const Order = ({ ShowItem, errorItem }) => {
                     <Link
                       href={`/u/${
                         ShowItem &&
-                        ShowItem.data.profile_seller.profile.user?.username
+                        ShowItem.profile_seller.profile.user?.username
                       }`}
                     >
                       <a className="order-user-info d-flex flex-center">
@@ -547,7 +576,7 @@ const Order = ({ ShowItem, errorItem }) => {
                           <Image
                             src={
                               ShowItem &&
-                              ShowItem.data.profile_seller.profile.avatar_path
+                              ShowItem.profile_seller.profile.avatar_path
                             }
                             width={50}
                             height={50}
@@ -557,15 +586,13 @@ const Order = ({ ShowItem, errorItem }) => {
                         <div className="order-user-content">
                           <h2 className="user-title">
                             {ShowItem &&
-                              ShowItem.data.profile_seller.profile.full_name}
+                              ShowItem.profile_seller.profile.full_name}
                           </h2>
                           <p className="meta">
                             <span className="badge bg-light text-dark">
                               {ShowItem &&
-                                ShowItem.data.profile_seller.level &&
-                                ShowItem.data.profile_seller.level[
-                                  which(language)
-                                ]}
+                                ShowItem.profile_seller.level &&
+                                ShowItem.profile_seller.level[which(language)]}
                             </span>
                           </p>
                         </div>
@@ -573,7 +600,7 @@ const Order = ({ ShowItem, errorItem }) => {
                     </Link>
                   </div>
 
-                  {ShowItem && ShowItem.data.attachments && (
+                  {ShowItem.attachments && (
                     <>
                       <div style={{ backgroundColor: "#fff", padding: 9 }}>
                         <div className="aside-header">
@@ -583,7 +610,7 @@ const Order = ({ ShowItem, errorItem }) => {
                         </div>
                         <div className="aside-attachments">
                           <Timeline>
-                            {ShowItem.data.attachments.map((e: any, i) => (
+                            {ShowItem.attachments.map((e: any, i) => (
                               <Timeline.Item
                                 key={i}
                                 dot={<>{switchFileTypes(e.mime_type)}</>}
@@ -622,7 +649,7 @@ const Order = ({ ShowItem, errorItem }) => {
                 </div>
                 <div className="col-md-6">
                   <div className="py-2">
-                    {ShowItem && ShowItem.data.is_rating == 1 && (
+                    {ShowItem.is_rating == 1 && (
                       <>
                         {isModalVisibleRatting && (
                           <div className="single-comments-overlay">
@@ -723,9 +750,7 @@ const Order = ({ ShowItem, errorItem }) => {
                                 <button
                                   className="btn butt-primary butt-sm mx-1"
                                   type="submit"
-                                  onClick={() =>
-                                    rattingHandle(ShowItem && ShowItem.data.id)
-                                  }
+                                  onClick={() => rattingHandle(ShowItem.id)}
                                 >
                                   {getAll("Add_comment")}
                                 </button>
@@ -743,7 +768,7 @@ const Order = ({ ShowItem, errorItem }) => {
                       </>
                     )}
                   </div>
-                  {ShowItem && ShowItem.data.is_rating == 1 && (
+                  {ShowItem.is_rating == 1 && (
                     <div
                       className="alert-info p-3 d-flex"
                       style={{
@@ -764,9 +789,7 @@ const Order = ({ ShowItem, errorItem }) => {
                     </div>
                   )}
                   <div className="aside-header">
-                    <h3 className="title">
-                      {ShowItem.data[whichTitle(language)]}
-                    </h3>
+                    <h3 className="title">{ShowItem[whichTitle(language)]}</h3>
                   </div>
                   <div style={{ backgroundColor: "#fff", padding: 9 }}>
                     <div className="aside-header">
@@ -777,15 +800,14 @@ const Order = ({ ShowItem, errorItem }) => {
                         className="timwoork-single-product-detailts"
                         dangerouslySetInnerHTML={{
                           __html:
-                            ShowItem &&
-                            ShowItem?.data?.profile_seller?.products[0] &&
-                            ShowItem?.data?.profile_seller?.products[0]
+                            ShowItem?.profile_seller?.products[0] &&
+                            ShowItem?.profile_seller?.products[0]
                               .buyer_instruct,
                         }}
                       />
                     </div>
                   </div>
-                  {ShowItem && ShowItem.data.conversation && (
+                  {ShowItem.conversation && (
                     <>
                       <div className="aside-header">
                         <h3 className="title">{getAll("Conversation")}</h3>
@@ -804,135 +826,128 @@ const Order = ({ ShowItem, errorItem }) => {
                             overflowY: "scroll",
                           }}
                         >
-                          {ShowItem.data.conversation.messages.map(
-                            (item: any) => (
-                              <motion.li
-                                initial={{ y: -4, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                key={item.id}
-                                className={
-                                  (ShowItem &&
-                                  ShowItem.data.order.cart.user_id ==
-                                    item.user.id
-                                    ? ""
-                                    : "recieved ") +
-                                  "d-flex message-item " +
-                                  switchTypeMessage(item.type)
-                                }
-                                style={{ marginBlock: 6, borderRadius: 6 }}
+                          {ShowItem.conversation.messages.map((item: any) => (
+                            <motion.li
+                              initial={{ y: -4, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              key={item.id}
+                              className={
+                                (ShowItem.order.cart.user_id == item.user.id
+                                  ? ""
+                                  : "recieved ") +
+                                "d-flex message-item " +
+                                switchTypeMessage(item.type)
+                              }
+                              style={{ marginBlock: 6, borderRadius: 6 }}
+                            >
+                              <div
+                                className="item-avatar"
+                                style={{ marginInline: 6 }}
                               >
-                                <div
-                                  className="item-avatar"
-                                  style={{ marginInline: 6 }}
-                                >
-                                  <Image
-                                    src={item.user.profile.avatar_path}
-                                    width={45}
-                                    height={45}
-                                    quality={80}
-                                    className="rounded-pill"
-                                    alt=""
-                                  />
-                                </div>
+                                <Image
+                                  src={item.user.profile.avatar_path}
+                                  width={45}
+                                  height={45}
+                                  quality={80}
+                                  className="rounded-pill"
+                                  alt=""
+                                />
+                              </div>
 
-                                <div className="item-content">
-                                  {item.type == 1 && (
-                                    <span
-                                      className="bg-success text-light d-inline-block"
-                                      style={{
-                                        paddingInline: 9,
-                                        paddingBlock: 3,
-                                        borderRadius: "4px 4px 0 4px",
-                                        fontSize: 12,
-                                        marginBottom: 5,
-                                      }}
-                                    >
-                                      {getAll("Educational")}
-                                    </span>
-                                  )}
-                                  {item.type == 2 && (
-                                    <span
-                                      className="bg-danger text-light d-inline-block"
-                                      style={{
-                                        paddingInline: 9,
-                                        paddingBlock: 3,
-                                        borderRadius: "4px 4px 0 4px",
-                                        fontSize: 12,
-                                        marginBottom: 5,
-                                      }}
-                                    >
-                                      {getAll("Cancellation_reason")}
-                                    </span>
-                                  )}
-                                  <p className="text" style={{ margin: 0 }}>
-                                    {item.user.profile.full_name}
-                                  </p>
-                                  <p
-                                    className="meta"
+                              <div className="item-content">
+                                {item.type == 1 && (
+                                  <span
+                                    className="bg-success text-light d-inline-block"
+                                    style={{
+                                      paddingInline: 9,
+                                      paddingBlock: 3,
+                                      borderRadius: "4px 4px 0 4px",
+                                      fontSize: 12,
+                                      marginBottom: 5,
+                                    }}
+                                  >
+                                    {getAll("Educational")}
+                                  </span>
+                                )}
+                                {item.type == 2 && (
+                                  <span
+                                    className="bg-danger text-light d-inline-block"
+                                    style={{
+                                      paddingInline: 9,
+                                      paddingBlock: 3,
+                                      borderRadius: "4px 4px 0 4px",
+                                      fontSize: 12,
+                                      marginBottom: 5,
+                                    }}
+                                  >
+                                    {getAll("Cancellation_reason")}
+                                  </span>
+                                )}
+                                <p className="text" style={{ margin: 0 }}>
+                                  {item.user.profile.full_name}
+                                </p>
+                                <p
+                                  className="meta"
+                                  style={{
+                                    marginBlock: 4,
+                                    fontSize: 11,
+                                    fontWeight: 200,
+                                  }}
+                                >
+                                  <LastSeen date={item.created_at} />
+                                </p>
+                                {item.attachments && (
+                                  <div
+                                    className="attach-items"
                                     style={{
                                       marginBlock: 4,
-                                      fontSize: 11,
+                                      fontSize: 12,
                                       fontWeight: 200,
                                     }}
                                   >
-                                    <LastSeen date={item.created_at} />
-                                  </p>
-                                  {item.attachments && (
-                                    <div
-                                      className="attach-items"
-                                      style={{
-                                        marginBlock: 4,
-                                        fontSize: 12,
-                                        fontWeight: 200,
-                                      }}
-                                    >
-                                      {item.attachments.map(
-                                        (att: any, i: number) => (
-                                          <div
-                                            className="att-item"
-                                            key={att.id}
+                                    {item.attachments.map(
+                                      (att: any, i: number) => (
+                                        <div className="att-item" key={att.id}>
+                                          <a
+                                            href={att.full_path}
+                                            rel="noreferrer"
+                                            target="_blank"
                                           >
-                                            <a
-                                              href={att.full_path}
-                                              rel="noreferrer"
-                                              target="_blank"
-                                            >
-                                              {switchFileTypes(att.mime_type)}{" "}
-                                              {getAll("Upload_file")}
-                                              {i + 1}#
-                                            </a>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  )}
-                                  <p className="text2" style={{ margin: 0 }}>
-                                    {item.message}
-                                  </p>
-                                  {ShowItem &&
-                                    ShowItem.data.order.cart.user_id ==
-                                      item.user.id && (
-                                      <>
-                                        {item.read_at && (
-                                          <span className="readed is-readed">
-                                            <span className="material-icons material-icons-outlined">
-                                              done_all
-                                            </span>
-                                          </span>
-                                        )}
-                                        {!item.read_at && (
-                                          <span className="readed is-unreaded">
-                                            <span className="material-icons material-icons-outlined">
-                                              done
-                                            </span>
-                                          </span>
-                                        )}
-                                      </>
+                                            {switchFileTypes(att.mime_type)}{" "}
+                                            {getAll("Upload_file")}
+                                            {i + 1}#
+                                          </a>
+                                        </div>
+                                      )
                                     )}
-                                </div>
-                              </motion.li>
-                            )
-                          )}
+                                  </div>
+                                )}
+                                <p className="text2" style={{ margin: 0 }}>
+                                  {item.message}
+                                </p>
+                                {ShowItem &&
+                                  ShowItem.order.cart.user_id ==
+                                    item.user.id && (
+                                    <>
+                                      {item.read_at && (
+                                        <span className="readed is-readed">
+                                          <span className="material-icons material-icons-outlined">
+                                            done_all
+                                          </span>
+                                        </span>
+                                      )}
+                                      {!item.read_at && (
+                                        <span className="readed is-unreaded">
+                                          <span className="material-icons material-icons-outlined">
+                                            done
+                                          </span>
+                                        </span>
+                                      )}
+                                    </>
+                                  )}
+                              </div>
+                            </motion.li>
+                          ))}
                         </ul>
                       </div>
                       <div
@@ -1108,7 +1123,7 @@ const Order = ({ ShowItem, errorItem }) => {
                       </div>
                     </>
                   )}
-                  {ShowItem && ShowItem.data.conversation == null && (
+                  {ShowItem.conversation == null && (
                     <>
                       <div className="conversation-start">
                         <div className="icon">
@@ -1131,9 +1146,7 @@ const Order = ({ ShowItem, errorItem }) => {
                           <button
                             type="button"
                             disabled={createConversationLoading}
-                            onClick={() =>
-                              createConversation(ShowItem && ShowItem.data.id)
-                            }
+                            onClick={() => createConversation(ShowItem.id)}
                             className="btn butt-lg butt-primary"
                           >
                             {getAll("Create_a_conversation")}
@@ -1155,12 +1168,10 @@ const Order = ({ ShowItem, errorItem }) => {
                       <h3 className="title">{getAll("Tools")}</h3>
                     </div>
                     <div className="d-grid gap-2">
-                      {ShowItem && ShowItem.data.status == 0 && (
+                      {ShowItem.status == 0 && (
                         <button
                           disabled={cancelledBuyerLoading}
-                          onClick={() =>
-                            item_cancelled_by_buyer(ShowItem.data.id)
-                          }
+                          onClick={() => item_cancelled_by_buyer(ShowItem.id)}
                           className="btn butt-md butt-red mx-1 flex-center-just"
                         >
                           <span className="material-icons material-icons-outlined">
@@ -1169,21 +1180,21 @@ const Order = ({ ShowItem, errorItem }) => {
                           {getAll("Cancel_your_purchase")}
                         </button>
                       )}
-                      {ShowItem && ShowItem.data.status == 1 && (
+                      {ShowItem.status == 1 && (
                         <span className="badge bg-success">
                           {getAll("You’ve_cancelled_it")}
                         </span>
                       )}
-                      {ShowItem && ShowItem.data.status == 2 && (
+                      {ShowItem.status == 2 && (
                         <span className="badge bg-warning">
                           {getAll("This_order_was")}
                         </span>
                       )}
-                      {ShowItem && ShowItem.data.status == 3 && (
+                      {ShowItem.status == 3 && (
                         <button
                           disabled={requestCancelItemBuyerLoading}
                           onClick={() =>
-                            request_cancel_item_by_buyer(ShowItem.data.id)
+                            request_cancel_item_by_buyer(ShowItem.id)
                           }
                           className="btn butt-md butt-red mx-1 flex-center-just"
                         >
@@ -1193,26 +1204,26 @@ const Order = ({ ShowItem, errorItem }) => {
                           {getAll("Cancellation_request")}{" "}
                         </button>
                       )}
-                      {ShowItem && ShowItem.data.status == 4 && (
+                      {ShowItem.status == 4 && (
                         <>
-                          {ShowItem.data.item_rejected.status == 0 && (
+                          {ShowItem.item_rejected.status == 0 && (
                             <p className="note-text">
                               {getAll("Waiting_for_your")}
                             </p>
                           )}
                         </>
                       )}
-                      {ShowItem && ShowItem.data.status == 5 && (
+                      {ShowItem.status == 5 && (
                         <span className="badge bg-warning">
                           {getAll("Cancelled_by_the_seller")}
                         </span>
                       )}
-                      {ShowItem && ShowItem.data.status == 6 && (
+                      {ShowItem.status == 6 && (
                         <>
                           <button
                             disabled={acceptedDeliveryBuyerLoading}
                             onClick={() =>
-                              accepted_delivery_by_buyer(ShowItem.data.id)
+                              accepted_delivery_by_buyer(ShowItem.id)
                             }
                             className="btn butt-md butt-green mx-1 flex-center-just"
                           >
@@ -1224,7 +1235,7 @@ const Order = ({ ShowItem, errorItem }) => {
                           <button
                             disabled={requestModifiedBuyerLoading}
                             onClick={() =>
-                              request_modified_by_buyer(ShowItem.data.id)
+                              request_modified_by_buyer(ShowItem.id)
                             }
                             className="btn butt-md butt-primary2 mx-1 flex-center-just"
                           >
@@ -1235,12 +1246,12 @@ const Order = ({ ShowItem, errorItem }) => {
                           </button>
                         </>
                       )}
-                      {ShowItem && ShowItem.data.status == 7 && (
+                      {ShowItem.status == 7 && (
                         <span className="badge bg-success text-light">
                           {getAll("Completed")}
                         </span>
                       )}
-                      {ShowItem && ShowItem.data.status == 8 && (
+                      {ShowItem.status == 8 && (
                         <>
                           <p className="note-text">
                             {getAll("The_seller_has")}
@@ -1253,9 +1264,9 @@ const Order = ({ ShowItem, errorItem }) => {
                         </>
                       )}
 
-                      {ShowItem && ShowItem.data.status == 9 && (
+                      {ShowItem.status == 9 && (
                         <>
-                          {ShowItem && ShowItem.data.item_modified.status == 0 && (
+                          {ShowItem.item_modified.status == 0 && (
                             <>
                               <div className="box-note warning">
                                 <p className="text">
@@ -1267,7 +1278,7 @@ const Order = ({ ShowItem, errorItem }) => {
                         </>
                       )}
 
-                      {ShowItem && ShowItem.data.status == 10 && (
+                      {ShowItem.status == 10 && (
                         <div className="box-note warning">
                           <p className="text">{getAll("The_amendment_has")}</p>
                         </div>
@@ -1284,20 +1295,20 @@ const Order = ({ ShowItem, errorItem }) => {
                           <th>{getAll("Operation_number1")}</th>
                         </tr>
                         <tr>
-                          <td>{ShowItem.data.uuid}</td>
+                          <td>{ShowItem.uuid}</td>
                         </tr>
                         <tr>
                           <th>{getAll("Operation_status")}</th>
                         </tr>
                         <tr>
-                          <td>{statusLabel(ShowItem.data.status)}</td>
+                          <td>{statusLabel(ShowItem.status)}</td>
                         </tr>
                         <tr>
                           <th>{getAll("Date_of_operation")}</th>
                         </tr>
                         <tr>
                           <td>
-                            <LastSeen date={ShowItem.data.created_at} />
+                            <LastSeen date={ShowItem.created_at} />
                           </td>
                         </tr>
                         <tr>
@@ -1310,7 +1321,7 @@ const Order = ({ ShowItem, errorItem }) => {
                           <th>{getAll("Order_price")}</th>
                         </tr>
                         <tr>
-                          <td>${ShowItem.data.price_product}</td>
+                          <td>${ShowItem.price_product}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1352,21 +1363,9 @@ export default Order;
 Order.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
-export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token || "";
-  const uriString = `api/my_purchases/${ctx.query.id}`;
-  try {
-    const res = await API.get(uriString, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return { props: { ShowItem: res.data, errorItem: true } };
-  } catch (error) {
-    return { props: { ShowItem: null, errorItem: true } };
-  }
+export async function getServerSideProps({ query }) {
+  return { props: { id: query.id } };
 }
 Order.propTypes = {
-  ShowItem: PropTypes.any,
-  errorItem: PropTypes.bool,
+  id: PropTypes.number,
 };

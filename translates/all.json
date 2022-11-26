@@ -276,7 +276,7 @@
     "ar": "مشترياتي"
   },
   "My_sells": {
-    "en": "My sells",
+    "en": "My sales",
     "fr": "Mes ventes",
     "ar": "مبيعاتي"
   },
@@ -2947,15 +2947,15 @@
     "fr": "Etape suivante",
     "ar": "المرحلة التالية"
   },
-  "Next":{
-    "en":"Next",
-    "ar":"التالي",
-    "fr":"Le prochain"
+  "Next": {
+    "en": "Next",
+    "ar": "التالي",
+    "fr": "Le prochain"
   },
-  "Previous":{
-    "en":"Previous",
-    "ar":"السابق",
-    "fr":"Précédent"
+  "Previous": {
+    "en": "Previous",
+    "ar": "السابق",
+    "fr": "Précédent"
   },
   "Service_price_is": {
     "en": "Service price is required",

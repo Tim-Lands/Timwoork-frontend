@@ -1,21 +1,26 @@
 import Layout from "@/components/Layout/HomeLayout";
 import React, { ReactElement, useEffect } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import cookies from "next-cookies";
 import { Table } from "antd";
-import API from "../../config";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import LastSeen from "@/components/LastSeen";
 import router from "next/router";
-import { useAppSelector } from "@/store/hooks";
-
-function index({ buysList }) {
-  const { getAll, language } = useAppSelector((state) => state.languages);
-  const user = useAppSelector((state) => state.user);
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { PurchasesActions } from "store/purchases/purchasesActions";
+function index() {
+  const dispatch = useAppDispatch();
+  const {
+    languages: { getAll, language },
+    user,
+    purchase: { purchases },
+  } = useAppSelector((state) => state);
 
   const veriedEmail = user.email_verified;
-
+  useEffect(() => {
+    if (purchases.loaded) return;
+    dispatch(PurchasesActions.getPurchasesData());
+  }, [purchases]);
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
@@ -135,7 +140,7 @@ function index({ buysList }) {
       render: (created_at: any) => <LastSeen date={created_at} />,
     },
   ];
-  const data = buysList && buysList.data;
+  const data = purchases.data;
   function onChange() {}
   return (
     <>
@@ -159,6 +164,7 @@ function index({ buysList }) {
                     onChange={onChange}
                     dataSource={data}
                     bordered
+                    loading={purchases.loading}
                     size="small"
                   />
                 </div>
@@ -182,20 +188,6 @@ const whichTitle = (language) => {
       return "title_fr";
   }
 };
-export async function getServerSideProps(ctx) {
-  const token = cookies(ctx).token || "";
-  const uriString = `api/my_purchases`;
-  try {
-    const res = await API.get(uriString, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return { props: { buysList: res.data, errorItem: true } };
-  } catch (error) {
-    return { props: { buysList: null, errorItem: true } };
-  }
-}
 index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
