@@ -15,7 +15,6 @@ import { SalesActions } from "@/store/sales/salesActions";
 import { ChatActions } from "@/store/chat/chatActions";
 
 const User = ({ query }) => {
-  const unused = "";
   const dispatch = useAppDispatch();
   const {
     languages: { getAll, language },

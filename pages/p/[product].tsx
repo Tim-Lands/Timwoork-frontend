@@ -3,7 +3,6 @@ import Layout from "@/components/Layout/HomeLayout";
 import Comments from "../../components/Comments";
 
 import { ReactElement, useState, useEffect } from "react";
-import API from "../../config";
 import Loading from "components/Loading";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
