@@ -2947,6 +2947,16 @@
     "fr": "Etape suivante",
     "ar": "المرحلة التالية"
   },
+  "Next":{
+    "en":"Next",
+    "ar":"التالي",
+    "fr":"Le prochain"
+  },
+  "Previous":{
+    "en":"Previous",
+    "ar":"السابق",
+    "fr":"Précédent"
+  },
   "Service_price_is": {
     "en": "Service price is required",
     "fr": "Le prix du service est nécessaire",
