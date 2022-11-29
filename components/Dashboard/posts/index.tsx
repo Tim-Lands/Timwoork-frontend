@@ -9,16 +9,16 @@ import DisactiveProductCause from "@/components/DisactiveProductCause";
 import { generatecolumns } from "./PostsService";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 function index({
   postsList = { last_page: 1, per_page: 10, data: [] },
-  status,
   onSearchSubmit,
   onPageChange,
   isLoading,
   postsType
 }: any): ReactElement {
-  console.log('posts type: ', postsType)
   const { getAll } = useAppSelector((state) => state.languages);
   const [pageNumber, setPageNumber] = useState(1);
   const [cause, setCause] = useState("");
@@ -30,14 +30,18 @@ function index({
   const [selectedUser, setSelectedUser] = useState("");
 
   const dispatch = useAppDispatch()
+  console.log('status is ', status, '####')
   const columns: any = generatecolumns(
     {
-      status,
+      status:postsType,
       callbacks: {
         activateProduct,
         onRejectClick,
         onDisactiveClick,
         onSendEmailClick,
+        archieveHandle,
+        forceDelete,
+        restoreArchieved
       },
     },
     getAll
@@ -46,6 +50,117 @@ function index({
   function onSendEmailClick(post) {
     setSelectedUser(post.profile_seller.profile.user);
     setIsReplyModalVisible(true);
+  }
+
+   async function archieveHandle(id,getAll) {  
+    const MySwal = withReactContent(Swal);
+    const swalWithBootstrapButtons = MySwal.mixin({
+      customClass: {
+        confirmButton: "btn butt-red butt-sm me-1",
+        cancelButton: "btn butt-green butt-sm",
+      },
+      buttonsStyling: false,
+    });
+  
+    swalWithBootstrapButtons
+      .fire({
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sur"),
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: getAll("Yes_I_want"),
+        cancelButtonText: "لا",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          try{
+           dispatch(ProductsActions.archieveOne({id, revalidatedType:postsType}))
+          } catch (error) {
+            console.log("err");
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            getAll("Cancelled_2"),
+            getAll("Cancelled"),
+            getAll("Error")
+          );
+        }
+      });
+  }
+  
+  async function forceDelete(id, getAll) {
+    const MySwal = withReactContent(Swal);  
+    const swalWithBootstrapButtons = MySwal.mixin({
+      customClass: {
+        confirmButton: "btn butt-red butt-sm me-1",
+        cancelButton: "btn butt-green butt-sm",
+      },
+      buttonsStyling: false,
+    });
+  
+    swalWithBootstrapButtons
+      .fire({
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sur1"),
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: getAll("Yes_I_ant"),
+        cancelButtonText: "لا",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          try {
+            dispatch(ProductsActions.deleteProduct({id}))
+          } catch (error) {
+            console.log("err");
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            getAll("Cancelled_2"),
+            getAll("Cancelled"),
+            getAll("Error")
+          );
+        }
+      });
+  }
+  
+  async function restoreArchieved(id, getAll) {
+    const MySwal = withReactContent(Swal);  
+    const swalWithBootstrapButtons = MySwal.mixin({
+      customClass: {
+        confirmButton: "btn butt-red butt-sm me-1",
+        cancelButton: "btn butt-green butt-sm",
+      },
+      buttonsStyling: false,
+    });
+  
+    swalWithBootstrapButtons
+      .fire({
+        title: getAll("Are_you_sure1"),
+        text: getAll("Are_you_sur1"),
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonText: getAll("Yes_I_ant_2"),
+        cancelButtonText: "لا",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            dispatch(ProductsActions.unarchieveOne({id, revalidatedType:postsType}))
+          } catch (error) {
+            console.log("err");
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            getAll("Cancelled_2"),
+            getAll("Cancelled"),
+            getAll("Error")
+          );
+        }
+      });
   }
 
   async function activateProduct(id: any) {
