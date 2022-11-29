@@ -120,20 +120,18 @@ export const chatSlice = createSlice({
     builder.addCase(
       sendMessage.fulfilled,
       (state, action: { payload: any }) => {
-        const newAll = state.all.data.map((item) => {
+        state.all.data.forEach((item, index) => {
           if (item.id == action.payload.conversation_id) {
-            return {
+            state.all.data.splice(index, 1);
+            state.all.data.unshift({
               ...item,
               latest_message: {
                 message: action.payload.message,
                 updated_at: new Date(),
               },
-            };
-          } else {
-            return item;
+            });
           }
         });
-        state.all.data = newAll;
         if (action.payload.conversation_id != state.one.id) return;
         state.one.data = [...state.one.data, action.payload];
       }
