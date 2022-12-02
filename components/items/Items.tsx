@@ -2,11 +2,8 @@ import { useAppSelector } from "@/store/hooks";
 import { Table } from "antd";
 import Link from "next/link";
 import LastSeen from "../LastSeen";
-export enum EItemType {
-    SALES = 'sales',
-    PURCHASES = 'purchases',
-    
-}
+import { EItemType } from "./EItemType";
+
 const Items = ({itemType, items, onChange}:{itemType:EItemType, items:any, onChange:Function}) => {
 
     const {

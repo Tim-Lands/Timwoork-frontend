@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { PurchasesActions } from "store/purchases/purchasesActions";
-import Items, { EItemType } from "@/components/items/Items";
+import Items from "@/components/items/Items";
+import { EItemType } from "@/components/items/EItemType";
 function index() {
   const dispatch = useAppDispatch();
   const {

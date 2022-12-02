@@ -4,7 +4,8 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { SalesActions } from "store/sales/salesActions";
-import Items, { EItemType } from "@/components/items/Items";
+import Items from "@/components/items/Items";
+import { EItemType } from "@/components/items/EItemType";
 function index() {
   const dispatch = useAppDispatch();
   const {
