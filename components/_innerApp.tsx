@@ -106,7 +106,9 @@ const App = ({ innerApp }) => {
       await dispatch(ChatActions.unreadMessagesCount());
       const effect = new Audio("/effect.mp3");
       effect.play();
-      dispatch(ChatActions.getChatsData({ pageNumber: chats.page_number }));
+      await dispatch(
+        ChatActions.getChatsData({ pageNumber: chats.page_number })
+      );
       if (singleChat.id == data.message.conversation_id) {
         dispatch(
           ChatActions.getSingleChat({ id: data.message.conversation_id })
@@ -160,6 +162,7 @@ const App = ({ innerApp }) => {
     pusher.bindNotifications(async (data) => {
       const effect = new Audio("/bell.mp3");
       effect.play();
+      dispatch(NotificationsActions.setPage(1));
       await dispatch(
         NotificationsActions.getNotificationsData({
           pageNumber: notifications.pageNumber,
