@@ -6,7 +6,6 @@ import router from "next/router";
 import { PurchasesActions } from "store/purchases/purchasesActions";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import Item from "@/components/items/ShowItem";
-import { EItemType } from "@/components/items/EItemType";
 
 const Order = ({ id }) => {
   const dispatch = useAppDispatch();
@@ -35,7 +34,7 @@ const Order = ({ id }) => {
 
  
   return (
-    <Item id = {id} type={EItemType.PURCHASES} ShowItem={ShowItem}/>
+    <Item id = {id} type={'purchases'} ShowItem={ShowItem}/>
   )
 };
 

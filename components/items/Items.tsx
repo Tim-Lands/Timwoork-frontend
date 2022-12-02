@@ -2,9 +2,8 @@ import { useAppSelector } from "@/store/hooks";
 import { Table } from "antd";
 import Link from "next/link";
 import LastSeen from "../LastSeen";
-import { EItemType } from "./EItemType";
 
-const Items = ({itemType, items, onChange}:{itemType:EItemType, items:any, onChange:Function}) => {
+const Items = ({itemType, items, onChange}:{itemType:string, items:any, onChange:Function}) => {
 
     const {
         languages: { getAll },
@@ -93,7 +92,7 @@ const Items = ({itemType, items, onChange}:{itemType:EItemType, items:any, onCha
             console.log(e)
             return (
               <Link href={
-                itemType == EItemType.SALES
+                itemType == 'sales'
                 ?`/mysales/${e.id}`
                 :`/mypurchases/${e.id}`
                 }>
@@ -108,11 +107,11 @@ const Items = ({itemType, items, onChange}:{itemType:EItemType, items:any, onCha
           render: (status: any) => <>{status}$</>,
         },
         {
-          title: itemType == EItemType.SALES? getAll("Buyer"):getAll('Seller'),
+          title: itemType == 'sales' ? getAll("Buyer"):getAll('Seller'),
           dataIndex: "",
           render: (e: any) => (
             <p className="m-0 is-hover-primary">
-              {itemType == EItemType.SALES
+              {itemType == 'sales'
               ?<Link href={`/u/${e.order.cart.user.username}`}>
                 <a className="flex-center" style={{ color: "gray" }}>
                   <span className="mx-1">

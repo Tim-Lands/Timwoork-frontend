@@ -8,9 +8,8 @@ import router from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useFileUpload } from "react-use-file-upload/dist/lib/useFileUpload";
 import { PurchasesActions } from "@/store/purchases/purchasesActions";
-import { EItemType } from "./EItemType";
 
-const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:EItemType }) => {
+const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:string }) => {
   const dispatch = useAppDispatch();
   const {
     languages: { getAll, language },
@@ -809,7 +808,7 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:EItem
             <h3 className="title">{getAll("Tools")}</h3>
           </div>
           {
-          type==EItemType.PURCHASES?<PurchasesButton status = {ShowItem?.status} id={id} />
+          type=='purchases'?<PurchasesButton status = {ShowItem?.status} id={id} />
           :<>
           <SalesModals  />
           <SalesButton status={ShowItem.status} id={id}/>

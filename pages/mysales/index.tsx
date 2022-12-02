@@ -5,7 +5,6 @@ import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { SalesActions } from "store/sales/salesActions";
 import Items from "@/components/items/Items";
-import { EItemType } from "@/components/items/EItemType";
 function index() {
   const dispatch = useAppDispatch();
   const {
@@ -35,7 +34,7 @@ function index() {
         ogDescription={getAll("My_sells")}
       />
       {veriedEmail && (
-        <Items onChange={onChange} items = {sales} itemType = {EItemType.SALES}/>
+        <Items onChange={onChange} items = {sales} itemType = {'sales'}/>
       )}
     </>
   );

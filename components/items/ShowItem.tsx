@@ -10,7 +10,6 @@ import { SalesActions } from "@/store/sales/salesActions";
 import { ChatActions } from "@/store/chat/chatActions";
 import Loading from "../Loading";
 import ButtonAction from "./ButtonAction";
-import { EItemType } from "./EItemType";
 
 
 const messageType = {
@@ -84,7 +83,7 @@ const Item = ({
   ShowItem,
 }: {
   id: number;
-  type: EItemType;
+  type: string;
   ShowItem: any;
 }) => {
   const {
@@ -114,7 +113,7 @@ const Item = ({
 
   const createConversation = async (id: any) => {
     setCreateConversationLoading(true);
-    const receiver_id = type==EItemType.PURCHASES
+    const receiver_id = type=='purchases'
     ?ShowItem.profile_seller?.profile.user?.id
     :ShowItem?.order?.cart?.user.id
     try {
@@ -330,7 +329,7 @@ const Item = ({
                       </div>
                       <Link
                         href={`/u/${
-                          type == EItemType.SALES
+                          type == 'sales'
                             ? ShowItem.order.cart.user.username
                             : ShowItem.profile_seller.profile.user?.username
                         }`}
