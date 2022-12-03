@@ -1,22 +1,16 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Progress, Timeline } from "antd";
+import {Timeline } from "antd";
 import { Alert } from "../Alert/Alert";
-import { motion } from "framer-motion";
 import LastSeen from "../LastSeen";
-import { useFileUpload } from "react-use-file-upload/dist/lib/useFileUpload";
 import { SalesActions } from "@/store/sales/salesActions";
 import { ChatActions } from "@/store/chat/chatActions";
 import Loading from "../Loading";
 import ButtonAction from "./ButtonAction";
+import SingleConversation from "../Conversations/Conversation";
 
 
-const messageType = {
-  0: "",
-  1: "instruct",
-  2: "cause",
-};
 
 const fileTypes = {
   png: { color: "orange", icon: "image" },
@@ -35,11 +29,7 @@ const fileTypes = {
   mpg: { color: "yellowgreen", icon: "smart_display" },
   pdf: { color: "maroon", icon: "picture_as_pdf" },
 };
-const switchTypeMessage = (type: number) => {
-  return Object.prototype.hasOwnProperty.call(messageType, type)
-    ? messageType[type]
-    : "";
-};
+
 
 const switchFileTypes = (type: any) => {
   return Object.prototype.hasOwnProperty.call(fileTypes, type) ? (
@@ -54,28 +44,7 @@ const switchFileTypes = (type: any) => {
   );
 };
 
-function linkify(text, id) {
-  const urlRegex =
-    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-  const before = text.replace(urlRegex, function (url) {
-    const start = url.startsWith("http") || url.startsWith("https");
-    let newUrl = url;
-    newUrl = !start ? "https://" + url : url;
-    if (newUrl.startsWith("https://timwoork")) {
-      return '<a href="' + newUrl + '" target="_blank">' + url + "</a>";
-    } else {
-      return (
-        '<a href="/redirect/f?url=' +
-        newUrl +
-        `&*conversations/${id}` +
-        '" target="_blank">' +
-        url +
-        "</a>"
-      );
-    }
-  });
-  return `<p style="word-break: break-word;">${before}</p>`;
-}
+
 
 const Item = ({
   id,
@@ -87,30 +56,16 @@ const Item = ({
   ShowItem: any;
 }) => {
   const {
-    languages: { getAll, language },
+    languages: { getAll},
   } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const inputRefMsg: any = useRef();
   const veriedEmail = user.email_verified;
-  const myRef: any = useRef();
-  const [sendMessageLoading, setSendMessageLoading] = useState(false);
-  const [messageType, setMessageType] = useState(0);
-  const [messageProgress, setMessageProgress] = useState(0);
-  const [messageErrors, setMessageErrors]: any = useState({});
+
   const [message, setMessage] = useState("");
-  const messageRef: any = useRef();
   const [createConversationLoading, setCreateConversationLoading] =
     useState(false);
-  const {
-    files: filesMsg,
-    fileNames: fileNamesMsg,
-    totalSize: totalSizeMsg,
-    setFiles: setFilesMsg,
-    removeFile: removeFileMsg,
-    clearAllFiles: clearAllFilesMsg,
-  } = useFileUpload();
-
+ 
   const createConversation = async (id: any) => {
     setCreateConversationLoading(true);
     const receiver_id = type=='purchases'
@@ -133,49 +88,6 @@ const Item = ({
     }
   };
 
-  const sendMessageHandle = async (e: any) => {
-    e.preventDefault();
-    setSendMessageLoading(true);
-    setMessageErrors({});
-    try {
-      const id = ShowItem?.conversation?.id;
-      const conversation: any = new FormData();
-      filesMsg.map((file: any) => conversation.append("attachments[]", file));
-      conversation.append("type", messageType);
-      conversation.append("message", message);
-
-      const res = await dispatch(
-        ChatActions.sendMessage({
-          id,
-          body: conversation,
-          headers: {
-            headers: {
-              "X-LOCALIZATION": language,
-            },
-            onUploadProgress: (uploadEvent) => {
-              if (filesMsg.length !== 0)
-                setMessageProgress(
-                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100)
-                );
-            },
-          },
-        })
-      ).unwrap();
-
-      ShowItem?.conversation?.messages?.push(res);
-      setSendMessageLoading(false);
-      myRef.current.scrollTo(0, myRef.current.scrollHeight + 80);
-      setMessage("");
-      messageRef.current.focus();
-      setMessageProgress(0);
-      clearAllFilesMsg();
-    } catch (error) {
-      setSendMessageLoading(false);
-      if (error.errors) {
-        setMessageErrors(error.errors);
-      }
-    }
-  };
 
   const statusLabel = (status: any) => {
     switch (status) {
@@ -446,333 +358,7 @@ const Item = ({
                     </div>
                     {ShowItem && ShowItem.conversation && (
                       <>
-                        <div className="aside-header">
-                          <h3 className="title">{getAll("Conversation")}</h3>
-                        </div>
-                        <div className="conversations-list">
-                          <ul
-                            ref={myRef}
-                            className="conversations-items"
-                            style={{
-                              margin: 0,
-                              padding: 0,
-                              listStyle: "none",
-                              height: 350,
-                              overflow: "hidden",
-                              overflowY: "scroll",
-                            }}
-                          >
-                            {ShowItem.conversation.messages.map((item: any) => {
-                              return (
-                                <motion.li
-                                  initial={{ y: -4, opacity: 0 }}
-                                  animate={{ y: 0, opacity: 1 }}
-                                  key={item.id}
-                                  className={
-                                    (ShowItem && user?.id === item.user?.id
-                                      ? ""
-                                      : "recieved ") +
-                                    "d-flex message-item align-item-center" +
-                                    switchTypeMessage(item.type)
-                                  }
-                                  style={{
-                                    marginBlock: 6,
-                                    borderRadius: 6,
-                                  }}
-                                >
-                                  <div
-                                    className="item-avatar"
-                                    style={{ marginInline: 6 }}
-                                  >
-                                    <img
-                                      src={item.user.profile.avatar_path}
-                                      width={45}
-                                      height={45}
-                                      className="rounded-pill"
-                                      alt=""
-                                    />
-                                  </div>
-
-                                  <div className="item-content">
-                                    {item.type == 1 && (
-                                      <span
-                                        className="bg-success text-light d-inline-block"
-                                        style={{
-                                          paddingInline: 9,
-                                          paddingBlock: 3,
-                                          borderRadius: "4px 4px 0 4px",
-                                          fontSize: 12,
-                                          marginBottom: 5,
-                                        }}
-                                      >
-                                        {getAll("Instructions")}
-                                      </span>
-                                    )}
-                                    {item.type == 2 && (
-                                      <span
-                                        className="bg-danger text-light d-inline-block"
-                                        style={{
-                                          paddingInline: 9,
-                                          paddingBlock: 3,
-                                          borderRadius: "4px 4px 0 4px",
-                                          fontSize: 12,
-                                          marginBottom: 5,
-                                        }}
-                                      >
-                                        {getAll("Rejection_reason")}
-                                      </span>
-                                    )}
-                                    <p className="text" style={{ margin: 0 }}>
-                                      {item.user.profile.full_name}
-                                    </p>
-                                    <p
-                                      className="meta"
-                                      style={{
-                                        marginBlock: 4,
-                                        fontSize: 11,
-                                        fontWeight: 200,
-                                      }}
-                                    >
-                                      <LastSeen date={item.created_at} />
-                                    </p>
-                                    {item.attachments && (
-                                      <div
-                                        className="attach-items"
-                                        style={{
-                                          marginBlock: 4,
-                                          fontSize: 12,
-                                          fontWeight: 200,
-                                        }}
-                                      >
-                                        {item.attachments.map(
-                                          (att: any, i: number) => (
-                                            <div
-                                              className="att-item"
-                                              key={att.id}
-                                            >
-                                              <a
-                                                href={att.full_path}
-                                                rel="noreferrer"
-                                                target="_blank"
-                                              >
-                                                {switchFileTypes(att.mime_type)}{" "}
-                                                {getAll("Upload_file")} {i + 1}#
-                                              </a>
-                                            </div>
-                                          )
-                                        )}
-                                      </div>
-                                    )}
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html: linkify(item.message, id),
-                                      }}
-                                    />
-                                    {ShowItem &&
-                                      ShowItem.profile_seller?.id ==
-                                        item.user.id && (
-                                        <>
-                                          {item.read_at && (
-                                            <span className="readed is-readed">
-                                              <span className="material-icons material-icons-outlined">
-                                                done_all
-                                              </span>
-                                            </span>
-                                          )}
-                                          {!item.read_at && (
-                                            <span className="readed is-unreaded">
-                                              <span className="material-icons material-icons-outlined">
-                                                done
-                                              </span>
-                                            </span>
-                                          )}
-                                        </>
-                                      )}
-                                  </div>
-                                </motion.li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                        <div
-                          className="conversations-form"
-                          style={{ backgroundColor: "#fff", padding: 9 }}
-                        >
-                          <form onSubmit={sendMessageHandle}>
-                            <div className="timlands-form">
-                              <label
-                                htmlFor="message_type"
-                                className="form-text"
-                              >
-                                {getAll("Choose_message_type")}
-                              </label>
-                              <div className="py-1 d-flex">
-                                <select
-                                  className={"timlands-inputs me-auto"}
-                                  disabled={sendMessageLoading}
-                                  name="message_type"
-                                  id="message_type"
-                                  onChange={(e: any) =>
-                                    setMessageType(e.target.value)
-                                  }
-                                >
-                                  <option value="0">
-                                    {getAll("Plain_text")}
-                                  </option>
-                                  <option value="1">
-                                    {getAll("Instructions")}
-                                  </option>
-                                  {getAll("Rejection_reason")}
-                                </select>
-                                <button
-                                  type="button"
-                                  style={{ width: "65%" }}
-                                  disabled={sendMessageLoading}
-                                  className="btn butt-sm butt-primary2-out mx-1 flex-center-just"
-                                  onClick={() => inputRefMsg.current.click()}
-                                >
-                                  <span className="material-icons material-icons-outlined">
-                                    attach_file
-                                  </span>{" "}
-                                  {getAll("Attach_file")}
-                                </button>
-                              </div>
-                              <div className="send-attachments">
-                                {messageProgress !== 0 && (
-                                  <Progress percent={messageProgress} />
-                                )}
-                                <div className="form-conainer">
-                                  <ul
-                                    className="attachment-list-items"
-                                    style={{
-                                      listStyle: "none",
-                                      paddingInline: 0,
-                                      paddingTop: 6,
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    {fileNamesMsg.map((name) => (
-                                      <motion.li
-                                        style={{
-                                          overflow: "hidden",
-                                          position: "relative",
-                                          paddingBlock: 3,
-                                          paddingInline: 9,
-                                          fontSize: 13,
-                                        }}
-                                        initial={{ y: -5, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        key={name}
-                                      >
-                                        <span className="name-file">
-                                          {name}
-                                        </span>
-                                        <span
-                                          className="remove-icon d-flex"
-                                          style={{
-                                            position: "absolute",
-                                            left: 10,
-                                            fontSize: 13,
-                                            top: 7,
-                                            color: "red",
-                                            cursor: "pointer",
-                                          }}
-                                          onClick={() => removeFileMsg(name)}
-                                        >
-                                          <i className="fa fa-times"></i>
-                                        </span>
-                                      </motion.li>
-                                    ))}
-                                  </ul>
-                                  {filesMsg.length > 0 && (
-                                    <ul
-                                      className="files-proprieties"
-                                      style={{
-                                        listStyle: "none",
-                                        padding: 0,
-                                        overflow: "hidden",
-                                      }}
-                                    >
-                                      <li>
-                                        <strong>
-                                          {getAll("Overall_size")}
-                                        </strong>
-                                        {totalSizeMsg}
-                                      </li>
-                                    </ul>
-                                  )}
-                                </div>
-                                <input
-                                  ref={inputRefMsg}
-                                  type="file"
-                                  multiple
-                                  style={{ display: "none" }}
-                                  onChange={(e: any) => setFilesMsg(e)}
-                                />
-                              </div>
-                              <div
-                                className="relative-form d-flex"
-                                style={{
-                                  position: "relative",
-                                  minHeight: 60,
-                                }}
-                              >
-                                <input
-                                  id="input-buyer_instruct"
-                                  name="buyer_instruct"
-                                  onKeyUp={() => {
-                                    setMessageErrors({});
-                                  }}
-                                  placeholder={getAll("Message_text")}
-                                  className={
-                                    "timlands-inputs " +
-                                    (messageErrors &&
-                                      messageErrors.message &&
-                                      " has-error")
-                                  }
-                                  disabled={sendMessageLoading}
-                                  autoComplete="off"
-                                  value={message}
-                                  ref={messageRef}
-                                  onChange={(e: any) =>
-                                    setMessage(e.target.value)
-                                  }
-                                  style={{
-                                    height: 60,
-                                    width: "calc(100% - 110px)",
-                                    borderRadius: "0 5px 5px 0",
-                                  }}
-                                />
-                                <button
-                                  style={{
-                                    width: 110,
-                                    height: 60,
-                                    borderRadius: "5px 0 0 5px",
-                                  }}
-                                  disabled={sendMessageLoading}
-                                  className="btn butt-sm butt-primary flex-center-just"
-                                  type="submit"
-                                >
-                                  <span className="material-icons material-icons-outlined">
-                                    send
-                                  </span>
-                                  {getAll("Send")}
-                                </button>
-                              </div>
-                              {messageErrors && messageErrors.message && (
-                                <motion.div
-                                  initial={{ y: -6, opacity: 0 }}
-                                  animate={{ y: 0, opacity: 1 }}
-                                  className="timlands-form-note form-note-error"
-                                >
-                                  <p className="text">
-                                    {messageErrors.message[0]}
-                                  </p>
-                                </motion.div>
-                              )}
-                            </div>
-                          </form>
-                        </div>
+                       <SingleConversation id = {ShowItem.conversation.id}/>
                       </>
                     )}
                     {ShowItem && ShowItem.conversation == null && (
