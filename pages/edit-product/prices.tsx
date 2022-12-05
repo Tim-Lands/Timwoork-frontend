@@ -11,12 +11,14 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import Navbar from "components/productModify/navbar";
 
 import PropTypes from "prop-types";
+import NavigationButtons from "@/components/NavigationButtons";
 
 function Prices({ query }) {
   const dispatch = useAppDispatch();
   const id = query.id;
   const getProduct = useAppSelector((state) => state.myProducts.product);
   const stepsView = useRef(null);
+  const ref = useRef(null);
   const { getAll } = useAppSelector((state) => state.languages);
   useEffect(() => {
     if (!id) return;
@@ -41,6 +43,31 @@ function Prices({ query }) {
       return;
     }
   }, [user]);
+
+  const handleSubmit = async () => {
+    const values = ref.current.values
+    setValidationsErrors({});
+    try {
+      await dispatch(
+        MyProductsActions.modifySteps({
+          url: `api/product/${id}/product-step-two`,
+          id,
+          body: values,
+        })
+      ).unwrap();
+      // Authentication was successful.
+
+      message.success(getAll("The_update_has"));
+      router.push(
+        `/edit-product/description?id=${getProduct?.id}`
+      );
+    } catch (error: any) {
+      if (error.errors) {
+        setValidationsErrors(error.errors);
+      }
+    }
+  };
+
   return (
     <>
       <MetaTags
@@ -53,6 +80,7 @@ function Prices({ query }) {
           <div className="row justify-content-md-center my-3">
             <div className="col-md-7 pt-3">
               <Formik
+                innerRef={ref}
                 isInitialValid={true}
                 initialValues={{
                   price: getProduct.price,
@@ -60,28 +88,7 @@ function Prices({ query }) {
                   developments: getProduct.developments || null,
                 }}
                 enableReinitialize={true}
-                onSubmit={async (values) => {
-                  setValidationsErrors({});
-                  try {
-                    await dispatch(
-                      MyProductsActions.modifySteps({
-                        url: `api/product/${id}/product-step-two`,
-                        id,
-                        body: values,
-                      })
-                    ).unwrap();
-                    // Authentication was successful.
-
-                    message.success(getAll("The_update_has"));
-                    router.push(
-                      `/edit-product/description?id=${getProduct?.id}`
-                    );
-                  } catch (error: any) {
-                    if (error.errors) {
-                      setValidationsErrors(error.errors);
-                    }
-                  }
-                }}
+                onSubmit={handleSubmit}
               >
                 {({ errors, touched, isSubmitting, values }) => (
                   <Form>
@@ -187,19 +194,20 @@ function Prices({ query }) {
                                   {getAll("Choose_a_suitable")}
                                 </p>
                               </motion.div>
-                              {validationsErrors && validationsErrors.duration && (
-                                <div style={{ overflow: "hidden" }}>
-                                  <motion.div
-                                    initial={{ y: -70, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    className="timlands-form-note form-note-error"
-                                  >
-                                    <p className="text">
-                                      {validationsErrors.duration[0]}
-                                    </p>
-                                  </motion.div>
-                                </div>
-                              )}
+                              {validationsErrors &&
+                                validationsErrors.duration && (
+                                  <div style={{ overflow: "hidden" }}>
+                                    <motion.div
+                                      initial={{ y: -70, opacity: 0 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      className="timlands-form-note form-note-error"
+                                    >
+                                      <p className="text">
+                                        {validationsErrors.duration[0]}
+                                      </p>
+                                    </motion.div>
+                                  </div>
+                                )}
                             </div>
                           </div>
                           <div className="col-md-12">
@@ -471,34 +479,11 @@ function Prices({ query }) {
                           </div>
                           <div className="col-md-12">
                             <div className="py-4 d-flex">
-                              <button
-                                onClick={() => router.back()}
-                                type="button"
-                                className="btn flex-center butt-primary2-out me-auto butt-xs"
-                              >
-                                <span className="material-icons-outlined">
-                                  chevron_right
-                                </span>
-                                <span className="text">
-                                  {" "}
-                                  {getAll("Previous_step")}
-                                </span>
-                                <div
-                                  className="spinner-border spinner-border-sm text-white"
-                                  role="status"
-                                ></div>
-                              </button>
-                              <button
-                                type="submit"
-                                disabled={
-                                  (!getProduct ? true : false) || isSubmitting
-                                }
-                                className="btn flex-center butt-green ml-auto butt-sm"
-                              >
-                                <span className="text">
-                                  {getAll("Save_edits")}
-                                </span>
-                              </button>
+                              <NavigationButtons
+                                onNextClick={handleSubmit}
+                                nextTitle={getAll("Next_step")}
+                                backTitle={getAll("Previous_step")}
+                              />
                             </div>
                           </div>
                         </div>

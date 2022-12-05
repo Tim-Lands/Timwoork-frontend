@@ -15,11 +15,14 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
+import NavigationButtons from "@/components/NavigationButtons";
 let testTime;
 function Prices({ query }) {
   const dispatch = useAppDispatch();
   const getProduct = useAppSelector((state) => state.myProducts.product);
   const id = query.id;
+  const ref = useRef(null);
+
   useEffect(() => {
     if (!id) return;
     if (getProduct.loaded && getProduct.id == id) return;
@@ -45,7 +48,7 @@ function Prices({ query }) {
   ]);
   const {
     user,
-    languages: { language, getAll },
+    languages: { getAll },
   } = useAppSelector((state) => state);
 
   const [isShowenModal, setIsShowenModal] = useState(false);
@@ -97,6 +100,44 @@ function Prices({ query }) {
     setCheckedLangs({ ...checkedLangs, [res.data.data]: false });
     setUserLang(res.data.data);
   };
+
+  const handleSubmit = async () => {
+    const values = ref.current.values
+    console.log(ref.current.values)
+    setValidationsErrors({});
+    try {
+      values.developments.forEach((val, indx) => {
+        if (!isSubtitle[indx]["ar"] && subtitles[indx]["ar"])
+          val.title = subtitles["ar"];
+        if (!isSubtitle[indx]["en"] && subtitles[indx]["en"])
+          val.title = subtitles["en"];
+        if (!isSubtitle[indx]["fr"] && subtitles[indx]["fr"])
+          val.title = subtitles["fr"];
+      });
+
+      await dispatch(
+        MyProductsActions.modifySteps({
+          url: `api/product/${id}/product-step-two`,
+          body: {
+            ...values,
+          },
+          id,
+        })
+      ).unwrap();
+      // Authentication was successful.
+      message.success(getAll("The_update_has"));
+      router.push({
+        pathname: "/add-new/description",
+        query: {
+          id: id, // pass the id
+        },
+      });
+    } catch (error: any) {
+      if (error.errors) {
+        setValidationsErrors(error.errors);
+      }
+    }
+  }
   return (
     <>
       <MetaTags
@@ -129,6 +170,7 @@ function Prices({ query }) {
               )}
 
               <Formik
+                innerRef={ref}
                 isInitialValid={true}
                 initialValues={{
                   price: getProduct.price,
@@ -136,43 +178,7 @@ function Prices({ query }) {
                   developments: getProduct.developments,
                 }}
                 enableReinitialize={true}
-                onSubmit={async (values) => {
-                  setValidationsErrors({});
-                  try {
-                    values.developments.forEach((val, indx) => {
-                      if (!isSubtitle[indx]["ar"] && subtitles[indx]["ar"])
-                        val.title = subtitles["ar"];
-                      if (!isSubtitle[indx]["en"] && subtitles[indx]["en"])
-                        val.title = subtitles["en"];
-                      if (!isSubtitle[indx]["fr"] && subtitles[indx]["fr"])
-                        val.title = subtitles["fr"];
-                    });
-
-                    await dispatch(
-                      MyProductsActions.modifySteps({
-                        url: `api/product/${id}/product-step-two`,
-                        body: {
-                          ...values,
-                          price: getProduct.price,
-                          duration: getProduct.duration,
-                        },
-                        id,
-                      })
-                    ).unwrap();
-                    // Authentication was successful.
-                    message.success(getAll("The_update_has"));
-                    router.push({
-                      pathname: "/add-new/description",
-                      query: {
-                        id: id, // pass the id
-                      },
-                    });
-                  } catch (error: any) {
-                    if (error.errors) {
-                      setValidationsErrors(error.errors);
-                    }
-                  }
-                }}
+                onSubmit={handleSubmit}
               >
                 {({ errors, touched, isSubmitting, values }) => (
                   <Form>
@@ -592,41 +598,7 @@ function Prices({ query }) {
                           </div>
                           <div className="col-md-12">
                             <div className="py-4 d-flex">
-                              <button
-                                onClick={() => router.back()}
-                                type="button"
-                                className="btn flex-center butt-primary2-out me-auto butt-md"
-                              >
-                                {language === "ar" ? (
-                                  <span className="material-icons-outlined">
-                                    chevron_right
-                                  </span>
-                                ) : (
-                                  <span className="material-icons-outlined">
-                                    chevron_left
-                                  </span>
-                                )}
-                                <span className="text">
-                                  {getAll("Previous_step")}
-                                </span>
-                              </button>
-                              <button
-                                type="submit"
-                                className="btn flex-center butt-green ml-auto butt-sm"
-                              >
-                                <span className="text">
-                                  {getAll("Next_step")}
-                                </span>
-                                {language === "ar" ? (
-                                  <span className="material-icons-outlined">
-                                    chevron_left
-                                  </span>
-                                ) : (
-                                  <span className="material-icons-outlined">
-                                    chevron_right
-                                  </span>
-                                )}
-                              </button>
+                              <NavigationButtons onNextClick={handleSubmit} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
                             </div>
                           </div>
                         </div>

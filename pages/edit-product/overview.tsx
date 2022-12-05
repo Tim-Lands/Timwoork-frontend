@@ -13,6 +13,7 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
+import NavigationButtons from "@/components/NavigationButtons";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -292,16 +293,8 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
                           <span className="me-auto"></span>
-                          <button
-                            type="submit"
-                            disabled={
-                              (!getProduct ? true : false) ||
-                              formik.isSubmitting
-                            }
-                            className="btn flex-center butt-green ml-auto butt-sm"
-                          >
-                            <span className="text">{getAll("Save_edits")}</span>
-                          </button>
+                          <NavigationButtons isBackVisible={false} onNextClick={formik.handleSubmit} nextTitle={getAll('Next_step')}/>
+                          
                         </div>
                       </div>
                     </div>

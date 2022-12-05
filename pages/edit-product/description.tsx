@@ -12,6 +12,7 @@ import API from "../../config";
 import { ReactElement, useEffect, useState, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import NavigationButtons from "@/components/NavigationButtons";
 
 export const MenuBar = ({ editor }) => {
   if (!editor) {
@@ -324,30 +325,8 @@ function Description({ query }) {
                       </div>
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
-                          <button
-                            onClick={() => router.back()}
-                            type="button"
-                            className="btn flex-center butt-primary2-out me-auto butt-xs"
-                          >
-                            <span className="material-icons-outlined">
-                              chevron_right
-                            </span>
-                            <span className="text"> </span>
-                            <div
-                              className="spinner-border spinner-border-sm text-white"
-                              role="status"
-                            ></div>
-                          </button>
-                          <button
-                            type="submit"
-                            disabled={
-                              (!getProduct.id ? true : false) ||
-                              formik.isSubmitting
-                            }
-                            className="btn flex-center butt-green ml-auto butt-sm"
-                          >
-                            <span className="text">{getAll("Save_edits")}</span>
-                          </button>
+                        <NavigationButtons onNextClick={formik.handleSubmit} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
+                          
                         </div>
                       </div>
                     </div>
