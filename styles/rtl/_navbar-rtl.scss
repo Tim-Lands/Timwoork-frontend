@@ -61,7 +61,7 @@
   }
   .nav-auth {
     /* width: 40%; */
-    justify-content: end;
+    justify-content: flex-end;
     > li {
       &.login-user {
         img {

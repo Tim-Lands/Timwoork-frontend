@@ -125,7 +125,7 @@
 }
 .rtl .timlands-navbar .nav-auth {
   /* width: 40%; */
-  justify-content: end;
+  justify-content: flex-end;
 }
 .rtl .timlands-navbar .nav-auth > li.login-user img {
   margin-right: 10px;
@@ -698,7 +698,7 @@
   max-width: 1400px !important;
 }
 .rtl .timland-hero .timlands-hero-carousel .timlands-hero-img {
-  align-items: start;
+  align-items: flex-start;
   padding-left: 15px;
 }
 .rtl .timland-hero .timlands-hero-carousel .timlands-hero-img img {
