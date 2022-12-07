@@ -8,7 +8,7 @@ import Items from "@/components/items/Items";
 function index() {
   const dispatch = useAppDispatch();
   const {
-    languages: { getAll},
+    languages: { getAll },
     mySales: { sales },
     user,
   } = useAppSelector((state) => state);
@@ -23,8 +23,6 @@ function index() {
     dispatch(SalesActions.getData());
   }, [sales]);
 
-  
- 
   function onChange() {}
   return (
     <>
@@ -34,7 +32,7 @@ function index() {
         ogDescription={getAll("My_sells")}
       />
       {veriedEmail && (
-        <Items onChange={onChange} items = {sales} itemType = {'sales'}/>
+        <Items onChange={onChange} items={sales} itemType={"sales"} />
       )}
     </>
   );

@@ -14,7 +14,6 @@ const User = ({ query }) => {
   } = useAppSelector((state) => state);
   const user = useAppSelector((state) => state.user);
 
-
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
@@ -29,13 +28,7 @@ const User = ({ query }) => {
       });
   }, [query.id]);
 
-
-
-
-
-  return (
-    <Item id={query.id} type={'sales'} ShowItem={ShowItem}/>
-  )
+  return <Item id={query.id} type={"sales"} ShowItem={ShowItem} />;
 };
 
 export default User;

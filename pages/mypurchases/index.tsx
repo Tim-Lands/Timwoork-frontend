@@ -33,7 +33,7 @@ function index() {
         ogDescription={getAll("My_purchases")}
       />
       {veriedEmail && (
-       <Items onChange={onChange} items = {purchases} itemType = {'purchases'}/>
+        <Items onChange={onChange} items={purchases} itemType={"purchases"} />
       )}
     </>
   );

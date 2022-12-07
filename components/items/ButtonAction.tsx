@@ -9,7 +9,15 @@ import { useEffect, useRef, useState } from "react";
 import { useFileUpload } from "react-use-file-upload/dist/lib/useFileUpload";
 import { PurchasesActions } from "@/store/purchases/purchasesActions";
 
-const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:string }) => {
+const ButtonAction = ({
+  id,
+  ShowItem,
+  type,
+}: {
+  id: any;
+  ShowItem: any;
+  type: string;
+}) => {
   const dispatch = useAppDispatch();
   const {
     languages: { getAll, language },
@@ -25,7 +33,7 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
       router.push("/login");
     }
   }, [user]);
-  
+
   const { files, fileNames, totalSize, setFiles, removeFile } = useFileUpload();
 
   const [acceptedBySellerLoadingLoading, setAcceptedBySellerLoading] =
@@ -238,12 +246,12 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
 
   // دالة إرسال الرسالة
 
-  const SalesButton = (props:{status:number, id:number}) => {
+  const SalesButton = (props: { status: number; id: number }) => {
     const {
-      languages: { getAll},
+      languages: { getAll },
     } = useAppSelector((state) => state);
-    const {status} = props
-   
+    const { status } = props;
+
     switch (status) {
       case 0:
         return (
@@ -285,7 +293,7 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
           </div>
         );
       case 3:
-        console.log('in case 3')
+        console.log("in case 3");
         return (
           <>
             <div className="order-uploader-files">
@@ -468,8 +476,8 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
           </>
         );
       default:
-        console.log(status)
-        return <p>sharaffffff</p>
+        console.log(status);
+        return <p>sharaffffff</p>;
     }
   };
 
@@ -607,16 +615,16 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
     );
   };
 
-  const PurchasesButton = ( props: {status:number, id:number} ) => {
+  const PurchasesButton = (props: { status: number; id: number }) => {
     const [cancelledBuyerLoading, setCancelledBuyerLoading] = useState(false);
     const [requestCancelItemBuyerLoading, setRequestCancelItemBuyerLoading] =
-    useState(false);
+      useState(false);
     const [acceptedDeliveryBuyerLoading, setAcceptedDeliveryBuyerLoading] =
-    useState(false);
+      useState(false);
     const [requestModifiedBuyerLoading, setRequestModifiedBuyerLoading] =
-    useState(false);
-    
-    const dispatch = useAppDispatch()
+      useState(false);
+
+    const dispatch = useAppDispatch();
     const item_cancelled_by_buyer = async (id: any) => {
       setCancelledBuyerLoading(true);
       try {
@@ -676,11 +684,8 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
         setRequestModifiedBuyerLoading(false);
       }
     };
-  
 
-    
-
-    const {status} = props
+    const { status } = props;
     switch (status) {
       case 0:
         return (
@@ -791,30 +796,31 @@ const ButtonAction = ({ id, ShowItem, type}: { id: any, ShowItem:any, type:strin
           </div>
         );
       default:
-        return <></>
+        return <></>;
     }
-  }
+  };
   return (
     <>
       {/* <SalesModals /> */}
-        <div
-          style={{
-            backgroundColor: "#fff",
-            padding: 9,
-            marginBottom: 7,
-          }}
-        >
-          <div className="aside-header">
-            <h3 className="title">{getAll("Tools")}</h3>
-          </div>
-          {
-          type=='purchases'?<PurchasesButton status = {ShowItem?.status} id={id} />
-          :<>
-          <SalesModals  />
-          <SalesButton status={ShowItem.status} id={id}/>
-        </>
-        }
-          </div>
+      <div
+        style={{
+          backgroundColor: "#fff",
+          padding: 9,
+          marginBottom: 7,
+        }}
+      >
+        <div className="aside-header">
+          <h3 className="title">{getAll("Tools")}</h3>
+        </div>
+        {type == "purchases" ? (
+          <PurchasesButton status={ShowItem?.status} id={id} />
+        ) : (
+          <>
+            <SalesModals />
+            <SalesButton status={ShowItem.status} id={id} />
+          </>
+        )}
+      </div>
     </>
   );
 };

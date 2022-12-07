@@ -19,11 +19,10 @@ const Order = ({ id }) => {
       .unwrap()
       .then(() => {})
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         router.push("/mypurchases");
       });
   }, [id]);
-
 
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
@@ -32,10 +31,7 @@ const Order = ({ id }) => {
     }
   }, [user]);
 
- 
-  return (
-    <Item id = {id} type={'purchases'} ShowItem={ShowItem}/>
-  )
+  return <Item id={id} type={"purchases"} ShowItem={ShowItem} />;
 };
 
 export default Order;
