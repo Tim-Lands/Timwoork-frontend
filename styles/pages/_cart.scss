@@ -1,0 +1,288 @@
+.cart-list {
+  .d-flex {
+    align-content: center;
+    align-items: center;
+  }
+
+  .row {
+    align-content: center;
+    align-items: center;
+  }
+
+  .cart-list-item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .cart-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-bottom: 0;
+
+      &:first-child {
+        border-radius: 6px 6px 0 0;
+      }
+
+      &:last-child {
+        border-radius: 0 0 6px 6px;
+        border-bottom: 1px solid #ddd;
+        background-color: #f9f9f9;
+      }
+
+      .add-devloppers-nav {
+        list-style: none;
+        margin-top: 6px;
+        border-top: 1px solid #f6f6f6;
+        padding-top: 12px;
+
+        .devloppers-item {
+          display: flex;
+          font-weight: 200;
+
+          .form-check-label {
+            font-weight: bold;
+            font-size: 15px;
+
+            .price-duration {
+              font-size: 13px;
+              font-weight: 200;
+            }
+          }
+        }
+      }
+
+      .cart-item-content {
+        padding: 15px;
+
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+          color: #444;
+          margin: 0;
+          margin-bottom: 8px;
+        }
+
+        .meta-user {
+          font-weight: 200;
+          color: #777;
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+          align-content: center;
+          margin: 0;
+
+          .material-icons {
+            font-size: 19px;
+          }
+        }
+      }
+
+      .cart-item-header {
+        padding: 12px;
+
+        .prices-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+
+          li {
+            font-size: 13px;
+            color: #777;
+            strong,
+            span {
+              color: #333;
+            }
+          }
+        }
+      }
+
+      .cart-item-price {
+        .price-title-total {
+          font-weight: bold;
+          color: $primary;
+          margin: 0;
+          padding: 0 25px;
+        }
+
+        .price-nav {
+          display: flex;
+          list-style: none;
+          justify-content: flex-end;
+
+          li {
+            padding: 0 2px;
+            display: flex;
+            align-items: center;
+            align-content: center;
+
+            button {
+              background-color: lighten(rgb(233, 58, 58), 9);
+              border: 1px solid lighten(rgb(221, 44, 44), 9);
+              display: flex;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              align-items: center;
+              align-content: center;
+              justify-content: center;
+              color: #fff;
+
+              .material-icons {
+                font-size: 16px;
+              }
+
+              &:hover {
+                background-color: lighten(rgb(233, 58, 58), 12);
+                border: 1px solid lighten(rgb(233, 58, 58), 19);
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.cart-list-continue {
+  margin-top: 17px;
+  padding: 20px 0;
+  border-top: 1px dashed #ddd;
+  display: flex;
+}
+.rtl {
+  .cart-list {
+    .cart-list-item {
+      .cart-item {
+        .add-devloppers-nav {
+          padding-right: 20px;
+        }
+
+        .cart-item-header {
+          .prices-list {
+            li {
+              padding-left: 8px;
+              margin-left: 3px;
+              border-left: 1px solid #f8f8f8;
+            }
+          }
+        }
+
+        .cart-item-price {
+          .price-title-total {
+            margin-left: auto;
+            float: left;
+          }
+        }
+      }
+    }
+  }
+}
+.ltr {
+  .cart-list {
+    .cart-list-item {
+      .cart-item {
+        .add-devloppers-nav {
+          padding-left: 20px;
+        }
+
+        .cart-item-header {
+          .prices-list {
+            li {
+              padding-right: 8px;
+              margin-right: 3px;
+              border-right: 1px solid #f8f8f8;
+            }
+          }
+        }
+
+        .cart-item-price {
+          .price-title-total {
+            margin-right: auto;
+            float: right;
+          }
+        }
+      }
+    }
+  }
+}
+.is-dark {
+  .cart-list {
+    .cart-list-item {
+      .cart-item {
+        background-color: #000;
+        border: 1px solid #111;
+        &:last-child {
+          border-bottom: 1px solid #131313;
+          background-color: #111;
+        }
+        .add-devloppers-nav {
+          border-top: 1px solid #131313;
+          .devloppers-item {
+            .form-check-label {
+              .price-duration {
+                color: #fff;
+              }
+            }
+          }
+        }
+        .cart-item-content {
+          .title {
+            color: #ddd;
+          }
+          .meta-user {
+            color: #f4f4f4;
+          }
+        }
+        .cart-item-header {
+          .prices-list {
+            li {
+              color: #ddd;
+              strong,
+              span {
+                color: #fff;
+              }
+            }
+          }
+        }
+        .cart-item-price {
+          .price-title-total {
+            color: $primary2;
+          }
+          .price-nav {
+            li {
+              button {
+                background-color: lighten(rgb(233, 58, 58), 9);
+                border: 1px solid lighten(rgb(221, 44, 44), 9);
+                color: #fff;
+                &:hover {
+                  background-color: lighten(rgb(233, 58, 58), 12);
+                  border: 1px solid lighten(rgb(233, 58, 58), 19);
+                  color: #fff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .cart-list-continue {
+    border-top: 1px dashed #f1f1f1;
+  }
+}
+.prices-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-bottom: 9px;
+
+  li {
+    font-size: 13px;
+    color: #777777;
+    padding: 0 8px;
+    strong,
+    span {
+      color: #333;
+    }
+  }
+}

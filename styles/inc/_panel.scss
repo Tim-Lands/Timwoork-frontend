@@ -1,0 +1,361 @@
+.timlands-panel {
+  background-color: #fff;
+  padding: 20px;
+
+  .timlands-steps-cont {
+    overflow-x: scroll;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    -ms-overflow-style: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    &::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    &:hover {
+      scrollbar-color: #cbd1d8 transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      height: 13px;
+      background-color: transparent;
+      transition: all 0.1s linear;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      transition: all 0.1s linear;
+      background-color: #cbd1d8;
+    }
+  }
+
+  .timlands-steps {
+    border-bottom: 1px solid lighten($primary, 54);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0;
+    flex: none;
+    flex-wrap: wrap;
+    @media (max-width: 1235px) {
+      width: 800px;
+    }
+
+    .timlands-step-item {
+      padding: 10px 11px;
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      .title {
+        font-size: 14px;
+        font-weight: 300;
+        margin: 0;
+        opacity: 0.7;
+        color: #111;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .text {
+        font-size: 12px;
+        opacity: 0.5;
+        color: #222;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        font-weight: 200;
+        margin: 0;
+        flex-wrap: wrap;
+        a {
+          font-size: 12px;
+          opacity: 0.5;
+          color: #222;
+          display: flex;
+          align-content: center;
+          align-items: center;
+          font-weight: 200;
+          margin: 0;
+          flex-wrap: wrap;
+
+          &:hover {
+            color: #000;
+            opacity: 1;
+          }
+        }
+
+        .material-icons {
+          font-size: 14px;
+          margin: 0;
+        }
+
+        .icon-circular {
+          display: flex;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          align-items: center;
+          align-content: center;
+          justify-content: center;
+          background-color: #f2f2f2;
+        }
+      }
+
+      &::after {
+        content: "";
+        bottom: 0;
+        height: 2px;
+        background-color: $primary;
+        position: absolute;
+      }
+
+      &.active {
+        .title,
+        .text {
+          opacity: 1;
+          font-weight: bold;
+
+          a {
+            opacity: 1;
+            font-weight: bold;
+          }
+
+          .icon-circular {
+            background-color: $primary2;
+          }
+        }
+
+        &::after {
+          left: 0;
+          right: 0;
+          background-color: $primary;
+        }
+      }
+    }
+  }
+
+  &.is-loader {
+    position: relative;
+
+    &::after {
+      content: " ";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0.712);
+    }
+  }
+
+  .timlands-panel-header {
+    padding: 7px 0;
+    border-bottom: 1px solid #f4f4f4;
+    margin-bottom: 17px;
+    display: flex;
+    align-items: center;
+
+    .title {
+      a {
+        margin: 0 4px;
+        color: #000;
+      }
+    }
+
+    .header-butt {
+      display: flex;
+
+      .butt-sm {
+        .material-icons-outlined {
+          font-size: 18px;
+        }
+
+        .spinner-border {
+          display: none;
+        }
+      }
+
+      .butt-xs {
+        .material-icons-outlined {
+          font-size: 16px;
+        }
+
+        .spinner-border {
+          display: none;
+        }
+      }
+
+      &.is-loader {
+        .butt-sm {
+          .text,
+          .material-icons-outlined {
+            display: none;
+          }
+
+          .spinner-border {
+            display: inline-block;
+          }
+        }
+
+        .butt-xs {
+          .text,
+          .material-icons-outlined {
+            display: none;
+          }
+
+          .spinner-border {
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    .title {
+      font-weight: bold;
+      color: #444;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      align-content: center;
+
+      .material-icons {
+        font-size: 21px;
+      }
+    }
+  }
+}
+.is-dark {
+  .timlands-panel {
+    background-color: #000;
+    .timlands-steps {
+      border-bottom: 1px solid lighten($primary2, 54);
+      .timlands-step-item {
+        .title {
+          color: #fff;
+        }
+        .text {
+          color: #fff;
+          .icon-circular {
+            background-color: #111;
+          }
+        }
+        &::after {
+          background-color: $primary2;
+        }
+        &.active {
+          .title,
+          .text {
+            .icon-circular {
+              background-color: $primary;
+            }
+          }
+          &::after {
+            background-color: $primary2;
+          }
+        }
+      }
+    }
+    &.is-loader {
+      &::after {
+        background-color: rgba(0, 0, 0, 0.712);
+      }
+    }
+    .timlands-panel-header {
+      border-bottom: 1px solid #111;
+      .title {
+        color: #fff;
+      }
+    }
+  }
+}
+.rtl {
+  .timlands-panel {
+    .timlands-steps {
+      .timlands-step-item {
+        .text {
+          .icon-circular {
+            margin-left: 4px;
+          }
+        }
+
+        &::after {
+          left: 0;
+          right: 100%;
+        }
+
+        &.active {
+          &::after {
+            left: 0;
+            right: 0;
+          }
+        }
+      }
+    }
+
+    &.is-loader {
+      &::after {
+        left: 0;
+        right: 0;
+      }
+    }
+
+    .timlands-panel-header {
+      .header-butt {
+        margin-right: auto;
+      }
+
+      .title {
+        .material-icons {
+          margin-left: 6px;
+        }
+      }
+    }
+  }
+}
+.ltr {
+  .timlands-panel {
+    .timlands-steps {
+      .timlands-step-item {
+        .text {
+          .icon-circular {
+            margin-right: 4px;
+          }
+        }
+
+        &::after {
+          right: 0;
+          left: 100%;
+        }
+
+        &.active {
+          &::after {
+            left: 0;
+            right: 0;
+          }
+        }
+      }
+    }
+
+    &.is-loader {
+      &::after {
+        left: 0;
+        right: 0;
+      }
+    }
+
+    .timlands-panel-header {
+      .header-butt {
+        margin-left: auto;
+      }
+
+      .title {
+        .material-icons {
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+}

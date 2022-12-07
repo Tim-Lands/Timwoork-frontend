@@ -1,0 +1,41 @@
+.blogHeaderTitle {
+  font-size: 30px;
+  font-weight: bold;
+
+  @media (max-width: 580px) {
+    font-size: 20px;
+  }
+}
+.blog-single-content {
+  figure {
+    img {
+      width: 100%;
+    }
+  }
+
+  p {
+    @media (max-width: 580px) {
+      font-size: 15px;
+    }
+  }
+
+  ul {
+    li {
+      @media (max-width: 580px) {
+        font-size: 15px;
+      }
+    }
+  }
+}
+.blog_navbar {
+  width: 100%;
+  @media (max-width: 3000px) {
+    max-width: 1320px;
+  }
+  @media (max-width: 1400px) {
+    max-width: 1140px;
+  }
+  @media (max-width: 1200px) {
+    max-width: 960px;
+  }
+}

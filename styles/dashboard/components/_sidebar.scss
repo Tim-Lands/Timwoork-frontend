@@ -1,0 +1,138 @@
+.dashboard-sidebar {
+  background-color: #f4f4f4;
+  height: 100%;
+  transition: all 0.4s;
+
+  .dashboard-sidebar-inner {
+    .dashbord-user-details {
+      display: flex;
+      padding: 5px 13px;
+      background-color: #f9f9f9;
+      align-items: center;
+      align-content: center;
+      border-bottom: 2px solid #d9d9d9;
+
+      .dashbord-user-avatar {
+        display: block;
+
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+      }
+
+      .dashbord-user-content {
+        padding: 10px;
+        padding-top: 25px;
+
+        .user-title {
+          font-size: 16px;
+          font-weight: bold;
+          margin: 0;
+          color: #444;
+          margin-bottom: 6px;
+
+          a {
+            color: #333;
+
+            &:hover {
+              color: $primary;
+            }
+          }
+        }
+
+        .meta {
+          display: flex;
+          list-style: none;
+          padding: 0;
+
+          li {
+            font-size: 12px;
+            padding: 2px 5px;
+
+            a {
+              color: #777;
+              display: flex;
+              align-items: center;
+              align-content: center;
+              cursor: pointer;
+
+              .material-icons {
+                font-size: 15px;
+              }
+
+              &:hover {
+                color: $primary;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .dashboard-sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      > .dash-item {
+        padding: 3px;
+
+        > .dash-link {
+          padding: 10px 19px;
+          color: #222;
+          font-size: 15px;
+          font-weight: bold;
+          display: flex;
+          align-content: center;
+          align-items: center;
+          cursor: pointer;
+
+          .material-icons {
+            font-size: 19px;
+          }
+
+          &:hover {
+            color: $primary;
+          }
+        }
+
+        .sub-dashnav-list {
+          list-style: none;
+          padding: 0;
+          margin: 5px 0;
+          padding-right: 50px;
+          transition: all 0.3s;
+
+          > .subdash-item {
+            > .subdash-link {
+              display: flex;
+              font-size: 13px;
+              color: #333;
+              padding: 6px 4px;
+
+              &:hover {
+                color: $primary;
+              }
+            }
+
+            &.active {
+              > .subdash-link {
+                font-weight: bold;
+                color: $primary;
+              }
+            }
+          }
+        }
+
+        &.active {
+          > .dash-link {
+            color: $primary;
+            background-color: #f2f2f2;
+          }
+        }
+      }
+    }
+  }
+}

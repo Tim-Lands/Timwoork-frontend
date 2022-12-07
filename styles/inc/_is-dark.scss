@@ -12,14 +12,6 @@
       color: #fff;
     }
   }
-  .statistic-item {
-    .ant-statistic {
-      color: #fff;
-      .ant-statistic-title {
-        color: #fff;
-      }
-    }
-  }
 
   .timlands-navbar-container {
     box-shadow: 2px 4px 7px rgba(255, 255, 255, 0.034);
@@ -202,21 +194,7 @@
         Filter Search
     ---------------------------------------------------------------------------------------------
     */
-  .filter-search-sidebar {
-    .filter-sidebar-title {
-      border-bottom: 1px dashed #222;
-      .title {
-        color: #fff;
-      }
-    }
-    .filter-sidebar-panel {
-      background-color: #000;
-      .title {
-        color: #f1f1f1;
-        border-bottom: 1px dashed #111;
-      }
-    }
-  }
+
   /*
     ---------------------------------------------------------------------------------------------
         Grid
@@ -244,33 +222,11 @@
       }
     }
   }
-  .content-text-item {
-    border: 1px dashed #111;
-    .text-label {
-      color: #fff;
-    }
-    .text-value {
-      color: #fff;
-    }
-    .text-skills {
-      li {
-        a {
-          background-color: #111;
-          color: #fff;
-          &:hover {
-            background-color: $primary2;
-            color: #111;
-          }
-        }
-      }
-    }
-  }
+
   .user-bro {
     color: #fff;
   }
-  .statistic-item {
-    border-bottom: 1px dashed #111;
-  }
+
   .app-bill {
     background-color: #000;
     .app-bill-header {
@@ -293,28 +249,7 @@
       }
     }
   }
-  .timwoork-single-tags {
-    .single-tags-list {
-      li {
-        &.title {
-          color: #fff;
-        }
-        a {
-          color: #fff;
-          background-color: #222;
-          &:hover {
-            background-color: #111;
-            color: #fff;
-          }
-        }
-      }
-    }
-  }
-  /*
-    -------------------------------------------------------------------------------------------
-        Login Panel
-    -------------------------------------------------------------------------------------------
-    */
+
   .login-panel {
     background-color: #000;
     &.update-form {
@@ -385,11 +320,6 @@
       color: #ddd;
     }
   }
-  /*
-    -------------------------------------------------------------------------------------------
-        Hero Header
-    -------------------------------------------------------------------------------------------
-    */
 
   .timlands-hero {
     background-color: #111;
@@ -442,22 +372,7 @@
       }
     }
   }
-  .list-results-items {
-    .post-item-content {
-      .title {
-        color: #fff;
-      }
-    }
-  }
-  .be-seller-aside {
-    border: 1px dashed #111;
-    .title {
-      color: #ddd;
-    }
-    .text {
-      color: #f1f1f1;
-    }
-  }
+
   /*
     ---------------------------------------------------------------------------------------------
         Home Nannies Section
@@ -484,334 +399,13 @@
         Posts Aside
     ---------------------------------------------------------------------------------------------
     */
-  .timwoork-single {
-    .timwoork-single-post {
-      .timwoork-single-header {
-        border-bottom: 1px solid #111;
-        .title {
-          color: #fff;
-        }
-        .single-header-meta {
-          li {
-            border-left: 1px solid #111;
-            &:first-child {
-              padding-right: 0;
-            }
-            &:last-child {
-              border-left: 0;
-            }
-            &.rate-stars {
-              color: #fff;
-              .stars-icons {
-                .material-icons-outlined {
-                  color: rgb(233, 218, 8);
-                  &.outline-star {
-                    color: #ddd;
-                  }
-                }
-              }
-            }
-            &.level-item {
-              .text-level {
-                color: #ddd;
-              }
-              .value-level {
-                color: #f1f1f1;
-              }
-            }
-            &.user-item {
-              a {
-                color: #ddd;
-                &:hover {
-                  color: $primary2;
-                }
-              }
-            }
-            &.category-item {
-              a {
-                color: #f1f1f1;
-                &:hover {
-                  color: $primary2;
-                }
-              }
-            }
-          }
-        }
-      }
-      .timwoork-single-content {
-        .timwoork-single-content-body {
-          background-color: #000;
-          .react-slideshow-container {
-            margin-right: -80px;
-          }
-          .each-slide {
-            .images-slider {
-              .caption-descriptions {
-                background-image: linear-gradient(rgba(255, 255, 255, 0), #fff);
-                .text {
-                  color: #000;
-                  text-shadow: 1px 2px rgba(255, 255, 255, 0.555);
-                }
-              }
-            }
-          }
-          .arrow-navigations {
-            .material-icons-outlined {
-              color: #000;
-              text-shadow: 1px 2px rgba(255, 255, 255, 0.555);
-            }
-          }
-          .timwoork-single-product-detailts {
-            color: #f1f1f1;
-            .text {
-              color: #f1f1f1;
-            }
-            h1,
-            h2,
-            h3 {
-              color: #fff;
-            }
-            .single-list {
-              > li {
-                > ul {
-                  > li {
-                    color: #fff;
-                  }
-                }
-              }
-            }
-          }
-        }
-        .timwoork-single-seller-info {
-          .seller-info-header {
-            .title {
-              color: #fff;
-            }
-          }
-          .seller-info-container {
-            .seller-info-avatar {
-              span.is-online {
-                background-color: rgb(139, 247, 171);
-              }
-            }
-            .seller-info-content {
-              .user-title {
-                color: #f1f1f1;
-              }
-              .user-meta {
-                li {
-                  &:first-child {
-                    padding-right: 0;
-                  }
-                  color: #f1f1f1;
-                }
-              }
-            }
-          }
-        }
-        .timwoork-single-comments {
-          .timwoork-single-comments-inner {
-            .single-comments-header {
-              border-bottom: 1px solid #121212;
-              .title {
-                color: #f1f1f1;
-              }
-            }
-            .single-comments-body {
-              .comments-list-items {
-                .list-items-ul {
-                  > .comment-item {
-                    .comment-item-content {
-                      .meta-time,
-                      .user-ratting {
-                        color: #f1f1f1;
-                      }
-                      .meta-time {
-                        .material-icons {
-                          margin-left: 4px;
-                        }
-                      }
-                      .user-title {
-                        color: #f1f1f1;
-                      }
-                      .item-text {
-                        color: #ddd;
-                      }
-                    }
-                    .list-items-replies {
-                      .reply-item {
-                        background-color: #111;
-                        border-right: 4px solid $primary2;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  .cart-nothing {
-    .cart-nothing-inner {
-      .title {
-        color: #f1f1f1;
-      }
-      .text {
-        color: #ddd;
-      }
-    }
-  }
-  .text-quatity {
-    color: #fff;
-  }
-  .single-sidebar {
-    .single-panel-aside {
-      background-color: #000;
-      border: 1px solid #f1f1f1;
-      box-shadow: 2px 3px 9px rgba(255, 255, 255, 0.062);
-      .panel-aside-header {
-        border-bottom: 1px solid #111;
-        .top-aside-nav {
-          li {
-            color: #f1f1f1;
-            &:first-child {
-              padding-right: 0;
-            }
-            &:last-child {
-              border-left: 0;
-            }
-            a {
-              color: #f1f1f1;
-              &:hover {
-                color: $primary2;
-              }
-            }
-          }
-        }
-      }
-      .panel-aside-body {
-        .bayers-count {
-          background-color: rgb(22, 22, 22);
-          .num {
-            color: #f4f4f4;
-          }
-        }
-        .add-devloppers-header {
-          border-bottom: 1px solid #111;
-          .title {
-            color: #fff;
-          }
-        }
-        .add-devloppers-nav {
-          .devloppers-item {
-            color: #ddd;
-            border-bottom: 1px solid #111;
-            &:last-child {
-              border-bottom: 0;
-            }
-            .form-check {
-              .form-check-label {
-                margin-top: 2px;
-              }
-              .form-check-input {
-                &:focus {
-                  border-color: lighten($primary2, 8);
-                }
-                &:checked {
-                  background-color: $primary2;
-                  border-color: $primary2;
-                }
-              }
-            }
-            .price-duration {
-              color: #fff;
-            }
-            .devloppers-price {
-              .price-number {
-                color: #fff;
-              }
-            }
-          }
-        }
-      }
-      .panel-aside-footer {
-        background-color: #323232;
-        border-top: 1px solid #333;
-        .aside-footer-total-price {
-          .price-total {
-            color: #ddd;
-          }
-          .bayers-count {
-            background-color: rgb(26, 26, 26);
-            .num {
-              color: #ddd;
-            }
-          }
-        }
-        .aside-footer-note {
-          .text {
-            color: #f1f1f1;
-          }
-        }
-      }
-    }
-  }
-  @keyframes animate_placeholder {
-    0% {
-      background-color: #111;
-    }
-    50% {
-      background-color: #121212;
-    }
-    100% {
-      background-color: #323232;
-    }
-  }
-  @keyframes animate_placeholderdiv {
-    0% {
-      background-color: #232323;
-    }
-    50% {
-      background-color: #000;
-    }
-    100% {
-      background-color: #323232;
-    }
-  }
-  .loading-title {
-    background-color: #323232;
-  }
-  .loading-container {
-    .loading-container-item {
-      background-color: #000;
-      border: 1px solid #232323;
-      box-shadow: 2px 3px 9px rgba(255, 255, 255, 0.055);
-      .container-item-title {
-        background-color: #111;
-      }
-      .container-item-title2 {
-        background-color: #111;
-      }
-      .container-item-meta {
-        background-color: #111;
-      }
-    }
-  }
+
   /*
     ---------------------------------------------------------------------------------------------
         Posts Aside
     ---------------------------------------------------------------------------------------------
     */
-  .posts-aside {
-    .posts-aside-header {
-      border-bottom: 1px solid #111;
-      .title {
-        color: #fff;
-      }
-    }
-  }
+
   /*
     ---------------------------------------------------------------------------------------------
         Account Page
@@ -833,48 +427,7 @@
         Panels Style
     ---------------------------------------------------------------------------------------------
     */
-  .timlands-panel {
-    background-color: #000;
-    .timlands-steps {
-      border-bottom: 1px solid lighten($primary2, 54);
-      .timlands-step-item {
-        .title {
-          color: #fff;
-        }
-        .text {
-          color: #fff;
-          .icon-circular {
-            background-color: #111;
-          }
-        }
-        &::after {
-          background-color: $primary2;
-        }
-        &.active {
-          .title,
-          .text {
-            .icon-circular {
-              background-color: $primary;
-            }
-          }
-          &::after {
-            background-color: $primary2;
-          }
-        }
-      }
-    }
-    &.is-loader {
-      &::after {
-        background-color: rgba(0, 0, 0, 0.712);
-      }
-    }
-    .timlands-panel-header {
-      border-bottom: 1px solid #111;
-      .title {
-        color: #fff;
-      }
-    }
-  }
+
   .product-devlopes-butt {
     background-color: #111;
     border: 3px dotted #212121;
@@ -899,51 +452,7 @@
       }
     }
   }
-  .timlands-panel-item {
-    border: 1px solid #111;
-    background-color: #000;
 
-    &:hover {
-      border: 1px solid $primary2;
-      box-shadow: 3px 4px 9px rgba(255, 255, 255, 0.055);
-    }
-    .panel-item-header,
-    .panel-item-body,
-    .panel-item-footer {
-      padding: 15px;
-    }
-    .panel-item-header {
-      border-bottom: 1px solid #111;
-      .title {
-        color: #fff;
-      }
-    }
-    .panel-item-body {
-      .count-num {
-        color: #f2f2f2;
-      }
-      .details-items {
-        > li {
-          border-bottom: 1px solid #111;
-          &:last-child {
-            border-bottom: 0;
-          }
-          p {
-            color: #fff;
-          }
-          .det-val {
-            color: #fff;
-            .text {
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-    .panel-item-footer {
-      border-top: 1px solid #111;
-    }
-  }
   .develop-price {
     border: 1px solid #111;
     background-color: #232323;
@@ -1065,262 +574,12 @@
         Posts Aside
     ---------------------------------------------------------------------------------------------
     */
-  .timwoork-single {
-    background-color: #121212;
-    .timwoork-single-post {
-      .timwoork-single-content {
-        .timwoork-single-content-body {
-          background-color: #000;
-          .each-slide {
-            .images-slider {
-              .caption-descriptions {
-                background-image: linear-gradient(rgba(255, 255, 255, 0), #fff);
-                .text {
-                  color: #fff;
-                  text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
-                }
-              }
-            }
-          }
-          .arrow-navigations {
-            cursor: pointer;
-            .material-icons-outlined {
-              color: #fff;
-              text-shadow: 1px 2px rgba(0, 0, 0, 0.555);
-            }
-          }
-          .timwoork-single-product-detailts {
-            color: #fff;
-            h1,
-            h2,
-            h3 {
-              color: #fff;
-            }
-            .single-list {
-              > li {
-                margin: 6px 0;
-                > ul {
-                  margin: 15px 0;
-                  > li {
-                    margin: 6px 0;
-                  }
-                }
-              }
-            }
-          }
-        }
-        .timwoork-single-seller-info {
-          .seller-info-header {
-            padding: 9px 0;
-            .title {
-              font-weight: 700;
-            }
-          }
-          .seller-info-container {
-            .d-flex {
-              @media (max-width: 580px) {
-                flex-direction: column;
-              }
-            }
-            .seller-info-avatar {
-              span.is-online {
-                background-color: rgb(64, 175, 97);
-              }
-            }
-            .seller-info-content {
-              .user-title {
-                color: #fff;
-              }
-              .user-meta {
-                li {
-                  &:first-child {
-                    padding-right: 0;
-                  }
-                  color: #ddd;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .timwoork-single-header {
-    border-bottom: 1px dashed #111;
-    .title {
-      color: #f3f3f3;
-      &.md {
-        color: #fff;
-      }
-    }
-    .single-header-meta {
-      li {
-        border-left: 1px solid #111;
-        &:first-child {
-          padding-right: 0;
-        }
-        &:last-child {
-          border-left: 0;
-        }
-        &.rate-stars {
-          color: #fff;
-          .stars-icons {
-            .material-icons-outlined {
-              color: rgb(233, 192, 8);
-              &.outline-star {
-                color: #f3f3f3;
-              }
-            }
-          }
-        }
-        &.level-item {
-          .text-level {
-            color: #ddd;
-          }
-          .value-level {
-            color: #fff;
-          }
-        }
-        &.user-item {
-          a {
-            color: #fff;
-            &:hover {
-              color: $primary2;
-            }
-          }
-        }
-        &.category-item {
-          a {
-            color: #fff;
-            &:hover {
-              color: $primary2;
-            }
-          }
-        }
-      }
-    }
-  }
-  .choose-images-file {
-    .uploader-btn {
-      background-color: #000;
-      border: 1px solid #111;
-      color: #ddd;
-      &:focus {
-        color: #fff;
-        border: 1px solid #121212;
-      }
-      &.clear {
-        background-color: rgb(255, 204, 204);
-        color: rgb(184, 10, 10);
-      }
-    }
-    .choose-images-list {
-      .image-item {
-        border: 1px dashed #111;
-        .image-item__btn-wrapper {
-          background-color: rgba(255, 255, 255, 0.671);
-          button {
-            background-color: #000;
-            color: #ddd;
-            &:hover {
-              color: #fff;
-            }
-            &:focus {
-              color: #fff;
-              background-color: #000;
-            }
-          }
-        }
-        &:hover {
-          .image-item__btn-wrapper {
-            opacity: 1;
-          }
-        }
-      }
-    }
-    &.featured-image {
-      .choose-images-list {
-        .image-item {
-          border: 1px dashed #111;
-          .image-item__btn-wrapper {
-            button {
-              color: #fff;
-              .material-icons-outlined {
-                font-size: 20px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 
   /*
     -------------------------------------------------------------------------------------------
         Cart List Item
     -------------------------------------------------------------------------------------------
     */
-  .cart-list {
-    .cart-list-item {
-      .cart-item {
-        background-color: #000;
-        border: 1px solid #111;
-        &:last-child {
-          border-bottom: 1px solid #131313;
-          background-color: #111;
-        }
-        .add-devloppers-nav {
-          border-top: 1px solid #131313;
-          .devloppers-item {
-            .form-check-label {
-              .price-duration {
-                color: #fff;
-              }
-            }
-          }
-        }
-        .cart-item-content {
-          .title {
-            color: #ddd;
-          }
-          .meta-user {
-            color: #f4f4f4;
-          }
-        }
-        .cart-item-header {
-          .prices-list {
-            li {
-              color: #ddd;
-              strong,
-              span {
-                color: #fff;
-              }
-            }
-          }
-        }
-        .cart-item-price {
-          .price-title-total {
-            color: $primary2;
-          }
-          .price-nav {
-            li {
-              button {
-                background-color: lighten(rgb(233, 58, 58), 9);
-                border: 1px solid lighten(rgb(221, 44, 44), 9);
-                color: #fff;
-                &:hover {
-                  background-color: lighten(rgb(233, 58, 58), 12);
-                  border: 1px solid lighten(rgb(233, 58, 58), 19);
-                  color: #fff;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 
   .edit-button {
     color: #ddd;
@@ -1328,95 +587,7 @@
       color: $primary2;
     }
   }
-  .cart-list-continue {
-    border-top: 1px dashed #f1f1f1;
-  }
-  .single-sidebar {
-    .single-panel-aside {
-      background-color: #000;
-      border: 1px solid #121212;
-      box-shadow: 2px 3px 9px rgba(255, 255, 255, 0.062);
-      .panel-aside-header {
-        border-bottom: 1px solid #131313;
-        .top-aside-nav {
-          li {
-            color: #f4f4f4;
-            &:first-child {
-              padding-right: 0;
-            }
-            &:last-child {
-              border-left: 0;
-            }
-            a {
-              color: #fff;
-              &:hover {
-                color: $primary2;
-              }
-            }
-          }
-        }
-      }
-      .panel-aside-body {
-        .bayers-count {
-          background-color: rgb(31, 31, 31);
-          .num {
-            color: #ddd;
-          }
-        }
-        .add-devloppers-header {
-          border-bottom: 1px solid #121212;
-          .title {
-            color: #fff;
-          }
-        }
-        .add-devloppers-nav {
-          .devloppers-item {
-            color: #ddd;
-            border-bottom: 1px solid #161616;
-            &:last-child {
-              border-bottom: 0;
-            }
-            .form-check {
-              .form-check-input {
-                &:focus {
-                  border-color: lighten($primary2, 8);
-                }
-                &:checked {
-                  background-color: $primary2;
-                  border-color: $primary2;
-                }
-              }
-            }
-            .devloppers-price {
-              .price-number {
-                color: #fff;
-              }
-            }
-          }
-        }
-      }
-      .panel-aside-footer {
-        background-color: #131313;
-        border-top: 1px solid #111;
-        .aside-footer-total-price {
-          .price-total {
-            color: #ddd;
-          }
-          .bayers-count {
-            background-color: rgb(27, 27, 27);
-            .num {
-              color: #ddd;
-            }
-          }
-        }
-        .aside-footer-note {
-          .text {
-            color: #f5f5f5;
-          }
-        }
-      }
-    }
-  }
+
   .page-loading-spinner {
     .spinner-border {
       border: 0.25em solid $primary2;
@@ -1451,23 +622,11 @@
       color: rgba(255, 255, 255, 0.733);
     }
   }
-  .images-btns-upload {
-    .note-text {
-      color: #ddd;
-    }
-  }
+
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     border: 0;
   }
-  .choose-images-file {
-    background-color: #131313;
-    border: 2px dotted #111;
-    box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.041);
-    &:hover {
-      border-color: $primary2;
-      background-color: #000;
-    }
-  }
+
   .timlands-content-form-subtitle {
     border-bottom: 1px solid #121212;
   }

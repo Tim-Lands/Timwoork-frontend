@@ -1,0 +1,128 @@
+.product-devlopes-butt {
+  background-color: #f8f8f8;
+  border: 3px dotted #ccc;
+  box-shadow: 3px 4px 9px rgba(0, 0, 0, 0.071);
+  text-align: center;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+
+  .product-devlopes-text {
+    font-weight: 200;
+    color: #444;
+    font-size: 18px;
+  }
+
+  .add-devs-btn {
+    text-align: center;
+    justify-content: center;
+
+    .material-icons-outlined {
+      font-size: 21px;
+      margin-top: -4px;
+    }
+  }
+}
+
+.add-product-advices {
+  position: sticky;
+  top: 70px;
+  padding-top: 23px;
+
+  .advice-img {
+    width: 150px;
+    display: block;
+    margin: auto;
+  }
+
+  .advice-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 26px 0;
+    margin-bottom: 26px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .advice-list {
+    li {
+      font-size: 15px;
+      color: #333;
+      font-weight: 200;
+      margin: 10px 0;
+    }
+  }
+}
+
+.develop-price {
+  border: 1px solid #f1f1f1;
+  background-color: #f8f8f8;
+  padding: 12px;
+  margin-bottom: 9px;
+  border-radius: 6px;
+  position: relative;
+
+  .buttons-tools {
+    position: absolute;
+    top: -5px;
+    display: flex;
+
+    .formarray-butt {
+      background-color: #f7f7f7;
+      border: 0;
+      display: flex;
+      width: 25px;
+      height: 25px;
+      font-size: 19px;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #777;
+
+      &:hover {
+        color: #000;
+        background-color: #f2f2f2;
+      }
+
+      &.del {
+        background-color: rgb(255, 221, 221);
+        color: rgb(80, 8, 8);
+      }
+    }
+  }
+}
+.timlands-add-new {
+  border: 1px dashed #ddd;
+  border-radius: 7px;
+  margin: 20px 0;
+  padding: 30px 50px;
+  text-align: center;
+
+  .timlands-add-new-icon {
+    color: #ccc;
+    padding-top: 20px;
+    padding-bottom: 10px;
+
+    .material-icons {
+      font-size: 49px;
+    }
+  }
+
+  .timlands-add-new-body {
+    .title {
+      font-size: 25px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .text {
+      font-size: 14px;
+      color: #666;
+      font-weight: 200;
+      line-height: 27px;
+    }
+  }
+}

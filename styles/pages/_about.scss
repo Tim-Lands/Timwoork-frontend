@@ -1,0 +1,21 @@
+.about-hero {
+  padding: 70px 25px;
+  background-image: url("../public/5566879.jpg");
+  background-size: cover;
+  background-position: 20% 20%;
+
+  .title {
+    font-size: 50px;
+    font-weight: bold;
+    color: $primary;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .text {
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.733);
+    margin: 0;
+    font-weight: 200;
+  }
+}

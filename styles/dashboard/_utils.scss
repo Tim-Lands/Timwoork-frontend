@@ -1,0 +1,13 @@
+.timlands-dashboard-content {
+  padding: 0;
+
+  @media (max-width: 500px) {
+    padding: 0;
+  }
+}
+
+.filter-form {
+  @media (max-width: 768px) {
+    margin: 12px 0;
+  }
+}

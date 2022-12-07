@@ -1,0 +1,123 @@
+.user-bro {
+  margin: 0;
+  line-height: 27px;
+  color: #444;
+  overflow: hidden;
+}
+.be-seller-aside {
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 26px 15px;
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #777;
+  }
+
+  .text {
+    font-size: 13px;
+    color: #333;
+    margin: 12px 0;
+  }
+}
+.is-dark {
+  .be-seller-aside {
+    border: 1px dashed #111;
+    .title {
+      color: #ddd;
+    }
+    .text {
+      color: #f1f1f1;
+    }
+  }
+}
+.userProfileCont {
+  width: 100%;
+  margin-inline: auto;
+  padding: 0px 20px;
+  max-width: 1150px;
+}
+.user-bro {
+  transition: all 0.3s;
+  height: auto;
+
+  &.is-less {
+    height: 200px;
+    transition: all 0.3s;
+  }
+}
+.order-user-info {
+  .order-user-avatar {
+    img {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+    }
+  }
+
+  .order-user-content {
+    .user-title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+      margin: 0;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #666;
+      margin: 0;
+      margin-top: 6px;
+      font-weight: 200;
+    }
+  }
+}
+.read-more-btn {
+  border: 0;
+  background-color: transparent;
+  color: #777;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 7px;
+  padding: 10px;
+
+  transition: all 0.3s;
+  font-weight: bold;
+  position: relative;
+
+  &.is-less {
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 3000;
+      top: -50px;
+      height: 40px;
+
+      transition: all 0.3s;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.459), #fff);
+    }
+  }
+
+  &:hover {
+    color: #000;
+  }
+}
+.edit-button {
+  color: #777;
+  padding: 4px;
+
+  &:hover {
+    color: $primary;
+  }
+
+  .material-icons {
+    font-size: 17px;
+  }
+}

@@ -1,0 +1,60 @@
+.stars {
+  padding-top: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  align-content: center;
+
+  .stars-text {
+    margin: 0;
+    font-weight: bold;
+    font-size: 19px;
+    color: #444;
+    margin-bottom: 19px;
+  }
+}
+
+.stars input[type="radio"]:checked ~ label {
+  color: rgb(255, 145, 0);
+
+  .material-icons {
+    font-size: 36px;
+  }
+}
+
+.stars input[type="radio"] {
+  display: none;
+}
+
+.stars input[type="radio"]:first-child + label {
+  .material-icons {
+    font-size: 36px;
+  }
+}
+
+.stars:hover input[type="radio"]:checked ~ label,
+.stars label {
+  font-size: 24px;
+  color: rgb(255, 145, 0);
+}
+
+.stars label {
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.stars label {
+  display: block;
+  content: "";
+  transition: all 0.25s;
+  color: rgb(182, 182, 182);
+
+  .material-icons {
+    font-size: 36px;
+  }
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+  color: rgb(223, 131, 12) !important;
+}

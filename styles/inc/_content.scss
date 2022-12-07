@@ -1,0 +1,59 @@
+.content-editor {
+  border: 1px solid #f6f6f6;
+  border-radius: 6px;
+  overflow: hidden;
+
+  textarea {
+    min-height: 100px !important;
+  }
+
+  .content-menu-tools {
+    background-color: #f5f5f5;
+    display: flex;
+
+    button {
+      background-color: transparent;
+      color: #555;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      height: 46px;
+      width: 46px;
+      border: 0;
+
+      &:hover {
+        color: $primary;
+        background-color: lighten($primary, 44);
+      }
+
+      &.is-active {
+        color: #fff;
+        background-color: $primary;
+      }
+    }
+  }
+
+  .ProseMirror {
+    padding: 12px;
+    min-height: 200px;
+    outline: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .normal-editor {
+    textarea {
+      min-height: 200px;
+    }
+  }
+}
+.timlands-content-form-subtitle {
+  font-size: 17px !important;
+  font-weight: bold;
+  padding: 15px 0;
+  border-bottom: 1px solid #f4f4f4;
+  margin-bottom: 7px;
+}

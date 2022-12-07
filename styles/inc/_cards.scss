@@ -1,0 +1,222 @@
+.timlands-profile-content {
+  .profile-content-body {
+    padding: 20px;
+    background-color: #fff;
+
+    .content-title {
+      padding: 15px 0;
+      border-bottom: 1px dashed #ddd;
+      margin-bottom: 9px;
+
+      .title {
+        font-size: 17px;
+        color: #444;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+  }
+
+  .profile-buttons {
+    width: 200px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 9px;
+  }
+
+  .profile-content-header {
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 8px;
+    padding: 20px;
+    text-align: center;
+
+    .profile-content-avatar {
+      width: 120px;
+      overflow: hidden;
+      border-radius: 50%;
+      margin: auto;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    .profile-content-head {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .title {
+        font-size: 19px;
+        font-weight: bold;
+        margin: 4px 0;
+        color: #222;
+      }
+
+      .text {
+        font-size: 13px;
+        color: #333;
+        margin: 0;
+      }
+
+      .button-edit {
+        margin: 7px auto;
+
+        .btn {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+.content-text-item {
+  padding: 10px 0;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+  margin: 7px 0;
+  padding: 15px;
+
+  &::after,
+  &::before {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  .text-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+    margin: 0;
+  }
+
+  .text-value {
+    font-size: 13px;
+    font-weight: 200;
+    color: #555;
+    margin: 0;
+  }
+
+  &.wallet-info {
+    text-align: center;
+
+    .text-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .text-value {
+      font-size: 26px;
+      color: #555;
+    }
+
+    .text-note {
+      font-size: 13px;
+      font-weight: 200;
+      color: #555;
+      margin: 0;
+    }
+
+    @media (min-width: 760px) {
+      height: 170px;
+      position: relative;
+
+      .text-note {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+      }
+    }
+
+    &.red {
+      .text-label {
+        color: rgb(105, 30, 30);
+      }
+
+      .text-value {
+        color: rgb(216, 30, 30);
+      }
+    }
+
+    &.green {
+      .text-label {
+        color: rgb(30, 105, 53);
+      }
+
+      .text-value {
+        color: rgb(23, 170, 60);
+      }
+    }
+  }
+}
+.statistic-item {
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 10px;
+  padding: 15px 0;
+
+  &:last-of-type {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.is-dark {
+  .content-text-item {
+    border: 1px dashed #111;
+    .text-label {
+      color: #fff;
+    }
+    .text-value {
+      color: #fff;
+    }
+    .text-skills {
+      li {
+        a {
+          background-color: #111;
+          color: #fff;
+          &:hover {
+            background-color: $primary2;
+            color: #111;
+          }
+        }
+      }
+    }
+  }
+  .statistic-item {
+    border-bottom: 1px dashed #111;
+    .ant-statistic {
+      color: #fff;
+      .ant-statistic-title {
+        color: #fff;
+      }
+    }
+  }
+}
+.ltr {
+  .content-text-item {
+    &.wallet-info {
+      @media (min-width: 760px) {
+        .text-note {
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+}
+.rtl {
+  .content-text-item {
+    &.wallet-info {
+      @media (min-width: 760px) {
+        .text-note {
+          right: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+}

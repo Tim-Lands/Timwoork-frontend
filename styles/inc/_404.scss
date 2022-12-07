@@ -1,0 +1,23 @@
+.timwoork-404-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  .not-found-image {
+    img {
+      width: 400px;
+    }
+  }
+
+  .title {
+    margin: 25px 0;
+    color: #555;
+    font-weight: 400;
+
+    .error-status {
+      font-weight: bold;
+    }
+  }
+}

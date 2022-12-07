@@ -1,0 +1,47 @@
+.mainHomeIndex {
+  background-image: linear-gradient(to top, lighten($primary, 55%), white);
+  .loading {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 1000000000000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.clearflex {
+  display: flex;
+
+  .right-column {
+    width: 290px;
+    transition: all 0.4s;
+    transform: translateX(0);
+
+    @media (max-width: 768px) {
+      transition: all 0.4s;
+      width: 450px;
+    }
+
+    &.hidden {
+      transform: translateX(400px);
+      transition: all 0.4s;
+      width: 0;
+    }
+  }
+
+  .left-column {
+    transition: all 0.4s;
+    width: calc(100% - 290px);
+
+    @media (max-width: 768px) {
+      transition: all 0.4s;
+      width: calc(100% + 290px);
+    }
+
+    &.full-width {
+      transition: all 0.4s;
+      width: calc(100% + 290px);
+    }
+  }
+}

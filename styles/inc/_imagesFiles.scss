@@ -1,0 +1,306 @@
+.choose-images-file {
+  transition: all 0.3s;
+
+  .uploader-btn {
+    width: 90px;
+    transition: all 0.3s;
+    height: 90px;
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    color: #666;
+
+    &:focus {
+      color: #000;
+      border: 1px solid #ccc;
+      transition: all 0.3s;
+    }
+
+    &.clear {
+      background-color: rgb(255, 204, 204);
+      color: rgb(184, 10, 10);
+    }
+  }
+
+  .choose-images-list {
+    transition: all 0.3s;
+
+    .image-item {
+      width: 100%;
+      height: 100px;
+      margin: 4px 0;
+      //border: 1px dashed #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+      margin: auto;
+
+      @media (max-width: 2688px) {
+        width: 565px;
+        height: 341px;
+      }
+
+      .image-item__btn-wrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        transition: all 0.3s;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+
+        button {
+          border: 0;
+          display: flex;
+          width: 30px;
+          height: 30px;
+          background-color: #fff;
+          border-radius: 50%;
+          align-items: center;
+          align-content: center;
+          justify-content: center;
+          color: #555;
+          margin: 0 3px;
+
+          &:hover {
+            color: #000;
+          }
+
+          &:focus {
+            color: #000;
+            background-color: #f7f7f7;
+          }
+
+          .material-icons-outlined {
+            font-size: 20px;
+          }
+
+          button {
+            border: 0;
+            display: flex;
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 50%;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            color: #555;
+            margin: 0 3px;
+
+            &:hover {
+              color: #000;
+            }
+
+            &:focus {
+              color: #000;
+              background-color: #f7f7f7;
+            }
+
+            .material-icons-outlined {
+              font-size: 20px;
+            }
+          }
+        }
+
+        &:hover {
+          transition: all 0.3s;
+          background-color: rgba(0, 0, 0, 0.671);
+        }
+      }
+
+      margin-inline: auto;
+      margin-top: 18px;
+      background-size: cover;
+
+      @media (min-width: 1920px) {
+        width: 488.343px;
+        height: 293.006px;
+      }
+
+      @media (max-width: 1366px) {
+        width: 452.487px;
+        height: 271.492px;
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+        height: 271.492px;
+      }
+
+      @media (max-width: 570px) {
+        width: 100%;
+        height: 210px;
+      }
+
+      &.featured-wrapper {
+        .image-item__btn-wrapper {
+          button {
+            width: 65px;
+            height: 65px;
+
+            .material-icons-outlined {
+              font-size: 23px;
+            }
+          }
+        }
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+
+      &:hover {
+        .image-item__btn-wrapper {
+          opacity: 1;
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
+
+  &.featured-image {
+    .choose-images-list {
+      justify-content: center;
+
+      .image-item {
+        width: 430px;
+        height: 150px;
+        border-radius: 5px;
+
+        .image-item__btn-wrapper {
+          button {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+
+            .material-icons-outlined {
+              font-size: 20px;
+            }
+          }
+        }
+
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+.choose-images-file {
+  background-color: #f8f8f8;
+  border: 2px dotted #ccc;
+  padding: 17px;
+  border-radius: 6px;
+  margin-bottom: 13px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.041);
+  transition: all 0.3s;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    border-color: $primary;
+    transition: all 0.3s;
+    background-color: #fff;
+  }
+}
+.ltr {
+  .choose-images-file {
+    .choose-images-list {
+      .image-item {
+        .image-item__btn-wrapper {
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+}
+.rtl {
+  .choose-images-file {
+    .choose-images-list {
+      .image-item {
+        .image-item__btn-wrapper {
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+}
+.is-dark {
+  .choose-images-file {
+    .uploader-btn {
+      background-color: #000;
+      border: 1px solid #111;
+      color: #ddd;
+      &:focus {
+        color: #fff;
+        border: 1px solid #121212;
+      }
+      &.clear {
+        background-color: rgb(255, 204, 204);
+        color: rgb(184, 10, 10);
+      }
+    }
+    .choose-images-list {
+      .image-item {
+        border: 1px dashed #111;
+        .image-item__btn-wrapper {
+          background-color: rgba(255, 255, 255, 0.671);
+          button {
+            background-color: #000;
+            color: #ddd;
+            &:hover {
+              color: #fff;
+            }
+            &:focus {
+              color: #fff;
+              background-color: #000;
+            }
+          }
+        }
+        &:hover {
+          .image-item__btn-wrapper {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    &.featured-image {
+      .choose-images-list {
+        .image-item {
+          border: 1px dashed #111;
+          .image-item__btn-wrapper {
+            button {
+              color: #fff;
+              .material-icons-outlined {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .choose-images-file {
+    background-color: #131313;
+    border: 2px dotted #111;
+    box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.041);
+    &:hover {
+      border-color: $primary2;
+      background-color: #000;
+    }
+  }
+}

@@ -1,0 +1,896 @@
+.timwoork-single {
+  .timwoork-single-post {
+    padding: 20px;
+
+    @media (max-width: 580px) {
+      padding: 0px 0 !important;
+    }
+
+    .timwoork-single-header {
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 9px;
+      padding: 20px 0;
+
+      .title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+
+        @media (max-width: 580px) {
+          font-size: 20px;
+        }
+      }
+
+      .timwoork-single-header-meta {
+        margin-top: 10px;
+        justify-content: space-between;
+
+        @media (max-width: 630px) {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .single-header-meta {
+        padding: 0;
+        margin-top: 12px;
+
+        li {
+          padding: 0 9px;
+          display: flex;
+          font-size: 14px;
+          align-items: center;
+          align-content: center;
+
+          @media (max-width: 580px) {
+            font-size: 12px;
+            padding: 0 7px;
+          }
+
+          &.rate-stars {
+            .stars-icons {
+              .material-icons-outlined {
+                color: rgb(233, 98, 8);
+                font-size: 19px;
+                margin-top: 5px;
+
+                &.outline-star {
+                  color: #777;
+                }
+
+                @media (max-width: 580px) {
+                  font-size: 17px;
+                }
+              }
+            }
+          }
+
+          &.level-item {
+            .text-level {
+              font-weight: 700;
+              color: #555;
+            }
+
+            .value-level {
+              font-weight: 300;
+              color: #333;
+            }
+          }
+
+          &.user-item {
+            a {
+              display: flex;
+              align-items: center;
+              align-content: center;
+              font-weight: bold;
+              color: #333;
+              font-size: 13px;
+
+              .circular-center {
+                display: inline-block;
+              }
+
+              &:hover {
+                color: $primary;
+              }
+            }
+          }
+
+          &.category-item {
+            a {
+              display: flex;
+              align-items: center;
+              align-content: center;
+              font-weight: bold;
+              color: #333;
+              font-size: 13px;
+
+              &:hover {
+                color: $primary;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .timwoork-single-content {
+      .timwoork-single-content-body {
+        overflow-x: hidden;
+        background-color: #fff;
+        padding: 18px;
+        border-radius: 5px;
+
+        .timwoork-single-product-detailts {
+          padding: 20px 0;
+
+          p {
+            font-size: 16px;
+
+            @media (max-width: 580px) {
+              font-size: 14px;
+            }
+          }
+
+          @media (max-width: 580px) {
+            padding: 15px 0;
+          }
+
+          .text {
+            font-size: 26px;
+            color: #333;
+            margin: 14px 0;
+            text-align: justify;
+            font-weight: 400;
+            line-height: 29px;
+
+            @media (max-width: 580px) {
+              font-size: 25px;
+              margin: 13px 0;
+              line-height: 27px;
+            }
+          }
+
+          .single-list {
+            line-height: 29px;
+            font-size: 19px;
+
+            @media (max-width: 580px) {
+              font-size: 17px;
+              line-height: 27px;
+            }
+
+            > li {
+              margin: 6px 0;
+
+              > ul {
+                margin: 15px 0;
+
+                > li {
+                  margin: 6px 0;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .timwoork-single-seller-info {
+        .seller-info-header {
+          padding: 9px 0;
+
+          .title {
+            font-weight: 700;
+          }
+        }
+
+        .seller-info-container {
+          padding: 14px 0;
+
+          .seller-info-avatar {
+            position: relative;
+
+            span.is-online {
+              position: absolute;
+              display: flex;
+              height: 16px;
+              width: 16px;
+              top: 5px;
+              background-color: rgb(64, 175, 97);
+              border-radius: 50%;
+            }
+          }
+
+          .seller-info-content {
+            .user-title {
+              font-size: 20px;
+
+              @media (max-width: 580px) {
+                font-size: 18px;
+              }
+
+              font-weight: bold;
+              margin: 0;
+              color: #333;
+            }
+
+            .user-meta {
+              padding: 0;
+              margin-top: 8px;
+
+              li {
+                display: flex;
+                align-content: center;
+                align-items: center;
+                font-size: 13px;
+
+                @media (max-width: 580px) {
+                  font-size: 12px;
+                }
+
+                padding: 1px 6px;
+
+                color: #555;
+
+                .material-icons {
+                  font-size: 16px;
+
+                  @media (max-width: 580px) {
+                    font-size: 14px;
+                  }
+                }
+              }
+            }
+
+            .seller-info-butts {
+              padding: 10px 0;
+            }
+          }
+        }
+      }
+
+      .timwoork-single-comments {
+        .timwoork-single-comments-inner {
+          .single-comments-header {
+            padding: 14px 0;
+            border-bottom: 1px solid #f4f4f4;
+            margin-bottom: 8px;
+
+            .title {
+              font-weight: bold;
+              font-size: 22px;
+              margin: 0;
+              color: #444;
+              display: flex;
+              align-items: center;
+              align-content: center;
+            }
+          }
+
+          .single-comments-body {
+            .comments-list-items {
+              .list-items-ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                > .comment-item {
+                  padding: 12px;
+                  position: relative;
+
+                  .reply-button {
+                    position: absolute;
+                    top: 19px;
+                  }
+
+                  @media (max-width: 580px) {
+                    padding: 12px 0;
+                  }
+
+                  .comment-item-avatar {
+                    padding-top: 8px;
+                  }
+
+                  .comment-item-content {
+                    padding: 13px;
+
+                    @media (max-width: 580px) {
+                      padding: 12px 0;
+                    }
+
+                    .meta-time,
+                    .user-ratting {
+                      font-size: 12px;
+                      color: #444;
+                      margin: 0;
+                      display: flex;
+                      align-content: center;
+                      align-items: center;
+
+                      span {
+                        font-size: 13px;
+                      }
+                    }
+
+                    .meta-time {
+                      .material-icons {
+                        margin-top: -1px;
+                      }
+                    }
+
+                    .user-title {
+                      font-size: 17px;
+                      font-weight: bold;
+                      color: #444;
+                      margin-top: 6px;
+                    }
+
+                    .item-text {
+                      line-height: 28px;
+                      color: #333;
+                      margin: 0;
+                      margin-top: 7px;
+                    }
+                  }
+
+                  .list-items-replies {
+                    list-style: none;
+
+                    .reply-item {
+                      margin: 5px 0;
+                      background-color: #f7f7f7;
+                      border-radius: 6px;
+                      padding: 20px 13px;
+                    }
+
+                    @media (max-width: 580px) {
+                      padding: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.timwoork-single-header {
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 9px;
+  padding: 20px 0;
+
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+
+    .material-icons {
+      font-size: 35px;
+    }
+
+    &.md {
+      font-size: 18px !important;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      color: #444;
+
+      .material-icons {
+        font-size: 19px;
+      }
+    }
+  }
+
+  .single-header-meta {
+    padding: 0;
+    margin-top: 12px;
+
+    li {
+      padding: 0 9px;
+      display: flex;
+      font-size: 14px;
+      align-items: center;
+      align-content: center;
+      &.rate-stars {
+        .stars-icons {
+          .material-icons-outlined {
+            color: rgb(233, 98, 8);
+            font-size: 19px;
+            margin-top: 5px;
+
+            &.outline-star {
+              color: #777;
+            }
+          }
+        }
+      }
+
+      &.level-item {
+        .text-level {
+          font-weight: 700;
+          color: #555;
+        }
+
+        .value-level {
+          font-weight: 300;
+          color: #333;
+        }
+      }
+
+      &.user-item {
+        a {
+          display: flex;
+          align-items: center;
+          align-content: center;
+          font-weight: bold;
+          color: #333;
+          font-size: 13px;
+
+          .circular-center {
+            display: inline-block;
+          }
+
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+
+      &.category-item {
+        a {
+          display: flex;
+          align-items: center;
+          align-content: center;
+          font-weight: bold;
+          color: #333;
+          font-size: 13px;
+
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+.ltr {
+  .timwoork-single {
+    .timwoork-single-post {
+      .timwoork-single-header {
+        .single-header-meta {
+          li {
+            border-right: 1px solid #ddd;
+
+            &:first-child {
+              padding-left: 0;
+            }
+
+            &:last-child {
+              border-right: 0;
+            }
+            &.user-item {
+              a {
+                .circular-center {
+                  margin-right: 5px;
+                }
+              }
+            }
+
+            &.category-item {
+              a {
+                .material-icons {
+                  margin-right: 6px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .timwoork-single-content {
+        .timwoork-single-seller-info {
+          .seller-info-container {
+            .seller-info-avatar {
+              span.is-online {
+                left: 4px;
+              }
+            }
+            .seller-info-content {
+              .user-meta {
+                li {
+                  &:first-child {
+                    padding-left: 0;
+                  }
+                  .material-icons {
+                    margin-right: 5px;
+                  }
+                }
+              }
+              .seller-info-butts {
+                .btn {
+                  margin-right: 6px;
+                }
+              }
+            }
+          }
+        }
+
+        .timwoork-single-comments {
+          .timwoork-single-comments-inner {
+            .single-comments-header {
+              .title {
+                .material-icons {
+                  margin-right: 7px;
+                }
+              }
+            }
+
+            .single-comments-body {
+              .comments-list-items {
+                .list-items-ul {
+                  > .comment-item {
+                    padding-left: 25px;
+
+                    .reply-button {
+                      right: 14px;
+                    }
+                    @media (max-width: 580px) {
+                      padding-left: 0;
+                    }
+                    .comment-item-content {
+                      @media (max-width: 580px) {
+                        padding-left: 9px;
+                      }
+
+                      .meta-time {
+                        .material-icons {
+                          margin-right: 4px;
+                        }
+                      }
+                    }
+
+                    .list-items-replies {
+                      .reply-item {
+                        padding-left: 40px;
+                        border-left: 4px solid $primary;
+                        @media (max-width: 580px) {
+                          padding-left: 10px;
+                        }
+                      }
+
+                      @media (max-width: 580px) {
+                        padding-left: 10px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .timwoork-single {
+    .timwoork-single-post {
+      .timwoork-single-content {
+        .timwoork-single-content-body {
+          .each-slide {
+            .images-slider {
+              .caption-descriptions {
+                left: 0;
+                right: 0;
+              }
+            }
+          }
+          .arrow-navigations {
+            .material-icons-outlined {
+              margin-left: -22px;
+            }
+          }
+        }
+
+        .timwoork-single-seller-info {
+          .seller-info-container {
+            .seller-info-avatar {
+              padding-right: 12px;
+
+              span.is-online {
+                left: 4px;
+              }
+            }
+            .seller-info-content {
+              .user-meta {
+                li {
+                  &:first-child {
+                    padding-left: 0;
+                  }
+                  .material-icons {
+                    margin-right: 5px;
+                  }
+                }
+              }
+
+              .seller-info-butts {
+                .btn {
+                  margin-right: 6px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .timwoork-single-header {
+    .title {
+      .material-icons {
+        margin-right: 7px;
+      }
+
+      &.md {
+        .material-icons {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .single-header-meta {
+      li {
+        border-right: 1px solid #ddd;
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          border-right: 0;
+        }
+
+        &.level-item {
+          .text-level {
+            margin-right: 4px;
+          }
+        }
+
+        &.user-item {
+          a {
+            .circular-center {
+              margin-right: 5px;
+            }
+          }
+        }
+
+        &.category-item {
+          a {
+            .material-icons {
+              margin-right: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.rtl {
+  .timwoork-single {
+    .timwoork-single-post {
+      .timwoork-single-header {
+        .single-header-meta {
+          li {
+            border-left: 1px solid #ddd;
+
+            &:first-child {
+              padding-right: 0;
+            }
+
+            &:last-child {
+              border-left: 0;
+            }
+            &.user-item {
+              a {
+                .circular-center {
+                  margin-left: 5px;
+                }
+              }
+            }
+
+            &.category-item {
+              a {
+                .material-icons {
+                  margin-left: 6px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .timwoork-single-content {
+        .timwoork-single-seller-info {
+          .seller-info-container {
+            .seller-info-avatar {
+              span.is-online {
+                right: 4px;
+              }
+            }
+            .seller-info-content {
+              .user-meta {
+                li {
+                  &:first-child {
+                    padding-right: 0;
+                  }
+                  .material-icons {
+                    margin-left: 5px;
+                  }
+                }
+              }
+              .seller-info-butts {
+                .btn {
+                  margin-left: 6px;
+                }
+              }
+            }
+          }
+        }
+
+        .timwoork-single-comments {
+          .timwoork-single-comments-inner {
+            .single-comments-header {
+              .title {
+                .material-icons {
+                  margin-left: 7px;
+                }
+              }
+            }
+
+            .single-comments-body {
+              .comments-list-items {
+                .list-items-ul {
+                  > .comment-item {
+                    padding-right: 25px;
+
+                    .reply-button {
+                      left: 14px;
+                    }
+                    @media (max-width: 580px) {
+                      padding-right: 0;
+                    }
+                    .comment-item-content {
+                      @media (max-width: 580px) {
+                        padding-right: 9px;
+                      }
+
+                      .meta-time {
+                        .material-icons {
+                          margin-left: 4px;
+                        }
+                      }
+                    }
+
+                    .list-items-replies {
+                      .reply-item {
+                        padding-right: 40px;
+                        border-right: 4px solid $primary;
+                        @media (max-width: 580px) {
+                          padding-right: 10px;
+                        }
+                      }
+
+                      @media (max-width: 580px) {
+                        padding-right: 10px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .timwoork-single {
+    .timwoork-single-post {
+      .timwoork-single-content {
+        .timwoork-single-content-body {
+          .each-slide {
+            .images-slider {
+              .caption-descriptions {
+                left: 0;
+                right: 0;
+              }
+            }
+          }
+          .arrow-navigations {
+            .material-icons-outlined {
+              margin-right: -22px;
+            }
+          }
+        }
+
+        .timwoork-single-seller-info {
+          .seller-info-container {
+            .seller-info-avatar {
+              padding-left: 12px;
+
+              span.is-online {
+                right: 4px;
+              }
+            }
+            .seller-info-content {
+              .user-meta {
+                li {
+                  &:first-child {
+                    padding-right: 0;
+                  }
+                  .material-icons {
+                    margin-left: 5px;
+                  }
+                }
+              }
+
+              .seller-info-butts {
+                .btn {
+                  margin-left: 6px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .timwoork-single-header {
+    .title {
+      .material-icons {
+        margin-left: 7px;
+      }
+
+      &.md {
+        .material-icons {
+          margin-left: 4px;
+        }
+      }
+    }
+
+    .single-header-meta {
+      li {
+        border-left: 1px solid #ddd;
+        &:first-child {
+          padding-right: 0;
+        }
+
+        &:last-child {
+          border-left: 0;
+        }
+
+        &.level-item {
+          .text-level {
+            margin-left: 4px;
+          }
+        }
+
+        &.user-item {
+          a {
+            .circular-center {
+              margin-left: 5px;
+            }
+          }
+        }
+
+        &.category-item {
+          a {
+            .material-icons {
+              margin-left: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@
   @import "ltr/table-ltr";
   @import "ltr/footer-ltr";
   @import "ltr/conversations-ltr";
+
   direction: ltr;
   font-family: "Roboto Slab", serif;
   .me-auto {
@@ -31,27 +32,6 @@
           .material-icons {
             margin-right: 4px;
           }
-        }
-      }
-    }
-  }
-
-  .content-text-item {
-    &.wallet-info {
-      @media (min-width: 760px) {
-        .text-note {
-          left: 0;
-          right: 0;
-        }
-      }
-    }
-  }
-
-  .timwoork-single-tags {
-    .single-tags-list {
-      li {
-        span {
-          margin-right: 3px;
         }
       }
     }
@@ -160,182 +140,11 @@
       Posts Aside
   ---------------------------------------------------------------------------------------------
   */
-  .timwoork-single {
-    .timwoork-single-post {
-      .timwoork-single-header {
-        .single-header-meta {
-          li {
-            border-right: 1px solid #ddd;
-
-            &:first-child {
-              padding-left: 0;
-            }
-
-            &:last-child {
-              border-right: 0;
-            }
-            &.user-item {
-              a {
-                .circular-center {
-                  margin-right: 5px;
-                }
-              }
-            }
-
-            &.category-item {
-              a {
-                .material-icons {
-                  margin-right: 6px;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .timwoork-single-content {
-        .timwoork-single-seller-info {
-          .seller-info-container {
-            .seller-info-avatar {
-              span.is-online {
-                left: 4px;
-              }
-            }
-            .seller-info-content {
-              .user-meta {
-                li {
-                  &:first-child {
-                    padding-left: 0;
-                  }
-                  .material-icons {
-                    margin-right: 5px;
-                  }
-                }
-              }
-              .seller-info-butts {
-                .btn {
-                  margin-right: 6px;
-                }
-              }
-            }
-          }
-        }
-
-        .timwoork-single-comments {
-          .timwoork-single-comments-inner {
-            .single-comments-header {
-              .title {
-                .material-icons {
-                  margin-right: 7px;
-                }
-              }
-            }
-
-            .single-comments-body {
-              .comments-list-items {
-                .list-items-ul {
-                  > .comment-item {
-                    padding-left: 25px;
-
-                    .reply-button {
-                      right: 14px;
-                    }
-                    @media (max-width: 580px) {
-                      padding-left: 0;
-                    }
-                    .comment-item-content {
-                      @media (max-width: 580px) {
-                        padding-left: 9px;
-                      }
-
-                      .meta-time {
-                        .material-icons {
-                          margin-right: 4px;
-                        }
-                      }
-                    }
-
-                    .list-items-replies {
-                      .reply-item {
-                        padding-left: 40px;
-                        border-left: 4px solid $primary;
-                        @media (max-width: 580px) {
-                          padding-left: 10px;
-                        }
-                      }
-
-                      @media (max-width: 580px) {
-                        padding-left: 10px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .react-slideshow-container {
-    margin-left: -80px;
-    left: 80px;
-  }
-
-  .each-slide {
-    .images-slider {
-      .caption-descriptions {
-        left: 0;
-        right: 0;
-      }
-    }
-  }
 
   .arrow-navigations {
     margin-right: -78px !important;
     .material-icons-outlined {
       margin-left: -22px;
-    }
-  }
-  .single-sidebar {
-    .single-panel-aside {
-      .panel-aside-header {
-        .top-aside-nav {
-          li {
-            &:first-child {
-              padding-left: 0;
-            }
-
-            &:last-child {
-              border-right: 0;
-            }
-
-            .material-icons {
-              margin-right: 5px;
-            }
-          }
-        }
-      }
-
-      .panel-aside-body {
-        .add-devloppers-nav {
-          .devloppers-item {
-            .devloppers-price {
-              margin-left: auto;
-              margin-right: 0;
-            }
-          }
-        }
-      }
-
-      .panel-aside-footer {
-        .aside-footer-total-price {
-          .bayers-count {
-            margin-left: 7px;
-          }
-        }
-      }
     }
   }
 
@@ -400,93 +209,17 @@
       Dashboard Navbar
   ---------------------------------------------------------------------------------------------
   */
-  .dashboard-navbar {
-    .nav {
-      padding-left: 0;
-    }
-    .auth-dashboard {
-      &.left-dash-nav {
-        margin-left: auto;
-      }
-
-      &.right-dash-nav {
-        margin-right: auto;
-      }
-    }
-  }
 
   /*
   ---------------------------------------------------------------------------------------------
       Panels Style
   ---------------------------------------------------------------------------------------------
   */
-  .timlands-panel {
-    .timlands-steps {
-      .timlands-step-item {
-        .text {
-          .icon-circular {
-            margin-right: 4px;
-          }
-        }
-
-        &::after {
-          right: 0;
-          left: 100%;
-        }
-
-        &.active {
-          &::after {
-            left: 0;
-            right: 0;
-          }
-        }
-      }
-    }
-
-    &.is-loader {
-      &::after {
-        left: 0;
-        right: 0;
-      }
-    }
-
-    .timlands-panel-header {
-      .header-butt {
-        margin-left: auto;
-      }
-
-      .title {
-        .material-icons {
-          margin-right: 6px;
-        }
-      }
-    }
-  }
 
   .product-devlopes-butt {
     .add-devs-btn {
       .material-icons-outlined {
         margin-right: 5px;
-      }
-    }
-  }
-  .timlands-panel-item {
-    .panel-item-body {
-      .panel-img-thumb {
-        left: -10px;
-      }
-      .details-items {
-        > li {
-          .det-val {
-            margin-left: auto;
-          }
-        }
-      }
-    }
-
-    .panel-item-footer {
-      .absolute-btns {
-        margin-left: auto;
       }
     }
   }
@@ -542,149 +275,12 @@
       Posts Aside
   ---------------------------------------------------------------------------------------------
   */
-  .timwoork-single {
-    .timwoork-single-post {
-      .timwoork-single-content {
-        .timwoork-single-content-body {
-          .each-slide {
-            .images-slider {
-              .caption-descriptions {
-                left: 0;
-                right: 0;
-              }
-            }
-          }
-          .arrow-navigations {
-            .material-icons-outlined {
-              margin-left: -22px;
-            }
-          }
-        }
-
-        .timwoork-single-seller-info {
-          .seller-info-container {
-            .seller-info-avatar {
-              padding-right: 12px;
-
-              span.is-online {
-                left: 4px;
-              }
-            }
-            .seller-info-content {
-              .user-meta {
-                li {
-                  &:first-child {
-                    padding-left: 0;
-                  }
-                  .material-icons {
-                    margin-right: 5px;
-                  }
-                }
-              }
-
-              .seller-info-butts {
-                .btn {
-                  margin-right: 6px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .timwoork-single-header {
-    .title {
-      .material-icons {
-        margin-right: 7px;
-      }
-
-      &.md {
-        .material-icons {
-          margin-right: 4px;
-        }
-      }
-    }
-
-    .single-header-meta {
-      li {
-        border-right: 1px solid #ddd;
-        &:first-child {
-          padding-left: 0;
-        }
-
-        &:last-child {
-          border-right: 0;
-        }
-
-        &.level-item {
-          .text-level {
-            margin-right: 4px;
-          }
-        }
-
-        &.user-item {
-          a {
-            .circular-center {
-              margin-right: 5px;
-            }
-          }
-        }
-
-        &.category-item {
-          a {
-            .material-icons {
-              margin-right: 6px;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .choose-images-file {
-    .choose-images-list {
-      .image-item {
-        .image-item__btn-wrapper {
-          left: 0;
-          right: 0;
-        }
-      }
-    }
-  }
 
   /*
   -------------------------------------------------------------------------------------------
       Cart List Item
   -------------------------------------------------------------------------------------------
   */
-  .cart-list {
-    .cart-list-item {
-      .cart-item {
-        .add-devloppers-nav {
-          padding-left: 20px;
-        }
-
-        .cart-item-header {
-          .prices-list {
-            li {
-              padding-right: 8px;
-              margin-right: 3px;
-              border-right: 1px solid #f8f8f8;
-            }
-          }
-        }
-
-        .cart-item-price {
-          .price-title-total {
-            margin-right: auto;
-            float: right;
-          }
-        }
-      }
-    }
-  }
 
   .read-more-btn {
     &.is-less {
@@ -710,45 +306,6 @@
     }
   }
 
-  .single-sidebar {
-    .single-panel-aside {
-      .panel-aside-header {
-        .top-aside-nav {
-          li {
-            &:first-child {
-              padding-left: 0;
-            }
-
-            &:last-child {
-              border-right: 0;
-            }
-
-            .material-icons {
-              margin-right: 5px;
-            }
-          }
-        }
-      }
-
-      .panel-aside-body {
-        .add-devloppers-nav {
-          .devloppers-item {
-            .devloppers-price {
-              margin-left: auto;
-            }
-          }
-        }
-      }
-
-      .panel-aside-footer {
-        .aside-footer-total-price {
-          .bayers-count {
-            margin-left: 7px;
-          }
-        }
-      }
-    }
-  }
   .app-label {
     .material-icons {
       margin-left: 3px;

@@ -1,0 +1,31 @@
+.cart-nothing {
+  .cart-nothing-inner {
+    padding: 29px 15px;
+    text-align: center;
+
+    .title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #777;
+      margin: 10px 0;
+    }
+
+    .text {
+      font-size: 13px;
+      color: #999;
+      margin: 0;
+    }
+  }
+}
+.is-dark {
+  .cart-nothing {
+    .cart-nothing-inner {
+      .title {
+        color: #f1f1f1;
+      }
+      .text {
+        color: #ddd;
+      }
+    }
+  }
+}

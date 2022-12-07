@@ -1,131 +1,276 @@
 .app-footer {
-    background-color: #fff;
-    padding: 80px 0;
-  
-    .app-footer-aside {
-      .aside-header {
-        padding: 9px 0;
-        border-bottom: 1px solid #f5f5f5;
-        margin-bottom: 7px;
-        .title {
-          font-weight: 700;
-          font-size: 18px;
-          color: #444;
-        }
+  background-color: #fff;
+  padding: 80px 0;
+
+  .app-footer-aside {
+    .aside-header {
+      padding: 9px 0;
+      border-bottom: 1px solid #f5f5f5;
+      margin-bottom: 7px;
+      .title {
+        font-weight: 700;
+        font-size: 18px;
+        color: #444;
       }
-      .aside-body {
-        .aside-list-items {
-          > li {
-            padding: 5px 0;
-            > a {
-              color: #555;
-              font-size: 13px;
-              &:hover {
-                color: darken($primary2, 9);
-              }
+    }
+    .aside-body {
+      .aside-list-items {
+        > li {
+          padding: 5px 0;
+          > a {
+            color: #555;
+            font-size: 13px;
+            &:hover {
+              color: darken($primary2, 9);
             }
           }
         }
       }
-      .social-icons {
-        margin-top: 9px;
-        padding-top: 14px;
-        border-top: 1px solid #f5f5f5;
+    }
+    .social-icons {
+      margin-top: 9px;
+      padding-top: 14px;
+      border-top: 1px solid #f5f5f5;
+      li {
+        a {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          border-radius: 50%;
+          background-color: #f3f3f3;
+          color: #777;
+          align-content: center;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            transition: all 0.3s;
+            color: #000;
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+}
+.bottom-footer {
+  .payments-logo {
+    img {
+      height: 15px;
+    }
+  }
+  .center-nav-footer {
+    li {
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+  .copy-text {
+    font-size: 13px;
+    margin: 0;
+    color: #333;
+    a {
+      color: #000;
+      font-weight: 700;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+@media (max-width: 992px) {
+  .reverse {
+    flex-direction: column-reverse;
+  }
+}
+.social-link.bt-twitter {
+  color: #fff !important;
+  background-color: #1da1f2 !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-instagram {
+  color: #fff !important;
+  background-image: linear-gradient(to bottom, #405de6, #c13584) !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-facebook {
+  color: #fff !important;
+  background-color: #104ca5 !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.social-link.bt-telegram {
+  color: #fff !important;
+  background-color: #0088cc !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-tiktok {
+  color: #fff !important;
+  background-image: linear-gradient(black, #481063) !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.social-link.bt-linkedin {
+  color: #fff !important;
+  background-color: #2b3557 !important;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.footer-inner {
+  overflow-x: hidden;
+  padding: 70px 0;
+  background-color: #fff;
+  border-top: 2px solid #ddd;
+  .footer-cont {
+    max-width: 1400px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0px 50px;
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
+    @media (max-width: 700px) {
+      padding: 0px 30px;
+    }
+    @media (max-width: 400px) {
+      padding: 0px 8px;
+    }
+  }
+  .footer-item {
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .footerlist {
+      list-style: none;
+      padding: 0;
+      li {
+        padding: 7px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a {
+          font-size: 14px;
+          font-weight: 300;
+          color: #666;
+          &:hover {
+            color: $primary3;
+          }
+        }
+      }
+    }
+  }
+  .payments-footer {
+    border-top: 1px solid #f8f8f8;
+    padding: 16px 0;
+    img {
+      &.pays {
+        height: 14px;
+      }
+      &.ccp {
+        height: 20px;
+      }
+      &.wise {
+        height: 20px;
+      }
+    }
+  }
+}
+.footer-bottom {
+  background-color: #fff;
+  padding: 20px 0;
+  border-top: 2px solid #ddd;
+  .footer-bottom-inner {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    align-items: center;
+    .right-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      img {
+        height: 25px;
+        opacity: 0.6;
+      }
+      .text {
+        font-size: 13px;
+        color: #666;
+        font-weight: 200;
+        margin: 0;
+      }
+    }
+    .left-footer {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      .currency {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+          .rounded-button {
+            display: flex;
+            align-items: center;
+            border: 0;
+            background-color: transparent;
+            transition: all 0.3s;
+            color: #888;
+            border-radius: 30px;
+            height: 35px;
+            padding: 0 10px;
+            svg {
+            }
+            &:hover {
+              background-color: #f6f6f6;
+              transition: all 0.3s;
+              color: #222;
+            }
+          }
+        }
+      }
+      .socials {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
         li {
           a {
-            width: 40px;
-            height: 40px;
-            display: flex;
             border-radius: 50%;
-            background-color: #f3f3f3;
-            color: #777;
-            align-content: center;
+            width: 35px;
+            height: 35px;
+            color: #999;
+            transition: all 0.3s;
             align-items: center;
+            display: flex;
             justify-content: center;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 19px;
             &:hover {
               transition: all 0.3s;
-              color: #000;
-              background-color: #ddd;
+              background-color: #f6f6f6;
+              color: #222;
             }
           }
         }
       }
     }
   }
-  .bottom-footer {
-    .payments-logo {
-      img {
-        height: 15px;
-      }
-    }
-    .center-nav-footer {
-      li {
-        font-size: 13px;
-        font-weight: 600;
-      }
-    }
-    .copy-text {
-      font-size: 13px;
-      margin: 0;
-      color: #333;
-      a {
-        color: #000;
-        font-weight: 700;
-        &:hover {
-          color: $primary;
-        }
-      }
-    }
-  }
-  @media (max-width: 992px) {
-    .reverse {
-      flex-direction: column-reverse;
-    }
-  }
-  .social-link.bt-twitter {
-    color: #fff !important;
-    background-color: #1da1f2 !important;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-  
-  .social-link.bt-instagram {
-    color: #fff !important;
-    background-image: linear-gradient(to bottom, #405de6, #c13584) !important;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-  
-  .social-link.bt-facebook {
-    color: #fff !important;
-    background-color: #104ca5 !important;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-  .social-link.bt-telegram {
-    color: #fff !important;
-    background-color: #0088cc !important;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-  
-  .social-link.bt-tiktok {
-    color: #fff !important;
-    background-image: linear-gradient(black, #481063) !important;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-  
-  .social-link.bt-linkedin {
-    color: #fff !important;
-    background-color: #2b3557 !important;
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-  
+}

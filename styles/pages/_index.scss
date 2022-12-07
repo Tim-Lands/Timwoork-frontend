@@ -1,0 +1,153 @@
+.page-header {
+  padding: 18px 0;
+  border-bottom: 1px dashed #f1f1f1;
+  margin-bottom: 15px;
+  display: flex;
+
+  @media (max-width: 580px) {
+    margin-bottom: 7px;
+  }
+
+  .add-new-product {
+    display: flex;
+    border-radius: 5px;
+    background-color: #ddd;
+    color: #555;
+    padding: 7px 10px;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: #000;
+      background-color: #ccc;
+    }
+
+    .material-icons {
+      font-size: 17px;
+    }
+  }
+
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+
+    @media (max-width: 580px) {
+      font-size: 20px;
+    }
+  }
+
+  &.sm {
+    padding: 15px 0;
+    margin-bottom: 12px;
+
+    .title {
+      font-size: 25px;
+    }
+  }
+
+  &.xs {
+    padding: 12px 0;
+    margin-bottom: 10px;
+
+    .title {
+      font-size: 20px;
+    }
+  }
+}
+
+.page-content {
+  padding: 12px 28px;
+
+  @media (max-width: 580px) {
+    padding: 12px 12px;
+  }
+
+  h5 {
+    font-size: 25px;
+
+    @media (max-width: 580px) {
+      font-size: 20px;
+    }
+  }
+
+  .sub-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 20px 0;
+    margin-top: 0;
+
+    @media (max-width: 580px) {
+      font-size: 20px;
+    }
+  }
+
+  .text {
+    font-size: 20px;
+    color: #444;
+    font-weight: 200;
+    line-height: 41px;
+    margin: 0;
+
+    @media (max-width: 580px) {
+      font-size: 16px;
+      line-height: 31px;
+    }
+  }
+
+  .list {
+    @media (max-width: 580px) {
+      padding-inline: 10px 0px;
+    }
+
+    li {
+      &.title {
+        font-weight: 400;
+        font-size: 22px;
+        color: #444;
+
+        @media (max-width: 580px) {
+          font-size: 16px;
+          line-height: 31px;
+        }
+      }
+
+      font-size: 20px;
+      font-weight: 200;
+      color: #444;
+      line-height: 41px;
+      margin-bottom: 15px;
+
+      @media (max-width: 580px) {
+        font-size: 16px;
+        line-height: 31px;
+      }
+    }
+  }
+}
+.page-loading-spinner {
+  padding: 29px 0;
+  margin-top: 35px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+
+  .spinner-border {
+    border: 0.25em solid $primary;
+    border-right-color: transparent;
+  }
+
+  &.sm {
+    padding: 16px 0;
+    margin-top: 25px;
+    height: 100px;
+
+    .spinner-border {
+      border: 0.15em solid $primary;
+      border-right-color: transparent;
+    }
+  }
+}

@@ -510,7 +510,18 @@
 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
   background-color: $primary !important;
 }
+.post-item-content {
+  .post-meta-rate {
+    .material-icons-outlined {
+      color: rgb(236, 127, 2);
+      font-size: 15px;
+    }
 
+    .outline-star {
+      color: #acacac;
+    }
+  }
+}
 .swiper {
   .swiper-button-prev,
   .swiper-rtl .swiper-button-next {
@@ -529,5 +540,50 @@
     .swiper-rtl .swiper-button-prev {
       transition: all 0.3s;
     }
+  }
+}
+.posts-aside {
+  padding: 40px 0;
+
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
+
+  .posts-aside-header {
+    padding: 20px 0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f1f1f1;
+    display: flex;
+
+    .title {
+      font-size: 19px;
+      font-weight: bold;
+    }
+  }
+}
+.is-dark {
+  .posts-aside {
+    .posts-aside-header {
+      border-bottom: 1px solid #111;
+      .title {
+        color: #fff;
+      }
+    }
+  }
+}
+@media (min-width: 720px) {
+  .post-resposive-with-desktop {
+    display: block;
+  }
+  .post-resposive-with-smart {
+    display: none;
+  }
+}
+@media (max-width: 720px) {
+  .post-resposive-with-desktop {
+    display: none;
+  }
+  .post-resposive-with-smart {
+    display: block;
   }
 }

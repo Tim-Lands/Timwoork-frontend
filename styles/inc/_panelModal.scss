@@ -1,0 +1,110 @@
+.panel-modal {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.11);
+  width: 730px;
+  margin: 20px auto;
+  z-index: 999;
+  overflow: hidden;
+
+  &.md {
+    width: 790px;
+  }
+
+  &.lg {
+    width: 880px;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+
+  .panel-modal-header {
+    padding: 17px 12px;
+    border-bottom: 1px solid #f6f6f6;
+    margin-bottom: 7px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+
+    .title {
+      font-weight: bold;
+      color: #444;
+      margin: 0;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      align-content: center;
+
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+
+    .panel-modal-left-tools {
+      margin-right: auto;
+
+      .close-modal {
+        background-color: #fff;
+        display: flex;
+        width: 40px;
+        height: 40px;
+        color: #777;
+        border-radius: 50%;
+        border: 0;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+
+        .material-icons {
+          font-size: 20px;
+        }
+
+        &:hover {
+          color: #333;
+          background-color: #f8f8f8;
+          transition: all 0.3s;
+        }
+
+        &:focus {
+          color: #000;
+          background-color: #f1f1f1;
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
+
+  .panel-modal-body {
+    padding: 17px 12px;
+    position: relative;
+    overflow-y: scroll;
+    height: 445px;
+
+    &.auto-height {
+      height: auto;
+      overflow-y: hidden;
+    }
+
+    .is-loading {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.699);
+      z-index: 20;
+    }
+  }
+
+  .panel-modal-footer {
+    display: flex;
+    padding: 17px 12px;
+    border-top: 1px solid #ddd;
+    background-color: #f7f7f7;
+  }
+}

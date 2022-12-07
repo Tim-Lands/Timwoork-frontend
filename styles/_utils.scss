@@ -1,0 +1,467 @@
+@mixin hideInput {
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+@mixin focusOutline {
+  outline: dotted 1px #ccc;
+  outline-offset: 0.45rem;
+}
+@mixin breakpoint($point) {
+  @if $point==1100 {
+    @media (max-width: 1100px) {
+      @content;
+    }
+  } @else if $point==800 {
+    @media (max-width: 800px) {
+      @content;
+    }
+  }
+}
+// Create Circular Center
+.circular-center {
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+
+  &.small-size {
+    width: 40px;
+    height: 40px;
+  }
+
+  &.semi-small-size {
+    width: 35px;
+    height: 35px;
+  }
+
+  &.tiny-size {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.circular-img {
+  border-radius: 50%;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &.huge2-size {
+    width: 110px;
+    height: 110px;
+  }
+
+  &.huge-size {
+    width: 90px;
+    height: 90px;
+  }
+
+  &.xl-size {
+    width: 75px;
+    height: 75px;
+  }
+
+  &.lg-size {
+    width: 65px;
+    height: 65px;
+  }
+
+  &.md-size {
+    width: 50px;
+    height: 50px;
+  }
+
+  &.small-size {
+    width: 40px;
+    height: 40px;
+  }
+
+  &.semi-small-size {
+    width: 35px;
+    height: 35px;
+  }
+
+  &.tiny-size {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+.material-icons {
+  line-height: 0;
+
+  @media (max-width: 450px) {
+    font-size: 18px;
+  }
+}
+.row {
+  margin: 0;
+}
+
+.flex-center {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.align-center {
+  text-align: center;
+}
+
+h3 {
+  line-height: 25px;
+}
+
+.ant-table-content {
+  table {
+    tr {
+      th {
+        font-weight: bold;
+      }
+
+      td,
+      th {
+        font-size: 12px;
+      }
+    }
+  }
+}
+.timwoork-logo {
+  margin: 8px 0;
+  padding: 5px 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+
+  img {
+    height: 35px;
+  }
+}
+.timwoork-single-tags {
+  .single-tags-list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+
+    li {
+      padding-bottom: 3px;
+
+      &.title {
+        font-weight: bold;
+        padding: 5px;
+      }
+
+      span {
+        display: block;
+        padding: 6px 13px;
+        color: #444;
+        font-size: 13px;
+        background-color: #f7f7f7;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: #f1f1f1;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+.text-quatity {
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+}
+.is-dark {
+  .timwoork-single-tags {
+    .single-tags-list {
+      li {
+        &.title {
+          color: #fff;
+        }
+        a {
+          color: #fff;
+          background-color: #222;
+          &:hover {
+            background-color: #111;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .text-quatity {
+    color: #fff;
+  }
+}
+.transition-5 {
+  bottom: 50px !important;
+}
+.ltr {
+  .timwoork-single-tags {
+    .single-tags-list {
+      li {
+        span {
+          margin-right: 3px;
+        }
+      }
+    }
+  }
+}
+.rtl {
+  .timwoork-single-tags {
+    .single-tags-list {
+      li {
+        span {
+          margin-left: 3px;
+        }
+      }
+    }
+  }
+}
+.toggle {
+  margin: 0 0 1.5rem;
+
+  input {
+    @include hideInput;
+  }
+
+  input + label {
+    cursor: pointer;
+    margin: 0;
+    padding: 0.75rem 2rem;
+    position: relative;
+    display: flex;
+    border: solid 1px #ddd;
+    border-bottom: 0;
+    align-items: center;
+    align-content: center;
+    background-color: #fff;
+    font-size: 0.8rem;
+    line-height: 140%;
+    color: #777;
+    font-weight: 300;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    transition: border-color 0.15s ease-out, color 0.25s ease-out,
+      background-color 0.15s ease-out, box-shadow 0.15s ease-out;
+
+    img {
+      width: 55px;
+      opacity: 0.4;
+    }
+
+    &:first-of-type {
+      border-radius: 6px 6px 0 0;
+    }
+
+    &:last-of-type {
+      border-bottom: solid 1px #ddd;
+      border-radius: 0 0 6px 6px;
+    }
+  }
+
+  input:hover + label {
+    border-color: #ccc;
+    color: #000;
+    background-color: #f5f5f5;
+  }
+
+  input:checked + label {
+    background-color: $primary;
+    color: #fff;
+    box-shadow: $activeShadow;
+    border-color: $primary;
+    z-index: 1;
+    font-weight: bold;
+
+    img {
+      opacity: 1;
+    }
+  }
+
+  input:focus + label {
+    @include focusOutline;
+  }
+
+  @include breakpoint(800) {
+    input + label {
+      padding: 0.75rem 0.25rem;
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+/* STYLING FOR THE STATUS HELPER TEXT FOR THE DEMO */
+.status {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+
+  span {
+    font-weight: 600;
+    color: $gold;
+
+    &:first-of-type {
+      display: inline;
+    }
+
+    &:last-of-type {
+      display: none;
+    }
+  }
+
+  @include breakpoint(800) {
+    span {
+      &:first-of-type {
+        display: none;
+      }
+
+      &:last-of-type {
+        display: inline;
+      }
+    }
+  }
+}
+
+.ReactTags :global {
+  /* Example Styles for React Tags*/
+  .app {
+    padding: 40px;
+    text-align: center;
+  }
+
+  /* Example Styles for React Tags*/
+
+  .container {
+    margin: auto;
+    width: 50%;
+  }
+
+  .ReactTags__tags {
+    position: relative;
+  }
+
+  .ReactTags__clearAll {
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px;
+    background: #f88d8d;
+    color: #fff;
+    border: none;
+  }
+
+  /* Styles for the input */
+  .ReactTags__tagInput {
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .ReactTags__tagInput input.ReactTags__tagInputField,
+  .ReactTags__tagInput input.ReactTags__tagInputField:focus {
+    height: 31px;
+    margin: 0;
+    font-size: 12px;
+    border: 1px solid #eee;
+    min-width: 150px;
+  }
+
+  .ReactTags__editInput {
+    border-radius: 1px;
+  }
+
+  .ReactTags__editTagInput {
+    display: inline-flex;
+  }
+
+  /* Styles for selected tags */
+  .ReactTags__selected span.ReactTags__tag {
+    border: 1px solid #ddd;
+    background: #63bcfd;
+    color: white;
+    font-size: 12px;
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 2px;
+  }
+
+  .ReactTags__selected a.ReactTags__remove {
+    color: #aaa;
+    cursor: pointer;
+  }
+
+  /* Styles for suggestions */
+  .ReactTags__suggestions {
+    position: absolute;
+    top: 60px;
+  }
+
+  .ReactTags__suggestions ul {
+    list-style-type: none;
+    box-shadow: 0.05em 0.01em 0.5em rgba(0, 0, 0, 0.2);
+    background: white;
+    width: 200px;
+  }
+
+  .ReactTags__suggestions li {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0;
+  }
+
+  .ReactTags__suggestions li mark {
+    text-decoration: underline;
+    background: none;
+    font-weight: 600;
+  }
+
+  .ReactTags__suggestions ul li.ReactTags__activeSuggestion {
+    background: #b7cfe0;
+    cursor: pointer;
+  }
+
+  .ReactTags__remove {
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: white;
+  }
+}
+
+.StripeElement {
+  margin: 9px 0;
+  font-size: 14px;
+  border: 1px solid #f3f3f3;
+  border-radius: 6px;
+  padding: 13px 20px;
+}
+.flex-center-just {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+.active {
+  color: #d2ac02 !important;
+}
+
+.selected {
+  background-color: rgba(71, 92, 128, 0.4) !important;
+}
