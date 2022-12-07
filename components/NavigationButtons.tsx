@@ -2,11 +2,13 @@ import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+
+
 const NavigationButtons = ({
   nextTitle,
   backTitle,
   nextIcon,
-  backIcon,
+  backIcon, 
   onNextClick,
   onBackClick,
   isNextVisible,
@@ -33,7 +35,7 @@ const NavigationButtons = ({
       : "chevron_right",
     backIcon: backIcon
       ? backIcon
-      : language == "en"
+      : language == "ar"
       ? "chevron_right"
       : "chevron_left",
     onBackClick: onBackClick
@@ -42,17 +44,19 @@ const NavigationButtons = ({
           router.back();
         },
     onNextClick: onNextClick,
-    isNextVisible: isNextVisible ? isNextVisible : true,
-    isBackVisible: isBackVisible ? isBackVisible : true,
+    isNextVisible: isNextVisible != undefined ? isNextVisible : true,
+    isBackVisible: isBackVisible != undefined ? isBackVisible : true,
   });
 
+  console.log(props)
+
   return (
-    <div>
+    <>
       {props.isBackVisible && (
         <button
           onClick={(e) => props.onBackClick(e)}
           type="button"
-          className="btn flex-center butt-primary2-out mx-1 butt-md"
+          className="btn flex-center butt-primary2-out me-auto butt-md"
         >
           <span className="material-icons-outlined">{props.backIcon}</span>
           <span className="text">{props.backTitle}</span>
@@ -60,7 +64,7 @@ const NavigationButtons = ({
       )}
       {props.isNextVisible && (
         <button
-          onClick={(e) => props.onNextClick(e)}
+          onClick={(e) => onNextClick(e)}
           type="button"
           className="btn flex-center butt-green ml-auto butt-sm"
         >
@@ -68,7 +72,7 @@ const NavigationButtons = ({
           <span className="material-icons-outlined">{props.nextIcon}</span>
         </button>
       )}
-    </div>
+    </>
   );
 };
 

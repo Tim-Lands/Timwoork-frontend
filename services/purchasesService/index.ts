@@ -1,10 +1,10 @@
 import API from "../../config";
 async function getAll() {
-  const res = await API.get("api/my_purchases");
+  const res = await API.get("api/new/me/items/purchases");
   return res.data.data;
 }
 async function getOne(id: number) {
-  const res = await API.get("api/my_purchases/" + id);
+  const res = await API.get("api/new/me/items/purchases/" + id);
   return res.data.data;
 }
 async function updateOne(query: string, body = {}, headers = {}) {

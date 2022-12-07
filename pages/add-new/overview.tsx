@@ -15,6 +15,7 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
 import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
+import NavigationButtons from "@/components/NavigationButtons";
 
 const MySelect = (props: any) => {
   const [dataTags, setDataTags] = useState([]);
@@ -67,7 +68,7 @@ function Overview({ query }) {
   const {
     user,
     categories: { product: categories },
-    languages: { language, getAll },
+    languages: { getAll },
   } = useAppSelector((state) => state);
   useEffect(() => {
     if (getProduct.loaded && getProduct.id == query.id) return;
@@ -396,25 +397,7 @@ function Overview({ query }) {
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
                           <span className="me-auto"></span>
-                          <button
-                            type="submit"
-                            disabled={
-                              (!getProduct ? true : false) ||
-                              formik.isSubmitting
-                            }
-                            className="btn flex-center butt-green ml-auto butt-sm"
-                          >
-                            <span className="text">{getAll("Next_step")}</span>
-                            {language === "ar" ? (
-                              <span className="material-icons-outlined">
-                                chevron_left
-                              </span>
-                            ) : (
-                              <span className="material-icons-outlined">
-                                chevron_right
-                              </span>
-                            )}
-                          </button>
+                          <NavigationButtons isBackVisible={false} onNextClick={formik.handleSubmit} nextTitle={getAll('Next_step')}/>
                         </div>
                       </div>
                     </div>

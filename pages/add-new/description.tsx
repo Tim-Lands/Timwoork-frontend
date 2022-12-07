@@ -16,6 +16,7 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { useFormik } from "formik";
 import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
+import NavigationButtons from "@/components/NavigationButtons";
 
 // export const MenuBar = ({ editor }) => {
 //   if (!editor) {
@@ -172,7 +173,7 @@ function Description({ query }) {
   const [isShownInstrucModal, setIsShownInstrucModal] = useState(false);
   const [userLang, setUserLang] = useState();
 
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
 
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const veriedEmail = user.email_verified;
@@ -489,41 +490,8 @@ function Description({ query }) {
                         </div>
                         <div className="col-md-12">
                           <div className="py-4 d-flex">
-                            <button
-                              onClick={() => router.back()}
-                              type="button"
-                              className="btn flex-center butt-primary2-out me-auto butt-md"
-                            >
-                              {language === "ar" ? (
-                                <span className="material-icons-outlined">
-                                  chevron_right
-                                </span>
-                              ) : (
-                                <span className="material-icons-outlined">
-                                  chevron_left
-                                </span>
-                              )}
-                              <span className="text">
-                                {getAll("Previous_step")}
-                              </span>
-                            </button>
-                            <button
-                              type="submit"
-                              className="btn flex-center butt-green ml-auto butt-sm"
-                            >
-                              <span className="text">
-                                {getAll("Next_step")}
-                              </span>
-                              {language === "ar" ? (
-                                <span className="material-icons-outlined">
-                                  chevron_left
-                                </span>
-                              ) : (
-                                <span className="material-icons-outlined">
-                                  chevron_right
-                                </span>
-                              )}
-                            </button>
+                          <NavigationButtons onNextClick={formik.handleSubmit} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
+                            
                           </div>
                         </div>
                       </div>

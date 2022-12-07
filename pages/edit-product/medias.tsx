@@ -14,6 +14,7 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
+import NavigationButtons from "@/components/NavigationButtons";
 
 function Medias({ query }) {
   const dispatch = useAppDispatch();
@@ -356,31 +357,8 @@ function Medias({ query }) {
 
               <div className="col-md-12">
                 <div className="py-4 d-flex">
-                  <button
-                    onClick={() => router.back()}
-                    type="button"
-                    className="btn flex-center butt-primary2-out me-auto butt-xs"
-                  >
-                    <span className="material-icons-outlined">
-                      chevron_right
-                    </span>
-                    <span className="text">{getAll("Previous_step")}</span>
-                    <div
-                      className="spinner-border spinner-border-sm text-white"
-                      role="status"
-                    ></div>
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    onClick={loadImagesHandle}
-                    className="btn flex-center butt-green ml-auto butt-sm"
-                  >
-                    <span className="text">{getAll("Next_step")}</span>
-                    <span className="material-icons-outlined">
-                      chevron_left
-                    </span>
-                  </button>
+                <NavigationButtons onNextClick={()=>loadImagesHandle()} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
+                  
                 </div>
               </div>
             </div>

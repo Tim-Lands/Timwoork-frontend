@@ -16,6 +16,7 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import RemoveImageModal from "@/components/removeImageModal";
+import NavigationButtons from "@/components/NavigationButtons";
 
 function Medias({ query }) {
   const [validationsErrors, setValidationsErrors]: any = useState({});
@@ -31,11 +32,12 @@ function Medias({ query }) {
         router.push("/add-new");
       });
   }, []);
-  const { getAll, language } = useAppSelector((state) => state.languages);
+  const { getAll} = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
 
   const [featuredMedia, setFeaturedImages]: any = useState("");
   const [galleryMedia, setGalleryMedia]: any = useState([]);
+  console.log(galleryMedia)
   const [isFeaturedChanged, setIsFeaturedChanged] = useState(false);
   const [isGalleryChanged, setIsGalleryChanged] = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
@@ -123,6 +125,8 @@ function Medias({ query }) {
       "i"
     );
     if (galleryMedia.length <= 0) {
+      console.log('gallery is 0')
+      console.log(galleryMedia)
       notification.open({
         message: getAll("An_error_occurred"),
         description: getAll("Please_add_at_2"),
@@ -355,39 +359,8 @@ function Medias({ query }) {
 
                   <div className="col-md-12">
                     <div className="py-4 d-flex">
-                      <button
-                        onClick={() => router.back()}
-                        type="button"
-                        className="btn flex-center butt-primary2-out me-auto butt-md"
-                      >
-                        {language === "ar" ? (
-                          <span className="material-icons-outlined">
-                            chevron_right
-                          </span>
-                        ) : (
-                          <span className="material-icons-outlined">
-                            chevron_left
-                          </span>
-                        )}
-                        <span className="text">{getAll("Previous_step")}</span>
-                      </button>
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        onClick={loadImagesHandle}
-                        className="btn flex-center butt-green ml-auto butt-sm"
-                      >
-                        <span className="text">{getAll("Next_step")}</span>
-                        {language === "ar" ? (
-                          <span className="material-icons-outlined">
-                            chevron_left
-                          </span>
-                        ) : (
-                          <span className="material-icons-outlined">
-                            chevron_right
-                          </span>
-                        )}
-                      </button>
+                    <NavigationButtons onNextClick={()=>loadImagesHandle()} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
+
                     </div>
                   </div>
                 </div>

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { PurchasesActions } from "store/purchases/purchasesActions";
-import Items, { EItemType } from "@/components/items/Items";
+import Items from "@/components/items/Items";
 function index() {
   const dispatch = useAppDispatch();
   const {
@@ -33,7 +33,7 @@ function index() {
         ogDescription={getAll("My_purchases")}
       />
       {veriedEmail && (
-       <Items onChange={onChange} items = {purchases} itemType = {EItemType.PURCHASES}/>
+       <Items onChange={onChange} items = {purchases} itemType = {'purchases'}/>
       )}
     </>
   );

@@ -4,7 +4,7 @@ import { MetaTags } from "@/components/SEO/MetaTags";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { SalesActions } from "store/sales/salesActions";
-import Items, { EItemType } from "@/components/items/Items";
+import Items from "@/components/items/Items";
 function index() {
   const dispatch = useAppDispatch();
   const {
@@ -34,7 +34,7 @@ function index() {
         ogDescription={getAll("My_sells")}
       />
       {veriedEmail && (
-        <Items onChange={onChange} items = {sales} itemType = {EItemType.SALES}/>
+        <Items onChange={onChange} items = {sales} itemType = {'sales'}/>
       )}
     </>
   );
