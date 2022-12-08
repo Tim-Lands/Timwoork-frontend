@@ -79,3 +79,9 @@
     }
   }
 }
+.ant-upload.ant-upload-select-picture-card {
+  border-radius: 6px !important;
+}
+.ant-upload.ant-upload-select-picture-card:hover {
+  border-color: $primary !important;
+}

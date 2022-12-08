@@ -6192,6 +6192,14 @@
   color: #475c80;
 }
 
+.ant-upload.ant-upload-select-picture-card {
+  border-radius: 6px !important;
+}
+
+.ant-upload.ant-upload-select-picture-card:hover {
+  border-color: #475c80 !important;
+}
+
 .timwoork-404-page {
   height: 100vh;
   display: flex;

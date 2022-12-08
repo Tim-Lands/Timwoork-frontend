@@ -164,7 +164,7 @@ function BankAccount({ create, setIsShowBankTransfert }: any) {
                   )}
                   {Countries.map((e: any) => (
                     <option value={e.id} key={e.id}>
-                      {e.name_ar}
+                      {e.ar_name}
                     </option>
                   ))}
                 </select>

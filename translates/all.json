@@ -620,6 +620,7 @@
     "fr": "Importer maintenant",
     "ar": "رفع الآن"
   },
+
   "profile_photo": {
     "en": "Profile photo must be the same height and width, and no larger than 2MB",
     "fr": "La photo de profil doit avoir la même hauteur et la même largeur, et pas plus de 2 Mégaoctet",
@@ -6146,6 +6147,11 @@
     "fr": "Galerie d’affaires",
     "ar": "معرض الأعمال"
   },
+  "Business_gallery_photo": {
+    "en": "Business gallery's background",
+    "fr": "Fond de galerie d'affaires",
+    "ar": "خلفية معرض الأعمال"
+  },
   "Palestine": {
     "en": "Palestine",
     "fr": "Palestine",
@@ -6380,6 +6386,11 @@
     "en": "Select the type of competition well, as the type of competition requires the freelancer to participate in the competition if it is (images / videos / texts, articles, or website domains)",
     "fr": "Sélectionnez bien le type de concours, car il oblige l’indépendant/ freelancer à participer au concours s'il en est (images / vidéos / textes, articles ou domaines de site Web)",
     "ar": "حدد نوع المسابقة جيداً, فنوع المسابقة يفرض على المستقل نوع مشاركته فى المسابقه إذا كانت (صور / فيديو / نصوص ومقالات  أو نطاقات مواقع)  "
+  },
+  "Select_the_type": {
+    "en": "Select the type of ID",
+    "fr": "Sélectionner le type d’identifiant",
+    "ar": "اختر نوع الهوية"
   },
   "Explain_your_requirements": {
     "en": "Explain your requirements clearly in Arabic so that it is easy for freelancers to understand and implement them",

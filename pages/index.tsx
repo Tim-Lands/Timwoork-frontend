@@ -16,8 +16,9 @@ function index() {
   const {
     products: { popular, best_seller, latest },
     categories: { all: categories },
-    languages: { getAll },
+    languages: { getAll, language },
   } = useAppSelector((state) => state);
+
   useEffect(() => {
     if (!latest.loaded) dispatch(ProductsActions.getLatestProducts());
     if (!best_seller.loaded) dispatch(ProductsActions.getSellingProducts());

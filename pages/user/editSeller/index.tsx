@@ -17,7 +17,12 @@ import { useFormik } from "formik";
 import FormLangsCheck from "@/components/Forms/FormLangsCheck";
 import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
-
+import { Upload } from "antd";
+import type {
+  RcFile,
+  UploadFile,
+  UploadProps,
+} from "antd/lib/upload/interface";
 export const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
@@ -127,6 +132,26 @@ const Tiptap = (props: any) => {
 };
 
 const EditSeller = () => {
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as RcFile);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
   const dispatch = useAppDispatch();
 
   const { profile_seller, loading } = useAppSelector((state) => state.profile);
@@ -216,6 +241,7 @@ const EditSeller = () => {
         metaDescription={getAll("Edit_the_sellers")}
         ogDescription={getAll("Edit_the_sellers")}
       />
+
       {veriedEmail && (
         <>
           {loading && <Loading />}
@@ -295,6 +321,29 @@ const EditSeller = () => {
                                     </motion.div>
                                   </div>
                                 )}
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="timlands-form">
+                              <label
+                                className="label-block"
+                                htmlFor="portfolio"
+                              >
+                                {getAll("Business_gallery_photo")}
+                              </label>
+
+                              <Upload
+                                customRequest={({ onSuccess }) => {
+                                  onSuccess("done");
+                                }}
+                                listType="picture-card"
+                                fileList={fileList}
+                                onChange={onChange}
+                                accept=".png,.jpg,.jpeg"
+                                onPreview={onPreview}
+                              >
+                                {fileList.length < 1 && "+ Upload"}
+                              </Upload>
                             </div>
                           </div>
                           <div className="col-md-12">

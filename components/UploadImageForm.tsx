@@ -1,7 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
-
+import { useAppSelector } from "store/hooks";
+import { Button, Tooltip } from "antd";
+import { FaTrash } from "react-icons/fa";
 export default function UploadImageForm({
   validationsErrors,
   setPicture,
@@ -9,6 +11,9 @@ export default function UploadImageForm({
   //const [imgData, setImgData] = useState(src);
   const [images, setImages] = useState([]);
   const [imagesData, setImagesData] = useState([]);
+  const {
+    languages: { getAll },
+  } = useAppSelector((state) => state);
   const onChangePicture = (e: any) => {
     if (e.target.files[0]) {
       setPicture([...images, e.target.files[e.target.files.length - 1]]);
@@ -29,9 +34,17 @@ export default function UploadImageForm({
   return (
     <div className="login-panel update-form">
       <div className={"panel-modal-body login-panel-body auto-height"}>
-        <button type="button" onClick={clearImages}>
-          clear
-        </button>
+        <div style={{ position: "absolute", zIndex: 1000 }}>
+          <Tooltip title={getAll("Cancel")}>
+            <Button
+              shape="circle"
+              danger
+              size="middle"
+              icon={<FaTrash />}
+              onClick={clearImages}
+            />
+          </Tooltip>
+        </div>
         <div className="avatar-uploader image-identifie">
           <img width={110} height={110} src={imagesData[0]} />
           <input
