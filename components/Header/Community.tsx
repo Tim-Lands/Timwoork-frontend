@@ -6,7 +6,10 @@ import PropTypes from "prop-types";
 import { RiUserSmileLine } from "react-icons/ri";
 
 const Community = ({ refs }) => {
-  const { getAll } = useAppSelector((state) => state.languages);
+  const {
+    languages: { getAll },
+    user,
+  } = useAppSelector((state) => state);
 
   return (
     <motion.div
@@ -16,6 +19,40 @@ const Community = ({ refs }) => {
       className="nav-menu-dropdown"
     >
       <ul className="menu-list-dropdown">
+        <li>
+          <Link href={`/blog`}>
+            <a className="dropd-item">
+              <div className="dropd-item-img">
+                <span className="icon-item link-circular-button">
+                  <span className="material-icons material-icons-outlined">
+                    edit_note
+                  </span>
+                </span>
+              </div>
+              <div className="dropd-item-content">
+                <h4 className="title">{getAll("Blog")}</h4>
+                <p className="text">{getAll("general_information")}</p>
+              </div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={`/portfolios/user/${user.username}`}>
+            <a className="dropd-item">
+              <div className="dropd-item-img">
+                <span className="icon-item link-circular-button">
+                  <span className="material-icons material-icons-outlined">
+                    photo_library
+                  </span>
+                </span>
+              </div>
+              <div className="dropd-item-content">
+                <h4 className="title">{getAll("Business_gallery")}</h4>
+                <p className="text">{getAll("Boost_your_sales")}</p>
+              </div>
+            </a>
+          </Link>
+        </li>
         <li>
           <Link href={`/`}>
             <a className="dropd-item">
@@ -50,23 +87,7 @@ const Community = ({ refs }) => {
             </a>
           </Link>
         </li>
-        <li>
-          <Link href={`/`}>
-            <a className="dropd-item">
-              <div className="dropd-item-img">
-                <span className="icon-item link-circular-button">
-                  <span className="material-icons material-icons-outlined">
-                    photo_library
-                  </span>
-                </span>
-              </div>
-              <div className="dropd-item-content">
-                <h4 className="title">{getAll("Business")}</h4>
-                <p className="text">{getAll("Soon")}</p>
-              </div>
-            </a>
-          </Link>
-        </li>
+
         <li>
           <Link href={`/`}>
             <a className="dropd-item">
@@ -78,23 +99,6 @@ const Community = ({ refs }) => {
               <div className="dropd-item-content">
                 <h4 className="title">{getAll("Timwoork_community")}</h4>
                 <p className="text">{getAll("Soon")}</p>
-              </div>
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href={`/blog`}>
-            <a className="dropd-item">
-              <div className="dropd-item-img">
-                <span className="icon-item link-circular-button">
-                  <span className="material-icons material-icons-outlined">
-                    edit_note
-                  </span>
-                </span>
-              </div>
-              <div className="dropd-item-content">
-                <h4 className="title">{getAll("Blog")}</h4>
-                <p className="text">{getAll("general_information")}</p>
               </div>
             </a>
           </Link>

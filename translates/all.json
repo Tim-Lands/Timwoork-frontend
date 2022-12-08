@@ -6143,7 +6143,7 @@
     "ar": "معرض الأعمال ل، فلان بن فلان"
   },
   "Business_gallery": {
-    "en": "Business gallery",
+    "en": "Portfolio",
     "fr": "Galerie d’affaires",
     "ar": "معرض الأعمال"
   },
@@ -6151,6 +6151,11 @@
     "en": "Business gallery's background",
     "fr": "Fond de galerie d'affaires",
     "ar": "خلفية معرض الأعمال"
+  },
+  "Boost_your_sales": {
+    "en": "Boost your sales!",
+    "fr": "Boostez vos ventes!",
+    "ar": "عزز مبيعاتك الان!"
   },
   "Palestine": {
     "en": "Palestine",
