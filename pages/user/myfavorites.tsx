@@ -3,7 +3,6 @@ import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
 import Navbar from "components/Portfolio/navbar";
-import PropTypes from "prop-types";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
 import { useAppSelector } from "@/store/hooks";
 
@@ -36,6 +35,7 @@ function Index() {
                 avatar={`/avatar.png`}
                 views={72868}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -48,6 +48,7 @@ function Index() {
                 avatar={`/avatar.png`}
                 views={72868}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -60,6 +61,7 @@ function Index() {
                 views={72868}
                 avatar={`/avatar.png`}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -72,6 +74,7 @@ function Index() {
                 views={72868}
                 avatar={`/avatar.png`}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
           </div>

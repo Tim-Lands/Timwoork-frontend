@@ -15,6 +15,7 @@ function Portfolio({
   avatar,
   views,
   slug,
+  me = true,
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   const [isFavorated, setIsFavorated] = useState(false);
@@ -30,7 +31,10 @@ function Portfolio({
         </>
       }
     >
-      <div className={"timlands-portfolio-item"}>
+      <div
+        className={"timlands-portfolio-item"}
+        style={{ height: me ? 350 : 400 }}
+      >
         <div
           className="portfolio-item-img"
           style={{ backgroundImage: thumbnailUrl }}
@@ -65,21 +69,25 @@ function Portfolio({
           <p className="views-meta">
             <FaEye /> ({views})
           </p>
-          <Link href={`/u/${username}`}>
-            <a className="user-mata-post">
-              <div className="user-mata-post-img">
-                <Image src={avatar} width={30} height={30} alt={author} />
-              </div>
-              <div className="user-mata-post-content">
-                <p className="text-user">
-                  <span className="text">{author}</span>
-                </p>
-                <p className="text-meta">
-                  <span className="text">{level}</span>
-                </p>
-              </div>
-            </a>
-          </Link>
+          {me ? (
+            <></>
+          ) : (
+            <Link href={`/u/${username}`}>
+              <a className="user-mata-post">
+                <div className="user-mata-post-img">
+                  <Image src={avatar} width={30} height={30} alt={author} />
+                </div>
+                <div className="user-mata-post-content">
+                  <p className="text-user">
+                    <span className="text">{author}</span>
+                  </p>
+                  <p className="text-meta">
+                    <span className="text">{level}</span>
+                  </p>
+                </div>
+              </a>
+            </Link>
+          )}
         </div>
       </div>
     </Badge.Ribbon>
@@ -95,6 +103,7 @@ Portfolio.propTypes = {
   heartCount: PropTypes.number,
   views: PropTypes.number,
   level: PropTypes.string,
+  me: PropTypes.bool,
 };
 
 export default Portfolio;
