@@ -58,7 +58,7 @@ function BankAccountCart({ setIsShowBankTransfert, userInfo = {} }: any) {
             onClick={() => setIsShowBankTransfert(true)}
             className="btn flex-center butt-green ml-auto butt-sm"
           >
-            <span className="text">{getAll("Bank_number")}</span>
+            <span className="text">{getAll("Edit_information")}</span>
           </button>
         </div>
       </div>
