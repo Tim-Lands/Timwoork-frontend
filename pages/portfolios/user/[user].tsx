@@ -11,7 +11,9 @@ import { useAppSelector } from "@/store/hooks";
 function Index({ query }) {
   const { getAll } = useAppSelector((state) => state.languages);
 
+  const unused = "stop building";
   console.log(query);
+
   return (
     <div className="container pt-4 mt-2">
       <MetaTags

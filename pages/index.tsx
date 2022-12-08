@@ -16,7 +16,7 @@ function index() {
   const {
     products: { popular, best_seller, latest },
     categories: { all: categories },
-    languages: { getAll, language },
+    languages: { getAll },
   } = useAppSelector((state) => state);
 
   useEffect(() => {
