@@ -2,61 +2,29 @@ import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
+import Navbar from "components/Portfolio/navbar";
 import PropTypes from "prop-types";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
-import Link from "next/link";
-import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
+
 import { useAppSelector } from "@/store/hooks";
 
 function Index({ query }) {
-  const { getAll } = useAppSelector((state) => state.languages);
+  const {
+    languages: { getAll, language },
+  } = useAppSelector((state) => state);
 
   const unused = "stop building";
-  console.log(query);
+  const title =
+    language === "ar"
+      ? getAll("X’s_business_gallery") + query.user
+      : query.user + getAll("X’s_business_gallery");
 
   return (
     <div className="container pt-4 mt-2">
-      <MetaTags
-        title={"معرض الأعمال ل، فلان بن فلان"}
-        metaDescription={"معرض الأعمال ل، فلان بن فلان"}
-        ogDescription={"معرض الأعمال ل، فلان بن فلان"}
-      />
+      <MetaTags title={title} metaDescription={title} ogDescription={title} />
       <div className="portfolios-container">
         <PortfolioProfileHeader />
-        <div className="portfolios-container">
-          <nav className="portfolios-nav d-flex">
-            <ul className="portfolios-nav-list me-auto">
-              <li>
-                <Link href={`/user/profile`}>
-                  <a className="portfolio-item">
-                    <FaUserCircle /> {getAll("Profile")}
-                  </a>
-                </Link>
-              </li>
-              <li className="active">
-                <Link href={`/portfolios/user/dfdfd`}>
-                  <a className="portfolio-item">
-                    <FaImages /> معرض الأعمال
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href={`/user/myfollowers`}>
-                  <a className="portfolio-item">
-                    <FaRss /> الأشخاص الذين أتابعهم
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href={`/user/myfavorites`}>
-                  <a className="portfolio-item">
-                    <FaHeart /> مفضلاتي
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <Navbar active="portfolio" />
         <div className="portfolios-content">
           <div className="row">
             <div className="col-sm-6 col-lg-3">

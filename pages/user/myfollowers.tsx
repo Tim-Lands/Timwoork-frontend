@@ -3,12 +3,12 @@ import { Result } from "antd";
 import React, { ReactElement, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Navbar from "components/Portfolio/navbar";
 import router from "next/router";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Loading from "@/components/Loading";
 import Sidebar from "@/components/Profile/Sidebar";
 import Unauthorized from "@/components/Unauthorized";
-import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import FollowItem from "@/components/FollowItem";
 import { useAppSelector } from "@/store/hooks";
 
@@ -120,40 +120,7 @@ function MyFollowers() {
                     </button>
                   </p>
                 </div>
-                <div className="portfolios-container">
-                  <nav className="portfolios-nav d-flex">
-                    <ul className="portfolios-nav-list me-auto">
-                      <li>
-                        <Link href={`/user/profile`}>
-                          <a className="portfolio-item">
-                            <FaUserCircle /> {getAll("Profile")}
-                          </a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/portfolios/user/${user.username}`}>
-                          <a className="portfolio-item">
-                            <FaImages /> معرض الأعمال
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="active">
-                        <Link href={`/user/myfollowers`}>
-                          <a className="portfolio-item">
-                            <FaRss /> الأشخاص الذين أتابعهم
-                          </a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href={`/user/myfavorites`}>
-                          <a className="portfolio-item">
-                            <FaHeart /> مفضلاتي
-                          </a>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+                <Navbar active="followers" />
               </div>
               <div className="row">
                 <Sidebar
@@ -164,7 +131,7 @@ function MyFollowers() {
                   <div className="timlands-profile-content">
                     <div className="profile-content-body">
                       <div className="page-header sm">
-                        <h3 className="title">الأشخاص الذين أتابعهم</h3>
+                        <h3 className="title">{getAll("Following")}</h3>
                       </div>
                       <div className="timlands-followers-users">
                         <FollowItem

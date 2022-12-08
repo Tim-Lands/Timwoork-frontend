@@ -6139,9 +6139,9 @@
     "ar": "مفضلاتي"
   },
   "X’s_business_gallery": {
-    "en": "X’s business gallery",
-    "fr": "Galerie d’affaires de X",
-    "ar": "معرض الأعمال ل، فلان بن فلان"
+    "en": "’s business gallery",
+    "fr": "Galerie d’affaires de ",
+    "ar": "معرض الأعمال ل"
   },
   "Business_gallery": {
     "en": "Portfolio",

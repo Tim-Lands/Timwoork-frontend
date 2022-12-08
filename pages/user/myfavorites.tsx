@@ -2,62 +2,28 @@ import React, { ReactElement } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
+import Navbar from "components/Portfolio/navbar";
 import PropTypes from "prop-types";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
-import Link from "next/link";
-import { FaHeart, FaImages, FaRss, FaUserCircle } from "react-icons/fa";
 import { useAppSelector } from "@/store/hooks";
 
-function Index({ query }) {
+function Index() {
   const { getAll } = useAppSelector((state) => state.languages);
-  console.log(query);
 
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
-        title={"معرض الأعمال ل، فلان بن فلان"}
-        metaDescription={"معرض الأعمال ل، فلان بن فلان"}
-        ogDescription={"معرض الأعمال ل، فلان بن فلان"}
+        title={getAll("Favorite")}
+        metaDescription={getAll("Favorite")}
+        ogDescription={getAll("Favorite")}
       />
       <div className="portfolios-container">
         <PortfolioProfileHeader />
-        <div className="portfolios-container">
-          <nav className="portfolios-nav d-flex">
-            <ul className="portfolios-nav-list me-auto">
-              <li>
-                <Link href={`/user/profile`}>
-                  <a className="portfolio-item">
-                    <FaUserCircle /> {getAll("Profile")}
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href={`/portfolios/user/dfdfd`}>
-                  <a className="portfolio-item">
-                    <FaImages /> معرض الأعمال
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href={`/user/myfollowers`}>
-                  <a className="portfolio-item">
-                    <FaRss /> الأشخاص الذين أتابعهم
-                  </a>
-                </Link>
-              </li>
-              <li className="active">
-                <Link href={`/user/myfavorites`}>
-                  <a className="portfolio-item">
-                    <FaHeart /> مفضلاتي
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <Navbar active="favorite" />
+
         <div className="portfolios-content">
           <div className="page-header">
-            <div className="title">My Favotites</div>
+            <div className="title">{getAll("My_favoite")}</div>
           </div>
           <div className="row">
             <div className="col-sm-6 col-lg-3">
@@ -118,10 +84,3 @@ Index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Index;
-Index.propTypes = {
-  query: PropTypes.any,
-};
-
-export async function getServerSideProps({ query }) {
-  return { props: { query } };
-}
