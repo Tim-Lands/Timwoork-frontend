@@ -2,7 +2,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Result } from "antd";
 import React, { ReactElement, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
 import Navbar from "components/Portfolio/navbar";
 import router from "next/router";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -18,9 +18,6 @@ function MyFollowers() {
 
   const { getAll } = useAppSelector((state) => state.languages);
 
-  const myLoader = () => {
-    return `${profile.avatar_path}`;
-  };
   useEffect(() => {
     if (!user.isLogged && !user.loading) {
       router.push("/login");
@@ -48,7 +45,7 @@ function MyFollowers() {
     );
   } else
     return (
-      <div className="py-3">
+      <div className="container pt-4 mt-2">
         {user.loading && <Loading />}
         {!user.isLogged && !user.loading && <Unauthorized />}
         {user.isLogged && (
@@ -73,53 +70,10 @@ function MyFollowers() {
                 profile.last_name
               }
             />
-            <div className="userProfileCont">
+            <div className="portfolios-container">
               <div className="timlands-profile-content">
-                <div className="profile-content-header">
-                  <div className="profile-content-avatar">
-                    <Image
-                      loader={myLoader}
-                      src={profile.avatar_path}
-                      quality={1}
-                      width={120}
-                      height={120}
-                      placeholder="blur"
-                      blurDataURL="/avatar2.jpg"
-                    />
-                  </div>
-                  <div className="profile-content-head">
-                    <h4 className="title">{profile.full_name}</h4>
-                    <p className="text">
-                      @{user.username} |
-                      <span className="app-label"> {profile.level.name} </span>
-                    </p>
-                    <div className="button-edit">
-                      <Link href="/user/personalInformations">
-                        <a className="btn butt-primary flex-center butt-sm">
-                          <span className="material-icons material-icons-outlined">
-                            edit
-                          </span>{" "}
-                          {getAll("Edit_profile")}
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                  <p className="profile-buttons">
-                    <button
-                      className="btn butt-primary2 flex-center butt-sm"
-                      onClick={() =>
-                        navigator.clipboard.writeText(
-                          `https://timwoork.com/u/${user.username}`
-                        )
-                      }
-                    >
-                      <span className="material-icons material-icons-outlined">
-                        copy
-                      </span>{" "}
-                      {getAll("Copy_my_profiles")}
-                    </button>
-                  </p>
-                </div>
+                <PortfolioProfileHeader showAddBtn={false} />
+
                 <Navbar active="followers" />
               </div>
               <div className="row">

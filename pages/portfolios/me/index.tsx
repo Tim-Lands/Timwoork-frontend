@@ -6,47 +6,58 @@ import Navbar from "components/Portfolio/navbar";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
 import { useAppSelector } from "@/store/hooks";
 import { Empty } from "antd";
-
+import { Tooltip } from "@mui/material";
 function Index() {
-  const { getAll } = useAppSelector((state) => state.languages);
-  const favorites = [];
+  const {
+    languages: { getAll, language },
+    profile,
+  } = useAppSelector((state) => state);
+
+  const title =
+    language === "ar"
+      ? getAll("X’s_business_gallery") + profile.full_name
+      : profile.full_name + getAll("X’s_business_gallery");
+  const projects = [];
   return (
     <div className="container pt-4 mt-2">
-      <MetaTags
-        title={getAll("Favorite")}
-        metaDescription={getAll("Favorite")}
-        ogDescription={getAll("Favorite")}
-      />
+      <MetaTags title={title} metaDescription={title} ogDescription={title} />
       <div className="portfolios-container">
-        <PortfolioProfileHeader showAddBtn={false} />
-        <Navbar active="favorite" />
-
+        <PortfolioProfileHeader showAddBtn={projects.length !== 0} />
+        <Navbar active="portfolio" />
         <div className="portfolios-content">
           <div className="row">
-            {favorites.map(() => (
-              <div key={1} className="col-sm-6 col-lg-3">
+            {projects.map(() => (
+              <div className="col-sm-6 col-lg-3" key={1}>
                 <Portfolio
-                  title="A very tasty and cool recipe for pilaf inside a huge"
+                  title={getAll("This_text_is")}
                   thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/1400/165af265485593.5af5bf8eae575.jpg`}
                   slug={`dedej-djeded-wedw-wedwef-hgc`}
-                  author={"Abdelhamid Boumegouas"}
-                  level={`New Seller`}
+                  author={"أحمد يحيى"}
+                  level={getAll("New_seller")}
                   avatar={`/avatar.png`}
                   views={72868}
                   username={`aboumegouass`}
-                  me={false}
                 />
               </div>
             ))}
-            {favorites.length === 0 && (
+            {projects.length === 0 && (
               <div className="bg-white py-3 rounded mb-3">
                 <Empty
                   image="/hero.png"
                   imageStyle={{
                     height: 100,
                   }}
-                  description={<span>{getAll("Favorites_projects")}</span>}
-                ></Empty>
+                  description={<span>{getAll("There_is_no_projects")}</span>}
+                >
+                  <Tooltip title={getAll("Soon")}>
+                    <button className="btn butt-green mx-1 flex-center butt-sm w-fit">
+                      <span className="material-icons material-icons-outlined">
+                        add_circle
+                      </span>{" "}
+                      {getAll("Add_New_project")}
+                    </button>
+                  </Tooltip>
+                </Empty>
               </div>
             )}
           </div>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
 import { FaEye, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
+import Router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
 function Portfolio({
@@ -36,8 +37,9 @@ function Portfolio({
         style={{ height: me ? 350 : 400 }}
       >
         <div
-          className="portfolio-item-img"
+          className={`portfolio-item-img ${me ? "" : "show"}`}
           style={{ backgroundImage: thumbnailUrl }}
+          onClick={() => me && Router.push("/portfolios/" + slug)}
         >
           <div className="portfolio-item-img-buttons">
             <button
@@ -64,7 +66,7 @@ function Portfolio({
         </div>
         <div className="portfolio-item-content">
           <h3 className="title">
-            <a href={`/portfolios/${slug}`}>{title}</a>
+            <a onClick={() => Router.push("/portfolios/" + slug)}>{title}</a>
           </h3>
           <p className="views-meta">
             <FaEye /> ({views})

@@ -5912,10 +5912,10 @@
     "fr": "Vendeur VIP",
     "ar": "بائع جاد"
   },
-  "Add_New_Portfolio": {
-    "en": "Add New Portfolio",
-    "fr": "Ajouter un nouveau portefeuille",
-    "ar": "إضافة محفظة جديدة"
+  "Add_New_project": {
+    "en": "Add New Project",
+    "fr": "Ajouter un nouveau projet",
+    "ar": "إضافة عمل جديد"
   },
   "Copy_My_Profile": {
     "en": "Copy My Profile Link",
@@ -6157,6 +6157,16 @@
     "en": "Boost your sales!",
     "fr": "Boostez vos ventes!",
     "ar": "عزز مبيعاتك الان!"
+  },
+  "There_is_no_projects": {
+    "en": "There is no projects to show.",
+    "fr": "Il n'y a pas de projets à afficher.",
+    "ar": "لا يوجد اعمال لعرضها."
+  },
+  "Favorites_projects": {
+    "en": "Favorites projects are empty",
+    "fr": "Les projets favoris sont vides",
+    "ar": "الاعمال المفضلة فارغة"
   },
   "Palestine": {
     "en": "Palestine",

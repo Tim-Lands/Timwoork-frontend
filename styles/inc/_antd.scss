@@ -85,3 +85,8 @@
 .ant-upload.ant-upload-select-picture-card:hover {
   border-color: $primary !important;
 }
+.ant-empty-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
