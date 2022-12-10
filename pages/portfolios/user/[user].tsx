@@ -13,7 +13,6 @@ function Index({ query }) {
     languages: { getAll, language },
   } = useAppSelector((state) => state);
 
-  const unused = "stop building";
   const title =
     language === "ar"
       ? getAll("X’s_business_gallery") + query.user
