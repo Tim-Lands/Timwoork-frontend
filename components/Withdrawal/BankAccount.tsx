@@ -6,7 +6,7 @@ import API from "../../config";
 import PropTypes from "prop-types";
 import { Alert } from "../Alert/Alert";
 import UploadImageForm from "../UploadImageForm";
-import { CountriesService } from "@/services/countryService";
+import { CountriesService } from "@/services/country";
 import { useAppSelector } from "@/store/hooks";
 
 function BankAccount({ create, setIsShowBankTransfert }: any) {

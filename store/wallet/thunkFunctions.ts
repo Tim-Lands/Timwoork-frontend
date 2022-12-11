@@ -1,4 +1,4 @@
-import { WalletService } from "services/walletService";
+import { WalletService } from "@/services/wallet";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const getWalletData = createAsyncThunk(
   "wallet/data",

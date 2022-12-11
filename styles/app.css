@@ -452,6 +452,33 @@
   z-index: 100;
 }
 
+.timlands-checked-items {
+  position: absolute;
+  z-index: 100;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  top: 48px;
+  left: 10px;
+  display: flex;
+}
+.timlands-checked-items li a {
+  display: flex;
+  padding: 4px 6px;
+  color: #666 !important;
+  border-radius: 4px;
+  margin-inline: 3px;
+  background-color: #f5f5f5;
+  font-size: 11px;
+}
+.timlands-checked-items li.active a {
+  color: #fff !important;
+  background-color: #3bb361;
+}
+.timlands-checked-items li.active a:hover {
+  color: #fff;
+}
+
 .btn {
   border-width: 2px;
   border-style: solid;
@@ -6200,6 +6227,12 @@
   border-color: #475c80 !important;
 }
 
+.ant-empty-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .timwoork-404-page {
   height: 100vh;
   display: flex;
@@ -7398,7 +7431,7 @@
 .add-product-advices {
   position: -webkit-sticky;
   position: sticky;
-  top: 70px;
+  top: 120px;
   padding-top: 23px;
 }
 .add-product-advices .advice-img {
@@ -7481,6 +7514,17 @@
   color: #666;
   font-weight: 200;
   line-height: 27px;
+}
+
+.descriptionInputHold {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  border-color: rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+.descriptionInputHold:focus {
+  outline: none;
 }
 
 .about-hero {
@@ -8129,16 +8173,24 @@
   transition: all 0.3s;
   align-items: center;
   flex-wrap: nowrap;
+  cursor: not-allowed;
 }
 @media (max-width: 768px) {
   .portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item {
     font-size: 12px;
   }
 }
-.portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item:hover {
+.portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item.now {
+  cursor: pointer;
+}
+.portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item.now:hover {
   background-color: #fff;
   transition: all 0.3s;
   border: 1px solid #ccc;
+  color: #475c80;
+}
+.portfolios-container .portfolios-nav .portfolios-nav-list li .portfolio-item:hover {
+  color: #555;
 }
 .portfolios-container .portfolios-nav .portfolios-nav-list li.active .portfolio-item {
   font-weight: 600;
@@ -8411,13 +8463,13 @@
   opacity: 0;
   transform: scale(0);
 }
-.timlands-portfolio-item .portfolio-item-img:hover .portfolio-item-img-buttons {
+.timlands-portfolio-item .portfolio-item-img:hover.show .portfolio-item-img-buttons {
   -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
   background-color: rgba(0, 0, 0, 0.6);
   transition: all 0.3s;
 }
-.timlands-portfolio-item .portfolio-item-img:hover .portfolio-item-img-buttons .btn {
+.timlands-portfolio-item .portfolio-item-img:hover.show .portfolio-item-img-buttons .btn {
   transition: all 0.3s;
   opacity: 1;
   transform: scale(1);
@@ -8498,6 +8550,21 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
+}
+
+.descriptionInputHold.portfolio {
+  height: 400px;
+}
+
+.portfolio .ant-upload.ant-upload-select-picture-card {
+  width: 100% !important;
+}
+.portfolio .timlands-checked-items {
+  left: 20px;
+}
+
+.ltr .timlands-checked-items {
+  right: 20px !important;
 }
 
 .dashboard-sidebar {
@@ -9762,6 +9829,22 @@ h3 {
 
 .selected {
   background-color: rgba(71, 92, 128, 0.4) !important;
+}
+
+.w-fit {
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
+
+@media (max-width: 992px) {
+  .d-none-lg {
+    display: none !important;
+  }
+}
+
+.p-relative {
+  position: relative;
 }
 
 @font-face {
@@ -11125,17 +11208,6 @@ body:hover::-webkit-scrollbar-thumb {
   color: #ffd000;
 }
 
-.descriptionInputHold {
-  width: 100%;
-  height: 180px;
-  border-radius: 8px;
-  border-color: rgba(0, 0, 0, 0.1);
-  padding: 15px;
-}
-.descriptionInputHold:focus {
-  outline: none;
-}
-
 .add-butts {
   display: flex;
   justify-content: center;
@@ -11295,31 +11367,4 @@ body:hover::-webkit-scrollbar-thumb {
   font-weight: 200;
   margin: 0;
   color: #777;
-}
-
-.timlands-checked-items {
-  position: absolute;
-  z-index: 100;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  top: 48px;
-  left: 10px;
-  display: flex;
-}
-.timlands-checked-items li a {
-  display: flex;
-  padding: 4px 6px;
-  color: #666 !important;
-  border-radius: 4px;
-  margin-inline: 3px;
-  background-color: #f5f5f5;
-  font-size: 11px;
-}
-.timlands-checked-items li.active a {
-  color: #fff !important;
-  background-color: #3bb361;
-}
-.timlands-checked-items li.active a:hover {
-  color: #fff;
 }/*# sourceMappingURL=app.css.map */

@@ -31,6 +31,7 @@ function Index() {
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -43,6 +44,7 @@ function Index() {
                 avatar={`/avataré.jpg`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -55,6 +57,7 @@ function Index() {
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -67,6 +70,7 @@ function Index() {
                 avatar={`/avatar3.jpg`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -79,6 +83,7 @@ function Index() {
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -91,6 +96,7 @@ function Index() {
                 avatar={`/avatar3.jpg`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -103,6 +109,7 @@ function Index() {
                 avatar={`/avatar.png`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
             <div className="col-sm-6 col-lg-3">
@@ -115,6 +122,7 @@ function Index() {
                 avatar={`/avatar2.jpg`}
                 views={3563}
                 username={`aboumegouass`}
+                me={false}
               />
             </div>
           </div>

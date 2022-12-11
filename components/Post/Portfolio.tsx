@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "antd";
 import { FaEye, FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
+import Router from "next/router";
 import { useAppSelector } from "@/store/hooks";
 
 function Portfolio({
@@ -15,6 +16,7 @@ function Portfolio({
   avatar,
   views,
   slug,
+  me = true,
 }): ReactElement {
   const thumbnailUrl = `url(${thumbnail})`;
   const [isFavorated, setIsFavorated] = useState(false);
@@ -30,10 +32,14 @@ function Portfolio({
         </>
       }
     >
-      <div className={"timlands-portfolio-item"}>
+      <div
+        className={"timlands-portfolio-item"}
+        style={{ height: me ? 350 : 400 }}
+      >
         <div
-          className="portfolio-item-img"
+          className={`portfolio-item-img ${me ? "" : "show"}`}
           style={{ backgroundImage: thumbnailUrl }}
+          onClick={() => me && Router.push("/portfolios/" + slug)}
         >
           <div className="portfolio-item-img-buttons">
             <button
@@ -60,26 +66,30 @@ function Portfolio({
         </div>
         <div className="portfolio-item-content">
           <h3 className="title">
-            <a href={`/portfolios/${slug}`}>{title}</a>
+            <a onClick={() => Router.push("/portfolios/" + slug)}>{title}</a>
           </h3>
           <p className="views-meta">
             <FaEye /> ({views})
           </p>
-          <Link href={`/u/${username}`}>
-            <a className="user-mata-post">
-              <div className="user-mata-post-img">
-                <Image src={avatar} width={30} height={30} alt={author} />
-              </div>
-              <div className="user-mata-post-content">
-                <p className="text-user">
-                  <span className="text">{author}</span>
-                </p>
-                <p className="text-meta">
-                  <span className="text">{level}</span>
-                </p>
-              </div>
-            </a>
-          </Link>
+          {me ? (
+            <></>
+          ) : (
+            <Link href={`/u/${username}`}>
+              <a className="user-mata-post">
+                <div className="user-mata-post-img">
+                  <Image src={avatar} width={30} height={30} alt={author} />
+                </div>
+                <div className="user-mata-post-content">
+                  <p className="text-user">
+                    <span className="text">{author}</span>
+                  </p>
+                  <p className="text-meta">
+                    <span className="text">{level}</span>
+                  </p>
+                </div>
+              </a>
+            </Link>
+          )}
         </div>
       </div>
     </Badge.Ribbon>
@@ -95,6 +105,7 @@ Portfolio.propTypes = {
   heartCount: PropTypes.number,
   views: PropTypes.number,
   level: PropTypes.string,
+  me: PropTypes.bool,
 };
 
 export default Portfolio;

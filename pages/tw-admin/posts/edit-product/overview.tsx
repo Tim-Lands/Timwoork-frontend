@@ -5,7 +5,7 @@ import { message } from "antd";
 import { motion } from "framer-motion";
 import router from "next/router";
 import Cookies from "js-cookie";
-import { CategoriesService } from "@/services/categoriesServices";
+import { CategoriesService } from "@/services/categories";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import CreatableSelect from "react-select/creatable";
@@ -16,14 +16,14 @@ import { ProductsService } from "@/services/tw-admin/productsService";
 import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 
 const MySelect = (props: any) => {
-  const tagsState = useAppSelector(state=>state.dashboardTagsSlice)
-  console.log(tagsState)
-  const dispatch = useAppDispatch()
+  const tagsState = useAppSelector((state) => state.dashboardTagsSlice);
+  console.log(tagsState);
+  const dispatch = useAppDispatch();
   const getdataTags = async (tag: string) => {
     try {
-      dispatch(TagsActions.getAll({name:tag}))
+      dispatch(TagsActions.getAll({ name: tag }));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   const handleChange = (value) => {
@@ -132,9 +132,12 @@ function Overview({ query }) {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const {title, subcategory, tags} = values
+        const { title, subcategory, tags } = values;
         await ProductsService.editProductStepOne({
-          id, title, subcategory,tags
+          id,
+          title,
+          subcategory,
+          tags,
         });
         message.success(getAll("The_update_has"));
         router.push(`/tw-admin/posts/edit-product/prices?id=${product?.id}`);
@@ -390,19 +393,20 @@ function Overview({ query }) {
                                   </option>
                                 ))}
                           </select>
-                          {validationsErrors && validationsErrors.subcategory && (
-                            <div style={{ overflow: "hidden" }}>
-                              <motion.div
-                                initial={{ y: -70, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="timlands-form-note form-note-error"
-                              >
-                                <p className="text">
-                                  {validationsErrors.subcategory[0]}
-                                </p>
-                              </motion.div>
-                            </div>
-                          )}
+                          {validationsErrors &&
+                            validationsErrors.subcategory && (
+                              <div style={{ overflow: "hidden" }}>
+                                <motion.div
+                                  initial={{ y: -70, opacity: 0 }}
+                                  animate={{ y: 0, opacity: 1 }}
+                                  className="timlands-form-note form-note-error"
+                                >
+                                  <p className="text">
+                                    {validationsErrors.subcategory[0]}
+                                  </p>
+                                </motion.div>
+                              </div>
+                            )}
                         </div>
                       </div>
                       <MySelect

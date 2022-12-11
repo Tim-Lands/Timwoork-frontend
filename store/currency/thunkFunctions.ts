@@ -1,4 +1,4 @@
-import { CurrencyService } from "@/services/currencyService";
+import { CurrencyService } from "@/services/currency";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const getData = createAsyncThunk(

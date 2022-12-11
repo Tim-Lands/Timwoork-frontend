@@ -3,11 +3,12 @@ import { ReactElement, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
-import { CategoriesService } from "@/services/categoriesServices";
+import { CategoriesService } from "@/services/categories";
 import router from "next/router";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
 import Navbar from "components/productModify/navbar";
+import Tags from "@/components/add-new/Tags";
 
 import API from "../../config";
 import PropTypes from "prop-types";
@@ -269,32 +270,37 @@ function Overview({ query }) {
                               </option>
                             ))}
                           </select>
-                          {validationsErrors && validationsErrors.subcategory && (
-                            <div style={{ overflow: "hidden" }}>
-                              <motion.div
-                                initial={{ y: -70, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="timlands-form-note form-note-error"
-                              >
-                                <p className="text">
-                                  {validationsErrors.subcategory[0]}
-                                </p>
-                              </motion.div>
-                            </div>
-                          )}
+                          {validationsErrors &&
+                            validationsErrors.subcategory && (
+                              <div style={{ overflow: "hidden" }}>
+                                <motion.div
+                                  initial={{ y: -70, opacity: 0 }}
+                                  animate={{ y: 0, opacity: 1 }}
+                                  className="timlands-form-note form-note-error"
+                                >
+                                  <p className="text">
+                                    {validationsErrors.subcategory[0]}
+                                  </p>
+                                </motion.div>
+                              </div>
+                            )}
                         </div>
                       </div>
-                      <MySelect
-                        value={formik.values.tags}
+                      <Tags
+                        values={formik.values.tags}
                         onChange={formik.setFieldValue}
-                        disabled={!getProduct ? true : false}
                         onBlur={formik.setFieldTouched}
+                        validationsErrors={validationsErrors}
                       />
+
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
                           <span className="me-auto"></span>
-                          <NavigationButtons isBackVisible={false} onNextClick={formik.handleSubmit} nextTitle={getAll('Next_step')}/>
-                          
+                          <NavigationButtons
+                            isBackVisible={false}
+                            onNextClick={formik.handleSubmit}
+                            nextTitle={getAll("Next_step")}
+                          />
                         </div>
                       </div>
                     </div>

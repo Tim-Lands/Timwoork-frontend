@@ -1,4 +1,4 @@
-import { ChatService } from "services/chatService";
+import { ChatService } from "@/services/chat";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const createChat = createAsyncThunk(
@@ -66,7 +66,7 @@ const sendMessage = createAsyncThunk(
     const { id, body, headers } = args;
     try {
       const res = await ChatService.message(id, body, headers);
-      dispatch(getSingleChat({id}))
+      dispatch(getSingleChat({ id }));
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);

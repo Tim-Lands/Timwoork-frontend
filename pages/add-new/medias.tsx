@@ -32,12 +32,11 @@ function Medias({ query }) {
         router.push("/add-new");
       });
   }, []);
-  const { getAll} = useAppSelector((state) => state.languages);
+  const { getAll } = useAppSelector((state) => state.languages);
   const user = useAppSelector((state) => state.user);
 
   const [featuredMedia, setFeaturedImages]: any = useState("");
   const [galleryMedia, setGalleryMedia]: any = useState([]);
-  console.log(galleryMedia)
   const [isFeaturedChanged, setIsFeaturedChanged] = useState(false);
   const [isGalleryChanged, setIsGalleryChanged] = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
@@ -125,8 +124,8 @@ function Medias({ query }) {
       "i"
     );
     if (galleryMedia.length <= 0) {
-      console.log('gallery is 0')
-      console.log(galleryMedia)
+      console.log("gallery is 0");
+      console.log(galleryMedia);
       notification.open({
         message: getAll("An_error_occurred"),
         description: getAll("Please_add_at_2"),
@@ -358,10 +357,11 @@ function Medias({ query }) {
                   </div>
 
                   <div className="col-md-12">
-                    <div className="py-4 d-flex">
-                    <NavigationButtons onNextClick={()=>loadImagesHandle()} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
-
-                    </div>
+                    <NavigationButtons
+                      onNextClick={() => loadImagesHandle()}
+                      nextTitle={getAll("Next_step")}
+                      backTitle={getAll("Previous_step")}
+                    />
                   </div>
                 </div>
               </div>

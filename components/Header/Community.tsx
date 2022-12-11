@@ -8,7 +8,6 @@ import { RiUserSmileLine } from "react-icons/ri";
 const Community = ({ refs }) => {
   const {
     languages: { getAll },
-    user,
   } = useAppSelector((state) => state);
 
   return (
@@ -37,7 +36,7 @@ const Community = ({ refs }) => {
           </Link>
         </li>
         <li>
-          <Link href={`/portfolios/user/${user.username}`}>
+          <Link href={`/portfolios`}>
             <a className="dropd-item">
               <div className="dropd-item-img">
                 <span className="icon-item link-circular-button">
@@ -48,7 +47,7 @@ const Community = ({ refs }) => {
               </div>
               <div className="dropd-item-content">
                 <h4 className="title">{getAll("Business_gallery")}</h4>
-                <p className="text">{getAll("Boost_your_sales")}</p>
+                <p className="text">{getAll("See_our")}</p>
               </div>
             </a>
           </Link>

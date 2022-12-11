@@ -9,6 +9,7 @@ function ImagesUploadingGalleries({
   setGalleryMedia,
   setIsChanged,
   callback,
+  title = "You_must_choose",
 }): ReactElement {
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
@@ -76,9 +77,7 @@ function ImagesUploadingGalleries({
                         <h4 className="nothing-title">
                           {getAll("Choose_pictures_from")}
                         </h4>
-                        <p className="nothing-text">
-                          {getAll("You_must_choose")}
-                        </p>
+                        <p className="nothing-text">{getAll(title)}</p>
                       </div>
                     )}
                     {imageList &&
@@ -120,4 +119,5 @@ ImagesUploadingGalleries.propTypes = {
   setGalleryMedia: PropTypes.func,
   setIsChanged: PropTypes.func,
   callback: PropTypes.func,
+  title: PropTypes.string,
 };

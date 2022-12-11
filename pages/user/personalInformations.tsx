@@ -4,7 +4,7 @@ import { Field, Form, Formik } from "formik";
 import API from "../../config";
 import { motion } from "framer-motion";
 import { message } from "antd";
-import { CountriesService } from "@/services/countryService";
+import { CountriesService } from "@/services/country";
 import Loading from "@/components/Loading";
 import router from "next/router";
 import UploadPicture from "@/components/Profile/UploadPicture";
@@ -262,19 +262,20 @@ const personalInformations = () => {
                                   <option value="0">{getAll("woman")}</option>
                                   <option value="1">{getAll("Man")}</option>
                                 </Field>
-                                {validationsErrors && validationsErrors.gender && (
-                                  <div style={{ overflow: "hidden" }}>
-                                    <motion.div
-                                      initial={{ y: -70, opacity: 0 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      className="timlands-form-note form-note-error"
-                                    >
-                                      <p className="text">
-                                        {validationsErrors.gender[0]}
-                                      </p>
-                                    </motion.div>
-                                  </div>
-                                )}
+                                {validationsErrors &&
+                                  validationsErrors.gender && (
+                                    <div style={{ overflow: "hidden" }}>
+                                      <motion.div
+                                        initial={{ y: -70, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        className="timlands-form-note form-note-error"
+                                      >
+                                        <p className="text">
+                                          {validationsErrors.gender[0]}
+                                        </p>
+                                      </motion.div>
+                                    </div>
+                                  )}
                               </div>
                             </div>
                             <div className="col-md-6">

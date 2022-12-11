@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import Pagination from "react-js-pagination";
 import Loading from "@/components/Loading";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import { ProductService } from "@/services/productService";
+import { ProductService } from "@/services/product";
 
 function Popular() {
   const [size, setSize] = useState(3);

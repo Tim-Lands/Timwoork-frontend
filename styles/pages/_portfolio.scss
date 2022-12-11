@@ -50,10 +50,19 @@
           @media (max-width: 768px) {
             font-size: 12px;
           }
+          cursor: not-allowed;
+          &.now {
+            cursor: pointer;
+
+            &:hover {
+              background-color: #fff;
+              transition: all 0.3s;
+              border: 1px solid #ccc;
+              color: $primary;
+            }
+          }
           &:hover {
-            background-color: #fff;
-            transition: all 0.3s;
-            border: 1px solid #ccc;
+            color: #555;
           }
         }
         &.active {
@@ -341,14 +350,16 @@
       }
     }
     &:hover {
-      .portfolio-item-img-buttons {
-        backdrop-filter: blur(4px);
-        background-color: rgba(0, 0, 0, 0.6);
-        transition: all 0.3s;
-        .btn {
+      &.show {
+        .portfolio-item-img-buttons {
+          backdrop-filter: blur(4px);
+          background-color: rgba(0, 0, 0, 0.6);
           transition: all 0.3s;
-          opacity: 1;
-          transform: scale(1);
+          .btn {
+            transition: all 0.3s;
+            opacity: 1;
+            transform: scale(1);
+          }
         }
       }
     }
@@ -428,5 +439,23 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
+  }
+}
+.descriptionInputHold {
+  &.portfolio {
+    height: 400px;
+  }
+}
+.portfolio {
+  .ant-upload.ant-upload-select-picture-card {
+    width: 100% !important;
+  }
+  .timlands-checked-items {
+    left: 20px;
+  }
+}
+.ltr {
+  .timlands-checked-items {
+    right: 20px !important;
   }
 }

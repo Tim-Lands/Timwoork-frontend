@@ -1,4 +1,4 @@
-import { SalesService } from "services/salesService";
+import { SalesService } from "@/services/sales";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const getData = createAsyncThunk(
   "sales/get",

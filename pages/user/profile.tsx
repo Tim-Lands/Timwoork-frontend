@@ -2,8 +2,9 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Result, message, Card } from "antd";
 import React, { createRef, ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Loading from "components/Loading";
+import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
+import Navbar from "@/components/Portfolio/navbar";
 import router from "next/router";
 import API from "../../config";
 import { ProfileActions } from "@/store/profile/profileActions";
@@ -45,10 +46,6 @@ function Profile() {
       router.push("/login");
     }
   }, [user]);
-
-  const myLoader = () => {
-    return `${profile.avatar_path}`;
-  };
 
   const beseller = async () => {
     setIsLoadingSeler(true);
@@ -102,7 +99,7 @@ function Profile() {
     );
   } else if (!user.loading && !profile.loading)
     return (
-      <div className="py-3">
+      <div className="container pt-4 mt-2">
         {!user.isLogged && <Unauthorized />}
         {profile && (
           <>
@@ -126,59 +123,15 @@ function Profile() {
                 profile.last_name
               }
             />
-            <div className="userProfileCont">
+            <div className="portfolios-container">
               <div className="timlands-profile-content">
-                <div className="profile-content-header">
-                  <div className="profile-content-avatar">
-                    <Image
-                      loader={myLoader}
-                      src={profile.avatar_path}
-                      quality={1}
-                      width={120}
-                      height={120}
-                      placeholder="blur"
-                      blurDataURL="/avatar2.jpg"
-                    />
-                  </div>
-                  <div className="profile-content-head">
-                    <h4 className="title">{profile.full_name}</h4>
-                    <p className="text">
-                      @{user.username} |
-                      <span className="app-label"> {profile.level.name} </span>
-                    </p>
-                    <div className="button-edit">
-                      <Link href="/user/personalInformations">
-                        <a className="btn butt-primary flex-center butt-sm">
-                          <span className="material-icons material-icons-outlined">
-                            edit
-                          </span>{" "}
-                          {getAll("Profile_editing")}
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                  <p className="profile-buttons">
-                    <button
-                      className="btn butt-primary2 flex-center butt-sm"
-                      onClick={() =>
-                        navigator.clipboard.writeText(
-                          `https://timwoork.com/u/${user.username}`
-                        )
-                      }
-                    >
-                      <span className="material-icons material-icons-outlined">
-                        copy
-                      </span>{" "}
-                      {getAll("Copy_my_profiles")}
-                    </button>
-                  </p>
-                </div>
+                <PortfolioProfileHeader showAddBtn={false} />
+                <Navbar active="profile" />
               </div>
               <div className="row">
                 <Sidebar
                   withdrawable_amount={profile.withdrawable_amount}
                   pending_amount={profile.pending_amount}
-                  // darkMode={darkMode}
                 />
                 {profile_seller && (
                   <div className="col-lg-8">

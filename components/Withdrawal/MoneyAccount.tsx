@@ -3,7 +3,7 @@ import { ReactElement, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
-import { CountriesService } from "@/services/countryService";
+import { CountriesService } from "@/services/country";
 import API from "../../config";
 import PropTypes from "prop-types";
 import { Alert } from "../Alert/Alert";
@@ -442,19 +442,20 @@ function MoneyAccount({ create, setIsShowBankTransfert }) {
                   onChange={formik.handleChange}
                   value={formik.values.bank_adress_line_one}
                 />
-                {validationsErrors && validationsErrors.bank_adress_line_one && (
-                  <div style={{ overflow: "hidden" }}>
-                    <motion.div
-                      initial={{ y: -70, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      className="timlands-form-note form-note-error"
-                    >
-                      <p className="text">
-                        {validationsErrors.bank_adress_line_one[0]}
-                      </p>
-                    </motion.div>
-                  </div>
-                )}
+                {validationsErrors &&
+                  validationsErrors.bank_adress_line_one && (
+                    <div style={{ overflow: "hidden" }}>
+                      <motion.div
+                        initial={{ y: -70, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        className="timlands-form-note form-note-error"
+                      >
+                        <p className="text">
+                          {validationsErrors.bank_adress_line_one[0]}
+                        </p>
+                      </motion.div>
+                    </div>
+                  )}
               </div>
             </div>
             <div className="col-md-8">
