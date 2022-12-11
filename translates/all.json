@@ -6688,5 +6688,10 @@
     "en": "Add new services – Price and duration",
     "fr": "Ajouter un nouveau service – prix et durée",
     "ar": "إضافة خدمة جديدة - السعر والمدة"
+  },
+  "Add": {
+    "en": "Add",
+    "fr": "Ajouter ",
+    "ar": "إضافة"
   }
 }

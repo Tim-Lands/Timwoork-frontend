@@ -3,13 +3,14 @@ import Layout from "@/components/Layout/HomeLayout";
 import FormLangs from "@/components/Forms/FormLangs";
 import FeaturedUploadingGalleries from "@/components/featuredUploadingGalleries";
 import { useAppSelector } from "@/store/hooks";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { NextPage } from "next";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import { useState } from "react";
 import { FormInput, FormTextarea } from "components/Forms/Forms";
 import Tips from "@/components/Portfolio/Tips";
 import Tags from "@/components/add-new/Tags";
+import NavigationButtons from "components/NavigationButtons";
 const Add: NextPage = () => {
   const [galleryMedia, setGalleryMedia]: any = useState([]);
   const [, setIsRemoveModal]: any = useState(false);
@@ -25,6 +26,7 @@ const Add: NextPage = () => {
   console.log(id);
   const {
     languages: { getAll },
+    user,
   } = useAppSelector((state) => state);
 
   return (
@@ -48,7 +50,7 @@ const Add: NextPage = () => {
             <div className="col-lg-4 d-none-lg">
               <Tips />
             </div>
-            <div className="col-lg-8 bg-white pb-5">
+            <div className="col-lg-8 bg-white ">
               <div className="row">
                 <div className="col-md-12 p-relative portfolio mb-3">
                   <FormInput title={getAll("Project_title")} />
@@ -89,15 +91,28 @@ const Add: NextPage = () => {
                     galaries={galleryMedia}
                   />
                 </div>
+                <div className="col-md-12">
+                  <Tags validationsErrors={{}} />
+                </div>
                 <div className="col-md-8   mb-3">
                   <FormInput title={getAll("Project_link")} />
                 </div>
                 <div className="col-md-4   mb-3">
                   <FormInput type="date" title={getAll("Completion_date")} />
                 </div>
-                <div className="col-md-12">
-                  <Tags validationsErrors={{}} />
-                </div>
+              </div>
+              <div className="py-4 d-flex">
+                <NavigationButtons
+                  nextTitle={getAll("Add")}
+                  backClass="butt-red"
+                  backTitle={getAll("Cancel")}
+                  onBackClick={() =>
+                    router.push("/portfolios/user/" + user.username)
+                  }
+                  onNextClick={() => {
+                    console.log("ahmed");
+                  }}
+                />
               </div>
             </div>
           </div>

@@ -358,13 +358,11 @@ function Medias({ query }) {
                   </div>
 
                   <div className="col-md-12">
-                    <div className="py-4 d-flex">
-                      <NavigationButtons
-                        onNextClick={() => loadImagesHandle()}
-                        nextTitle={getAll("Next_step")}
-                        backTitle={getAll("Previous_step")}
-                      />
-                    </div>
+                    <NavigationButtons
+                      onNextClick={() => loadImagesHandle()}
+                      nextTitle={getAll("Next_step")}
+                      backTitle={getAll("Previous_step")}
+                    />
                   </div>
                 </div>
               </div>

@@ -2,13 +2,13 @@ import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-
-
 const NavigationButtons = ({
   nextTitle,
   backTitle,
   nextIcon,
-  backIcon, 
+  backIcon,
+  nextClass,
+  backClass,
   onNextClick,
   onBackClick,
   isNextVisible,
@@ -18,6 +18,8 @@ const NavigationButtons = ({
   backTitle?: string;
   nextIcon?: string;
   backIcon?: string;
+  nextClass?: string;
+  backClass?: string;
   onNextClick: Function;
   onBackClick?: Function;
   isNextVisible?: Boolean;
@@ -48,7 +50,7 @@ const NavigationButtons = ({
     isBackVisible: isBackVisible != undefined ? isBackVisible : true,
   });
 
-  console.log(props)
+  console.log(props);
 
   return (
     <>
@@ -56,7 +58,7 @@ const NavigationButtons = ({
         <button
           onClick={(e) => props.onBackClick(e)}
           type="button"
-          className="btn flex-center butt-primary2-out me-auto butt-md"
+          className={` btn flex-center butt-primary2-out me-auto butt-md ${backClass}`}
         >
           <span className="material-icons-outlined">{props.backIcon}</span>
           <span className="text">{props.backTitle}</span>
@@ -66,7 +68,7 @@ const NavigationButtons = ({
         <button
           onClick={(e) => onNextClick(e)}
           type="button"
-          className="btn flex-center butt-green ml-auto butt-sm"
+          className={`btn flex-center butt-green ml-auto butt-sm ${nextClass} `}
         >
           <span className="text">{props.nextTitle}</span>
           <span className="material-icons-outlined">{props.nextIcon}</span>

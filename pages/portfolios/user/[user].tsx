@@ -6,7 +6,7 @@ import Navbar from "components/Portfolio/navbar";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
 import { useAppSelector } from "@/store/hooks";
 import { Empty } from "antd";
-import { Tooltip } from "@mui/material";
+import router from "next/router";
 function Index() {
   const {
     languages: { getAll, language },
@@ -49,14 +49,17 @@ function Index() {
                   }}
                   description={<span>{getAll("There_is_no_projects")}</span>}
                 >
-                  <Tooltip title={getAll("Soon")}>
-                    <button className="btn butt-green mx-1 flex-center butt-sm w-fit">
-                      <span className="material-icons material-icons-outlined">
-                        add_circle
-                      </span>{" "}
-                      {getAll("Add_New_project")}
-                    </button>
-                  </Tooltip>
+                  <button
+                    onClick={() => {
+                      router.push("/portfolios/modify/add");
+                    }}
+                    className="btn butt-green mx-1 flex-center butt-sm w-fit"
+                  >
+                    <span className="material-icons material-icons-outlined">
+                      add_circle
+                    </span>{" "}
+                    {getAll("Add_New_project")}
+                  </button>
                 </Empty>
               </div>
             )}
