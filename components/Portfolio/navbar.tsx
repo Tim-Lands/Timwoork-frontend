@@ -19,7 +19,7 @@ function Navbar({ active }: { active: string }): ReactElement {
             </Link>
           </li>
           <li className={active === "portfolio" ? "active" : ""}>
-            <Link href={`/portfolios/me`}>
+            <Link href={`/portfolios/user/ahmedYehia`}>
               <a className="portfolio-item now">
                 <FaImages /> {getAll("Business_gallery")}
               </a>

@@ -3015,6 +3015,11 @@
     "fr": "Vous devez choisir une photo dans la galerie du service. Les photos doivent convenir au service",
     "ar": "يجب أن تختار صورة في معرض الخدمة ويجب أن تكون الصور مناسبة من الخدمة"
   },
+  "You_must_choose_project": {
+    "en": "You must choose a photo in the service gallery. The pictures must be suitable to the project",
+    "fr": "Vous devez choisir une photo dans la galerie du service. Les photos doivent convenir au projet",
+    "ar": "يجب أن تختار صورة في معرض الخدمة ويجب أن تكون الصور مناسبة من المشروع"
+  },
   "Service_introduction_video": {
     "en": "Service introduction video (optional)",
     "fr": "Vidéo de présentation du service (facultatif)",
@@ -5913,10 +5918,36 @@
     "ar": "بائع جاد"
   },
   "Add_New_project": {
-    "en": "Add New Project",
-    "fr": "Ajouter un nouveau projet",
-    "ar": "إضافة عمل جديد"
+    "en": "Add  Project",
+    "fr": "Ajouter un projet",
+    "ar": "إضافة عمل "
   },
+  "Add_New_project_advices": {
+    "en": "Tips to add Project ",
+    "fr": "Conseils pour ajouter un projet",
+    "ar": "نصائح لإضافة عمل"
+  },
+  "Project_title": {
+    "en": "Project title",
+    "fr": "Titre du projet",
+    "ar": "عنوان المشروع"
+  },
+  "Project_details": {
+    "en": "Project details",
+    "fr": "Détails du projet",
+    "ar": "تفاصيل المشروع"
+  },
+  "Project_link": {
+    "en": "Project link",
+    "fr": "lien du projet",
+    "ar": "رابط المشروع"
+  },
+  "Completion_date": {
+    "en": "Completion date",
+    "fr": "Date d'achèvement",
+    "ar": "تاريخ الإنجاز"
+  },
+
   "Copy_My_Profile": {
     "en": "Copy My Profile Link",
     "fr": "Copier le lien de mon portefeuille",
@@ -6153,10 +6184,10 @@
     "fr": "Fond de galerie d'affaires",
     "ar": "خلفية معرض الأعمال"
   },
-  "Boost_your_sales": {
-    "en": "Boost your sales!",
-    "fr": "Boostez vos ventes!",
-    "ar": "عزز مبيعاتك الان!"
+  "See_our": {
+    "en": "See our sellers' expertises.",
+    "fr": "Voir les expertises de nos vendeurs.",
+    "ar": "شاهد خبرات بائعينا."
   },
   "There_is_no_projects": {
     "en": "There is no projects to show.",

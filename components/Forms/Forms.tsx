@@ -7,8 +7,10 @@ export function FormInput({
   value,
   title,
   handleChange,
+  onKeyDown,
   validationsErrors,
   isLoading,
+  onKeyUp,
   type = "text",
   isVisibleBtn = false,
   setIsShowenPass,
@@ -28,6 +30,8 @@ export function FormInput({
         placeholder={title}
         className={"timlands-inputs " + (validationsErrors && " has-error")}
         autoComplete="off"
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
         onChange={handleChange}
         value={value}
       />
@@ -63,6 +67,8 @@ FormInput.propTypes = {
   setIsShowenPass: PropTypes.func,
   isShowenPass: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func,
   title: PropTypes.string,
   isLoading: PropTypes.bool,
   isVisibleBtn: PropTypes.bool,

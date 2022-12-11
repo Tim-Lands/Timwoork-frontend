@@ -441,3 +441,21 @@
     border-radius: 50%;
   }
 }
+.descriptionInputHold {
+  &.portfolio {
+    height: 400px;
+  }
+}
+.portfolio {
+  .ant-upload.ant-upload-select-picture-card {
+    width: 100% !important;
+  }
+  .timlands-checked-items {
+    left: 20px;
+  }
+}
+.ltr {
+  .timlands-checked-items {
+    right: 20px !important;
+  }
+}

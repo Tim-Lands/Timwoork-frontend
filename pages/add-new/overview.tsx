@@ -12,54 +12,11 @@ import PropTypes from "prop-types";
 import { MyProductsActions } from "store/myProducts/myProductsActions";
 import Navbar from "components/productModify/navbar";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import CreatableSelect from "react-select/creatable";
 import FormLangs from "@/components/Forms/FormLangs";
 import FormModal from "@/components/Forms/FormModal";
 import NavigationButtons from "@/components/NavigationButtons";
+import Tags from "@/components/add-new/Tags";
 
-const MySelect = (props: any) => {
-  const [dataTags, setDataTags] = useState([]);
-  const [isLoadingTags, setIsLoadingTags] = useState(false);
-  const getdataTags = async (tag: string) => {
-    setIsLoadingTags(true);
-    try {
-      const res: any = await API.get(`api/tags/filter?tag=${tag}`);
-      setIsLoadingTags(false);
-      setDataTags(res.data.data.data);
-    } catch (error) {
-      setIsLoadingTags(false);
-    }
-  };
-  const handleChange = (value) => {
-    props.onChange("tags", value);
-  };
-  const handleBlur = () => {
-    props.onBlur("tags", true);
-  };
-  return (
-    <div
-      className="select-tags-form"
-      style={{ margin: "1rem 0", position: "relative", maxWidth: 1300 }}
-    >
-      {isLoadingTags && (
-        <span className="spinner-border spinner-border-sm" role="status"></span>
-      )}
-      <CreatableSelect
-        id="color"
-        options={dataTags}
-        onKeyDown={(e: any) => {
-          if (e.target.value) {
-            getdataTags(e.target.value);
-          }
-        }}
-        isMulti={true}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={props.value}
-      />
-    </div>
-  );
-};
 let testTime;
 
 function Overview({ query }) {
@@ -352,52 +309,38 @@ function Overview({ query }) {
                               </option>
                             ))}
                           </select>
-                          {validationsErrors && validationsErrors.subcategory && (
-                            <div style={{ overflow: "hidden" }}>
-                              <motion.div
-                                initial={{ y: -70, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="timlands-form-note form-note-error"
-                              >
-                                <p className="text">
-                                  {validationsErrors.subcategory[0]}
-                                </p>
-                              </motion.div>
-                            </div>
-                          )}
+                          {validationsErrors &&
+                            validationsErrors.subcategory && (
+                              <div style={{ overflow: "hidden" }}>
+                                <motion.div
+                                  initial={{ y: -70, opacity: 0 }}
+                                  animate={{ y: 0, opacity: 1 }}
+                                  className="timlands-form-note form-note-error"
+                                >
+                                  <p className="text">
+                                    {validationsErrors.subcategory[0]}
+                                  </p>
+                                </motion.div>
+                              </div>
+                            )}
                         </div>
                       </div>
-                      <p
-                        className="label-text"
-                        style={{
-                          fontWeight: "bold",
-                          marginTop: 10,
-                          marginBottom: -9,
-                        }}
-                      >
-                        {getAll("Key_words")}
-                      </p>
-                      <MySelect
-                        value={formik.values.tags}
+
+                      <Tags
+                        values={formik.values.tags}
                         onChange={formik.setFieldValue}
                         onBlur={formik.setFieldTouched}
-                        disabled={!getProduct ? true : false}
+                        validationsErrors={validationsErrors}
                       />
-                      {validationsErrors && validationsErrors.tags && (
-                        <div style={{ overflow: "hidden" }}>
-                          <motion.div
-                            initial={{ y: -70, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            className="timlands-form-note form-note-error"
-                          >
-                            <p className="text">{validationsErrors.tags[0]}</p>
-                          </motion.div>
-                        </div>
-                      )}
+
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
                           <span className="me-auto"></span>
-                          <NavigationButtons isBackVisible={false} onNextClick={formik.handleSubmit} nextTitle={getAll('Next_step')}/>
+                          <NavigationButtons
+                            isBackVisible={false}
+                            onNextClick={formik.handleSubmit}
+                            nextTitle={getAll("Next_step")}
+                          />
                         </div>
                       </div>
                     </div>
