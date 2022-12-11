@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ReactElement, useState } from "react";
-import { message, Table } from "antd";
+import { message, notification, Table } from "antd";
 import Pagination from "react-js-pagination";
 import RejectProductCause from "@/components/RejectProductCause";
 import ReplyContactModal from "@/components/ReplyContactModal";
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { UsersService } from "@/services/tw-admin/usersService";
 
 function index({
   postsList = { last_page: 1, per_page: 10, data: [] },
@@ -28,9 +29,10 @@ function index({
   const [isDisactiveModalVisible, setIsDisactiveModalVisible] = useState(false);
   const [selectedProductId, setSelectedProductId]:any = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
+  const [selectedUserID, setSelectedUserID]: any = useState(null);
+
 
   const dispatch = useAppDispatch()
-  console.log('status is ', status, '####')
   const columns: any = generatecolumns(
     {
       status:postsType,
@@ -41,7 +43,8 @@ function index({
         onSendEmailClick,
         archieveHandle,
         forceDelete,
-        restoreArchieved
+        restoreArchieved,
+        onSendNotificationClick
       },
     },
     getAll
@@ -50,6 +53,22 @@ function index({
   function onSendEmailClick(post) {
     setSelectedUser(post.profile_seller.profile.user);
     setIsReplyModalVisible(true);
+  }
+
+  const sendNotification = async () => {
+    try {
+      await UsersService.sendNotification({cause, id: selectedUserID})
+      setIsEmailModalVisible(false)
+      notification.success({ message: getAll("The_notification_was") });
+    } catch (err) {
+      console.log(err);
+      notification.warning({ message: getAll("An_error_occured") });
+    }
+  };
+
+  async function onSendNotificationClick(post){
+    setIsEmailModalVisible(true)
+    setSelectedUserID(post.profile_seller.profile.user.id)
   }
 
    async function archieveHandle(id,getAll) {  
@@ -195,6 +214,7 @@ function index({
     const id = selectedProductId
     const revalidatedType = postsType
     await dispatch(ProductsActions.rejectOne({cause, id, revalidatedType}))
+    setIsModalVisible(false)
     message.info(getAll('Rejected_succesufully'))
   }
   return (
@@ -220,9 +240,10 @@ function index({
           {isEmailModalVisible && (
             <EmailModalCause
               setIsConfirmText={setIsEmailModalVisible}
+              handleFunc={() => sendNotification()}
               title={getAll("User_notification")}
               msg={cause}
-              setMsg={(e) => setCause(e.target.value)}
+              setMsg={(e) => setCause(e)}
             />
           )}
           {isReplyModalVisible && (

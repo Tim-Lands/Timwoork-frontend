@@ -171,7 +171,6 @@ function index(): ReactElement {
     const [showedMenues, setShowedMenues] = useState({})
     const submenu = true
     const path = useRouter()
-    console.log(showedMenues)
     return (
         <div className={"dashboard-sidebar"}>
             {userData &&

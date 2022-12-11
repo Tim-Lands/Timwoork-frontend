@@ -90,7 +90,7 @@ function index(): ReactElement {
                           <p className="text">{getAll("Buyers")}</p>
                         </div>
                         <div className="det-val">
-                          <p className="text">0</p>
+                          <p className="text">{postsList.data.buyers}</p>
                         </div>
                       </div>
                     </li>
@@ -100,7 +100,7 @@ function index(): ReactElement {
                           <p className="text">{getAll("Sellers")}</p>
                         </div>
                         <div className="det-val">
-                          <p className="text">0</p>
+                          <p className="text">{postsList.data.profile_sellers}</p>
                         </div>
                       </div>
                     </li>
@@ -176,7 +176,7 @@ function index(): ReactElement {
                           <p className="text">{getAll("Disabled")}</p>
                         </div>
                         <div className="det-val">
-                          <p className="text">0</p>
+                          <p className="text">{postsList.data.products_disactived}</p>
                         </div>
                       </div>
                     </li>

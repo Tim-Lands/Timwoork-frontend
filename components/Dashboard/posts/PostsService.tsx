@@ -6,7 +6,6 @@ import { EProductStateType } from "@/store/tw-admin/products/thunkFunctions";
 
 
 export const generatecolumns = ({ status, callbacks }, getAll) => {
-  console.log(status)
   const switchStatus = (status, getAll) => {
     switch (status) {
       case null:
@@ -167,7 +166,7 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
         title={getAll("Send_notification")}
         className="btn butt-xs2 butt-light"
         onClick={() => {
-          onSendNotificationClick();
+          onSendNotificationClick(post);
           //setIsEmailModalVisible(true)
         }}
       >
