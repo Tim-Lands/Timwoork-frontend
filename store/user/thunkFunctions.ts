@@ -1,6 +1,6 @@
-import { PusherService } from "services/pusherService";
+import { PusherService } from "@/services/pusher";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { UserService } from "../../services/userService";
+import { UserService } from "../../services/user";
 const getData = createAsyncThunk(
   "user/data",
   async (args: any, { rejectWithValue }) => {

@@ -45,7 +45,7 @@ function PortfolioProfileHeader({ showAddBtn }: { showAddBtn: boolean }) {
               </a>
             </Link>
             {showAddBtn && (
-              <Link href="/portfolios/modify/add">
+              <Link href="/portfolios/project-modify/add">
                 <a className="btn butt-green mx-1 flex-center butt-sm">
                   <span className="material-icons material-icons-outlined">
                     add_circle

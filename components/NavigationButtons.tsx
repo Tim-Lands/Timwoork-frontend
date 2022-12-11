@@ -50,8 +50,6 @@ const NavigationButtons = ({
     isBackVisible: isBackVisible != undefined ? isBackVisible : true,
   });
 
-  console.log(props);
-
   return (
     <>
       {props.isBackVisible && (

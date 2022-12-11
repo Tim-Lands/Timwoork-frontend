@@ -1,4 +1,4 @@
-import { BlogService } from "../../services/blogService";
+import { BlogService } from "../../services/blog";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const getBlogsData = createAsyncThunk(

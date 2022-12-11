@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { message } from "antd";
 import { motion } from "framer-motion";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { CategoriesService } from "@/services/categoriesServices";
+import { CategoriesService } from "@/services/categories";
 import router from "next/router";
 import SidebarAdvices from "../../components/add-new/SidebarAdvices";
 import API from "../../config";

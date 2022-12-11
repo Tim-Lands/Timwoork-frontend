@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { NotificationsService } from "services/notificationsService";
+import { NotificationsService } from "@/services/notifications";
 const getNotificationsData = createAsyncThunk(
   "notifications/get/all",
   async (args: { pageNumber: number }, { rejectWithValue }) => {

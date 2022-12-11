@@ -37,7 +37,6 @@ function Medias({ query }) {
 
   const [featuredMedia, setFeaturedImages]: any = useState("");
   const [galleryMedia, setGalleryMedia]: any = useState([]);
-  console.log(galleryMedia);
   const [isFeaturedChanged, setIsFeaturedChanged] = useState(false);
   const [isGalleryChanged, setIsGalleryChanged] = useState(false);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);

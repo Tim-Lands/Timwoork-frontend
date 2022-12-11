@@ -21,7 +21,7 @@ import {
 import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import router from "next/router";
-import { ProductService } from "@/services/productService";
+import { ProductService } from "@/services/product";
 import Image from "next/image";
 import { Alert } from "@/components/Alert/Alert";
 import ReactPlayer from "react-player";

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { MyProductsService } from "@/services/myProductsService";
+import { MyProductsService } from "@/services/myProducts";
 const getMyProducts = createAsyncThunk(
   "myProducts/get",
   async (args: { params?: any }, { rejectWithValue }) => {

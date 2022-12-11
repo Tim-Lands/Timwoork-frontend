@@ -1,4 +1,4 @@
-import { CartService } from "../../services/cartService";
+import { CartService } from "../../services/cart";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const getCartData = createAsyncThunk(
   "cart/data",

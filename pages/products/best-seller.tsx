@@ -4,7 +4,7 @@ import FilterContent from "../../components/products";
 import { Form, Formik } from "formik";
 import Pagination from "react-js-pagination";
 import Loading from "@/components/Loading";
-import { ProductService } from "@/services/productService";
+import { ProductService } from "@/services/product";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
 

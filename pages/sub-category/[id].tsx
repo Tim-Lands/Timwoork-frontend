@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Layout from "@/components/Layout/HomeLayout";
-import { CategoriesService } from "@/services/categoriesServices";
+import { CategoriesService } from "@/services/categories";
 import Categories from "@/components/Categories";
 import router from "next/router";
 function SubCategory({ subCategories }): ReactElement {

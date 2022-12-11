@@ -3,7 +3,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import PropTypes from "prop-types";
 import { Result } from "antd";
 import { useAppSelector } from "@/store/hooks";
-import { CategoriesService } from "@/services/categoriesServices";
+import { CategoriesService } from "@/services/categories";
 import Loading from "@/components/Loading";
 import Post from "@/components/Post/Post";
 import { MetaTags } from "@/components/SEO/MetaTags";

@@ -51,7 +51,7 @@ function Index() {
                 >
                   <button
                     onClick={() => {
-                      router.push("/portfolios/modify/add");
+                      router.push("/portfolios/project-modify/add");
                     }}
                     className="btn butt-green mx-1 flex-center butt-sm w-fit"
                   >

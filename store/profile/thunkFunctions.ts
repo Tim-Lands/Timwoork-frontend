@@ -1,4 +1,4 @@
-import { ProfileService } from "services/profileService";
+import { ProfileService } from "@/services/profile";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const getProfileData = createAsyncThunk(
   "profile/data",

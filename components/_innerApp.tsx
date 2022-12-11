@@ -18,7 +18,7 @@ import { LanguagesActions } from "@/store/languages/languagesActions";
 import { NotificationsActions } from "@/store/notifications/notificationsActions";
 import { ChatActions } from "store/chat/chatActions";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { PusherService } from "services/pusherService";
+import { PusherService } from "@/services/pusher";
 import getSpecCurrency from "../utils/currency";
 
 const App = ({ innerApp }) => {

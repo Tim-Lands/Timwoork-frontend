@@ -5,7 +5,7 @@ import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Card } from "antd";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
-import { ProfileService } from "../../services/profileService";
+import { ProfileService } from "../../services/profile";
 import cookies from "next-cookies";
 import PropTypes from "prop-types";
 import Loading from "@/components/Loading";
@@ -27,7 +27,7 @@ const User = ({ query, profile: User }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
-  console.log(User)
+  console.log(User);
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
@@ -223,31 +223,32 @@ const User = ({ query, profile: User }) => {
                     {User &&
                       User.profile.profile_seller &&
                       User.profile.profile_seller.products &&
-                      User.profile.profile_seller.products.map((e: any) =>{ console.log(e); return(
-                        
-                        <div key={e.id} className={"col-sm-6 col-lg-4"}>
-                          <PostInner
-                            avatar={User.profile.avatar_path}
-                            size="small"
-                            title={e.title}
-                            author={
-                              User.profile &&
-                              User.profile.first_name +
-                                " " +
-                                User.profile.last_name
-                            }
-                            rate={e.ratings_avg_rating}
-                            username={
-                              User.profile.profile_seller &&
-                              User.username
-                            }
-                            price={e.price}
-                            slug={e.id}
-                            thumbnail={e.full_path_thumbnail}
-                            buyers={e.count_buying}
-                          />
-                        </div>
-                      )})}
+                      User.profile.profile_seller.products.map((e: any) => {
+                        console.log(e);
+                        return (
+                          <div key={e.id} className={"col-sm-6 col-lg-4"}>
+                            <PostInner
+                              avatar={User.profile.avatar_path}
+                              size="small"
+                              title={e.title}
+                              author={
+                                User.profile &&
+                                User.profile.first_name +
+                                  " " +
+                                  User.profile.last_name
+                              }
+                              rate={e.ratings_avg_rating}
+                              username={
+                                User.profile.profile_seller && User.username
+                              }
+                              price={e.price}
+                              slug={e.id}
+                              thumbnail={e.full_path_thumbnail}
+                              buyers={e.count_buying}
+                            />
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
               </div>
