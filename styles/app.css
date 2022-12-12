@@ -1726,7 +1726,7 @@
   height: 250px;
   overflow: hidden;
   border-radius: 7px;
-  margin: 0px !important;
+  margin-inline: 0px !important;
   position: relative;
   transition: all 0.3s;
 }
@@ -8440,6 +8440,11 @@
   border-radius: 7px 7px 0 0;
   align-items: center;
   justify-content: center;
+}
+.timlands-portfolio-item .portfolio-item-img img {
+  position: absolute;
+  width: 100%;
+  height: 80%;
 }
 .timlands-portfolio-item .portfolio-item-img .portfolio-item-img-buttons {
   display: flex;

@@ -49,10 +49,17 @@ function index() {
   const [pageNumber, setPageNumber]: any = useState(1);
   const [sentinel, setSentinel] = useState({ mount: true });
   const search = useRef(null);
-  const {transactions} = useAppSelector(state=>state.dashboardActivitiesSlice)
-  const dispatch = useAppDispatch()
+  const { transactions } = useAppSelector(
+    (state) => state.dashboardActivitiesSlice
+  );
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(ActivitiesActions.getTransactions({page:pageNumber, search:search.current}))
+    dispatch(
+      ActivitiesActions.getTransactions({
+        page: pageNumber,
+        search: search.current,
+      })
+    );
   }, [pageNumber, sentinel]);
 
   return (
@@ -111,7 +118,9 @@ function index() {
                         <td>{transfer.payload.title}</td>
                         <td>{transfer.payload.payment_method}</td>
                         <td className="linked-image">
-                          <Link href={`/u/${transfer.wallet.profile.id}`}>
+                          <Link
+                            href={`/user/profile/${transfer.wallet.profile.id}`}
+                          >
                             <a>
                               <Image
                                 src={transfer.wallet.profile.avatar_url}

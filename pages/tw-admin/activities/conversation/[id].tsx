@@ -18,42 +18,46 @@ function Single({ query }: any) {
   const { current_conversation } = useAppSelector(
     (state) => state.dashboardActivitiesSlice
   );
-  console.log(current_conversation)
-  const dispatch = useDispatch(); 
+  console.log(current_conversation);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(ActivitiesActions.getOneConversation({ id: query.id }));
   }, []);
 
-
   const deleteMsg = async (body) => {
     try {
-      const{comment} = body
-      await dispatch(ActivitiesActions.deleteMessage({id:selectedMessageId, cause:comment}))
+      const { comment } = body;
+      await dispatch(
+        ActivitiesActions.deleteMessage({
+          id: selectedMessageId,
+          cause: comment,
+        })
+      );
       notification.success({
-      message: "تم حذف الرسالة بنجاح",
-        });
-      
+        message: "تم حذف الرسالة بنجاح",
+      });
     } catch (err) {
       console.log(err);
     }
   };
   const editMsg = async (body) => {
     try {
-        const {message, cause} = body
-        const id = selectedMessageId
-        await dispatch(ActivitiesActions.editMessage({id, cause, message}))
-        setIsShowEdit(false);
-        notification.success({
-          message: "تم تعديل الرسالة بنجاح",
-        });
-      
+      const { message, cause } = body;
+      const id = selectedMessageId;
+      await dispatch(ActivitiesActions.editMessage({ id, cause, message }));
+      setIsShowEdit(false);
+      notification.success({
+        message: "تم تعديل الرسالة بنجاح",
+      });
     } catch (err) {
       console.log(err);
     }
   };
   const [isShowEdit, setIsShowEdit] = useState(false);
-  return current_conversation.loading?(<Loading/>):(
+  return current_conversation.loading ? (
+    <Loading />
+  ) : (
     <div className="timlands-panel">
       {isConfirmText && (
         <ConfirmText
@@ -69,8 +73,9 @@ function Single({ query }: any) {
           handleFunc={editMsg}
           title="التعديل على الرسالة"
           msgValues={
-            current_conversation?.data.conversation.find((elm) => elm.id == selectedMessageId)
-              .message
+            current_conversation?.data.conversation.find(
+              (elm) => elm.id == selectedMessageId
+            ).message
           }
         />
       )}
@@ -98,7 +103,8 @@ function Single({ query }: any) {
                   <li key={message.id}>
                     <span
                       className={`item-link user-${
-                        current_conversation.data.members[0]?.user_id == message.user.id
+                        current_conversation.data.members[0]?.user_id ==
+                        message.user.id
                           ? "from"
                           : "to"
                       }`}
@@ -133,7 +139,7 @@ function Single({ query }: any) {
                       </div>
                       <div className="conversation-item">
                         <p className="username">
-                          <Link href={`/u/${message.user.id}`}>
+                          <Link href={`/user/profile/${message.user.id}`}>
                             <a>{message.user.username}</a>
                           </Link>
                         </p>

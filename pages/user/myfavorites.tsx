@@ -28,7 +28,7 @@ function Index() {
                 <Portfolio
                   title="A very tasty and cool recipe for pilaf inside a huge"
                   thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/1400/165af265485593.5af5bf8eae575.jpg`}
-                  slug={`dedej-djeded-wedw-wedwef-hgc`}
+                  slug={1}
                   author={"Abdelhamid Boumegouas"}
                   level={`New Seller`}
                   avatar={`/avatar.png`}

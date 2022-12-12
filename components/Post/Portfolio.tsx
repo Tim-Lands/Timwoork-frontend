@@ -18,7 +18,6 @@ function Portfolio({
   slug,
   me = true,
 }): ReactElement {
-  const thumbnailUrl = `url(${thumbnail})`;
   const [isFavorated, setIsFavorated] = useState(false);
   const { getAll } = useAppSelector((state) => state.languages);
 
@@ -34,13 +33,13 @@ function Portfolio({
     >
       <div
         className={"timlands-portfolio-item"}
-        style={{ height: me ? 350 : 400 }}
+        style={{ height: me ? 300 : 400 }}
       >
         <div
           className={`portfolio-item-img ${me ? "" : "show"}`}
-          style={{ backgroundImage: thumbnailUrl }}
           onClick={() => me && Router.push("/portfolios/" + slug)}
         >
+          <img src={thumbnail} alt="thumbnail" />
           <div className="portfolio-item-img-buttons">
             <button
               className="btn butt-xs butt-white flex-center"
@@ -74,7 +73,7 @@ function Portfolio({
           {me ? (
             <></>
           ) : (
-            <Link href={`/u/${username}`}>
+            <Link href={`/user/profile/${username}`}>
               <a className="user-mata-post">
                 <div className="user-mata-post-img">
                   <Image src={avatar} width={30} height={30} alt={author} />
@@ -100,7 +99,7 @@ Portfolio.propTypes = {
   thumbnail: PropTypes.any,
   avatar: PropTypes.string,
   author: PropTypes.string,
-  slug: PropTypes.string,
+  slug: PropTypes.number,
   username: PropTypes.string,
   heartCount: PropTypes.number,
   views: PropTypes.number,

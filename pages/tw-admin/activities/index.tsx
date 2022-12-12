@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ActivitiesActions } from "@/store/tw-admin/activities/activityActions";
 
 const ActivityData = (activity, getAll) => {
-
   switch (activity.data.type) {
     case "order":
       return (
@@ -18,7 +17,11 @@ const ActivityData = (activity, getAll) => {
             {activity?.data?.content?.title}
           </a>{" "}
           , مقدمة من{" "}
-          <a href={`/u/${activity.user_id}`} target="_blank" rel="noreferrer">
+          <a
+            href={`/user/profile/${activity.user_id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             {" "}
             {activity.username}
           </a>
@@ -31,7 +34,11 @@ const ActivityData = (activity, getAll) => {
           قام <a href=""> {activity?.data?.user_sender?.full_name}</a> بتقييم
           خدمة {activity?.data?.content?.slug.split("-").slice(1).join(" ")}{" "}
           المُقدمة من{" "}
-          <a href={`/u/${activity?.user_id}`} target="_blank" rel="noreferrer">
+          <a
+            href={`/user/profile/${activity?.user_id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             {" "}
             {activity?.username}
           </a>
@@ -41,8 +48,8 @@ const ActivityData = (activity, getAll) => {
       return (
         <p>
           إشعار من الإدارة إلى{" "}
-          <a href={`/u/${activity.user_id}`}>{activity.username}</a> :{" "}
-          <a href={``}>{activity?.data?.title}</a>
+          <a href={`/user/profile/${activity.user_id}`}>{activity.username}</a>{" "}
+          : <a href={``}>{activity?.data?.title}</a>
         </p>
       );
     default:
@@ -55,14 +62,20 @@ function index() {
   const [pageNumber, setPagenNumber]: any = useState(1);
 
   const [sentinel, setSentinel] = useState({ mount: true });
-  const search:any = useRef(null);
+  const search: any = useRef(null);
 
-  const {notifications} = useAppSelector(state=>state.dashboardActivitiesSlice)
-  const dispatch = useAppDispatch()
+  const { notifications } = useAppSelector(
+    (state) => state.dashboardActivitiesSlice
+  );
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(ActivitiesActions.getNotifications({page:pageNumber, search:search.current}))
+    dispatch(
+      ActivitiesActions.getNotifications({
+        page: pageNumber,
+        search: search.current,
+      })
+    );
   }, [pageNumber, sentinel]);
-
 
   return (
     <>

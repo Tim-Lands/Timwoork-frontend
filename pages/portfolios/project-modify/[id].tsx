@@ -329,7 +329,10 @@ const Add: NextPage = () => {
                           images: galleryMedia.map((media) => media.file),
                         };
                         await dispatch(
-                          PortfolioActions.addProject({ body })
+                          PortfolioActions.addProject({
+                            body,
+                            username: user.username,
+                          })
                         ).unwrap();
                         router.push("/portfolios/user/" + user.username);
                       } catch (error) {

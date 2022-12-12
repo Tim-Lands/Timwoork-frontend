@@ -91,7 +91,7 @@ const personalInformations = () => {
                       if (values.currency_id !== currency.id)
                         dispatch(CurrencyActions.getData());
                       message.success(getAll("The_update_has"));
-                      router.push("/user/profile");
+                      router.push("/user/profile/me");
                     } catch (error: any) {
                       if (error.errors) {
                         setValidationsErrors(error.errors);

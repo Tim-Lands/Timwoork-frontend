@@ -195,7 +195,7 @@ const Item = ({
                           <h3 className="title">{getAll("Seller")}</h3>
                         </div>
                         <Link
-                          href={`/u/${
+                          href={`/user/profile/${
                             ShowItem &&
                             ShowItem.profile_seller?.profile.user?.username
                           }`}
@@ -238,7 +238,7 @@ const Item = ({
                           <h3 className="title">{getAll("Buyer")}</h3>
                         </div>
                         <Link
-                          href={`/u/${
+                          href={`/user/profile/${
                             type == "sales"
                               ? ShowItem.order.cart.user.username
                               : ShowItem.profile_seller.profile.user?.username

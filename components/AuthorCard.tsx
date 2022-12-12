@@ -21,7 +21,7 @@ function AuthorCard({
       <div className="user-info-portfolio">
         <Image src={avatar} width={50} height={50} />
         <h3 className="user-title">
-          <Link href={`/u/${username}`}>
+          <Link href={`/user/profile/${username}`}>
             <a>{author}</a>
           </Link>
         </h3>

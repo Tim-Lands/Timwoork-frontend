@@ -263,7 +263,7 @@ function Id({ query }) {
                   <th>{getAll("Full_name")}</th>
                   <td>
                     <Link
-                      href={`/u/${
+                      href={`/user/profile/${
                         curr_withdrawal.data && curr_withdrawal.data?.withdrawalable?.profile?.user_id
                       }`}
                     >

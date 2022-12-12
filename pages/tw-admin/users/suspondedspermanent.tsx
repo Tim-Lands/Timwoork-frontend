@@ -21,16 +21,18 @@ function suspondedspermanent() {
 
   const { getAll } = useAppSelector((state) => state.languages);
 
-  const usersState = useAppSelector(state=>state.dashboardUsers)
-  const dispatch = useAppDispatch()
+  const usersState = useAppSelector((state) => state.dashboardUsers);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(UserActions.getAllUsers({
-      page:pageNumber,
-      search:username,
-      is_banned:true,
-      is_banned_permanent:true
-    }))
+    dispatch(
+      UserActions.getAllUsers({
+        page: pageNumber,
+        search: username,
+        is_banned: true,
+        is_banned_permanent: true,
+      })
+    );
   }, [pageNumber, sentinel]);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ function suspondedspermanent() {
 
   const unSuspend = async (id) => {
     try {
-      dispatch(UserActions.unbanUser({id}))
+      dispatch(UserActions.unbanUser({ id }));
     } catch (err) {
       () => {};
     }
@@ -73,7 +75,7 @@ function suspondedspermanent() {
       title: getAll("Full_name"),
       dataIndex: ["profile"],
       render: (profile: any) => (
-        <Link key={profile.id} href={`/u/${profile.id}`}>
+        <Link key={profile.id} href={`/user/profile/${profile.id}`}>
           <a className="flex-center">
             <Image src={`${profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">

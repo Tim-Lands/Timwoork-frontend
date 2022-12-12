@@ -138,7 +138,7 @@ const App = ({ innerApp }) => {
                 onClick={() =>
                   router.push(
                     data.message.user.username
-                      ? `/u/${data.message.user.username}`
+                      ? `/user/profile/${data.message.user.username}`
                       : "/notifications"
                   )
                 }
@@ -209,7 +209,7 @@ const App = ({ innerApp }) => {
                 onClick={() => {
                   router.push(
                     data?.user_sender?.username
-                      ? `/u/${data.user_sender.username}`
+                      ? `/user/profile/${data.user_sender.username}`
                       : "/notifications"
                   );
                 }}

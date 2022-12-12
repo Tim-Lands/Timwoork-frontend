@@ -22,7 +22,7 @@ function index() {
     useState(false);
   const [selectedUserID, setSelectedUserID]: any = useState(null);
   const [pageNumber, setPageNumber]: any = useState(1);
-  const [search, setSearch]: any = useState('')
+  const [search, setSearch]: any = useState("");
 
   const [cause, setCause] = useState("");
 
@@ -30,14 +30,13 @@ function index() {
   const [isNotifyModalVisible, setIsNotifyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const { getAll } = useAppSelector((state) => state.languages);
-  const usersState = useAppSelector(state=>state.dashboardUsers)
-  const dispatch = useAppDispatch()
-  useEffect(()=>{
-    dispatch(UserActions.getAllUsers({page:pageNumber, search}))
+  const usersState = useAppSelector((state) => state.dashboardUsers);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(UserActions.getAllUsers({ page: pageNumber, search }));
+  }, [pageNumber, sentinel]);
 
-  },[pageNumber, sentinel])
-
-  useEffect(() => {    
+  useEffect(() => {
     if (window.innerWidth < 550) {
       setPaginationSize(2);
     }
@@ -64,13 +63,18 @@ function index() {
     };
   }, []);
 
-
-  const suspendUser = async (body:any) => {
+  const suspendUser = async (body: any) => {
     try {
-     dispatch(UserActions.banUser({id:selectedUserID, comment:body.comment, expired_at:body.expired_at}))
+      dispatch(
+        UserActions.banUser({
+          id: selectedUserID,
+          comment: body.comment,
+          expired_at: body.expired_at,
+        })
+      );
     } catch (err) {
-      console.log(err)
-      message.error(err.message)
+      console.log(err);
+      message.error(err.message);
     }
   };
 
@@ -79,7 +83,7 @@ function index() {
       title: getAll("Full_name"),
       dataIndex: "",
       render: (e: any) => (
-        <Link key={e.id} href={`/u/${e.id}`}>
+        <Link key={e.id} href={`/user/profile/${e.id}`}>
           <a className="flex-center">
             <Image src={`${e.profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
@@ -188,7 +192,7 @@ function index() {
 
   const sendNotification = async () => {
     try {
-      await UsersService.sendNotification({cause, id: selectedUserID})
+      await UsersService.sendNotification({ cause, id: selectedUserID });
       notification.success({ message: getAll("The_notification_was") });
     } catch (err) {
       console.log(err);

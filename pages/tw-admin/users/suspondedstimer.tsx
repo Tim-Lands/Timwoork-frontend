@@ -12,19 +12,24 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { UserActions } from "@/store/tw-admin/users/UserActions";
 
 function suspondedstimer() {
-
   const [isShowSuspensionInfo, setIsShowSuspensionInfo] = useState(false);
   const [paginationSize, setPaginationSize] = useState(8);
   const [selectedUser, setSelectedUser]: any = useState(null);
   const [pageNumber, setPageNumber]: any = useState(1);
   const [search, setSearch] = useState("");
   const [sentinel, setSentinel] = useState({ mount: true });
-  const usersState = useAppSelector(state=>state.dashboardUsers)
-  const dispatch = useAppDispatch()
+  const usersState = useAppSelector((state) => state.dashboardUsers);
+  const dispatch = useAppDispatch();
 
-  useEffect(()=>{
-    dispatch(UserActions.getAllUsers({is_banned:true, is_banned_temporrary:true, page:pageNumber}))
-  },[pageNumber, sentinel])
+  useEffect(() => {
+    dispatch(
+      UserActions.getAllUsers({
+        is_banned: true,
+        is_banned_temporrary: true,
+        page: pageNumber,
+      })
+    );
+  }, [pageNumber, sentinel]);
   useEffect(() => {
     if (window.innerWidth < 550) {
       setPaginationSize(2);
@@ -58,7 +63,7 @@ function suspondedstimer() {
       title: getAll("Full_name"),
       dataIndex: ["profile"],
       render: (profile: any) => (
-        <Link key={profile.id} href={`/u/${profile.id}`}>
+        <Link key={profile.id} href={`/user/profile/${profile.id}`}>
           <a className="flex-center">
             <Image src={`${profile.avatar_path}`} width={20} height={20} />
             <span className="me-1">
@@ -136,14 +141,12 @@ function suspondedstimer() {
 
   const unSuspend = async (id) => {
     try {
-      dispatch(UserActions.unbanUser({id}))
+      dispatch(UserActions.unbanUser({ id }));
     } catch (err) {
-      console.log(err)
-      message.error(err.message)
+      console.log(err);
+      message.error(err.message);
     }
   };
-
-  
 
   // Return statement.
   return (
@@ -189,7 +192,7 @@ function suspondedstimer() {
           dataSource={usersState.users}
           pagination={false}
           bordered
-          loading = {usersState.loading}
+          loading={usersState.loading}
         />
         <div>
           <hr />

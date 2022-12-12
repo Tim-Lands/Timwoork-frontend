@@ -25,7 +25,7 @@ function Index() {
               <Portfolio
                 title="مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع"
                 thumbnail={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyBCwIVaaXgBU_spXezU8RZr-MGrzWMBCA5A&usqp=CAU`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"أحمد يحيى"}
                 level={getAll("New_seller")}
                 avatar={`/avatar.png`}
@@ -38,7 +38,7 @@ function Index() {
               <Portfolio
                 title="النص يمكن أن يتم تركيبه على أي تصميم دون مشكلة فلن"
                 thumbnail={`https://i.pinimg.com/736x/fc/c2/a5/fcc2a5b86a3887465ef66e7d13b35fc5.jpg`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"عمر الهواري"}
                 level={`بائع ممتاز`}
                 avatar={`/avataré.jpg`}
@@ -51,7 +51,7 @@ function Index() {
               <Portfolio
                 title="البحث عن نص بديل لا علاقة له بالموضوع الذى يتحدث عنه التصميم"
                 thumbnail={`https://previews.agefotostock.com/previewimage/medibigoff/c21090dd6e94425eaa6e70ed7a23d883/esy-046306278.jpg`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"قويدر جلول"}
                 level={`بائع محترف`}
                 avatar={`/avatar.png`}
@@ -64,7 +64,7 @@ function Index() {
               <Portfolio
                 title="المصمم أن يضع نصوصا مؤقتة على التصميم ليظهر للعميل"
                 thumbnail={`https://gdj-inr5u0ip5pewom.stackpathdns.com/wp-content/uploads/2012/08/big-typography-design-27.jpg`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"ثامر بن العمري"}
                 level={getAll("Active_seller")}
                 avatar={`/avatar3.jpg`}
@@ -77,7 +77,7 @@ function Index() {
               <Portfolio
                 title="العربى مفيد لمصممي المواقع على وجه الخصوص، حيث"
                 thumbnail={`https://www.designandpaper.com/wp-content/uploads/2020/04/Pawel_Nolbert_adobe_dream_1920-1920x1266-1-1600x1055.jpg`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"شكراري محمد"}
                 level={getAll("New_seller")}
                 avatar={`/avatar.png`}
@@ -90,7 +90,7 @@ function Index() {
               <Portfolio
                 title="أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات"
                 thumbnail={`https://cdnb.artstation.com/p/assets/images/images/021/763/033/large/joshua-prakash-magical-water.jpg?1572873773`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"ادير عيسى"}
                 level={`بائع محترف`}
                 avatar={`/avatar3.jpg`}
@@ -103,7 +103,7 @@ function Index() {
               <Portfolio
                 title="هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد"
                 thumbnail={`https://www.digitalartsonline.co.uk/cmsdata/slideshow/3594658/final-1.jpg`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"جمال عبد القادر"}
                 level={getAll("Active_seller")}
                 avatar={`/avatar.png`}
@@ -116,7 +116,7 @@ function Index() {
               <Portfolio
                 title="مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع"
                 thumbnail={`https://gdj-inr5u0ip5pewom.stackpathdns.com/wp-content/uploads/2013/05/TypographyDesign35.jpg`}
-                slug={`dedej-djeded-wedw-wedwef-hgc`}
+                slug={1}
                 author={"الهواري وشراك"}
                 level={`بائع ممتاز`}
                 avatar={`/avatar2.jpg`}

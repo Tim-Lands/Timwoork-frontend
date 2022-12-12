@@ -119,7 +119,7 @@ function Post({
         />
       </Link>
       <div className="post-item-content">
-        <Link href={`/u/${username}`}>
+        <Link href={`/user/profile/${username}`}>
           <a className="user-mata-post">
             <div className="user-mata-post-img">
               <Image src={avatar} width={30} height={30} alt={author} />

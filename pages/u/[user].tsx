@@ -35,7 +35,7 @@ const User = ({ query, profile: User }) => {
         detectHeight.current.scrollHeight > 230
     ),
       [detectHeight, detectHeight.current];
-    if (userId && userId == currentUserId) router.push("/user/profile");
+    if (userId && userId == currentUserId) router.push("/user/profile/me");
   }, [detectHeight]);
 
   return (
@@ -49,7 +49,7 @@ const User = ({ query, profile: User }) => {
           User.profile.profile_seller && User.profile.profile_seller.bio
         }
         ogImage={User.profile.avatar_path}
-        ogUrl={`https://timwoork.com/u/${User.username}`}
+        ogUrl={`https://timwoork.com/user/profile/${User.username}`}
       />
       {!User && <Loading />}
       {User.profile && (
@@ -100,7 +100,7 @@ const User = ({ query, profile: User }) => {
                     className="btn butt-primary2 flex-center butt-sm"
                     onClick={() =>
                       navigator.clipboard.writeText(
-                        `https://timwoork.com/u/${query?.user}`
+                        `https://timwoork.com/user/profile/${query?.user}`
                       )
                     }
                   >

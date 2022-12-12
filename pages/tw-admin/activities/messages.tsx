@@ -15,13 +15,20 @@ function index() {
   const email = useRef(null);
   const router = useRouter();
 
-  const {conversations} = useAppSelector(state=> state.dashboardActivitiesSlice)
-  const dispatch = useAppDispatch()
-  console.log(conversations)
+  const { conversations } = useAppSelector(
+    (state) => state.dashboardActivitiesSlice
+  );
+  const dispatch = useAppDispatch();
+  console.log(conversations);
   useEffect(() => {
-    dispatch(ActivitiesActions.getConversations({page:pageNumber, email:email.current}))
+    dispatch(
+      ActivitiesActions.getConversations({
+        page: pageNumber,
+        email: email.current,
+      })
+    );
   }, [pageNumber, email.current]);
-  
+
   return (
     <>
       <div className="timlands-panel">
@@ -73,7 +80,7 @@ function index() {
                       </div>
                       <div className="activity-item">
                         <a
-                          href={`/u/${message.members[0].id}`}
+                          href={`/user/profile/${message.members[0].id}`}
                           rel="noreferrer"
                           target="_blank"
                           className="u"
@@ -82,7 +89,7 @@ function index() {
                         </a>
                         <span className="text">رسالة خاصة لـ </span>
                         <a
-                          href={`/u/${message.members[1].id}`}
+                          href={`/user/profile/${message.members[1].id}`}
                           rel="noreferrer"
                           target="_blank"
                           className="u"

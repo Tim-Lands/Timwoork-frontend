@@ -128,7 +128,7 @@ function Index({ query }) {
                       <Portfolio
                         title={getAll("If_you_need")}
                         thumbnail={`https://cdn.dribbble.com/uploads/7999/original/71d0450f3b5282d9ae34f788ba3a04e2.jpg?1582829647`}
-                        slug={`dedej-djeded-wedw-wedwef-hgc`}
+                        slug={1}
                         author={"طارق عروي"}
                         level={`New Seller`}
                         views={3642}
@@ -140,7 +140,7 @@ function Index({ query }) {
                       <Portfolio
                         title="يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى"
                         thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/7631ff94721811.5e85dc7bb7e11.png`}
-                        slug={`dedej-djeded-wedw-wedwef-hgc`}
+                        slug={1}
                         author={"شرف الدين المصري"}
                         level={`New Seller`}
                         avatar={`/avatar.png`}
@@ -152,7 +152,7 @@ function Index({ query }) {
                       <Portfolio
                         title={getAll("This_text_is")}
                         thumbnail={`https://cdn.dribbble.com/users/2189268/screenshots/8028972/media/5ae2b122667ec785965a00a021b54eee.png?compress=1&resize=400x300`}
-                        slug={`dedej-djeded-wedw-wedwef-hgc`}
+                        slug={1}
                         author={"أحمد يحيى"}
                         level={`New Seller`}
                         views={3642}
@@ -198,7 +198,7 @@ function Index({ query }) {
               <div className="user-info-portfolio">
                 <Image src={`/avatar.png`} width={50} height={50} />
                 <h3 className="user-title">
-                  <Link href={`/u/ddkdh`}>
+                  <Link href={`/user/profile`}>
                     <a>عبد الحميد بومقواس</a>
                   </Link>
                 </h3>

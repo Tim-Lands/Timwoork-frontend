@@ -63,7 +63,7 @@ export default function AboutSeller({
               )}
             </ul>
             <div className="seller-info-butts d-flex">
-              <Link href={"/u/" + username}>
+              <Link href={"/user/profile/" + username}>
                 <a className="btn butt-primary butt-sm flex-center">
                   <i className="material-icons material-icons-outlined">
                     account_circle

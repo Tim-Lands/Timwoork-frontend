@@ -15,8 +15,9 @@ function PostInner({
   size,
   slug,
   rate = 2,
+  style,
+  className,
 }): ReactElement {
-  
   const { value, symbol_native } = useAppSelector((state) => state.currency.my);
   const sizeClass = () => {
     switch (size) {
@@ -109,8 +110,8 @@ function PostInner({
 
   return (
     <div
-      className={"timlands-post-inner" + sizeClass()}
-      style={{ direction: language === "ar" ? "rtl" : "ltr" }}
+      className={`timlands-post-inner ${sizeClass()} ${className}`}
+      style={{ direction: language === "ar" ? "rtl" : "ltr", ...style }}
     >
       <Link href={`/p/${slug}`}>
         <a>
@@ -128,7 +129,7 @@ function PostInner({
             <div className="post-item-content">
               <ul className="nav post-meta">
                 <li className="post-meta-user">
-                  <Link href={`/u/${username}`}>
+                  <Link href={`/user/profile/${username}`}>
                     <a>
                       <Image
                         width={20}
@@ -180,6 +181,8 @@ PostInner.propTypes = {
   avatar: PropTypes.string,
   price: PropTypes.string,
   product: PropTypes.any,
+  style: PropTypes.any,
+  className: PropTypes.string,
 };
 
 export default PostInner;

@@ -101,7 +101,7 @@ export default function ProductHeader({
       <div className="timwoork-single-header-meta d-flex">
         <ul className="single-header-meta nav me-auto">
           <li className="user-item">
-            <Link href={`/u/${username}`}>
+            <Link href={`/user/profile/${username}`}>
               <a className="user-link">
                 <Image
                   className="circular-center tiny-size"

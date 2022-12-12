@@ -4,48 +4,53 @@ import React, { createRef, ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 import Loading from "components/Loading";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
+import cookies from "next-cookies";
+import { ProfileService } from "@/services/profile";
 import Navbar from "@/components/Portfolio/navbar";
 import router from "next/router";
-import API from "../../config";
+import API from "../../../config";
 import { ProfileActions } from "@/store/profile/profileActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Sidebar from "@/components/Profile/Sidebar";
 import MyProducts from "@/components/Profile/MyProducts";
 import Unauthorized from "@/components/Unauthorized";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import PostInner from "@/components/Post/PostInner";
 
-function Profile() {
+function Profile({
+  otherUser,
+  isMeProp,
+  username,
+  errorFetch,
+}: {
+  otherUser: any;
+  isMeProp: boolean;
+  username: string;
+  errorFetch: boolean;
+}) {
   const dispatch = useAppDispatch();
 
   const {
-    user,
+    user: meUser,
     languages: { getAll },
-    profile,
-    profile: { profile_seller },
+    profile: meProfile,
+    profile: { profile_seller: profile_seller_me },
     currency: { my: currency },
   } = useAppSelector((state) => state);
-  const [isLoadingSeler, setIsLoadingSeler] = useState(false);
-  const [isLess, setIsLess] = useState(true);
-  const detectHeight: any = createRef();
-  const [isOverflow, setIsOverflow] = useState(false);
+  const isMe = username === meUser.username ? true : isMeProp;
+  if (errorFetch && !isMe) router.push("/user/profile/me");
 
+  const [isLoadingSeler, setIsLoadingSeler] = useState(false);
+  const detectHeight: any = createRef();
+  const user = isMe ? meUser : otherUser;
+  const profile = isMe ? meProfile : otherUser.profile;
+  const profile_seller = isMe
+    ? profile_seller_me
+    : otherUser.profile.profile_seller;
   useEffect(() => {
     if (profile_seller.loaded) return;
     dispatch(ProfileActions.getProfileSellerData());
   }, [profile_seller]);
-  useEffect(() => {
-    setIsOverflow(
-      detectHeight &&
-        detectHeight.current &&
-        detectHeight.current.scrollHeight > 230
-    ),
-      [detectHeight, detectHeight.current];
-  }, [detectHeight]);
-  useEffect(() => {
-    if (!user.isLogged && !user.loading) {
-      router.push("/login");
-    }
-  }, [user]);
 
   const beseller = async () => {
     setIsLoadingSeler(true);
@@ -59,7 +64,7 @@ function Profile() {
     }
   };
 
-  if (!user.email_verified && !user.loading) {
+  if (!user.email_verified && !user.loading && isMe) {
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
@@ -78,7 +83,12 @@ function Profile() {
         </div>
       </div>
     );
-  } else if (profile.steps < 1 && profile.steps !== null && !user.loading) {
+  } else if (
+    profile.steps < 1 &&
+    profile.steps !== null &&
+    !user.loading &&
+    isMe
+  ) {
     return (
       <div className="row justify-content-md-center">
         <div className="col-md-5">
@@ -100,7 +110,7 @@ function Profile() {
   } else if (!user.loading && !profile.loading)
     return (
       <div className="container pt-4 mt-2">
-        {!user.isLogged && <Unauthorized />}
+        {!user.isLogged && isMe && <Unauthorized />}
         {profile && (
           <>
             <MetaTags
@@ -125,18 +135,24 @@ function Profile() {
             />
             <div className="portfolios-container">
               <div className="timlands-profile-content">
-                <PortfolioProfileHeader showAddBtn={false} />
-                <Navbar active="profile" />
+                <PortfolioProfileHeader
+                  showAddBtn={false}
+                  otherProfile={!isMe && profile}
+                  otherUsername={user.username}
+                />
+                <Navbar active="profile" username={!isMe && user.username} />
               </div>
               <div className="row">
-                <Sidebar
-                  withdrawable_amount={profile.withdrawable_amount}
-                  pending_amount={profile.pending_amount}
-                />
+                {isMe && (
+                  <Sidebar
+                    withdrawable_amount={profile.withdrawable_amount}
+                    pending_amount={profile.pending_amount}
+                  />
+                )}
                 {profile_seller && (
-                  <div className="col-lg-8">
+                  <div className={isMe ? "col-lg-8" : "col-lg-12"}>
                     <div className="timlands-profile-content">
-                      {!profile_seller.data.id && (
+                      {isMe && !profile_seller.data.id && (
                         <div className="be-seller-aside mb-2">
                           <h3 className="title">{getAll("Become_a_seller")}</h3>
                           <p className="text">{getAll("Do_you_ant")}</p>
@@ -150,46 +166,32 @@ function Profile() {
                           </button>
                         </div>
                       )}
-                      {profile_seller.data.id && (
+                      {(profile_seller?.data?.id || !isMe) && (
                         <>
                           <div className="pb-1 mb-2">
                             <Card
                               title={getAll("Brief_me_about")}
                               extra={
-                                <Link href="/user/editSeller">
-                                  <a className="edit-button flex-center">
-                                    <span className="material-icons material-icons-outlined">
-                                      edit
-                                    </span>
-                                  </a>
-                                </Link>
+                                isMe && (
+                                  <Link href="/user/editSeller">
+                                    <a className="edit-button flex-center">
+                                      <span className="material-icons material-icons-outlined">
+                                        edit
+                                      </span>
+                                    </a>
+                                  </Link>
+                                )
                               }
                             >
                               <div
                                 ref={detectHeight}
-                                className={
-                                  "user-bro " + (isLess ? "is-less" : "")
-                                }
+                                className={"user-bro "}
                                 dangerouslySetInnerHTML={{
-                                  __html: profile_seller.data.bio,
+                                  __html: isMe
+                                    ? profile_seller.data.bio
+                                    : profile_seller.bio,
                                 }}
                               />
-
-                              {isOverflow && (
-                                <button
-                                  onClick={() => {
-                                    setIsLess(!isLess);
-                                  }}
-                                  type="button"
-                                  className={
-                                    "read-more-btn " + (isLess ? "is-less" : "")
-                                  }
-                                >
-                                  {isLess
-                                    ? getAll("Read_more")
-                                    : getAll("Read_less")}
-                                </button>
-                              )}
                             </Card>
                           </div>
                         </>
@@ -222,29 +224,34 @@ function Profile() {
                               <p className="text-value">{profile.last_name}</p>
                             </div>
                           </div>
-                          <div className="col-sm-4">
-                            <div className="content-text-item">
-                              <h3 className="text-label">
-                                {getAll("Phone_number")}
-                              </h3>
-                              <p className="text-value">
-                                {user.phone
-                                  ? user.code_phone?.split("+")[1] + user.phone
-                                  : getAll("Uncompleted")}
-                                {user.phone && "+"}
-                              </p>
+                          {isMe && (
+                            <div className="col-sm-4">
+                              <div className="content-text-item">
+                                <h3 className="text-label">
+                                  {getAll("Phone_number")}
+                                </h3>
+                                <p className="text-value">
+                                  {user.phone
+                                    ? user.code_phone?.split("+")[1] +
+                                      user.phone
+                                    : getAll("Uncompleted")}
+                                  {user.phone && "+"}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                          <div className="col-sm-4">
-                            <div className="content-text-item">
-                              <h3 className="text-label">
-                                {getAll("Currency")}
-                              </h3>
-                              <p className="text-value">
-                                {currency.symbol_native}
-                              </p>
+                          )}
+                          {isMe && (
+                            <div className="col-sm-4">
+                              <div className="content-text-item">
+                                <h3 className="text-label">
+                                  {getAll("Currency")}
+                                </h3>
+                                <p className="text-value">
+                                  {currency.symbol_native}
+                                </p>
+                              </div>
                             </div>
-                          </div>
+                          )}
                           {profile.country.name !== "" && (
                             <div className="col-sm-4">
                               <div className="content-text-item">
@@ -269,23 +276,73 @@ function Profile() {
                               </p>
                             </div>
                           </div>
-                          <div className="col-sm-4">
-                            <div className="content-text-item">
-                              <h3 className="text-label">
-                                {getAll("Birthday")}
-                              </h3>
-                              <p className="text-value">
-                                {profile.date_of_birth}
-                              </p>
+                          {isMe && (
+                            <div className="col-sm-4">
+                              <div className="content-text-item">
+                                <h3 className="text-label">
+                                  {getAll("Birthday")}
+                                </h3>
+                                <p className="text-value">
+                                  {profile.date_of_birth}
+                                </p>
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
-              {profile_seller.data.id && <MyProducts />}
+              {isMe && profile_seller.data.id && <MyProducts />}
+              {!isMe && (
+                <>
+                  <div
+                    className="posts-aside-header"
+                    style={{
+                      textAlign: "center",
+                      paddingBlock: 10,
+                    }}
+                  >
+                    <h1
+                      className="title me-auto"
+                      style={{ fontWeight: "bold", fontSize: 26 }}
+                    >
+                      {getAll("Services")}
+                    </h1>
+                  </div>
+                  <div className="posts-aside-body ">
+                    <div className="row">
+                      {profile_seller.products.map((e: any) => {
+                        return (
+                          <div key={e.id} className={"col-sm-6 col-lg-4"}>
+                            <PostInner
+                              className="mb-3"
+                              avatar={user.profile.avatar_path}
+                              size="small"
+                              title={e.title}
+                              author={
+                                user.profile &&
+                                user.profile.first_name +
+                                  " " +
+                                  user.profile.last_name
+                              }
+                              rate={e.ratings_avg_rating}
+                              username={
+                                user.profile.profile_seller && user.username
+                              }
+                              price={e.price}
+                              slug={e.id}
+                              thumbnail={e.full_path_thumbnail}
+                              buyers={e.count_buying}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
@@ -299,4 +356,20 @@ function Profile() {
 Profile.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
+export async function getServerSideProps(ctx) {
+  const {
+    query: { user: username },
+  } = ctx;
+  const isMeProp = username === "me";
+  if (isMeProp)
+    return { props: { otherUser: null, errorFetch: true, isMeProp, username } };
+
+  try {
+    const lang = cookies(ctx).lang || "";
+    const otherUser = await ProfileService.getOne(username, lang);
+    return { props: { otherUser, errorFetch: false, isMeProp, username } };
+  } catch (error) {
+    return { props: { otherUser: null, errorFetch: true, isMeProp, username } };
+  }
+}
 export default Profile;

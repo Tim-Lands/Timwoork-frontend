@@ -6,12 +6,21 @@ import {
   isFulfilled,
 } from "@reduxjs/toolkit";
 import { PortfolioThunkFunctions } from "./thunkFunctions";
-const { addProject, deleteProject, getAllProjects, updateProduct } =
+const { addProject, deleteProject, getUserProjects, updateProduct } =
   PortfolioThunkFunctions;
 
-// const isMyProductsActions = isAsyncThunkAction(getMyProducts);
-// const isMyProductsPending = isAllOf(isMyProductsActions, isPending);
-// const isMyProductsFulfilled = isAllOf(isMyProductsActions, isFulfilled);
-// const isMyProductsRejected = isAllOf(isMyProductsActions, isRejected);
+const isUserProjectsActions = isAsyncThunkAction(
+  getUserProjects,
+  deleteProject,
+  addProject,
+  updateProduct
+);
+const isUserProjectsPending = isAllOf(isUserProjectsActions, isPending);
+const isUserProjectsFulfilled = isAllOf(isUserProjectsActions, isFulfilled);
+const isUserProjectsRejected = isAllOf(isUserProjectsActions, isRejected);
 
-export const PortfolioMatchers = {};
+export const PortfolioMatchers = {
+  isUserProjectsPending,
+  isUserProjectsFulfilled,
+  isUserProjectsRejected,
+};

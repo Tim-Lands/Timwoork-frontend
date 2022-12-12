@@ -12,7 +12,7 @@ function FollowItem({ avatar, fullname, level }): ReactElement {
         </div>
         <div className="follower-user-item-content">
           <h3 className="title">
-            <Link href={`/u/username`}>
+            <Link href={`/user/profile/username`}>
               <a>{fullname}</a>
             </Link>
           </h3>

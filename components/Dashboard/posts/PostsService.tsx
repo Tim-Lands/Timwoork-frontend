@@ -1,9 +1,7 @@
-  import Link from "next/link";
+import Link from "next/link";
 import LastSeen from "@/components/LastSeen";
 import { Space } from "antd";
 import { EProductStateType } from "@/store/tw-admin/products/thunkFunctions";
-
-
 
 export const generatecolumns = ({ status, callbacks }, getAll) => {
   const switchStatus = (status, getAll) => {
@@ -60,7 +58,7 @@ export const generatecolumns = ({ status, callbacks }, getAll) => {
       title: "صاحب الخدمة",
       dataIndex: ["profile_seller"],
       render: (seller: any) => (
-        <Link href={`/u/${seller.profile.user.username}`}>
+        <Link href={`/user/profile/${seller.profile.user.username}`}>
           <a>
             {seller.profile.full_name ||
               seller.profile.first_name + seller.profile.last_name}
@@ -72,7 +70,8 @@ export const generatecolumns = ({ status, callbacks }, getAll) => {
     {
       title: getAll("Tools"),
       dataIndex: "",
-      render: (post: any) => generateButtonSet({ status, post, callbacks }, getAll),
+      render: (post: any) =>
+        generateButtonSet({ status, post, callbacks }, getAll),
       ellipsis: true,
     },
   ];
@@ -86,11 +85,13 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
     onDisactiveClick,
     forceDelete,
     restoreArchieved,
-    archieveHandle
+    archieveHandle,
   } = callbacks;
   return (
     <Space>
-      {![EProductStateType.ACTIVE, EProductStateType.ARCHIEVE].includes(status) &&
+      {![EProductStateType.ACTIVE, EProductStateType.ARCHIEVE].includes(
+        status
+      ) &&
       (post.status == 0 || post.status == null) ? (
         <button
           title={getAll("Able_this_service")}
@@ -141,15 +142,16 @@ const generateButtonSet = ({ status, post, callbacks }, getAll) => {
           أرشفة
         </button>
       )}
-      {status != EProductStateType.REJECTED && (post.status == 2 || post.status == null) && (
-        <button
-          title="رفض الخدمة"
-          className="btn butt-xs2 butt-orange"
-          onClick={() => onRejectClick(post.id)}
-        >
-          {getAll("Rejection")}
-        </button>
-      )}
+      {status != EProductStateType.REJECTED &&
+        (post.status == 2 || post.status == null) && (
+          <button
+            title="رفض الخدمة"
+            className="btn butt-xs2 butt-orange"
+            onClick={() => onRejectClick(post.id)}
+          >
+            {getAll("Rejection")}
+          </button>
+        )}
       <Link href={`/tw-admin/posts/edit-product/overview?id=${post.id}`}>
         <a title="تعديل هذه الخدمة" className="btn butt-xs2 butt-green">
           {getAll("Edit")}

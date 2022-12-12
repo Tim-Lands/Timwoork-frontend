@@ -50,7 +50,7 @@ function ContestEntierPost({
               style={{ width: "25%" }}
             ></div>
           </div>
-          <Link href={`/u/${username}`}>
+          <Link href={`/user/profile/${username}`}>
             <a className="user-mata-post">
               <div className="user-mata-post-img">
                 <Image src={avatar} width={30} height={30} alt={author} />

@@ -18,7 +18,7 @@ function ContestComment({
   return (
     <div className="contest-comment-item">
       <div className="contest-comment-item-head flex-center">
-        <Link href={`/u/${username}`}>
+        <Link href={`/user/profile/${username}`}>
           <a className="contest-comment-item-head-user me-auto flex-center">
             <div className="contest-comment-user-avatar">
               <Image src={avatar} width={35} height={35} />

@@ -324,7 +324,7 @@ function Single({ query }) {
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
                         <Link
-                          href={`/u/${product.profile_seller?.profile?.user?.username}`}
+                          href={`/user/profile/${product.profile_seller?.profile?.user?.username}`}
                         >
                           <a className="user-link">
                             <span className="pe-2">

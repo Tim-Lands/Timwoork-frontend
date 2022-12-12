@@ -35,14 +35,15 @@ const properties = {
   ),
 };
 function Id() {
-  const ProductData = useAppSelector(state=>state.dashboardProducts.currProduct)
-  const dispatch = useAppDispatch()
+  const ProductData = useAppSelector(
+    (state) => state.dashboardProducts.currProduct
+  );
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const { id }:any = router.query;
-  console.log(ProductData)
+  const { id }: any = router.query;
+  console.log(ProductData);
   useEffect(() => {
-    if (id)
-    dispatch(ProductsActions.getOne({id}))
+    if (id) dispatch(ProductsActions.getOne({ id }));
   }, [id]);
 
   const showStars = () => {
@@ -209,7 +210,7 @@ function Id() {
                     <ul className="single-header-meta nav me-auto">
                       <li className="user-item">
                         <Link
-                          href={`/u/${ProductData.data.profile_seller.profile.user.username}`}
+                          href={`/user/profile/${ProductData.data.profile_seller.profile.user.username}`}
                         >
                           <a className="user-link">
                             <Image
@@ -386,7 +387,7 @@ function Id() {
                               <div className="seller-info-butts d-flex">
                                 <Link
                                   href={
-                                    "/u/" +
+                                    "/user/profile/" +
                                     ProductData.data.profile_seller.profile.user
                                       .username
                                   }

@@ -49,7 +49,7 @@ function ProfileMenu({ refs, setIsShowProfileMenu }) {
       animate={{ y: 0, opacity: 1 }}
       className="nav-profile-list"
     >
-      <Link href={`/user/profile`}>
+      <Link href={`/user/profile/me`}>
         <a
           className="nav-profile-list-header"
           onClick={() => setIsShowProfileMenu(false)}

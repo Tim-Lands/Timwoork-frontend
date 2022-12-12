@@ -119,7 +119,7 @@ const Items = ({
       render: (e: any) => (
         <p className="m-0 is-hover-primary">
           {itemType == "sales" ? (
-            <Link href={`/u/${e.order.cart.user.username}`}>
+            <Link href={`/user/profile/${e.order.cart.user.username}`}>
               <a className="flex-center" style={{ color: "gray" }}>
                 <span className="mx-1">
                   {e.order.cart.user.profile.full_name}
@@ -127,7 +127,9 @@ const Items = ({
               </a>
             </Link>
           ) : (
-            <Link href={`/u/${e.profile_seller.profile.user.username}`}>
+            <Link
+              href={`/user/profile/${e.profile_seller.profile.user.username}`}
+            >
               <a className="flex-center" style={{ color: "gray" }}>
                 <span className="mx-1">
                   {e.profile_seller.profile.first_name +

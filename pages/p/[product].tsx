@@ -368,7 +368,7 @@ function Single({ id }) {
                       <ul className="single-header-meta nav ">
                         <li className="user-item">
                           <Link
-                            href={`/u/${ProductData.profile_seller.profile.user?.username}`}
+                            href={`/user/profile/${ProductData.profile_seller.profile.user?.username}`}
                           >
                             <a className="user-link">
                               <Image
@@ -548,7 +548,7 @@ function Single({ id }) {
                                 <div className="seller-info-butts d-flex">
                                   <Link
                                     href={
-                                      "/u/" +
+                                      "/user/profile/" +
                                       ProductData.profile_seller.profile.user
                                         ?.username
                                     }

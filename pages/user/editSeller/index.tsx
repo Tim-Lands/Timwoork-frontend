@@ -213,7 +213,7 @@ const EditSeller = () => {
         await dispatch(ProfileActions.updateProfileSeller(values)).unwrap();
 
         message.success(getAll("The_update_has"));
-        router.push("/user/profile");
+        router.push("/user/profile/me");
       } catch (error: any) {
         if (error.errors) {
           setValidationsErrors(error.errors);
