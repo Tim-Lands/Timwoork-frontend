@@ -7,6 +7,10 @@ async function getAll(username: string, lang?: string) {
 
   return res.data;
 }
+async function getOne(id: number) {
+  const res = await API.get("api/portfolios/items/" + id);
+  return res.data.data;
+}
 async function addOne(body: {
   title: string;
   content: string;
@@ -45,4 +49,10 @@ async function deleteOne(id: number) {
   const res = await API.delete("api/portfolios/items/" + id);
   return res.data.data;
 }
-export const ProjectsServices = { getAll, addOne, deleteOne, updateOne };
+export const ProjectsServices = {
+  getAll,
+  addOne,
+  deleteOne,
+  updateOne,
+  getOne,
+};

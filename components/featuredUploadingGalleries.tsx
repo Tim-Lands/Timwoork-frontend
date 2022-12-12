@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 import { Spin } from "antd";
 import PropTypes from "prop-types";
@@ -9,6 +10,7 @@ function FeaturedUploadingGalleries({
   full_path_thumbnail,
   setImage,
   setIsChanged,
+  validationsErrors = "",
 }): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const [featuredImages, setFeaturedImages]: any = useState([
@@ -16,10 +18,10 @@ function FeaturedUploadingGalleries({
       data_url: full_path_thumbnail,
     },
   ]);
-  useEffect(()=>{
+  useEffect(() => {
     if (full_path_thumbnail)
-    setFeaturedImages([{data_url:full_path_thumbnail}])
-  },[full_path_thumbnail])
+      setFeaturedImages([{ data_url: full_path_thumbnail }]);
+  }, [full_path_thumbnail]);
   const onChangeFeatured = (imageListc) => {
     // data for submit
     setFeaturedImages(imageListc);
@@ -27,7 +29,10 @@ function FeaturedUploadingGalleries({
     setIsChanged(true);
   };
   return (
-    <div className="choose-images-file" style={{ width: "100%" }}>
+    <div
+      className={`choose-images-file ${validationsErrors ? "error" : ""}`}
+      style={{ width: "100%" }}
+    >
       <div className="choose-images-list">
         <div className={"panel-modal-body login-panel-body auto-height"}>
           <div className="images-list-uploading align-center">
@@ -102,6 +107,17 @@ function FeaturedUploadingGalleries({
                 </Spin>
               )}
             </ImageUploading>
+            {validationsErrors && (
+              <div style={{ overflow: "hidden" }}>
+                <motion.div
+                  initial={{ y: -12, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="timlands-form-note form-note-error"
+                >
+                  <p className="text">{validationsErrors}</p>
+                </motion.div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -114,4 +130,5 @@ FeaturedUploadingGalleries.propTypes = {
   full_path_thumbnail: PropTypes.any,
   setImage: PropTypes.func,
   setIsChanged: PropTypes.func,
+  validationsErrors: PropTypes.string,
 };

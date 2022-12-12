@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useAppSelector } from "@/store/hooks";
 
-function DeleteConfirm({ setIsDeleteModal }): ReactElement {
+function DeleteConfirm({ setIsDeleteModal, onClick }): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
 
   return (
@@ -22,17 +22,14 @@ function DeleteConfirm({ setIsDeleteModal }): ReactElement {
         </div>
         <div className="modal-conferm-footer">
           <Space>
-            <button
-              className="btn butt-sm butt-green"
-              onClick={() => console.log("jhkjfh")}
-            >
+            <button className="btn butt-sm butt-green" onClick={onClick}>
               {getAll("Yes")}
             </button>
             <button
               className="btn butt-sm butt-red-text"
               onClick={() => setIsDeleteModal(false)}
             >
-              لا
+              {getAll("No")}
             </button>
           </Space>
         </div>
@@ -44,4 +41,5 @@ function DeleteConfirm({ setIsDeleteModal }): ReactElement {
 export default DeleteConfirm;
 DeleteConfirm.propTypes = {
   setIsDeleteModal: PropTypes.func,
+  onClick: PropTypes.func,
 };

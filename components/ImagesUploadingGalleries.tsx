@@ -3,6 +3,7 @@ import { useAppSelector } from "@/store/hooks";
 import { Spin } from "antd";
 import PropTypes from "prop-types";
 import ImageUploading from "react-images-uploading";
+import { motion } from "framer-motion";
 
 function ImagesUploadingGalleries({
   galaries,
@@ -10,6 +11,7 @@ function ImagesUploadingGalleries({
   setIsChanged,
   callback,
   title = "You_must_choose",
+  validationsErrors = "",
 }): ReactElement {
   const [images, setImages] = useState(galaries);
   const maxNumber = 5;
@@ -28,7 +30,7 @@ function ImagesUploadingGalleries({
     await callback(image, index);
   };
   return (
-    <div className="choose-images-file">
+    <div className={`choose-images-file ${validationsErrors ? "error" : ""}`}>
       <div className="choose-images-list">
         <div className={"panel-modal-body login-panel-body auto-height"}>
           <div className="images-list-uploading align-center">
@@ -106,6 +108,17 @@ function ImagesUploadingGalleries({
                 </Spin>
               )}
             </ImageUploading>
+            {validationsErrors && (
+              <div style={{ overflow: "hidden" }}>
+                <motion.div
+                  initial={{ y: -12, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="timlands-form-note form-note-error"
+                >
+                  <p className="text">{validationsErrors}</p>
+                </motion.div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -120,4 +133,5 @@ ImagesUploadingGalleries.propTypes = {
   setIsChanged: PropTypes.func,
   callback: PropTypes.func,
   title: PropTypes.string,
+  validationsErrors: PropTypes.string,
 };

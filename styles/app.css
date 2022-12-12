@@ -5917,6 +5917,9 @@
 .choose-images-file:last-of-type {
   margin-bottom: 0;
 }
+.choose-images-file.error {
+  border-color: red !important;
+}
 .choose-images-file:hover {
   border-color: #475c80;
   transition: all 0.3s;

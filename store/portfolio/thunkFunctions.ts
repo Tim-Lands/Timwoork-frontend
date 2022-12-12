@@ -2,13 +2,24 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ProjectsServices } from "@/services/projects";
 
 const getUserProjects = createAsyncThunk(
-  "portfolio/projects/get",
+  "portfolio/user/projects/get",
   async (args: { username: string }, { rejectWithValue }) => {
     try {
       const res = await ProjectsServices.getAll(args.username);
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+const getUserProject = createAsyncThunk(
+  "portfolio/user/project/get",
+  async (args: { id: number }, { rejectWithValue }) => {
+    try {
+      const res = await ProjectsServices.getOne(args.id);
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -83,4 +94,5 @@ export const PortfolioThunkFunctions = {
   addProject,
   updateProduct,
   deleteProject,
+  getUserProject,
 };

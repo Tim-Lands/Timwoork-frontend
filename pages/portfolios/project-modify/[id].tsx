@@ -30,6 +30,9 @@ const Add: NextPage = () => {
   const [removedImages, setRemovedImages] = useState([]);
   const [selectedLangTitle, setSelectedLangTitle] = useState("");
   const [selectedLangContent, setSelectedLangContent] = useState("");
+
+  console.log(validationsErrors);
+
   const [subtitlesTitle, setSubtitlesTitle] = useState({
     ar: null,
     fr: null,
@@ -235,6 +238,9 @@ const Add: NextPage = () => {
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}
                     full_path_thumbnail={featuredMedia || "/project.png"}
+                    validationsErrors={
+                      validationsErrors?.cover && validationsErrors.cover[0]
+                    }
                   />
                 </div>
                 <div className="col-md-12 mb-3 p-relative portfolio">
@@ -277,6 +283,7 @@ const Add: NextPage = () => {
                     setIsChanged={setIsGalleryChanged}
                     setGalleryMedia={setGalleryMedia}
                     galaries={galleryMedia}
+                    validationsErrors={validationsErrors?.images}
                   />
                 </div>
                 <div className="col-md-12">
@@ -284,7 +291,9 @@ const Add: NextPage = () => {
                     values={form.values.tags}
                     onChange={form.setFieldValue}
                     onBlur={form.setFieldTouched}
-                    validationsErrors={validationsErrors}
+                    validationsErrors={
+                      validationsErrors?.images && validationsErrors.images[0]
+                    }
                   />
                 </div>
                 <div className="col-md-8   mb-3">
@@ -325,8 +334,8 @@ const Add: NextPage = () => {
                       try {
                         const body = {
                           ...form.values,
-                          cover: featuredMedia[0].file,
-                          images: galleryMedia.map((media) => media.file),
+                          cover: featuredMedia && featuredMedia[0].file,
+                          images: galleryMedia?.map((media) => media.file),
                         };
                         await dispatch(
                           PortfolioActions.addProject({
@@ -336,7 +345,9 @@ const Add: NextPage = () => {
                         ).unwrap();
                         router.push("/portfolios/user/" + user.username);
                       } catch (error) {
-                        setValidationsErrors(error.data);
+                        console.log(error);
+
+                        setValidationsErrors(error?.errors);
                       }
                     } else {
                       // try {

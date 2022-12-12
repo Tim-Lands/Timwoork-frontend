@@ -208,7 +208,9 @@
   &:last-of-type {
     margin-bottom: 0;
   }
-
+  &.error {
+    border-color: red !important;
+  }
   &:hover {
     border-color: $primary;
     transition: all 0.3s;
