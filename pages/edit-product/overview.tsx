@@ -10,56 +10,10 @@ import { MyProductsActions } from "store/myProducts/myProductsActions";
 import Navbar from "components/productModify/navbar";
 import Tags from "@/components/add-new/Tags";
 
-import API from "../../config";
 import PropTypes from "prop-types";
 import { MetaTags } from "@/components/SEO/MetaTags";
-import CreatableSelect from "react-select/creatable";
 import NavigationButtons from "@/components/NavigationButtons";
 
-const MySelect = (props: any) => {
-  const [dataTags, setDataTags] = useState([]);
-
-  const [isLoadingTags, setIsLoadingTags] = useState(false);
-  const getdataTags = async (tag: string) => {
-    setIsLoadingTags(true);
-    try {
-      const res: any = await API.get(`api/tags/filter?tag=${tag}`);
-      setIsLoadingTags(false);
-      setDataTags(res.data.data.data);
-    } catch (error) {
-      setIsLoadingTags(false);
-    }
-  };
-  const handleChange = (value) => {
-    props.onChange("tags", value);
-  };
-  const handleBlur = () => {
-    props.onBlur("tags", true);
-  };
-  return (
-    <div
-      className="select-tags-form"
-      style={{ margin: "1rem 0", position: "relative" }}
-    >
-      {isLoadingTags && (
-        <span className="spinner-border spinner-border-sm" role="status"></span>
-      )}
-      <CreatableSelect
-        id="color"
-        options={dataTags}
-        onKeyDown={(e: any) => {
-          if (e.target.value) {
-            getdataTags(e.target.value);
-          }
-        }}
-        isMulti={true}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={props.value}
-      />
-    </div>
-  );
-};
 function Overview({ query }) {
   const id = query.id;
   const {

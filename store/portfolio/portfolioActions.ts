@@ -1,5 +1,5 @@
 import { PortfolioSlice } from "./portfolioSlice";
-import { PortfolioThunkFunctions } from "./thunkFunction";
+import { PortfolioThunkFunctions } from "./thunkFunctions";
 
 export const PortfolioActions = {
   ...PortfolioSlice.actions,

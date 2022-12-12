@@ -13,11 +13,12 @@ import purchase from "./purchases/purchasesSlice";
 import myProducts from "./myProducts/myProductsSlice";
 import mySales from "./sales/salesSlice";
 import categories from "./categories/categoriesSlice";
-import dashboardUsers  from "./tw-admin/users/userSlice";
-import dashboardProducts from './tw-admin/products/productsSlice'
-import dashboardWithdrawals from './tw-admin/withdrawals/withdrawalsSlice'
+import portfolio from "./portfolio/portfolioSlice";
+import dashboardUsers from "./tw-admin/users/userSlice";
+import dashboardProducts from "./tw-admin/products/productsSlice";
+import dashboardWithdrawals from "./tw-admin/withdrawals/withdrawalsSlice";
 import dashboardActivitiesSlice from "./tw-admin/activities/activitiesSlice";
-import dashboardTypespaymentSlice  from "./tw-admin/typesPayment/typesPaymentSlice";
+import dashboardTypespaymentSlice from "./tw-admin/typesPayment/typesPaymentSlice";
 import dashboardBadgesSlice from "./tw-admin/badges/badgesSlice";
 import dashboardCountriesSlice from "./tw-admin/countries/countriesSlice";
 import dashboardLanguagesSlice from "./tw-admin/languages/languagesSlice";
@@ -42,6 +43,7 @@ export const store = configureStore({
     myProducts,
     mySales,
     categories,
+    portfolio,
     dashboardUsers,
     dashboardProducts,
     dashboardWithdrawals,
@@ -53,7 +55,7 @@ export const store = configureStore({
     dashboardLevelsSlice,
     dashboardSkillsSlice,
     dashboardTagsSlice,
-    dashboardCategoriesSlice
+    dashboardCategoriesSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

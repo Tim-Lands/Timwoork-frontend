@@ -23,8 +23,8 @@ const Add: NextPage = () => {
   const [galleryMedia, setGalleryMedia]: any = useState([]);
   const [isRemoveModal, setIsRemoveModal]: any = useState(false);
   const [removedImage, setRemovedImage]: any = useState({ id: -1, index: -1 });
-  const [isGalleryChanged, setIsGalleryChanged] = useState(false);
-  const [isFeaturedChanges, setIsFeaturedChanged] = useState(false);
+  const [, setIsGalleryChanged] = useState(false);
+  const [, setIsFeaturedChanged] = useState(false);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState("");
   const [removedImages, setRemovedImages] = useState([]);
