@@ -234,7 +234,7 @@ const Add: NextPage = () => {
                   <FeaturedUploadingGalleries
                     setIsChanged={setIsFeaturedChanged}
                     setImage={setFeaturedImages}
-                    full_path_thumbnail={featuredMedia || "/g10.png"}
+                    full_path_thumbnail={featuredMedia || "/project.png"}
                   />
                 </div>
                 <div className="col-md-12 mb-3 p-relative portfolio">
