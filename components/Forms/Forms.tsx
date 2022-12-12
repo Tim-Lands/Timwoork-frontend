@@ -174,6 +174,8 @@ export function FormTextarea({
   validationsErrors,
   isLoading,
   minHeight = 150,
+  onKeyUp,
+  onKeyDown
 }: any): ReactElement {
   return (
     <div className="timlands-form">
@@ -192,6 +194,8 @@ export function FormTextarea({
         autoComplete="off"
         onChange={handleChange}
         value={value}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
       >
         {value}
       </textarea>
@@ -218,4 +222,6 @@ FormTextarea.propTypes = {
   title: PropTypes.string,
   minHeight: PropTypes.number,
   validationsErrors: PropTypes.string,
+  onkeyUp: PropTypes.func,
+  onkeyDown: PropTypes.func
 };

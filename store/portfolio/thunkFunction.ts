@@ -22,6 +22,8 @@ const addProject = createAsyncThunk(
         tags: Array<any>;
         cover: any;
         images: Array<any>;
+        completed_date: any;
+        url: any;
       };
     },
     { rejectWithValue, dispatch }
