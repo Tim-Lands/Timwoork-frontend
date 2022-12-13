@@ -63,7 +63,12 @@ function Profile({
       setIsLoadingSeler(false);
     }
   };
-
+  useEffect(() => {
+    if (!user.isLogged && !user.loading && isMe) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   if (!user.email_verified && !user.loading && isMe) {
     return (
       <div className="row justify-content-md-center">
@@ -111,7 +116,7 @@ function Profile({
     return (
       <div className="container pt-4 mt-2">
         {!user.isLogged && isMe && <Unauthorized />}
-        {profile && (
+        {profile && (user.isLogged || !isMe) && (
           <>
             <MetaTags
               title={
