@@ -9,12 +9,11 @@ import { ProfileService } from "@/services/profile";
 import Navbar from "@/components/Portfolio/navbar";
 import router from "next/router";
 import API from "../../../config";
-import { ProfileActions } from "@/store/profile/profileActions";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Sidebar from "@/components/Profile/Sidebar";
 import MyProducts from "@/components/Profile/MyProducts";
 import Unauthorized from "@/components/Unauthorized";
-import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import PostInner from "@/components/Post/PostInner";
 
 function Profile({
@@ -28,8 +27,6 @@ function Profile({
   username: string;
   errorFetch: boolean;
 }) {
-  const dispatch = useAppDispatch();
-
   const {
     user: meUser,
     languages: { getAll },
@@ -47,10 +44,6 @@ function Profile({
   const profile_seller = isMe
     ? profile_seller_me
     : otherUser.profile.profile_seller;
-  useEffect(() => {
-    if (profile_seller.loaded) return;
-    dispatch(ProfileActions.getProfileSellerData());
-  }, [profile_seller]);
 
   const beseller = async () => {
     setIsLoadingSeler(true);

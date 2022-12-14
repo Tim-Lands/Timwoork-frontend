@@ -58,6 +58,7 @@ const App = ({ innerApp }) => {
     dispatch(ChatActions.unreadMessagesCount());
     dispatch(CurrencyActions.getAllCurrenciesValues());
     dispatch(CartActions.getCartData());
+    dispatch(ProfileActions.getProfileSellerData());
     dispatch(CategoriesActions.getProductCategories());
   }
   useEffect(() => {

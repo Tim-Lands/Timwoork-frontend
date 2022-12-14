@@ -27,6 +27,7 @@ function Index({
 }) {
   const {
     user: meUser,
+    profile: meProfile,
     languages: { getAll, language },
     portfolio: {
       user: { data: meData, loading },
@@ -46,11 +47,12 @@ function Index({
   }, [isMe, meUser]);
   const user = isMe ? meUser : otherUser;
   const data = isMe ? meData : portfolio;
+  const profile = isMe ? meProfile : user.profile;
 
   const title =
     language === "ar"
-      ? getAll("X’s_business_gallery") + user?.profile?.full_name
-      : user?.profile?.full_name + getAll("X’s_business_gallery");
+      ? getAll("X’s_business_gallery") + profile.full_name
+      : profile?.full_name + getAll("X’s_business_gallery");
 
   return (
     <div className="container pt-4 mt-2">
@@ -73,6 +75,7 @@ function Index({
                     thumbnail={portfolio.cover_url}
                     slug={portfolio.id}
                     author={"أحمد يحيى"}
+                    fans_count={portfolio.fans_count}
                     level={getAll("New_seller")}
                     avatar={`/avatar.png`}
                     views={72868}

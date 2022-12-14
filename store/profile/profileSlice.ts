@@ -38,7 +38,6 @@ export interface profileState {
   wise_account: any;
   profile_seller: {
     data: { id: number; level: { name: string }; bio: any; portfolio: string };
-    loaded: boolean;
   };
 }
 interface payloadState {
@@ -99,7 +98,6 @@ const initialState: profileState = {
   wise_account: null,
   profile_seller: {
     data: { id: null, level: { name: "" }, bio: "", portfolio: "" },
-    loaded: false,
   },
 };
 const assignState = (state: profileState, payload: payloadState) => {
@@ -153,7 +151,6 @@ export const profileSlice = createSlice({
       getProfileSellerData.fulfilled,
       (state: profileState, action: { payload: any }) => {
         state.profile_seller.data = action.payload;
-        state.profile_seller.loaded = true;
       }
     );
     builder.addMatcher(isProfileActionPending, (state, action) => {

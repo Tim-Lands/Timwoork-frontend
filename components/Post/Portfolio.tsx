@@ -16,6 +16,7 @@ function Portfolio({
   avatar,
   views,
   slug,
+  fans_count = 12365,
   me = true,
 }): ReactElement {
   const [isFavorated, setIsFavorated] = useState(false);
@@ -27,7 +28,7 @@ function Portfolio({
       text={
         <>
           <FaStar />
-          <span style={{ marginInline: 4, fontSize: 14 }}>(12,365)</span>
+          <span style={{ marginInline: 4, fontSize: 14 }}>{fans_count}</span>
         </>
       }
     >
@@ -105,6 +106,7 @@ Portfolio.propTypes = {
   views: PropTypes.number,
   level: PropTypes.string,
   me: PropTypes.bool,
+  fans_count: PropTypes.number,
 };
 
 export default Portfolio;

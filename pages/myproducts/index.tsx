@@ -1,9 +1,8 @@
 import Layout from "@/components/Layout/HomeLayout";
 import { Badge, Result } from "antd";
 import React, { ReactElement, useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import router from "next/router";
-import { ProfileActions } from "@/store/profile/profileActions";
 import Link from "next/link";
 import Image from "next/image";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -15,13 +14,6 @@ function index() {
   const profile_seller = useAppSelector(
     (state) => state.profile.profile_seller
   );
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (profile_seller.loaded) return;
-    dispatch(ProfileActions.getProfileSellerData());
-  }, [profile_seller]);
 
   const user = useAppSelector((state) => state.user);
   const profile = useAppSelector((state) => state.profile);

@@ -155,11 +155,7 @@ const EditSeller = () => {
   const dispatch = useAppDispatch();
 
   const { profile_seller, loading } = useAppSelector((state) => state.profile);
-  useEffect(() => {
-    if (!profile_seller.loaded) {
-      dispatch(ProfileActions.getProfileSellerData());
-    }
-  }, [profile_seller]);
+
   const user = useAppSelector((state) => state.user);
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [isShowenModal, setIsShowenModal] = useState(false);

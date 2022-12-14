@@ -17,6 +17,7 @@ export interface PortfolioState {
       title: string;
       content: string;
       cover_url: string;
+      fans_count: number;
       seller: { id: number };
     }>;
     loading: boolean;
@@ -28,6 +29,7 @@ export interface PortfolioState {
     content: string;
     cover_url: string;
     completed_date: string;
+    likers_count: number;
     gallery: Array<{ id: number; image_url: string }>;
     url: string;
     seller: {
@@ -53,6 +55,7 @@ const initialState: PortfolioState = {
     content: "",
     cover_url: "",
     completed_date: "",
+    likers_count: null,
     gallery: [],
     url: "",
     seller: {

@@ -26,6 +26,11 @@ import { message } from "antd";
 function Index({ id }) {
   const {
     user,
+    profile: {
+      profile_seller: {
+        data: { id: meId },
+      },
+    },
     languages: { getAll },
     portfolio: { project },
   } = useAppSelector((state) => state);
@@ -38,6 +43,7 @@ function Index({ id }) {
     if (project.loaded && project.id == id) return;
     dispatch(PortfolioActions.getUserProject({ id }));
   }, [project.id]);
+  const isMe = project.seller.id === meId;
 
   return (
     <div className="container pt-4 mt-2">
@@ -74,43 +80,45 @@ function Index({ id }) {
                   <div className="portfolio-single-header-aside">
                     <h2 className="title">{project.title}</h2>
                   </div>
-                  <div className="portfolio-single-header-tool">
-                    <button
-                      className={`like-btn-portfolio ${
-                        isLiked ? " active" : ""
-                      }`}
-                      type="button"
-                      onClick={() => setIsLiked(!isLiked)}
-                    >
-                      {!isLiked ? (
-                        <>
-                          <FaRegStar /> {getAll("Like")}
-                        </>
-                      ) : (
-                        <>
-                          <FaStar /> {getAll("Fan")}
-                        </>
-                      )}
-                    </button>
+                  {!isMe && (
+                    <div className="portfolio-single-header-tool">
+                      <button
+                        className={`like-btn-portfolio ${
+                          isLiked ? " active" : ""
+                        }`}
+                        type="button"
+                        onClick={() => setIsLiked(!isLiked)}
+                      >
+                        {!isLiked ? (
+                          <>
+                            <FaRegStar /> {getAll("Like")}
+                          </>
+                        ) : (
+                          <>
+                            <FaStar /> {getAll("Fan")}
+                          </>
+                        )}
+                      </button>
 
-                    <button
-                      className={`like-btn-portfolio ${
-                        isFavorated ? " active" : ""
-                      }`}
-                      type="button"
-                      onClick={() => setIsFavorated(!isFavorated)}
-                    >
-                      {!isFavorated ? (
-                        <>
-                          <FaRegHeart /> {getAll("Add_to_favorite")}
-                        </>
-                      ) : (
-                        <>
-                          <FaHeart /> {getAll("Added_successfully")}
-                        </>
-                      )}
-                    </button>
-                  </div>
+                      <button
+                        className={`like-btn-portfolio ${
+                          isFavorated ? " active" : ""
+                        }`}
+                        type="button"
+                        onClick={() => setIsFavorated(!isFavorated)}
+                      >
+                        {!isFavorated ? (
+                          <>
+                            <FaRegHeart /> {getAll("Add_to_favorite")}
+                          </>
+                        ) : (
+                          <>
+                            <FaHeart /> {getAll("Added_successfully")}
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="portfolio-single-content">
                   <div className="mb-2">
@@ -146,123 +154,84 @@ function Index({ id }) {
                       <FaLink /> {getAll("See_work")}
                     </a>
                   </div>
-                  {/* <div className="portfolio-another-posts">
-                  <div className="portfolio-another-posts-header">
-                    <h2 className="title">أعمال لنفس المستخدم</h2>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6 col-md-4">
-                      <Portfolio
-                        title={getAll("If_you_need")}
-                        thumbnail={`https://cdn.dribbble.com/uploads/7999/original/71d0450f3b5282d9ae34f788ba3a04e2.jpg?1582829647`}
-                        slug={1}
-                        author={"طارق عروي"}
-                        level={`New Seller`}
-                        views={3642}
-                        avatar={`/avatar.png`}
-                        username={`aboumegouass`}
-                      />
-                    </div>
-                    <div className="col-sm-6 col-md-4">
-                      <Portfolio
-                        title="يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى"
-                        thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/7631ff94721811.5e85dc7bb7e11.png`}
-                        slug={1}
-                        author={"شرف الدين المصري"}
-                        level={`New Seller`}
-                        avatar={`/avatar.png`}
-                        views={3642}
-                        username={`aboumegouass`}
-                      />
-                    </div>
-                    <div className="col-sm-6 col-md-4">
-                      <Portfolio
-                        title={getAll("This_text_is")}
-                        thumbnail={`https://cdn.dribbble.com/users/2189268/screenshots/8028972/media/5ae2b122667ec785965a00a021b54eee.png?compress=1&resize=400x300`}
-                        slug={1}
-                        author={"أحمد يحيى"}
-                        level={`New Seller`}
-                        views={3642}
-                        avatar={`/avatar.png`}
-                        username={`aboumegouass`}
-                      />
-                    </div>
-                  </div>
-                </div> */}
                 </div>
               </div>
             </div>
 
             <div className="col-xl-3">
-              <div className="p-3 bg-white portfolio-sidebar">
-                <h3 className="title">{getAll("Gallery_tools")}</h3>
-                <div className="actions-info-portfolio">
-                  <button
-                    type="button"
-                    className="btn butt-green mb-2 flex-center butt-sm"
-                    style={{ width: "100%", justifyContent: "center" }}
-                  >
-                    <span className="material-icons material-icons-outlined">
-                      edit
-                    </span>{" "}
-                    {getAll("Edit_business_gallery")}
-                  </button>
-                  <button
-                    type="button"
-                    className="btn butt-red flex-center butt-sm"
-                    style={{ width: "100%", justifyContent: "center" }}
-                    onClick={() => setIsDeleteShowen(true)}
-                  >
-                    <span className="material-icons material-icons-outlined">
-                      delete
-                    </span>{" "}
-                    {getAll("Delete_business_gallery")}
-                  </button>
-                </div>
-              </div>
-              <div className="p-3 bg-white portfolio-sidebar">
-                <h3 className="title">{getAll("User’s_information")}</h3>
-                <div className="user-info-portfolio">
-                  <Image
-                    src={project.seller.profile.avatar_url}
-                    width={50}
-                    height={50}
-                  />
-                  <h3 className="user-title">
-                    <Link href={`/user/profile/` + project.seller.id}>
-                      <a>{project.seller.profile.full_name}</a>
-                    </Link>
-                  </h3>
-                  <p className="meta">{project.seller.profile.level.name}</p>
-                  <p className="text">{project.seller.bio}</p>
-                  <div className="btns-follow">
-                    {isFollowing && (
-                      <button
-                        type="button"
-                        className="btn butt-sm butt-green flex-center"
-                        onClick={() => setIsFollowing(!isFollowing)}
-                      >
-                        <span className="material-icons material-icons-outlined">
-                          person_add
-                        </span>
-                        {getAll("Follow")}
-                      </button>
-                    )}
-                    {!isFollowing && (
-                      <button
-                        type="button"
-                        className="btn butt-sm butt-light flex-center"
-                        onClick={() => setIsFollowing(!isFollowing)}
-                      >
-                        <span className="material-icons material-icons-outlined">
-                          person_remove
-                        </span>
-                        {getAll("Followed")}
-                      </button>
-                    )}
+              {isMe && (
+                <div className="p-3 bg-white portfolio-sidebar">
+                  <h3 className="title">{getAll("Gallery_tools")}</h3>
+                  <div className="actions-info-portfolio">
+                    <button
+                      type="button"
+                      className="btn butt-green mb-2 flex-center butt-sm"
+                      style={{ width: "100%", justifyContent: "center" }}
+                    >
+                      <span className="material-icons material-icons-outlined">
+                        edit
+                      </span>{" "}
+                      {getAll("Edit_business_gallery")}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn butt-red flex-center butt-sm"
+                      style={{ width: "100%", justifyContent: "center" }}
+                      onClick={() => setIsDeleteShowen(true)}
+                    >
+                      <span className="material-icons material-icons-outlined">
+                        delete
+                      </span>{" "}
+                      {getAll("Delete_business_gallery")}
+                    </button>
                   </div>
                 </div>
-              </div>
+              )}
+              {!isMe && (
+                <div className="p-3 bg-white portfolio-sidebar">
+                  <h3 className="title">{getAll("User’s_information")}</h3>
+                  <div className="user-info-portfolio">
+                    <Image
+                      src={project.seller.profile.avatar_url}
+                      width={50}
+                      height={50}
+                    />
+                    <h3 className="user-title">
+                      <Link href={`/user/profile/` + project.seller.id}>
+                        <a>{project.seller.profile.full_name}</a>
+                      </Link>
+                    </h3>
+                    <p className="meta">{project.seller.profile.level.name}</p>
+                    <p className="text">{project.seller.bio}</p>
+                    <div className="btns-follow">
+                      {isFollowing && (
+                        <button
+                          type="button"
+                          className="btn butt-sm butt-green flex-center"
+                          onClick={() => setIsFollowing(!isFollowing)}
+                        >
+                          <span className="material-icons material-icons-outlined">
+                            person_add
+                          </span>
+                          {getAll("Follow")}
+                        </button>
+                      )}
+                      {!isFollowing && (
+                        <button
+                          type="button"
+                          className="btn butt-sm butt-light flex-center"
+                          onClick={() => setIsFollowing(!isFollowing)}
+                        >
+                          <span className="material-icons material-icons-outlined">
+                            person_remove
+                          </span>
+                          {getAll("Followed")}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="p-3 bg-white portfolio-sidebar single-info-portfolio-container">
                 <h3 className="title">{getAll("Project_info")}</h3>
                 <div className="single-info-portfolio">
@@ -278,7 +247,7 @@ function Index({ id }) {
                       </tr>
                       <tr>
                         <th>{getAll("Likes")}</th>
-                        <td>236</td>
+                        <td>{project.likers_count}</td>
                       </tr>
                       <tr>
                         <th>{getAll("Skills")}</th>
