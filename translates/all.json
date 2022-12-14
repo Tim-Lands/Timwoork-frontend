@@ -4172,9 +4172,9 @@
     "ar": "حسابك غير كامل"
   },
   "X’s_profile": {
-    "en": "X’s profile",
-    "fr": "Le profil de X",
-    "ar": "الملف الشخصي لـفلان"
+    "en": "’s profile",
+    "fr": "Le profil de ",
+    "ar": "الملف الشخصي لـ"
   },
   "Profile_editing": {
     "en": "Profile editing",
@@ -5614,7 +5614,7 @@
   "Copy_my_profils": {
     "en": "Copy my profil ‘s link",
     "fr": "Copier le lien de mon profil",
-    "ar": "نسخ رابط بروفايلي"
+    "ar": "نسخ رابط ملفي الشخصي"
   },
   "Personal_informations_one": {
     "en": "Personal informations",

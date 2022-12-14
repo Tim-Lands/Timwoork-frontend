@@ -1,8 +1,12 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { PortfolioMatchers } from "./matchers";
 import { PortfolioThunkFunctions } from "./thunkFunctions";
-const { getUserProjects, getUserProject } = PortfolioThunkFunctions;
+const { getUserProjects, getUserProject, getUsersProjects } =
+  PortfolioThunkFunctions;
 const {
+  isUsersProjectsPending,
+  isUsersProjectsFulfilled,
+  isUsersProjectsRejected,
   isUserProjectsPending,
   isUserProjectsFulfilled,
   isUserProjectsRejected,
@@ -11,6 +15,29 @@ const {
   isUserProjectRejected,
 } = PortfolioMatchers;
 export interface PortfolioState {
+  all: {
+    data: Array<{
+      id: number;
+      title: string;
+      content: string;
+      cover_url: string;
+      fans_count: number;
+      seller: {
+        profile_id: number;
+        id: number;
+        profile: {
+          full_name: string;
+          avatar_url: string;
+          level: { name: string };
+        };
+      };
+    }>;
+    loaded: boolean;
+    loading: boolean;
+    per_page: number;
+    current_page: number;
+    total: number;
+  };
   user: {
     data: Array<{
       id: number;
@@ -32,6 +59,9 @@ export interface PortfolioState {
     likers_count: number;
     gallery: Array<{ id: number; image_url: string }>;
     url: string;
+    is_liked: boolean;
+    is_favourite: boolean;
+
     seller: {
       id: number;
       bio: string;
@@ -48,6 +78,14 @@ export interface PortfolioState {
 }
 
 const initialState: PortfolioState = {
+  all: {
+    data: [],
+    loading: true,
+    current_page: null,
+    total: null,
+    per_page: null,
+    loaded: false,
+  },
   user: { data: [], loading: true, loaded: false },
   project: {
     id: null,
@@ -58,6 +96,8 @@ const initialState: PortfolioState = {
     likers_count: null,
     gallery: [],
     url: "",
+    is_liked: false,
+    is_favourite: false,
     seller: {
       id: null,
       bio: "",
@@ -76,8 +116,18 @@ export const PortfolioSlice = createSlice({
     initializeProject: (state) => {
       state.project = initialState.project;
     },
+    toggleLike: (state) => {
+      state.project.is_liked = !state.project.is_liked;
+    },
+    toggleFav: (state) => {
+      state.project.is_favourite = !state.project.is_favourite;
+    },
   },
   extraReducers(builder) {
+    builder.addCase(getUsersProjects.fulfilled, (state, action) => {
+      state.all = action.payload;
+      state.all.loaded = true;
+    });
     builder.addCase(
       getUserProjects.fulfilled,
       (state: PortfolioState, action) => {
@@ -89,6 +139,16 @@ export const PortfolioSlice = createSlice({
       state.project = action.payload;
       state.project.loaded = true;
     });
+    builder.addMatcher(isUsersProjectsPending, (state, action) => {
+      if (action.type.split("/")[0] !== "portfolio") return;
+      state.all.loading = true;
+    });
+    builder.addMatcher(
+      isAnyOf(isUsersProjectsFulfilled, isUsersProjectsRejected),
+      (state) => {
+        state.all.loading = false;
+      }
+    );
     builder.addMatcher(isUserProjectsPending, (state, action) => {
       if (action.type.split("/")[0] !== "portfolio") return;
       state.user.loading = true;

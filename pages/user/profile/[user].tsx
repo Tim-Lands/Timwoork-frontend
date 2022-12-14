@@ -29,7 +29,7 @@ function Profile({
 }) {
   const {
     user: meUser,
-    languages: { getAll },
+    languages: { getAll, language },
     profile: meProfile,
     profile: { profile_seller: profile_seller_me },
     currency: { my: currency },
@@ -44,7 +44,10 @@ function Profile({
   const profile_seller = isMe
     ? profile_seller_me
     : otherUser.profile.profile_seller;
-
+  const title =
+    language === "ar"
+      ? getAll("X’s_profile") + profile.full_name
+      : profile?.full_name + getAll("X’s_profile");
   const beseller = async () => {
     setIsLoadingSeler(true);
     try {
@@ -112,24 +115,9 @@ function Profile({
         {profile && (user.isLogged || !isMe) && (
           <>
             <MetaTags
-              title={
-                getAll("X’s_profile") +
-                profile.first_name +
-                " " +
-                profile.last_name
-              }
-              metaDescription={
-                getAll("X’s_profile") +
-                profile.first_name +
-                " " +
-                profile.last_name
-              }
-              ogDescription={
-                getAll("X’s_profile") +
-                profile.first_name +
-                " " +
-                profile.last_name
-              }
+              title={title}
+              metaDescription={title}
+              ogDescription={title}
             />
             <div className="portfolios-container">
               <div className="timlands-profile-content">

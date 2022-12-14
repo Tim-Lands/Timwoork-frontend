@@ -68,8 +68,8 @@ function Index({
           <div className="row">
             {loading && isMe && <Loading />}
             {(!loading || !isMe) &&
-              data?.map((portfolio, index) => (
-                <div className="col-sm-6 col-lg-3" key={index}>
+              data?.map((portfolio) => (
+                <div className="col-sm-6 col-lg-3" key={portfolio.id}>
                   <Portfolio
                     title={portfolio.title}
                     thumbnail={portfolio.cover_url}
@@ -79,7 +79,7 @@ function Index({
                     level={getAll("New_seller")}
                     avatar={`/avatar.png`}
                     views={72868}
-                    username={user.username}
+                    username={"me"}
                   />
                 </div>
               ))}

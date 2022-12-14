@@ -11,8 +11,14 @@ const {
   deleteProject,
   getUserProjects,
   updateProduct,
-  getUserProject,
+  getUsersProjects,
 } = PortfolioThunkFunctions;
+
+const isUsersProjectsActions = isAsyncThunkAction(getUsersProjects);
+
+const isUsersProjectsPending = isAllOf(isUsersProjectsActions, isPending);
+const isUsersProjectsFulfilled = isAllOf(isUsersProjectsActions, isFulfilled);
+const isUsersProjectsRejected = isAllOf(isUsersProjectsActions, isRejected);
 
 const isUserProjectsActions = isAsyncThunkAction(
   getUserProjects,
@@ -31,6 +37,9 @@ const isUserProjectFulfilled = isAllOf(isUserProjectActions, isFulfilled);
 const isUserProjectRejected = isAllOf(isUserProjectActions, isRejected);
 
 export const PortfolioMatchers = {
+  isUsersProjectsPending,
+  isUsersProjectsFulfilled,
+  isUsersProjectsRejected,
   isUserProjectsPending,
   isUserProjectsFulfilled,
   isUserProjectsRejected,

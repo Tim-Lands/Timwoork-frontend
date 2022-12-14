@@ -15,7 +15,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import DeleteConfirm from "@/components/Portfolio/DeleteConfirm";
-// import Portfolio from "@/components/Post/Portfolio";
 import PortfolioNav from "@/components/Portfolio/PortfolioNav";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { PortfolioActions } from "@/store/portfolio/portfolioActions";
@@ -37,8 +36,6 @@ function Index({ id }) {
   const dispatch = useAppDispatch();
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [isFavorated, setIsFavorated] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   useEffect(() => {
     if (project.loaded && project.id == id) return;
     dispatch(PortfolioActions.getUserProject({ id }));
@@ -84,12 +81,15 @@ function Index({ id }) {
                     <div className="portfolio-single-header-tool">
                       <button
                         className={`like-btn-portfolio ${
-                          isLiked ? " active" : ""
+                          project.is_liked ? " active" : ""
                         }`}
                         type="button"
-                        onClick={() => setIsLiked(!isLiked)}
+                        onClick={() => {
+                          dispatch(PortfolioActions.toggleLikeBack({ id }));
+                          dispatch(PortfolioActions.toggleLike());
+                        }}
                       >
-                        {!isLiked ? (
+                        {!project.is_liked ? (
                           <>
                             <FaRegStar /> {getAll("Like")}
                           </>
@@ -102,12 +102,15 @@ function Index({ id }) {
 
                       <button
                         className={`like-btn-portfolio ${
-                          isFavorated ? " active" : ""
+                          project.is_favourite ? " active" : ""
                         }`}
                         type="button"
-                        onClick={() => setIsFavorated(!isFavorated)}
+                        onClick={() => {
+                          dispatch(PortfolioActions.toggleFavBack({ id }));
+                          dispatch(PortfolioActions.toggleFav());
+                        }}
                       >
-                        {!isFavorated ? (
+                        {!project.is_favourite ? (
                           <>
                             <FaRegHeart /> {getAll("Add_to_favorite")}
                           </>
@@ -166,6 +169,9 @@ function Index({ id }) {
                     <button
                       type="button"
                       className="btn butt-green mb-2 flex-center butt-sm"
+                      onClick={() => {
+                        router.push("/portfolio/project-modify/" + id);
+                      }}
                       style={{ width: "100%", justifyContent: "center" }}
                     >
                       <span className="material-icons material-icons-outlined">

@@ -101,7 +101,7 @@ Portfolio.propTypes = {
   avatar: PropTypes.string,
   author: PropTypes.string,
   slug: PropTypes.number,
-  username: PropTypes.string,
+  username: PropTypes.any,
   heartCount: PropTypes.number,
   views: PropTypes.number,
   level: PropTypes.string,

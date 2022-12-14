@@ -73,7 +73,7 @@ const Add: NextPage = () => {
     setRemovedImage({ id: image.id, index });
   };
   const [project, setProject]: any = useState({});
-  const id:any = useRouter().query.id;
+  const id: any = useRouter().query.id;
   const isAdd = id === "add";
 
   const addSubtitleTitle = (subtitle) => {
@@ -121,15 +121,11 @@ const Add: NextPage = () => {
       content: project.content,
     },
     enableReinitialize: true,
-    onSubmit: (values) => {
-      console.log("sharaf");
-      console.log(values);
-    },
+    onSubmit: () => {},
   });
 
   const fetchData = async () => {
     const res = await API.get(`/api/portfolios/items/${id}`);
-    console.log(res.data);
     setProject(res.data.data);
   };
 
@@ -360,8 +356,6 @@ const Add: NextPage = () => {
                         setValidationsErrors(error?.errors);
                       }
                     } else {
-                      console.log;
-                      console.log(form.values);
                       try {
                         await dispatch(
                           PortfolioActions.updateProduct({

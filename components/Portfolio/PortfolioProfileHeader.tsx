@@ -86,7 +86,7 @@ function PortfolioProfileHeader({
             <span className="material-icons material-icons-outlined">
               file_copy
             </span>{" "}
-            {getAll("Copy_My_Profile")}
+            {getAll("Copy_my_profils")}
           </button>
         </p>
       </div>

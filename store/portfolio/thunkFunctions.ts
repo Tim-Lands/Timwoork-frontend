@@ -1,6 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ProjectsServices } from "@/services/projects";
 
+const getUsersProjects = createAsyncThunk(
+  "portfolio/users/projects/get",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await ProjectsServices.getAllUsers();
+      return res;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 const getUserProjects = createAsyncThunk(
   "portfolio/user/projects/get",
   async (args: { username: string }, { rejectWithValue }) => {
@@ -91,10 +102,37 @@ const deleteProject = createAsyncThunk(
     }
   }
 );
+const toggleLikeBack = createAsyncThunk(
+  "portfolio/project/like",
+  async (args: { id: number }, { rejectWithValue }) => {
+    try {
+      const res = await ProjectsServices.like(args.id);
+
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+const toggleFavBack = createAsyncThunk(
+  "portfolio/project/like",
+  async (args: { id: number }, { rejectWithValue }) => {
+    try {
+      const res = await ProjectsServices.favorite(args.id);
+
+      return res;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 export const PortfolioThunkFunctions = {
+  getUsersProjects,
   getUserProjects,
   addProject,
   updateProduct,
   deleteProject,
   getUserProject,
+  toggleLikeBack,
+  toggleFavBack,
 };

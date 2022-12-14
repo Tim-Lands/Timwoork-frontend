@@ -1,5 +1,9 @@
 import API from "../../config";
 
+async function getAllUsers() {
+  const res = await API.get("api/portfolios/items");
+  return res.data.data;
+}
 async function getAll(username: string, lang?: string) {
   const res = await API.get("api/portfolios/" + username, {
     headers: { "X-localization": lang },
@@ -51,22 +55,34 @@ async function updateOne(
   formData.append("completed_date", completed_date);
   formData.append("url", url);
   tags.forEach((tag) => formData.append("tags[]", JSON.stringify(tag)));
-  if (cover)
-    formData.append("cover", cover);
+  if (cover) formData.append("cover", cover);
 
-  if (images)
-    images.forEach((image) => formData.append("images[]", image));
-  const res = await API.post("api/portfolios/items/" + id+'/update', formData);
+  if (images) images.forEach((image) => formData.append("images[]", image));
+  const res = await API.post(
+    "api/portfolios/items/" + id + "/update",
+    formData
+  );
   return res.data.data;
 }
 async function deleteOne(id: number) {
   const res = await API.delete("api/portfolios/items/" + id);
   return res.data.data;
 }
+async function like(id: number) {
+  const res = await API.post(`api/portfolios/items/${id}/like`);
+  return res.data;
+}
+async function favorite(id: number) {
+  const res = await API.post(`api/portfolios/items/${id}/favourite`);
+  return res.data;
+}
 export const ProjectsServices = {
+  getAllUsers,
   getAll,
   addOne,
   deleteOne,
   updateOne,
   getOne,
+  like,
+  favorite,
 };
