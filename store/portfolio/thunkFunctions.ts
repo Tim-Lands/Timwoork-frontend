@@ -61,6 +61,8 @@ const updateProduct = createAsyncThunk(
         tags: Array<any>;
         cover: any;
         images: Array<any>;
+        completed_date: string;
+        url: string;
       };
     },
     { rejectWithValue, dispatch }

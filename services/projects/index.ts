@@ -40,9 +40,23 @@ async function updateOne(
     tags: Array<any>;
     cover: any;
     images: Array<any>;
+    completed_date: string;
+    url: string;
   }
 ) {
-  const res = await API.put("api/portfolios/items" + id, body);
+  const { title, content, tags, cover, images, url, completed_date } = body;
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("content", content);
+  formData.append("completed_date", completed_date);
+  formData.append("url", url);
+  tags.forEach((tag) => formData.append("tags[]", JSON.stringify(tag)));
+  if (cover)
+    formData.append("cover", cover);
+
+  if (images)
+    images.forEach((image) => formData.append("images[]", image));
+  const res = await API.post("api/portfolios/items/" + id+'/update', formData);
   return res.data.data;
 }
 async function deleteOne(id: number) {

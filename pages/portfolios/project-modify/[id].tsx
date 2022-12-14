@@ -72,7 +72,8 @@ const Add: NextPage = () => {
     setIsRemoveModal(true);
     setRemovedImage({ id: image.id, index });
   };
-  const id = useRouter().query.id;
+  const [project, setProject]: any = useState({});
+  const id:any = useRouter().query.id;
   const isAdd = id === "add";
 
   const addSubtitleTitle = (subtitle) => {
@@ -105,6 +106,7 @@ const Add: NextPage = () => {
 
   useEffect(() => {
     if (id === "add") return;
+    else if (id) fetchData();
   }, [id]);
   const {
     languages: { getAll },
@@ -112,11 +114,11 @@ const Add: NextPage = () => {
   } = useAppSelector((state) => state);
   const form = useFormik({
     initialValues: {
-      title: "",
-      tags: [],
-      url: "",
-      completed_date: "",
-      content: "",
+      title: project.title,
+      tags: project.portfolio_item_tags,
+      url: project.url,
+      completed_date: project.completed_date,
+      content: project.content,
     },
     enableReinitialize: true,
     onSubmit: (values) => {
@@ -124,6 +126,13 @@ const Add: NextPage = () => {
       console.log(values);
     },
   });
+
+  const fetchData = async () => {
+    const res = await API.get(`/api/portfolios/items/${id}`);
+    console.log(res.data);
+    setProject(res.data.data);
+  };
+
   const onRemoveSubmit = async (image_id, index) => {
     if (image_id) {
       setRemovedImages([...removedImages, image_id]);
@@ -351,14 +360,24 @@ const Add: NextPage = () => {
                         setValidationsErrors(error?.errors);
                       }
                     } else {
-                      // try {
-                      //   await dispatch(
-                      //     PortfolioActions.updateProduct()
-                      //   ).unwrap();
-                      //   router.push("/portfolios/" + id);
-                      // } catch (error) {
-                      //   setValidationsErrors(error.data);
-                      // }
+                      console.log;
+                      console.log(form.values);
+                      try {
+                        await dispatch(
+                          PortfolioActions.updateProduct({
+                            id,
+                            username: user.username,
+                            body: {
+                              ...form.values,
+                              cover: featuredMedia && featuredMedia[0].file,
+                              images: galleryMedia?.map((media) => media.file),
+                            },
+                          })
+                        ).unwrap();
+                        router.push("/portfolios/" + id);
+                      } catch (error) {
+                        setValidationsErrors(error.data);
+                      }
                     }
                   }}
                 />
