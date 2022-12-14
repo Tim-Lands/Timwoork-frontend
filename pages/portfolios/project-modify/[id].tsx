@@ -30,8 +30,7 @@ const Add: NextPage = () => {
   const [removedImages, setRemovedImages] = useState([]);
   const [selectedLangTitle, setSelectedLangTitle] = useState("");
   const [selectedLangContent, setSelectedLangContent] = useState("");
-
-  console.log(validationsErrors);
+  const [loading, setLoading] = useState(false);
 
   const [subtitlesTitle, setSubtitlesTitle] = useState({
     ar: null,
@@ -326,6 +325,7 @@ const Add: NextPage = () => {
                   nextTitle={getAll("Add")}
                   backClass="butt-red"
                   backTitle={getAll("Cancel")}
+                  loading={loading}
                   onBackClick={() =>
                     router.push("/portfolios/user/" + user.username)
                   }
@@ -337,6 +337,7 @@ const Add: NextPage = () => {
                           cover: featuredMedia && featuredMedia[0].file,
                           images: galleryMedia?.map((media) => media.file),
                         };
+                        setLoading(true);
                         await dispatch(
                           PortfolioActions.addProject({
                             body,
@@ -345,7 +346,7 @@ const Add: NextPage = () => {
                         ).unwrap();
                         router.push("/portfolios/user/" + user.username);
                       } catch (error) {
-                        console.log(error);
+                        setLoading(false);
 
                         setValidationsErrors(error?.errors);
                       }

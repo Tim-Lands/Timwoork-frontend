@@ -6199,6 +6199,13 @@
     "fr": "Les projets favoris sont vides",
     "ar": "الاعمال المفضلة فارغة"
   },
+
+  "Project_info": {
+    "en": "Project's info",
+    "fr": "Informations sur le projet",
+    "ar": "معلومات عن العمل"
+  },
+
   "Palestine": {
     "en": "Palestine",
     "fr": "Palestine",
@@ -6223,6 +6230,11 @@
     "en": "Edit seller’s information",
     "fr": "Modifier les informations de vendeur",
     "ar": "تعديل المعلومات البائع"
+  },
+  "seller’s_information": {
+    "en": " seller’s information",
+    "fr": "les informations de vendeur",
+    "ar": "معلومات البائع"
   },
   "Your_business_link": {
     "en": "Your business link",

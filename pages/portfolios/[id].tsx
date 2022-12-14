@@ -137,7 +137,8 @@ function Index({ id }) {
                   <p className="text">{project.content}</p>
                   <div className="buttons-link">
                     <a
-                      href={project.url}
+                      // href={project.url}
+                      href={linkify(project.url, id)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn butt-primary butt-lg"
@@ -263,24 +264,24 @@ function Index({ id }) {
                 </div>
               </div>
               <div className="p-3 bg-white portfolio-sidebar single-info-portfolio-container">
-                <h3 className="title">Post Info</h3>
+                <h3 className="title">{getAll("Project_info")}</h3>
                 <div className="single-info-portfolio">
                   <table className="table table-borderles">
                     <tbody>
                       <tr>
-                        <th>{getAll("Created_At")}</th>
+                        <th>{getAll("Created_At:")}</th>
                         <td>{project.completed_date}</td>
                       </tr>
                       <tr>
-                        <th>{getAll("Views")}:</th>
+                        <th>{getAll("Views")}</th>
                         <td>8,368</td>
                       </tr>
                       <tr>
-                        <th>{getAll("Likes")}:</th>
+                        <th>{getAll("Likes")}</th>
                         <td>236</td>
                       </tr>
                       <tr>
-                        <th>{getAll("Skills")}:</th>
+                        <th>{getAll("Skills")}</th>
                         <td>
                           {project.portfolio_item_tags.map((skill) => {
                             return (
@@ -292,7 +293,7 @@ function Index({ id }) {
                         </td>
                       </tr>
                       <tr>
-                        <th>{getAll("Share_My_Portfolio")}:</th>
+                        <th>{getAll("Share_My_Portfolio:")}</th>
                         <td>
                           <a href="" className="share-item">
                             <FaFacebook />
@@ -315,6 +316,22 @@ function Index({ id }) {
       </div>
     </div>
   );
+}
+function linkify(text, id) {
+  const urlRegex =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  const before = text?.replace(urlRegex, function (url) {
+    const start = url.startsWith("http") || url.startsWith("https");
+    let newUrl = url;
+    newUrl = !start ? "https://" + url : url;
+    if (newUrl.startsWith("https://timwoork")) {
+      return newUrl;
+    } else {
+      return "/redirect/f?url=" + newUrl + `&*portfolios/${id}`;
+    }
+  });
+
+  return before;
 }
 Index.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;

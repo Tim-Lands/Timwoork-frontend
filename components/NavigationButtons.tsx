@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const NavigationButtons = ({
   nextTitle,
@@ -13,6 +14,7 @@ const NavigationButtons = ({
   onBackClick,
   isNextVisible,
   isBackVisible,
+  loading,
 }: {
   nextTitle?: string;
   backTitle?: string;
@@ -24,6 +26,7 @@ const NavigationButtons = ({
   onBackClick?: Function;
   isNextVisible?: Boolean;
   isBackVisible?: Boolean;
+  loading?: boolean;
 }) => {
   const router = useRouter();
   const { getAll, language } = useAppSelector((state) => state.languages);
@@ -64,12 +67,22 @@ const NavigationButtons = ({
       )}
       {props.isNextVisible && (
         <button
-          onClick={(e) => onNextClick(e)}
+          onClick={(e) => {
+            if (loading) return;
+            onNextClick(e);
+          }}
           type="button"
-          className={`btn flex-center butt-green ml-auto butt-sm ${nextClass} `}
+          className={`btn flex-center align-items-center butt-green ml-auto butt-sm ${nextClass} g-1`}
         >
           <span className="text">{props.nextTitle}</span>
-          <span className="material-icons-outlined">{props.nextIcon}</span>
+          {loading ? (
+            <AiOutlineLoading3Quarters
+              className="loading_rotate"
+              style={{ fontSize: 18 }}
+            />
+          ) : (
+            <span className="material-icons-outlined">{props.nextIcon}</span>
+          )}
         </button>
       )}
     </>
