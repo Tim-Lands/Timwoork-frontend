@@ -45,6 +45,7 @@ export interface PortfolioState {
       content: string;
       cover_url: string;
       fans_count: number;
+      is_liked: boolean;
       seller: { id: number };
     }>;
     loading: boolean;
