@@ -43,12 +43,13 @@ function Index() {
                     avatar={portfolio.seller.profile.avatar_url}
                     views={3563}
                     fans_count={portfolio.fans_count}
+                    likes={portfolio.seller.profile_id === meId}
                     username={
                       portfolio.seller.profile_id === meId
                         ? "me"
                         : portfolio.seller.profile_id
                     }
-                    user={portfolio.seller.profile_id === meId}
+                    user={false}
                   />
                 </div>
               );
