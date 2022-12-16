@@ -6,12 +6,16 @@ import Navbar from "components/Portfolio/navbar";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Empty } from "antd";
+import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 import { FavoritesActions } from "@/store/favorites/favoritesAction";
+import router from "next/router";
 import Loading from "@/components/Loading";
 
 function Index() {
   const dispatch = useAppDispatch();
   const {
+    user,
+    portfolio: { project },
     languages: { getAll },
     favorites,
   } = useAppSelector((state) => state);
@@ -19,6 +23,12 @@ function Index() {
     if (favorites.loaded) return;
     dispatch(FavoritesActions.getFavorites());
   }, [favorites.loaded]);
+  useEffect(() => {
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
@@ -41,12 +51,26 @@ function Index() {
                     slug={item.id}
                     fans_count={item.fans_count}
                     likes={false}
-                    author={"Abdelhamid Boumegouas"}
+                    author={item.seller.profile.full_name}
                     level={`New Seller`}
-                    avatar={`/avatar.png`}
+                    avatar={item.seller.profile.avatar_url}
                     views={72868}
-                    username={`aboumegouass`}
+                    isLiked={item.is_liked}
+                    username={item.seller.profile.user.username}
                     user={false}
+                    onLike={async () => {
+                      if (!user.isLogged) router.push("/login");
+                      dispatch(FavoritesActions.toggleLike(item.id));
+                      await dispatch(
+                        PortfolioActions.toggleLikeBack({ id: item.id })
+                      );
+
+                      if (project.id == item.id) {
+                        dispatch(
+                          PortfolioActions.getUserProject({ id: project.id })
+                        );
+                      }
+                    }}
                   />
                 </div>
               ))}

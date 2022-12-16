@@ -13,6 +13,15 @@ export interface favoritesState {
     title: string;
     cover_url: string;
     url: string;
+    is_liked: boolean;
+    seller: {
+      profile: {
+        avatar_url: string;
+        full_name: string;
+        level: { name: string };
+        user: { username: string };
+      };
+    };
   }>;
   loading: boolean;
   loaded: boolean;
@@ -25,7 +34,19 @@ export const initialState: favoritesState = {
 export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
-  reducers: {},
+  reducers: {
+    toggleLike: (state, action) => {
+      const id = action.payload;
+      state.data = state.data.map((element) => {
+        if (element.id === id) {
+          return {
+            ...element,
+            is_liked: !element.is_liked,
+          };
+        } else return element;
+      });
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getFavorites.fulfilled, (state, action) => {
       state.data = action.payload;

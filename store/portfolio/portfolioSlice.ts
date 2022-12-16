@@ -22,6 +22,7 @@ export interface PortfolioState {
       content: string;
       cover_url: string;
       fans_count: number;
+      is_liked: boolean;
       seller: {
         profile_id: number;
         id: number;
@@ -122,6 +123,17 @@ export const PortfolioSlice = createSlice({
     },
     toggleFav: (state) => {
       state.project.is_favourite = !state.project.is_favourite;
+    },
+    toggleLikeAll: (state, action) => {
+      const id = action.payload;
+      state.all.data = state.all.data.map((element) => {
+        if (element.id === id) {
+          return {
+            ...element,
+            is_liked: !element.is_liked,
+          };
+        } else return element;
+      });
     },
   },
   extraReducers(builder) {
