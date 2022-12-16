@@ -30,7 +30,7 @@ function Index({
     profile: meProfile,
     languages: { getAll, language },
     portfolio: {
-      user: { data: meData, loading },
+      user: { data: meData, loading, loaded },
       project,
     },
   } = useAppSelector((state) => state);
@@ -44,6 +44,7 @@ function Index({
   if (errorFetch && !isMe) router.push("/user/profile/me");
   const dispatch = useAppDispatch();
   useEffect(() => {
+    if (loaded) return;
     if (isMe && meUser.username) {
       dispatch(
         PortfolioActions.getUserProjects({
