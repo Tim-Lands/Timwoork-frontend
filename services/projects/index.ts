@@ -4,9 +4,9 @@ async function getAllUsers() {
   const res = await API.get("api/portfolios/items");
   return res.data.data;
 }
-async function getAll(username: string, lang?: string) {
+async function getAll(username: string, lang?: string, token?: string) {
   const res = await API.get("api/portfolios/" + username, {
-    headers: { "X-localization": lang },
+    headers: { "X-localization": lang, Authorization: `Bearer ${token}` },
   });
 
   return res.data;

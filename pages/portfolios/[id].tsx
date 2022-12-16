@@ -91,11 +91,12 @@ function Index({ id }) {
                       >
                         {!project.is_liked ? (
                           <>
-                            <FaRegStar /> {getAll("Like")}
+                            <FaRegHeart />
+                            {getAll("Like")}
                           </>
                         ) : (
                           <>
-                            <FaStar /> {getAll("Fan")}
+                            <FaHeart /> {getAll("Fan")}
                           </>
                         )}
                       </button>
@@ -112,11 +113,11 @@ function Index({ id }) {
                       >
                         {!project.is_favourite ? (
                           <>
-                            <FaRegHeart /> {getAll("Add_to_favorite")}
+                            <FaRegStar /> {getAll("Add_to_favorite")}
                           </>
                         ) : (
                           <>
-                            <FaHeart /> {getAll("Added_successfully")}
+                            <FaStar /> {getAll("Favorited")}
                           </>
                         )}
                       </button>
@@ -170,7 +171,7 @@ function Index({ id }) {
                       type="button"
                       className="btn butt-green mb-2 flex-center butt-sm"
                       onClick={() => {
-                        router.push("/portfolio/project-modify/" + id);
+                        router.push("/portfolios/project-modify/" + id);
                       }}
                       style={{ width: "100%", justifyContent: "center" }}
                     >

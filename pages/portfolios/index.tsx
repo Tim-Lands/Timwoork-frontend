@@ -48,7 +48,7 @@ function Index() {
                         ? "me"
                         : portfolio.seller.profile_id
                     }
-                    me={false}
+                    user={portfolio.seller.profile_id === meId}
                   />
                 </div>
               );

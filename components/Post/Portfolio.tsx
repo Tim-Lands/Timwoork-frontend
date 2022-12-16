@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,9 +17,11 @@ function Portfolio({
   views,
   slug,
   fans_count = 12365,
-  me = true,
+  user = true,
+  likes = true,
+  isLiked = true,
+  onLike = () => {},
 }): ReactElement {
-  const [isFavorated, setIsFavorated] = useState(false);
   const { getAll } = useAppSelector((state) => state.languages);
 
   return (
@@ -34,26 +36,26 @@ function Portfolio({
     >
       <div
         className={"timlands-portfolio-item"}
-        style={{ height: me ? 300 : 400 }}
+        style={{ height: user ? 320 : 400 }}
       >
         <div
-          className={`portfolio-item-img ${me ? "" : "show"}`}
-          onClick={() => me && Router.push("/portfolios/" + slug)}
+          className={`portfolio-item-img ${likes ? "" : "show"}`}
+          onClick={() => likes && Router.push("/portfolios/" + slug)}
         >
           <img src={thumbnail} alt="thumbnail" />
           <div className="portfolio-item-img-buttons">
             <button
               className="btn butt-xs butt-white flex-center"
               type="button"
-              onClick={() => setIsFavorated(!isFavorated)}
+              onClick={onLike}
             >
-              {!isFavorated ? (
+              {isLiked ? (
                 <>
-                  <FaRegHeart /> {getAll("To_Favorite")}
+                  <FaHeart /> {getAll("Fan")}
                 </>
               ) : (
                 <>
-                  <FaHeart /> {getAll("Favorited")}
+                  <FaRegHeart /> {getAll("Like")}
                 </>
               )}
             </button>
@@ -71,7 +73,7 @@ function Portfolio({
           <p className="views-meta">
             <FaEye /> ({views})
           </p>
-          {me ? (
+          {user ? (
             <></>
           ) : (
             <Link href={`/user/profile/${username}`}>
@@ -105,8 +107,11 @@ Portfolio.propTypes = {
   heartCount: PropTypes.number,
   views: PropTypes.number,
   level: PropTypes.string,
-  me: PropTypes.bool,
+  user: PropTypes.bool,
   fans_count: PropTypes.number,
+  isLiked: PropTypes.bool,
+  onLike: PropTypes.func,
+  likes: PropTypes.bool,
 };
 
 export default Portfolio;

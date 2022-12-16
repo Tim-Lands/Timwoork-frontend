@@ -34,7 +34,7 @@ function Index() {
                   avatar={`/avatar.png`}
                   views={72868}
                   username={`aboumegouass`}
-                  me={false}
+                  user={false}
                 />
               </div>
             ))}

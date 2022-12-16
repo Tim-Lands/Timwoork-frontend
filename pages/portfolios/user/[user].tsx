@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import cookies from "next-cookies";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -14,16 +14,16 @@ import Loading from "@/components/Loading";
 import { ProjectsServices } from "@/services/projects";
 function Index({
   otherUser,
-  isMeProp,
+
   portfolio,
   errorFetch,
   username,
 }: {
   otherUser: any;
-  isMeProp: boolean;
+
   portfolio: any;
   errorFetch: boolean;
-  username: string;
+  username: any;
 }) {
   const {
     user: meUser,
@@ -33,7 +33,13 @@ function Index({
       user: { data: meData, loading },
     },
   } = useAppSelector((state) => state);
-  const isMe = username === meUser.username ? true : isMeProp;
+  const [isMe, setIsMe] = useState(
+    username.toLowerCase() === meUser.username.toLowerCase() ||
+      username === "me" ||
+      username == meUser.id
+      ? true
+      : false
+  );
   if (errorFetch && !isMe) router.push("/user/profile/me");
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -46,14 +52,26 @@ function Index({
     }
   }, [isMe, meUser]);
   const user = isMe ? meUser : otherUser;
-  const data = isMe ? meData : portfolio;
-  const profile = isMe ? meProfile : user.profile;
+  const [data, setData] = useState(isMe ? meData : portfolio);
+  useEffect(() => {
+    setIsMe(
+      username.toLowerCase() === meUser.username.toLowerCase() ||
+        username === "me" ||
+        username == meUser.id
+        ? true
+        : false
+    );
+  }, [meUser, otherUser]);
+  useEffect(() => {
+    setData(isMe ? meData : portfolio);
+  }, [isMe, meData, portfolio]);
+
+  const profile = isMe ? meProfile : user?.profile;
 
   const title =
     language === "ar"
       ? getAll("X’s_business_gallery") + profile.full_name
       : profile?.full_name + getAll("X’s_business_gallery");
-
   return (
     <div className="container pt-4 mt-2">
       <MetaTags title={title} metaDescription={title} ogDescription={title} />
@@ -74,12 +92,34 @@ function Index({
                     title={portfolio.title}
                     thumbnail={portfolio.cover_url}
                     slug={portfolio.id}
-                    author={"أحمد يحيى"}
+                    author={"any"}
                     fans_count={portfolio.fans_count}
                     level={getAll("New_seller")}
                     avatar={`/avatar.png`}
                     views={72868}
+                    user={true}
+                    likes={isMe}
                     username={"me"}
+                    isLiked={portfolio.is_liked}
+                    onLike={async () => {
+                      if (meUser.isLogged) {
+                        await dispatch(
+                          PortfolioActions.toggleLikeBack({ id: portfolio.id })
+                        );
+                        setData((data) => {
+                          return data.map((element) => {
+                            if (element.id === portfolio.id) {
+                              return {
+                                ...element,
+                                is_liked: !element.is_liked,
+                              };
+                            } else return element;
+                          });
+                        });
+                      } else {
+                        router.push("/login");
+                      }
+                    }}
                   />
                 </div>
               ))}
@@ -129,19 +169,20 @@ export async function getServerSideProps(ctx) {
         portfolio: null,
         otherUser: null,
         errorFetch: true,
-        isMeProp,
+
         username,
       },
     };
   try {
     const lang = cookies(ctx).lang || "";
+    const token = cookies(ctx).token || "";
     const [portfolio, otherUser] = await Promise.all([
-      ProjectsServices.getAll(username, lang),
+      ProjectsServices.getAll(username, lang, token),
       ProfileService.getOne(username, lang),
     ]);
 
     return {
-      props: { portfolio, otherUser, errorFetch: false, isMeProp, username },
+      props: { portfolio, otherUser, errorFetch: false, username },
     };
   } catch (error) {
     return {
@@ -149,7 +190,7 @@ export async function getServerSideProps(ctx) {
         portfolio: null,
         otherUser: null,
         errorFetch: true,
-        isMeProp,
+
         username,
       },
     };

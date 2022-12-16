@@ -18,13 +18,13 @@ import PostInner from "@/components/Post/PostInner";
 
 function Profile({
   otherUser,
-  isMeProp,
+
   username,
   errorFetch,
 }: {
   otherUser: any;
-  isMeProp: boolean;
-  username: string;
+
+  username: any;
   errorFetch: boolean;
 }) {
   const {
@@ -34,7 +34,22 @@ function Profile({
     profile: { profile_seller: profile_seller_me },
     currency: { my: currency },
   } = useAppSelector((state) => state);
-  const isMe = username === meUser.username ? true : isMeProp;
+  const [isMe, setIsMe] = useState(
+    username.toLowerCase() === meUser.username.toLowerCase() ||
+      username === "me" ||
+      username == meUser.id
+      ? true
+      : false
+  );
+  useEffect(() => {
+    setIsMe(
+      username.toLowerCase() === meUser.username.toLowerCase() ||
+        username === "me" ||
+        username == meUser.id
+        ? true
+        : false
+    );
+  }, [meUser, otherUser]);
   if (errorFetch && !isMe) router.push("/user/profile/me");
 
   const [isLoadingSeler, setIsLoadingSeler] = useState(false);
@@ -348,14 +363,14 @@ export async function getServerSideProps(ctx) {
   } = ctx;
   const isMeProp = username === "me";
   if (isMeProp)
-    return { props: { otherUser: null, errorFetch: true, isMeProp, username } };
+    return { props: { otherUser: null, errorFetch: true, username } };
 
   try {
     const lang = cookies(ctx).lang || "";
     const otherUser = await ProfileService.getOne(username, lang);
-    return { props: { otherUser, errorFetch: false, isMeProp, username } };
+    return { props: { otherUser, errorFetch: false, username } };
   } catch (error) {
-    return { props: { otherUser: null, errorFetch: true, isMeProp, username } };
+    return { props: { otherUser: null, errorFetch: true, username } };
   }
 }
 export default Profile;
