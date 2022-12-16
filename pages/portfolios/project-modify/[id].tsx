@@ -7,7 +7,7 @@ import router, { useRouter } from "next/router";
 import { NextPage } from "next";
 import ImagesUploadingGalleries from "@/components/ImagesUploadingGalleries";
 import { useEffect, useState } from "react";
-import { FormInput, FormTextarea } from "components/Forms/Forms";
+import { FormInput, FormTextarea, FormSelect2 } from "components/Forms/Forms";
 import Tips from "@/components/Portfolio/Tips";
 import RemoveImageModal from "@/components/removeImageModal";
 import Tags from "@/components/add-new/Tags";
@@ -31,7 +31,6 @@ const Add: NextPage = () => {
   const [selectedLangTitle, setSelectedLangTitle] = useState("");
   const [selectedLangContent, setSelectedLangContent] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [subtitlesTitle, setSubtitlesTitle] = useState({
     ar: null,
     fr: null,
@@ -119,6 +118,9 @@ const Add: NextPage = () => {
       url: project.url,
       completed_date: project.completed_date,
       content: project.content,
+
+      category: "",
+      sub_category: "",
     },
     enableReinitialize: true,
     onSubmit: () => {},
@@ -144,6 +146,12 @@ const Add: NextPage = () => {
     const res = await API.post(`/api/detectLang`, { sentence: txt });
     callback(res.data.data);
   };
+  useEffect(() => {
+    if (!user.isLogged && !user.loading) {
+      router.push("/login");
+      return;
+    }
+  }, [user]);
   return (
     <Layout>
       {isRemoveModal && (
@@ -290,7 +298,31 @@ const Add: NextPage = () => {
                     validationsErrors={validationsErrors?.images}
                   />
                 </div>
-                <div className="col-md-12">
+                <div className="col-md-6   mb-3">
+                  <FormSelect2
+                    title={getAll("Choose_the_principal")}
+                    name="category"
+                    handleChange={form.handleChange}
+                    value={form.values.category}
+                    validationsErrors={
+                      validationsErrors?.category &&
+                      validationsErrors.category[0]
+                    }
+                  />
+                </div>
+                <div className="col-md-6   mb-3">
+                  <FormSelect2
+                    title={getAll("Choose_a_subcategory")}
+                    name="sub_category"
+                    handleChange={form.handleChange}
+                    value={form.values.sub_category}
+                    validationsErrors={
+                      validationsErrors?.sub_category &&
+                      validationsErrors.sub_category[0]
+                    }
+                  />
+                </div>
+                <div className="col-md-8">
                   <Tags
                     values={form.values.tags}
                     onChange={form.setFieldValue}
@@ -300,17 +332,7 @@ const Add: NextPage = () => {
                     }
                   />
                 </div>
-                <div className="col-md-8   mb-3">
-                  <FormInput
-                    title={getAll("Project_link")}
-                    name="url"
-                    handleChange={form.handleChange}
-                    value={form.values.url}
-                    validationsErrors={
-                      validationsErrors?.url && validationsErrors.url[0]
-                    }
-                  />
-                </div>
+
                 <div className="col-md-4  mb-3">
                   <FormInput
                     type="date"
@@ -321,6 +343,17 @@ const Add: NextPage = () => {
                     validationsErrors={
                       validationsErrors?.completed_date &&
                       validationsErrors.completed_date[0]
+                    }
+                  />
+                </div>
+                <div className="col-md-12   mb-3">
+                  <FormInput
+                    title={getAll("Project_link")}
+                    name="url"
+                    handleChange={form.handleChange}
+                    value={form.values.url}
+                    validationsErrors={
+                      validationsErrors?.url && validationsErrors.url[0]
                     }
                   />
                 </div>
