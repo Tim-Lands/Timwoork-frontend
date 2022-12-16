@@ -3,9 +3,9 @@ import { ProjectsServices } from "@/services/projects";
 
 const getUsersProjects = createAsyncThunk(
   "portfolio/users/projects/get",
-  async (args, { rejectWithValue }) => {
+  async (args: { current_page: number }, { rejectWithValue }) => {
     try {
-      const res = await ProjectsServices.getAllUsers();
+      const res = await ProjectsServices.getAllUsers(args.current_page);
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);

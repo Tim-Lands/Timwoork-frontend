@@ -110,12 +110,12 @@ function Sidebar({ RouterId }) {
           onChange={(page) => {
             dispatch(ChatActions.setPage(page));
           }}
-          pageRangeDisplayed={8}
+          pageRangeDisplayed={5}
           itemClass="page-item"
           linkClass="page-link"
           className="productPagination"
-          firstPageText={getAll("First_page")}
-          lastPageText={getAll("Last_page")}
+          // firstPageText={getAll("First_page")}
+          // lastPageText={getAll("Last_page")}
         />
       </div>
     </div>

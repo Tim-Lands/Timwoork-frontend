@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
+import Pagination from "react-js-pagination";
 import Portfolio from "@/components/Post/Portfolio";
 import PortfolioNav from "@/components/Portfolio/PortfolioNav";
 import PortfolioSliders from "@/components/Portfolio/PortfolioSlider";
@@ -8,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 import router from "next/router";
 import Loading from "@/components/Loading";
+import { Result } from "antd";
 
 function Index() {
   const dispatch = useAppDispatch();
@@ -20,7 +22,9 @@ function Index() {
   } = useAppSelector((state) => state);
   useEffect(() => {
     if (all.loaded) return;
-    dispatch(PortfolioActions.getUsersProjects());
+    dispatch(
+      PortfolioActions.getUsersProjects({ current_page: all.current_page })
+    );
   }, [all.loaded, all.current_page]);
 
   return (
@@ -74,6 +78,27 @@ function Index() {
                 );
               })}
             {all.loading && <Loading />}
+            {all.data.length === 0 && !all.loading && (
+              <Result
+                status="404"
+                title={getAll("No_data")}
+                subTitle={getAll("There_are_no_more")}
+              />
+            )}
+            {all.last_page > 1 && (
+              <Pagination
+                activePage={all.current_page}
+                itemsCountPerPage={all.per_page}
+                totalItemsCount={all.total}
+                onChange={(page) => {
+                  dispatch(PortfolioActions.setPage(page));
+                }}
+                pageRangeDisplayed={5}
+                itemClass="page-item"
+                linkClass="page-link"
+                className="productPagination"
+              />
+            )}
           </div>
         </div>
       </div>

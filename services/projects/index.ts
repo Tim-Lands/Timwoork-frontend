@@ -1,7 +1,9 @@
 import API from "../../config";
 
-async function getAllUsers() {
-  const res = await API.get("api/portfolios/items");
+async function getAllUsers(current_page: number) {
+  const res = await API.get(
+    "api/portfolios/items?per_page=20&page=" + current_page
+  );
   return res.data.data;
 }
 async function getAll(username: string, lang?: string, token?: string) {

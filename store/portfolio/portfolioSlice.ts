@@ -37,6 +37,7 @@ export interface PortfolioState {
     loading: boolean;
     per_page: number;
     current_page: number;
+    last_page: number;
     total: number;
   };
   user: {
@@ -83,9 +84,10 @@ const initialState: PortfolioState = {
   all: {
     data: [],
     loading: true,
-    current_page: null,
+    current_page: 1,
     total: null,
-    per_page: null,
+    per_page: 20,
+    last_page: 1,
     loaded: false,
   },
   user: { data: [], loading: true, loaded: false },
@@ -134,6 +136,9 @@ export const PortfolioSlice = createSlice({
           };
         } else return element;
       });
+    },
+    setPage: (state, action) => {
+      state.all.current_page = action.payload;
     },
   },
   extraReducers(builder) {
