@@ -74,6 +74,7 @@ export interface PortfolioState {
     };
     portfolio_item_tags: Array<{ id: number; name: string }>;
     loading: boolean;
+    loaded: boolean;
   };
 }
 
@@ -105,6 +106,7 @@ const initialState: PortfolioState = {
     },
     portfolio_item_tags: [],
     loading: true,
+    loaded: false,
   },
 };
 
@@ -136,6 +138,7 @@ export const PortfolioSlice = createSlice({
     );
     builder.addCase(getUserProject.fulfilled, (state, action) => {
       state.project = action.payload;
+      state.project.loaded = true;
     });
     builder.addMatcher(isUsersProjectsPending, (state, action) => {
       if (action.type.split("/")[0] !== "portfolio") return;

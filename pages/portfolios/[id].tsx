@@ -37,8 +37,9 @@ function Index({ id }) {
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {
+    if (project.loaded && project.id == id) return;
     dispatch(PortfolioActions.getUserProject({ id }));
-  }, []);
+  }, [project.id]);
   const isMe = project.seller.id === meId;
 
   return (

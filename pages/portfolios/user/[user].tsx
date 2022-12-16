@@ -31,6 +31,7 @@ function Index({
     languages: { getAll, language },
     portfolio: {
       user: { data: meData, loading },
+      project,
     },
   } = useAppSelector((state) => state);
   const [isMe, setIsMe] = useState(
@@ -103,9 +104,6 @@ function Index({
                     isLiked={portfolio.is_liked}
                     onLike={async () => {
                       if (meUser.isLogged) {
-                        await dispatch(
-                          PortfolioActions.toggleLikeBack({ id: portfolio.id })
-                        );
                         setData((data) => {
                           return data.map((element) => {
                             if (element.id === portfolio.id) {
@@ -116,6 +114,14 @@ function Index({
                             } else return element;
                           });
                         });
+                        await dispatch(
+                          PortfolioActions.toggleLikeBack({ id: portfolio.id })
+                        );
+                        if (project.id == portfolio.id) {
+                          dispatch(
+                            PortfolioActions.getUserProject({ id: project.id })
+                          );
+                        }
                       } else {
                         router.push("/login");
                       }
