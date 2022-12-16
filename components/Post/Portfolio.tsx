@@ -36,7 +36,7 @@ function Portfolio({
     >
       <div
         className={"timlands-portfolio-item"}
-        style={{ height: user ? 320 : 400 }}
+        style={{ height: user ? 320 : 370 }}
       >
         <div
           className={`portfolio-item-img ${likes ? "" : "show"}`}

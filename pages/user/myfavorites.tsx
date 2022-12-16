@@ -1,15 +1,24 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import Layout from "@/components/Layout/HomeLayout";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import Portfolio from "@/components/Post/Portfolio";
 import Navbar from "components/Portfolio/navbar";
 import PortfolioProfileHeader from "@/components/Portfolio/PortfolioProfileHeader";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Empty } from "antd";
+import { FavoritesActions } from "@/store/favorites/favoritesAction";
+import Loading from "@/components/Loading";
 
 function Index() {
-  const { getAll } = useAppSelector((state) => state.languages);
-  const favorites = [];
+  const dispatch = useAppDispatch();
+  const {
+    languages: { getAll },
+    favorites,
+  } = useAppSelector((state) => state);
+  useEffect(() => {
+    if (favorites.loaded) return;
+    dispatch(FavoritesActions.getFavorites());
+  }, [favorites.loaded]);
   return (
     <div className="container pt-4 mt-2">
       <MetaTags
@@ -23,22 +32,26 @@ function Index() {
 
         <div className="portfolios-content">
           <div className="row">
-            {favorites.map(() => (
-              <div key={1} className="col-sm-6 col-lg-3">
-                <Portfolio
-                  title="A very tasty and cool recipe for pilaf inside a huge"
-                  thumbnail={`https://mir-s3-cdn-cf.behance.net/project_modules/1400/165af265485593.5af5bf8eae575.jpg`}
-                  slug={1}
-                  author={"Abdelhamid Boumegouas"}
-                  level={`New Seller`}
-                  avatar={`/avatar.png`}
-                  views={72868}
-                  username={`aboumegouass`}
-                  user={false}
-                />
-              </div>
-            ))}
-            {favorites.length === 0 && (
+            {!favorites.loading &&
+              favorites.data.map((item) => (
+                <div key={item.id} className="col-sm-6 col-lg-3">
+                  <Portfolio
+                    title={item.title}
+                    thumbnail={item.cover_url}
+                    slug={item.id}
+                    fans_count={item.fans_count}
+                    likes={false}
+                    author={"Abdelhamid Boumegouas"}
+                    level={`New Seller`}
+                    avatar={`/avatar.png`}
+                    views={72868}
+                    username={`aboumegouass`}
+                    user={false}
+                  />
+                </div>
+              ))}
+            {favorites.loading && <Loading />}
+            {!favorites.loading && favorites.data.length === 0 && (
               <div className="bg-white py-3 rounded mb-3">
                 <Empty
                   image="/hero.png"

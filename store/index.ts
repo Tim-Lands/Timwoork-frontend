@@ -14,6 +14,7 @@ import myProducts from "./myProducts/myProductsSlice";
 import mySales from "./sales/salesSlice";
 import categories from "./categories/categoriesSlice";
 import portfolio from "./portfolio/portfolioSlice";
+import favorites from "./favorites/favoritesSlice";
 import dashboardUsers from "./tw-admin/users/userSlice";
 import dashboardProducts from "./tw-admin/products/productsSlice";
 import dashboardWithdrawals from "./tw-admin/withdrawals/withdrawalsSlice";
@@ -44,6 +45,7 @@ export const store = configureStore({
     mySales,
     categories,
     portfolio,
+    favorites,
     dashboardUsers,
     dashboardProducts,
     dashboardWithdrawals,

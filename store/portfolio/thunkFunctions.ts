@@ -114,18 +114,7 @@ const toggleLikeBack = createAsyncThunk(
     }
   }
 );
-const toggleFavBack = createAsyncThunk(
-  "portfolio/project/like",
-  async (args: { id: number }, { rejectWithValue }) => {
-    try {
-      const res = await ProjectsServices.favorite(args.id);
 
-      return res;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
 export const PortfolioThunkFunctions = {
   getUsersProjects,
   getUserProjects,
@@ -134,5 +123,4 @@ export const PortfolioThunkFunctions = {
   deleteProject,
   getUserProject,
   toggleLikeBack,
-  toggleFavBack,
 };

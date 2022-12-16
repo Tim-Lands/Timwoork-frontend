@@ -72,10 +72,7 @@ async function like(id: number) {
   const res = await API.post(`api/portfolios/items/${id}/like`);
   return res.data;
 }
-async function favorite(id: number) {
-  const res = await API.post(`api/portfolios/items/${id}/favourite`);
-  return res.data;
-}
+
 export const ProjectsServices = {
   getAllUsers,
   getAll,
@@ -84,5 +81,4 @@ export const ProjectsServices = {
   updateOne,
   getOne,
   like,
-  favorite,
 };

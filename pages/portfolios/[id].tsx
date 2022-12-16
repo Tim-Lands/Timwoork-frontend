@@ -21,6 +21,7 @@ import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 import router from "next/router";
 import Loading from "@/components/Loading";
 import { message } from "antd";
+import { FavoritesActions } from "@/store/favorites/favoritesAction";
 
 function Index({ id }) {
   const {
@@ -107,7 +108,7 @@ function Index({ id }) {
                         }`}
                         type="button"
                         onClick={() => {
-                          dispatch(PortfolioActions.toggleFavBack({ id }));
+                          dispatch(FavoritesActions.toggleFavBack({ id }));
                           dispatch(PortfolioActions.toggleFav());
                         }}
                       >

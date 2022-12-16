@@ -34,20 +34,18 @@ function Navbar({
           </li>
           {!username && (
             <>
+              <li className={active === "favorite" ? "active" : ""}>
+                <Link href={`/user/myfavorites`}>
+                  <a className="portfolio-item now">
+                    <FaHeart /> {getAll("Favorite")}
+                  </a>
+                </Link>
+              </li>
               <Tooltip title={getAll("Soon")}>
                 <li className={active === "followers" ? "active" : ""}>
                   {/* <Link href={`/user/myfollowers`}> */}
                   <a className="portfolio-item">
                     <FaRss /> {getAll("Following")}
-                  </a>
-                  {/* </Link> */}
-                </li>
-              </Tooltip>
-              <Tooltip title={getAll("Soon")}>
-                <li className={active === "favorite" ? "active" : ""}>
-                  {/* <Link href={`/user/myfavorites`}> */}
-                  <a className="portfolio-item">
-                    <FaHeart /> {getAll("Favorite")}
                   </a>
                   {/* </Link> */}
                 </li>
