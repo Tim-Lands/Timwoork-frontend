@@ -29,7 +29,7 @@ import { ChatActions } from "@/store/chat/chatActions";
 
 const { Text } = Typography;
 const properties = {
-  duration: 5000,
+  duration: 500000,
   transitionDuration: 500,
   infinite: true,
   prevArrow: (
@@ -456,7 +456,8 @@ function Single({ id }) {
                           className="each-slide"
                         >
                           <img
-                            className="images-slider"
+                            className="images-slider "
+                            style={{ width: "100%" }}
                             src={`${APIURL2}${ProductData.full_path_thumbnail}`}
                           />
                         </div>
@@ -624,7 +625,7 @@ function Single({ id }) {
               </div>
               <div className="col-lg-4">
                 <div className="single-sidebar">
-                  <Spin spinning={isLoading}>
+                  <Spin spinning={isLoading && user.isLogged}>
                     <div className="single-panel-aside">
                       <div className="panel-aside-header">
                         <ul className="nav top-aside-nav">

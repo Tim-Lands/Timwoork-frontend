@@ -9,6 +9,7 @@
     background-position: center;
     overflow: hidden;
     height: 450px;
+    width: 100%;
 
     &.fix-height {
       height: 400px;
@@ -57,4 +58,7 @@
       }
     }
   }
+}
+.react-slideshow-container {
+  justify-content: center !important;
 }

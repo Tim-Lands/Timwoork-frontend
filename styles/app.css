@@ -3855,6 +3855,7 @@
   background-position: center;
   overflow: hidden;
   height: 450px;
+  width: 100%;
 }
 .each-slide .images-slider.fix-height {
   height: 400px;
@@ -3887,6 +3888,10 @@
 .rtl .each-slide .images-slider .caption-descriptions {
   left: 0;
   right: 0;
+}
+
+.react-slideshow-container {
+  justify-content: center !important;
 }
 
 .cart-nothing .cart-nothing-inner {
