@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 import API from "../../../config";
 import FormModal from "@/components/Forms/FormModal";
+import { CategoriesActions } from "@/store/categories/categoriesActions";
 
 let testTime;
 const Add: NextPage = () => {
@@ -67,6 +68,7 @@ const Add: NextPage = () => {
   });
   const [userLang, setUserLang] = useState();
 
+
   const removeImage = async (image, index) => {
     setIsRemoveModal(true);
     setRemovedImage({ id: image.id, index });
@@ -107,9 +109,14 @@ const Add: NextPage = () => {
     if (id === "add") return;
     else if (id) fetchData();
   }, [id]);
+
+  useEffect(()=>{
+    CategoriesActions.getAllCategories({})
+  },[])
   const {
     languages: { getAll },
     user,
+    categories
   } = useAppSelector((state) => state);
   const form = useFormik({
     initialValues: {
@@ -119,8 +126,8 @@ const Add: NextPage = () => {
       completed_date: project.completed_date,
       content: project.content,
 
-      category: "",
-      sub_category: "",
+      category: project.subcategory?.parent_id,
+      subcategory: project.subcategory?.id,
     },
     enableReinitialize: true,
     onSubmit: () => {},
@@ -129,7 +136,17 @@ const Add: NextPage = () => {
   const fetchData = async () => {
     const res = await API.get(`/api/portfolios/items/${id}`);
     setProject(res.data.data);
+    setFeaturedImages([{data_url:res.data.data.cover_url}])
+    setGalleryMedia(res.data.data.gallery.map(img=>({...img, data_url:img.image_url})))
   };
+
+  const deleteImages = async()=>{
+    console.log(removedImages)
+    const promises = removedImages.map((img) =>
+        API.delete(`api/portfolios/items/images/${img}`)
+      );
+      await Promise.all(promises);
+  }
 
   const onRemoveSubmit = async (image_id, index) => {
     if (image_id) {
@@ -152,6 +169,7 @@ const Add: NextPage = () => {
       return;
     }
   }, [user]);
+  console.log(featuredMedia)
   return (
     <Layout>
       {isRemoveModal && (
@@ -308,18 +326,20 @@ const Add: NextPage = () => {
                       validationsErrors?.category &&
                       validationsErrors.category[0]
                     }
+                    data={categories.all}
                   />
                 </div>
                 <div className="col-md-6   mb-3">
                   <FormSelect2
                     title={getAll("Choose_a_subcategory")}
-                    name="sub_category"
+                    name="subcategory"
                     handleChange={form.handleChange}
-                    value={form.values.sub_category}
+                    value={form.values.subcategory}
                     validationsErrors={
-                      validationsErrors?.sub_category &&
-                      validationsErrors.sub_category[0]
+                      validationsErrors?.subcategory &&
+                      validationsErrors.subcategory[0]
                     }
+                    data = {categories.all?.find(category=>category.id==form.values.category)?.subcategories}
                   />
                 </div>
                 <div className="col-md-8">
@@ -373,7 +393,7 @@ const Add: NextPage = () => {
                         const body = {
                           ...form.values,
                           cover: featuredMedia && featuredMedia[0].file,
-                          images: galleryMedia?.map((media) => media.file),
+                          images: galleryMedia.map((media) => media.file),
                         };
                         setLoading(true);
                         await dispatch(
@@ -397,10 +417,11 @@ const Add: NextPage = () => {
                             body: {
                               ...form.values,
                               cover: featuredMedia && featuredMedia[0].file,
-                              images: galleryMedia?.map((media) => media.file),
+                              images: galleryMedia.filter(media=>media.file).map((media) => media.file),
                             },
                           })
                         ).unwrap();
+                        await deleteImages()
                         router.push("/portfolios/" + id);
                       } catch (error) {
                         setValidationsErrors(error.data);

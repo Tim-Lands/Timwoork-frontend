@@ -2,7 +2,7 @@ import { CategoriesService } from "@/services/categories";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const getAllCategories = createAsyncThunk(
   "Categories/all/data",
-  async (args, { rejectWithValue }) => {
+  async (args:{}, { rejectWithValue }) => {
     try {
       const res = await CategoriesService.getAll();
       return res;

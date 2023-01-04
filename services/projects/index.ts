@@ -25,14 +25,16 @@ async function addOne(body: {
   images: Array<any>;
   completed_date: any;
   url: any;
+  subcategory:number;
 }) {
-  const { title, content, tags, cover, images, url, completed_date } = body;
+  const { title, subcategory, content, tags, cover, images, url, completed_date } = body;
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
   formData.append("completed_date", completed_date);
   formData.append("cover", cover);
   formData.append("url", url);
+  formData.append('subcategory', subcategory.toString())
   tags.forEach((tag) => formData.append("tags[]", JSON.stringify(tag)));
   images.forEach((image) => formData.append("images[]", image));
   const res = await API.post("api/portfolios/items", formData);

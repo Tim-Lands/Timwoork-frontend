@@ -140,7 +140,7 @@ export function FormSelect2(props: any): ReactElement {
         <option value="">{props.title}</option>
         {props.data &&
           props.data.map((item: any, i: number) => (
-            <option key={i} value={item.name}>
+            <option key={i} value={item.id}>
               {item.name}
             </option>
           ))}
