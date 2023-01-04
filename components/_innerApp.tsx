@@ -38,7 +38,7 @@ const App = ({ innerApp }) => {
     lang = localStorage.getItem("lang");
   }
   useEffect(() => {
-    dispatch(CategoriesActions.getAllCategories());
+    dispatch(CategoriesActions.getAllCategories({}));
     dispatch(CategoriesActions.getTopCategories());
     dispatch(CategoriesActions.getTopMainCategories());
     dispatch(ProductsActions.getPopularProducts());

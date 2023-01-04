@@ -17,8 +17,8 @@ import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 
 const MySelect = (props: any) => {
   const tagsState = useAppSelector((state) => state.dashboardTagsSlice);
-  console.log(tagsState);
   const dispatch = useAppDispatch();
+  console.log(tagsState)
   const getdataTags = async (tag: string) => {
     try {
       dispatch(TagsActions.getAll({ name: tag }));

@@ -161,7 +161,7 @@ function Description({query}) {
         }))
         // Authentication was successful.
         message.success(getAll("The_update_has"));
-        
+        router.push(`medias?id=${query.id}`)
       } catch (error: any) {
         if (
           error.response &&
@@ -253,7 +253,7 @@ function Description({query}) {
                       }`}
                     >
                       <h3 className="text">
-                        <Link href={`/edit-product/medias?id=${query.id}`}>
+                        <Link href={`/tw-admin/posts/edit-product/medias?id=${query.id}`}>
                           <a>
                             <span className="icon-circular">
                               <span className="material-icons material-icons-outlined">

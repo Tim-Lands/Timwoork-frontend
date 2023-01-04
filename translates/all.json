@@ -659,12 +659,12 @@
   "Service_title": {
     "en": "Service title",
     "fr": "Titre du service",
-    "ar": " عنوان الخدمة"
+    "ar": " إسم الخدمة"
   },
   "The_service_title": {
     "en": "The service title should not contain symbols",
     "fr": "Le titre du service ne doit pas contenir de symboles",
-    "ar": " يجب أن لايحتوي عنوان الخدمة على رموز"
+    "ar": " يجب أن لايحتوي إسم الخدمة على رموز"
   },
   "Service_editing_Price ": {
     "en": "Service editing – Price & duration",
@@ -1690,7 +1690,7 @@
   "Read_the_service": {
     "en": "Read the service details carefully, pay attention to the execution period and what is stated in the service title and description is exactly what you will get. So be sure to read it carefully. ",
     "fr": "Lisez attentivement les détails du service, faites attention à la période d'exécution et ce qui est indiqué dans le titre et la description du service est exactement ce que vous obtiendrez.",
-    "ar": "اقرأ تفاصيل الخدمة بعناية، وانتبه لمدة التنفيذ وما ذُكر في عنوان الخدمة ووصفها هو ما ستحصل عليه بالضبط. لذا تأكد من قراءته بعناية."
+    "ar": "اقرأ تفاصيل الخدمة بعناية، وانتبه لمدة التنفيذ وما ذُكر في إسم الخدمة ووصفها هو ما ستحصل عليه بالضبط. لذا تأكد من قراءته بعناية."
   },
   "And_in_the": {
     "en": "And in the case that there are some improvements to the service, read them carefully to make sure that you don’t request any wrong addition. If there are ambiguous things in the description, then do not hesitate to contact the seller and ask about every detail before purchasing, and pay attention to the implementation period. You will not be able to cancel the service or obtain it before the end of this period unless the seller delivers it in a shorter period. And do not forget to consider the verification of other service specifications such as price and implementation period. If you wish to purchase additional services or improvements added to the service, remember that the price that is added to the basic service price, as well as the period that may be added to the period of implementation of the basic service.",
@@ -2876,7 +2876,7 @@
   "Service_title_is": {
     "en": "Service title is required",
     "fr": "Le titre du service est nécessaire",
-    "ar": "عنوان الخدمة مطلوب"
+    "ar": "إسم الخدمة مطلوب"
   },
   "Subcategory_is_required": {
     "en": "Subcategory is required",

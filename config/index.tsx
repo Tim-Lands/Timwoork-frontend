@@ -11,6 +11,9 @@ const token =
     ? localStorage.getItem("token")
     : Cookies.get("token") || "";
 
+const admin_token =
+     Cookies.get("token_dash") || "";
+
 export default axios.create({
   baseURL: "https://api.timwoork.com/", //api.timwoork.com
   headers: { "X-localization": lang, Authorization: `Bearer ${token}` },
@@ -21,7 +24,7 @@ export const AdminAPI = axios.create({
   baseURL: "https://api.timwoork.com/", //api.timwoork.com
   headers: {
     "X-localization": lang,
-    Authorization: `Bearer ${Cookies.get("token_dash")}`,
+    Authorization: `Bearer ${admin_token}`,
   },
   withCredentials: true,
 });

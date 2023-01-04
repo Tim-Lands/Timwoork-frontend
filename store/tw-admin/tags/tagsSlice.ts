@@ -37,7 +37,7 @@ const initialState: TagsState = {
     to: 1,
     total: 0,
     per_page: 0,
-    loading: true,
+    loading: false,
     current_tag: {
         loading: true,
         data: null
@@ -56,6 +56,7 @@ export const dashboardTagsSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(getAll.fulfilled, (state, action: any) => {
+            console.log('get all is fulfilleding')
             const payload: any = action.payload
             const {name} = action.meta.arg
             state.page = payload.current_page,
@@ -65,8 +66,8 @@ export const dashboardTagsSlice = createSlice({
             state.data = payload.data
             state.loading = false
             state.filter = {name}
-            state.data = payload.data
-            state.loading = false
+            console.log('getAll fulfilled')
+
         })
 
         builder.addCase(getAll.pending, (state) => {

@@ -59,6 +59,7 @@ function Prices({ query }) {
                      }))
                     // Authentication was successful.
                       message.success(getAll("The_update_has"));
+                      router.push(`./description?id=${query.id}`)
                     
                   } catch (error: any) {
                     if (
@@ -224,7 +225,7 @@ function Prices({ query }) {
                                 className="label-block"
                                 htmlFor="input-duration"
                               >
-                                {getAll("Service_price")}
+                                {getAll("Delivery_terme")}
                               </label>
                               <div className="rel-form">
                                 <Field
