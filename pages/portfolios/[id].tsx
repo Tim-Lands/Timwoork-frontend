@@ -15,7 +15,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import DeleteConfirm from "@/components/Portfolio/DeleteConfirm";
-import PortfolioNav from "@/components/Portfolio/PortfolioNav";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 import router from "next/router";
@@ -68,7 +67,6 @@ function Index({ id }) {
         />
       )}
       <div className="portfolios-container">
-        <PortfolioNav />
         {project.loading && <Loading />}
         {project.id && !project.loading && (
           <div className="row">
@@ -251,7 +249,7 @@ function Index({ id }) {
                       </tr>
                       <tr>
                         <th>{getAll("Views")}</th>
-                        <td>8,368</td>
+                        <td>{project.viewers_count}</td>
                       </tr>
                       <tr>
                         <th>{getAll("Likes")}</th>

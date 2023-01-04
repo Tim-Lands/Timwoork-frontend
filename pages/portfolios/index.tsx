@@ -21,11 +21,13 @@ function Index() {
     portfolio: { all, project },
   } = useAppSelector((state) => state);
   useEffect(() => {
-    if (all.loaded) return;
     dispatch(
-      PortfolioActions.getUsersProjects({ current_page: all.current_page })
+      PortfolioActions.getUsersProjects({
+        current_page: all.current_page,
+        category_id: all.category_id,
+      })
     );
-  }, [all.loaded, all.current_page]);
+  }, [all.current_page, all.category_id]);
 
   return (
     <div className="container pt-4 mt-2">
@@ -50,7 +52,7 @@ function Index() {
                       author={portfolio.seller.profile.full_name}
                       level={portfolio.seller.profile.level.name}
                       avatar={portfolio.seller.profile.avatar_url}
-                      views={3563}
+                      views={portfolio.views}
                       isLiked={portfolio.is_liked}
                       fans_count={portfolio.fans_count}
                       likes={portfolio.seller.profile_id === meId}

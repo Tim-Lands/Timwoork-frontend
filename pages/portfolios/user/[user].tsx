@@ -98,7 +98,7 @@ function Index({
                     fans_count={portfolio.fans_count}
                     level={getAll("New_seller")}
                     avatar={`/avatar.png`}
-                    views={72868}
+                    views={portfolio.views}
                     user={true}
                     likes={isMe}
                     username={"me"}
