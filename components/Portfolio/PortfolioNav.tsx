@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FavoritesActions } from "@/store/favorites/favoritesAction";
+import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 import { useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -8,7 +9,9 @@ function PortfolioNav() {
   const {
     languages: { getAll },
     favorites,
+    portfolio: { all },
   } = useAppSelector((state) => state);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (favorites.loaded) return;
@@ -18,20 +21,52 @@ function PortfolioNav() {
     <nav className="portfolios-nav d-flex">
       <ul className="portfolios-nav-list me-auto">
         <li>
-          <button className="portfolio-item">
-            {getAll("Websites_design")}
+          <button
+            className={`portfolio-item now ${
+              all.category_id === 12 ? "active" : ""
+            }`}
+            onClick={() => {
+              dispatch(PortfolioActions.setCategory(12));
+            }}
+          >
+            {getAll("Buisiness")}
           </button>
         </li>
         <li>
-          <button className="portfolio-item">{getAll("Graphic_design")}</button>
-        </li>
-        <li>
-          <button className="portfolio-item">
-            {getAll("Audios_recording")}
+          <button
+            className={`portfolio-item now ${
+              all.category_id === 11 ? "active" : ""
+            }`}
+            onClick={() => {
+              dispatch(PortfolioActions.setCategory(1));
+            }}
+          >
+            {getAll("Programming_and_development")}
           </button>
         </li>
         <li>
-          <button className="portfolio-item">{getAll("Design")}</button>
+          <button
+            className={`portfolio-item now ${
+              all.category_id === 6 ? "active" : ""
+            }`}
+            onClick={() => {
+              dispatch(PortfolioActions.setCategory(6));
+            }}
+          >
+            {getAll("Audio")}
+          </button>
+        </li>
+        <li>
+          <button
+            className={`portfolio-item now ${
+              all.category_id === 7 ? "active" : ""
+            }`}
+            onClick={() => {
+              dispatch(PortfolioActions.setCategory(7));
+            }}
+          >
+            {getAll("General_design")}
+          </button>
         </li>
       </ul>
       <ul className="portfolios-nav-list ml-auto">

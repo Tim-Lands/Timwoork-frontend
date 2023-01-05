@@ -32,13 +32,14 @@ export interface PortfolioState {
           level: { name: string };
         };
       };
+      views: number;
     }>;
-    loaded: boolean;
     loading: boolean;
     per_page: number;
     current_page: number;
     last_page: number;
     total: number;
+    category_id: number;
   };
   user: {
     data: Array<{
@@ -49,6 +50,7 @@ export interface PortfolioState {
       fans_count: number;
       is_liked: boolean;
       seller: { id: number };
+      views: number;
     }>;
     loading: boolean;
     loaded: boolean;
@@ -74,6 +76,7 @@ export interface PortfolioState {
         level: { name: string };
       };
     };
+    viewers_count: number;
     portfolio_item_tags: Array<{ id: number; name: string }>;
     loading: boolean;
     loaded: boolean;
@@ -88,7 +91,7 @@ const initialState: PortfolioState = {
     total: null,
     per_page: 20,
     last_page: 1,
-    loaded: false,
+    category_id: null,
   },
   user: { data: [], loading: true, loaded: false },
   project: {
@@ -107,6 +110,7 @@ const initialState: PortfolioState = {
       bio: "",
       profile: { full_name: "", avatar_url: "", level: { name: "" } },
     },
+    viewers_count: 0,
     portfolio_item_tags: [],
     loading: true,
     loaded: false,
@@ -140,11 +144,20 @@ export const PortfolioSlice = createSlice({
     setPage: (state, action) => {
       state.all.current_page = action.payload;
     },
+    setCategory: (state, action) => {
+      if (state.all.category_id === action.payload) {
+        state.all.category_id = null;
+        return;
+      }
+      state.all.category_id = action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(getUsersProjects.fulfilled, (state, action) => {
-      state.all = action.payload;
-      state.all.loaded = true;
+      state.all.data = action.payload.data;
+      state.all.current_page = action.payload.current_page;
+      state.all.last_page = action.payload.last_page;
+      state.all.total = action.payload.total;
     });
     builder.addCase(
       getUserProjects.fulfilled,

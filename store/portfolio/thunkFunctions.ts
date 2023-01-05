@@ -3,9 +3,15 @@ import { ProjectsServices } from "@/services/projects";
 
 const getUsersProjects = createAsyncThunk(
   "portfolio/users/projects/get",
-  async (args: { current_page: number }, { rejectWithValue }) => {
+  async (
+    args: { current_page: number; category_id: number },
+    { rejectWithValue }
+  ) => {
     try {
-      const res = await ProjectsServices.getAllUsers(args.current_page);
+      const res = await ProjectsServices.getAllUsers(
+        args.current_page,
+        args.category_id
+      );
       return res;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -47,7 +53,7 @@ const addProject = createAsyncThunk(
         images: Array<any>;
         completed_date: any;
         url: any;
-        subcategory:number;
+        subcategory: number;
       };
     },
     { rejectWithValue, dispatch }
