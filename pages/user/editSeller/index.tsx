@@ -192,7 +192,6 @@ const EditSeller = () => {
         break;
     }
   };
-
   const formik = useFormik({
     initialValues: {
       bio: html,
@@ -206,8 +205,11 @@ const EditSeller = () => {
         if (subtitles["ar"]) values.bio = subtitles["ar"];
         if (subtitles["en"]) values.bio = subtitles["en"];
         if (subtitles["fr"]) values.bio = subtitles["fr"];
-        await dispatch(ProfileActions.updateProfileSeller(values)).unwrap();
-
+        if (fileList.length>0)
+          await dispatch(ProfileActions.updateProfileSeller({...values, cover:fileList[0].originFileObj})).unwrap();
+        else  
+          await dispatch(ProfileActions.updateProfileSeller(values)).unwrap();
+           
         message.success(getAll("The_update_has"));
         router.push("/user/profile/me");
       } catch (error: any) {
