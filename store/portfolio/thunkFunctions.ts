@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ProjectsServices } from "@/services/projects";
+import { SellersService } from "@/services/sellers";
 
 const getUsersProjects = createAsyncThunk(
   "portfolio/users/projects/get",
@@ -122,6 +123,17 @@ const toggleLikeBack = createAsyncThunk(
   }
 );
 
+const getTopSellers = createAsyncThunk('portfolio/topSellers',
+  async (args: {}, { rejectWithValue }) => {
+    try {
+      const res = await SellersService.getTopSellers()
+      return res?.data
+    }
+    catch (err: any) {
+      return rejectWithValue(err?.response?.data)
+    }
+  })
+
 export const PortfolioThunkFunctions = {
   getUsersProjects,
   getUserProjects,
@@ -130,4 +142,5 @@ export const PortfolioThunkFunctions = {
   deleteProject,
   getUserProject,
   toggleLikeBack,
+  getTopSellers
 };

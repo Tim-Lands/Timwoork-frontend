@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { PortfolioMatchers } from "./matchers";
 import { PortfolioThunkFunctions } from "./thunkFunctions";
-const { getUserProjects, getUserProject, getUsersProjects } =
+const { getUserProjects, getUserProject, getUsersProjects, getTopSellers } =
   PortfolioThunkFunctions;
 const {
   isUsersProjectsPending,
@@ -81,6 +81,26 @@ export interface PortfolioState {
     loading: boolean;
     loaded: boolean;
   };
+  topSellers: {
+    data: Array<{
+      id: number;
+      user_id:number;
+      portfolio: string;
+      bio: string;
+      portfolio_cover: string;
+      portfolio_cover_url: string;
+      first_name:string;
+      last_name:string;
+      full_name:string;
+      level_id:number;
+      level_name:string;
+      avatar_url:string;
+      views: number;
+
+    }>
+    loading: boolean
+
+  }
 }
 
 const initialState: PortfolioState = {
@@ -115,6 +135,10 @@ const initialState: PortfolioState = {
     loading: true,
     loaded: false,
   },
+  topSellers: {
+    data: [],
+    loading: false
+  }
 };
 
 export const PortfolioSlice = createSlice({
@@ -166,10 +190,25 @@ export const PortfolioSlice = createSlice({
         state.user.loaded = true;
       }
     );
+
     builder.addCase(getUserProject.fulfilled, (state, action) => {
       state.project = action.payload;
       state.project.loaded = true;
     });
+
+    builder.addCase(getTopSellers.fulfilled, (state, action) => {
+      state.topSellers.data = action.payload
+      state.topSellers.loading = false
+    })
+
+    builder.addCase(getTopSellers.pending, (state) => {
+      state.topSellers.loading = true
+    })
+
+    builder.addCase(getTopSellers.rejected, (state) => {
+      state.topSellers.loading = false
+    })
+
     builder.addMatcher(isUsersProjectsPending, (state, action) => {
       if (action.type.split("/")[0] !== "portfolio") return;
       state.all.loading = true;

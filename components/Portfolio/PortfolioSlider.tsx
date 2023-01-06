@@ -1,49 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PortfolioSlider from "@/components/Post/PortfolioSlider";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { PortfolioActions } from "@/store/portfolio/portfolioActions";
 
 function PortfolioSliders() {
-  const { getAll } = useAppSelector((state) => state.languages);
+  const { topSellers } = useAppSelector((state) => state.portfolio);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(PortfolioActions.getTopSellers({}));
+  }, []);
 
   return (
     <div className="portfolios-slider">
       <div className="row">
-        <div className="col-sm-6 col-xl-3 p-0 slider-inner">
-          <PortfolioSlider
-            thumbnail={`https://i.pinimg.com/736x/7e/90/4b/7e904beaf84643862390894801aa2895.jpg`}
-            author={`قويدر جلال`}
-            level={getAll("New_seller")}
-            username={`wjw`}
-            avatar={`/avatar3.jpg`}
-          />
-        </div>
-        <div className="col-sm-6 col-xl-3 p-0 slider-inner">
-          <PortfolioSlider
-            thumbnail={`https://lopamudracreative.com/wp-content/uploads/2018/08/black-birdie-thumb-image-1_o.jpg`}
-            author={`حياء الأمل`}
-            level={`بائع ممتاز`}
-            username={`wjw`}
-            avatar={`/avatar.png`}
-          />
-        </div>
-        <div className="col-sm-6 col-xl-3 p-0 slider-inner">
-          <PortfolioSlider
-            thumbnail={`https://plana.ae/uploads/1/2020-09/7_graphic_design.jpg`}
-            author={`أحمد يحيى`}
-            level={`بائع ممتاز`}
-            username={`wjw`}
-            avatar={`/avatar2.jpg`}
-          />
-        </div>
-        <div className="col-sm-6 col-xl-3 p-0 slider-inner">
-          <PortfolioSlider
-            thumbnail={`https://pbs.twimg.com/media/FWhCIAHXEAAEYzB?format=jpg&name=large`}
-            author={`عبد الحميد بومقواس`}
-            level={getAll("Professional_seller")}
-            username={`wjw`}
-            avatar={`/avatar3.jpg`}
-          />
-        </div>
+        {topSellers.data.map((seller) => (
+          <div key={seller.id} className="col-sm-6 col-xl-3 p-0 slider-inner">
+            <PortfolioSlider
+              thumbnail={seller.portfolio_cover_url||'/avatar.png '}
+              author={seller.full_name}
+              level={seller.level_name}
+              username={seller.user_id.toString()}
+              avatar={seller.avatar_url}
+            />
+          </div>
+        ))}
+  
       </div>
     </div>
   );
