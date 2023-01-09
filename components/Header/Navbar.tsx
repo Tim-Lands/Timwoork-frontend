@@ -3,6 +3,14 @@ import React, { useEffect, useState, useRef } from "react";
 import { useOutsideAlerter } from "../useOutsideAlerter";
 import { useOutSide } from "../useOutSide";
 import Community from "./Community";
+import { BiCartAlt } from "react-icons/bi";
+import { BsPersonPlus } from "react-icons/bs";
+import {
+  MdOutlineBackupTable,
+  MdPersonOutline,
+  MdKeyboardArrowDown,
+  MdLanguage,
+} from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Subnavbar from "./Subnavbar";
@@ -192,22 +200,16 @@ function Navbar({ dark = false, MoreNav = <></> }) {
         <ul className="app-new-nav nav">
           <li className="link-item" ref={communityBtn}>
             <a onClick={() => setShowCommunityMenu(!showCommunityMenu)}>
-              <span className="material-icons material-icons-outlined">
-                backup_table
-              </span>{" "}
+              <MdOutlineBackupTable className="material-icons" />
               {getAll("Timwoork_sections")}
-              <span className="material-icons material-icons-outlined expand-more">
-                expand_more
-              </span>
+              <MdKeyboardArrowDown className="material-icons" />
             </a>
             {showCommunityMenu && <Community refs={communityRef} />}
           </li>
           <li className="link-item">
             <Link href={"/products"}>
               <a>
-                <span className="material-icons material-icons-outlined">
-                  shopping_cart
-                </span>{" "}
+                <BiCartAlt className="material-icons" />
                 {getAll("Browsing_services")}
               </a>
             </Link>
@@ -324,9 +326,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                       style={{ fontWeight: "bold" }}
                       className="btn butt-xs butt-primary2 flex-center"
                     >
-                      <span className="material-icons material-icons-outlined">
-                        person_add
-                      </span>{" "}
+                      <BsPersonPlus className="material-icons" />
                       {getAll("Sign_up")}
                     </a>
                   </Link>
@@ -348,9 +348,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
                       }`}
                       // onClick={() => setIsShowLoginForm(true)}
                     >
-                      <span className="material-icons material-icons-outlined">
-                        person
-                      </span>{" "}
+                      <MdPersonOutline className="material-icons" />
                       {getAll("Log_in")}
                     </a>
                   </Link>
@@ -370,9 +368,7 @@ function Navbar({ dark = false, MoreNav = <></> }) {
               className="link-circular-button "
               onClick={() => setIsLanguageVisible(!isLanguageVisible)}
             >
-              <span className="material-icons material-icons-outlined">
-                language
-              </span>
+              <MdLanguage className="material-icons" />
             </a>
             {isLanguageVisible ? <LanguageMenu /> : <></>}
           </li>
