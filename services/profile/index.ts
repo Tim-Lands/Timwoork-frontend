@@ -23,8 +23,15 @@ async function getSeller() {
   const res = await API.get("api/new/me/profile_seller");
   return res.data;
 }
-async function updateSeller(data: { bio: string; portfolio: string }) {
-  const res = await API.post("api/sellers/detailsStore", data);
+async function updateSeller(data: { bio: string; portfolio: string; cover?: any; }) {
+  const { bio, portfolio, cover } = data
+  const formData = new FormData()
+  formData.append('bio', bio);
+  formData.append('portfolio', portfolio)
+  if (cover)
+    formData.append('cover', cover)
+
+  const res = await API.post("api/sellers/detailsStore", formData);
   return res.data.data;
 }
 async function getOne(id, lang?: string) {

@@ -50,7 +50,7 @@ const updateProfile = createAsyncThunk(
 const updateProfileSeller = createAsyncThunk(
   "profile/seller/data/update",
   async (
-    args: { bio: string; portfolio: string },
+    args: { bio: string; portfolio: string, cover?:any },
     { dispatch, rejectWithValue }
   ) => {
     try {

@@ -24,7 +24,7 @@ function PortfolioSlider({
           <div className="portfolio-user-avatar">
             <Image src={avatar} width={40} height={40} />
           </div>
-          <Link href={`/user/profile/${username}`}>
+          <Link href={`/portfolios/user/${username}`}>
             <a className="portfolio-user-body">
               <h3 className="title">{author}</h3>
               <p className="meta">{level}</p>
