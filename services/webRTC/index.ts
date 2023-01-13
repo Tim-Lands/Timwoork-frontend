@@ -13,8 +13,8 @@ export class WebRTCService {
                 this.stream = currentStream;
             });
         this.peer = new Peer({ initiator: false, trickle: false, stream: this.stream });
-        if (signal)
-            this.peer.signal(signal)
+        this.peer.signal(signal)
+        this.signal = signal
     }
 
     public static async Instance(signal?: any) {
@@ -35,6 +35,10 @@ export class WebRTCService {
 
     public onStream(callback: Function) {
        this.peer.on('stream',callback)
+    }
+
+    public getSignal(){
+        return this.signal
     }
 
 }
