@@ -24,7 +24,7 @@ function Footer() {
   } = useAppSelector((state) => state);
   useEffect(() => {
     if (!footer.loaded) dispatch(BlogActions.getFooterData({ per_page: 5 }));
-  }, [footer]);
+  }, [footer.data]);
   const [isLanguageVisible, setIsLanguageVisible] = useState(false);
   const { getAll } = useAppSelector((state) => state.languages);
 
