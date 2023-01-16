@@ -4,7 +4,7 @@ import Peer from 'simple-peer';
 const Video = () => {
     const socket = io('http://localhost:5000');
     const [callAccepted, setCallAccepted] = useState(false);
-    const [callEnded, setCallEnded] = useState(false);
+    // const [callEnded, setCallEnded] = useState(false);
     const [stream, setStream] = useState();
     const [name, setName] = useState('');
     const [call, setCall] = useState({});
@@ -15,7 +15,7 @@ const Video = () => {
     const userVideo = useRef();
     const connectionRef = useRef();
 
-    console.log(me)
+    console.log(callAccepted)
 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -73,13 +73,13 @@ const Video = () => {
         setCallAccepted(true);
         connectionRef.current.signal(signal);
     });
-    const leaveCall = () => {
+    /* const leaveCall = () => {
         setCallEnded(true);
 
         connectionRef.current.destroy();
 
         window.location.reload();
-    };
+    }; */
 
     return (
         <>
