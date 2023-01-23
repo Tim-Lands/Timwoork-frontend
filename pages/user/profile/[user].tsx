@@ -291,7 +291,7 @@ function Profile({
                 )}
               </div>
               {isMe && profile_seller.data.id && <MyProducts />}
-              {!isMe && (
+              {!isMe && profile_seller&&(
                 <>
                   <div
                     className="posts-aside-header"
@@ -307,36 +307,36 @@ function Profile({
                       {getAll("Services")}
                     </h1>
                   </div>
-                  <div className="posts-aside-body ">
-                    <div className="row">
-                      {profile_seller.products.map((e: any) => {
-                        return (
-                          <div key={e.id} className={"col-sm-6 col-lg-4"}>
-                            <PostInner
-                              className="mb-3"
-                              avatar={user.profile.avatar_path}
-                              size="small"
-                              title={e.title}
-                              author={
-                                user.profile &&
-                                user.profile.first_name +
-                                  " " +
-                                  user.profile.last_name
-                              }
-                              rate={e.ratings_avg_rating}
-                              username={
-                                user.profile.profile_seller && user.username
-                              }
-                              price={e.price}
-                              slug={e.id}
-                              thumbnail={e.full_path_thumbnail}
-                              buyers={e.count_buying}
-                            />
-                          </div>
-                        );
-                      })}
+                    <div className="posts-aside-body ">
+                      <div className="row">
+                        {profile_seller.products.map((e: any) => {
+                          return (
+                            <div key={e.id} className={"col-sm-6 col-lg-4"}>
+                              <PostInner
+                                className="mb-3"
+                                avatar={user.profile.avatar_path}
+                                size="small"
+                                title={e.title}
+                                author={
+                                  user.profile &&
+                                  user.profile.first_name +
+                                    " " +
+                                    user.profile.last_name
+                                }
+                                rate={e.ratings_avg_rating}
+                                username={
+                                  user.profile.profile_seller && user.username
+                                }
+                                price={e.price}
+                                slug={e.id}
+                                thumbnail={e.full_path_thumbnail}
+                                buyers={e.count_buying}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
                 </>
               )}
             </div>
