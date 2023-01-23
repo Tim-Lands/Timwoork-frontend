@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {  useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import mediasoupClient, { Device } from 'mediasoup-client'
+import  { Device } from 'mediasoup-client'
 const Video = () => {
     const localVideo = useRef()
     const videoContainer = useRef()
@@ -36,8 +36,6 @@ const Video = () => {
     let consumerTransports = []
     let audioProducer
     let videoProducer
-    let consumer
-    let isProducer = false
 
     // https://mediasoup.org/documentation/v3/mediasoup-client/api/#ProducerOptions
     // https://mediasoup.org/documentation/v3/mediasoup-client/api/#transport-produce
@@ -311,6 +309,7 @@ const Video = () => {
             console.log(`Consumer Params ${params}`)
             // then consume with the local consumer transport
             // which creates a consumer
+            console.log(params)
             const consumer = await consumerTransport.consume({
                 id: params.id,
                 producerId: params.producerId,

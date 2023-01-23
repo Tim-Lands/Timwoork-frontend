@@ -55,7 +55,7 @@ export class WebRTCService {
 
     }
 
-
+/* 
 
     private constructor(signal: any) {
 
@@ -66,6 +66,6 @@ export class WebRTCService {
 
         return this.instance;
     }
-
+ */
 
 }
