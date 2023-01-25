@@ -45,7 +45,6 @@ const properties = {
 };
 function Single({ id }) {
   const [ProductData, setProductData]: any = useState({});
-
   const dispatch = useAppDispatch();
   const {
     user,
@@ -329,8 +328,14 @@ function Single({ id }) {
         <MetaTags
           title={ProductData.title}
           keywords={ProductData.product_tag}
-          metaDescription={ProductData.content}
-          ogDescription={ProductData.content}
+          metaDescription={ProductData.content.replace(
+            /(&nbsp;|<([^>]+)>)/gi,
+            ""
+          )}
+          ogDescription={ProductData.content.replace(
+            /(&nbsp;|<([^>]+)>)/gi,
+            ""
+          )}
           ogImage={ProductData.full_path_thumbnail}
           ogUrl={`https://timwoork.com/p/${ProductData.id}`}
         />
