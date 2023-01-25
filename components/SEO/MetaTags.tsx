@@ -20,7 +20,7 @@ export function MetaTags({
   ogImage,
   ogUrl,
 }): ReactElement {
-  const { getAll } = useAppSelector((state) => state.languages);
+  const { getAll, language } = useAppSelector((state) => state.languages);
 
   return (
     <>
@@ -29,8 +29,8 @@ export function MetaTags({
         <meta property="og:type" content="website" />
         <meta property="og:title" content={title} key="title" />
         <meta property="og:site_name" content={getAll("Timwoork_website")} />
-        <meta property="og:locale" content="ar" />
-        <meta property="og:locale:alternate" content="ar" />
+        <meta property="og:locale" content={language} />
+        <meta property="og:locale:alternate" content={language} />
         <meta property="og:description" content={ogDescription} />
         {keywords && (
           <meta
