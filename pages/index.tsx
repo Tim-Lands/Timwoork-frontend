@@ -69,7 +69,7 @@ function index() {
           property="og:description"
           content={getAll("Timwoork’s_website")}
         />
-        <meta property="og:url" content="https://timwoork.com/" />
+        <meta property="og:url" content="https://timwoorsk.com/" />
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>
