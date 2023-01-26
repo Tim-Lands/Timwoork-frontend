@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from "@/components/Layout/HomeLayout";
 import Comments from "../../components/Comments";
-
+import { NextSeo } from "next-seo";
 import { ReactElement, useState, useEffect } from "react";
 import Loading from "components/Loading";
 import { Slide } from "react-slideshow-image";
@@ -18,7 +18,7 @@ import {
   Typography,
   Popover,
 } from "antd";
-import { MetaTags } from "@/components/SEO/MetaTags";
+// import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import router from "next/router";
 import { ProductService } from "@/services/product";
@@ -45,7 +45,6 @@ const properties = {
 };
 function Single({ id }) {
   const [ProductData, setProductData]: any = useState({});
-
   const dispatch = useAppDispatch();
   const {
     user,
@@ -326,14 +325,43 @@ function Single({ id }) {
   else
     return (
       <>
-        <MetaTags
+        {/* <MetaTags
           title={ProductData.title}
           keywords={ProductData.product_tag}
-          metaDescription={ProductData.content}
-          ogDescription={ProductData.content}
+          metaDescription={ProductData.content.replace(
+            /(&nbsp;|<([^>]+)>)/gi,
+            ""
+          )}
+          ogDescription={ProductData.content.replace(
+            /(&nbsp;|<([^>]+)>)/gi,
+            ""
+          )}
           ogImage={ProductData.full_path_thumbnail}
           ogUrl={`https://timwoork.com/p/${ProductData.id}`}
+        /> */}
+        <NextSeo
+          title={ProductData.title}
+          description={ProductData.content.replace(/(&nbsp;|<([^>]+)>)/gi, "")}
+          openGraph={{
+            url: `https://timwoork.com/p/${ProductData.id}`,
+            title: ProductData.title,
+            description: ProductData.content.replace(
+              /(&nbsp;|<([^>]+)>)/gi,
+              ""
+            ),
+            images: [
+              {
+                url: ProductData.full_path_thumbnail,
+              },
+            ],
+          }}
+          twitter={{
+            handle: "@timwoorkDotCom",
+            site: "@timwoorkDotCom",
+            cardType: "summary_large_image",
+          }}
         />
+
         {ProductData && (
           <div className="timwoork-single">
             <Modal
