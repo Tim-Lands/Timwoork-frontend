@@ -1,6 +1,6 @@
 import { NextSeo } from "next-seo";
-import Layout from "../components/Layout/HomeLayout";
-import { ReactElement } from "react";
+/* import Layout from "../components/Layout/HomeLayout";
+import { ReactElement } from "react"; */
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
 
@@ -103,7 +103,7 @@ function Privacy() {
     </>
   );
 }
-Privacy.getLayout = function getLayout(page: any): ReactElement {
+/* Privacy.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
-};
+}; */
 export default Privacy;
