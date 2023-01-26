@@ -55,7 +55,7 @@ function index() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@timwoorkDotCom" />
         <meta name="twitter:creator" content="@timwoorkDotCom" />
-        <meta property="og:site_name" content={'tssst'} />
+        <meta property="og:site_name" content={getAll("Timwoork_website")} />
         <meta property="og:locale" content="ar" />
         <meta property="og:locale:alternate" content="ar" />
         <meta property="og:type" content="website" />
@@ -69,7 +69,7 @@ function index() {
           property="og:description"
           content={getAll("Timwoork’s_website")}
         />
-        <meta property="og:url" content="https://timwoorsk.com/" />
+        <meta property="og:url" content="https://timwoork.com/" />
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
       </Head>

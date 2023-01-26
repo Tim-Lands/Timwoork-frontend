@@ -1,51 +1,10 @@
-import { NextSeo } from "next-seo";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 export default class CustomDocument extends Document {
   render() {
     return (
       <Html lang="ar">
         <Head>
-          <NextSeo
-            title="Your Title"
-            description="This is a demo description"
-            canonical="https://www.google.com"
-            openGraph={{
-              url: "https://www.example.com",
-              title: "Open Graph Title",
-              description: "Open Graph Description",
-              images: [
-                {
-                  url: "https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/play_10_year-keyword_asset-.png",
-                  width: 800,
-                  height: 600,
-                  alt: "Og Image Alt",
-                  type: "image/jpeg",
-                },
-                {
-                  url: "https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/play_10_year-keyword_asset-.png",
-
-                  width: 900,
-                  height: 800,
-                  alt: "Og Image Alt Second",
-                  type: "image/jpeg",
-                },
-                {
-                  url: "https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/play_10_year-keyword_asset-.png",
-                },
-                {
-                  url: "https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/play_10_year-keyword_asset-.png",
-                },
-              ],
-              site_name: "YourSiteName",
-            }}
-            twitter={{
-              handle: "@handle",
-              site: "@site",
-              cardType: "summary_large_image",
-            }}
-          />
           {/* <title>تيموورك</title> */}
-          <meta name="discription" content="sharaf eldeeen"/>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
