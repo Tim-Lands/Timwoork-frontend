@@ -1,3 +1,4 @@
+import { NextSeo } from "next-seo";
 import Layout from "../components/Layout/HomeLayout";
 import { ReactElement } from "react";
 import { MetaTags } from "@/components/SEO/MetaTags";
@@ -8,6 +9,40 @@ function Privacy() {
 
   return (
     <div className="py-4">
+      <NextSeo
+        title="Your Title"
+        description="This is a demo description"
+        canonical="https://www.example.com"
+        openGraph={{
+          url: "https://www.example.com",
+          title: "Open Graph Title",
+          description: "Open Graph Description",
+          images: [
+            {
+              url: "https://www.example.com/og-image01.jpg",
+              width: 800,
+              height: 600,
+              alt: "Og Image Alt",
+              type: "image/jpeg",
+            },
+            {
+              url: "https://www.example.com/og-image02.jpg",
+              width: 900,
+              height: 800,
+              alt: "Og Image Alt Second",
+              type: "image/jpeg",
+            },
+            { url: "https://www.example.com/og-image03.jpg" },
+            { url: "https://www.example.com/og-image04.jpg" },
+          ],
+          site_name: "YourSiteName",
+        }}
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+      />
       <MetaTags
         title={getAll("Privacy_policy")}
         metaDescription={getAll("Arabic_text_you")}
