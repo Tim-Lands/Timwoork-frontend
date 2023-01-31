@@ -9,7 +9,7 @@ function Privacy() {
 
   return (
     <div className="py-4">
-      <NextSeo
+      {/* <NextSeo
         title="Your Title"
         description="This is a demo description"
         canonical="https://www.example.com"
@@ -42,7 +42,7 @@ function Privacy() {
           site: "@site",
           cardType: "summary_large_image",
         }}
-      />
+      /> */}
       <MetaTags
         title={"سياسة الخصوصية"}
         metaDescription={
