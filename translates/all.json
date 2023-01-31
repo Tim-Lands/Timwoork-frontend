@@ -656,6 +656,11 @@
     "fr": "Publier le service",
     "ar": " نشر الخدمة"
   },
+  "Tutorial": {
+    "en": "Tutorial",
+    "fr": "Didacticiel",
+    "ar": "دورة تعليمية"
+  },
   "Service_title": {
     "en": "Service title",
     "fr": "Titre du service",
@@ -1967,7 +1972,7 @@
     "fr": "L’administration du site s’engage dans les limites autorisées conformément à la loi, à ne divulguer aucune information personnelle sur l’utilisateur telle que l’adresse, le numéro de téléphone, l’adresse électronique, etc. En outre, aucune de ces informations ne sera échangée, transmise ou vendue à une autre partie tant qu’elle est dans les limites des capacités de gestion possibles du site, et seules les personnes qualifiées et professionnelles qui supervisent le site Web et l’équipe de travail seront autorisées à accéder à l’information.",
     "ar": " تلتزم إدارة الموقع في حدود المسموح لها وفق القانون المنظم، بعدم كشف أي معلومات شخصية عن المستخدم مثل العنوان أو رقم الهاتف أو عنوان البريد الإلكتروني وغيرها. علاوة على ذلك، لن يتم تبادل، أو تداول أي من تلك المعلومات أو بيعها لأي طرف آخر طالما كان ذلك في حدود قدرات إدارة الموقع الممكنة، ولن يُسمح بالوصول إلى المعلومات إلا للأشخاص المؤهلين والمحترفين الذين يشرفون على موقع تيم ورك الإلكتروني."
   },
-  "Disclaimer_of_legal ": {
+  "Disclaimer_of_legal": {
     "en": "Disclaimer of legal responsibility",
     "fr": "Absence de responsabilité légale",
     "ar": "انتقاء المسؤولية القانونية"
