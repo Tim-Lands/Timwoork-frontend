@@ -9,7 +9,7 @@ function Privacy() {
 
   return (
     <div className="py-4">
-      <NextSeo
+      {/* <NextSeo
         title="Your Title"
         description="This is a demo description"
         canonical="https://www.example.com"
@@ -42,11 +42,15 @@ function Privacy() {
           site: "@site",
           cardType: "summary_large_image",
         }}
-      />
+      /> */}
       <MetaTags
-        title={getAll("Privacy_policy")}
-        metaDescription={getAll("Arabic_text_you")}
-        ogDescription={getAll("Arabic_text_you")}
+        title={"سياسة الخصوصية"}
+        metaDescription={
+          "يهدف بيان الخصوصية إلى مساعدتك على فهم ماهية المعلومات التي نجمعها وكيفية استخدامها في موقع تيم ورك, أكبر منصة للعمل الحر في العالم العربي."
+        }
+        ogDescription={
+          "يهدف بيان الخصوصية إلى مساعدتك على فهم ماهية المعلومات التي نجمعها وكيفية استخدامها في موقع تيم ورك, أكبر منصة للعمل الحر في العالم العربي."
+        }
       />
       <div className="container my-3">
         <div className="bg-white p-2 px-4">
