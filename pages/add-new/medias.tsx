@@ -135,10 +135,9 @@ function Medias({ query }) {
 
       return;
     }
-
+    console.log(featuredMedia)
     if (
-      !(featuredMedia instanceof Array) &&
-      featuredMedia.split("/")[5].length <= 0
+      !(featuredMedia instanceof Array) && featuredMedia.split("/")[5].length <= 0
     ) {
       notification.open({
         message: getAll("An_error_occurred"),
