@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import { ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import InnerApp from "../components/_innerApp";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
@@ -27,6 +28,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
   return (
     <div>
+      <Head>
+        <title>{"موقع تيم ورك "}</title>
+        <meta name="description" content={"موقع تيم ورك العالمي للعمل الحر"} />
+        <meta property="og:title" content={"تيم ورك"} />
+        <meta property="og:url" content={"/1.png"} />
+      </Head>
       <Provider store={store}>
         <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
       </Provider>
