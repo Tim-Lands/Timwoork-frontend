@@ -102,8 +102,8 @@ function Prices({ query }) {
   };
 
   const handleSubmit = async () => {
-    const values = ref.current.values
-    console.log(ref.current.values)
+    const values = ref.current.values;
+    console.log(ref.current.values);
     setValidationsErrors({});
     try {
       values.developments.forEach((val, indx) => {
@@ -137,7 +137,7 @@ function Prices({ query }) {
         setValidationsErrors(error.errors);
       }
     }
-  }
+  };
   return (
     <>
       <MetaTags
@@ -281,19 +281,20 @@ function Prices({ query }) {
                                   {getAll("Choose_a_suitable")}
                                 </p>
                               </motion.div>
-                              {validationsErrors && validationsErrors.duration && (
-                                <div style={{ overflow: "hidden" }}>
-                                  <motion.div
-                                    initial={{ y: -70, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    className="timlands-form-note form-note-error"
-                                  >
-                                    <p className="text">
-                                      {validationsErrors.duration[0]}
-                                    </p>
-                                  </motion.div>
-                                </div>
-                              )}
+                              {validationsErrors &&
+                                validationsErrors.duration && (
+                                  <div style={{ overflow: "hidden" }}>
+                                    <motion.div
+                                      initial={{ y: -70, opacity: 0 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      className="timlands-form-note form-note-error"
+                                    >
+                                      <p className="text">
+                                        {validationsErrors.duration[0]}
+                                      </p>
+                                    </motion.div>
+                                  </div>
+                                )}
                             </div>
                           </div>
                           <div className="col-md-12">
@@ -598,7 +599,11 @@ function Prices({ query }) {
                           </div>
                           <div className="col-md-12">
                             <div className="py-4 d-flex">
-                              <NavigationButtons onNextClick={handleSubmit} nextTitle={getAll('Next_step')} backTitle={getAll('Previous_step')}/>
+                              <NavigationButtons
+                                onNextClick={handleSubmit}
+                                nextTitle={getAll("Next_step")}
+                                backTitle={getAll("Previous_step")}
+                              />
                             </div>
                           </div>
                         </div>

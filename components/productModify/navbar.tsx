@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useRef } from "react";
 import router from "next/router";
+import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 function Navbar({
   active,
   navigate,
@@ -21,6 +22,7 @@ function Navbar({
 }): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const general = useRef(null);
+  const tutorial = useRef(null);
   const price = useRef(null);
   const description = useRef(null);
   const gallery = useRef(null);
@@ -29,6 +31,9 @@ function Navbar({
     switch (active) {
       case "general":
         general.current.scrollIntoView();
+        return;
+      case "tutorial":
+        tutorial.current.scrollIntoView();
         return;
       case "price":
         price.current.scrollIntoView();
@@ -46,7 +51,7 @@ function Navbar({
   }, [active]);
   return (
     <div className="timlands-steps-cont">
-      <div className="timlands-steps">
+      <div className={`timlands-steps ${!navigate ? "navigate" : ""}`}>
         <div
           className={`timlands-step-item ${
             active === "general" ? "active" : ""
@@ -64,6 +69,22 @@ function Navbar({
             </span>
             {getAll("General_information")}
           </h4>
+        </div>
+        <div
+          className={`timlands-step-item ${
+            active === "tutorial" ? "active" : ""
+          } `}
+          ref={tutorial}
+          onClick={() => {
+            if (navigate) router.push(`/${url}/tutorial?id=${id}`);
+          }}
+        >
+          <h3 className="text">
+            <span className="icon-circular">
+              <AiOutlineVideoCameraAdd className="material-icons" />
+            </span>
+            {getAll("Tutorial")}
+          </h3>
         </div>
         <div
           className={`timlands-step-item ${
