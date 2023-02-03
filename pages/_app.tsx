@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content={"https://timwoork.com/1.png"}
           key="image"
         />
-        <meta property="og:url" content={"https://timwoork.com/1.png"} />
+        <meta property="og:url" content={"https://timwoork.com/"} />
       </Head>
 
       <Provider store={store}>
