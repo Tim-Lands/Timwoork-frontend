@@ -3,7 +3,7 @@
 import { ReactElement } from "react"; */
 import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
-
+//test
 function Privacy() {
   const { getAll } = useAppSelector((state) => state.languages);
 
