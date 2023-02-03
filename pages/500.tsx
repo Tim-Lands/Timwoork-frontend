@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Head from "next/head";
+// import Head from "next/head";
 import { useAppSelector } from "@/store/hooks";
 
 function FourOFour() {
@@ -7,9 +7,9 @@ function FourOFour() {
 
   return (
     <div className="timwoork-404-page">
-      <Head>
+      {/* <Head>
         <title> {getAll("An_interne_error")}</title>
-      </Head>
+      </Head> */}
       <div className="timwoork-404-page-inner">
         <div className="not-found-image">
           <img src="/undraw_Waiting__for_you_ldha.svg" alt="" />

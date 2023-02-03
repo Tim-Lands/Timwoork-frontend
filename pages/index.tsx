@@ -3,7 +3,7 @@ import { PRIMARY } from "../styles/variables";
 import PostsAside from "@/components/PostsAside";
 import Hero from "@/components/Header/Hero";
 import VideoAside from "@/components/VideoSection/VideoAside";
-import Head from "next/head";
+// import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import router from "next/router";
@@ -50,7 +50,7 @@ function index() {
   );
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{getAll("Timwoork_l_For")}</title>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@timwoorkDotCom" />
@@ -72,7 +72,7 @@ function index() {
         <meta property="og:url" content="https://timwoork.com/" />
         <meta property="og:image" content="/seo.png" />
         <meta name="twitter:image:src" content="/seo.png" />
-      </Head>
+      </Head> */}
       <Hero />
       <VideoAside />
 
