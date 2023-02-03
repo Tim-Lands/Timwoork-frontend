@@ -29,15 +29,41 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <div>
       <Head>
-        <title>{"موقع تيم ورك "}</title>
-        <meta name="description" content={"موقع تيم ورك العالمي للعمل الحر"} />
-        <meta property="og:title" content={"تيم ورك"} />
+        <meta
+          name="description"
+          content={"موقع تيم ورك العالمي للعمل الحر"}
+          key="description"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={"موقع تيم ورك "} key="title" />
+        <meta property="og:site_name" content={"موقع تيم ورك"} />
+        <meta property="og:locale" content={"ar"} />
+        <meta property="og:locale:alternate" content={"ar"} />
         <meta
           property="og:description"
           content={"موقع تيم ورك العالمي للعمل الحر"}
         />
+
+        {/* Twitter cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@timwoorkDotCom" />
+        <meta name="twitter:creator" content="@timwoorkDotCom" />
+        <meta name="twitter:title" content={"موقع تيم ورك "} />
+        <meta
+          name="twitter:description"
+          content={"موقع تيم ورك العالمي للعمل الحر"}
+        />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <title>{"موقع تيم ورك "}</title>
+        <meta
+          property="og:image"
+          content={"https://timwoork.com/1.png"}
+          key="image"
+        />
         <meta property="og:url" content={"https://timwoork.com/1.png"} />
       </Head>
+
       <Provider store={store}>
         <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
       </Provider>
