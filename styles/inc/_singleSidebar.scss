@@ -284,21 +284,6 @@
             .form-check-label {
               margin-top: 2px;
             }
-
-            .form-check-input {
-              width: 1.14em;
-              height: 1.14em;
-
-              &:focus {
-                border-color: lighten($primary, 8);
-                outline: 0;
-              }
-
-              &:checked {
-                background-color: $primary;
-                border-color: $primary;
-              }
-            }
           }
 
           .devloppers-price {
@@ -710,5 +695,16 @@
         }
       }
     }
+  }
+}
+.form-check-input {
+  &:focus {
+    border-color: lighten($primary, 8);
+    outline: 0;
+  }
+
+  &:checked {
+    background-color: $primary;
+    border-color: $primary;
   }
 }

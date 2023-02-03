@@ -4,23 +4,19 @@
 
   .timlands-steps-cont {
     overflow-x: scroll;
-    scrollbar-color: transparent transparent;
+    scrollbar-color: #cbd1d8 transparent;
     scrollbar-width: thin;
     -ms-overflow-style: scroll;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     &::-webkit-scrollbar {
-      height: 10px;
-    }
-
-    &:hover {
-      scrollbar-color: #cbd1d8 transparent;
+      height: 6px;
     }
 
     &::-webkit-scrollbar-thumb {
       border-radius: 5px;
-      height: 13px;
-      background-color: transparent;
+      height: 6px;
+      background-color: #cbd1d8;
       transition: all 0.1s linear;
     }
 
@@ -32,14 +28,16 @@
   }
 
   .timlands-steps {
-    border-bottom: 1px solid lighten($primary, 54);
+    // border-bottom: 1px solid lighten($primary, 54);
     border-radius: 6px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
     margin: 12px 0;
     flex: none;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    margin-bottom: 3px !important;
+
     @media (max-width: 1235px) {
       width: 800px;
     }
@@ -48,8 +46,10 @@
       padding: 10px 11px;
       position: relative;
       display: flex;
-      flex-wrap: wrap;
+      cursor: pointer;
+      flex-wrap: nowrap;
       .title {
+        z-index: 1;
         font-size: 14px;
         font-weight: 300;
         margin: 0;
@@ -62,13 +62,14 @@
       .text {
         font-size: 12px;
         opacity: 0.5;
+        z-index: 1;
         color: #222;
         display: flex;
         align-content: center;
         align-items: center;
         font-weight: 200;
         margin: 0;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         a {
           font-size: 12px;
           opacity: 0.5;
@@ -78,7 +79,7 @@
           align-items: center;
           font-weight: 200;
           margin: 0;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
 
           &:hover {
             color: #000;
@@ -102,36 +103,42 @@
           background-color: #f2f2f2;
         }
       }
-
       &::after {
         content: "";
-        bottom: 0;
-        height: 2px;
-        background-color: $primary;
         position: absolute;
+        inset: 5px 8px;
+        z-index: 0;
       }
 
       &.active {
+        cursor: pointer !important;
         .title,
         .text {
           opacity: 1;
+          color: white;
           font-weight: bold;
 
           a {
+            color: white;
             opacity: 1;
             font-weight: bold;
           }
 
           .icon-circular {
+            color: black;
             background-color: $primary2;
           }
         }
-
         &::after {
-          left: 0;
-          right: 0;
           background-color: $primary;
+
+          border-radius: 3px;
         }
+      }
+    }
+    &.navigate {
+      .timlands-step-item {
+        cursor: not-allowed;
       }
     }
   }

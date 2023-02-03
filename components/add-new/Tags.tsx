@@ -39,7 +39,7 @@ function Tags({
     return (
       <div
         className="select-tags-form"
-        style={{ margin: "1rem 0", position: "relative", maxWidth: 1300 }}
+        style={{ marginTop: "1rem", position: "relative", maxWidth: 1300 }}
       >
         {isLoadingTags && (
           <span

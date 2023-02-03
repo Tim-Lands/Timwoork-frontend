@@ -90,6 +90,7 @@ function Overview({ query }) {
       content: "ejrferjgh erfkerh whgferg",
       title: "",
       subcategory: null,
+      is_tutorial: false,
       tags: [],
     },
     isInitialValid: true,
@@ -112,12 +113,21 @@ function Overview({ query }) {
           })
         ).unwrap();
         message.success(getAll("The_update_has"));
-        router.push({
-          pathname: "/add-new/prices",
-          query: {
-            id: id, // pass the id
-          },
-        });
+        if (formik.values.is_tutorial) {
+          router.push({
+            pathname: "/add-new/tutorial",
+            query: {
+              id: id, // pass the id
+            },
+          });
+        } else {
+          router.push({
+            pathname: "/add-new/prices",
+            query: {
+              id: id, // pass the id
+            },
+          });
+        }
       } catch (error: any) {
         if (error.errors) {
           setValidationsErrors(error.errors);
@@ -332,7 +342,22 @@ function Overview({ query }) {
                         onBlur={formik.setFieldTouched}
                         validationsErrors={validationsErrors}
                       />
-
+                      <div className="col-12">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          name="is_tutorial"
+                          onChange={formik.handleChange}
+                          id="tutorial"
+                          checked={formik.values.is_tutorial}
+                        />
+                        <label
+                          className="form-check-label mx-2"
+                          htmlFor="tutorial"
+                        >
+                          {getAll("Tutorial")}
+                        </label>
+                      </div>
                       <div className="col-md-12">
                         <div className="py-4 d-flex">
                           <span className="me-auto"></span>

@@ -4158,18 +4158,6 @@
 .single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-label {
   margin-top: 2px;
 }
-.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input {
-  width: 1.14em;
-  height: 1.14em;
-}
-.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:focus {
-  border-color: #566f9a;
-  outline: 0;
-}
-.single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .form-check .form-check-input:checked {
-  background-color: #475c80;
-  border-color: #475c80;
-}
 .single-sidebar .single-panel-aside .panel-aside-body .add-devloppers-nav .devloppers-item .devloppers-price .price-number {
   font-weight: bold;
   margin: 0;
@@ -4430,28 +4418,34 @@
   margin-right: 7px;
 }
 
+.form-check-input:focus {
+  border-color: #566f9a;
+  outline: 0;
+}
+.form-check-input:checked {
+  background-color: #475c80;
+  border-color: #475c80;
+}
+
 .timlands-panel {
   background-color: #fff;
   padding: 20px;
 }
 .timlands-panel .timlands-steps-cont {
   overflow-x: scroll;
-  scrollbar-color: transparent transparent;
+  scrollbar-color: #cbd1d8 transparent;
   scrollbar-width: thin;
   -ms-overflow-style: scroll;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .timlands-panel .timlands-steps-cont::-webkit-scrollbar {
-  height: 10px;
-}
-.timlands-panel .timlands-steps-cont:hover {
-  scrollbar-color: #cbd1d8 transparent;
+  height: 6px;
 }
 .timlands-panel .timlands-steps-cont::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  height: 13px;
-  background-color: transparent;
+  height: 6px;
+  background-color: #cbd1d8;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
@@ -4462,14 +4456,14 @@
   background-color: #cbd1d8;
 }
 .timlands-panel .timlands-steps {
-  border-bottom: 1px solid #e8ecf2;
   border-radius: 6px;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   margin: 12px 0;
   flex: none;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  margin-bottom: 3px !important;
 }
 @media (max-width: 1235px) {
   .timlands-panel .timlands-steps {
@@ -4480,9 +4474,11 @@
   padding: 10px 11px;
   position: relative;
   display: flex;
-  flex-wrap: wrap;
+  cursor: pointer;
+  flex-wrap: nowrap;
 }
 .timlands-panel .timlands-steps .timlands-step-item .title {
+  z-index: 1;
   font-size: 14px;
   font-weight: 300;
   margin: 0;
@@ -4494,13 +4490,14 @@
 .timlands-panel .timlands-steps .timlands-step-item .text {
   font-size: 12px;
   opacity: 0.5;
+  z-index: 1;
   color: #222;
   display: flex;
   align-content: center;
   align-items: center;
   font-weight: 200;
   margin: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .timlands-panel .timlands-steps .timlands-step-item .text a {
   font-size: 12px;
@@ -4511,7 +4508,7 @@
   align-items: center;
   font-weight: 200;
   margin: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .timlands-panel .timlands-steps .timlands-step-item .text a:hover {
   color: #000;
@@ -4533,29 +4530,36 @@
 }
 .timlands-panel .timlands-steps .timlands-step-item::after {
   content: "";
-  bottom: 0;
-  height: 2px;
-  background-color: #475c80;
   position: absolute;
+  inset: 5px 8px;
+  z-index: 0;
+}
+.timlands-panel .timlands-steps .timlands-step-item.active {
+  cursor: pointer !important;
 }
 .timlands-panel .timlands-steps .timlands-step-item.active .title,
 .timlands-panel .timlands-steps .timlands-step-item.active .text {
   opacity: 1;
+  color: white;
   font-weight: bold;
 }
 .timlands-panel .timlands-steps .timlands-step-item.active .title a,
 .timlands-panel .timlands-steps .timlands-step-item.active .text a {
+  color: white;
   opacity: 1;
   font-weight: bold;
 }
 .timlands-panel .timlands-steps .timlands-step-item.active .title .icon-circular,
 .timlands-panel .timlands-steps .timlands-step-item.active .text .icon-circular {
+  color: black;
   background-color: #ffd000;
 }
 .timlands-panel .timlands-steps .timlands-step-item.active::after {
-  left: 0;
-  right: 0;
   background-color: #475c80;
+  border-radius: 3px;
+}
+.timlands-panel .timlands-steps.navigate .timlands-step-item {
+  cursor: not-allowed;
 }
 .timlands-panel.is-loader {
   position: relative;
