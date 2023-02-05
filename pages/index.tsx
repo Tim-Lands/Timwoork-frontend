@@ -2,14 +2,14 @@ import { Menu, Dropdown, Button } from "antd";
 import { PRIMARY } from "../styles/variables";
 import PostsAside from "@/components/PostsAside";
 import Hero from "@/components/Header/Hero";
+import cookies from "next-cookies";
 import VideoAside from "@/components/VideoSection/VideoAside";
-// import Head from "next/head";
 import { ReactElement, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import router from "next/router";
 import Categories from "@/components/Categories";
 import LayoutHome from "@/components/Layout/indexLayout";
-
+import getTranslatedMeta from "utils/translatedMeta";
 import { ProductsActions } from "@/store/products/productActions";
 function index() {
   const dispatch = useAppDispatch();
@@ -50,29 +50,6 @@ function index() {
   );
   return (
     <>
-      {/* <Head>
-        <title>{getAll("Timwoork_l_For")}</title>
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@timwoorkDotCom" />
-        <meta name="twitter:creator" content="@timwoorkDotCom" />
-        <meta property="og:site_name" content={getAll("Timwoork_website")} />
-        <meta property="og:locale" content="ar" />
-        <meta property="og:locale:alternate" content="ar" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:title" content={getAll("Timwoork_l_For")} />
-        <meta
-          name="twitter:description"
-          content={getAll("Timwoork’s_website")}
-        />
-        <meta property="og:title" content={getAll("Timwoork_l_For")} />
-        <meta
-          property="og:description"
-          content={getAll("Timwoork’s_website")}
-        />
-        <meta property="og:url" content="https://timwoork.com/" />
-        <meta property="og:image" content="/seo.png" />
-        <meta name="twitter:image:src" content="/seo.png" />
-      </Head> */}
       <Hero />
       <VideoAside />
 
@@ -138,3 +115,7 @@ index.getLayout = function getLayout(page: any): ReactElement {
 };
 
 export default index;
+export async function getServerSideProps(ctx: any) {
+  const lang = cookies(ctx).lang || "";
+  return { props: { meta: getTranslatedMeta({ lang }) } };
+}

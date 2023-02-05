@@ -18,7 +18,6 @@ import {
   Typography,
   Popover,
 } from "antd";
-// import { MetaTags } from "@/components/SEO/MetaTags";
 import PropTypes from "prop-types";
 import router from "next/router";
 import { ProductService } from "@/services/product";
@@ -320,29 +319,6 @@ function Single({ ProductData, error }) {
   else
     return (
       <>
-        {/* <NextSeo
-          title={ProductData.title}
-          description={ProductData.content.replace(/(&nbsp;|<([^>]+)>)/gi, "")}
-          openGraph={{
-            url: `https://timwoork.com/p/${ProductData.id}`,
-            title: ProductData.title,
-            description: ProductData.content.replace(
-              /(&nbsp;|<([^>]+)>)/gi,
-              ""
-            ),
-            images: [
-              {
-                url: ProductData.full_path_thumbnail,
-              },
-            ],
-          }}
-          twitter={{
-            handle: "@timwoorkDotCom",
-            site: "@timwoorkDotCom",
-            cardType: "summary_large_image",
-          }}
-        /> */}
-
         {ProductData && (
           <div className="timwoork-single">
             <Modal
@@ -816,7 +792,7 @@ export async function getServerSideProps(ctx: any) {
       const res = await ProductService.getOne(encodeURI(id), lang);
       const meta = {
         title: res.title,
-        keywords: JSON.parse(JSON.stringify(res.keywords)),
+        keyword: res.product_tag,
         metaDescription: res.content,
         ogDescription: res.content,
         ogImage: res.full_path_thumbnail,

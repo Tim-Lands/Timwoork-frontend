@@ -1,8 +1,6 @@
-// import { NextSeo } from "next-seo";
-/* import Layout from "../components/Layout/HomeLayout";
-import { ReactElement } from "react"; */
+import cookies from "next-cookies";
+import getTranslatedMeta from "utils/translatedMeta";
 import { useAppSelector } from "@/store/hooks";
-//test
 function Privacy() {
   const { getAll } = useAppSelector((state) => state.languages);
 
@@ -95,3 +93,9 @@ function Privacy() {
   return <Layout>{page}</Layout>;
 }; */
 export default Privacy;
+export function getServerSideProps(ctx: any) {
+  const lang = cookies(ctx).lang || "";
+  return {
+    props: { meta: getTranslatedMeta({ lang, title: "Privacy_policy" }) },
+  };
+}
