@@ -49,7 +49,7 @@ export function MetaTags({
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <title>
-        {initialState.getAllByLang("Logo", language)} {title}
+        {initialState.getAllByLang("Logo", language)} | {title}
       </title>
       {ogImage && <meta property="og:image" content={ogImage} key="image" />}
       {ogUrl && <meta property="og:url" content={ogUrl} />}
