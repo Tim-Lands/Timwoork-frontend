@@ -11,12 +11,13 @@ import { TypesPaymentActions } from "@/store/tw-admin/typesPayment/typespaymentA
 
 function Countries(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const types_payments = useAppSelector(state=> state.dashboardTypespaymentSlice)
-  const dispatch = useAppDispatch()
-  console.log(types_payments)
-  useEffect(()=>{
-    dispatch(TypesPaymentActions.getAll({}))
-  },[])
+  const types_payments = useAppSelector(
+    (state) => state.dashboardTypespaymentSlice
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(TypesPaymentActions.getAll({}));
+  }, []);
   /*     const deleteHandle = (id: any) => {
         const MySwal = withReactContent(Swal)
         const swalWithBootstrapButtons = MySwal.mixin({
@@ -55,18 +56,16 @@ function Countries(): ReactElement {
     } */
   const activateHandle = async (id: any) => {
     try {
-        await dispatch(TypesPaymentActions.activateOne({id}))
-        message.success(getAll("The_gateway_had"));
-      
+      await dispatch(TypesPaymentActions.activateOne({ id }));
+      message.success(getAll("The_gateway_had"));
     } catch (error) {
       message.success(getAll("Unfortunately_the_gateway"));
     }
   };
   const disactivateHandle = async (id: any) => {
     try {
-        dispatch(TypesPaymentActions.disactiveOne({id}))
-        message.success(getAll("The_gateway_has"));
-      
+      dispatch(TypesPaymentActions.disactiveOne({ id }));
+      message.success(getAll("The_gateway_has"));
     } catch (error) {
       message.success(getAll("Unfortunately_the_gateway_2"));
     }

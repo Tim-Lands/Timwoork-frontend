@@ -18,7 +18,7 @@ function index({
   onSearchSubmit,
   onPageChange,
   isLoading,
-  postsType
+  postsType,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const [pageNumber, setPageNumber] = useState(1);
@@ -27,15 +27,14 @@ function index({
   const [isReplyModalVisible, setIsReplyModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const [isDisactiveModalVisible, setIsDisactiveModalVisible] = useState(false);
-  const [selectedProductId, setSelectedProductId]:any = useState(null);
+  const [selectedProductId, setSelectedProductId]: any = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedUserID, setSelectedUserID]: any = useState(null);
 
-
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const columns: any = generatecolumns(
     {
-      status:postsType,
+      status: postsType,
       callbacks: {
         activateProduct,
         onRejectClick,
@@ -44,7 +43,7 @@ function index({
         archieveHandle,
         forceDelete,
         restoreArchieved,
-        onSendNotificationClick
+        onSendNotificationClick,
       },
     },
     getAll
@@ -57,21 +56,20 @@ function index({
 
   const sendNotification = async () => {
     try {
-      await UsersService.sendNotification({cause, id: selectedUserID})
-      setIsEmailModalVisible(false)
+      await UsersService.sendNotification({ cause, id: selectedUserID });
+      setIsEmailModalVisible(false);
       notification.success({ message: getAll("The_notification_was") });
     } catch (err) {
-      console.log(err);
       notification.warning({ message: getAll("An_error_occured") });
     }
   };
 
-  async function onSendNotificationClick(post){
-    setIsEmailModalVisible(true)
-    setSelectedUserID(post.profile_seller.profile.user.id)
+  async function onSendNotificationClick(post) {
+    setIsEmailModalVisible(true);
+    setSelectedUserID(post.profile_seller.profile.user.id);
   }
 
-   async function archieveHandle(id,getAll) {  
+  async function archieveHandle(id, getAll) {
     const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
       customClass: {
@@ -80,7 +78,7 @@ function index({
       },
       buttonsStyling: false,
     });
-  
+
     swalWithBootstrapButtons
       .fire({
         title: getAll("Are_you_sure1"),
@@ -93,10 +91,12 @@ function index({
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          try{
-           dispatch(ProductsActions.archieveOne({id, revalidatedType:postsType}))
-          } catch (error) {
-            console.log("err");
+          try {
+            dispatch(
+              ProductsActions.archieveOne({ id, revalidatedType: postsType })
+            );
+          } catch {
+            () => {};
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire(
@@ -107,9 +107,9 @@ function index({
         }
       });
   }
-  
+
   async function forceDelete(id, getAll) {
-    const MySwal = withReactContent(Swal);  
+    const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
       customClass: {
         confirmButton: "btn butt-red butt-sm me-1",
@@ -117,7 +117,7 @@ function index({
       },
       buttonsStyling: false,
     });
-  
+
     swalWithBootstrapButtons
       .fire({
         title: getAll("Are_you_sure1"),
@@ -131,9 +131,9 @@ function index({
       .then((result) => {
         if (result.isConfirmed) {
           try {
-            dispatch(ProductsActions.deleteProduct({id}))
-          } catch (error) {
-            console.log("err");
+            dispatch(ProductsActions.deleteProduct({ id }));
+          } catch {
+            () => {};
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire(
@@ -144,9 +144,9 @@ function index({
         }
       });
   }
-  
+
   async function restoreArchieved(id, getAll) {
-    const MySwal = withReactContent(Swal);  
+    const MySwal = withReactContent(Swal);
     const swalWithBootstrapButtons = MySwal.mixin({
       customClass: {
         confirmButton: "btn butt-red butt-sm me-1",
@@ -154,7 +154,7 @@ function index({
       },
       buttonsStyling: false,
     });
-  
+
     swalWithBootstrapButtons
       .fire({
         title: getAll("Are_you_sure1"),
@@ -168,9 +168,11 @@ function index({
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            dispatch(ProductsActions.unarchieveOne({id, revalidatedType:postsType}))
-          } catch (error) {
-            console.log("err");
+            dispatch(
+              ProductsActions.unarchieveOne({ id, revalidatedType: postsType })
+            );
+          } catch {
+            () => {};
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire(
@@ -184,11 +186,12 @@ function index({
 
   async function activateProduct(id: any) {
     try {
-      await dispatch(ProductsActions.activateOne({id,revalidatedType:postsType}))
-      message.success(getAll('This_service_has'))
-    } catch (error) {
-
-      console.log(error)
+      await dispatch(
+        ProductsActions.activateOne({ id, revalidatedType: postsType })
+      );
+      message.success(getAll("This_service_has"));
+    } catch {
+      () => {};
     }
   }
   async function onRejectClick(id: any) {
@@ -201,21 +204,27 @@ function index({
   }
   async function disactiveProduct() {
     try {
-      await dispatch(ProductsActions.disactivateOne({cause ,id: selectedProductId, revalidatedType:postsType}))
-      setIsDisactiveModalVisible(false)
-      message.info(getAll('The_service_has_2'))
-    } catch (err) {
-      console.log(err);
+      await dispatch(
+        ProductsActions.disactivateOne({
+          cause,
+          id: selectedProductId,
+          revalidatedType: postsType,
+        })
+      );
+      setIsDisactiveModalVisible(false);
+      message.info(getAll("The_service_has_2"));
+    } catch {
+      () => {};
     }
   }
 
   async function rejectProduct(body) {
-    const {cause} = body
-    const id = selectedProductId
-    const revalidatedType = postsType
-    await dispatch(ProductsActions.rejectOne({cause, id, revalidatedType}))
-    setIsModalVisible(false)
-    message.info(getAll('Rejected_succesufully'))
+    const { cause } = body;
+    const id = selectedProductId;
+    const revalidatedType = postsType;
+    await dispatch(ProductsActions.rejectOne({ cause, id, revalidatedType }));
+    setIsModalVisible(false);
+    message.info(getAll("Rejected_succesufully"));
   }
   return (
     <>
@@ -292,7 +301,7 @@ function index({
         )}
         <Table
           columns={columns}
-          rowKey='id'
+          rowKey="id"
           dataSource={postsList?.data}
           pagination={false}
           bordered
@@ -305,7 +314,7 @@ function index({
             itemsCountPerPage={postsList?.per_page || 0}
             totalItemsCount={postsList?.total}
             onChange={(pageNumber) => {
-              onPageChange(pageNumber)
+              onPageChange(pageNumber);
               setPageNumber(pageNumber);
             }}
             pageRangeDisplayed={8}

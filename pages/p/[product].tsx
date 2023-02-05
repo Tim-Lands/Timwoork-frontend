@@ -1,8 +1,8 @@
 import Link from "next/link";
+import cookies from "next-cookies";
 import Layout from "@/components/Layout/HomeLayout";
 import Comments from "../../components/Comments";
-import { NextSeo } from "next-seo";
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Loading from "components/Loading";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
@@ -43,8 +43,7 @@ const properties = {
     </div>
   ),
 };
-function Single({ id }) {
-  const [ProductData, setProductData]: any = useState({});
+function Single({ ProductData, error }) {
   const dispatch = useAppDispatch();
   const {
     user,
@@ -60,13 +59,6 @@ function Single({ id }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [createConversationLoading, setCreateConversationLoading] =
     useState(false);
-  useEffect(() => {
-    ProductService.getOne(encodeURI(id))
-      .then((res) => setProductData(res))
-      .catch(() => {
-        router.push("/404");
-      });
-  }, [id]);
   const showStars = () => {
     const rate = Number(ProductData?.ratings_avg_rating).toPrecision(1) || 0;
     const xAr: any = [
@@ -321,25 +313,14 @@ function Single({ id }) {
       </Text>
     </div>
   );
-  if (!ProductData.id) return <Loading />;
+  useEffect(() => {
+    if (error) router.push("/404");
+  }, [error]);
+  if (!ProductData?.id) return <Loading />;
   else
     return (
       <>
-        {/* <MetaTags
-          title={ProductData.title}
-          keywords={ProductData.product_tag}
-          metaDescription={ProductData.content.replace(
-            /(&nbsp;|<([^>]+)>)/gi,
-            ""
-          )}
-          ogDescription={ProductData.content.replace(
-            /(&nbsp;|<([^>]+)>)/gi,
-            ""
-          )}
-          ogImage={ProductData.full_path_thumbnail}
-          ogUrl={`https://timwoork.com/p/${ProductData.id}`}
-        /> */}
-        <NextSeo
+        {/* <NextSeo
           title={ProductData.title}
           description={ProductData.content.replace(/(&nbsp;|<([^>]+)>)/gi, "")}
           openGraph={{
@@ -360,7 +341,7 @@ function Single({ id }) {
             site: "@timwoorkDotCom",
             cardType: "summary_large_image",
           }}
-        />
+        /> */}
 
         {ProductData && (
           <div className="timwoork-single">
@@ -826,8 +807,27 @@ Single.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Single;
-export async function getServerSideProps({ query }) {
-  return { props: { id: query.product } };
+export async function getServerSideProps(ctx: any) {
+  const lang = cookies(ctx).lang || "";
+
+  const id = ctx.query.product;
+  if (typeof id === "string")
+    try {
+      const res = await ProductService.getOne(encodeURI(id), lang);
+      const meta = {
+        title: res.title,
+        metaDescription: res.content,
+        ogDescription: res.content,
+        ogImage: res.full_path_thumbnail,
+        ogUrl: `https://timwoork.com/p/${res.id}`,
+        language: lang,
+      };
+      return {
+        props: { ProductData: res, error: false, meta },
+      };
+    } catch (error) {
+      return { props: { ProductData: undefined, error: true, meta: null } };
+    }
 }
 
 Single.propTypes = {

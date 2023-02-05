@@ -15,8 +15,9 @@ import PropTypes from "prop-types";
 import { ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import Head from "next/head";
+// import Head from "next/head";
 import InnerApp from "../components/_innerApp";
+import { MetaTags } from "@/components/SEO/MetaTags";
 type NextPageWithLayout = NextPage & {
   getLayout?: () => ReactNode;
 };
@@ -26,9 +27,21 @@ type AppPropsWithLayout = AppProps & {
 };
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
+  const initialMeta = {
+    title: "تيم ورك | لبيع وشراء الخدمات المصغرة",
+    metaDescription:
+      "بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. ",
+    ogDescription:
+      "بعض أجزاء الموقع لا تفتح إلا للأعضاء المشتركين المسجلين بعد تقديم بعض المعلومات الشخصية عنهم. يوافق المشترك عند تسجيله في الموقع بأن المعلومات المدخلة من طرفه هي كاملة ودقيقة، ويلتزم بأنه لن يقوم بالتسجيل في الموقع أو يحاول دخوله منتحلاً اسم مشترك آخر ولن يستخدم اسماً قد ترى الإدارة أنه غير مناسب، مثل أرقام الهواتف، والأسماء المنتحلة لشخصيات شهيرة، وروابط المواقع، والأسماء غير المفهومة، وما في حكمها. كذلك يلتزم بعدم تسجيل أكثر من حساب واحد في موقع تيموورك وعند استخدام نفس الشخص لأكثر من حساب فإنه يعرض كافة حساباته للإيقاف بشكل نهائي. ",
+    ogImage: "/seo.png",
+    ogUrl: `https://timwoork.com/`,
+    language: "ar",
+  };
+  const metas = pageProps.meta ? pageProps.meta : initialMeta;
   return (
     <div>
-      <Head>
+      <MetaTags {...metas} />
+      {/* <Head>
         <meta
           name="description"
           content={"موقع تيم ورك العالمي للعمل الحر"}
@@ -44,7 +57,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content={"موقع تيم ورك العالمي للعمل الحر"}
         />
 
-        {/* Twitter cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@timwoorkDotCom" />
         <meta name="twitter:creator" content="@timwoorkDotCom" />
@@ -62,9 +74,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           key="image"
         />
         <meta property="og:url" content={"https://timwoork.com/"} />
-      </Head>
+      </Head> */}
 
-      <Provider store={store}>
+      <Provider store={store()}>
         <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
       </Provider>
     </div>

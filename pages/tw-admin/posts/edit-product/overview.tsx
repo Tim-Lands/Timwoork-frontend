@@ -18,12 +18,11 @@ import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 const MySelect = (props: any) => {
   const tagsState = useAppSelector((state) => state.dashboardTagsSlice);
   const dispatch = useAppDispatch();
-  console.log(tagsState)
   const getdataTags = async (tag: string) => {
     try {
       dispatch(TagsActions.getAll({ name: tag }));
-    } catch (error) {
-      console.log(error);
+    } catch {
+      () => {};
     }
   };
   const handleChange = (value) => {
@@ -67,7 +66,6 @@ function Overview({ query }) {
   const id = query.id;
   const token = useRef(Cookies.get("token_dash"));
   const dispatch = useAppDispatch();
-  console.log(product);
   useEffect(() => {
     if (!token) {
       router.push("/tw-admin/login");
@@ -112,7 +110,6 @@ function Overview({ query }) {
     setSubCategories(temp_subCategories);
   };
 
-  //console.log( subCategories[product.category_id]?.parent_id)
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const clearValidationHandle = () => {
     setValidationsErrors({});
@@ -153,7 +150,6 @@ function Overview({ query }) {
     },
   });
   if (!query) return message.error(getAll("An_error_occured"));
-  console.log(formik.values);
   return (
     <>
       <MetaTags

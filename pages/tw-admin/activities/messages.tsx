@@ -19,7 +19,6 @@ function index() {
     (state) => state.dashboardActivitiesSlice
   );
   const dispatch = useAppDispatch();
-  console.log(conversations);
   useEffect(() => {
     dispatch(
       ActivitiesActions.getConversations({

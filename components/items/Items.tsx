@@ -96,7 +96,6 @@ const Items = ({
       title: getAll("Title"),
       dataIndex: "",
       render: (e: any) => {
-        console.log(e);
         return (
           <Link
             href={

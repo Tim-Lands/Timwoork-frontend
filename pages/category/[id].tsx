@@ -61,8 +61,6 @@ function index({ query }) {
             <div className="row">
               {popularProducts?.length !== 0 &&
                 popularProducts?.products?.map((e: any) => {
-                  console.log(e);
-
                   return (
                     <div key={e.id} className={"col-md-3"}>
                       <Post

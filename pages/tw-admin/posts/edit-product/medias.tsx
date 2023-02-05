@@ -17,12 +17,14 @@ import { ProductsActions } from "@/store/tw-admin/products/ProductsActions";
 
 function Medias({ query }) {
   const token = useRef(Cookies.get("token_dash"));
-  const productState = useAppSelector(state=>state.dashboardProducts.currProduct)
-  const product = productState.data
-  const dispatch = useAppDispatch()
+  const productState = useAppSelector(
+    (state) => state.dashboardProducts.currProduct
+  );
+  const product = productState.data;
+  const dispatch = useAppDispatch();
   const [validationsErrors, setValidationsErrors]: any = useState({});
   const [featuredMedia, setFeaturedImages]: any = useState(
-    product?.full_path_thumbnail|| "/seo.png"
+    product?.full_path_thumbnail || "/seo.png"
   );
   const [galleryMedia, setGalleryMedia]: any = useState(product?.galaries);
   const [isGalleryChanged, setIsGalleryChanged]: any = useState(false);
@@ -38,16 +40,15 @@ function Medias({ query }) {
       return;
     }
     //if(!productState.loading)
-    dispatch(ProductsActions.getOne({id:query.id}))
+    dispatch(ProductsActions.getOne({ id: query.id }));
   }, []);
 
-  useEffect(()=>{
-    if (product){
-    setFeaturedImages(product?.full_path_thumbnail)
-    console.log(product?.full_path_thumbnail)
-    setGalleryMedia(product?.galaries)
+  useEffect(() => {
+    if (product) {
+      setFeaturedImages(product?.full_path_thumbnail);
+      setGalleryMedia(product?.galaries);
     }
-  },[product])
+  }, [product]);
   const [validationsGeneral, setValidationsGeneral]: any = useState({});
   const [url_video, setVideourl] = useState("");
   const [temp_url_video, setTempUrlVideo] = useState("");
@@ -71,24 +72,23 @@ function Medias({ query }) {
     const imageFeature = new FormData();
     imageFeature.append("thumbnail", featuredMedia[0].file);
     imageFeature.append("url_video", url_video);
-    await dispatch(ProductsActions.editThumbnail({id, form_data: imageFeature}))
-  
+    await dispatch(
+      ProductsActions.editThumbnail({ id, form_data: imageFeature })
+    );
   };
 
   const loadGalleryImages: any = async () => {
     const galleries = new FormData();
-    console.log(galleryMedia)
     galleryMedia.map(
       (e: any) => e.file && galleries.append("images[]", e.file)
     );
-    console.log(galleries)
     //galleries.append('images[]', images)
-    await dispatch(ProductsActions.editGallery({ id, form_data: galleries}))
+    await dispatch(ProductsActions.editGallery({ id, form_data: galleries }));
   };
 
   const loadVideoUrl: any = async () => {
     try {
-      dispatch(ProductsActions.updateStepFour({id, url_video}))
+      dispatch(ProductsActions.updateStepFour({ id, url_video }));
     } catch (e) {
       () => {};
     }
@@ -204,8 +204,7 @@ function Medias({ query }) {
   const onRemoveSubmit = async (image_id, index) => {
     if (image_id) {
       setGalleryMedia(galleryMedia.filter((media) => media.id !== image_id));
-      dispatch(ProductsActions.deleteGallary({id:id, gallery_id:image_id}))
-
+      dispatch(ProductsActions.deleteGallary({ id: id, gallery_id: image_id }));
     } else {
       const temp_arr = galleryMedia;
       temp_arr.splice(index, 1);
@@ -214,7 +213,6 @@ function Medias({ query }) {
     setIsRemoveModal(false);
   };
 
- 
   return (
     <div className="container-fluid">
       <MetaTags
@@ -223,7 +221,7 @@ function Medias({ query }) {
         ogDescription={getAll("Contact_us_Timwoork")}
       />
 
-      {token &&!productState.loading &&(
+      {token && !productState.loading && (
         <div className="row justify-content-md-center my-3">
           <div className="col-md-8 pt-3">
             {isRemoveModal && (

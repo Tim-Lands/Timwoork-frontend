@@ -5,7 +5,6 @@ import API from "../config";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import { GoogleLogin } from "react-google-login";
-import { MetaTags } from "@/components/SEO/MetaTags";
 import { Badge, message, Tooltip } from "antd";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { UserActions } from "../store/user/UserActions";
@@ -90,11 +89,6 @@ const Register = (): ReactElement => {
   }, [user]);
   return (
     <>
-      <MetaTags
-        title={getAll("Sign_up")}
-        metaDescription={getAll("Home")}
-        ogDescription={getAll("Home")}
-      />
       <Formik
         initialValues={{
           email: "",

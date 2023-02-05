@@ -143,7 +143,6 @@ function suspondedstimer() {
     try {
       dispatch(UserActions.unbanUser({ id }));
     } catch (err) {
-      console.log(err);
       message.error(err.message);
     }
   };

@@ -13,8 +13,7 @@ import AuthorCard from "@/components/AuthorCard";
 import ContestSingleInfo from "@/components/Contests/ContestSingleInfo";
 import Link from "next/link";
 
-function Index({ query }) {
-  console.log(query);
+function Index() {
   const [isDeleteShowen, setIsDeleteShowen] = useState(false);
   const [isFavorated, setIsFavorated] = useState(false);
   const [isLiked, setIsLiked] = useState(false);

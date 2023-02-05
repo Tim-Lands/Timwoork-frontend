@@ -19,8 +19,10 @@ async function getAll({
   });
   return res.data.data;
 }
-async function getOne(id: string) {
-  const res = await API.get(`api/new/product/${id}`);
+async function getOne(id: string, lang?: string) {
+  const res = await API.get(`api/new/product/${id}`, {
+    headers: { "X-localization": lang },
+  });
   return res?.data?.data;
 }
 export const ProductService = { getAll, getOne };

@@ -12,12 +12,13 @@ import { CategoriesActions } from "@/store/tw-admin/categories/categoriesActions
 
 function Categories(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const categoriesState = useAppSelector(state=> state.dashboardCategoriesSlice)
-  const dispatch = useAppDispatch()
-  console.log(categoriesState)
-  useEffect(()=>{
-    dispatch(CategoriesActions.getAll({}))
-  },[])
+  const categoriesState = useAppSelector(
+    (state) => state.dashboardCategoriesSlice
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(CategoriesActions.getAll({}));
+  }, []);
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
 
@@ -42,7 +43,7 @@ function Categories(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await dispatch(CategoriesActions.deleteOne({id}))
+            await dispatch(CategoriesActions.deleteOne({ id }));
           } catch (error) {
             () => {};
           }
@@ -111,7 +112,8 @@ function Categories(): ReactElement {
               </tr>
             </thead>
             <tbody>
-              {categoriesState&&!categoriesState.loading &&
+              {categoriesState &&
+                !categoriesState.loading &&
                 categoriesState.data.map((e: any, i) => (
                   <motion.tr
                     initial="hidden"
@@ -153,7 +155,7 @@ function Categories(): ReactElement {
                 ))}
             </tbody>
           </table>
-          {categoriesState&&categoriesState.error && (
+          {categoriesState && categoriesState.error && (
             <Alert type="error">
               <p className="text">
                 <span className="material-icons">warning_amber</span>{" "}
@@ -161,7 +163,7 @@ function Categories(): ReactElement {
               </p>
             </Alert>
           )}
-          {categoriesState&&categoriesState.loading && (
+          {categoriesState && categoriesState.loading && (
             <motion.div
               initial={{ opacity: 0, y: 29 }}
               animate={{ opacity: 1, y: 0 }}

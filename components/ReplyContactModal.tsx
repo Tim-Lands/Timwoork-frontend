@@ -103,7 +103,7 @@ const Tiptap = ({ value, editor }: any) => {
     <EditorContent
       content={value}
       editor={editor}
-      onChange={() => console.log("test")}
+      onChange={() => {}}
       style={{ minHeight: 170 }}
     />
   );
@@ -128,7 +128,6 @@ function ReplyContactModal({
     content: "stars && stars.data.buyer_instruct",
   });
   async function sendEmail() {
-    console.log(messageState);
     const token = Cookies.get("token_dash");
     const res = await API.post(
       `dashboard/contacts/sent_to_client_by_email/${user.id}`,
@@ -276,7 +275,6 @@ function ReplyContactModal({
                   <Tiptap
                     value={messageState}
                     changeHandle={(e: any) => () => {
-                      console.log(e.target.value);
                       setMessageState(e.target.value);
                     }}
                     editor={editor}

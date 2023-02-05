@@ -73,7 +73,6 @@ function index() {
         })
       );
     } catch (err) {
-      console.log(err);
       message.error(err.message);
     }
   };
@@ -195,7 +194,6 @@ function index() {
       await UsersService.sendNotification({ cause, id: selectedUserID });
       notification.success({ message: getAll("The_notification_was") });
     } catch (err) {
-      console.log(err);
       notification.warning({ message: getAll("An_error_occured") });
     }
   };

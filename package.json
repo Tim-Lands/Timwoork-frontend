@@ -44,6 +44,7 @@
     "moment": "^2.29.4",
     "next": "^11.1.0",
     "next-cookies": "^2.0.3",
+    "next-redux-wrapper": "^8.1.0",
     "next-seo": "^4.29.0",
     "octokit": "^1.7.1",
     "prop-types": "^15.7.2",

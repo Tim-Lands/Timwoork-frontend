@@ -103,7 +103,6 @@ function Prices({ query }) {
 
   const handleSubmit = async () => {
     const values = ref.current.values;
-    console.log(ref.current.values);
     setValidationsErrors({});
     try {
       values.developments.forEach((val, indx) => {

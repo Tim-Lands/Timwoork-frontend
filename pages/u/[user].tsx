@@ -27,7 +27,6 @@ const User = ({ query, profile: User }) => {
   const [isLess, setIsLess] = useState(true);
   const [isOverflow, setIsOverflow] = useState(false);
   const detectHeight: any = createRef();
-  console.log(User);
   useEffect(() => {
     setIsOverflow(
       detectHeight &&
@@ -224,7 +223,6 @@ const User = ({ query, profile: User }) => {
                       User.profile.profile_seller &&
                       User.profile.profile_seller.products &&
                       User.profile.profile_seller.products.map((e: any) => {
-                        console.log(e);
                         return (
                           <div key={e.id} className={"col-sm-6 col-lg-4"}>
                             <PostInner

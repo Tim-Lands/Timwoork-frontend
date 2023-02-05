@@ -8,10 +8,11 @@
 | relevance for SEO.
 |
 */
-// import Head from "next/head";
+import translates from "../../translates/all.json";
+
+import Head from "next/head";
 import PropTypes from "prop-types";
 import { ReactElement } from "react";
-// import { useAppSelector } from "@/store/hooks";
 export function MetaTags({
   title,
   metaDescription,
@@ -19,39 +20,40 @@ export function MetaTags({
   ogDescription,
   ogImage,
   ogUrl,
+  language,
 }): ReactElement {
-  // const { getAll, language } = useAppSelector((state) => state.languages);
-  console.log(title, metaDescription, keywords, ogDescription, ogImage, ogUrl);
   return (
-    <></>
-    // <Head>
-    //   <meta name="description" content={metaDescription} key="description" />
-    //   <meta property="og:type" content="website" />
-    //   <meta property="og:title" content={title} key="title" />
-    //   <meta property="og:site_name" content={getAll("Timwoork_website")} />
-    //   <meta property="og:locale" content={language} />
-    //   <meta property="og:locale:alternate" content={language} />
-    //   <meta property="og:description" content={ogDescription} />
-    //   {keywords && (
-    //     <meta
-    //       name="keywords"
-    //       content={keywords.map((keyword: any) => keyword.name + ", ")}
-    //     />
-    //   )}
-    //   {/* Twitter cards */}
-    //   <meta name="twitter:card" content="summary_large_image" />
-    //   <meta name="twitter:site" content="@timwoorkDotCom" />
-    //   <meta name="twitter:creator" content="@timwoorkDotCom" />
-    //   <meta name="twitter:title" content={title} />
-    //   <meta name="twitter:description" content={ogDescription} />
-    //   <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-    //   <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    //   <title>
-    //     {getAll("Logo")} | {title}
-    //   </title>
-    //   {ogImage && <meta property="og:image" content={ogImage} key="image" />}
-    //   {ogUrl && <meta property="og:url" content={ogUrl} />}
-    // </Head>
+    <Head>
+      <meta name="description" content={metaDescription} key="description" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={title} key="title" />
+      <meta
+        property="og:site_name"
+        content={translates["Timwoork_website"][language] || ""}
+      />
+      <meta property="og:locale" content={language} />
+      <meta property="og:locale:alternate" content={language} />
+      <meta property="og:description" content={ogDescription} />
+      {keywords && (
+        <meta
+          name="keywords"
+          content={keywords?.map((keyword: any) => keyword.name + ", ")}
+        />
+      )}
+      {/* Twitter cards */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@timwoorkDotCom" />
+      <meta name="twitter:creator" content="@timwoorkDotCom" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={ogDescription} />
+      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <title>
+        {translates["Logo"][language] || ""} | {title}
+      </title>
+      {ogImage && <meta property="og:image" content={ogImage} key="image" />}
+      {ogUrl && <meta property="og:url" content={ogUrl} />}
+    </Head>
   );
 }
 MetaTags.propTypes = {
@@ -61,4 +63,5 @@ MetaTags.propTypes = {
   ogDescription: PropTypes.string.isRequired,
   ogImage: PropTypes.string,
   ogUrl: PropTypes.string,
+  language: PropTypes.string,
 };

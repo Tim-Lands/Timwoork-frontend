@@ -18,7 +18,6 @@ function Single({ query }: any) {
   const { current_conversation } = useAppSelector(
     (state) => state.dashboardActivitiesSlice
   );
-  console.log(current_conversation);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,8 +36,8 @@ function Single({ query }: any) {
       notification.success({
         message: "تم حذف الرسالة بنجاح",
       });
-    } catch (err) {
-      console.log(err);
+    } catch {
+      () => {};
     }
   };
   const editMsg = async (body) => {
@@ -50,8 +49,8 @@ function Single({ query }: any) {
       notification.success({
         message: "تم تعديل الرسالة بنجاح",
       });
-    } catch (err) {
-      console.log(err);
+    } catch {
+      () => {};
     }
   };
   const [isShowEdit, setIsShowEdit] = useState(false);

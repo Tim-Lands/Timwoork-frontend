@@ -76,10 +76,7 @@ function AddNew() {
     onSubmit: async (values) => {
       try {
         setValidationsErrors({});
-        const res = await API.post(`api/product/product-step-one`, values);
-        if (res.status === 200) {
-          console.log("result");
-        }
+        await API.post(`api/product/product-step-one`, values);
       } catch (error: any) {
         if (
           error.response &&

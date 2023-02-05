@@ -293,7 +293,6 @@ const ButtonAction = ({
           </div>
         );
       case 3:
-        console.log("in case 3");
         return (
           <>
             <div className="order-uploader-files">
@@ -476,7 +475,6 @@ const ButtonAction = ({
           </>
         );
       default:
-        console.log(status);
         return <p>sharaffffff</p>;
     }
   };

@@ -11,12 +11,11 @@ import { TagsActions } from "@/store/tw-admin/tags/tagsActions";
 
 function index(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const tagsState = useAppSelector(state=>state.dashboardTagsSlice)
-  const dispatch = useAppDispatch()
-  console.log(tagsState)
-  useEffect(()=>{
-    dispatch(TagsActions.getAll({}))
-  },[])
+  const tagsState = useAppSelector((state) => state.dashboardTagsSlice);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(TagsActions.getAll({}));
+  }, []);
 
   const deleteHandle = (id: any) => {
     const MySwal = withReactContent(Swal);
@@ -41,7 +40,7 @@ function index(): ReactElement {
       .then(async (result) => {
         if (result.isConfirmed) {
           if (id) {
-            await dispatch(TagsActions.getAll({}))
+            await dispatch(TagsActions.getAll({}));
           }
           swalWithBootstrapButtons.fire(
             getAll("Deleted"),

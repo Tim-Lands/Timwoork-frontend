@@ -9,7 +9,6 @@ function index(): ReactElement {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
-  console.log(productsState);
   useEffect(() => {
     dispatch(ProductsActions.getAllPending({ page, search }));
   }, [page, search]);

@@ -9,20 +9,17 @@ export default function EditCategory(): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
   const router = useRouter();
   const id: any = router.query.id;
-  const {current_category} = useAppSelector(
+  const { current_category } = useAppSelector(
     (state) => state.dashboardCategoriesSlice
   );
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log(id)
-    if(id)
-      dispatch(CategoriesActions.getOne({ id }));
+    if (id) dispatch(CategoriesActions.getOne({ id }));
   }, [id]);
 
-  useEffect(()=>{
-    if(current_category.data)
-      setPerson(current_category.data)
-  },[current_category.data])
+  useEffect(() => {
+    if (current_category.data) setPerson(current_category.data);
+  }, [current_category.data]);
   const [person, setPerson] = useState({
     name_ar: "",
     name_en: "",

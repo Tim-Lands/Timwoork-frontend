@@ -78,10 +78,8 @@ function Token({ query }) {
               }}
               //validationSchema={SignupSchema}
               onSubmit={async (values) => {
-                console.log(values);
                 setValidationsErrors({});
                 try {
-                  console.log(query);
                   const res = await API.post("api/password/forget/reset", {
                     ...values,
                     token: query.token,
@@ -156,19 +154,20 @@ function Token({ query }) {
                               }
                               autoComplete="off"
                             />
-                            {validationsErrors && validationsErrors.password && (
-                              <div style={{ overflow: "hidden" }}>
-                                <motion.div
-                                  initial={{ y: -70, opacity: 0 }}
-                                  animate={{ y: 0, opacity: 1 }}
-                                  className="timlands-form-note form-note-error"
-                                >
-                                  <p className="text">
-                                    {validationsErrors.password[0]}
-                                  </p>
-                                </motion.div>
-                              </div>
-                            )}
+                            {validationsErrors &&
+                              validationsErrors.password && (
+                                <div style={{ overflow: "hidden" }}>
+                                  <motion.div
+                                    initial={{ y: -70, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    className="timlands-form-note form-note-error"
+                                  >
+                                    <p className="text">
+                                      {validationsErrors.password[0]}
+                                    </p>
+                                  </motion.div>
+                                </div>
+                              )}
                           </div>
                         </div>
                         <div className="col-md-12">

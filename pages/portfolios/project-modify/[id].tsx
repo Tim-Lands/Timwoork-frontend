@@ -68,7 +68,6 @@ const Add: NextPage = () => {
   });
   const [userLang, setUserLang] = useState();
 
-
   const removeImage = async (image, index) => {
     setIsRemoveModal(true);
     setRemovedImage({ id: image.id, index });
@@ -110,13 +109,13 @@ const Add: NextPage = () => {
     else if (id) fetchData();
   }, [id]);
 
-  useEffect(()=>{
-    CategoriesActions.getAllCategories({})
-  },[])
+  useEffect(() => {
+    CategoriesActions.getAllCategories({});
+  }, []);
   const {
     languages: { getAll },
     user,
-    categories
+    categories,
   } = useAppSelector((state) => state);
   const form = useFormik({
     initialValues: {
@@ -136,17 +135,18 @@ const Add: NextPage = () => {
   const fetchData = async () => {
     const res = await API.get(`/api/portfolios/items/${id}`);
     setProject(res.data.data);
-    setFeaturedImages([{data_url:res.data.data.cover_url}])
-    setGalleryMedia(res.data.data.gallery.map(img=>({...img, data_url:img.image_url})))
+    setFeaturedImages([{ data_url: res.data.data.cover_url }]);
+    setGalleryMedia(
+      res.data.data.gallery.map((img) => ({ ...img, data_url: img.image_url }))
+    );
   };
 
-  const deleteImages = async()=>{
-    console.log(removedImages)
+  const deleteImages = async () => {
     const promises = removedImages.map((img) =>
-        API.delete(`api/portfolios/items/images/${img}`)
-      );
-      await Promise.all(promises);
-  }
+      API.delete(`api/portfolios/items/images/${img}`)
+    );
+    await Promise.all(promises);
+  };
 
   const onRemoveSubmit = async (image_id, index) => {
     if (image_id) {
@@ -169,7 +169,6 @@ const Add: NextPage = () => {
       return;
     }
   }, [user]);
-  console.log(featuredMedia)
   return (
     <Layout>
       {isRemoveModal && (
@@ -339,7 +338,11 @@ const Add: NextPage = () => {
                       validationsErrors?.subcategory &&
                       validationsErrors.subcategory[0]
                     }
-                    data = {categories.all?.find(category=>category.id==form.values.category)?.subcategories}
+                    data={
+                      categories.all?.find(
+                        (category) => category.id == form.values.category
+                      )?.subcategories
+                    }
                   />
                 </div>
                 <div className="col-md-8">
@@ -417,11 +420,13 @@ const Add: NextPage = () => {
                             body: {
                               ...form.values,
                               cover: featuredMedia && featuredMedia[0].file,
-                              images: galleryMedia.filter(media=>media.file).map((media) => media.file),
+                              images: galleryMedia
+                                .filter((media) => media.file)
+                                .map((media) => media.file),
                             },
                           })
                         ).unwrap();
-                        await deleteImages()
+                        await deleteImages();
                         router.push("/portfolios/" + id);
                       } catch (error) {
                         setValidationsErrors(error.data);

@@ -11,7 +11,7 @@ export default function AddNewUser({
   setIsModalHiddenHandle,
 }: any): ReactElement {
   const { getAll } = useAppSelector((state) => state.languages);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -55,11 +55,10 @@ export default function AddNewUser({
             number_sales: Yup.number().required(getAll("This_field_is")),
             value_bayer: Yup.number().required(getAll("This_field_is")),
           })}
-          onSubmit={async (values:ILevel) => {
+          onSubmit={async (values: ILevel) => {
             try {
-              console.log(values)
-              await dispatch(LevelsActions.createOne({level:values}))
-              setIsModalHiddenHandle()
+              await dispatch(LevelsActions.createOne({ level: values }));
+              setIsModalHiddenHandle();
             } catch (error) {
               alert("Error Network");
             }

@@ -32,10 +32,7 @@ function ContestSidebar() {
             </div>
 
             <div className="list-inner">
-              <div
-                className={`list-cat-item`}
-                onClick={() => console.log("shkd")}
-              >
+              <div className={`list-cat-item`} onClick={() => {}}>
                 <span className="item-cat-label">
                   <span className="material-icons material-icons-outlined">
                     home
@@ -46,10 +43,7 @@ function ContestSidebar() {
             </div>
 
             <div className="list-inner">
-              <div
-                className={`list-cat-item`}
-                onClick={() => console.log("shkd")}
-              >
+              <div className={`list-cat-item`} onClick={() => {}}>
                 <span className="item-cat-label">
                   <span className="material-icons material-icons-outlined">
                     home
@@ -60,10 +54,7 @@ function ContestSidebar() {
             </div>
 
             <div className="list-inner">
-              <div
-                className={`list-cat-item`}
-                onClick={() => console.log("shkd")}
-              >
+              <div className={`list-cat-item`} onClick={() => {}}>
                 <span className="item-cat-label">
                   <span className="material-icons material-icons-outlined">
                     home
@@ -74,10 +65,7 @@ function ContestSidebar() {
             </div>
 
             <div className="list-inner">
-              <div
-                className={`list-cat-item`}
-                onClick={() => console.log("shkd")}
-              >
+              <div className={`list-cat-item`} onClick={() => {}}>
                 <span className="item-cat-label">
                   <span className="material-icons material-icons-outlined">
                     home
@@ -87,10 +75,7 @@ function ContestSidebar() {
               </div>
             </div>
             <div className="list-inner">
-              <div
-                className={`list-cat-item`}
-                onClick={() => console.log("shkd")}
-              >
+              <div className={`list-cat-item`} onClick={() => {}}>
                 <span className="item-cat-label">
                   <span className="material-icons material-icons-outlined">
                     home

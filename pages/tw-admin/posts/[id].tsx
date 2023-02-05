@@ -41,7 +41,6 @@ function Id() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { id }: any = router.query;
-  console.log(ProductData);
   useEffect(() => {
     if (id) dispatch(ProductsActions.getOne({ id }));
   }, [id]);

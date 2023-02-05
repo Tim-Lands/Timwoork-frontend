@@ -3,12 +3,12 @@ import { ReactElement, useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import Posts from "@/components/Dashboard/posts";
 import cookies from "next-cookies";
-function index({ pageNumber = 1, postsData }): ReactElement {
+function index({ postsData }): ReactElement {
   const [postsList, setPostsList] = useState(postsData);
+
   useEffect(() => {
     setPostsList(postsData);
   }, [postsData]);
-  console.log(pageNumber);
   return (
     <>
       <div className="timlands-panel">
@@ -42,7 +42,6 @@ export async function getServerSideProps(ctx) {
     like: search && `title,${search}`,
   };
   try {
-    console.log(token);
     const res = await API.get("dashboard/products", {
       params,
       headers: { Authorization: `Bearer ${token}` },

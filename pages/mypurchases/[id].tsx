@@ -18,8 +18,7 @@ const Order = ({ id }) => {
     dispatch(PurchasesActions.getOnePurchase({ id }))
       .unwrap()
       .then(() => {})
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         router.push("/mypurchases");
       });
   }, [id]);

@@ -124,8 +124,6 @@ function Medias({ query }) {
       "i"
     );
     if (galleryMedia.length <= 0) {
-      console.log("gallery is 0");
-      console.log(galleryMedia);
       notification.open({
         message: getAll("An_error_occurred"),
         description: getAll("Please_add_at_2"),
@@ -135,9 +133,9 @@ function Medias({ query }) {
 
       return;
     }
-    console.log(featuredMedia)
     if (
-      !(featuredMedia instanceof Array) && featuredMedia.split("/")[5].length <= 0
+      !(featuredMedia instanceof Array) &&
+      featuredMedia.split("/")[5].length <= 0
     ) {
       notification.open({
         message: getAll("An_error_occurred"),
