@@ -1,4 +1,3 @@
-import cookies from "next-cookies";
 import getTranslatedMeta from "utils/translatedMeta";
 import { useAppSelector } from "@/store/hooks";
 function Privacy() {
@@ -94,8 +93,7 @@ function Privacy() {
 }; */
 export default Privacy;
 export function getServerSideProps(ctx: any) {
-  const lang = cookies(ctx).lang || "";
   return {
-    props: { meta: getTranslatedMeta({ lang, title: "Privacy_policy" }) },
+    props: { meta: getTranslatedMeta({ ctx, title: "Privacy_policy" }) },
   };
 }

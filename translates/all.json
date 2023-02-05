@@ -817,9 +817,9 @@
     "ar": "اشتري الآن"
   },
   "Timwoork_l_For": {
-    "en": "Timwoork l For buying and selling micro-services",
-    "fr": "Timwoork l Pour l’achat et la vente des micro-services",
-    "ar": "تيم ورك | لبيع وشراء الخدمات المصغرة"
+    "en": "For buying and selling micro-services",
+    "fr": "l Pour l’achat et la vente des micro-services",
+    "ar": "لبيع وشراء الخدمات المصغرة"
   },
   "To": {
     "en": "To",
@@ -4857,11 +4857,6 @@
     "ar": "أرسل الآن"
   },
 
-  "To": {
-    "en": "To",
-    "fr": "À",
-    "ar": "إلى"
-  },
   "Subject": {
     "en": "Subject",
     "fr": "Objet",

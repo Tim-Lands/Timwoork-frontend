@@ -793,8 +793,8 @@ export async function getServerSideProps(ctx: any) {
       const meta = {
         title: res.title,
         keyword: res.product_tag,
-        metaDescription: res.content,
-        ogDescription: res.content,
+        metaDescription: res.content.replace(/(<([^>]+)>)/gi, ""),
+        ogDescription: res.content.replace(/(<([^>]+)>)/gi, ""),
         ogImage: res.full_path_thumbnail,
         ogUrl: `https://timwoork.com/p/${res.id}`,
         language: lang,

@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import { ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
+// import Head from "next/head";
 import InnerApp from "../components/_innerApp";
 import { MetaTags } from "@/components/SEO/MetaTags";
 import getTranslatedMeta from "utils/translatedMeta";
@@ -28,7 +29,6 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
   const initialMeta = getTranslatedMeta({});
-
   const metas = pageProps.meta || initialMeta;
   return (
     <div>
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta property="og:url" content={"https://timwoork.com/"} />
       </Head> */}
 
-      <Provider store={store()}>
+      <Provider store={store}>
         <InnerApp innerApp={getLayout(<Component {...pageProps} />)} />
       </Provider>
     </div>

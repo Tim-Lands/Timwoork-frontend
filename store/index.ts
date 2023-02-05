@@ -27,50 +27,41 @@ import dashboardLevelsSlice from "./tw-admin/levels/levelsSlice";
 import dashboardSkillsSlice from "./tw-admin/skills/skillsSlice";
 import dashboardTagsSlice from "./tw-admin/tags/tagsSlice";
 import dashboardCategoriesSlice from "./tw-admin/categories/categoriesSlice";
-import { createWrapper } from "next-redux-wrapper";
 
-export const store = () =>
-  configureStore({
-    reducer: {
-      user,
-      blog,
-      cart,
-      notifications,
-      chat,
-      wallet,
-      currency,
-      languages,
-      profile,
-      products,
-      purchase,
-      myProducts,
-      mySales,
-      categories,
-      portfolio,
-      favorites,
-      dashboardUsers,
-      dashboardProducts,
-      dashboardWithdrawals,
-      dashboardActivitiesSlice,
-      dashboardTypespaymentSlice,
-      dashboardBadgesSlice,
-      dashboardCountriesSlice,
-      dashboardLanguagesSlice,
-      dashboardLevelsSlice,
-      dashboardSkillsSlice,
-      dashboardTagsSlice,
-      dashboardCategoriesSlice,
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ serializableCheck: false }),
-  });
-export type AppStore = ReturnType<typeof store>;
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
-
-export const wrapper = createWrapper<AppStore>(store, {
-  debug: true,
-  serializeState(state) {
-    return JSON.stringify(state);
+export const store = configureStore({
+  reducer: {
+    user,
+    blog,
+    cart,
+    notifications,
+    chat,
+    wallet,
+    currency,
+    languages,
+    profile,
+    products,
+    purchase,
+    myProducts,
+    mySales,
+    categories,
+    portfolio,
+    favorites,
+    dashboardUsers,
+    dashboardProducts,
+    dashboardWithdrawals,
+    dashboardActivitiesSlice,
+    dashboardTypespaymentSlice,
+    dashboardBadgesSlice,
+    dashboardCountriesSlice,
+    dashboardLanguagesSlice,
+    dashboardLevelsSlice,
+    dashboardSkillsSlice,
+    dashboardTagsSlice,
+    dashboardCategoriesSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

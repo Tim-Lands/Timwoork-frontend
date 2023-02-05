@@ -2,7 +2,6 @@ import { Menu, Dropdown, Button } from "antd";
 import { PRIMARY } from "../styles/variables";
 import PostsAside from "@/components/PostsAside";
 import Hero from "@/components/Header/Hero";
-import cookies from "next-cookies";
 import VideoAside from "@/components/VideoSection/VideoAside";
 import { ReactElement, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -116,6 +115,5 @@ index.getLayout = function getLayout(page: any): ReactElement {
 
 export default index;
 export async function getServerSideProps(ctx: any) {
-  const lang = cookies(ctx).lang || "";
-  return { props: { meta: getTranslatedMeta({ lang }) } };
+  return { props: { meta: getTranslatedMeta({ ctx }) } };
 }

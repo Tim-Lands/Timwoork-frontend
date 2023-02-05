@@ -1,18 +1,13 @@
 import Layout from "../components/Layout/HomeLayout";
 import { ReactElement } from "react";
-import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
+import getTranslatedMeta from "utils/translatedMeta";
 
 function Terms() {
   const { getAll } = useAppSelector((state) => state.languages);
 
   return (
     <div className="py-4">
-      <MetaTags
-        title={getAll("Terms_of_use")}
-        metaDescription={getAll("Services_are_provided")}
-        ogDescription={getAll("Services_are_provided")}
-      />
       <div className="container my-3">
         <div className="bg-white p-2 px-4">
           <div className="page-header">
@@ -256,3 +251,15 @@ Terms.getLayout = function getLayout(page: any): ReactElement {
   return <Layout>{page}</Layout>;
 };
 export default Terms;
+export function getServerSideProps(ctx: any) {
+  return {
+    props: {
+      meta: getTranslatedMeta({
+        ctx,
+        title: "Terms_of_use",
+        metaDescription: "Services_are_provided",
+        ogDescription: "Services_are_provided",
+      }),
+    },
+  };
+}
