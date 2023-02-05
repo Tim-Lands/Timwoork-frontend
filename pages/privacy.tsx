@@ -1,7 +1,6 @@
 // import { NextSeo } from "next-seo";
 /* import Layout from "../components/Layout/HomeLayout";
 import { ReactElement } from "react"; */
-import { MetaTags } from "@/components/SEO/MetaTags";
 import { useAppSelector } from "@/store/hooks";
 //test
 function Privacy() {
@@ -43,15 +42,7 @@ function Privacy() {
           cardType: "summary_large_image",
         }}
       /> */}
-      <MetaTags
-        title={"سياسة الخصوصية"}
-        metaDescription={
-          "يهدف بيان الخصوصية إلى مساعدتك على فهم ماهية المعلومات التي نجمعها وكيفية استخدامها في موقع تيم ورك, أكبر منصة للعمل الحر في العالم العربي."
-        }
-        ogDescription={
-          "يهدف بيان الخصوصية إلى مساعدتك على فهم ماهية المعلومات التي نجمعها وكيفية استخدامها في موقع تيم ورك, أكبر منصة للعمل الحر في العالم العربي."
-        }
-      />
+
       <div className="container my-3">
         <div className="bg-white p-2 px-4">
           <div className="page-header">

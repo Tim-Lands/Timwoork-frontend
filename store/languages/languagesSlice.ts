@@ -1,15 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import API from "../../config";
 import translates from "../../translates/all.json";
 export interface languagesState {
   language: string;
   getAll: Function;
+  getAllByLang: Function;
 }
 export const initialState: languagesState = {
   language: undefined,
   getAll: (name: string) => {
     if (translates[name]) return translates[name][initialState.language];
+    else {
+      return "error here";
+    }
+  },
+  getAllByLang(name: string, lang: string) {
+    if (translates[name]) return translates[name][lang];
     else {
       return "error here";
     }

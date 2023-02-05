@@ -8,7 +8,7 @@
 | relevance for SEO.
 |
 */
-import translates from "../../translates/all.json";
+import { initialState } from "store/languages/languagesSlice";
 
 import Head from "next/head";
 import PropTypes from "prop-types";
@@ -29,7 +29,7 @@ export function MetaTags({
       <meta property="og:title" content={title} key="title" />
       <meta
         property="og:site_name"
-        content={translates["Timwoork_website"][language] || ""}
+        content={initialState.getAllByLang("Timwoork_website", language)}
       />
       <meta property="og:locale" content={language} />
       <meta property="og:locale:alternate" content={language} />
@@ -49,7 +49,7 @@ export function MetaTags({
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <title>
-        {translates["Logo"][language] || ""} | {title}
+        {initialState.getAllByLang("Logo", language)} | {title}
       </title>
       {ogImage && <meta property="og:image" content={ogImage} key="image" />}
       {ogUrl && <meta property="og:url" content={ogUrl} />}

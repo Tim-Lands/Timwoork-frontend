@@ -816,6 +816,7 @@ export async function getServerSideProps(ctx: any) {
       const res = await ProductService.getOne(encodeURI(id), lang);
       const meta = {
         title: res.title,
+        keywords: JSON.parse(JSON.stringify(res.keywords)),
         metaDescription: res.content,
         ogDescription: res.content,
         ogImage: res.full_path_thumbnail,
@@ -826,7 +827,7 @@ export async function getServerSideProps(ctx: any) {
         props: { ProductData: res, error: false, meta },
       };
     } catch (error) {
-      return { props: { ProductData: undefined, error: true, meta: null } };
+      return { props: { ProductData: null, error: true, meta: null } };
     }
 }
 
