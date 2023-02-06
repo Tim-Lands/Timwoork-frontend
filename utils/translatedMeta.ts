@@ -16,7 +16,7 @@ export default function getTranslatedMeta({
   ogUrl?: string;
   ctx?: any;
 }) {
-  const lang = ctx ? cookies(ctx).lang : "ar";
+  const lang = ctx ? cookies(ctx).lang || "ar" : "ar";
   return {
     title: initialState.getAllByLang(title || "Timwoork_l_For", lang),
     metaDescription: initialState.getAllByLang(
