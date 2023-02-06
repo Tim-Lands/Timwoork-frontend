@@ -15,7 +15,7 @@ export const initialState: languagesState = {
     }
   },
   getAllByLang(name: string, lang: string) {
-    if (translates[name]) return translates[name][lang];
+    if (translates[name]) return translates[name][lang || "ar"];
     else {
       return "error here";
     }
