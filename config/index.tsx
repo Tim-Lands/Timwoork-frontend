@@ -14,13 +14,13 @@ const token =
 const admin_token = Cookies.get("token_dash") || "";
 
 export default axios.create({
-  baseURL: "https://api.timwoork.com/", //api.timwoork.com
+  baseURL: "https://backend.timwoork.com/", //api.timwoork.com
   headers: { "X-localization": lang, Authorization: `Bearer ${token}` },
   withCredentials: true,
 });
 
 export const AdminAPI = axios.create({
-  baseURL: "https://api.timwoork.com/", //api.timwoork.com
+  baseURL: "https://backend.timwoork.com/", //api.timwoork.com
   headers: {
     "X-localization": lang,
     Authorization: `Bearer ${admin_token}`,
